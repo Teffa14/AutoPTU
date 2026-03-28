@@ -33,6 +33,7 @@ from ..rules import (
     ManipulateAction,
     PickupItemAction,
     TrainerState,
+    TrainerSwitchAction,
     PokemonState,
     ShiftAction,
     SprintAction,
@@ -1416,6 +1417,52 @@ def _core_action_hints(battle: BattleState, actor_id: str, state: PokemonState) 
     return hints
 
 
+def _trainer_turn_context(battle: BattleState, trainer_id: str) -> Dict[str, Any]:
+    trainer = battle.trainers.get(trainer_id)
+    if trainer is None:
+        return {}
+    switch_options: List[Dict[str, Any]] = []
+    active_ids = [
+        pid
+        for pid, mon in battle.pokemon.items()
+        if mon.controller_id == trainer_id and mon.active and not mon.fainted
+    ]
+    bench_ids = [
+        pid
+        for pid, mon in battle.pokemon.items()
+        if mon.controller_id == trainer_id and not mon.active and not mon.fainted
+    ]
+    for outgoing_id in active_ids:
+        for replacement_id in bench_ids:
+            try:
+                action = TrainerSwitchAction(
+                    actor_id=trainer_id,
+                    outgoing_id=outgoing_id,
+                    replacement_id=replacement_id,
+                )
+                action.validate(battle)
+            except Exception:
+                continue
+            outgoing = battle.pokemon.get(outgoing_id)
+            replacement = battle.pokemon.get(replacement_id)
+            switch_options.append(
+                {
+                    "outgoing_id": outgoing_id,
+                    "outgoing_name": outgoing.spec.name or outgoing.spec.species or outgoing_id if outgoing else outgoing_id,
+                    "replacement_id": replacement_id,
+                    "replacement_name": replacement.spec.name or replacement.spec.species or replacement_id if replacement else replacement_id,
+                    "action_type": action.action_type.value,
+                }
+            )
+    return {
+        "id": trainer.identifier,
+        "name": trainer.name or trainer.identifier,
+        "team": trainer.team or trainer.identifier,
+        "actions_taken": {k.value: v for k, v in trainer.actions_taken.items()},
+        "switch_options": switch_options,
+    }
+
+
 @dataclass
 class EngineFacade:
     plan: Optional[MatchPlan] = None
@@ -2746,6 +2793,7 @@ class EngineFacade:
                         "occurrence": seen_counts[actor_id],
                     }
                 )
+        trainer_turn = _trainer_turn_context(battle, current) if current and battle.is_trainer_actor_id(current) else None
         log_payload = list(getattr(battle, "log", []) or [])
         if str(os.environ.get("AUTOPTU_BATTLE_LOG_DIR") or "").strip():
             log_payload = log_payload[-200:]
@@ -2783,6 +2831,7 @@ class EngineFacade:
             "maneuver_targets": maneuver_targets,
             "maneuver_context": maneuver_context,
             "turn_order": turn_order,
+            "trainer_turn": trainer_turn,
             "log": log_payload,
             "pending_prompts": list(self._pending_prompts),
             "battle_royale": copy.deepcopy(self._battle_royale_state),
@@ -3241,6 +3290,17 @@ class EngineFacade:
             if not replacement_id:
                 raise ValueError("Switch requires a replacement.")
             return SwitchAction(actor_id=actor_id, replacement_id=str(replacement_id))
+        if action_type == "trainer_switch":
+            outgoing_id = payload.get("outgoing_id")
+            replacement_id = payload.get("replacement_id") or payload.get("target_id")
+            if not outgoing_id or not replacement_id:
+                raise ValueError("Trainer Switch requires outgoing and replacement combatants.")
+            return TrainerSwitchAction(
+                actor_id=str(actor_id),
+                outgoing_id=str(outgoing_id),
+                replacement_id=str(replacement_id),
+                forced=bool(payload.get("forced")),
+            )
         if action_type == "sprint":
             return SprintAction(actor_id=actor_id)
         if action_type == "take_breather":

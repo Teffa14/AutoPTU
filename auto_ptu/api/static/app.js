@@ -9859,8 +9859,65 @@ function renderCreativeBattleAction(moveListEl, combatant, canAct) {
   moveListEl.appendChild(section);
 }
 
+function renderTrainerTurnActions(moveListEl) {
+  const trainerTurn = state?.trainer_turn || null;
+  if (!trainerTurn) return;
+  moveListEl.innerHTML = "";
+  const section = document.createElement("div");
+  section.className = "item-section";
+  const title = document.createElement("div");
+  title.className = "item-title";
+  title.textContent = `${trainerTurn.name} Actions`;
+  section.appendChild(title);
+
+  const info = document.createElement("div");
+  info.className = "creative-help";
+  info.textContent = "Trainer turns use the trainer action budget, not a Pokemon move list.";
+  section.appendChild(info);
+
+  const list = document.createElement("div");
+  list.className = "item-list";
+  const switchOptions = Array.isArray(trainerTurn.switch_options) ? trainerTurn.switch_options : [];
+  const switchBtn = document.createElement("button");
+  switchBtn.className = "item-button";
+  switchBtn.textContent = "Trainer Switch";
+  if (!state?.current_actor_is_player || !switchOptions.length) {
+    switchBtn.classList.add("inactive");
+    switchBtn.setAttribute("aria-disabled", "true");
+  }
+  switchBtn.addEventListener("click", () => {
+    if (!state?.current_actor_is_player || !switchOptions.length) return;
+    pickTrainerFeatureOption(
+      "Trainer Switch",
+      switchOptions.map((entry) => ({
+        value: `${entry.outgoing_id}::${entry.replacement_id}`,
+        label: `${entry.outgoing_name} -> ${entry.replacement_name}`,
+        hint: `${String(entry.action_type || "standard").toUpperCase()} action`,
+      })),
+      (value) => {
+        const [outgoingId, replacementId] = String(value || "").split("::");
+        if (!outgoingId || !replacementId) return;
+        commitAction({
+          type: "trainer_switch",
+          actor_id: trainerTurn.id,
+          outgoing_id: outgoingId,
+          replacement_id: replacementId,
+        }).catch(alertError);
+      },
+      "Choose which active ally to recall and which benched ally to send out."
+    );
+  });
+  list.appendChild(switchBtn);
+  section.appendChild(list);
+  moveListEl.appendChild(section);
+}
+
 function renderMoves() {
   moveListEl.innerHTML = "";
+  if (state?.trainer_turn && selectedId === state.current_actor_id) {
+    renderTrainerTurnActions(moveListEl);
+    return;
+  }
   const combatant = state.combatants.find((c) => c.id === selectedId);
   if (!combatant) {
     return;

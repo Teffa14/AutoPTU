@@ -1356,6 +1356,71 @@ def test_engine_facade_builds_core_action_types():
     assert unequip_action.__class__.__name__ == "UnequipWeaponAction"
 
 
+def test_engine_facade_snapshot_exposes_trainer_turn_switches():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("Lead", [_move("Tackle")]),
+                controller_id="player",
+                position=(1, 1),
+                active=True,
+            ),
+            "bench-1": PokemonState(
+                spec=_spec("Bench", [_move("Tackle")]),
+                controller_id="player",
+                position=(4, 4),
+                active=False,
+            ),
+        },
+        grid=GridState(width=6, height=6),
+        rng=random.Random(21),
+    )
+    battle.current_actor_id = "player"
+    facade.battle = battle
+    payload = facade.snapshot()
+    trainer_turn = payload["trainer_turn"]
+    assert trainer_turn["id"] == "player"
+    assert any(
+        option["outgoing_id"] == "player-1" and option["replacement_id"] == "bench-1"
+        for option in trainer_turn["switch_options"]
+    )
+
+
+def test_engine_facade_builds_trainer_switch_action_type():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("Lead", [_move("Tackle")]),
+                controller_id="player",
+                position=(1, 1),
+                active=True,
+            ),
+            "bench-1": PokemonState(
+                spec=_spec("Bench", [_move("Tackle")]),
+                controller_id="player",
+                position=(4, 4),
+                active=False,
+            ),
+        },
+        grid=GridState(width=6, height=6),
+        rng=random.Random(22),
+    )
+    action = facade._build_action(
+        battle,
+        {
+            "type": "trainer_switch",
+            "actor_id": "player",
+            "outgoing_id": "player-1",
+            "replacement_id": "bench-1",
+        },
+    )
+    assert action.__class__.__name__ == "TrainerSwitchAction"
+
+
 def test_engine_facade_snapshot_exposes_telepath_hint_state():
     facade = EngineFacade()
     battle = BattleState(
