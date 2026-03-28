@@ -1,0 +1,312 @@
+{
+  "name": "wurmple",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 265,
+    "size": {
+      "category": "tiny",
+      "type": "length",
+      "height": 0.3,
+      "weight": 3.6
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 3
+      },
+      {
+        "type": "threaded",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "many-legged",
+      "darkvision-15",
+      "wallclimber",
+      "venomous",
+      "underdog",
+      "jump-2"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "shield-dust"
+        },
+        {
+          "slug": "run-away"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "suction-cups"
+        },
+        {
+          "slug": "sap-sipper"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "poison-point"
+        },
+        {
+          "slug": "gluttony"
+        }
+      ],
+      "master": [
+        {
+          "slug": "huge-power"
+        },
+        {
+          "slug": "pure-power"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "wurmple",
+    "stats": {
+      "hp": 45,
+      "atk": 45,
+      "def": 35,
+      "spa": 20,
+      "spd": 30,
+      "spe": 20
+    },
+    "types": [
+      "bug"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "electroweb",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "string-shot",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "poison-sting",
+          "level": 5,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bug-bite",
+          "level": 15,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ]
+    },
+    "captureRate": 255,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "wurmple",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "silcoon",
+          "uuid": "Compendium.ptr2e.core-species.Item.W8SR9b5EwvxtzIKk",
+          "methods": [
+            {
+              "type": "level",
+              "level": 7,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "beautifly",
+              "uuid": "Compendium.ptr2e.core-species.Item.g9LFPZPUUaDCJ2mt",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 10,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        },
+        {
+          "name": "cascoon",
+          "uuid": "Compendium.ptr2e.core-species.Item.jl2vWuKiTk1OgSOQ",
+          "methods": [
+            {
+              "type": "level",
+              "level": 7,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "dustox",
+              "uuid": "Compendium.ptr2e.core-species.Item.unsutL4D1ZHXsU6J",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 10,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.hmph3LYhawO70pes"
+    },
+    "habitats": [
+      "forest"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Hoenn Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "hmph3LYhawO70pes",
+  "effects": [],
+  "folder": null
+}

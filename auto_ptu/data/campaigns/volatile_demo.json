@@ -1,0 +1,110 @@
+{
+  "name": "Volatile Status Lab",
+  "description": "Hypno begins the encounter confused and raging while Primeape starts flinched and trapped after a stray flash. Watch confusion force Hypno to damage itself, Rage lock it into attack actions, and see Primeape skip its opening action plus report the trap so you can validate the expanded volatile logging.",
+  "default_weather": "Clear",
+  "grid": {
+    "width": 10,
+    "height": 6,
+    "blockers": [[4, 2], [5, 2], [4, 3], [5, 3]],
+    "tiles": {
+      "3,1": "difficult",
+      "6,4": "rough"
+    }
+  },
+  "players": [
+    {
+      "name": "Hypno",
+      "species": "Hypno",
+      "level": 22,
+      "types": ["Psychic"],
+      "hp_stat": 13,
+      "atk": 12,
+      "def": 10,
+      "spatk": 13,
+      "spdef": 11,
+      "spd": 8,
+      "statuses": [{"name": "Confused", "remaining": 2}, {"name": "Rage"}],
+      "moves": [
+        {
+          "name": "Confusion",
+          "type": "Psychic",
+          "category": "Special",
+          "db": 8,
+          "ac": 3,
+          "range_kind": "Ranged",
+          "range_value": 6,
+          "freq": "At-Will",
+          "effects_text": "Confusion adds a volatile status on hit."
+        },
+        {
+          "name": "Hypnosis",
+          "type": "Psychic",
+          "category": "Status",
+          "db": 0,
+          "ac": 4,
+          "range_kind": "Ranged",
+          "range_value": 6,
+          "freq": "Scene",
+          "effects_text": "Sleep-inducing status move."
+        }
+      ],
+      "movement": {
+        "overland": 5,
+        "swim": 2,
+        "sky": 0,
+        "levitate": 0,
+        "burrow": 0,
+        "h_jump": 2,
+        "l_jump": 1,
+        "power": 3
+      }
+    }
+  ],
+  "foes": [
+    {
+      "name": "Primeape",
+      "species": "Primeape",
+      "level": 22,
+      "types": ["Fighting"],
+      "hp_stat": 14,
+      "atk": 14,
+      "def": 11,
+      "spatk": 9,
+      "spdef": 9,
+      "spd": 10,
+      "statuses": [{"name": "Flinch"}, {"name": "Trapped"}],
+      "moves": [
+        {
+          "name": "Karate Chop",
+          "type": "Fighting",
+          "category": "Physical",
+          "db": 6,
+          "ac": 4,
+          "range_kind": "Melee",
+          "freq": "At-Will",
+          "effects_text": "A reliable attack that can flinch."
+        },
+        {
+          "name": "Close Combat",
+          "type": "Fighting",
+          "category": "Physical",
+          "db": 8,
+          "ac": 3,
+          "range_kind": "Melee",
+          "freq": "Scene",
+          "effects_text": "Deals heavy damage but lowers defenses."
+        }
+      ],
+      "movement": {
+        "overland": 4,
+        "swim": 0,
+        "sky": 0,
+        "levitate": 0,
+        "burrow": 0,
+        "h_jump": 3,
+        "l_jump": 1,
+        "power": 5
+      }
+    }
+  ]
+}

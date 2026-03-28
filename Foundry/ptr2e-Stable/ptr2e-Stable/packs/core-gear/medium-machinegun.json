@@ -1,0 +1,271 @@
+{
+  "name": "Medium Machinegun",
+  "img": "systems/ptr2e/img/icons/weapon_icon.webp",
+  "type": "weapon",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "held",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "steel",
+      "power": 85,
+      "accuracy": 80,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 2,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "traits": [
+      "weapon",
+      "fling",
+      "firearm",
+      "autoload",
+      "readied",
+      "steel",
+      "reload-3",
+      "charge-pool-30",
+      "conventional",
+      "modern",
+      "sci-fi"
+    ],
+    "actions": [
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 50,
+        "accuracy": 90,
+        "free": true,
+        "traits": [
+          "missile",
+          "firearm"
+        ],
+        "name": "Medium Machinegun",
+        "slug": "medium-machinegun",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 34,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 125,
+        "accuracy": 85,
+        "free": true,
+        "traits": [
+          "missile",
+          "firearm"
+        ],
+        "name": "Medium Machinegun (Burst)",
+        "slug": "medium-machinegun-burst",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 34,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "variant": "medium-machinegun",
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 32,
+        "accuracy": 80,
+        "free": true,
+        "traits": [
+          "missile",
+          "10-strike",
+          "flinch-30",
+          "firearm"
+        ],
+        "name": "Medium Machinegun (Salvo)",
+        "slug": "medium-machinegun-salvo",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 51,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 10,
+          "delay": 3
+        },
+        "variant": "medium-machinegun",
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 105,
+        "accuracy": 60,
+        "free": true,
+        "traits": [
+          "missile",
+          "dash",
+          "firearm"
+        ],
+        "name": "Medium Machinegun (Hip Fire)",
+        "slug": "medium-machinegun-hip-fire",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "wide-line",
+          "distance": 11,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "variant": "medium-machinegun",
+        "predicate": []
+      }
+    ],
+    "weaponType": "untyped",
+    "weaponPp": 24,
+    "slug": "medium-machinegun",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "description": "<p>A machine gun (MG) is a fully automatic and rifled firearm designed for sustained direct fire with rifle cartridges.  Medium machine guns use full-sized rifle rounds and are designed to be used from fixed positions mounted on a tripod.</p>"
+  },
+  "_id": "XtRwBNGmJN12N2z9",
+  "effects": [
+    {
+      "name": "Medium Machinegun",
+      "type": "passive",
+      "_id": "hXbKdUQ7DsXMq1RE",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "{item|id}-attack-damage-flat",
+            "value": 33,
+            "predicate": [],
+            "label": "Medium Machinegun",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "flat-modifier",
+            "key": "medium-machinegun-burst-attack-damage-flat",
+            "value": 66,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "flat-modifier",
+            "key": "medium-machinegun-hip-fire-attack-damage-flat",
+            "value": 66,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-gear.Item.Ba3EyqpUePgGrfQk.ActiveEffect.uOxpw5kHcRtpv4pa",
+        "duplicateSource": null,
+        "coreVersion": "13.347",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1743892843449,
+        "modifiedTime": 1757631998546,
+        "lastModifiedBy": "UTlFSVhgfIUeTsoW",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "fwBg1GB1fMcgPklo"
+}

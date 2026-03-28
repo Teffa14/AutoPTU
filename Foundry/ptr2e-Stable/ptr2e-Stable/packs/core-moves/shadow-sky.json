@@ -1,0 +1,48 @@
+{
+  "name": "Shadow Sky",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-sky",
+    "actions": [
+      {
+        "slug": "shadow-sky",
+        "name": "Shadow Sky",
+        "type": "attack",
+        "traits": [
+          "weather"
+        ],
+        "range": {
+          "target": "field",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "shadow"
+        ],
+        "description": "<p>Effect: The weather becomes Shady for 3 rounds.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "AAR6aTeRkeBMhviz",
+  "effects": []
+}

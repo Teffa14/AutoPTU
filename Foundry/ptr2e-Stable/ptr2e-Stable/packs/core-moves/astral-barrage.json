@@ -1,0 +1,52 @@
+{
+  "name": "Astral Barrage",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "astral-barrage",
+    "actions": [
+      {
+        "slug": "astral-barrage",
+        "name": "Astral Barrage",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "blast-6"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 9
+        },
+        "category": "special",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "free": true,
+        "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "DtnkomrT8bTf6rJD",
+  "effects": []
+}

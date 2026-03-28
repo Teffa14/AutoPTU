@@ -1,0 +1,84 @@
+{
+  "name": "Hitmon-Class Sandwiches",
+  "type": "perk",
+  "folder": "zrVtKATNxzLNxTUZ",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.husbandry.mod}",
+          80
+        ]
+      }
+    ],
+    "cost": 5,
+    "description": "<p>The ultimate in exploration nutrition. The adventurer with Hitmon-Class Sandwiches for Lunch gains a passive +20 to all skill checks for the following day, and can gain an additional +25 to one skill check that day.</p>",
+    "actions": [
+      {
+        "name": "Hitmon-Class Sandwiches",
+        "slug": "hitmon-class-sandwiches",
+        "description": "<p>The ultimate in exploration nutrition. The adventurer with Hitmon-Class Sandwiches for Lunch gains a passive +20 to all skill checks for the following day, and can gain an additional +25 to one skill check that day.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "type": "camping",
+        "traits": [],
+        "range": {
+          "target": "object",
+          "unit": "m",
+          "distance": 0
+        },
+        "img": "icons/svg/explosion.svg",
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "hitmon-class-sandwiches",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": null,
+        "y": null,
+        "hidden": false,
+        "type": "normal",
+        "connected": [],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Chef.svg",
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "tint": null,
+          "scale": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "power",
+      "archetype": "chef"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "mHmtUUfzz3IXBye5",
+  "img": "systems/ptr2e/img/perk-icons/Chef.svg",
+  "effects": []
+}

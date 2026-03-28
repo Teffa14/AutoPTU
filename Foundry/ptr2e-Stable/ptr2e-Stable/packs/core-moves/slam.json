@@ -1,0 +1,54 @@
+{
+  "name": "Slam",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "slam",
+    "actions": [
+      {
+        "slug": "slam",
+        "name": "Slam",
+        "type": "attack",
+        "traits": [
+          "crushing",
+          "dash",
+          "contact",
+          "hammer",
+          "tail"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 75,
+        "types": [
+          "normal"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "McrAWKN452ACD4pD",
+  "effects": []
+}

@@ -1,0 +1,48 @@
+{
+  "name": "Snowscape",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "snowscape",
+    "actions": [
+      {
+        "slug": "snowscape",
+        "name": "Snowscape",
+        "type": "attack",
+        "traits": [
+          "weather"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "types": [
+          "ice"
+        ],
+        "description": "<p>Effect: The Weather becomes Snowy for 3 rounds.</p>",
+        "img": "systems/ptr2e/img/svg/ice_icon.svg",
+        "summon": "Compendium.ptr2e.core-summons.8EVtue4CUOjddZIP",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "KQ8pNG4ebggQwd8k",
+  "effects": []
+}

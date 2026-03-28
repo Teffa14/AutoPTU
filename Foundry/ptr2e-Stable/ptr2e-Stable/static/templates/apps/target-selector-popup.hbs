@@ -1,0 +1,19 @@
+<article>
+    {{#if hint}}
+    <p class="m-0 mb-1">{{localize hint}}</p>
+    {{/if}}
+    <fieldset class="available-targets">
+      <legend>{{localize "PTR2E.Dialog.TargetSelector.Target"}}</legend>
+      {{#each targets as |target|}}
+        <fieldset data-target="{{target.uuid}}" data-index="{{@index}}">
+          <legend>{{target.name}}</legend>
+          {{#each target.results as |result|}}
+            <div class="target" data-tooltip-direction="UP" data-index="{{@index}}" data-uuid="{{target.uuid}}" data-tooltip="{{target.name}}" data-type="{{result.type}}">
+              <img class="target-icon icon" src="{{target.img}}"/>
+              <span class="target-name">{{localize (concat "PTR2E.Dialog.TargetSelector.Type." result.type) name=result.name}}</span>
+            </div>
+          {{/each}}
+        </fieldset>
+      {{/each}}
+    </fieldset>
+</article>

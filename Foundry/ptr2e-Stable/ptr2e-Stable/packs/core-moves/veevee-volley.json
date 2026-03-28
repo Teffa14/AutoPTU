@@ -1,0 +1,47 @@
+{
+  "name": "Veevee Volley",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "veevee-volley",
+    "actions": [
+      {
+        "slug": "veevee-volley",
+        "name": "Veevee Volley",
+        "type": "attack",
+        "traits": [
+          "mascot",
+          "dash",
+          "contact",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 50,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: For every active ally in the user's own party, Veevee Volkey's Power increases by +10, up to a maximum of 100 Power.</p>",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg"
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "QKxWcfVXzQrKvduM",
+  "effects": []
+}

@@ -1,0 +1,408 @@
+{
+  "name": "eternatus",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "poison",
+      "dragon"
+    ],
+    "stats": {
+      "hp": 140,
+      "atk": 85,
+      "def": 95,
+      "spa": 145,
+      "spd": 95,
+      "spe": 130
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "agility",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "confuse-ray",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "dragon-tail",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "poison-tail",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "toxic",
+          "gen": "scarlet-violet",
+          "level": 8
+        },
+        {
+          "name": "venoshock",
+          "gen": "scarlet-violet",
+          "level": 16
+        },
+        {
+          "name": "dragon-dance",
+          "gen": "scarlet-violet",
+          "level": 24
+        },
+        {
+          "name": "cross-poison",
+          "gen": "scarlet-violet",
+          "level": 32
+        },
+        {
+          "name": "dragon-pulse",
+          "gen": "scarlet-violet",
+          "level": 40
+        },
+        {
+          "name": "flamethrower",
+          "gen": "scarlet-violet",
+          "level": 48
+        },
+        {
+          "name": "dynamax-cannon",
+          "gen": "scarlet-violet",
+          "level": 56
+        },
+        {
+          "name": "cosmic-power",
+          "gen": "scarlet-violet",
+          "level": 64
+        },
+        {
+          "name": "recover",
+          "gen": "scarlet-violet",
+          "level": 72
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet",
+          "level": 80
+        },
+        {
+          "name": "eternabeam",
+          "gen": "sword-shield",
+          "level": 88
+        },
+        {
+          "name": "outrage",
+          "gen": "scarlet-violet",
+          "level": 88
+        }
+      ],
+      "tutor": [
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "brutal-swing",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "draco-meteor",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-spin",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fly",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gravity",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "meteor-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mystical-fire",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "screech",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic-spikes",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "venom-drench",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 20,
+      "weight": 950,
+      "category": "colossal",
+      "type": "length"
+    },
+    "captureRate": 2,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "eternatus",
+      "details": null,
+      "evolutions": [],
+      "uuid": null,
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 890,
+    "traits": [
+      "pokemon",
+      "legendary",
+      "glow-3",
+      "hostile-dynamax",
+      "venomous",
+      "hover",
+      "forme-change",
+      "fully-evolved",
+      "jump-1"
+    ],
+    "diet": [
+      "nullivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "dynamogenesis"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "pressure"
+        },
+        {
+          "slug": "ray-blaster"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "beast-boost"
+        },
+        {
+          "slug": "corrosion"
+        }
+      ],
+      "master": [
+        {
+          "slug": "merciless"
+        },
+        {
+          "slug": "power-spot"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 20
+      },
+      {
+        "type": "overland",
+        "value": 13
+      },
+      {
+        "type": "swim",
+        "value": 13
+      }
+    ],
+    "skills": [
+      {
+        "slug": "intimidate",
+        "value": 90,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "legends",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 80,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "eternatus",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "f8tTAq9iWO07Z0Qi",
+  "effects": []
+}

@@ -1,0 +1,249 @@
+{
+  "name": "unown",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 201,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.5,
+      "weight": 5
+    },
+    "diet": [
+      "nullivore"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 8
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "hover",
+      "darkvision-15",
+      "unown-choir",
+      "aura-user",
+      "telepath",
+      "telekinetic-8",
+      "glow-3",
+      "fully-evolved"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "runes-of-power"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "power-leech"
+        },
+        {
+          "slug": "potent-might"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "feedback"
+        },
+        {
+          "slug": "magic-guard"
+        }
+      ],
+      "master": [
+        {
+          "slug": "mystic-power"
+        },
+        {
+          "slug": "magic-bounce"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "archaeology",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "aura-sense",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "dragon",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fairy",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ghost",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "history",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "legendary",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "paradox",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychic",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spiritual",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "unown",
+    "stats": {
+      "hp": 48,
+      "atk": 72,
+      "def": 48,
+      "spa": 72,
+      "spd": 48,
+      "spe": 48
+    },
+    "types": [
+      "psychic"
+    ],
+    "captureRate": 191,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "evolutions": {
+      "name": "unown",
+      "details": null,
+      "evolutions": [],
+      "uuid": null,
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "hidden-power",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ],
+      "tutor": []
+    },
+    "habitats": [
+      "ruin"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Johto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "genderRatio": -1
+  },
+  "_id": "xLNQQNY9sPyryF47",
+  "effects": []
+}

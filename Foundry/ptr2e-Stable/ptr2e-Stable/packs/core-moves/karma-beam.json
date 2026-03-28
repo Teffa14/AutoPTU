@@ -1,0 +1,77 @@
+{
+  "name": "Karma Beam",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "karma-beam",
+    "actions": [
+      {
+        "slug": "karma-beam",
+        "name": "Karma Beam",
+        "type": "attack",
+        "traits": [
+          "ray"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "special",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>Effect: If the user has been damaged by super effective damage since its last Activation, this Attack's Power doubles.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "karma-beam-retribution",
+        "name": "Karma Beam (Retribution)",
+        "type": "attack",
+        "traits": [
+          "ray"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6,
+          "trigger": "<p>The user has been damaged by super effective damage since the end of its last Activation.</p>"
+        },
+        "category": "special",
+        "power": 140,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>Trigger: The user has been damaged by super effective damage since the end of its last Activation.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "JhjIgIhWRq7FZCnK",
+  "effects": []
+}

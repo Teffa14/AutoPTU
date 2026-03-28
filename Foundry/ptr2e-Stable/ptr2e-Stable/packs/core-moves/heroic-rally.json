@@ -1,0 +1,46 @@
+{
+  "name": "Heroic Rally",
+  "type": "move",
+  "_id": "hott3x4xss13fP3g",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "heroic-rally",
+    "actions": [
+      {
+        "name": "Heroic Rally",
+        "slug": "heroic-rally",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+        "traits": [],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "types": [
+          "fighting"
+        ],
+        "category": "status",
+        "description": "<p>Effect: The user gains @Affliction[boosted] X and @Affliction[resolved] X, where X equals the number of allied creatures that have @Affliction[fainted] during this battle.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

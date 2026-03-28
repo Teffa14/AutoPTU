@@ -1,0 +1,116 @@
+{
+  "name": "Magma Storm",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "magma-storm",
+    "actions": [
+      {
+        "slug": "magma-storm",
+        "name": "Magma Storm",
+        "type": "attack",
+        "traits": [
+          "blast-2",
+          "legendary"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 75,
+        "types": [
+          "fire"
+        ],
+        "description": "<p>Effect: On hit, all valid targets gain @Affliction[bound 7] and @Affliction[burn 7]. While @Affliction[bound], they also suffer from @Affliction[splinter] and @Affliction[bleed]. This @Affliction[bound] effect can be removed with a Difficut Movement-related Skill, Acrobatics, Geology, or Survival Skill Check taken as a Complex Action. EFFECT NEEDS REAUTOMATED.</p>",
+        "img": "systems/ptr2e/img/svg/fire_icon.svg"
+      }
+    ],
+    "grade": "B",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "8Orxtt3ZLifqWqde",
+  "effects": [
+    {
+      "name": "Magma Storm",
+      "type": "passive",
+      "_id": "WoVwRx9iOImd6Ozf",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "magma-storm-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.boundconditiitem",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "label": "Bound",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "magma-storm-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.burnconditioitem",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "label": "Burn",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.0",
+        "createdTime": 1736712174003,
+        "modifiedTime": 1736712257134,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

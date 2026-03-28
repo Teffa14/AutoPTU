@@ -1,0 +1,116 @@
+{
+  "name": "Rending Strip",
+  "type": "move",
+  "_id": "16e0RETsjFtwRwKi",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "rending-strip",
+    "actions": [
+      {
+        "name": "Rending Strip",
+        "slug": "rending-strip",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "types": [
+          "rock"
+        ],
+        "category": "physical",
+        "power": 70,
+        "accuracy": 100,
+        "description": "<p>Effect: On hit, the target has a 10% chance of gaining @Affliction[splinter] 5. This attack is super effective against the Steel Type.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": [
+    {
+      "name": "Rending Strip",
+      "type": "passive",
+      "_id": "dNjqR7HW3EXNdWeY",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "rending-strip-attack-effectiveness-stage",
+            "value": 2,
+            "predicate": [
+              "target:trait:steel"
+            ],
+            "label": "Target: Steel",
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "rending-strip-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.splinterconditem",
+            "predicate": [],
+            "chance": 10,
+            "isFixedChance": false,
+            "affects": "target",
+            "alterations": [],
+            "dontMerge": false,
+            "label": "Splinter Chance",
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.3.8.beta",
+        "createdTime": 1752324592706,
+        "modifiedTime": 1752324807340,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS"
+      }
+    }
+  ]
+}

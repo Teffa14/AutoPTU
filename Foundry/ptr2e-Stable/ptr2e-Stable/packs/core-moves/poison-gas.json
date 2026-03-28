@@ -1,0 +1,43 @@
+{
+  "name": "Poison Gas",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "slug": "poison-gas",
+    "actions": [
+      {
+        "slug": "poison-gas",
+        "name": "Poison Gas",
+        "type": "attack",
+        "traits": [
+          "hazard",
+          "blast-2"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "status",
+        "types": [
+          "poison"
+        ],
+        "description": "<p>Effect: An Obscurring Cloud is created in the [Blast X] area for 5 rounds. Any creature that starts their Activation in or enters a space containing the Hazard gains @Affliction[poison] 3.</p>",
+        "img": "systems/ptr2e/img/svg/poison_icon.svg"
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "1uSmoHF5veiMfJQI",
+  "effects": []
+}

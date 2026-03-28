@@ -1,0 +1,76 @@
+{
+  "name": "Infernal Parade",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "infernal-parade",
+    "actions": [
+      {
+        "slug": "infernal-parade",
+        "name": "Infernal Parade",
+        "type": "attack",
+        "traits": [
+          "blast-1"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "special",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>Effect: On hit, all valid targets have a 30% chance of gaining @Affliction[burn] 5.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "slug": "infernal-parade-alt",
+        "name": "Infernal Parade (Alt)",
+        "type": "attack",
+        "traits": [
+          "blast-1"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8,
+          "trigger": "A target possesses a [Major Affliction]."
+        },
+        "category": "special",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>A target possesses a [Major Affliction].</p><p>Effect: On hit, the valid target(s) have a 30% chance of gaining @Affliction[burn] 5.</p>",
+        "variant": "infernal-parade",
+        "free": true,
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "grade": "A",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "rDgo75tKgaNAcwVY",
+  "effects": []
+}

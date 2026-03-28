@@ -1,0 +1,50 @@
+{
+  "name": "Hydrolysis",
+  "type": "move",
+  "_id": "MZs1e84dHCiNg6Dt",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "hydrolysis",
+    "actions": [
+      {
+        "name": "Hydrolysis",
+        "slug": "hydrolysis",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "drain-1-2"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "types": [
+          "water"
+        ],
+        "category": "special",
+        "power": 70,
+        "accuracy": 100,
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

@@ -1,0 +1,156 @@
+{
+  "folder": "c29hnIAtXgwB7FeY",
+  "name": "Punishment Ward",
+  "type": "perk",
+  "_id": "Uylv9mn44TF6SnfU",
+  "img": "systems/ptr2e/img/perk-icons/Tactician.svg",
+  "system": {
+    "actions": [],
+    "slug": "punishment-ward",
+    "description": "<p>Connection - Bide. Connection - Karmic Bide.</p>",
+    "traits": [],
+    "prerequisites": [
+      "item:move:bide"
+    ],
+    "cost": 3,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "reflection",
+          "ready-for-anything"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Tactician.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 92,
+        "y": 96,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "resilience",
+      "archetype": "tank"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "effects": [
+    {
+      "name": "Punishment Ward",
+      "type": "passive",
+      "_id": "GphBDlZViLi47BWK",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.Do4KJ9riUaghCF4B",
+            "predicate": [],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "allowDuplicate": true,
+            "track": false,
+            "replaceSelf": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            }
+          },
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.Co4KJ9riUaghDK9Z",
+            "predicate": [],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "allowDuplicate": true,
+            "track": false,
+            "replaceSelf": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            }
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.5",
+        "createdTime": 1737391430809,
+        "modifiedTime": 1737391507930,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

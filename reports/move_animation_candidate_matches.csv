@@ -1,0 +1,509 @@
+move_name,type,category,candidate_1,score_1,candidate_2,score_2,candidate_3,score_3
+Absorb,Grass,Special,PRAS- Absorption.png,0.625,PRAS- Orbs.png,0.6,PRAS- Absorption2.png,0.5882
+Accelerock,Rock,Physical,PRAS- Rock.png,0.7914,PRAS- Stealth Rock.png,0.5714,PRAS- Electric.png,0.5556
+Acid,Poison,Special,GEN8- Apple Acid.png,0.9154,PRAS- Gastro Acid.png,0.8714,PRAS- Acid Downpour.png,0.85
+Acid Armor,Poison,Status,PRAS- Acid Downpour.png,0.5562,PRAS- Clear Smog.png,0.5556,Custom_Sandsear Storm.png,0.5455
+Acid Spray,Poison,Special,PRAS- Acid Downpour.png,0.6514,PRAS- Acid Downpour BG1 - Copy.png,0.58,PRAS- Acid Downpour BG1.png,0.58
+Acrobatics,Flying,Physical,PRAS- Aeroblast.png,0.6316,Custom_Chloroblast.png,0.5714,PRAS- Magic Coat.png,0.5263
+Acupressure,Normal,Status,PRAS- Fissure.png,0.5556,PRAS- Present.png,0.5556,PRAS- Sacred Sword.png,0.5455
+After You,Normal,Status,GEN8- Eat Berry.png,0.625,GEN8- Fiery.png,0.6154,PRAS- Water.png,0.6154
+Agility,Psychic,Status,PRAS- Glitch BG.png,0.6154,PRAS- Glitch2.png,0.5714,PRAS- Gravity BG.png,0.5714
+Ally Switch,Psychic,Status,PRAS- Swift.png,0.7273,PRAS- Glitch BG.png,0.6667,PRAS- Glitch2.png,0.6154
+Ancient Power,Rock,Special,Ancient-PowerFilesheet.png,1.1973,PRAS- Hidden Power.png,0.8957,PRAS- Earth Power.png,0.8364
+Aqua Ring,Water,Status,PRAS- Burning BG.png,0.6667,Gen9- Aqua_Cutter.png,0.6356,PRAS- Aqua Jet.png,0.6133
+Aqua Tail,Water,Physical,PRAS- Dragon Tail.png,0.7556,PRAS- Aqua Jet.png,0.7467,Gen9- Aqua Step.png,0.705
+Arcane Fury,Normal,Special,PRAS- Hyper Space Fury.png,0.6633,face and eye.png,0.6,PRAS- Confuse Ray.png,0.6
+Arcane Storm,Normal,Special,PRAS- Magma Storm.png,0.7467,PRAS- Sandstorm.png,0.7,Custom_Springtide Storm.png,0.6954
+Arm Thrust,Fighting,Physical,PRAS- Aromatherapy FG.png,0.5714,PRAS- Aromatherapy.png,0.5714,Earth1.png,0.5333
+Aromatic Mist,Fairy,Status,PRAS- Mist FG.png,0.8,PRAS- Mist.png,0.8,PRAS- Aeroblast.png,0.5714
+Assist,Normal,Status,PRAS- Plasma Fist BG.png,0.625,PRAS- Plasma Fist.png,0.625,PRAS- Mist FG.png,0.6
+Assurance,Dark,Physical,PRAS- Fissure.png,0.625,GEN8- False Surrender.png,0.6087,PRAS- Quiver Dance.png,0.6
+Astonish,Ghost,Physical,PRAS- Strong Winds.png,0.6316,PRAS- Baton Pass.png,0.5882,PRAS- Absorption.png,0.5556
+Attack of Opportunity,,--,PRAS- Tri Attack.png,0.5086,PRAS- Sand Attack.png,0.4938,Sand-Attack.png,0.4938
+Attack Order,Bug,Physical,PRAS- Tri Attack.png,0.68,PRAS- Sand Attack.png,0.6514,Sand-Attack.png,0.6514
+Aurora Beam,Ice,Special,PRAS- Aurora BG.png,1.05,Ultra Beam.png,0.9368,GEN8- Meteor Beam.png,0.8
+Avalanche,Ice,Physical,Aerial Ace.png,0.6667,GEN8- Glacial Lance.png,0.6667,PRAS- Petal Dance.png,0.6316
+Backswing,Normal,Physical,PRAS- Brutal Swing FG Opp.png,0.7,PRAS- Brutal Swing FG.png,0.7,PRAS- Brutal Swing.png,0.7
+Bane,Normal,Special,PRAS- Brine.png,0.6667,PRAS- Amnesia.png,0.5455,PRAS- Barrier.png,0.5455
+Baneful Bunker,Poison,Status,GEN8- DragonEnergy.png,0.48,PRAS- Brave Bird.png,0.4545,PRAS- Needle Arm.png,0.4545
+Barb Barrage,Poison,Physical,GEN8- AstralBarrage.png,0.75,GEN8- AstralBarrage_bg.png,0.6923,PRAS- Barrier.png,0.5556
+Barrage,Normal,Physical,GEN8- AstralBarrage.png,0.92,GEN8- AstralBarrage_bg.png,0.8564,PRAS- Barrier.png,0.7143
+Bash!,Normal,Physical,GEN8- Double Iron Bash.png,0.7444,GEN8- Behemoth Bash Sword.png,0.681,PRAS- Flash FG.png,0.6667
+Beak Blast,Flying,Physical,fire blast.png,0.7467,PRAS- Techno Blast.png,0.68,PRAS- Aeroblast.png,0.6667
+Beat Up,Dark,Physical,PRAS- Bulk Up.png,0.58,Custom_Order Up.png,0.5415,PRAS- Shore Up.png,0.5415
+Behemoth Bash,Steel,Physical,GEN8- Behemoth Bash Sword.png,1.2576,emo.png,0.62,GEN8- Double Iron Bash.png,0.6185
+Behemoth Blade,Steel,Physical,GEN8- Behemoth Bash Sword.png,0.8633,Gen9- Bitter Blade.png,0.6633,GEN8- Solar Blade.png,0.6017
+Belch,Poison,Special,PRAS- Black BG.png,0.6,PRAS- Glitch BG.png,0.5455,PRAS- Glitch2.png,0.5
+Belly Drum,Normal,Status,PRAS- Hydro Pump.png,0.5556,GEN8- Drum beating.png,0.48,PRAS- Heal Bell.png,0.4706
+Bestow,Normal,Status,estranho.png,0.5714,PRAS- Absorption.png,0.5,PRAS- Earth Power.png,0.5
+Bind,Normal,Static,PRAS- Bide.png,0.75,PRAS- Brine.png,0.6667,Wind1.png,0.6667
+Bitter Malice,Ghost,Special,Gen9- Bitter Blade.png,0.7757,GEN8- Skitter Smack fg.png,0.6667,PRAS- Ice BG.png,0.62
+Blast Burn,Fire,Special,fire blast.png,0.6356,PRAS- Ice Burn BG.png,0.58,PRAS- Ice Burn.png,0.58
+Bleakwind Storm,Flying,Special,PRAS- Sandstorm.png,0.6957,Custom_Wildbolt Storm.png,0.6726,PRAS- sandstorm2.png,0.6667
+Bleed!,Normal,Physical,leer.png,0.6667,PRAS- Leer.png,0.6667,PRAS- Speed BG.png,0.6
+Blind,,Status,PRAS- Bide.png,0.6667,PRAS- Blizzard BG.png,0.6154,PRAS- Blizzard FG.png,0.6154
+Block,Normal,Status,PRAS- Mat Block.png,1.0692,PRAS- Black BG.png,0.8,PRAS- Lock On.png,0.7273
+Blue Flare,Fire,Special,Custom_Temper Flare.png,0.68,PRAS- Fusion Flare.png,0.68,Gen 9 - Temper Flare.png,0.58
+Body Press,Fighting,Physical,PRAS- Baton Pass.png,0.5556,PRAS- Powders.png,0.5,PRAS- Present.png,0.5
+Body Slam,Normal,Physical,PRAS- Mud Slap.png,0.5333,Gen9- Blood Moon.png,0.4706,PRAS- Bloom Doom.png,0.4706
+Bolt Beak,Electric,Physical,PRAS- Black BG.png,0.6154,Ultra Beam.png,0.5882,PRAS- Frost Breath.png,0.5263
+Bolt Strike,Electric,Physical,PRAS- Strike.png,1.05,GEN8- Sunsteel Strike.png,0.6633,PRAS- Psystrike BG.png,0.6316
+Bon Mot,,Status,PRAS- Roost.png,0.5455,PRAS- Bloom Doom.png,0.5333,PRAS- BoneMerang.png,0.5
+Bone Club,Ground,Physical,PRAS- Hone Claws.png,0.5882,PRAS- Ion Deluge FG.png,0.5882,PRAS- Shadow Bone BG.png,0.5244
+Bone Rush,Ground,Physical,Gen 9 - Glaive Rush.png,0.6255,poi.hear.mus.png,0.5556,PRAS- BoneMerang.png,0.5556
+Boomburst,Normal,Special,PRAS- Metal Burst BG.png,0.6316,PRAS- Metal Burst.png,0.6316,PRAS- Roost.png,0.5714
+Bounce,Flying,Physical,punches.png,0.6154,PRAS- Brine.png,0.5455,PRAS- Sound.png,0.5455
+Branch Poke,Grass,Physical,estranho.png,0.5556,PRAS- Black BG.png,0.5333,PRAS- Brine.png,0.5333
+Breaking Swipe,Dragon,Physical,PRAS- False Swipe.png,0.6017,PRAS- Healing Wish.png,0.5833,PRAS- King's Shield.png,0.5833
+Brick Break,Fighting,Physical,PRAS- Brine.png,0.5333,PRAS- Trick.png,0.5333,PRAS- Trick Room BG.png,0.5263
+Bubble,Water,Special,PRAS- Bug Bite.png,0.6154,PRAS- Burning Blue BG.png,0.5882,PRAS- Bulk Up.png,0.5
+Bubblebeam,Water,Special,Ultra Beam.png,0.6316,PRAS- Hyper Beam BG.png,0.5263,PRAS- Hyper Beam.png,0.5263
+Bulldoze,Ground,Physical,PRAS- Guillotine BG.png,0.5556,PRAS- Guillotine.png,0.5556,Custom_Psyblade.png,0.5
+Bullet Punch,Steel,Physical,GEN8- Elemental Punch.png,0.72,PRAS- Elemental Punch.png,0.72,PRAS- Focus Punch BG.png,0.6514
+Bullet Seed,Grass,Physical,leech-seed.png,0.7116,PRAS- Leech Seed.png,0.7116,PRAS- PulseEvo BG.png,0.5556
+Bullseye,Normal,Physical,PRAS- PulseEvo BG.png,0.625,PRAS- Baby Doll Eyes BG.png,0.6,PRAS- Baby Doll Eyes.png,0.6
+Burn Up,Fire,Special,PRAS- Bulk Up.png,0.7467,PRAS- Ice Burn BG.png,0.6954,PRAS- Ice Burn.png,0.6954
+Burning Jealousy,Fire,Special,PRAS- Burning BG.png,0.9364,PRAS- Burning Blue BG.png,0.6954,PRAS- Brine.png,0.5
+Calm Mind,Psychic,Status,PRAS- Tailwind.png,0.625,PRAS- Scald.png,0.6154,PRAS- Mind Blown BG.png,0.5506
+Camouflage,Normal,Status,PRAS- Outrage BG.png,0.5882,PRAS- Clear Smog.png,0.5263,PRAS- Scary Face.png,0.5263
+Captivate,Normal,Status,PRAS- Glaciate BG.png,0.5882,PRAS- Glaciate.png,0.5882,PRAS- Spite.png,0.5714
+Ceaseless Edge,Dark,Physical,PRAS- Crafty Shield.png,0.48,Ancient-PowerFilesheet.png,0.4706,GEN8- Scale Shot.png,0.4545
+Charge,Electric,Status,PRAS- Charge Beam.png,1.1,PRAS- Discharge.png,1.02,PRAS- Chatter.png,0.6154
+Charm,Fairy,Status,PRAS- Charge Beam.png,0.6667,PRAS- Chatter.png,0.6667,PRAS- Clear Smog.png,0.5714
+Cheap Shot,Normal,Physical,GEN8- Scale Shot.png,0.7467,PRAS- Anchor Shot.png,0.7116,GEN8- Tar Shot.png,0.705
+Chip Away,Normal,Physical,PRAS- Pay Day.png,0.5714,PRAS- Heat Wave.png,0.5,PRAS- Crush Grip.png,0.4706
+Circle Throw,Fighting,Physical,PRAS- Electroweb.png,0.5714,PRAS- Icicle Spear.png,0.5455,Custom_Chilly Reception.png,0.5385
+Clamp,Water,Static,PRAS- Clear Smog.png,0.5714,Flames.png,0.5455,PRAS- Mud Slap.png,0.5
+Clangorous Soul,Dragon,Status,PRAS- Clangorous Soulblaze BG.png,1.1985,PRAS- Clanging Scales.png,0.5,Custom_Chloroblast.png,0.48
+Close Combat,Fighting,Physical,PRAS- Electro Ball.png,0.5455,PRAS- Techno Blast.png,0.5455,GEN8- Decorate.png,0.5263
+Coaching,Fighting,Status,PRAS- Floral Healing.png,0.5714,PRAS- Coil.png,0.5,PRAS- Wrapping.png,0.5
+Comet Punch,Normal,Physical,GEN8- Elemental Punch.png,0.7467,PRAS- Elemental Punch.png,0.7467,PRAS- Focus Punch BG.png,0.68
+Cone of Force,Normal,Special,GEN8- Core Enforcer.png,0.6957,PRAS- Force Palm.png,0.58,PRAS- Cotton Spore.png,0.5455
+Confide,Normal,Status,PRAS- Confusion BG.png,0.625,PRAS- Confuse Ray.png,0.5882,PRAS- Dragon Fire BG.png,0.5882
+Conversion2,Normal,Status,PRAS- Conversion.png,1.2224,PRAS- Confusion BG.png,0.7,poison2.png,0.5556
+Copycat,Normal,Status,PRAS- Lucky Chant.png,0.5882,fly copy.png,0.5714,GEN8- Decorate.png,0.5333
+Corrosive Gas,Poison,Status,PRAS- Corrosive BG.png,1.2071,PRAS- Corkscrew Crash.png,0.5385,Custom_Chloroblast.png,0.5217
+Cosmic Power,Psychic,Status,PRAS- High Horse Power.png,0.64,PRAS- Hidden Power.png,0.6255,PRAS- Powder.png,0.5882
+Counter,Fighting,Physical,PRAS- Air Cutter.png,0.625,PRAS- Constrict.png,0.625,Gen9- Aqua_Cutter.png,0.5882
+Court Change,Normal,Status,PRAS- Outrage BG.png,0.6667,PRAS- Hurricane FG.png,0.6,scratchbattle.png,0.5833
+Cross Chop,Fighting,Physical,PRAS- Cross Poison.png,0.68,PRAS- Crush Grip.png,0.5556,PRAS- Rock Smash.png,0.5556
+Crush Claw,Normal,Physical,PRAS- Shadow Claw.png,0.7116,Scratch + Shadow Claw.png,0.6954,PRAS- Crush Grip.png,0.6356
+Cut,Normal,Physical,PRAS- Psycho Cut.png,0.8,Psycho Cut.png,0.8,PRAS- Air Cutter.png,0.72
+Dark Void [SM],Dark,Status,PRAS- Dark Void BG.png,1.3189,PRAS- Dark void.png,1.3189,PRAS- Dark Pulse.png,0.6063
+Darkest Lariat,Dark,Physical,PRAS- Sparkling Aria.png,0.6154,GEN8- No Retreat.png,0.5455,PRAS- Amnesia.png,0.5
+Deadly Strike,Normal,Physical,PRAS- Strike.png,0.9667,GEN8- Sunsteel Strike.png,0.6954,PRAS- Psystrike BG.png,0.6667
+Defend Order,Bug,Status,Gen 9 - Order Up.png,0.7164,Custom_Order Up.png,0.6356,GEN8- Core Enforcer.png,0.6087
+Defense Curl,Normal,Status,EerieSpell.png,0.4762,GEN8- EerieSpell.png,0.4762,PRAS- Dream Eater BG.png,0.4762
+Destiny Bond,Ghost,Status,estranho.png,0.5263,PRAS- Eruption.png,0.5263,PRAS- Devastating Drake.png,0.5185
+Diamond Storm,Rock,Physical,PRAS- Sandstorm.png,0.7619,PRAS- sandstorm2.png,0.7273,Custom_Sandsear Storm.png,0.72
+Dire Claw,Poison,Physical,dragon claw.png,0.7467,PRAS- Dragon Claw.png,0.7467,PRAS- Shadow Claw.png,0.6356
+Dirty Trick,,Status,PRAS- Trick.png,0.9667,GEN9- Flower Trick.png,0.6514,PRAS- Trick Room BG.png,0.6063
+Disarm,,Status,PRAS- Discharge.png,0.6667,PRAS- Disable.png,0.6154,PRAS- Needle Arm.png,0.5333
+Disarming Voice,Fairy,Special,PRAS- Discharge.png,0.6087,PRAS- Ice BG.png,0.5729,PRAS- Ice.png,0.5729
+Disengage,,--,PRAS- Discharge.png,0.6667,GEN8- Thundercage.png,0.5,PRAS- Dig.png,0.5
+Dizzy Punch,Normal,Physical,PRAS- Drain Punch.png,0.78,PRAS- Shadow Punch.png,0.6514,punches.png,0.5882
+Double Hit,Normal,Physical,GEN8- Double Iron Bash.png,0.6887,PRAS- Odor Sleuth.png,0.5263,Custom_Use Item.png,0.5
+Double Kick,Fighting,Physical,PRAS- Blaze Kick.png,0.8168,GEN8- Double Iron Bash.png,0.6633,GEN8- Thunderous kick.png,0.6633
+Double Slap,Normal,Physical,PRAS- Mud Slap.png,0.6682,GEN8- Double Iron Bash.png,0.6633,PRAS- Tail slap.png,0.6356
+Double Swipe,Normal,Physical,PRAS- False Swipe.png,0.7467,GEN8- Double Iron Bash.png,0.64,GEN8- Doom Desire.png,0.5714
+Double Team,Normal,Status,GEN8- Double Iron Bash.png,0.6633,Custom_Use Item.png,0.5882,GEN8- No Retreat.png,0.5263
+Double-Edge,Normal,Physical,GEN8- Double Iron Bash.png,0.58,PRAS- Grudge.png,0.5,GEN8- Drum beating.png,0.4762
+Draco Meteor,Dragon,Special,PRAS- Dream Eater BG.png,0.7619,PRAS- Dream Eater.png,0.7619,GEN8- Meteor Beam.png,0.6514
+Dragon Hammer,Dragon,Physical,GEN8- Dragon Darts.png,0.7757,PRAS- Dragon Dance.png,0.7757,PRAS- Dragon Ascent BG.png,0.7467
+Dragon Rage,Dragon,Special,PRAS- Dragon Fire BG.png,0.88,PRAS- Dragon Dance.png,0.8419,PRAS- Dragon Ascent BG.png,0.8073
+Dragon Rush,Dragon,Physical,GEN8- Dragon Darts.png,0.8419,PRAS- Dragon Pulse.png,0.8419,PRAS- Dragon Fire BG.png,0.78
+Drill Peck,Flying,Physical,PRAS- Horn Drill BG.png,0.6356,PRAS- Trick.png,0.5714,PRAS- Drain Punch.png,0.5263
+Drill Run,Ground,Physical,PRAS- Horn Drill BG.png,0.6682,GEN8- PrimalGroudon BG.png,0.5714,PRAS- Drain Punch.png,0.5556
+Dual Chop,Dragon,Physical,fly copy.png,0.5333,GEN8- Scale Shot.png,0.4706,PRAS- Surf FG Opp - Copie.png,0.4706
+Dual Wingbeat,Flying,Physical,PRAS- Dazzling Gleam.png,0.64,PRAS- Brutal Swing FG Opp.png,0.6087,PRAS- Brutal Swing FG.png,0.6087
+Dynamax Cannon,Dragon,Special,PRAS- Flash Cannon.png,0.6633,PRAS- Hydro Cannon BG.png,0.6633,PRAS- Hydro cannon.png,0.6633
+Dynamic Punch,Fighting,Physical,PRAS- Drain Punch.png,0.7164,PRAS- Focus Punch BG.png,0.6255,PRAS- Focus Punch Opp BG.png,0.6255
+Echoed Voice,Normal,Special,PRAS- Ice BG.png,0.6486,PRAS- Ice.png,0.6486,PRAS- Tectonic Rage BG.png,0.5217
+Eerie Impulse,Electric,Status,PRAS- Origin Pulse BG.png,0.6957,PRAS- Origin Pulse FG.png,0.6957,PRAS- Origin Pulse.png,0.6957
+Electrify,Electric,Status,PRAS- Electric.png,0.8235,electric1.png,0.7778,electric2.png,0.7778
+Embargo,Dark,Status,emo.png,0.6,PRAS- Searing Shot BG.png,0.5556,emo2.png,0.5455
+Ember,Fire,Special,leer.png,0.6667,PRAS- Leer.png,0.6667,GEN8- Eat Berry.png,0.6154
+Endeavor,Normal,Physical,PRAS- Needle Arm.png,0.5882,Custom_Sandsear Storm.png,0.5714,PRAS- Encore.png,0.5714
+Endure,Normal,Status,PRAS- Encore.png,0.6667,PRAS- Venom Drench.png,0.5882,PRAS- Curse BG.png,0.5455
+Energy Blast,Normal,Special,PRAS- Energy Ball.png,0.8419,PRAS- Techno Blast.png,0.7164,PRAS- Aeroblast.png,0.7
+Energy Sphere,Normal,Special,PRAS- Aura Sphere.png,0.7164,PRAS- Energy Ball.png,0.6255,PRAS- Focus Energy.png,0.6017
+Energy Vortex,Normal,Special,PRAS- Energy Ball.png,0.6255,PRAS- Focus Energy.png,0.6017,PRAS- Encore.png,0.5556
+Entrainment,Normal,Status,PRAS- Torment.png,0.6667,GEN8- Tea Time.png,0.5556,PRAS- Ingrain.png,0.5556
+Esper Wing,Psychic,Special,PRAS- Silver Wind BG.png,0.6316,PRAS- Silver Wind.png,0.6316,PRAS- Fire Spin.png,0.5882
+Eternabeam,Dragon,Special,GEN8- Meteor Beam.png,0.8,Ultra Beam.png,0.7368,Gen9- TwinBeam.png,0.6667
+EW Adept,--,--,PRAS- Swap.png,0.5455,icewater.png,0.5333,PRAS- Heat Wave.png,0.5333
+EW Expert,--,--,PRAS- Teleport.png,0.625,PRAS- Weather.png,0.5333,weather.png,0.5333
+Expanding Force,Psychic,Special,GEN8- Core Enforcer.png,0.5385,PRAS- Force Palm.png,0.5148,Gen9- Raging Bull Fire.png,0.5
+Explosion,Normal,Physical,PRAS- Explosions.png,1.2174,GEN8- Misty Explosion.png,1.0826,poison.png,0.6667
+Extrasensory,Psychic,Special,estranho.png,0.6,Custom_Tera Starstorm.png,0.56,PRAS- Last Resort.png,0.5455
+Extreme Speed,Normal,Physical,PRAS- Speed BG.png,0.8882,PRAS- Extreme Evoboost.png,0.6726,PRAS- Speed Up BG.png,0.6063
+Facade,Normal,Physical,face and eye.png,0.75,PRAS- Glaciate BG.png,0.5714,PRAS- Glaciate.png,0.5714
+Façade,Normal,Physical,face and eye.png,0.6667,Flames.png,0.5455,GEN8- Solar Blade.png,0.5333
+Feather Dance,Flying,Status,PRAS- Petal Dance.png,0.7164,PRAS- Quiver Dance.png,0.6887,PRAS- Weather.png,0.6316
+Feint,Normal,Status,PRAS- Fire Spin.png,0.6154,PRAS- Foresight.png,0.5714,firepoison.png,0.5333
+Feint Attack,Dark,Physical,PRAS- Tri Attack.png,0.78,PRAS- Sand Attack.png,0.7467,Sand-Attack.png,0.7467
+Fell Stinger [SM],Bug,Physical,PRAS- Fell Stinger.png,1.3467,finger.spoon.png,0.5833,PRAS- FAKE TEARS.png,0.5455
+Fiery Dance,Fire,Special,GEN8- Fiery.png,0.9667,PRAS- Quiver Dance.png,0.8419,PRAS- Petal Dance.png,0.68
+Fiery Wrath,Dark,Special,GEN8- Fiery.png,0.9667,GEN8- Fiery_bg.png,0.6682,GEN8- Land's Wrath.png,0.58
+Final Gambit,Fighting,Special,GEN8- Fusion Bolt BG.png,0.4762,GEN8- Fusion Bolt.png,0.4762,PRAS- Giga Impact BG.png,0.4762
+Fire Fang,Fire,Physical,PRAS- Fire BG.png,0.9667,PRAS- Fire.png,0.9667,PRAS- Fire Spin.png,0.705
+Fire Lash,Fire,Physical,PRAS- Fire BG.png,0.9667,PRAS- Fire.png,0.9667,fire blast.png,0.9035
+Fire Pledge,Fire,Special,PRAS- Fire BG.png,0.8714,PRAS- Fire.png,0.8714,PRAS- Fire Spin.png,0.6356
+Fire Punch,Fire,Physical,PRAS- Fire BG.png,0.9154,PRAS- Fire.png,0.9154,PRAS- Fire Spin.png,0.7859
+Fishious Rend,Water,Physical,PRAS- Fissure.png,0.6316,PRAS- Sound.png,0.5882,PRAS- Thousand WA BG.png,0.5455
+Flail,Normal,Physical,PRAS- Flash FG.png,0.6,PRAS- Fairy Lock.png,0.5714,Flames.png,0.5455
+Flame Burst,Fire,Special,PRAS- Metal Burst BG.png,0.78,PRAS- Metal Burst.png,0.78,Flames.png,0.75
+Flame Charge,Fire,Physical,PRAS- Charge Beam.png,0.6514,PRAS- Discharge.png,0.6,Flames.png,0.5882
+Flame Wheel,Fire,Physical,GEN8- Aura Wheel Ally.png,0.7116,GEN8- Aura Wheel Opp.png,0.7116,Flames.png,0.625
+Flamethrower,Fire,Special,PRAS- Earth Power.png,0.6364,PRAS- Electroweb.png,0.6364,PRAS- Flatter.png,0.6316
+Flare Blitz,Fire,Physical,PRAS- Breakneck Blitz.png,0.6633,fire blast.png,0.6316,Custom_Temper Flare.png,0.5562
+Fling,Dark,Physical,PRAS- Fell Stinger.png,0.625,PRAS- Relic Song BG.png,0.5714,PRAS- Floral Healing.png,0.5556
+Flip Turn,Water,Physical,PRAS- U-Turn.png,0.6954,PRAS- Fissure.png,0.5333,PRAS- Flatter.png,0.5333
+Flirt,,Status,PRAS- Fire BG.png,0.6667,PRAS- Fire.png,0.6667,PRAS- Me first BG.png,0.6667
+Flower Shield,Fairy,Status,GEN9- Flower Trick.png,0.6887,PRAS- Crafty Shield.png,0.6633,PRAS- King's Shield.png,0.6017
+Flying Press,Fighting,Physical,PRAS- Fly.png,0.6486,PRAS- Fell Stinger.png,0.5455,GEN8- First Impression.png,0.5385
+Flying Press [SM],Fighting,Physical,PRAS- Fly.png,0.595,GEN8- First Impression.png,0.5,PRAS- Fell Stinger.png,0.5
+Focus Blast,Fighting,Special,fire blast.png,0.7116,PRAS- Techno Blast.png,0.6514,PRAS- Aeroblast.png,0.6316
+Forest's Curse,Grass,Status,PRAS- Curse BG.png,0.8882,PRAS- Curse.png,0.8882,Custom_Salt Cure.png,0.6
+Foul Play,Dark,Physical,PRAS- Fly.png,0.5455,fly copy.png,0.5333,PRAS- Follow Me.png,0.5
+Frustration,Normal,Physical,PRAS- Frost Breath.png,0.6364,PRAS- Eruption.png,0.6316,GEN8- First Impression.png,0.6154
+Furious Strikes,Normal,Physical,PRAS- Strike.png,0.82,GEN8- Surging Strikes.png,0.7943,PRAS- Psystrike BG.png,0.6087
+Fury Attack,Normal,Physical,PRAS- Tri Attack.png,0.8168,PRAS- Multi Attack.png,0.7467,PRAS- Sand Attack.png,0.68
+Fury Cutter,Bug,Physical,PRAS- Air Cutter.png,0.8168,Gen9- Aqua_Cutter.png,0.78,PRAS- Chatter.png,0.5882
+Fury Swipes,Normal,Physical,PRAS- False Swipe.png,0.6,GEN8- First Impression.png,0.56,PRAS- Curse BG.png,0.5333
+Future Sight,Psychic,Special,PRAS- Foresight.png,0.8,GEN8- UltraBurst BG.png,0.5714,GEN8- Tar Shot.png,0.5556
+Gear Grind,Steel,Physical,PRAS- Fairy Wind BG.png,0.5556,PRAS- Fairy Wind.png,0.5556,PRAS- Giga Drain BG.png,0.5556
+Gear Up,Steel,Status,Custom_Order Up.png,0.6954,Gen 9 - Order Up.png,0.6682,PRAS- Eruption.png,0.5714
+Gear Up [SS],Steel,Status,grass.png,0.6154,PRAS- Grass.png,0.6154,Custom_Order Up.png,0.6133
+Gouge,Normal,Physical,PRAS- Grudge.png,0.7273,PRAS- Outrage BG.png,0.6667,PRAS- Ion Deluge FG.png,0.5714
+Grapple,,Status,GEN8- Grav Apple.png,0.875,GEN8- Apple Acid.png,0.625,PRAS- Dragon Pulse.png,0.5556
+Grass Pledge,Grass,Special,grass.png,0.925,PRAS- Grass.png,0.925,GEN8- Grav Apple.png,0.6
+Grass Whistle,Grass,Status,grass.png,0.8882,PRAS- Grass.png,0.8882,PRAS- Grass Knot.png,0.6514
+Grassy Glide,Grass,Physical,grass.png,0.845,PRAS- Grass.png,0.845,grass2.png,0.5882
+Grassy Terrain,Grass,Status,PRAS- Misty Terrain BG.png,0.8,grass.png,0.7756,PRAS- Grass.png,0.7756
+Growth,Normal,Status,Growl.png,0.7273,PRAS- Ghost BG.png,0.5455,PRAS- Roost.png,0.5455
+Guard Split,Psychic,Status,Gust.png,0.5714,PRAS- Gust.png,0.5714,PRAS- Cotton Guard.png,0.5562
+Guard Swap,Psychic,Status,PRAS- Swap.png,0.9154,PRAS- Mud Slap.png,0.625,PRAS- Cotton Guard.png,0.58
+Hail,Ice,Status,Heal3.png,0.6667,Heal5.png,0.6667,anim sheet.png,0.5
+Hammer Arm,Fighting,Physical,PRAS- Ice Hammer.png,0.7467,PRAS- Wood Hammer.png,0.7116,PRAS- Crabhammer.png,0.6316
+Harden,Normal,Status,PRAS- Sharpen.png,0.7692,PRAS- Haze FG.png,0.6,PRAS- Glare BG.png,0.5455
+Head Charge,Normal,Physical,PRAS- Discharge.png,0.7368,PRAS- Charge Beam.png,0.68,PRAS- Heat Wave.png,0.5556
+Head Smash,Rock,Physical,PRAS- Shell Smash.png,0.8168,Divine_Smash.png,0.68,PRAS- Rock Smash.png,0.6356
+Headbutt,Normal,Physical,PRAS- Metal Burst BG.png,0.5556,PRAS- Metal Burst.png,0.5556,PRAS- Chatter.png,0.5333
+Headlong Rush,Ground,Physical,PRAS- Healing Wish.png,0.6957,poi.hear.mus.png,0.5455,Gen 9 - Glaive Rush.png,0.5415
+Heal Block,Psychic,Status,PRAS- Heal Bell.png,0.7859,PRAS- Mat Block.png,0.7859,PRAS- Stealth Rock.png,0.6
+Heal Order,Bug,Status,Custom_Order Up.png,0.705,Gen 9 - Order Up.png,0.68,PRAS- Heal Bell.png,0.6682
+Heal Pulse,Psychic,Status,PRAS- Dark Pulse.png,0.7467,PRAS- Water Pulse.png,0.7116,Water pulse.png,0.7116
+Heart Stamp,Psychic,Physical,PRAS- Heat Wave.png,0.5556,PRAS- Clear Smog.png,0.5263,Custom_Sandsear Storm.png,0.5217
+Heart Swap,Psychic,Status,PRAS- Swap.png,0.9154,PRAS- Heat Wave.png,0.7059,PRAS- SHell Trap FG.png,0.5556
+Heat Crash,Fire,Physical,PRAS- Heat Wave.png,0.6682,PRAS- Meteor Mash.png,0.6316,PRAS- Corkscrew Crash.png,0.6017
+Heavy Slam,Steel,Physical,Heal3.png,0.5714,Heal5.png,0.5714,PRAS- Air Slash.png,0.4706
+Helping Hand,Normal,Status,PRAS- Healing Wish.png,0.6364,GEN8- Hold Hands.png,0.6,PRAS- Ingrain.png,0.5556
+Hex,Ghost,Special,PRAS- Haze FG.png,0.5714,Heal3.png,0.5,Heal5.png,0.5
+Hidden Power Bug,Bug,Special,PRAS- Hidden Power.png,1.31,PRAS- High Horse Power.png,0.6514,PRAS- Acid Downpour BG1.png,0.6207
+Hidden Power Dark,Dark,Special,PRAS- Hidden Power.png,1.2762,PRAS- High Horse Power.png,0.6317,PRAS- Earth Power.png,0.56
+Hidden Power Dragon,Dragon,Special,PRAS- Hidden Power.png,1.2157,PRAS- High Horse Power.png,0.5961,dragon claw.png,0.5244
+Hidden Power Electric,Electric,Special,PRAS- Hidden Power.png,1.1633,PRAS- Electric.png,0.8926,electric1.png,0.5714
+Hidden Power Fairy,Fairy,Special,PRAS- Hidden Power.png,1.2448,PRAS- High Horse Power.png,0.6133,PRAS- Earth Power.png,0.5415
+Hidden Power Fighting,Fighting,Special,PRAS- Hidden Power.png,1.1633,Ancient-PowerFilesheet.png,0.6,PRAS- High Horse Power.png,0.5648
+Hidden Power Fire,Fire,Special,PRAS- Hidden Power.png,1.2762,PRAS- Fire BG.png,0.7211,PRAS- Fire.png,0.7211
+Hidden Power Flying,Flying,Special,PRAS- Hidden Power.png,1.2157,PRAS- High Horse Power.png,0.5961,PRAS- Acid Downpour FG1.png,0.5625
+Hidden Power Ghost,Ghost,Special,PRAS- Hidden Power.png,1.2448,PRAS- Ghost BG.png,0.7762,PRAS- High Horse Power.png,0.6133
+Hidden Power Grass,Grass,Special,PRAS- Hidden Power.png,1.2448,grass.png,0.7762,PRAS- Grass.png,0.7762
+Hidden Power Ground,Ground,Special,PRAS- Hidden Power.png,1.2157,PRAS- High Horse Power.png,0.5961,PRAS- Earth Power.png,0.5244
+Hidden Power Ice,Ice,Special,PRAS- Hidden Power.png,1.31,PRAS- Ice BG.png,0.6529,PRAS- Ice.png,0.6529
+Hidden Power Poison,Poison,Special,PRAS- Hidden Power.png,1.2157,poison.png,0.8217,PRAS- Poison.png,0.8217
+Hidden Power Psychic,Psychic,Special,PRAS- Hidden Power.png,1.1886,PRAS- Psychic BG.png,0.86,PRAS- High Horse Power.png,0.58
+Hidden Power Rock,Rock,Special,PRAS- Hidden Power.png,1.2762,PRAS- Rock.png,0.7211,PRAS- High Horse Power.png,0.6317
+Hidden Power Steel,Steel,Special,PRAS- Hidden Power.png,1.2448,PRAS- High Horse Power.png,0.6133,Ancient-PowerFilesheet.png,0.5946
+Hidden Power Water,Water,Special,PRAS- Hidden Power.png,1.2448,PRAS- Water.png,0.7762,PRAS- Muddy Water FG Opp old.png,0.6185
+High Jump Kick,Fighting,Physical,PRAS- Mega Kick BG.png,0.58,PRAS- Mega Kick Opp BG.png,0.58,PRAS- Trop Kick.png,0.58
+Hinder,,Status,PRAS- Thunder BG.png,0.7692,Thunder2.png,0.7143,PRAS- Bide.png,0.6
+Horn Attack,Normal,Physical,PRAS- Tri Attack.png,0.8168,PRAS- Sand Attack.png,0.78,Sand-Attack.png,0.78
+Howl [SS],Normal,Status,PRAS- Howl.png,1.1,Growl.png,0.5455,PRAS- Ghost BG.png,0.5455
+Hyper Voice,Normal,Special,PRAS- Hyper Beam BG.png,0.7116,PRAS- Hyper Beam.png,0.7116,PRAS- Ice BG.png,0.6815
+Hypnosis,Psychic,Status,poison.png,0.5714,PRAS- Poison.png,0.5714,PRAS- Explosions.png,0.5556
+Ice Ball,Ice,Physical,PRAS- Ice BG.png,0.9,PRAS- Ice.png,0.9,PRAS- Energy Ball.png,0.6682
+Ice Beam,Ice,Special,PRAS- Ice BG.png,1.02,PRAS- Ice.png,1.02,PRAS- Ice Hammer.png,0.825
+Ice Fang,Ice,Physical,PRAS- Ice BG.png,0.9,PRAS- Ice.png,0.9,PRAS- Hyper Fang BG.png,0.705
+Ice Punch,Ice,Physical,PRAS- Ice BG.png,0.8455,PRAS- Ice.png,0.8455,PRAS- Drain Punch.png,0.7467
+Ice Shard,Ice,Physical,PRAS- Ice BG.png,0.8455,PRAS- Ice.png,0.8455,PRAS- Ice Hammer.png,0.7859
+Icicle Crash,Ice,Physical,PRAS- Corkscrew Crash.png,0.72,PRAS- Icicle Spear.png,0.7164,PRAS- Ice Cave BG.png,0.5556
+Imprison,Psychic,Status,poison.png,0.7143,PRAS- Poison.png,0.7143,firepoison.png,0.6667
+Incinerate,Fire,Special,icewater.png,0.6667,PRAS- Underwater BG.png,0.6,PRAS- Ice Cave BG.png,0.5882
+Infernal Parade,Ghost,Special,Gen9- Bitter Blade.png,0.56,PRAS- Fusion Flare.png,0.56,Aerial Ace.png,0.5217
+Inferno,Fire,Special,PRAS- Ice Burn BG.png,0.5714,PRAS- Ice Burn.png,0.5714,PRAS- Ingrain.png,0.5714
+Infestation,Bug,Special,PRAS- Confusion BG.png,0.6,PRAS- Steam Eruption FG.png,0.5833,PRAS- Steam Eruption.png,0.5833
+Instruct,Psychic,Status,GEN8- Obstruct.png,0.75,PRAS- Constrict.png,0.7059,PRAS- Attract BG.png,0.5333
+Intercept Melee,,Status,EerieSpell.png,0.5,GEN8- EerieSpell.png,0.5,PRAS- Miracle Eye.png,0.5
+Intercept Ranged,,Status,PRAS- Tectonic Rage BG.png,0.5926,PRAS- Tectonic Rage.png,0.5926,PRAS- BoneMerang.png,0.56
+Iron Defense,Steel,Status,Iron Head.png,0.6063,PRAS- Iron Head.png,0.6063,PRAS- Ion Deluge FG.png,0.6
+Jaw Lock,Dark,Physical,PRAS- Fairy Lock.png,0.705,PRAS- Lock On.png,0.6954,PRAS- Mat Block.png,0.6667
+Jump Kick,Fighting,Physical,PRAS- Mega Kick BG.png,0.705,PRAS- Mega Kick Opp BG.png,0.705,PRAS- Trop Kick.png,0.705
+Jungle Healing,Grass,Status,PRAS- Floral Healing.png,0.6954,PRAS- Healing Wish.png,0.6633,GEN8- Drum beating.png,0.5
+Karate Chop,Fighting,Physical,Gen9- Aqua Step.png,0.5556,PRAS- Aromatherapy FG.png,0.5455,PRAS- Aromatherapy.png,0.5455
+Kinesis,Psychic,Status,PRAS- Kenesis.png,0.8571,PRAS- Amnesia.png,0.5714,Divine_Smash.png,0.5556
+Knock Off,Dark,Physical,PRAS- Slack Off.png,0.705,PRAS- Lock On.png,0.5714,PRAS- Rock.png,0.5
+Laser Focus,Normal,Status,PRAS- Focus Punch BG.png,0.58,PRAS- Focus Punch Opp BG.png,0.58,PRAS- Focus Energy.png,0.5562
+Lash Out,Dark,Physical,GEN8- Tar Shot.png,0.7143,PRAS- Flash FG.png,0.6667,PRAS- Slash.png,0.6667
+Lava Plume,Fire,Special,GEN8- Grav Apple.png,0.6667,Flames.png,0.5333,GEN8- Glacial Lance.png,0.4762
+Leaf Blade,Grass,Physical,GEN8- Solar Blade.png,0.8168,Gen9- Bitter Blade.png,0.68,PRAS- Leaf Tornado.png,0.68
+Leaf Storm,Grass,Special,PRAS- Leaf Tornado.png,0.78,Custom_Sandsear Storm.png,0.7164,PRAS- Magma Storm.png,0.7116
+Leafage,Grass,Physical,PRAS- Elemental Fangs.png,0.5714,PRAS- Leaf Tornado.png,0.5556,leer.png,0.5455
+Leech Life [SM],Bug,Physical,PRAS- Leech Life.png,1.33,leech-seed.png,0.68,PRAS- Leech Seed.png,0.68
+Lick,Ghost,Physical,PRAS- Sketch + Lick.png,0.8714,PRAS- Black BG.png,0.6667,PRAS- Trick.png,0.6667
+Life Dew,Water,Status,PRAS- Leech Life.png,0.58,leer.png,0.5455,PRAS- Bide.png,0.5455
+Light of Ruin,Fairy,Special,PRAS- Light Screen.png,0.7164,Light1.png,0.5882,PRAS- Light that Burns the Sky.png,0.5316
+Liquidation,Water,Physical,PRAS- Quiver Dance.png,0.5455,PRAS- Eruption.png,0.5263,GEN8- MegaEvolution.png,0.5
+Lovely Kiss,Normal,Status,PRAS- Love.png,0.7914,PRAS- Black Hole Eclipse BG.png,0.4615,PRAS- Black Hole Eclipse Opp BG.png,0.4615
+Low Blow,,Status,PRAS- Howl.png,0.5455,Growl.png,0.5,PRAS- Mind Blown BG.png,0.5
+Low Kick,Fighting,Physical,PRAS- Trop Kick.png,0.7467,PRAS- Blaze Kick.png,0.705,GEN9- Flower Trick.png,0.6667
+Low Sweep,Fighting,Physical,PRAS- Will O Wisp.png,0.5882,PRAS- Speed Up BG.png,0.5333,leer.png,0.5
+Lunar Blessing,Psychic,Status,PRAS- Floral Healing.png,0.5385,GEN8- Solar Blade.png,0.5217,PRAS- Burning BG.png,0.5
+Lunar Dance,Psychic,Status,PRAS- Quiver Dance.png,0.7467,PRAS- Petal Dance.png,0.68,PRAS- Dragon Dance.png,0.6514
+Lunge,Bug,Physical,PRAS- Ion Deluge FG.png,0.5714,PRAS- Grudge.png,0.5455,PRAS- Sludge Bomb.png,0.5333
+Mach Punch,Fighting,Physical,PRAS- Drain Punch.png,0.7116,PRAS- Focus Punch BG.png,0.7116,PRAS- Focus Punch Opp BG.png,0.7116
+Magic Burst,Normal,Special,PRAS- Metal Burst BG.png,0.78,PRAS- Metal Burst.png,0.78,PRAS- Magic Coat.png,0.7116
+Magic Powder,Psychic,Status,PRAS- Powder.png,1.0059,PRAS- Rage Powder.png,0.8419,PRAS- Magic Coat.png,0.68
+Magnet Rise,Electric,Status,PRAS- Magnet bomb.png,0.68,Gen9- Rage Fist.png,0.5556,Aerial Ace.png,0.5263
+Magnetic Flux,Electric,Status,PRAS- Dragon Tail.png,0.5455,PRAS- Magnet bomb.png,0.5455,PRAS- Magical Leaf.png,0.5217
+Magnetic Flux [SM],Electric,Status,PRAS- Magnet bomb.png,0.5833,PRAS- Magic Room BG.png,0.5217,PRAS- Dragon Tail.png,0.5
+Magnetic Flux [SS],Electric,Status,PRAS- Dragon Tail.png,0.5,PRAS- Magnet bomb.png,0.5,PRAS- Metal Burst BG.png,0.5
+Maneuver,,Category,PRAS- MegaEvo BG.png,0.5333,PRAS- MegaEvo.png,0.5333,GEN8- DragonEnergy.png,0.5
+Manipulate,,Status,PRAS- Magnitude BG.png,0.6316,PRAS- Dragon Pulse.png,0.5714,GEN9- Raging Bull Water.png,0.56
+Maul,Normal,Physical,normal1.png,0.5455,normal2.png,0.5455,many.png,0.5
+Meditate,Psychic,Status,mixed status.png,0.6316,PRAS- Retaliate BG.png,0.5882,PRAS- Retaliate.png,0.5882
+Mega Drain,Grass,Special,PRAS- Giga Drain BG.png,0.8578,PRAS- Giga Drain.png,0.8578,PRAS- Megahorn BG.png,0.7059
+Mega Punch,Normal,Physical,GEN8- Elemental Punch.png,0.7757,PRAS- Elemental Punch.png,0.7757,PRAS- Drain Punch.png,0.7116
+Memento,Dark,Status,PRAS- Judgement.png,0.625,emo.png,0.6,PRAS- MegaEvo BG.png,0.5714
+Metal Claw,Steel,Physical,dragon claw.png,0.6063,PRAS- Dragon Claw.png,0.6063,PRAS- Metal Burst BG.png,0.6063
+Metronome,Normal,Status,PRAS- Magic Room BG.png,0.5556,PRAS- Trick Room BG.png,0.5556,Trovao.png,0.5333
+MH Adept,--,--,PRAS- Haze FG.png,0.5455,PRAS- Mud Sport.png,0.5333,PRAS- Hands.png,0.5
+MH Expert,--,--,PRAS- Me first BG.png,0.5333,PRAS- Me First.png,0.5333,PRAS- Hidden Power.png,0.5263
+Mimic,Normal,Status,PRAS- Ice BG.png,0.5,PRAS- Ice.png,0.5,PRAS- Seismic Toss.png,0.5
+Mind Reader,Normal,Status,PRAS- Dream Eater BG.png,0.6,PRAS- Dream Eater.png,0.6,icewater.png,0.5556
+Minimize,Normal,Status,anim sheet.png,0.5,PRAS- Magnitude BG.png,0.4706,PRAS- Night Daze.png,0.4706
+Mirror Move,Flying,Status,PRAS- Mirror Coat.png,0.78,PRAS- Mirror Shot.png,0.78,PRAS- Corrosive BG.png,0.5263
+Mist Ball,Psychic,Special,PRAS- Mist FG.png,0.9667,PRAS- Mist.png,0.9667,PRAS- Shadow Ball.png,0.6356
+Morning Sun,Normal,Status,PRAS- Burning BG.png,0.5882,PRAS- Burning Blue BG.png,0.5714,PRAS- Draining Kiss.png,0.5455
+Mountain Gale,Ice,Physical,PRAS- Outrage BG.png,0.6316,PRAS- Burning Blue BG.png,0.6087,PRAS- Iron Tail.png,0.6
+Multi-Attack [SS],Normal,Physical,PRAS- Multi Attack.png,1.3467,PRAS- Tri Attack.png,0.8073,PRAS- Sand Attack.png,0.6017
+Mystical Power,Psychic,Special,PRAS- Mystical Fire.png,0.85,PRAS- Earth Power.png,0.6017,PRAS- Hidden Power.png,0.58
+Name,Type,Category,Flames.png,0.6,GEN8- Tea Time.png,0.5455,PRAS- Amnesia.png,0.5455
+Natural Gift,Normal,Special,PRAS- Attract BG.png,0.5556,Gen9- Rage Fist.png,0.5263,GEN8- AstralBarrage.png,0.5
+Nature Power,Normal,Status,PRAS- Earth Power.png,0.7467,PRAS- Rage Powder.png,0.6667,PRAS- High Horse Power.png,0.64
+Night Shade,Ghost,Special,PRAS- Night Daze.png,0.8168,PRAS- Light Screen.png,0.5714,PRAS- Discharge.png,0.5263
+Night Slash,Dark,Physical,PRAS- Slash.png,0.9667,PRAS- Air Slash.png,0.7467,PRAS- Night Daze.png,0.7116
+Nightmare,Ghost,Status,PRAS- NeverendingNightmare FG.png,0.8407,PRAS- NeverEndingNightmare.png,0.8407,PRAS- Night Daze.png,0.7778
+Noble Roar,Normal,Status,PRAS- Roar.png,0.9154,GEN8- Double Iron Bash.png,0.6087,GEN8- No Retreat.png,0.5556
+Nuzzle,Electric,Physical,PRAS- Dragon Pulse.png,0.4706,PRAS- Origin Pulse BG.png,0.4706,PRAS- Origin Pulse FG.png,0.4706
+Oblivion Wing,Flying,Special,PRAS- Poison Sting.png,0.6087,PRAS- Burning BG.png,0.5263,PRAS- Brutal Swing FG Opp.png,0.5217
+Octazooka,Water,Special,PRAS- Octozooka.png,0.8889,PRAS- Catastropika.png,0.5714,PRAS- Mean Look.png,0.4706
+Octolock,Fighting,Status,PRAS- Octozooka.png,0.7059,PRAS- Mat Block.png,0.625,PRAS- Lock On.png,0.5714
+OH Adept,--,--,Custom_Order Up.png,0.5714,PRAS- Haze FG.png,0.5455,Iron Head.png,0.5333
+Overdrive,Electric,Special,PRAS- Corrosive BG.png,0.6667,PRAS- Dive.png,0.6154,PRAS- Horn Drill BG.png,0.5556
+Overheat,Fire,Special,GEN8- No Retreat.png,0.7059,PRAS- Covet.png,0.6154,PRAS- Frost Breath.png,0.5263
+Pain Split,Normal,Status,PRAS- Spite.png,0.5714,PRAS- Nasty Plot.png,0.5556,PRAS- Spotlight BG.png,0.5556
+Parabolic Charge,Electric,Special,PRAS- Discharge.png,0.5833,PRAS- Charge Beam.png,0.56,Aerial Ace.png,0.5
+Parabolic Charge [SM],Electric,Special,PRAS- Charge Beam.png,0.5985,PRAS- Discharge.png,0.5385,PRAS- Sparkling Aria.png,0.4667
+Parting Shot,Dark,Status,PRAS- Searing Shot BG.png,0.8982,PRAS- String Shot.png,0.8419,GEN8- Tar Shot.png,0.7467
+Payback,Dark,Physical,PRAS- Black BG.png,0.6667,PRAS- Pay Day.png,0.6154,PRAS- Psybeam.png,0.5714
+Peck,Flying,Physical,PRAS- Protect.png,0.5455,PRAS- Mega Kick BG.png,0.5,PRAS- Mega Kick Opp BG.png,0.5
+Perish Song,Normal,Status,PRAS- Relic Song BG.png,0.7116,poison.png,0.625,PRAS- Poison.png,0.625
+Phantom Force,Ghost,Physical,PRAS- Force Palm.png,0.5562,GEN8- Core Enforcer.png,0.5,PRAS- Sand Tomb.png,0.5
+Photon Geyser,Psychic,Special,PRAS- Photon Guyser.png,0.9967,GEN8- Moongeist Beam.png,0.56,PRAS- Cotton Guard.png,0.5217
+Pierce!,Normal,Physical,PRAS- Ice BG.png,0.6667,PRAS- Ice.png,0.6667,PRAS- Spider Web.png,0.6667
+Pin Missile,Bug,Physical,PRAS- King's Shield.png,0.5714,PRAS- Spirit Shackle BG.png,0.5217,PRAS- Spirit Shackle.png,0.5217
+Plasma Fists,Electric,Physical,PRAS- Plasma Fist BG.png,1.3024,PRAS- Plasma Fist.png,1.3024,PRAS- Me first BG.png,0.5556
+Play Nice,Normal,Status,PRAS- Ice BG.png,0.7655,PRAS- Ice.png,0.7655,PRAS- Petal Dance.png,0.6667
+Play Rough,Fairy,Physical,PRAS- Clear Smog.png,0.5556,GEN8- PyroBall.png,0.4706,GEN8- PrimalGroudon BG.png,0.4545
+Pluck,Flying,Physical,PRAS- Black BG.png,0.6,PRAS- Lock On.png,0.5455,PRAS- Lucky Chant.png,0.5333
+Poison Fang,Poison,Physical,poison.png,1.05,PRAS- Poison.png,1.05,PRAS- Poison Sting.png,0.8419
+Poison Gas,Poison,Status,poison.png,1.1,PRAS- Poison.png,1.1,PRAS- Poison Jab.png,0.8578
+Poison Powder,Poison,Status,poison.png,0.9667,PRAS- Poison.png,0.9667,PRAS- Powder.png,0.9667
+Pollen Puff,Bug,Special,PRAS- Rollout.png,0.4706,GEN8- PyroBall.png,0.4444,PRAS- Follow Me.png,0.4444
+Poltergeist,Ghost,Physical,Gen9- Rage Fist.png,0.6316,PRAS- Outrage BG.png,0.5556,PRAS- Powders.png,0.5556
+Pound,Normal,Physical,PRAS- Sound.png,0.8,poison.png,0.5455,PRAS- Poison.png,0.5455
+Power Gem,Rock,Special,PRAS- Powder.png,0.7143,PRAS- ZPower.png,0.7143,PRAS- Powders.png,0.6667
+Power Shift,Normal,Status,PRAS- Psycho Shift.png,0.7467,PRAS- Powders.png,0.7059,PRAS- Powder.png,0.625
+Power Split,Psychic,Status,PRAS- Powders.png,0.7059,PRAS- Powder.png,0.625,PRAS- ZPower.png,0.625
+Power Swap,Psychic,Status,PRAS- Swap.png,0.9154,PRAS- Powders.png,0.75,PRAS- Powder Snow.png,0.7368
+Power Trick,Psychic,Status,PRAS- Trick.png,0.9667,GEN9- Flower Trick.png,0.9371,PRAS- Powder.png,0.625
+Power Trip,Dark,Physical,GEN9- Flower Trick.png,0.7,PRAS- Powder.png,0.6667,PRAS- ZPower.png,0.6667
+Power Whip,Grass,Physical,PRAS- Powder.png,0.6667,PRAS- ZPower.png,0.6667,PRAS- Powder Snow.png,0.6316
+Power-Up Punch,Fighting,Physical,PRAS- Focus Punch BG.png,0.7164,PRAS- Focus Punch Opp BG.png,0.7164,PRAS- Shadow Punch.png,0.6887
+Psych Up,Normal,Status,PRAS- Psycho Cut.png,0.75,Psycho Cut.png,0.75,PRAS- Psychic BG.png,0.7143
+Psychic Fangs,Psychic,Physical,PRAS- Psychic BG.png,1.0368,PRAS- Psychic Terrain BG.png,0.7723,PRAS- Psycho Shift.png,0.6087
+Psyshield Bash,Psychic,Physical,PRAS- Spiky Shield.png,0.6667,PRAS- Shell Smash.png,0.6087,PRAS- King's Shield.png,0.5833
+Psyshock,Psychic,Special,T. Shock.png,0.7143,PRAS- Psycho Cut.png,0.7059,Psycho Cut.png,0.7059
+Psywave,Psychic,Special,Custom_Psyblade.png,0.6667,PRAS- Sludge Wave FG Opp.png,0.5882,PRAS- Sludge Wave FG.png,0.5882
+Punishment,Dark,Physical,PRAS- Present.png,0.5882,PRAS- Gunk Shot.png,0.5556,PRAS- judgment BG.png,0.5556
+Purify,Poison,Status,PRAS- Surf FG Opp.png,0.6,PRAS- Surf FG.png,0.6,PRAS- Surf.png,0.6
+Pursuit,Dark,Physical,Custom_Use Item.png,0.5714,PRAS- Present.png,0.5714,Gust.png,0.5455
+Push,,Status,PRAS- Mud Shot.png,0.5455,PRAS- Psychic BG.png,0.5455,punches.png,0.5455
+Quash,Dark,Status,Gen9- Aqua Step.png,0.6154,PRAS- Flash FG.png,0.6,PRAS- Slash.png,0.6
+Quick Attack,Normal,Physical,PRAS- Multi Attack.png,0.9273,PRAS- Tri Attack.png,0.9,PRAS- Sand Attack.png,0.7714
+Quick Guard,Fighting,Status,PRAS- Cotton Guard.png,0.6514,PRAS- Safeguard.png,0.5263,PRAS- Trump card.png,0.5263
+Rage,Normal,Physical,Gen9- Rage Fist.png,1.0167,PRAS- Outrage BG.png,0.9473,PRAS- Rage Powder.png,0.9214
+Raging Fury,Fire,Special,Gen9- Raging Bull Fire.png,0.7467,GEN9- Raging Bull Water.png,0.72,PRAS- Hyper Space Fury.png,0.58
+Rain Dance,Water,Status,PRAS- Dragon Dance.png,0.88,PRAS- Petal Dance.png,0.7116,PRAS- Quiver Dance.png,0.68
+Rapid Spin,Normal,Physical,Custom_Mortal Spin.png,0.7116,PRAS- Wrapping.png,0.7059,PRAS- Fire Spin.png,0.6682
+Rapid Spin [SS],Normal,Physical,Custom_Mortal Spin.png,0.6514,PRAS- Wrapping.png,0.6316,PRAS- Fire Spin.png,0.6063
+Razor Leaf,Grass,Physical,PRAS- Razor Shell.png,0.7116,PRAS- Magical Leaf.png,0.58,PRAS- Dragonbreath.png,0.5714
+Razor Wind,Normal,Special,PRAS- Fairy Wind BG.png,0.6356,PRAS- Fairy Wind.png,0.6356,PRAS- Razor Shell.png,0.6063
+Recover,Normal,Status,PRAS- Recovery.png,1.2033,PRAS- Covet.png,0.6667,PRAS- Conversion.png,0.5882
+Reflect Type,Normal,Status,PRAS- Reflect.png,1.0778,PRAS- Electroweb.png,0.5714,PRAS- Flatter.png,0.5556
+Refresh,Normal,Status,PRAS- Foresight.png,0.625,PRAS- Me first BG.png,0.5714,PRAS- Me First.png,0.5714
+Rending Spell,Normal,Special,EerieSpell.png,0.6364,GEN8- EerieSpell.png,0.6364,EerieSpell_bg.png,0.5833
+Resonance Beam,Normal,Special,GEN8- Strange Beam.png,0.7467,PRAS- Swords Dance + Signal Beam.png,0.6682,Ultra Beam.png,0.6255
+Rest,Psychic,Status,PRAS- Present.png,0.7273,Gen9- Rage Fist.png,0.6667,PRAS- Roost.png,0.6667
+Return,Normal,Physical,PRAS- U-Turn.png,0.7273,PRAS- Ice Burn BG.png,0.6154,PRAS- Ice Burn.png,0.6154
+Revelation Dance,Normal,Special,PRAS- Dragon Dance.png,0.7723,PRAS- Petal Dance.png,0.64,PRAS- Quiver Dance.png,0.6185
+Reversal,Fighting,Physical,PRAS- Recovery.png,0.625,EerieSpell.png,0.5556,GEN8- EerieSpell.png,0.5556
+Riposte,Normal,Physical,PRAS- Roost.png,0.6667,PRAS- Protect.png,0.5714,PRAS- Twister.png,0.5714
+Rising Voltage,Electric,Special,FreezingGlare.png,0.5385,GEN8- FreezingGlare.png,0.5385,GEN8- Fusion Bolt BG.png,0.5217
+Roar of Time,Dragon,Special,PRAS- Roar.png,0.8714,GEN8- Tea Time.png,0.6682,PRAS- Rototiller .png,0.6
+Rock Blast,Rock,Physical,PRAS- Rock.png,0.9154,PRAS- Aeroblast.png,0.7778,fire blast.png,0.7467
+Rock Climb,Normal,Physical,PRAS- Rock.png,0.9154,Rock Tomb.png,0.7859,PRAS- Rock Polish.png,0.7116
+Rock Slide,Rock,Physical,PRAS- Rock.png,0.9154,rockice.png,0.75,PRAS- Rock Polish.png,0.7116
+Rock Throw,Rock,Physical,PRAS- Rock.png,0.9154,Rock Tomb.png,0.7859,PRAS- Rock Smash.png,0.6356
+Rock Wrecker,Rock,Physical,PRAS- Rock.png,0.8333,rockice.png,0.5556,PRAS- Recovery.png,0.5263
+Role Play,Psychic,Status,PRAS- Rollout.png,0.5333,PRAS- Frenzy Plant BG.png,0.5263,PRAS- Frenzy Plant.png,0.5263
+Rolling Kick,Fighting,Physical,PRAS- Trop Kick.png,0.7116,PRAS- Mega Kick BG.png,0.6063,PRAS- Mega Kick Opp BG.png,0.6063
+Round,Normal,Special,PRAS- Sound.png,0.8,Iron Head.png,0.6154,PRAS- Iron Head.png,0.6154
+Sacred Fire,Fire,Physical,PRAS- Fire BG.png,0.8714,PRAS- Fire.png,0.8714,PRAS- Sacred Sword.png,0.7467
+Salvo,Normal,Physical,PRAS- Scald.png,0.6,GEN8- Scale Shot.png,0.5714,PRAS- Disable.png,0.5
+Sandstorm Sear,Ground,Special,PRAS- Sandstorm.png,1.1682,PRAS- sandstorm2.png,0.8326,Custom_Sandsear Storm.png,0.6923
+Scorching Sands,Ground,Special,PRAS- Strong Winds.png,0.56,PRAS- Hands.png,0.5263,GEN8- Hold Hands.png,0.5217
+Scratch,Normal,Physical,scratchbattle.png,0.97,Scratch + Shadow Claw.png,0.9333,PRAS- Screech.png,0.7143
+Secret Force,Normal,Special,GEN8- Core Enforcer.png,0.6957,PRAS- Scary Face.png,0.6,PRAS- Force Palm.png,0.58
+Secret Power,Normal,Special,PRAS- Earth Power.png,0.8419,PRAS- High Horse Power.png,0.64,PRAS- Hidden Power.png,0.6255
+Secret Sword,Fighting,Special,PRAS- Sacred Sword.png,0.8982,Sword5.png,0.5882,Sword6.png,0.5882
+Seed Flare,Grass,Special,Custom_Temper Flare.png,0.78,PRAS- Fusion Flare.png,0.68,PRAS- Needle Arm.png,0.6667
+Self-Destruct,Normal,Physical,GEN8- Obstruct.png,0.6,PRAS- Electric.png,0.6,electric1.png,0.5714
+Shadow Force,Ghost,Physical,PRAS- Shadow Bone BG.png,0.8419,PRAS- Shadow Bone.png,0.8419,PRAS- Shadow Claw.png,0.7467
+Shell Side Arm,Poison,Special,PRAS- Shell Smash.png,0.7164,PRAS- Needle Arm.png,0.6514,PRAS- SHell Trap FG.png,0.6514
+Shelter,Steel,Status,PRAS- SHell Trap FG.png,0.75,PRAS- Shell Trap.png,0.75,PRAS- Sheer Cold BG.png,0.625
+Shift Gear,Steel,Status,PRAS- Psycho Shift.png,0.58,PRAS- Spite.png,0.5714,PRAS- Swift.png,0.5714
+Shock Wave,Electric,Special,T. Shock.png,0.7467,PRAS- Heat Wave.png,0.6682,PRAS- Sludge Wave FG Opp.png,0.6063
+Signal Beam,Bug,Special,PRAS- Swords Dance + Signal Beam.png,1.0252,Gen9- TwinBeam.png,0.6667,GEN8- Strange Beam.png,0.6514
+Simple Beam,Normal,Status,PRAS- Hyper Beam BG.png,0.7116,PRAS- Hyper Beam.png,0.7116,GEN8- Meteor Beam.png,0.68
+Sing,Normal,Status,PRAS- Dig.png,0.5714,PRAS- String Shot.png,0.5714,PRAS- Burning BG.png,0.5455
+Sketch,Normal,Status,PRAS- Sketch + Lick.png,1.1,PRAS- Screech.png,0.6154,teeth.png,0.5455
+Skill Swap,Psychic,Status,PRAS- Swap.png,0.9154,PRAS- Tail slap.png,0.5882,PRAS- SHell Trap FG.png,0.5556
+Skull Bash,Normal,Physical,PRAS- Slash.png,0.7143,PRAS- Shell Smash.png,0.6316,GEN8- Double Iron Bash.png,0.6017
+Sky Attack,Flying,Physical,PRAS- Sand Attack.png,0.8168,Sand-Attack.png,0.8168,PRAS- Tri Attack.png,0.7467
+Sky Drop,Flying,Physical,PRAS- Hydro Pump.png,0.625,PRAS- Sky Uppercut BG.png,0.5244,PRAS- Surf FG Opp - Copie.png,0.5
+Slam,Normal,Physical,PRAS- Slash.png,0.6667,Flames.png,0.6,PRAS- Mud Slap.png,0.5455
+Sleep Powder,Grass,Status,PRAS- Powder.png,1.0059,PRAS- Rage Powder.png,0.7467,PRAS- Powders.png,0.6667
+Slice,Normal,Physical,PRAS- Ice BG.png,0.97,PRAS- Ice.png,0.97,Ice1.png,0.6667
+Sludge,Poison,Special,PRAS- Sludge Bomb.png,1.1,PRAS- Sludge Wave FG Opp.png,1.1,PRAS- Sludge Wave FG.png,1.1
+Smack Down,Rock,Physical,PRAS- Speed Down BG.png,0.6356,PRAS- Shadow Bone BG.png,0.6316,PRAS- Shadow Bone.png,0.6316
+Smart Strike,Steel,Physical,PRAS- Strike.png,1.0059,GEN8- Sunsteel Strike.png,0.72,PRAS- Psystrike BG.png,0.7
+Smelling Salts,Normal,Physical,PRAS- Shell Smash.png,0.6087,PRAS- Clanging Scales.png,0.5926,PRAS- Searing Shot BG.png,0.5833
+Snap Trap,Grass,Physical,PRAS- SHell Trap FG.png,0.6682,PRAS- Shell Trap.png,0.6682,PRAS- Sand Attack.png,0.5556
+Snarl,Dark,Special,PRAS- Scald.png,0.6,PRAS- Starry BG.png,0.5455,GEN8- Solar Blade.png,0.5333
+Snatch,Dark,Status,PRAS- Sand Attack.png,0.625,Sand-Attack.png,0.625,Custom_Salt Cure.png,0.5714
+Snipe Shot,Water,Special,GEN8- Snipe Shot bg2.png,1.2871,GEN8- Scale Shot.png,0.7467,PRAS- String Shot.png,0.7116
+Snore,Normal,Special,PRAS- Spore.png,0.8,PRAS- Encore.png,0.7273,PRAS- Shore Up.png,0.6667
+Soak,Water,Status,T. Shock.png,0.6,PRAS- GOA.png,0.5714,PRAS- Shadow Sneak.png,0.5333
+Soft-Boiled,Normal,Status,PRAS- Soft Boil.png,1.2389,PRAS- Rototiller .png,0.6,GEN8- Fusion Bolt BG.png,0.5
+Solar Beam,Grass,Special,GEN8- Solar Blade.png,0.8168,Ultra Beam.png,0.7467,GEN8- Meteor Beam.png,0.7116
+Sonic Boom,Normal,Special,PRAS- Magic Room BG.png,0.5556,PRAS- Trick Room BG.png,0.5556,GEN8- Fusion Bolt BG.png,0.5263
+Spark,Electric,Physical,PRAS- Sparkling Aria.png,0.8256,PRAS- Space BG.png,0.6,PRAS- Spore.png,0.6
+Speed Swap,Psychic,Status,PRAS- Speed BG.png,1.0143,PRAS- Swap.png,0.9154,PRAS- Speed Up BG.png,0.83
+Spirit Break,Fairy,Physical,PRAS- Spirit Shackle BG.png,0.6633,PRAS- Spirit Shackle.png,0.6633,PRAS- Spite.png,0.625
+Spirit Lance,Normal,Special,PRAS- Spirit Shackle BG.png,0.7467,PRAS- Spirit Shackle.png,0.7467,PRAS- Petal Dance.png,0.6667
+Spit Up,Normal,Special,PRAS- Spite.png,0.7273,PRAS- Speed Up BG.png,0.6954,PRAS- SpotlightOpp BG.png,0.5556
+Splash,Normal,Status,PRAS- Slash.png,0.9091,PRAS- Flash FG.png,0.7273,PRAS- Air Slash.png,0.7143
+Sprint,,Status,PRAS- Spite.png,0.7273,PRAS- String Shot.png,0.625,PRAS- Present.png,0.6154
+Steel Beam,Steel,Special,GEN8- Strange Beam.png,0.78,GEN8- Meteor Beam.png,0.7116,GEN8- Steel Roller.png,0.68
+Steel Wing,Steel,Physical,PRAS- Tailwind.png,0.5882,GEN8- Steel Roller.png,0.58,PRAS- Relic Song BG.png,0.5556
+Stockpile,Normal,Status,rockice.png,0.625,Tackle_B.png,0.625,PRAS- Soft Boil.png,0.5882
+Stomp,Normal,Physical,PRAS- Stomping Tantrum.png,0.77,PRAS- Sand Tomb.png,0.6154,PRAS- Sandstorm.png,0.5714
+Stone Edge,Rock,Physical,GEN8- Stone Axe.png,0.7859,PRAS- Sound.png,0.5714,PRAS- Speed BG.png,0.5714
+Stored Power,Psychic,Special,PRAS- High Horse Power.png,0.72,PRAS- Rage Powder.png,0.6667,PRAS- Earth Power.png,0.6514
+Storm Throw,Fighting,Physical,PRAS- Torment.png,0.5882,PRAS- Magma Storm.png,0.58,PRAS- Stealth Rock.png,0.5714
+Strange Steam,Fairy,Special,GEN8- Strange Beam.png,0.9496,GEN8- Moongeist Beam.png,0.64,PRAS- String Shot.png,0.6364
+Strength,Normal,Physical,PRAS- String Shot.png,0.6667,PRAS- Torment.png,0.6667,PRAS- Frost Breath.png,0.6316
+Strength Sap,Grass,Status,PRAS- String Shot.png,0.5714,PRAS- Torment.png,0.5556,GEN8- Strange Beam.png,0.5455
+Stuff Cheeks,Normal,Status,punches.png,0.5556,PRAS- Surf FG Opp - Copie.png,0.5,PRAS- Sketch + Lick.png,0.4762
+Stun Spore,Grass,Status,PRAS- Spore.png,1.0143,PRAS- Cotton Spore.png,0.78,Custom_Salt Cure.png,0.5882
+Submission,Fighting,Physical,GEN8- Misty Explosion.png,0.5833,GEN8- First Impression.png,0.56,PRAS- SunMoonZ.png,0.5556
+Sucker Punch,Dark,Physical,Crunch.png,0.7059,PRAS- Drain Punch.png,0.6514,PRAS- Focus Punch BG.png,0.6514
+Sucker Punch [SM],Dark,Physical,Crunch.png,0.6316,PRAS- Drain Punch.png,0.6017,PRAS- Focus Punch BG.png,0.6017
+Super Fang,Normal,Physical,PRAS- Hyper Fang BG.png,0.8578,PRAS- Hyper Fang Opp BG.png,0.8578,PRAS- Hyper Fang.png,0.8578
+Superpower,Fighting,Physical,PRAS- Earth Power.png,0.7,PRAS- Spider Web.png,0.6316,PRAS- Powder.png,0.625
+Swagger [SM],Normal,Status,PRAS- Swagger.png,1.175,PRAS- Water.png,0.5714,Custom_Sandsear Storm.png,0.5455
+Swallow,Normal,Status,PRAS- Tail Glow.png,0.6667,PRAS- Will O Wisp.png,0.625,PRAS- Shadow Ball.png,0.5882
+Sweeping Strike,Normal,Physical,PRAS- Strike.png,0.9,GEN8- Sunsteel Strike.png,0.7229,GEN8- Surging Strikes.png,0.7143
+Sweet Kiss,Fairy,Status,PRAS- Sweet Scent BG.png,0.7116,PRAS- Sweet Scent.png,0.7116,PRAS- Sleep Talk.png,0.5556
+Switcheroo,Dark,Status,PRAS- Twister.png,0.5882,PRAS- Weather.png,0.5882,weather.png,0.5882
+Swords Dance,Normal,Status,PRAS- Swords Dance + Signal Beam.png,1.1175,PRAS- Dragon Dance.png,0.6255,PRAS- Quiver Dance.png,0.6255
+Synchronoise,Psychic,Special,PRAS- Psycho Boost BG.png,0.6087,PRAS- Psycho Boost Opp BG.png,0.6087,PRAS- Psycho Boost.png,0.6087
+Synthesis,Grass,Status,PRAS- Kenesis.png,0.625,PRAS- Shell Smash.png,0.5263,GEN8- Sunsteel Strike.png,0.5217
+Tackle,Normal,Physical,Tackle_B.png,1.2731,PRAS- Twinkle Tackle FG.png,0.9316,PRAS- Twinkle Tackle.png,0.9316
+Tackle [SM],Normal,Physical,Tackle_B.png,0.88,PRAS- Twinkle Tackle FG.png,0.6514,PRAS- Twinkle Tackle.png,0.6514
+Tail Whip,Normal,Status,PRAS- Tailwind.png,0.75,PRAS- Tail Glow.png,0.705,PRAS- Tail slap.png,0.705
+Take Aim,Normal,Status,GEN8- Tea Time.png,0.7143,Ultra Beam.png,0.625,Tackle_B.png,0.5714
+Take Down,Normal,Physical,PRAS- Speed Down BG.png,0.6682,PRAS- Shadow Bone BG.png,0.5556,PRAS- Shadow Bone.png,0.5556
+Take Heart,Psychic,Status,PRAS- FAKE TEARS.png,0.6667,PRAS- Teleport.png,0.5882,Earth1.png,0.5333
+Tearful Look,Normal,Status,PRAS- Mean Look.png,0.7116,PRAS- Stealth Rock.png,0.5455,PRAS- Steamroller.png,0.5455
+Teeter Dance,Normal,Status,PRAS- Petal Dance.png,0.7467,PRAS- Quiver Dance.png,0.7164,PRAS- Dragon Dance.png,0.6255
+Telekinesis,Psychic,Status,PRAS- Kenesis.png,0.6667,PRAS- Healing Wish.png,0.5455,PRAS- Natures Madness BG.png,0.48
+Terrain Pulse,Normal,Special,PRAS- Water Pulse.png,0.8073,Water pulse.png,0.8073,PRAS- Dragon Pulse.png,0.7757
+Terrorize,,Status,PRAS- Corrosive BG.png,0.5556,Custom_Tera Starstorm.png,0.5455,PRAS- Water Shuriken.png,0.5455
+Thief,Dark,Physical,PRAS- Spectral thief BG.png,0.8556,PRAS- Spectral Thief.png,0.8556,PRAS- Strike.png,0.5455
+Thousand Arrows,Ground,Physical,PRAS- Thousand WA BG.png,0.88,PRAS- ThousandWA.png,0.8,PRAS- Thunder BG.png,0.5714
+Thousand Waves,Ground,Physical,PRAS- Thousand WA BG.png,1.2196,PRAS- ThousandWA.png,1.1396,PRAS- Thunder BG.png,0.6
+Thrash,Normal,Physical,PRAS- Meteor Mash.png,0.625,GEN8- Tar Shot.png,0.6154,estranho.png,0.5714
+Throat Chop,Dark,Physical,Trovao.png,0.625,estranho.png,0.5556,PRAS- Tri Attack.png,0.5263
+Thunder Fang,Electric,Physical,PRAS- Thunder BG.png,1.0778,GEN8- Thundercage.png,0.8182,PRAS- Hyper Fang BG.png,0.78
+Thunder Punch,Electric,Physical,PRAS- Thunder BG.png,1.0368,Thunder2.png,0.7,GEN8- Thundercage.png,0.6957
+Thunder Shock,Electric,Special,PRAS- Thunder BG.png,1.0368,GEN8- Thunderous kick.png,0.7692,Thunderous kick.png,0.7692
+Thunder Wave,Electric,Status,PRAS- Thunder BG.png,1.0778,GEN8- Thundercage.png,0.8182,PRAS- Underwater BG.png,0.7619
+Thunder Wave [SM],Electric,Status,PRAS- Thunder BG.png,1.0,GEN8- Thundercage.png,0.75,PRAS- Underwater BG.png,0.6957
+Thunderbolt,Electric,Special,PRAS- Thunder BG.png,1.1178,Thunder2.png,0.8568,GEN8- Thunderous kick.png,0.76
+Tickle,Normal,Status,Tackle_B.png,0.7692,PRAS- Trick.png,0.7273,PRAS- Ice BG.png,0.6667
+Titanic Slam,Normal,Physical,PRAS- Tail slap.png,0.6316,anim sheet.png,0.5333,Gen9- TwinBeam.png,0.5263
+Topsy-Turvy,Dark,Status,PRAS- Psystrike BG.png,0.5263,PRAS- Psystrike.png,0.5263,PRAS- Twister.png,0.4706
+Toxic,Poison,Status,normal2_toxicspikes.png,0.6548,PRAS- Trop Kick.png,0.6154,PRAS- Trick.png,0.6
+Toxic Spikes,Poison,Status,PRAS- Spikes.png,1.0059,normal2_toxicspikes.png,0.9786,PRAS- Trop Kick.png,0.5263
+Toxic Threads,Poison,Status,poi.hear.mus.png,0.5455,Iron Head.png,0.5,PRAS- Iron Head.png,0.5
+Transform,Normal,Status,PRAS- Sandstorm.png,0.6667,Custom_Tera Starstorm.png,0.6364,PRAS- sandstorm2.png,0.6316
+Trick-or-Treat,Ghost,Status,PRAS- Trick.png,0.8882,GEN8- No Retreat.png,0.6667,PRAS- Trick Room BG.png,0.6514
+Trip,,Status,PRAS- Trick.png,0.6667,PRAS- Strike.png,0.6,PRAS- Electric.png,0.5
+Triple Arrows,Fighting,Physical,PRAS- Tail Glow.png,0.5,PRAS- Sinister Arrow Raid.png,0.4828,GEN8- AstralBarrage.png,0.48
+Triple Axel,Ice,Physical,GEN8- Stone Axe.png,0.5556,PRAS- Twinkle Tackle FG.png,0.5217,PRAS- Twinkle Tackle.png,0.5217
+Triple Kick,Fighting,Physical,PRAS- Trop Kick.png,0.8578,PRAS- Blaze Kick.png,0.7116,PRAS- Trick.png,0.6667
+Triple Kick [LA],Fighting,Physical,PRAS- Trop Kick.png,0.78,PRAS- Blaze Kick.png,0.6514,PRAS- Trick.png,0.5882
+Triple Threat,Normal,Physical,GEN8- No Retreat.png,0.6667,PRAS- Withdraw.png,0.5,PRAS- Spectral thief BG.png,0.48
+Twineedle,Bug,Physical,PRAS- Needle Arm.png,0.6667,Gen9- TwinBeam.png,0.5882,PRAS- Tailwind.png,0.5882
+V-Create,Fire,Physical,GEN8- Decorate.png,0.6667,icewater.png,0.6667,PRAS- Retaliate BG.png,0.625
+Vacuum Wave,Fighting,Special,PRAS- Heat Wave.png,0.6356,PRAS- Sludge Wave FG Opp.png,0.58,PRAS- Sludge Wave FG.png,0.58
+Victory Dance,Fighting,Status,PRAS- Quiver Dance.png,0.6887,PRAS- Petal Dance.png,0.6255,PRAS- Dragon Dance.png,0.6017
+Vine Whip,Grass,Physical,PRAS- Vice Grip.png,0.625,Divine_Smash.png,0.5263,PRAS- Whirlpool.png,0.4706
+Vital Throw,Fighting,Physical,PRAS- Stealth Rock.png,0.6667,PRAS- Tail Glow.png,0.5556,PRAS- Earth Power.png,0.5
+Volt Switch,Electric,Special,PRAS- Glitch BG.png,0.625,PRAS- Glitch2.png,0.5882,PRAS- Swift.png,0.5333
+Volt Tackle,Electric,Physical,Tackle_B.png,0.7859,PRAS- Twinkle Tackle FG.png,0.6887,PRAS- Twinkle Tackle.png,0.6887
+Wake-Up Slap,Fighting,Physical,PRAS- Mud Slap.png,0.6682,PRAS- Tail slap.png,0.6356,PRAS- Water Pulse.png,0.5
+Water Gun,Water,Special,PRAS- Water.png,1.0692,PRAS- Water Pulse.png,0.7467,PRAS- Water Shuriken.png,0.7467
+Water Pledge,Water,Special,PRAS- Water.png,0.925,PRAS- Water Pulse.png,0.8419,Water pulse.png,0.8419
+Water Shuriken [SM],Water,Special,PRAS- Water Shuriken.png,1.3586,PRAS- Water.png,0.8,PRAS- Water Pulse.png,0.64
+Water Sport,Water,Status,PRAS- Water.png,0.9667,PRAS- Last Resort.png,0.7,PRAS- Water Shuriken.png,0.6887
+Water Spout,Water,Special,PRAS- Water.png,0.9667,PRAS- Water Shuriken.png,0.6887,PRAS- Water Pulse.png,0.68
+Waterfall,Water,Physical,PRAS- Water.png,0.9343,PRAS- Weatherball.png,0.8,water3.png,0.6667
+Wave Crash,Water,Physical,PRAS- Corkscrew Crash.png,0.6017,PRAS- Air Slash.png,0.5882,PRAS- Water.png,0.5714
+Wear Down,Normal,Physical,PRAS- Speed Down BG.png,0.6682,PRAS- Earth Power.png,0.5556,PRAS- Shadow Bone BG.png,0.5556
+Whirlwind,Normal,Status,PRAS- Tailwind.png,0.7059,PRAS- Fairy Wind BG.png,0.6667,PRAS- Fairy Wind.png,0.6667
+Wicked Blow,Dark,Physical,PRAS- Mind Blown BG.png,0.6316,PRAS- Mind Blown.png,0.6316,GEN9- Fickle Beam All Out bg.png,0.5385
+Wide Guard,Rock,Status,PRAS- Safeguard.png,0.6667,PRAS- Cotton Guard.png,0.58,PRAS- Powder.png,0.5333
+Wild Charge,Electric,Physical,PRAS- Discharge.png,0.7368,PRAS- Charge Beam.png,0.68,PRAS- Glare BG.png,0.5333
+Wing Attack,Flying,Physical,PRAS- Tri Attack.png,0.8168,PRAS- Sand Attack.png,0.78,Sand-Attack.png,0.78
+Work Up,Normal,Status,Custom_Order Up.png,0.6954,PRAS- Shore Up.png,0.6954,PRAS- Bulk Up.png,0.58
+Wounding Strike,Normal,Physical,PRAS- Strike.png,0.9,GEN8- Surging Strikes.png,0.7143,PRAS- Soul-Stealing 7-Star Strike BG.png,0.6746
+Wrap,Normal,Static,PRAS- Wrapping.png,0.9367,PRAS- Swap.png,0.75,PRAS- Roar.png,0.5
+Wring Out,Normal,Special,PRAS- String Shot.png,0.6667,PRAS- Searing Shot BG.png,0.6316,PRAS- Wrapping.png,0.625
+Zap Cannon,Electric,Special,PRAS- Flash Cannon.png,0.78,PRAS- Spike Cannon.png,0.78,GEN8- Fleur Cannon.png,0.68
+Zen Headbutt,Psychic,Physical,Iron Head.png,0.5263,PRAS- Iron Head.png,0.5263,PRAS- Metal Burst BG.png,0.4762
+Zing Zap,Electric,Physical,PRAS- Ingrain.png,0.5714,FreezingGlare.png,0.5,GEN8- FreezingGlare.png,0.5

@@ -1,0 +1,75 @@
+{
+  "name": "Comet Crash",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "comet-crash",
+    "actions": [
+      {
+        "slug": "comet-crash-resolution",
+        "name": "Comet Crash (Resolution)",
+        "type": "attack",
+        "traits": [
+          "set-up",
+          "recoil-1-8",
+          "terrain",
+          "priority-30"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 2,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "The user used Comet Crash (Set-Up) as their last Action."
+        },
+        "category": "physical",
+        "power": 140,
+        "accuracy": 85,
+        "types": [
+          "fire"
+        ],
+        "description": "<p>Trigger: The user used Comet Crash (Set Up) as their last Action.</p><p>Effect: The user freely Moves up to quadruple their Jump total (as per Flight Movement, to not exceed their highest Movement Score tripled) before attacking with this Attack. On resolution, if the user is on a surface, the Terrain is set to Scorched Terrain for 3 Activations.</p>",
+        "img": "systems/ptr2e/img/svg/fire_icon.svg",
+        "predicate": []
+      },
+      {
+        "name": "Comet Crash (Set-Up)",
+        "slug": "comet-crash-set-up",
+        "description": "<p>Effect: The user freely Moves up to triple their Jump total (as per Flight Movement, to not exceed their highest Movement Score doubled), remaining in the air. The user gains +1 SPDEF and SPD Stage for 5 Activations.</p>",
+        "traits": [
+          "set-up",
+          "defensive",
+          "flinch-50"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/fire_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "fire"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "D0vbXN13LTJsHpfp",
+  "effects": []
+}

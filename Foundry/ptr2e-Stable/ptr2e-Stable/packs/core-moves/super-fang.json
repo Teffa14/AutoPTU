@@ -1,0 +1,48 @@
+{
+  "name": "Super Fang",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "super-fang",
+    "actions": [
+      {
+        "slug": "super-fang",
+        "name": "Super Fang",
+        "type": "attack",
+        "traits": [
+          "contact",
+          "jaw"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "status",
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: On hit, the target's current HP is reduced by 50%. This attack always deals a minimum of 1 HP in damage.</p>",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg"
+      }
+    ],
+    "grade": "D",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "GrCm0UcSVchkEHKX",
+  "effects": []
+}

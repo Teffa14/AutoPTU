@@ -1,0 +1,91 @@
+{
+  "name": "Venomous Vex",
+  "type": "move",
+  "_id": "tdv6I3YSwXkmvwWI",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "slug": "venomous-vex",
+    "actions": [
+      {
+        "name": "Venomous Vex (Resolution)",
+        "slug": "venomous-vex",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/poison_icon.svg",
+        "traits": [
+          "set-up",
+          "contact",
+          "crit-1"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1,
+          "trigger": "The user used Venomous Vex (Set-Up) as their last Action."
+        },
+        "types": [
+          "poison"
+        ],
+        "category": "physical",
+        "power": 90,
+        "accuracy": 95,
+        "description": "<p>Trigger: The user used Venomous Vex (Set-Up) as their last Action.</p><p>Effect: On hit, the target gains @Affliction[poison 5].</p>",
+        "predicate": []
+      },
+      {
+        "name": "Venomous Vex (Set-Up)",
+        "slug": "venomous-vex-set-up",
+        "description": "<p>Effect: The user gains @Affliction[braced 2]. If Smoggy or Gloomy Weather is present, the user may use Venomous Vex (Resolution) as a Free Action upon resolving this Attack.</p>",
+        "traits": [
+          "set-up",
+          "defensive",
+          "environ",
+          "priority-20"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/poison_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "poison"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "CYLdyr5mPSDmNpTp": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.328",
+    "systemId": "ptr2e",
+    "systemVersion": "0.10.0-alpha.1.5.2",
+    "createdTime": 1721259795299,
+    "modifiedTime": 1721259869954,
+    "lastModifiedBy": "CYLdyr5mPSDmNpTp"
+  }
+}

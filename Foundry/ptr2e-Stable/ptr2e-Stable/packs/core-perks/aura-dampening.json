@@ -1,0 +1,84 @@
+{
+  "name": "Aura Dampening",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.aura-sense.mod}",
+          30
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>You are able to dampen your Aura, making it difficult to read your moods and intentions.</p><p>Whenever someone attempts to probe your Aura using @UUID[Compendium.ptr2e.core-perks.0oopLlKDWl1rf2Sm]{Aura Empathy} they take a -20 penalty to any triggering Aura Sense check(s).</p><p>If they fail on any such checks, you become aware of their attempt to probe your Aura.</p>",
+    "actions": [
+      {
+        "name": "Aura Dampening",
+        "slug": "aura-dampening",
+        "description": "<p>Whenever someone attempts to probe your Aura using @UUID[Compendium.ptr2e.core-perks.0oopLlKDWl1rf2Sm]{Aura Empathy} they take a -20 penalty to any triggering Aura Sense check(s).</p><p>If they fail on any such checks, you become aware of their attempt to probe your Aura.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 2
+        },
+        "type": "passive",
+        "traits": [
+          "aura"
+        ],
+        "img": "systems/ptr2e/img/perk-icons/Aura.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "aura-dampening",
+    "traits": [
+      "aura"
+    ],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 179,
+        "y": 25,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "aura-projection",
+          "aura-bonding",
+          "shift-consciousness-aura",
+          "shielding-aura"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Aura.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "resilience",
+      "archetype": "aura"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "3j8tXm6MJWi1JKsH",
+  "img": "systems/ptr2e/img/perk-icons/Aura.svg",
+  "effects": [],
+  "folder": "I7ocNlZvZjyhwUcw"
+}

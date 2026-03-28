@@ -1,0 +1,152 @@
+{
+  "name": "Corridors of Time",
+  "type": "ability",
+  "img": "icons/magic/time/hourglass-tilted-gray.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "legendary",
+          "defensive",
+          "interrupt-7",
+          "stage-change"
+        ],
+        "name": "Corridors of Time (Reaction)",
+        "slug": "corridors-of-time-reaction",
+        "type": "generic",
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 5,
+          "trigger": "<p>The user would be affected by a declared Action, Attack, or Ability.</p>"
+        },
+        "range": {
+          "target": "creature",
+          "distance": 20,
+          "unit": "m"
+        },
+        "description": "<p>Trigger: The user would be affected by a declared Action, Attack, or Ability.</p><p>Effect: The user targets the source of Triggering effect, causing them to be Delayed by 50%. The user is unaffected by the Triggering effect, and then user gains +6 EVA for 2 Activations.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [
+          "legendary",
+          "interrupt-7",
+          "priority-50"
+        ],
+        "name": "Corridors of Time (Action)",
+        "slug": "corridors-of-time-action",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3,
+          "trigger": "<p>The user declares an Action or Ability that consumes at least one Simple Action.</p>",
+          "priority": 5
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user declares an Action or Ability that consumes at least one Simple Action.</p><p>The number of Simple Actions the Triggering Action consumes are reduced by 1.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user would be affected by a declared Action, Attack, or Ability.</p><p>Effect: Connection - Roar of Time. The triggering effect does not affect the user, and effect's source is affected by Flinch. Then user gains +6 EVA for 2 Activations. When the user declares an Action or Ability that consumes at least one Simple Action, the user may spend 4 PP to reduce the number of Simple Actions that Action consumes by 1.</p>",
+    "traits": [
+      "legendary",
+      "connection",
+      "defensive",
+      "interrupt-7",
+      "priority-50",
+      "stage-change",
+      "partial-automation"
+    ],
+    "slug": "corridors-of-time",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "Zen8fn6P5ibzzf1l",
+  "effects": [
+    {
+      "name": "Corridors of Time",
+      "type": "passive",
+      "_id": "LmA9RqNABklWWACJ",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.PTh9HrZFLR9vXBGN",
+            "predicate": [
+              "ability:corridors-of-time:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "reevaluateOnUpdate": true,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737395351936,
+        "modifiedTime": 1754317360725,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

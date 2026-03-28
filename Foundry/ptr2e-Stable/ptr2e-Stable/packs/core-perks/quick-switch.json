@@ -1,0 +1,86 @@
+{
+  "name": "Quick Switch",
+  "type": "perk",
+  "folder": "fDfAXQXXzkaqpYoa",
+  "system": {
+    "prerequisites": [
+      "trait:trainer"
+    ],
+    "cost": 2,
+    "description": "<p>At the cost of 2PP and done across a Simple Action, the user Recalls a creature and selects that or another creature on their Team, freely using Send Out to bring that creature into Combat.</p>",
+    "actions": [
+      {
+        "name": "Quick Switch",
+        "slug": "quick-switch",
+        "description": "The user freely uses Recall on the creature, and freely uses Send Out targeting an elligible creature from their Team.",
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 2,
+          "delay": null,
+          "priority": null
+        },
+        "range": {
+          "target": "ally",
+          "unit": "m",
+          "distance": 0
+        },
+        "type": "generic",
+        "traits": [
+          "manipulate",
+          "basic"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "quick-switch",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "emergency-retreat"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#ff8000",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Juggler.svg",
+          "tint": "#151515",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 18,
+        "y": 125,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "finesse",
+      "archetype": "juggler"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "kGNc0h7Xs3dmXRjt",
+  "img": "systems/ptr2e/img/perk-icons/Juggler.svg",
+  "effects": []
+}

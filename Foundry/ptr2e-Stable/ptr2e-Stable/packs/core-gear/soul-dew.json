@@ -1,0 +1,76 @@
+{
+  "name": "Soul Dew",
+  "img": "systems/ptr2e/img/item-icons/soul dew.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "rare",
+    "traits": [
+      "combat",
+      "latios",
+      "latias"
+    ],
+    "actions": [
+      {
+        "name": "Soul Dew",
+        "slug": "soul-dew",
+        "type": "generic",
+        "description": "Effect: Boost the user's Dragon and Psychic-type attack Power by 20%.",
+        "traits": [
+          "Combat",
+          "Latios",
+          "Latias"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: Boost the user's Dragon and Psychic-type attack Power by 20%.",
+    "slug": "soul-dew",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "ivomDdLuov4BUX5w",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

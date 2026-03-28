@@ -1,0 +1,49 @@
+{
+  "name": "Searing Shot",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "searing-shot",
+    "actions": [
+      {
+        "slug": "searing-shot",
+        "name": "Searing Shot",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "blast-2"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "fire"
+        ],
+        "description": "<p>Effect: On hit, all valid targets have a 30% chance of gaining @Affliction[burn] 7.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "7eIiKUowGPEa9Pro",
+  "effects": []
+}

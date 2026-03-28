@@ -1,0 +1,603 @@
+{
+  "name": "bastiodon",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 411,
+    "size": {
+      "category": "medium",
+      "type": "quad",
+      "height": 1.3,
+      "weight": 149.5
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 5
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "quadrupedal",
+      "fossil",
+      "fully-evolved",
+      "underdog",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "soundproof"
+        },
+        {
+          "slug": "sturdy"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "fossilized"
+        },
+        {
+          "slug": "juggernaut"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "friend-guard"
+        },
+        {
+          "slug": "stamina"
+        }
+      ],
+      "master": [
+        {
+          "slug": "impervious"
+        },
+        {
+          "slug": "filter"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 60,
+      "atk": 52,
+      "def": 168,
+      "spa": 47,
+      "spd": 138,
+      "spe": 30
+    },
+    "types": [
+      "rock",
+      "steel"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "block",
+          "gen": "scarlet-violet",
+          "level": 0
+        },
+        {
+          "name": "metal-sound",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet",
+          "level": 15
+        },
+        {
+          "name": "iron-defense",
+          "gen": "scarlet-violet",
+          "level": 19
+        },
+        {
+          "name": "swagger",
+          "gen": "scarlet-violet",
+          "level": 24
+        },
+        {
+          "name": "ancient-power",
+          "gen": "scarlet-violet",
+          "level": 28
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet",
+          "level": 36
+        },
+        {
+          "name": "metal-burst",
+          "gen": "scarlet-violet",
+          "level": 43
+        },
+        {
+          "name": "iron-head",
+          "gen": "scarlet-violet",
+          "level": 51
+        },
+        {
+          "name": "heavy-slam",
+          "gen": "scarlet-violet",
+          "level": 58
+        }
+      ],
+      "tutor": [
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "avalanche",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-press",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "counter",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "earth-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "earthquake",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fissure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-energy",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "foul-play",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "guard-split",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hard-press",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "headbutt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "incinerate",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magnet-rise",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "meteor-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "outrage",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "power-gem",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "reversal",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "roar",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-polish",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sand-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scorching-sands",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "screech",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "smack-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "steel-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "strength",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "torment",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wide-guard",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "captureRate": 50,
+    "eggGroups": [
+      "monster"
+    ],
+    "genderRatio": 1,
+    "habitats": [],
+    "evolutions": {
+      "name": "shieldon",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "bastiodon",
+          "uuid": "Compendium.ptr2e.core-species.Item.YmJDcYkI5WA8RI0f",
+          "methods": [
+            {
+              "type": "level",
+              "level": 36,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.gVsZKm7O8db5Wlfa",
+      "methods": []
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "slug": "bastiodon",
+    "publication": {
+      "source": "PTR 2e Core - Sinnoh Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "YmJDcYkI5WA8RI0f",
+  "effects": []
+}

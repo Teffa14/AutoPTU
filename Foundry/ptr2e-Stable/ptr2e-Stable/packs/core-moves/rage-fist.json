@@ -1,0 +1,53 @@
+{
+  "name": "Rage Fist",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "rage-fist",
+    "actions": [
+      {
+        "slug": "rage-fist",
+        "name": "Rage Fist",
+        "type": "attack",
+        "traits": [
+          "punch",
+          "dash",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 50,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>Effect: Rage Fist's Power increased by +50 for every time the user has been hit by a damaging Attack (other than its own) during this combat, up to a maximum of 350 Power.</p>",
+        "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "05M62ikAeJYas6Oi",
+  "effects": []
+}

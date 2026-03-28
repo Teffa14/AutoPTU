@@ -1,0 +1,157 @@
+{
+  "folder": "zrVtKATNxzLNxTUX",
+  "name": "Metamove: Dirty Trick",
+  "type": "perk",
+  "_id": "7jgu6qfPzvZDS5lZ",
+  "img": "systems/ptr2e/img/perk-icons/Arcana.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Metamove: Dirty Trick",
+        "slug": "metamove-dirty-trick",
+        "description": "<p>Trigger: The user declares an Attack.</p><p>Effect: On hit, the Triggering Attack causes all valid targets to be Flinched and they lose -1 EVA for 5 Activations.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 4,
+          "trigger": "The user's declares an attack."
+        },
+        "type": "generic",
+        "traits": [
+          "social",
+          "flinch-3"
+        ],
+        "img": "systems/ptr2e/img/icons/feat_icon.webp",
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "metamove-dirty-trick",
+    "description": "<p>When declaring an Attack, the user may spend 4PP to have that Attack inflict 20% Delay and cause affected creatures lose -1 EVA for 5 Activations if it hits.</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 122,
+        "y": 182,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "metamove-power-swap",
+          "metamove-empower",
+          "stat-iv-booster-1-13",
+          "improved-overland-16",
+          "minor-buff-19",
+          "minor-buff-57",
+          "comingling-of-power"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Arcana.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "finesse",
+      "archetype": "metamove"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Dirty Trick",
+      "type": "passive",
+      "_id": "Sr4X0MTZvT3I7sIf",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "metamove-dirty-trick-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.delayconditiitem",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": false,
+            "affects": "target",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.amount",
+                "value": -20
+              }
+            ],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "metamove-dirty-trick-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.hIE6W3Y5E9CyHiTy",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": false,
+            "affects": "target",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1757861617379,
+        "modifiedTime": 1757861701447,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

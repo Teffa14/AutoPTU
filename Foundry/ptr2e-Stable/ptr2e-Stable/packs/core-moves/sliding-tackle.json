@@ -1,0 +1,50 @@
+{
+  "name": "Sliding Tackle",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "sliding-tackle",
+    "actions": [
+      {
+        "slug": "sliding-tackle",
+        "name": "Sliding Tackle",
+        "type": "attack",
+        "traits": [
+          "contact",
+          "kick",
+          "pass-3"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 65,
+        "accuracy": 100,
+        "types": [
+          "ice"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "kKZsQhFzfanqZhYp",
+  "effects": []
+}

@@ -1,0 +1,445 @@
+{
+  "name": "corvisquire",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "flying"
+    ],
+    "stats": {
+      "hp": 68,
+      "atk": 67,
+      "def": 55,
+      "spa": 43,
+      "spd": 55,
+      "spe": 77
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "hone-claws",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "leer",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "peck",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "power-trip",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "fury-attack",
+          "gen": "scarlet-violet",
+          "level": 12
+        },
+        {
+          "name": "pluck",
+          "gen": "scarlet-violet",
+          "level": 16
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet",
+          "level": 22
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet",
+          "level": 28
+        },
+        {
+          "name": "drill-peck",
+          "gen": "scarlet-violet",
+          "level": 34
+        },
+        {
+          "name": "swagger",
+          "gen": "scarlet-violet",
+          "level": 40
+        },
+        {
+          "name": "brave-bird",
+          "gen": "scarlet-violet",
+          "level": 46
+        }
+      ],
+      "tutor": [
+        {
+          "name": "aerial-ace",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "agility",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "air-cutter",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "air-slash",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fake-tears",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fly",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-energy",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hurricane",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "nasty-plot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "retaliate",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "revenge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "reversal",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spite",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tailwind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "u-turn",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "work-up",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.8,
+      "weight": 16,
+      "category": "small",
+      "type": "quad"
+    },
+    "captureRate": 120,
+    "eggGroups": [
+      "flying"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "rookidee",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "corvisquire",
+          "uuid": "Compendium.ptr2e.core-species.Item.sZs1m65t7GnCoYC6",
+          "methods": [
+            {
+              "type": "level",
+              "level": 18,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "corviknight",
+              "uuid": "Compendium.ptr2e.core-species.Item.GvnZOIhcgUghJorU",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 38,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.P5TjmXGB9w5dzcVb",
+      "methods": []
+    },
+    "number": 822,
+    "traits": [
+      "pokemon",
+      "winged",
+      "jump-3"
+    ],
+    "diet": [
+      "omnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "keen-eye"
+        },
+        {
+          "slug": "unnerve"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "big-pecks"
+        },
+        {
+          "slug": "flock"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "early-bird"
+        },
+        {
+          "slug": "reckless"
+        }
+      ],
+      "master": [
+        {
+          "slug": "guts"
+        },
+        {
+          "slug": "gale-wings"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 12
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "appraise",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "forest",
+      "woodland",
+      "badland",
+      "swamp"
+    ],
+    "slug": "corvisquire",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "sZs1m65t7GnCoYC6",
+  "effects": []
+}

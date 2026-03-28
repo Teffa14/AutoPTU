@@ -1,0 +1,106 @@
+{
+  "name": "Stench",
+  "type": "ability",
+  "img": "systems/ptr2e/img/conditions/flinched.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [],
+        "name": "Stench",
+        "slug": "stench",
+        "type": "passive",
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>The user hits with a Physical or Special-Category attack.</p>"
+        },
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "description": "<p>Trigger: The user hits target(s) with a Physical or Special-Category attack.</p><p>Effect: All valid target(s) has a 10% chance to be Flinched.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user hits target(s) with a Physical or Special-Category attack.</p><p>Effect: All valid target(s) has a 10% chance to be Flinched.</p>",
+    "traits": [],
+    "slug": "stench",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "mNww18uHVxa0yoaz",
+  "effects": [
+    {
+      "name": "Stench",
+      "type": "passive",
+      "_id": "yrTjSiuWC2aJbCJS",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "damaging-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.advanceffectitem",
+            "predicate": [],
+            "chance": 10,
+            "affects": "target",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.amount",
+                "value": -40
+              },
+              {
+                "mode": 5,
+                "property": "name",
+                "value": "Flinch 40%"
+              }
+            ],
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.3.0",
+        "createdTime": 1738250046138,
+        "modifiedTime": 1738250095556,
+        "lastModifiedBy": "IcBpMqhFuTck9VpX"
+      }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Mega Evolve!",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "mega-evolve",
+    "actions": [
+      {
+        "slug": "mega-evolve",
+        "name": "Mega Evolve!",
+        "type": "generic",
+        "traits": [
+          "evolution",
+          "phenomenon",
+          "command"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 50,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "untyped"
+        ],
+        "description": "<p>Effect: The targeted Pokémon spends 10 PP and undergoes Mega Evolution.</p><p>May only be used by either a Pokémon holding a <Species> matched Mega Stone or its partner, holding a Key Stone. The Pokémon may use this with target <q>Self<q> if the partner is within 50m.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "wf0qZhhnduvvBaw6",
+  "effects": []
+}

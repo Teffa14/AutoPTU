@@ -1,0 +1,52 @@
+{
+  "name": "Meteor Assault",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "meteor-assault",
+    "actions": [
+      {
+        "slug": "meteor-assault",
+        "name": "Meteor Assault",
+        "type": "attack",
+        "traits": [
+          "flinch-40",
+          "dash",
+          "pass-3",
+          "push-1",
+          "sharp"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "physical",
+        "power": 150,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "zNBOGA90XtIC0GVb",
+  "effects": []
+}

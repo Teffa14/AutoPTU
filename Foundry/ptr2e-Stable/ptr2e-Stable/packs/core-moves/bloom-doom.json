@@ -1,0 +1,51 @@
+{
+  "name": "Bloom Doom",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "bloom-doom",
+    "actions": [
+      {
+        "slug": "bloom-doom",
+        "name": "Bloom Doom",
+        "type": "attack",
+        "traits": [
+          "zenith",
+          "blast-3",
+          "sky"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0,
+          "trigger": "<p>User's partner uses Z-Pose! and triggers the appropriate Z-Crystal.</p>"
+        },
+        "category": "physical",
+        "power": 180,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "<p>Trigger: User's partner uses Z-Pose! and triggers the appropriate Z-Crystal.</p><p>Effect: Upon resolving this attack, the user freely uses Grassy Terrain.</p><p>Requirement: [Grass] Z-Crystal as an Accessory Item and a Grass-Type attack on the user's Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "PIcqvw3lxOj7p6hj",
+  "effects": []
+}

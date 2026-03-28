@@ -1,0 +1,51 @@
+{
+  "name": "Flame Impact",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "flame-impact",
+    "actions": [
+      {
+        "slug": "flame-impact",
+        "name": "Flame Impact",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "priority-10",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "priority": 1
+        },
+        "category": "physical",
+        "power": 65,
+        "accuracy": 100,
+        "types": [
+          "fire"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "cJEAe6BB6VRKgq8F",
+  "effects": []
+}

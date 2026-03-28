@@ -1,0 +1,476 @@
+{
+  "name": "gholdengo",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "ghost",
+      "steel"
+    ],
+    "stats": {
+      "hp": 87,
+      "atk": 60,
+      "def": 95,
+      "spa": 133,
+      "spd": 91,
+      "spe": 84
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "astonish",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "night-shade",
+          "gen": "scarlet-violet",
+          "level": 7
+        },
+        {
+          "name": "confuse-ray",
+          "gen": "scarlet-violet",
+          "level": 14
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet",
+          "level": 21
+        },
+        {
+          "name": "metal-sound",
+          "gen": "scarlet-violet",
+          "level": 28
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet",
+          "level": 35
+        },
+        {
+          "name": "recover",
+          "gen": "scarlet-violet",
+          "level": 42
+        },
+        {
+          "name": "power-gem",
+          "gen": "scarlet-violet",
+          "level": 49
+        },
+        {
+          "name": "make-it-rain",
+          "gen": "scarlet-violet",
+          "level": 56
+        },
+        {
+          "name": "nasty-plot",
+          "gen": "scarlet-violet",
+          "level": 63
+        },
+        {
+          "name": "memento",
+          "gen": "scarlet-violet",
+          "level": 70
+        }
+      ],
+      "tutor": [
+        {
+          "name": "charge-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "electro-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-punch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heavy-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hex",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-head",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "low-kick",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "low-sweep",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poltergeist",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psyshock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "steel-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-punch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.2,
+      "weight": 30,
+      "category": "small",
+      "type": "height"
+    },
+    "captureRate": 49,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "gimmighoul",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "gholdengo",
+          "uuid": "Compendium.ptr2e.core-species.Item.SY8K2Qxp57iYbltk",
+          "methods": [
+            {
+              "type": "item",
+              "item": "gimmighoul-coin",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 40,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": [],
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.fIQ07e3w2gbpejZZ",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 1000,
+    "traits": [
+      "pokemon",
+      "breathless",
+      "calming",
+      "darkvision-15",
+      "fully-evolved",
+      "mud-runner",
+      "natural-steel",
+      "water-walking",
+      "hover",
+      "jump-3"
+    ],
+    "diet": [
+      "nullivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "good-as-gold"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "unburden"
+        },
+        {
+          "slug": "super-luck"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "filter"
+        },
+        {
+          "slug": "friend-guard"
+        }
+      ],
+      "master": [
+        {
+          "slug": "parry"
+        },
+        {
+          "slug": "rebuild"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 8
+      },
+      {
+        "type": "flight",
+        "value": 13
+      }
+    ],
+    "skills": [
+      {
+        "slug": "accounting",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "acrobatics",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "appraise",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ghost",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "sleight-of-hand",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "ruin"
+    ],
+    "slug": "gholdengo",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "SY8K2Qxp57iYbltk",
+  "effects": []
+}

@@ -1,0 +1,155 @@
+{
+  "name": "Choice Scope",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "combat"
+    ],
+    "actions": [
+      {
+        "name": "Choice Scope",
+        "slug": "choice-scope",
+        "type": "generic",
+        "description": "Trigger: The user uses an attack and is not @Affliction[choice-locked].\nEffect: The user gains @Affliction[choice-locked] 3. Passive: the user has +1 default ACC Stage.",
+        "traits": [
+          "Combat"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "trigger": "The user uses an attack and is not @Affliction[choice-locked]."
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user uses an attack and is not @Affliction[choice-locked].</p><p></p><p> Effect: The user gains @Affliction[choice-locked 3]. </p><p></p><p>Passive: the user has +1 default ACC Stage.</p>",
+    "slug": "choice-scope",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "tHzKyFWDFFlji2iq",
+  "effects": [
+    {
+      "name": "Choice Scope",
+      "type": "passive",
+      "_id": "1nVLpsFFD1vdBkNL",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "basic",
+            "key": "system.battleStats.accuracy.stage",
+            "value": 1,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "attack",
+            "value": "Compendium.ptr2e.core-effects.Item.choicelockeditem",
+            "predicate": [
+              {
+                "not": "affliction:choice-locked"
+              }
+            ],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "self",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "duration.turns",
+                "value": 3
+              }
+            ],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.4.beta",
+        "createdTime": 1758374059815,
+        "modifiedTime": 1758374108429,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

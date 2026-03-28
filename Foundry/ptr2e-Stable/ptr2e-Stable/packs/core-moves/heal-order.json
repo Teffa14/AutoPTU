@@ -1,0 +1,79 @@
+{
+  "name": "Heal Order",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "system": {
+    "slug": "heal-order",
+    "actions": [
+      {
+        "slug": "heal-order",
+        "name": "Heal Order",
+        "type": "attack",
+        "traits": [
+          "healing",
+          "dance"
+        ],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "bug"
+        ],
+        "description": "<p>Effect: The user recovers 8 Ticks of HP.",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "heal-order-allies",
+        "name": "Heal Order (Allies)",
+        "type": "attack",
+        "traits": [
+          "dance"
+        ],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7,
+          "trigger": "Two or more Bug-Type allies are present on the Field."
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "bug"
+        ],
+        "description": "<p>Trigger: Two or more Bug-Type allies are present on the Field.</p><p>Effect: The user recovers 12 Ticks of HP and gains @Affliction[ringed] 5.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "heal-order",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "jAVzPMZah2qXr2qi",
+  "effects": []
+}

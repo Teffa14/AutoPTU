@@ -1,0 +1,48 @@
+{
+  "name": "Tailwind",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "system": {
+    "slug": "tailwind",
+    "actions": [
+      {
+        "slug": "tailwind",
+        "name": "Tailwind",
+        "type": "attack",
+        "traits": [
+          "weather"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "types": [
+          "flying"
+        ],
+        "description": "<p>Effect: The weather becomes Windy for 3 rounds.</p>",
+        "img": "systems/ptr2e/img/svg/flying_icon.svg",
+        "summon": "Compendium.ptr2e.core-summons.Item.JkgrSB6ARoHoyayT",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "u9S8zbICHVUBS1Gx",
+  "effects": []
+}

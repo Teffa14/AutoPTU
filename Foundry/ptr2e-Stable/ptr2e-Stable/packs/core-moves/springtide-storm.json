@@ -1,0 +1,141 @@
+{
+  "name": "Springtide Storm",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+  "system": {
+    "slug": "springtide-storm",
+    "actions": [
+      {
+        "slug": "springtide-storm",
+        "name": "Springtide Storm",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "friendly",
+          "blast-4",
+          "wind"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 9
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 80,
+        "types": [
+          "fairy"
+        ],
+        "description": "<p>Effect: On hit, all valid targets have a 30% chance of losing -1 ATK Stage for 5 Activations.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "springtide-storm-blowing",
+        "name": "Springtide Storm (Blowing)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "wind",
+          "blast-4",
+          "environ",
+          "danger-close"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8,
+          "trigger": "Gloomy or Windy Weather Weather is present."
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "fairy"
+        ],
+        "description": "<pTrigger: Gloomy or Windy Weather is present.</p><p>Effect: On hit, all valid targets have a 30% chance of losing -1 ATK Stage for 7 Activations.</p>",
+        "variant": "springtide-storm",
+        "free": true,
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "QCln8FVxc5CNC1ZG",
+  "effects": [
+    {
+      "name": "Springtide Storm",
+      "type": "passive",
+      "_id": "K0arPkjZfzaqpAk8",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "springtide-storm-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.ikCAv5w4iNfHHqaE",
+            "predicate": [],
+            "chance": 10,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": []
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.2.1",
+        "createdTime": 1737746142350,
+        "modifiedTime": 1737746164701,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS"
+      }
+    }
+  ]
+}

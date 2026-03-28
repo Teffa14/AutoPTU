@@ -1,0 +1,41 @@
+{
+  "name": "Infiltrator",
+  "type": "ability",
+  "img": "systems/ptr2e/img/perk-icons/Ninja.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [],
+        "name": "Infiltrator",
+        "slug": "infiltrator",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "description": "<p>Effect: The user's attacks ignore [Shield] effects.</p>",
+        "img": "systems/ptr2e/img/perk-icons/Ninja.svg"
+      }
+    ],
+    "description": "<p>Effect: The user's attacks ignore [Shield] effects.</p>",
+    "traits": [],
+    "slug": "infiltrator",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "lwzM23P0sNChuCx6",
+  "effects": []
+}

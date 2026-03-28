@@ -1,0 +1,66 @@
+{
+  "name": "Intercept",
+  "type": "move",
+  "_id": "V3Ez1kwHYBoE1GuX",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Intercept",
+        "slug": "intercept",
+        "type": "generic",
+        "traits": [
+          "interrupt-3",
+          "push-1",
+          "manipulate"
+        ],
+        "range": {
+          "target": "ally"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0,
+          "trigger": "<p>An ally would be hit by a non-[Danger Close] Attack.</p>"
+        },
+        "types": [
+          "untyped"
+        ],
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null,
+        "description": "<p>Trigger: An ally would be hit by a non-[Danger Close] Attack.</p><p>Effect: The user uses Movements of their choice, moving into the target's space.The target is Pushed out of that space, and the user takes the attack in place of the target. If the user is are unable to reach the target ally's space, the target still takes damage from the attack. If the target cannot be Pushed out of the area of effect of the triggering Attack, they still take the full effects of the triggering Attack.</p>"
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "Kc3DOunCh3ClAeHS": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.325",
+    "systemId": "ptr2e",
+    "systemVersion": "0.006",
+    "createdTime": 1717158253897,
+    "modifiedTime": 1717158572136,
+    "lastModifiedBy": "Kc3DOunCh3ClAeHS"
+  }
+}

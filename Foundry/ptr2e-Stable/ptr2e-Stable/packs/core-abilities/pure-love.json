@@ -1,0 +1,133 @@
+{
+  "name": "Pure Love",
+  "type": "ability",
+  "img": "icons/magic/life/heart-hand-gold-green-light.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive",
+          "interrupt-3"
+        ],
+        "name": "Pure Love",
+        "slug": "pure-love-trigger",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>The user is hit by a [Contact] attack.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "description": "<p>Trigger: The user is hit by a [Contact] attack.</p><p>Effect: The triggering creature gains @Affliction[charmed].</p>",
+        "img": "systems/ptr2e/img/icons/ability_icon.webp"
+      },
+      {
+        "traits": [
+          "healing"
+        ],
+        "name": "Pure Love",
+        "slug": "pure-love",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "description": "<p>Effect: The user's Physical- and Special-Category gain the [Drain 1/4] Trait when affecting creatures that are @Affliction[charmed].</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user is hit by a [Contact] attack.</p><p>Effect: The triggering creature gains @Affliction[charmed].</p><p>Passive: The user's Physical- and Special-Category gain the [Drain 1/4] Trait when affecting creatures that are @Affliction[charmed].</p>",
+    "traits": [
+      "defensive"
+    ],
+    "slug": "pure-love",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "iBSELL1at6mPDK5b",
+  "effects": [
+    {
+      "name": "Pure Love",
+      "type": "passive",
+      "_id": "YgxZUl8Qp1xZS5Qs",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "contact-trait-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.charmedcondiitem",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": false,
+            "affects": "origin",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "alter-attack",
+            "key": "damaging-attack",
+            "value": "drain-1-4",
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "property": "traits",
+            "definition": [
+              "target:effect:affliction:charmed"
+            ]
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1765283959124,
+        "modifiedTime": 1765284027818,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

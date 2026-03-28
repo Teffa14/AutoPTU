@@ -1,0 +1,51 @@
+{
+  "name": "Instant Crush",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "instant-crush",
+    "actions": [
+      {
+        "slug": "instant-crush",
+        "name": "Instant Crush",
+        "type": "attack",
+        "traits": [
+          "crushing",
+          "priority-10"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1,
+          "priority": 1
+        },
+        "category": "special",
+        "power": 60,
+        "accuracy": 85,
+        "types": [
+          "psychic"
+        ],
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+        "defensiveStat": "def"
+      }
+    ],
+    "grade": "E",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "PAVy0l3CS8e2Vi5x",
+  "effects": []
+}

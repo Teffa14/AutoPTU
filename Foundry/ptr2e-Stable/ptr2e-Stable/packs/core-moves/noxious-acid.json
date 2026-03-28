@@ -1,0 +1,105 @@
+{
+  "name": "Noxious Acid",
+  "type": "move",
+  "_id": "K68tBqtac9J769mO",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "system": {
+    "slug": "noxious-acid",
+    "actions": [
+      {
+        "name": "Noxious Acid",
+        "slug": "noxious-acid",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "blast-2"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "types": [
+          "poison",
+          "bug"
+        ],
+        "category": "special",
+        "power": 65,
+        "accuracy": 90,
+        "description": "<p>Effect: On hit, all valid targets have a 30% chance of losing -1 ACC Stage for 5 Activations. This attack is considered to be both Bug and Poison Type.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [
+    {
+      "name": "Noxious Acid",
+      "type": "passive",
+      "_id": "31inaYT1AXvHsT8M",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "noxious-acid-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.wA5oCsgHmZLcHHSn",
+            "predicate": [],
+            "chance": 30,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.4",
+        "createdTime": 1737308825429,
+        "modifiedTime": 1737308853280,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

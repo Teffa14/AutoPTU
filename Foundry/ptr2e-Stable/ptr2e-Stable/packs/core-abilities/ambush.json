@@ -1,0 +1,148 @@
+{
+  "name": "Ambush",
+  "type": "ability",
+  "img": "icons/creatures/magical/humanoid-silhouette-dashing-blue.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "interrupt-5"
+        ],
+        "name": "Ambush",
+        "slug": "ambush",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 4,
+          "trigger": "<p>The user enters battle, or emerges from stealth.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user enters battle, or emerges from stealth.</p><p>Effect: The user gains +4 CRIT Stages for 2 Activations.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user enters battle, or emerges from stealth, or declares an attack while @Affliction[invisible] .</p><p>Effect: Connection - Fake Out. The user gains +4 CRIT Stages for 2 Activations.</p>",
+    "traits": [
+      "connection"
+    ],
+    "slug": "ambush",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "VMPHWnc089Y3df9P",
+  "effects": [
+    {
+      "name": "Ambush",
+      "type": "passive",
+      "_id": "MgYBoLIFErTxjXtC",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.bETEHMYZpiBol842",
+            "predicate": [
+              "ability:ambush:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "ambush-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.E9uqJNUy2osKSaJI",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "self",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "duration.turns",
+                "value": 2
+              }
+            ],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-note",
+            "key": "combat-enter",
+            "value": "{actor|link} enters combat and may spend {item|system.cost} PP to use {item|link}!",
+            "predicate": [],
+            "visibility": null,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737392621557,
+        "modifiedTime": 1754316733014,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

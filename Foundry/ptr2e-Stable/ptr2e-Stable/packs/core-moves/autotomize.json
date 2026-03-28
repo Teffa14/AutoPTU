@@ -1,0 +1,46 @@
+{
+  "name": "Autotomize",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "autotomize",
+    "actions": [
+      {
+        "slug": "autotomize",
+        "name": "Autotomize",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Effect: The user reduces their WC by 3 Stages (min WC 1) for 5 Activations and increases their SPD Stage by +2 for 5 Activations.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "7SQwef1Kf1JPq6Rj",
+  "effects": []
+}

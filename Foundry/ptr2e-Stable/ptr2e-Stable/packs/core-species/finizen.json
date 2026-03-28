@@ -1,0 +1,445 @@
+{
+  "name": "finizen",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "water"
+    ],
+    "stats": {
+      "hp": 70,
+      "atk": 45,
+      "def": 40,
+      "spa": 45,
+      "spd": 40,
+      "spe": 75
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "supersonic",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-gun",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "astonish",
+          "level": 7,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-energy",
+          "level": 10,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aqua-jet",
+          "level": 13,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-hit",
+          "level": 17,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dive",
+          "level": 21,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acrobatics",
+          "level": 29,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "encore",
+          "level": 34,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aqua-tail",
+          "level": 39,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mist",
+          "level": 44,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hydro-pump",
+          "level": 50,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "agility",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "boomburst",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bounce",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "counter",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "disarming-voice",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "draining-kiss",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "haze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "liquidation",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "surf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tickle",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "waterfall",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.3,
+      "weight": 60.2,
+      "category": "medium",
+      "type": "quad"
+    },
+    "captureRate": 200,
+    "eggGroups": [
+      "ground",
+      "water2"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "finizen",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "palafin",
+          "uuid": "Compendium.ptr2e.core-species.Item.FIO0qX2OsiUJqPAt",
+          "methods": [
+            {
+              "type": "level",
+              "level": 38,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.MYptb932OldurRgQ",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 963,
+    "traits": [
+      "pokemon",
+      "deep-breath",
+      "direction-sense",
+      "mind-reader",
+      "pack-mon",
+      "wavesense-15",
+      "fountain",
+      "jump-2"
+    ],
+    "diet": [
+      "carnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "water-veil"
+        },
+        {
+          "slug": "torrent"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "swift-swim"
+        },
+        {
+          "slug": "inner-focus"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "team-player"
+        },
+        {
+          "slug": "tidal-rush"
+        }
+      ],
+      "master": [
+        {
+          "slug": "feisty"
+        },
+        {
+          "slug": "anticipation"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "swim",
+        "value": 11
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychology",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "ocean",
+      "reef"
+    ],
+    "slug": "finizen",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "MYptb932OldurRgQ",
+  "effects": []
+}

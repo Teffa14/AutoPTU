@@ -1,0 +1,77 @@
+{
+  "name": "Firefly",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      "trait:fire"
+    ],
+    "cost": 1,
+    "description": "<p>You gain @Trait[glow-3] or [Glow X+2].</p>",
+    "actions": [
+      {
+        "name": "Firefly",
+        "slug": "firefly",
+        "description": "<p>You gain [Glow 3] or [Glow X+2].</p>",
+        "cost": {
+          "activation": "free"
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "firefly",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 165,
+        "y": 95,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "midnight-oil",
+          "intense-heat",
+          "root-3",
+          "type-embodiment-type",
+          "grim-haunt",
+          "mindscramble",
+          "firestarter"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/svg/fire_icon.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "resilience",
+      "archetype": "fire"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "LPWul8LmZhwp1FbR",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "effects": [],
+  "folder": "oguAsvaOzTLs8f97"
+}

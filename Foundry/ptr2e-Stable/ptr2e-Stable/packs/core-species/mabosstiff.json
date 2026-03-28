@@ -1,0 +1,473 @@
+{
+  "name": "mabosstiff",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "dark"
+    ],
+    "stats": {
+      "hp": 80,
+      "atk": 120,
+      "def": 90,
+      "spa": 60,
+      "spd": 70,
+      "spe": 85
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leer",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scary-face",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lick",
+          "level": 4,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snarl",
+          "level": 7,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hone-claws",
+          "level": 10,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bite",
+          "level": 14,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "roar",
+          "level": 18,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "headbutt",
+          "level": 22,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "payback",
+          "level": 26,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "crunch",
+          "level": 34,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "level": 39,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reversal",
+          "level": 43,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "jaw-lock",
+          "level": 48,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-edge",
+          "level": 55,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "outrage",
+          "level": 60,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "comeuppance",
+          "level": null,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "spite",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pain-split",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endeavor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-voice",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fake-tears",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wild-charge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "play-rough",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-fangs",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lash-out",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.1,
+      "weight": 61,
+      "category": "medium",
+      "type": "quad"
+    },
+    "captureRate": 75,
+    "eggGroups": [
+      "ground"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "maschiff",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "mabosstiff",
+          "uuid": "Compendium.ptr2e.core-species.Item.TAJuJagFQJSy8A7k",
+          "methods": [
+            {
+              "type": "level",
+              "level": 30,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.nbZGqpeLBED6YOu7",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 943,
+    "traits": [
+      "pokemon",
+      "darkvision-15",
+      "fully-evolved",
+      "keen-scent",
+      "underdog",
+      "jump-4"
+    ],
+    "diet": [
+      "omnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "intimidate"
+        },
+        {
+          "slug": "friend-guard"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "guard-dog"
+        },
+        {
+          "slug": "stakeout"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "tough-hide"
+        },
+        {
+          "slug": "stalwart"
+        }
+      ],
+      "master": [
+        {
+          "slug": "fur-coat"
+        },
+        {
+          "slug": "strong-jaw"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 8
+      },
+      {
+        "type": "swim",
+        "value": 4
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 75,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "forest",
+      "city"
+    ],
+    "slug": "mabosstiff",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "TAJuJagFQJSy8A7k",
+  "effects": []
+}

@@ -1,0 +1,567 @@
+{
+  "name": "cherrim",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 421,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.5,
+      "weight": 9.3
+    },
+    "diet": [
+      "phototroph"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 9
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "bait",
+      "bipedal",
+      "fully-evolved",
+      "jump-1",
+      "underdog"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "flower-gift"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "chlorophyll"
+        },
+        {
+          "slug": "harvest"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "flower-veil"
+        },
+        {
+          "slug": "natural-cure"
+        }
+      ],
+      "master": [
+        {
+          "slug": "costar"
+        },
+        {
+          "slug": "adaptability"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "cherrim",
+    "stats": {
+      "hp": 70,
+      "atk": 60,
+      "def": 70,
+      "spa": 87,
+      "spd": 78,
+      "spe": 85
+    },
+    "types": [
+      "grass"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "flower-shield",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "growth",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "leafage",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "morning-sun",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "sunny-day",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "helping-hand",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 15
+        },
+        {
+          "name": "magical-leaf",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 20
+        },
+        {
+          "name": "leech-seed",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 28
+        },
+        {
+          "name": "take-down",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 34
+        },
+        {
+          "name": "petal-blizzard",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 41
+        },
+        {
+          "name": "lucky-chant",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 48
+        },
+        {
+          "name": "worry-seed",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 48
+        },
+        {
+          "name": "solar-beam",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 55
+        },
+        {
+          "name": "petal-dance",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 62
+        }
+      ],
+      "tutor": [
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bullet-seed",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "draining-kiss",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "flash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "grassy-glide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "grassy-terrain",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "laser-focus",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "play-rough",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "pollen-puff",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rollout",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "safeguard",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-blade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swagger",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "synthesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "weather-ball",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "captureRate": 75,
+    "eggGroups": [
+      "fairy",
+      "plant"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "forest"
+    ],
+    "evolutions": {
+      "name": "cherubi",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "cherrim",
+          "uuid": "Compendium.ptr2e.core-species.Item.zEz3oqCULVcENsLD",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.gvY2vyuQqc9YPg4y",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core - Sinnoh Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "zEz3oqCULVcENsLD",
+  "effects": [
+    {
+      "name": "Sunshine",
+      "type": "form",
+      "_id": "i1rq1SucjfVBtDI4",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-option",
+            "key": "manual-forme-toggle",
+            "value": "forme:sunshine:active",
+            "domain": "all",
+            "toggleable": true,
+            "label": "Toggle: Sunshine Forme",
+            "predicate": [],
+            "alwaysActive": false,
+            "count": false,
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "suboptions": [],
+            "state": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:sunshine:active"
+            ],
+            "key": "system.modifiers.atkMultiplier",
+            "value": 1.5,
+            "mode": 1,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:sunshine:active"
+            ],
+            "key": "system.modifiers.spdMultiplier",
+            "value": 1.5,
+            "mode": 1,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "trigger": "manual",
+        "conditions": [],
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.2.1",
+        "createdTime": 1738146981069,
+        "modifiedTime": 1738147034829,
+        "lastModifiedBy": "IcBpMqhFuTck9VpX",
+        "exportSource": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "name": "Key Stone",
+  "img": "systems/ptr2e/img/item-icons/key stone.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "slotless",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "S",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": true,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "unique",
+    "traits": [
+      "phenomenon",
+      "charge-pool-1"
+    ],
+    "actions": [
+      {
+        "slug": "mega-evolve",
+        "name": "Mega Evolve!",
+        "type": "generic",
+        "traits": [
+          "evolution",
+          "phenomenon",
+          "command"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 50,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>Targeted creature possesses a Mega Stone sharing their Species Trait.</p>"
+        },
+        "description": "<p>Trigger: Targeted creature possesses a Mega Stone sharing their Species Trait.</p><p>Effect: The targeted Pokémon uses Mega Evolve! (Mega Stone).</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "slug": "mega-evolve-key-stone-charge",
+        "name": "Mega Evolve! (Key Stone Charge)",
+        "type": "generic",
+        "traits": [
+          "evolution",
+          "phenomenon",
+          "command"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 50,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>Targeted creature possesses a Mega Stone sharing their Species Trait.</p>"
+        },
+        "description": "<p>Trigger: Targeted creature possesses a Mega Stone sharing their Species Trait.</p><p>Effect: The targeted Pokémon freely uses Mega Evolve! (Mega Stone).</p>",
+        "variant": "mega-evolve",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user may utilize a charge from this Item to pay the PP Cost of Mega Evolve! for the user or a creature on their Team.</p>",
+    "slug": "key-stone",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "FbPvDuEStPKXezyf",
+  "effects": [],
+  "folder": "V4skAU6G3OH5fXae"
+}

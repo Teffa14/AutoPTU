@@ -1,0 +1,93 @@
+{
+  "name": "Silk Swing",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      "trait:bug"
+    ],
+    "cost": 2,
+    "description": "<p>You gain the [Threaded] trait, and gain a Threaded Movement Allowance equal to your Overland Movement Allowance.</p>",
+    "actions": [
+      {
+        "name": "Silk Swing",
+        "slug": "silk-swing",
+        "description": "<p>You gain the [Threaded] trait, and gain a Threaded Movement Allowance equal to your Overland Movement Allowance.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0,
+          "delay": null,
+          "priority": null
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "hidden": false,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "silk-swing",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "adhesive-digits",
+          "hivemark",
+          "improved-threaded",
+          "root-1",
+          "improved-threaded-1",
+          "minor-buff-24",
+          "minor-buff-25",
+          "creepy-crawly"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/svg/bug_icon.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 83,
+        "y": 31,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [
+      "trait:threaded"
+    ],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "finesse",
+      "archetype": "bug"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "tVbuG5HWGhxgZQV5",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "effects": [],
+  "folder": "o5iIUG4Bj40M86yi"
+}

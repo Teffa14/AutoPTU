@@ -1,0 +1,566 @@
+{
+  "name": "purrloin",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 509,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.4,
+      "weight": 10.1
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 10
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "quadrupedal",
+      "darkvision-15",
+      "evil-touch",
+      "underdog",
+      "jump-6"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "limber"
+        },
+        {
+          "slug": "unburden"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "inner-focus"
+        },
+        {
+          "slug": "feline-prowess"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "magician"
+        },
+        {
+          "slug": "prankster"
+        }
+      ],
+      "master": [
+        {
+          "slug": "pickpocket"
+        },
+        {
+          "slug": "moxie"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "locksmith",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "sleight-of-hand",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "purrloin",
+    "stats": {
+      "hp": 41,
+      "atk": 50,
+      "def": 37,
+      "spa": 50,
+      "spd": 37,
+      "spe": 66
+    },
+    "types": [
+      "dark"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "scratch",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "growl",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sand-attack",
+          "level": 4,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fake-out",
+          "level": 5,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "assist",
+          "level": 6,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "fury-swipes",
+          "level": 12,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "pursuit",
+          "level": 15,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "torment",
+          "level": 16,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "assurance",
+          "level": 21,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hone-claws",
+          "level": 24,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sucker-punch",
+          "level": 28,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "slash",
+          "level": 30,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "nasty-plot",
+          "level": 32,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "captivate",
+          "level": 33,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "night-slash",
+          "level": 36,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snatch",
+          "level": 39,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "play-rough",
+          "level": 40,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "pay-day",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "quick-attack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-team",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "feint-attack",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "charm",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "encore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "yawn",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fake-tears",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "covet",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "copycat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "foul-play",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "spite",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trick",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "role-play",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "knock-off",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "lash-out",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "cut",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "screech",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swift",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dream-eater",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thief",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "baton-pass",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psych-up",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "taunt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "aerial-ace",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "u-turn",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "embargo",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "shadow-claw",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "echoed-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snarl",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "captureRate": 255,
+    "eggGroups": [
+      "ground"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "jungle",
+      "grassland",
+      "city"
+    ],
+    "evolutions": {
+      "name": "purrloin",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "liepard",
+          "uuid": "Compendium.ptr2e.core-species.Item.bN1o0wxZnCYBoIIL",
+          "methods": [
+            {
+              "type": "level",
+              "level": 20,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.bQGtsu1cXJdzRTfN"
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "bQGtsu1cXJdzRTfN",
+  "effects": [],
+  "folder": null
+}

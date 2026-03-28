@@ -1,0 +1,76 @@
+{
+  "name": "Z-Crystal",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "rare",
+    "traits": [
+      "phenomenon",
+      "combat",
+      "type"
+    ],
+    "actions": [
+      {
+        "name": "Z-Crystal",
+        "slug": "z-crystal",
+        "type": "passive",
+        "description": "Effect: Allows creature to use a [Zenith] attack corresponding with assigned %lt;Type&gt;.",
+        "traits": [
+          "Phenomenon",
+          "Combat",
+          "Type"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: Allows creature to use a [Zenith] attack corresponding with assigned %lt;Type&gt;.",
+    "slug": "z-crystal",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "4QiRxLVIl9rbhGGE",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

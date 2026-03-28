@@ -1,0 +1,49 @@
+{
+  "name": "Sanctified Terrain",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "sanctified-terrain",
+    "actions": [
+      {
+        "slug": "sanctified-terrain",
+        "name": "Sanctified Terrain",
+        "type": "attack",
+        "traits": [
+          "terrain"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: The Terrain becomes Sanctified Terrain for 3 rounds.</p>",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "summon": "Compendium.ptr2e.core-summons.Item.133T7v58Aobva7V3",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "GTbpzHPb4ZjttvkJ",
+  "effects": []
+}

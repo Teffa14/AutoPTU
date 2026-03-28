@@ -1,0 +1,52 @@
+{
+  "name": "Bullet Punch",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "bullet-punch",
+    "actions": [
+      {
+        "slug": "bullet-punch",
+        "name": "Bullet Punch",
+        "type": "attack",
+        "traits": [
+          "punch",
+          "dash",
+          "priority-10",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1,
+          "priority": 1
+        },
+        "category": "physical",
+        "power": 40,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "PDKfrt5BmoIBw8D2",
+  "effects": []
+}

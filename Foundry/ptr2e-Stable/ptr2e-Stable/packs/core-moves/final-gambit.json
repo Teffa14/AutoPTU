@@ -1,0 +1,47 @@
+{
+  "name": "Final Gambit",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "final-gambit",
+    "actions": [
+      {
+        "slug": "final-gambit",
+        "name": "Final Gambit",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "category": "physical",
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "description": "<p>Effect: The user reduces its HP and PP to zero, dealing flat damage equal to the amount of HP that that was lost, plus 2.5x the amount of PP lost, to the target.</p>",
+        "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "k2eyNpUG5U3zxCtn",
+  "effects": []
+}

@@ -1,0 +1,958 @@
+{
+  "name": "eevee",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 133,
+    "size": {
+      "category": "tiny",
+      "type": "quad",
+      "height": 0.3,
+      "weight": 6.5
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 9
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "quadrupedal",
+      "underdog",
+      "jump-5"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "run-away"
+        },
+        {
+          "slug": "adaptability"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "anticipation"
+        },
+        {
+          "slug": "unaware"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "scrappy"
+        },
+        {
+          "slug": "cute-charm"
+        }
+      ],
+      "master": [
+        {
+          "slug": "prankster"
+        },
+        {
+          "slug": "celebration"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ride",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "eevee",
+    "stats": {
+      "hp": 55,
+      "atk": 55,
+      "def": 50,
+      "spa": 45,
+      "spd": 65,
+      "spe": 55
+    },
+    "types": [
+      "normal"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flail",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "detect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "wish",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "yawn",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fake-tears",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "tickle",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "captivate",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "synchronoise",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stored-power",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "headbutt",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "body-slam",
+          "gen": "xd"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "heal-bell",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "laser-focus",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "pay-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "roar",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "rage",
+          "gen": "yellow"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "reflect",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "bide",
+          "gen": "yellow"
+        },
+        {
+          "name": "skull-bash",
+          "gen": "yellow"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "weather-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "echoed-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "retaliate",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "work-up",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "alluring-voice",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "knock-off",
+          "gen": "dev"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tail-whip",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "growl",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "covet",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sand-attack",
+          "level": 5,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-kick",
+          "level": 10,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "quick-attack",
+          "level": 10,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "baby-doll-eyes",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "refresh",
+          "level": 20,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bite",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "copycat",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "baton-pass",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-energy",
+          "level": 36,
+          "gen": "gold-silver"
+        },
+        {
+          "name": "take-down",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "level": 45,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trump-card",
+          "level": 45,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-edge",
+          "level": 50,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "last-resort",
+          "level": 55,
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "captureRate": 190,
+    "eggGroups": [
+      "ground"
+    ],
+    "genderRatio": 1,
+    "evolutions": {
+      "name": "eevee",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "vaporeon",
+          "uuid": "Compendium.ptr2e.core-species.Item.hVY20AdfvLPcJxz7",
+          "methods": [
+            {
+              "type": "item",
+              "item": "water-stone",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "jolteon",
+          "uuid": "Compendium.ptr2e.core-species.Item.z48oPxYxbtuBFYYF",
+          "methods": [
+            {
+              "type": "item",
+              "item": "thunder-stone",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "flareon",
+          "uuid": "Compendium.ptr2e.core-species.Item.mRkJYO7Gqg8xNfPl",
+          "methods": [
+            {
+              "type": "item",
+              "item": "fire-stone",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "espeon",
+          "uuid": "Compendium.ptr2e.core-species.Item.XblC013bmcMJBqoR",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            },
+            {
+              "type": "item",
+              "item": "sun-stone",
+              "operand": "or",
+              "held": false
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "umbreon",
+          "uuid": "Compendium.ptr2e.core-species.Item.as0m2VUV7NgVVPaA",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            },
+            {
+              "type": "item",
+              "item": "dusk-stone",
+              "operand": "or",
+              "held": false
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "leafeon",
+          "uuid": "Compendium.ptr2e.core-species.Item.xS4Zmx2OG1yQu3df",
+          "methods": [
+            {
+              "type": "item",
+              "item": "leaf-stone",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "glaceon",
+          "uuid": "Compendium.ptr2e.core-species.Item.t6PwxXiIe85TOJjZ",
+          "methods": [
+            {
+              "type": "item",
+              "item": "ice-stone",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "sylveon",
+          "uuid": "Compendium.ptr2e.core-species.Item.2pVuK1e9OzaaUX91",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            },
+            {
+              "type": "item",
+              "item": "shiny-stone",
+              "operand": "or",
+              "held": false
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "arideon",
+          "uuid": "Compendium.ptr2e.core-species.Item.SlPatRyO0xivpYPb",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "aviateon",
+          "uuid": "Compendium.ptr2e.core-species.Item.VOj7bWsmgBoKSkD2",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "centureon",
+          "uuid": "Compendium.ptr2e.core-species.Item.FutuBoa4WzfmFT69",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "champeon",
+          "uuid": "Compendium.ptr2e.core-species.Item.oBQcBDsalUNwAs40",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "companeon",
+          "uuid": "Compendium.ptr2e.core-species.Item.1pozoDbQyJ2P6dGX",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "corroseon",
+          "uuid": "Compendium.ptr2e.core-species.Item.ALaJ8e33rxIMlZOk",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "lungeon",
+          "uuid": "Compendium.ptr2e.core-species.Item.JoH0hoOAtcmrvZzs",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "entoeon",
+          "uuid": "Compendium.ptr2e.core-species.Item.P3xFAvcgi1QMXQvA",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "wispeon",
+          "uuid": "Compendium.ptr2e.core-species.Item.wyVg63ZF5uWtZDQz",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "tricereon",
+          "uuid": "Compendium.ptr2e.core-species.Item.0a4xByckMQkMMnL4",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "wyveon",
+          "uuid": "Compendium.ptr2e.core-species.Item.Hk3vy5itI7UeuwgZ",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.GLVg67j2hGGz2ksx"
+    },
+    "habitats": [
+      "forest",
+      "city"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "GLVg67j2hGGz2ksx",
+  "effects": [],
+  "folder": null
+}

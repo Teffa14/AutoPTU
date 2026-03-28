@@ -1,0 +1,77 @@
+{
+  "name": "Root 4",
+  "type": "perk",
+  "folder": "zrVtKATNxzLNxTUc",
+  "system": {
+    "description": "<p>This is an entry perk to the Web, it has no effect on its own.</p><p>Some of the clusters near Root 4 include:</p><ul><li>Pack-Mon</li><li>Metamoves</li><li>Styles</li><li>Chef/Cooking</li><li>Psychic-Type</li></ul>",
+    "actions": [],
+    "traits": [],
+    "prerequisites": [],
+    "cost": 5,
+    "slug": "root-4",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 165,
+        "y": 165,
+        "hidden": false,
+        "type": "root",
+        "connected": [
+          "beauty",
+          "pack-alpha",
+          "pack-mon",
+          "muse",
+          "telepathic-potential",
+          "improved-teleportation-2",
+          "hit-run",
+          "metamove-target-split",
+          "stat-iv-booster-1-13",
+          "koffing-class-curry",
+          "minor-buff-2",
+          "minor-buff-33",
+          "minor-buff-57",
+          "yousa-bad-bombin",
+          "swan-song",
+          "guerilla-radio",
+          "break-up-song",
+          "meditative-hymn",
+          "rousing-song"
+        ],
+        "config": {
+          "texture": "icons/svg/door-exit.svg",
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "tint": null,
+          "scale": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "img": "icons/svg/door-exit.svg",
+  "effects": [],
+  "_id": "yu3bMdyPG1jpA9qv"
+}

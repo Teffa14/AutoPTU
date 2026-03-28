@@ -1,0 +1,51 @@
+{
+  "name": "Shadow Claw",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "shadow-claw",
+    "actions": [
+      {
+        "slug": "shadow-claw",
+        "name": "Shadow Claw",
+        "type": "attack",
+        "traits": [
+          "sharp",
+          "pass-2",
+          "crit-1",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "a0E9oeQeTJm0NHAp",
+  "effects": []
+}

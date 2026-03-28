@@ -1,0 +1,248 @@
+{
+  "name": "Mystery Scholar 1",
+  "type": "perk",
+  "system": {
+    "_migration": {
+      "version": 0.11,
+      "previous": null
+    },
+    "actions": [],
+    "slug": "mystery-scholar-1",
+    "description": "<p>The user selects 3 Occult Group Skills. The user’s Species proficiency with the selected skills is increased by +10. A Skill may only be increased 3 times with this Perk and cannot be increased past 60 (with the last increase needing to be manually reduced to prevent the Skill from exceeding 60).</p>",
+    "traits": [],
+    "prerequisites": [
+      "item:perk:skill-refinement-5"
+    ],
+    "autoUnlock": [],
+    "cost": 1,
+    "variant": "tiered",
+    "mode": "coexist",
+    "global": true,
+    "webs": [],
+    "nodes": [
+      {
+        "x": 32,
+        "y": 88,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "skill-refinement-1"
+        ],
+        "tier": {
+          "rank": null,
+          "uuid": null
+        },
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        }
+      },
+      {
+        "x": null,
+        "y": null,
+        "hidden": false,
+        "type": "normal",
+        "connected": [],
+        "tier": {
+          "rank": 2,
+          "uuid": "Compendium.ptr2e.core-perks.Item.ogKYTDDvLqJYT835"
+        },
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        }
+      },
+      {
+        "x": null,
+        "y": null,
+        "hidden": false,
+        "type": "normal",
+        "connected": [],
+        "tier": {
+          "rank": 3,
+          "uuid": "Compendium.ptr2e.core-perks.Item.qKXP8inuQEgkS5Ny"
+        },
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        }
+      },
+      {
+        "x": null,
+        "y": null,
+        "hidden": false,
+        "type": "normal",
+        "connected": [],
+        "tier": {
+          "rank": 4,
+          "uuid": "Compendium.ptr2e.core-perks.Item.nCFHRQ2Ycb4LkvyD"
+        },
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        }
+      },
+      {
+        "x": null,
+        "y": null,
+        "hidden": false,
+        "type": "normal",
+        "connected": [],
+        "tier": {
+          "rank": 5,
+          "uuid": "Compendium.ptr2e.core-perks.Item.zelg8rFG7IbjbAdS"
+        },
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        }
+      }
+    ],
+    "design": {
+      "arena": null,
+      "approach": null,
+      "archetype": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "k5ztJixTB9SD8OJm",
+  "img": "systems/ptr2e/img/icons/feat_icon.webp",
+  "effects": [
+    {
+      "name": "Mystery Scholar",
+      "type": "passive",
+      "_id": "axgc1bbsh1V7Q17q",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "choice-set",
+            "key": "",
+            "value": 0,
+            "predicate": [],
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "choices": "flags.ptr2e.skillOptions.occult",
+            "prompt": "PTR2E.ChoiceSetPrompt.Prompt",
+            "adjustName": true,
+            "rollOption": "ms11"
+          },
+          {
+            "type": "basic",
+            "key": "system.skills.{effect|flags.ptr2e.choiceSelections.ms11}.value",
+            "value": 10,
+            "predicate": [],
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "choice-set",
+            "key": "",
+            "value": 0,
+            "predicate": [],
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "choices": "flags.ptr2e.skillOptions.occult",
+            "prompt": "PTR2E.ChoiceSetPrompt.Prompt",
+            "adjustName": true,
+            "rollOption": "ms12"
+          },
+          {
+            "type": "basic",
+            "key": "system.skills.{effect|flags.ptr2e.choiceSelections.ms12}.value",
+            "value": 10,
+            "predicate": [],
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "choice-set",
+            "key": "",
+            "value": 0,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "choices": "flags.ptr2e.skillOptions.occult",
+            "prompt": "PTR2E.ChoiceSetPrompt.Prompt",
+            "adjustName": true,
+            "rollOption": "ms13",
+            "priority": null
+          },
+          {
+            "type": "basic",
+            "key": "system.skills.{effect|flags.ptr2e.choiceSelections.ms13}.value",
+            "value": 10,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": "Item.xxuGLZ0QPnw7NYa8.ActiveEffect.V64elrUanozajfG2",
+        "duplicateSource": null,
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "P8RtSJE1K00CB5lL"
+}

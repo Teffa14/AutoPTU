@@ -1,0 +1,50 @@
+{
+  "name": "Silk Trap",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "system": {
+    "slug": "silk-trap",
+    "actions": [
+      {
+        "slug": "silk-trap",
+        "name": "Silk Trap",
+        "type": "attack",
+        "traits": [
+          "shield",
+          "interrupt-6"
+        ],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "trigger": "<p>The user is targeted by an Attack.</p>"
+        },
+        "category": "status",
+        "types": [
+          "bug"
+        ],
+        "description": "<p>Trigger: The user is targeted by an Attack.</p><p>Effect: The triggering attack fails to hit the user, and additional attacks also fail to hit until the end of the user's next Activation. Attacks failing to hit this way do not activate their secondary effects. If the triggering Attack has @Trait[contact], the attacker loses -1 SPD Stages for 5 Activations.</p><p>On resolution, the user gains @Affliction[disabled] 5 on this Attack.</p>",
+        "img": "systems/ptr2e/img/svg/bug_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "jb7qot38EwIYlWap",
+  "effects": []
+}

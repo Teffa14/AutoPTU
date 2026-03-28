@@ -1,0 +1,79 @@
+{
+  "name": "Facade",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "facade",
+    "actions": [
+      {
+        "slug": "facade",
+        "name": "Facade",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "facade-afflicted",
+        "name": "Facade (Afflicted)",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "trigger": "<p>The user possesses a [Major Affliction].</p>"
+        },
+        "category": "physical",
+        "power": 140,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: The user possesses a [Major Affliction].</p>",
+        "variant": "facade",
+        "free": true,
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "<p>Effect: This attack's Power is double while the user possesses a [Major Affliction].</p>"
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "eEIG8jgmrxWgRVMz",
+  "effects": []
+}

@@ -1,0 +1,561 @@
+{
+  "name": "azurill",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 298,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.2,
+      "weight": 2
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "swim",
+        "value": 3
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "natural-swimmer",
+      "baby",
+      "glow-1",
+      "jump-4"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "thick-fat"
+        },
+        {
+          "slug": "huge-power"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "sap-sipper"
+        },
+        {
+          "slug": "water-veil"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "swift-swim"
+        },
+        {
+          "slug": "hydration"
+        }
+      ],
+      "master": [
+        {
+          "slug": "stubborn"
+        },
+        {
+          "slug": "aquaboost"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "azurill",
+    "stats": {
+      "hp": 50,
+      "atk": 20,
+      "def": 40,
+      "spa": 20,
+      "spd": 40,
+      "spe": 20
+    },
+    "types": [
+      "normal",
+      "fairy"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "alluring-voice",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aqua-jet",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "belly-drum",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "brutal-swing",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "camouflage",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "copycat",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "covet",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "defense-curl",
+          "gen": "emerald"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "draining-kiss",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "encore",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fake-tears",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hail",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "headbutt",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "knock-off",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "muddy-water",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "perish-song",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "present",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "refresh",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rollout",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scald",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "sing",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "soak",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "supersonic",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "surf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "swift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tickle",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "waterfall",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "whirlpool",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "work-up",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "splash",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "tail-whip",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "water-gun",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet",
+          "level": 3
+        },
+        {
+          "name": "water-sport",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 5
+        },
+        {
+          "name": "bubble-beam",
+          "gen": "scarlet-violet",
+          "level": 6
+        },
+        {
+          "name": "bubble",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 7
+        },
+        {
+          "name": "charm",
+          "gen": "scarlet-violet",
+          "level": 9
+        },
+        {
+          "name": "slam",
+          "gen": "scarlet-violet",
+          "level": 12
+        },
+        {
+          "name": "bounce",
+          "gen": "scarlet-violet",
+          "level": 15
+        }
+      ]
+    },
+    "captureRate": 255,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": 6,
+    "evolutions": {
+      "name": "azurill",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "marill",
+          "uuid": "Compendium.ptr2e.core-species.Item.u1PPmnUB3ZhhGYbd",
+          "methods": [
+            {
+              "type": "level",
+              "level": 10,
+              "operand": "and"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": [
+            {
+              "name": "azumarill",
+              "uuid": "Compendium.ptr2e.core-species.Item.PpHWBVjN1fD1bRnn",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 18,
+                  "operand": "and"
+                }
+              ],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "evolutions": []
+            }
+          ]
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.29yYVLazOLl7g8JZ",
+      "methods": []
+    },
+    "habitats": [
+      "pond",
+      "lake",
+      "river",
+      "riverside",
+      "swamp"
+    ],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core - Hoenn Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "29yYVLazOLl7g8JZ",
+  "effects": []
+}

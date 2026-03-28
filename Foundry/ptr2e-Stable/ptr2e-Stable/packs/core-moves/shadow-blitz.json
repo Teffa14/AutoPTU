@@ -1,0 +1,51 @@
+{
+  "name": "Shadow Blitz",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-blitz",
+    "actions": [
+      {
+        "slug": "shadow-blitz",
+        "name": "Shadow Blitz",
+        "type": "attack",
+        "traits": [
+          "push-1",
+          "dash",
+          "basic",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "category": "physical",
+        "power": 40,
+        "accuracy": 100,
+        "types": [
+          "shadow"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "LqjdVMLkvMdh22y2",
+  "effects": []
+}

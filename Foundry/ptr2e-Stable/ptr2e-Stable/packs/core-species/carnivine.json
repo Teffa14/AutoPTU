@@ -1,0 +1,500 @@
+{
+  "name": "carnivine",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 455,
+    "size": {
+      "category": "medium",
+      "type": "height",
+      "height": 1.4,
+      "weight": 27
+    },
+    "diet": [
+      "carnivore",
+      "phototroph"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 5
+      },
+      {
+        "type": "flight",
+        "value": 5
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "hover",
+      "bait",
+      "awkward-flyer",
+      "fully-evolved"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "grip-pincer"
+        },
+        {
+          "slug": "arena-trap"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "gluttony"
+        },
+        {
+          "slug": "sunbathe"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "leaf-guard"
+        },
+        {
+          "slug": "regurgitation"
+        }
+      ],
+      "master": [
+        {
+          "slug": "ambush"
+        },
+        {
+          "slug": "mooch"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "carnivine",
+    "stats": {
+      "hp": 74,
+      "atk": 100,
+      "def": 72,
+      "spa": 90,
+      "spd": 72,
+      "spe": 46
+    },
+    "types": [
+      "grass"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "bind",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "growth",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "bite",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 7
+        },
+        {
+          "name": "vine-whip",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 11
+        },
+        {
+          "name": "sweet-scent",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 17
+        },
+        {
+          "name": "ingrain",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 21
+        },
+        {
+          "name": "feint-attack",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 27
+        },
+        {
+          "name": "grass-knot",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 27
+        },
+        {
+          "name": "leaf-tornado",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 31
+        },
+        {
+          "name": "stockpile",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 37
+        },
+        {
+          "name": "crunch",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 41
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 47
+        },
+        {
+          "name": "wring-out",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 47
+        },
+        {
+          "name": "power-whip",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 50
+        }
+      ],
+      "tutor": [
+        {
+          "name": "acid-spray",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bug-bite",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bullet-seed",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "cut",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "endure",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "flash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "fury-cutter",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "gastro-acid",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "grass-whistle",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "knock-off",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "leech-seed",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "magical-leaf",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "payback",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "protect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rage-powder",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "razor-leaf",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "slam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "sleep-powder",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "snap-trap",
+          "gen": "dev"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "stun-spore",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "substitute",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swagger",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "synthesis",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thief",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "throat-chop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "worry-seed",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ]
+    },
+    "captureRate": 115,
+    "eggGroups": [
+      "plant"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "forest",
+      "swamp"
+    ],
+    "evolutions": {
+      "name": "carnivine",
+      "details": null,
+      "evolutions": [],
+      "uuid": null,
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Sinnoh Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "ftMjpHjT8wuRdOeE",
+  "effects": []
+}

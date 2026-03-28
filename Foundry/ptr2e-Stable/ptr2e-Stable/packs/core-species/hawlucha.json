@@ -1,0 +1,703 @@
+{
+  "name": "hawlucha",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 701,
+    "size": {
+      "category": "small",
+      "type": "height",
+      "height": 0.8,
+      "weight": 21.5
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 11
+      },
+      {
+        "type": "flight",
+        "value": 11
+      },
+      {
+        "type": "swim",
+        "value": 5
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "winged",
+      "bipedal",
+      "well-built",
+      "fully-evolved",
+      "jump-5"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "limber"
+        },
+        {
+          "slug": "unburden"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "mold-breaker"
+        },
+        {
+          "slug": "olé"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "reckless"
+        },
+        {
+          "slug": "quick-feet"
+        }
+      ],
+      "master": [
+        {
+          "slug": "guts"
+        },
+        {
+          "slug": "no-guard"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "hawlucha",
+    "stats": {
+      "hp": 78,
+      "atk": 92,
+      "def": 75,
+      "spa": 74,
+      "spd": 63,
+      "spe": 118
+    },
+    "types": [
+      "fighting",
+      "flying"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "hone-claws",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "karate-chop",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 4
+        },
+        {
+          "name": "wing-attack",
+          "gen": "scarlet-violet",
+          "level": 4
+        },
+        {
+          "name": "detect",
+          "gen": "scarlet-violet",
+          "level": 8
+        },
+        {
+          "name": "aerial-ace",
+          "gen": "scarlet-violet",
+          "level": 12
+        },
+        {
+          "name": "encore",
+          "gen": "scarlet-violet",
+          "level": 16
+        },
+        {
+          "name": "feather-dance",
+          "gen": "scarlet-violet",
+          "level": 20
+        },
+        {
+          "name": "brick-break",
+          "gen": "scarlet-violet",
+          "level": 24
+        },
+        {
+          "name": "submission",
+          "gen": "sword-shield",
+          "level": 24
+        },
+        {
+          "name": "bounce",
+          "gen": "scarlet-violet",
+          "level": 28
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet",
+          "level": 32
+        },
+        {
+          "name": "roost",
+          "gen": "scarlet-violet",
+          "level": 36
+        },
+        {
+          "name": "swords-dance",
+          "gen": "scarlet-violet",
+          "level": 40
+        },
+        {
+          "name": "flying-press",
+          "gen": "scarlet-violet",
+          "level": 44
+        },
+        {
+          "name": "high-jump-kick",
+          "gen": "scarlet-violet",
+          "level": 48
+        },
+        {
+          "name": "endeavor",
+          "gen": "scarlet-violet",
+          "level": 52
+        },
+        {
+          "name": "sky-drop",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 55
+        },
+        {
+          "name": "sky-attack",
+          "gen": "scarlet-violet",
+          "level": 56
+        }
+      ],
+      "tutor": [
+        {
+          "name": "acrobatics",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "agility",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "baton-pass",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "body-press",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "brave-bird",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bulk-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "close-combat",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "coaching",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "cross-chop",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "cut",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "defog",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "drain-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dual-chop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "entrainment",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "false-swipe",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "feint",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "fly",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-head",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "laser-focus",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "last-resort",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "low-kick",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "low-sweep",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lunge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "me-first",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mean-look",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mega-kick",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mega-punch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mud-sport",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "power-up-punch",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "quick-guard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "retaliate",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "revenge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "reversal",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "steel-wing",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "strength",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "superpower",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tailwind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "throat-chop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thunder-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "torment",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "u-turn",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "upper-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "uproar",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "work-up",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "x-scissor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "captureRate": 95,
+    "eggGroups": [
+      "flying",
+      "humanshape"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "forest",
+      "field"
+    ],
+    "evolutions": {
+      "name": "hawlucha",
+      "details": null,
+      "evolutions": [],
+      "uuid": null,
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Kalos Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "XDDv2UwNEcW9p29H",
+  "effects": []
+}

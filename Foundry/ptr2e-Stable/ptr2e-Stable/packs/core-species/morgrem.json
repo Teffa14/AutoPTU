@@ -1,0 +1,568 @@
+{
+  "name": "morgrem",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "dark",
+      "fairy"
+    ],
+    "stats": {
+      "hp": 65,
+      "atk": 60,
+      "def": 45,
+      "spa": 75,
+      "spd": 55,
+      "spe": 70
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "false-surrender",
+          "gen": "scarlet-violet",
+          "level": 0
+        },
+        {
+          "name": "bite",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "confide",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "fake-out",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "flatter",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "goblin-claw",
+          "gen": "dev",
+          "level": 1
+        },
+        {
+          "name": "fake-tears",
+          "gen": "scarlet-violet",
+          "level": 12
+        },
+        {
+          "name": "assurance",
+          "gen": "scarlet-violet",
+          "level": 16
+        },
+        {
+          "name": "swagger",
+          "gen": "scarlet-violet",
+          "level": 20
+        },
+        {
+          "name": "sucker-punch",
+          "gen": "scarlet-violet",
+          "level": 24
+        },
+        {
+          "name": "torment",
+          "gen": "scarlet-violet",
+          "level": 28
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "scarlet-violet",
+          "level": 35
+        },
+        {
+          "name": "nasty-plot",
+          "gen": "scarlet-violet",
+          "level": 40
+        },
+        {
+          "name": "play-rough",
+          "gen": "scarlet-violet",
+          "level": 46
+        },
+        {
+          "name": "foul-play",
+          "gen": "scarlet-violet",
+          "level": 52
+        }
+      ],
+      "tutor": [
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "burning-jealousy",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "drain-punch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "draining-kiss",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "imprison",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lash-out",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "leech-life",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "low-kick",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mega-kick",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mega-punch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "metronome",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "misty-terrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "retaliate",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "revenge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-claw",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "throat-chop",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "uproar",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.8,
+      "weight": 12.5,
+      "category": "small",
+      "type": "height"
+    },
+    "captureRate": 120,
+    "eggGroups": [
+      "fairy",
+      "humanshape"
+    ],
+    "evolutions": {
+      "name": "impidimp",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "morgrem",
+          "uuid": "Compendium.ptr2e.core-species.Item.Ver31B2ZvjMXBntg",
+          "methods": [
+            {
+              "type": "level",
+              "level": 27,
+              "operand": "and"
+            }
+          ],
+          "perk": {
+            "x": 26,
+            "y": 26
+          },
+          "evolutions": [
+            {
+              "name": "grimmsnarl",
+              "uuid": "Compendium.ptr2e.core-species.Item.mlO0M42YBwrmoe2O",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 37,
+                  "operand": "and"
+                }
+              ],
+              "perk": {
+                "x": 26,
+                "y": 26
+              },
+              "details": null
+            }
+          ],
+          "details": null
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.A8WRI4Q4X1yuCrux",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 860,
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "silent",
+      "stealth",
+      "darkvision-15",
+      "plant-grower",
+      "mushroom-harvest",
+      "jump-4"
+    ],
+    "diet": [
+      "empathovore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "prankster"
+        },
+        {
+          "slug": "frisk"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "pickpocket"
+        },
+        {
+          "slug": "infiltrator"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "tangling-hair"
+        },
+        {
+          "slug": "sedation"
+        }
+      ],
+      "master": [
+        {
+          "slug": "dreamcatcher"
+        },
+        {
+          "slug": "screen-cleaner"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 7
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fairy",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "locksmith",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychology",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "read-lips",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "sleight-of-hand",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spiritual",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "thaumaturgy",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "woodland",
+      "city"
+    ],
+    "slug": "morgrem",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "genderRatio": -1
+  },
+  "_id": "Ver31B2ZvjMXBntg",
+  "effects": []
+}

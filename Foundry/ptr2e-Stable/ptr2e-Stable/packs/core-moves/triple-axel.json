@@ -1,0 +1,50 @@
+{
+  "name": "Triple Axel",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "triple-axel",
+    "actions": [
+      {
+        "slug": "triple-axel",
+        "name": "Triple Axel",
+        "type": "attack",
+        "traits": [
+          "3-strike",
+          "contact",
+          "kick"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 40,
+        "accuracy": 90,
+        "types": [
+          "ice"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "hWTk0YxzcBHFKoeB",
+  "effects": []
+}

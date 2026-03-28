@@ -1,0 +1,51 @@
+{
+  "name": "Brutal Swing",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "brutal-swing",
+    "actions": [
+      {
+        "slug": "brutal-swing",
+        "name": "Brutal Swing",
+        "type": "attack",
+        "traits": [
+          "contact",
+          "hammer"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "3ctJ9HFWI8TXA5FQ",
+  "effects": []
+}

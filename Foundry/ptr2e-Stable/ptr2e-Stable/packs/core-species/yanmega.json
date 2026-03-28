@@ -1,0 +1,572 @@
+{
+  "name": "yanmega",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 469,
+    "size": {
+      "category": "large",
+      "type": "quad",
+      "height": 1.9,
+      "weight": 51.5
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 15
+      },
+      {
+        "type": "overland",
+        "value": 10
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "winged",
+      "wallclimber",
+      "fully-evolved",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "speed-boost"
+        },
+        {
+          "slug": "compound-eyes"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "fossilized"
+        },
+        {
+          "slug": "frisk"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "speed-force"
+        },
+        {
+          "slug": "tinted-lens"
+        }
+      ],
+      "master": [
+        {
+          "slug": "giant-wings"
+        },
+        {
+          "slug": "wyrm-power"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "yanmega",
+    "stats": {
+      "hp": 86,
+      "atk": 76,
+      "def": 86,
+      "spa": 116,
+      "spd": 56,
+      "spe": 95
+    },
+    "types": [
+      "flying",
+      "bug"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "air-cutter",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "crunch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dream-eater",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "headbutt",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "laser-focus",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "leech-life",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lunge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "ominous-wind",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "pounce",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-noise",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "reversal",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "roost",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "round",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "silver-wind",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "steel-wing",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "struggle-bug",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tailwind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "whirlwind",
+          "gen": "scarlet-violet"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "air-slash",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "bug-buzz",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "double-team",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "foresight",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 1
+        },
+        {
+          "name": "gust",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "hypnosis",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "night-slash",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "wing-attack",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "aerial-ace",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 14
+        },
+        {
+          "name": "quick-attack",
+          "gen": "scarlet-violet",
+          "level": 14
+        },
+        {
+          "name": "sonic-boom",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 14
+        },
+        {
+          "name": "detect",
+          "gen": "scarlet-violet",
+          "level": 17
+        },
+        {
+          "name": "supersonic",
+          "gen": "scarlet-violet",
+          "level": 22
+        },
+        {
+          "name": "uproar",
+          "gen": "scarlet-violet",
+          "level": 27
+        },
+        {
+          "name": "bug-bite",
+          "gen": "scarlet-violet",
+          "level": 30
+        },
+        {
+          "name": "pursuit",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 30
+        },
+        {
+          "name": "string-shot",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 30
+        },
+        {
+          "name": "ancient-power",
+          "gen": "scarlet-violet",
+          "level": 33
+        },
+        {
+          "name": "feint",
+          "gen": "scarlet-violet",
+          "level": 38
+        },
+        {
+          "name": "slash",
+          "gen": "scarlet-violet",
+          "level": 43
+        },
+        {
+          "name": "screech",
+          "gen": "scarlet-violet",
+          "level": 46
+        },
+        {
+          "name": "u-turn",
+          "gen": "scarlet-violet",
+          "level": 49
+        }
+      ]
+    },
+    "captureRate": 45,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "yanma",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "yanmega",
+          "uuid": "Compendium.ptr2e.core-species.Item.bPon5Y4QhGjQbxnN",
+          "methods": [
+            {
+              "type": "move",
+              "move": "ancient-power",
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.D27BV3qRBFkaeJL9",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "habitats": [
+      "woodland",
+      "swamp"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Sinnoh Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "bPon5Y4QhGjQbxnN",
+  "effects": []
+}

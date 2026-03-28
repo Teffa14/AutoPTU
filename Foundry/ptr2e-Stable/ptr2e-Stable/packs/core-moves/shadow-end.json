@@ -1,0 +1,50 @@
+{
+  "name": "Shadow End",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-end",
+    "actions": [
+      {
+        "slug": "shadow-end",
+        "name": "Shadow End",
+        "type": "attack",
+        "traits": [
+          "recoil-1-2",
+          "dash",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "physical",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "shadow"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "GnTe76YFcBJc6BDB",
+  "effects": []
+}

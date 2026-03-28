@@ -1,0 +1,49 @@
+{
+  "name": "Moongeist Beam",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "moongeist-beam",
+    "actions": [
+      {
+        "slug": "moongeist-beam",
+        "name": "Moongeist Beam",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "ray"
+        ],
+        "range": {
+          "target": "line",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>Effect: This attack is unaffected by the abilities of other creatures.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "DaHQKPYCD2Qy7e4r",
+  "effects": []
+}

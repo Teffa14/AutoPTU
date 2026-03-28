@@ -1,0 +1,107 @@
+{
+  "name": "Wicked Torque",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "wicked-torque",
+    "actions": [
+      {
+        "slug": "wicked-torque",
+        "name": "Wicked Torque",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "pass-4",
+          "crash-1-2",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "description": "<p>Effect: On hit, the target has a 30% chance of gaining @Affliction[drowsy] 5.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "TWYwns2IOLQKn0tF",
+  "effects": [
+    {
+      "name": "Wicked Torque",
+      "type": "passive",
+      "_id": "7e7VGE8StJXkQ9VT",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "wicked-torque-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.drowsycondititem",
+            "predicate": [],
+            "chance": 30,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.5",
+        "createdTime": 1737331631911,
+        "modifiedTime": 1737331660732,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

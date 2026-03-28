@@ -1,0 +1,50 @@
+{
+  "name": "Drill Peck",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "system": {
+    "slug": "drill-peck",
+    "actions": [
+      {
+        "slug": "drill-peck",
+        "name": "Drill Peck",
+        "type": "attack",
+        "traits": [
+          "pass-3",
+          "contact",
+          "horn"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "flying"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "0085dOqSYzGMDOH4",
+  "effects": []
+}

@@ -1,0 +1,46 @@
+{
+  "name": "Shadow Rave",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-rave",
+    "actions": [
+      {
+        "slug": "shadow-rave",
+        "name": "Shadow Rave",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "wide-line",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "shadow"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "mVvVRkHiW6XlzkCr",
+  "effects": []
+}

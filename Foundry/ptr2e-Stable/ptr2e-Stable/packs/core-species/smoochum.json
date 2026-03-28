@@ -1,0 +1,663 @@
+{
+  "name": "smoochum",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 238,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.4,
+      "weight": 6
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 7
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "telepath",
+      "telekinetic-4",
+      "chiller",
+      "baby",
+      "jump-3"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "oblivious"
+        },
+        {
+          "slug": "forewarn"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "hydration"
+        },
+        {
+          "slug": "mind-mold"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "winter-joy"
+        },
+        {
+          "slug": "wonder-skin"
+        }
+      ],
+      "master": [
+        {
+          "slug": "psychic-surge"
+        },
+        {
+          "slug": "slush-rush"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "acting",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "beauty",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "dancing",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychic",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychology",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "singing",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "smoochum",
+    "stats": {
+      "hp": 45,
+      "atk": 30,
+      "def": 15,
+      "spa": 85,
+      "spd": 65,
+      "spe": 65
+    },
+    "types": [
+      "psychic",
+      "ice"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "aurora-veil",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "body-slam",
+          "gen": "xd"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "captivate",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "charm",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "counter",
+          "gen": "firered-leafgreen"
+        },
+        {
+          "name": "curse",
+          "gen": "crystal"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "draining-kiss",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dream-eater",
+          "gen": "xd"
+        },
+        {
+          "name": "dynamic-punch",
+          "gen": "emerald"
+        },
+        {
+          "name": "echoed-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "encore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "fake-out",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "flash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "frost-breath",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "hail",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "heal-bell",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "crystal"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "lovely-kiss",
+          "gen": "gold-silver"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "meditate",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mega-kick",
+          "gen": "firered-leafgreen"
+        },
+        {
+          "name": "mega-punch",
+          "gen": "firered-leafgreen"
+        },
+        {
+          "name": "metronome",
+          "gen": "firered-leafgreen"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "miracle-eye",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "nasty-plot",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "nightmare",
+          "gen": "xd"
+        },
+        {
+          "name": "payback",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "protect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "psych-up",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "psyshock",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "recycle",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "reflect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "role-play",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "seismic-toss",
+          "gen": "xd"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "skill-swap",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stored-power",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "sweet-scent",
+          "gen": "crystal"
+        },
+        {
+          "name": "thief",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trick",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trick-room",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "wake-up-slap",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "wish",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "wonder-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "malicious-whisper",
+          "gen": null
+        },
+        {
+          "name": "psychic-noise",
+          "gen": null
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "disarming-voice",
+          "level": 15,
+          "gen": null
+        },
+        {
+          "name": "lick",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "pound",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "powder-snow",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 4
+        },
+        {
+          "name": "copycat",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 8
+        },
+        {
+          "name": "confusion",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 12
+        },
+        {
+          "name": "covet",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 16
+        },
+        {
+          "name": "sing",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 20
+        },
+        {
+          "name": "heart-stamp",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 21
+        },
+        {
+          "name": "fake-tears",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 24
+        },
+        {
+          "name": "ice-punch",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 28
+        },
+        {
+          "name": "lucky-chant",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 31
+        },
+        {
+          "name": "psychic",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 32
+        },
+        {
+          "name": "avalanche",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 35
+        },
+        {
+          "name": "sweet-kiss",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 36
+        },
+        {
+          "name": "mean-look",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 40
+        },
+        {
+          "name": "perish-song",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 44
+        },
+        {
+          "name": "blizzard",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 48
+        }
+      ]
+    },
+    "captureRate": 45,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": 8,
+    "evolutions": {
+      "name": "smoochum",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "jynx",
+          "uuid": "Compendium.ptr2e.core-species.Item.fBBsFPTbxTYp3t5e",
+          "methods": [
+            {
+              "type": "level",
+              "level": 27,
+              "operand": "and"
+            }
+          ],
+          "perk": {
+            "x": 26,
+            "y": 26
+          },
+          "details": null,
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.pIfbrD0AHHqtYz9a",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "habitats": [
+      "ice"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Johto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "pIfbrD0AHHqtYz9a",
+  "effects": []
+}

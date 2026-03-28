@@ -1,0 +1,535 @@
+{
+  "name": "carvanha",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 318,
+    "size": {
+      "category": "small",
+      "type": "length",
+      "height": 0.8,
+      "weight": 20.8
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "swim",
+        "value": 10
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "natural-swimmer",
+      "gilled",
+      "wavesense-15",
+      "underdog",
+      "evil-touch",
+      "pack-mon",
+      "jump-3"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "rough-skin"
+        },
+        {
+          "slug": "strong-jaw"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "speed-boost"
+        },
+        {
+          "slug": "moxie"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "swift-swim"
+        },
+        {
+          "slug": "infiltrator"
+        }
+      ],
+      "master": [
+        {
+          "slug": "scavenger"
+        },
+        {
+          "slug": "carnivorous"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "carvanha",
+    "stats": {
+      "hp": 45,
+      "atk": 90,
+      "def": 20,
+      "spa": 65,
+      "spd": 20,
+      "spe": 65
+    },
+    "types": [
+      "water",
+      "dark"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "thrash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "double-edge",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "hydro-pump",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swift",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "destiny-bond",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "ancient-power",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "brine",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "psychic-fangs",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "super-fang",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "spite",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "fury-cutter",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dive",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "bounce",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "scale-shot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flip-turn",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "surf",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "blizzard",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "waterfall",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thief",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "protect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "whirlpool",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hail",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "torment",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "taunt",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "payback",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scald",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "retaliate",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snarl",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "leer",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "aqua-jet",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rage",
+          "level": 4,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "poison-fang",
+          "level": 4,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "focus-energy",
+          "level": 8,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "scary-face",
+          "level": 12,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "assurance",
+          "level": 15,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bite",
+          "level": 16,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "ice-fang",
+          "level": 20,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "screech",
+          "level": 24,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swagger",
+          "level": 28,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "crunch",
+          "level": 32,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "agility",
+          "level": 36,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "liquidation",
+          "level": 40,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "take-down",
+          "level": 44,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ]
+    },
+    "captureRate": 225,
+    "eggGroups": [
+      "water2"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "carvanha",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "sharpedo",
+          "uuid": "Compendium.ptr2e.core-species.Item.s6TsoitJ7X3A0ZXF",
+          "methods": [
+            {
+              "type": "level",
+              "level": 30,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.JvpyjVfPcqvoEtVZ"
+    },
+    "habitats": [
+      "river",
+      "ocean",
+      "reef"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Hoenn Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "JvpyjVfPcqvoEtVZ",
+  "effects": [],
+  "folder": null
+}

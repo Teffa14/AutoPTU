@@ -1,0 +1,306 @@
+{
+  "name": "kricketot",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 401,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.3,
+      "weight": 2.2
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 3
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "underdog",
+      "pack-mon",
+      "noisy",
+      "jump-5"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "run-away"
+        },
+        {
+          "slug": "shed-skin"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "singer"
+        },
+        {
+          "slug": "rattled"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "feisty"
+        },
+        {
+          "slug": "carapace-brace"
+        }
+      ],
+      "master": [
+        {
+          "slug": "power-leech"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "music",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 37,
+      "atk": 25,
+      "def": 41,
+      "spa": 25,
+      "spd": 41,
+      "spe": 25
+    },
+    "types": [
+      "bug"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "bide",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 1
+        },
+        {
+          "name": "growl",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "pound",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "struggle-bug",
+          "gen": "scarlet-violet",
+          "level": 6
+        },
+        {
+          "name": "bug-bite",
+          "gen": "scarlet-violet",
+          "level": 16
+        }
+      ],
+      "tutor": [
+        {
+          "name": "endeavor",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "lunge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "string-shot",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "captureRate": 255,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "field"
+    ],
+    "evolutions": {
+      "name": "kricketot",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "kricketune",
+          "uuid": "Compendium.ptr2e.core-species.Item.qOEkEPjWF9bsKUJ1",
+          "methods": [
+            {
+              "type": "level",
+              "level": 10,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.iLIXYctOcL0WSTyP",
+      "methods": []
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "slug": "kricketot",
+    "publication": {
+      "source": "PTR 2e Core - Sinnoh Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "iLIXYctOcL0WSTyP",
+  "effects": []
+}

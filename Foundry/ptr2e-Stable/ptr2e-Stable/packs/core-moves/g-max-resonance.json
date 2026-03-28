@@ -1,0 +1,50 @@
+{
+  "name": "G-Max Resonance",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "g-max-resonance",
+    "actions": [
+      {
+        "slug": "g-max-resonance",
+        "name": "G-Max Resonance",
+        "type": "attack",
+        "traits": [
+          "max",
+          "move-locked",
+          "sky"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "ice"
+        ],
+        "description": "<p>Effect: For 3 Rounds, the user and its allies take half damage from damaging attacks.</p><p>The user may spend up to 6 additional PP, increasing the Power of this attack by 15 per PP spent.</p><p>Requirement: User is a Dynamaxed Lapras and has an Ice-Type attack on their Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "I3Us8nbwENoubdjY",
+  "effects": []
+}

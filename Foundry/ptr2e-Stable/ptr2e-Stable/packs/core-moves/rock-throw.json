@@ -1,0 +1,49 @@
+{
+  "name": "Rock Throw",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "rock-throw",
+    "actions": [
+      {
+        "slug": "rock-throw",
+        "name": "Rock Throw",
+        "type": "attack",
+        "traits": [
+          "missile",
+          "basic"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "physical",
+        "power": 50,
+        "accuracy": 90,
+        "types": [
+          "rock"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "nQU1ZyqgBIIbyIVX",
+  "effects": []
+}

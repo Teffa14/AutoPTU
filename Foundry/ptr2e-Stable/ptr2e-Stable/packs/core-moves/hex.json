@@ -1,0 +1,75 @@
+{
+  "name": "Hex",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "hex",
+    "actions": [
+      {
+        "slug": "hex",
+        "name": "Hex",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "special",
+        "power": 65,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "name": "Hex (Afflicted)",
+        "slug": "hex-afflicted",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "<p>The target has a [Major Affliction].</p>"
+        },
+        "variant": "hex",
+        "types": [
+          "ghost"
+        ],
+        "category": "special",
+        "power": 130,
+        "accuracy": 100,
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null,
+        "description": "<p>Trigger: The target has a [Major Affliction].</p>"
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "HJJtn8nNONYSibxV",
+  "effects": []
+}

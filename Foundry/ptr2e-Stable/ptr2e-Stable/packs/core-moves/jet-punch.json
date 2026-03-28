@@ -1,0 +1,53 @@
+{
+  "name": "Jet Punch",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "jet-punch",
+    "actions": [
+      {
+        "slug": "jet-punch",
+        "name": "Jet Punch",
+        "type": "attack",
+        "traits": [
+          "punch",
+          "priority-40",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "priority": 4
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "water"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "lyjLX6WIIrbdvqXS",
+  "effects": []
+}

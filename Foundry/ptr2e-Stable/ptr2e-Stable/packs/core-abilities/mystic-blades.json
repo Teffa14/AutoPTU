@@ -1,0 +1,50 @@
+{
+  "name": "Mystic Blades",
+  "type": "ability",
+  "img": "icons/skills/melee/strike-sword-steel-yellow.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "innate",
+          "aura",
+          "interrupt-5"
+        ],
+        "name": "Mystic Blades",
+        "slug": "mystic-blades",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 2,
+          "trigger": "<p>The user declares a [Sharp] attack.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user declares a [Sharp] attack.</p><p>Effect: The triggering attack has its Power increase by 30% and either change its Category to Special, or change the attack to target the foe’s SPDEF.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user declares a [Sharp] attack.</p><p>Effect: The triggering attack has its Power increase by 30% and either change its Category to Special, or change the attack to target the foe’s SPDEF.</p>",
+    "traits": [
+      "innate",
+      "aura"
+    ],
+    "slug": "mystic-blades",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "bBLnhBsrAlQ2Qjv7",
+  "effects": []
+}

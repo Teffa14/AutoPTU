@@ -1,0 +1,470 @@
+{
+  "name": "shiinotic",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "grass",
+      "fairy"
+    ],
+    "stats": {
+      "hp": 60,
+      "atk": 45,
+      "def": 80,
+      "spa": 90,
+      "spd": 100,
+      "spe": 30
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "absorb",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confuse-ray",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "ingrain",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "astonish",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flash",
+          "level": 8,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mega-drain",
+          "level": 12,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-powder",
+          "level": 16,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "moonlight",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "strength-sap",
+          "level": 27,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-drain",
+          "level": 32,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dazzling-gleam",
+          "level": 38,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spore",
+          "level": 44,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "moonblast",
+          "level": 50,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spotlight",
+          "level": 53,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dream-eater",
+          "level": 56,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "synthesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "recycle",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "worry-seed",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "wonder-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "after-you",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "amnesia",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "weather-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "drain-punch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "charge-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "draining-kiss",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "pollen-puff",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 1,
+      "weight": 11.5,
+      "category": "small",
+      "type": "height"
+    },
+    "captureRate": 75,
+    "eggGroups": [
+      "plant"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "morelull",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "shiinotic",
+          "uuid": "Compendium.ptr2e.core-species.Item.oS0zGzXygYsdU8yW",
+          "methods": [
+            {
+              "type": "level",
+              "level": 24,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.jd96Cj8kz7MqVYia"
+    },
+    "number": 756,
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "underdog",
+      "mushroom-harvest",
+      "glow-3",
+      "bait",
+      "fully-evolved",
+      "jump-1"
+    ],
+    "diet": [
+      "soil"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "illuminate"
+        },
+        {
+          "slug": "effect-spore"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "rain-dish"
+        },
+        {
+          "slug": "heliophobia"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "flower-veil"
+        },
+        {
+          "slug": "hydration"
+        }
+      ],
+      "master": [
+        {
+          "slug": "symbiosis"
+        },
+        {
+          "slug": "mycelium-might"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 3
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fairies",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "forest",
+      "woodland"
+    ],
+    "slug": "shiinotic",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "oS0zGzXygYsdU8yW",
+  "effects": [],
+  "folder": null
+}

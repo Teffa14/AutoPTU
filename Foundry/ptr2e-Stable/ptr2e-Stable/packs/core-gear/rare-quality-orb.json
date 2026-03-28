@@ -1,0 +1,56 @@
+{
+  "name": "Rare Quality Orb",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": "handiwork",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "consumableType": "other",
+    "traits": [
+      "treasure",
+      "wonder-orb",
+      "held",
+      "fling"
+    ],
+    "description": "<p>The user recovers 15 IP. Cannot be purchased in shops.</p>",
+    "quantity": 1,
+    "slug": "rare-quality-orb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "M5c663lAtlfsEDSM",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

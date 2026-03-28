@@ -1,0 +1,50 @@
+{
+  "name": "Clangor",
+  "type": "move",
+  "_id": "agzkVidQZLl8r9CK",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "clangor",
+    "actions": [
+      {
+        "name": "Clangor",
+        "slug": "clangor",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/steel_icon.svg",
+        "traits": [
+          "sonic"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 2,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "types": [
+          "steel"
+        ],
+        "category": "special",
+        "power": 45,
+        "accuracy": 95,
+        "description": "<p>Effect: All creatures in Range are cured of @Affliction[drowsy].</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

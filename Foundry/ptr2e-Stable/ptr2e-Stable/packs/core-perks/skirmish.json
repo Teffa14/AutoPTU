@@ -1,0 +1,161 @@
+{
+  "folder": "W85LoOCz3WlwbyhZ",
+  "name": "Skirmish",
+  "type": "perk",
+  "_id": "lAzKGhCaE28Nk7gP",
+  "img": "systems/ptr2e/img/perk-icons/Ninja.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Skirmish",
+        "slug": "skirmish",
+        "description": "<p>Trigger: The user enters Combat.</p><p>Effect: The user advances their Initiative by 50%.</p><blockquote><p>Ideally this should be done prior to the GM pressing the 'Begin Combat' button.</p></blockquote>",
+        "traits": [
+          "interrupt-2"
+        ],
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 4,
+          "trigger": "The user enters Combat."
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "img": "systems/ptr2e/img/perk-icons/Ninja.svg"
+      }
+    ],
+    "slug": "skirmish",
+    "description": "<p>Upon entering combat, as a Free Action at [Interrupt 2], you may spend 4 PP advance their Initiative by 50%.</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 65,
+        "y": 177,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "quick-and-the-dead",
+          "stat-iv-booster-1-7",
+          "improved-overland-9",
+          "mightyena-tactic"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Ninja.svg",
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "tint": null,
+          "scale": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "finesse",
+      "archetype": "hunter"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Skirmish",
+      "type": "passive",
+      "_id": "K8myFiH8KtoNqkyD",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "skirmish-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.advanceffectitem",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.amount",
+                "value": 50
+              },
+              {
+                "mode": 5,
+                "property": "name",
+                "value": "Skirmish - Advance 50%"
+              }
+            ],
+            "label": "Skirmish",
+            "priority": null,
+            "dontMerge": false,
+            "isFixedChance": false,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-note",
+            "key": "combat-enter",
+            "value": "{actor|link} enters combat and may spend {item|actions.contents.0.cost.powerPoints} PP to use {item|link}!",
+            "predicate": [],
+            "visibility": null,
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.1.beta",
+        "createdTime": 1742128039172,
+        "modifiedTime": 1754146292781,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

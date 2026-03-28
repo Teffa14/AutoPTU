@@ -1,0 +1,622 @@
+{
+  "name": "piplup",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 393,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.4,
+      "weight": 5.2
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 4
+      },
+      {
+        "type": "swim",
+        "value": 6
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "natural-swimmer",
+      "deep-breath",
+      "winged",
+      "jump-4",
+      "darkvision-15"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "torrent"
+        },
+        {
+          "slug": "competitive"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "aurora-borealis"
+        },
+        {
+          "slug": "streamlined"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "arctic-fur"
+        },
+        {
+          "slug": "tough-claws"
+        }
+      ],
+      "master": [
+        {
+          "slug": "north-wind"
+        },
+        {
+          "slug": "impervious"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "piplup",
+    "stats": {
+      "hp": 53,
+      "atk": 51,
+      "def": 53,
+      "spa": 61,
+      "spd": 56,
+      "spe": 40
+    },
+    "types": [
+      "water"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "pound",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "growl",
+          "gen": "scarlet-violet",
+          "level": 4
+        },
+        {
+          "name": "bubble",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 8
+        },
+        {
+          "name": "water-gun",
+          "gen": "scarlet-violet",
+          "level": 8
+        },
+        {
+          "name": "charm",
+          "gen": "scarlet-violet",
+          "level": 11
+        },
+        {
+          "name": "water-sport",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 11
+        },
+        {
+          "name": "peck",
+          "gen": "scarlet-violet",
+          "level": 15
+        },
+        {
+          "name": "bubble-beam",
+          "gen": "scarlet-violet",
+          "level": 18
+        },
+        {
+          "name": "bide",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 22
+        },
+        {
+          "name": "swagger",
+          "gen": "scarlet-violet",
+          "level": 22
+        },
+        {
+          "name": "fury-attack",
+          "gen": "scarlet-violet",
+          "level": 25
+        },
+        {
+          "name": "brine",
+          "gen": "scarlet-violet",
+          "level": 29
+        },
+        {
+          "name": "whirlpool",
+          "gen": "scarlet-violet",
+          "level": 32
+        },
+        {
+          "name": "mist",
+          "gen": "scarlet-violet",
+          "level": 36
+        },
+        {
+          "name": "drill-peck",
+          "gen": "scarlet-violet",
+          "level": 39
+        },
+        {
+          "name": "hydro-pump",
+          "gen": "scarlet-violet",
+          "level": 43
+        }
+      ],
+      "tutor": [
+        {
+          "name": "aerial-ace",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "agility",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "aqua-ring",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "brick-break",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "covet",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "cut",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dig",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "disarming-voice",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dive",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "double-hit",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "echoed-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "feather-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flail",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "flip-turn",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hail",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "haze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "headbutt",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-spinner",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "liquidation",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "mud-sport",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "pluck",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "power-trip",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "quash",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "roost",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "scald",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snowscape",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "supersonic",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "surf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "triple-axel",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-pledge",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "waterfall",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "weather-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "work-up",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "yawn",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "captureRate": 45,
+    "eggGroups": [
+      "water1",
+      "ground"
+    ],
+    "genderRatio": 1,
+    "habitats": [
+      "polar"
+    ],
+    "evolutions": {
+      "name": "piplup",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "prinplup",
+          "uuid": "Compendium.ptr2e.core-species.Item.NKL0TccBgqsxDiKn",
+          "methods": [
+            {
+              "type": "level",
+              "level": 16,
+              "operand": "and"
+            }
+          ],
+          "perk": {
+            "x": 26,
+            "y": 26
+          },
+          "evolutions": [
+            {
+              "name": "empoleon",
+              "uuid": "Compendium.ptr2e.core-species.Item.qiDoQPGEQqgqGLGS",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 36,
+                  "operand": "and"
+                }
+              ],
+              "perk": {
+                "x": 26,
+                "y": 26
+              },
+              "details": null
+            }
+          ],
+          "details": null
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.rwztuFZeHsGOVitA",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Sinnoh Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "rwztuFZeHsGOVitA",
+  "effects": []
+}

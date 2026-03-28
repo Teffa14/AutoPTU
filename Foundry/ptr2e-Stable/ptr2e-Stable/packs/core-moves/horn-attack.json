@@ -1,0 +1,51 @@
+{
+  "name": "Horn Attack",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "horn-attack",
+    "actions": [
+      {
+        "slug": "horn-attack",
+        "name": "Horn Attack",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "push-1",
+          "horn",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 65,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "xtEfPkKT3XyjHFoa",
+  "effects": []
+}

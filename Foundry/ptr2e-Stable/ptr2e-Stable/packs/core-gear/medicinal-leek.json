@@ -1,0 +1,52 @@
+{
+  "name": "Medicinal Leek",
+  "img": "systems/ptr2e/img/item-icons/medicinal leek.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 1,
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "E",
+    "fling": {
+      "type": "untyped",
+      "power": 15,
+      "accuracy": 90,
+      "hide": false
+    },
+    "rarity": "common",
+    "consumableType": "other",
+    "traits": [
+      "stack-8",
+      "material",
+      "fling",
+      "restorative",
+      "consumable",
+      "healing"
+    ],
+    "description": "The user is healed 5 HP.",
+    "quantity": 1,
+    "slug": "medicinal-leek",
+    "stack": 8,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Ht5TwfO0LlT34LbP",
+  "effects": [],
+  "folder": "fWXwbB0LHCXeB5EW"
+}

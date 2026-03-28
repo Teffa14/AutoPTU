@@ -1,0 +1,634 @@
+{
+  "name": "xatu",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 178,
+    "size": {
+      "category": "medium",
+      "type": "height",
+      "height": 1.5,
+      "weight": 15
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 15
+      },
+      {
+        "type": "overland",
+        "value": 9
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "winged",
+      "telepath",
+      "telekinetic-4",
+      "premonition",
+      "fully-evolved",
+      "jump-2"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "synchronize"
+        },
+        {
+          "slug": "early-bird"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "magic-bounce"
+        },
+        {
+          "slug": "forewarn"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "gifted-mind"
+        },
+        {
+          "slug": "psych-out"
+        }
+      ],
+      "master": [
+        {
+          "slug": "sun-worship"
+        },
+        {
+          "slug": "sage-power"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychic",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychology",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spiritual",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 65,
+      "atk": 75,
+      "def": 70,
+      "spa": 95,
+      "spd": 70,
+      "spe": 95
+    },
+    "types": [
+      "flying",
+      "psychic"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "aerial-ace",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "air-cutter",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "baton-pass",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "cosmic-power",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "curse",
+          "gen": "crystal"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "detect",
+          "gen": "crystal"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "dream-eater",
+          "gen": "xd"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "expanding-force",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "flash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "fly",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "foul-play",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "heat-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "imprison",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "laser-focus",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "nightmare",
+          "gen": "xd"
+        },
+        {
+          "name": "pain-split",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "pluck",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "protect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "psych-up",
+          "gen": "emerald"
+        },
+        {
+          "name": "psyshock",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "reflect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "roost",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "silver-wind",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "skill-swap",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sky-attack",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "steel-wing",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "sucker-punch",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "swift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "telekinesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thief",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "xd"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trick",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trick-room",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "twister",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "u-turn",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "air-slash",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "leer",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "peck",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "stored-power",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "tailwind",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "teleport",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "lucky-chant",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 12
+        },
+        {
+          "name": "confuse-ray",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 15
+        },
+        {
+          "name": "night-shade",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 20
+        },
+        {
+          "name": "ominous-wind",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 20
+        },
+        {
+          "name": "psycho-shift",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 28
+        },
+        {
+          "name": "guard-swap",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 34
+        },
+        {
+          "name": "power-swap",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 34
+        },
+        {
+          "name": "miracle-eye",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 39
+        },
+        {
+          "name": "psychic",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 41
+        },
+        {
+          "name": "wish",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 48
+        },
+        {
+          "name": "future-sight",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 55
+        },
+        {
+          "name": "me-first",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 57
+        }
+      ]
+    },
+    "captureRate": 75,
+    "eggGroups": [
+      "flying"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "natu",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "xatu",
+          "uuid": "Compendium.ptr2e.core-species.Item.fvBxUnWfQkcRZVtX",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.ll7dIgaY8hDq07VX",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "habitats": [
+      "jungle",
+      "desert",
+      "ruin"
+    ],
+    "slug": "xatu",
+    "publication": {
+      "source": "PTR 2e Core - Johto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "fvBxUnWfQkcRZVtX",
+  "effects": []
+}

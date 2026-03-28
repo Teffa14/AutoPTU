@@ -1,0 +1,51 @@
+{
+  "name": "Leaf Blade",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "leaf-blade",
+    "actions": [
+      {
+        "slug": "leaf-blade",
+        "name": "Leaf Blade",
+        "type": "attack",
+        "traits": [
+          "crit-1",
+          "pass-3",
+          "sharp",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 90,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "AO8ABcakgLIp4Fuz",
+  "effects": []
+}

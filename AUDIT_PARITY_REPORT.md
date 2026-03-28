@@ -1,0 +1,441 @@
+# Parity Audit Report
+
+Generated from `audit_parity.json`.
+Moves without special handlers may still be fully implemented by generic rules; lack of a handler alone is not a bug.
+
+## Moves
+- Total moves: 856
+- Not found by name in sources: 0
+- Without special handlers: 181
+- Without test mentions: 228
+
+### Moves Not Found By Name In Sources
+- None
+
+### Moves Without Special Handlers
+- Aerial Ace
+- Aeroblast
+- Arm Thrust
+- Attack Order
+- Aura Sphere
+- Barrage
+- Behemoth Bash
+- Behemoth Blade
+- Bonemerang
+- Boomburst
+- Brine
+- Bullet Punch
+- Bullet Seed
+- Bullseye
+- Cheap Shot
+- Chip Away
+- Comet Punch
+- Crabhammer
+- Cross Chop
+- Cross Poison
+- Crunch
+- Crush Grip
+- Cut
+- Darkest Lariat
+- Dazzling Gleam
+- Disarming Voice
+- Dizzy Punch
+- Double Hit
+- Double Kick
+- Double Slap
+- Double Swipe
+- Dragon Claw
+- Dragon Darts
+- Dragon Energy
+- Dragon Hammer
+- Dragon Pulse
+- Dragon Rush
+- Drill Peck
+- Drill Run
+- Dual Chop
+- Dynamax Cannon
+- EW Adept
+- EW Expert
+- Echoed Voice
+- Eerie Impulse
+- Egg Bomb
+- Electro Ball
+- Eruption
+- Explosion
+- Extrasensory
+- Extreme Speed
+- False Surrender
+- Feint Attack
+- Fell Stinger [SM]
+- Fiery Wrath
+- Fire Blast
+- Flail
+- Flame Wheel
+- Flare Blitz
+- Flash Cannon
+- Flatter
+- Focus Blast
+- Foul Play
+- Freezing Glare
+- Frenzy Plant
+- Frost Breath
+- Frustration
+- Fury Attack
+- Fury Cutter
+- Fury Swipes
+- Fusion Bolt
+- Fusion Flare
+- Gear Grind
+- Grass Whistle
+- Gunk Shot
+- Gyro Ball
+- Harden
+- Head Charge
+- Head Smash
+- Headbutt
+- Heart Stamp
+- Heat Crash
+- Heat Wave
+- Heavy Slam
+- Hex
+- Hidden Power Bug
+- Hidden Power Dark
+- Hidden Power Dragon
+- Hidden Power Electric
+- Hidden Power Fairy
+- Hidden Power Fighting
+- Hidden Power Fire
+- Hidden Power Grass
+- Hidden Power Ground
+- Hidden Power Ice
+- Hidden Power Poison
+- Hidden Power Psychic
+- Hidden Power Rock
+- Hidden Power Steel
+- Hidden Power Water
+- High Jump Kick
+- Howl
+- Hydro Pump
+- Hyper Beam
+- Hyper Fang
+- Hyper Voice
+- Ice Ball
+- Ice Punch
+- Ice Shard
+- Icicle Crash
+- Icicle Spear
+- Infernal Parade
+- Intercept Melee
+- Intercept Ranged
+- Iron Defense
+- Iron Head
+- Iron Tail
+- Judgement
+- Jump Kick
+- Karate Chop
+- Lash Out
+- Lava Plume
+- Leaf Blade
+- Leaf Storm
+- Light of Ruin
+- Lock-On
+- Low Sweep
+- Luster Purge
+- MH Adept
+- MH Expert
+- Mach Punch
+- Magical Leaf
+- Magnet Bomb
+- Maneuver
+- Mega Kick
+- Mega Punch
+- Megahorn
+- Metal Burst
+- Metal Claw
+- Meteor Assault
+- Meteor Mash
+- Moonblast
+- Multi-Attack
+- Multi-Attack [SS]
+- Night Slash
+- OH Adept
+- Overheat
+- Peck
+- Petal Blizzard
+- Photon Geyser
+- Pin Missile
+- Pound
+- Power Gem
+- Power Trip
+- Precipice Blades
+- Psych Up
+- Psycho Boost
+- Psycho Cut
+- Punishment
+- Razor Leaf
+- Rollout
+- Round
+- Sacred Sword
+- Self-Destruct
+- Shadow Claw
+- Shadow Punch
+- Shell Side Arm
+- Shock Wave
+- Skull Bash
+- Smog
+- Spike Cannon
+- Tackle
+- Tackle [SM]
+- Tail Slap
+- Twineedle
+- Volt Tackle
+- Water Shuriken
+- Water Shuriken [SM]
+- Wave Crash
+- Wild Charge
+- Wood Hammer
+
+### Moves Without Test Mentions
+- Acid Armor
+- Astonish
+- Astral Barrage
+- Attack of Opportunity
+- Backswing
+- Barb Barrage
+- Baton Pass
+- Beak Blast
+- Beat Up
+- Belch
+- Belly Drum
+- Bestow
+- Bide
+- Bitter Malice
+- Bleakwind Storm
+- Bleed!
+- Body Press
+- Bolt Beak
+- Bon Mot
+- Breaking Swipe
+- Brick Break
+- Bulldoze
+- Burn Up
+- Burning Jealousy
+- Calm Mind
+- Ceaseless Edge
+- Charge Beam
+- Chloroblast
+- Circle Throw
+- Clanging Scales
+- Clangorous Soul
+- Clear Smog
+- Coaching
+- Cone of Force
+- Constrict
+- Conversion
+- Conversion2
+- Core Enforcer
+- Corrosive Gas
+- Cosmic Power
+- Cotton Guard
+- Cotton Spore
+- Court Change
+- Covet
+- Crafty Shield
+- Dark Void
+- Dark Void [SM]
+- Deadly Strike
+- Decorate
+- Dire Claw
+- Dirty Trick
+- Doom Desire
+- Dragon Rage
+- Dragon Tail
+- Dynamic Punch
+- Earth Power
+- Eerie Spell
+- Electrify
+- Electroweb
+- Embargo
+- Encore
+- Endeavor
+- Energy Blast
+- Energy Sphere
+- Energy Vortex
+- Entrainment
+- Esper Wing
+- Expanding Force
+- Fairy Lock
+- Fake Out
+- Façade
+- Fiery Dance
+- Fire Pledge
+- Fire Spin
+- First Impression
+- Flame Charge
+- Flip Turn
+- Flying Press
+- Flying Press [SM]
+- Focus Energy
+- Focus Punch
+- Follow Me
+- Forest's Curse
+- Freeze Shock
+- Freeze-Dry
+- Furious Strikes
+- Gastro Acid
+- Gear Up [SS]
+- Geomancy
+- Glacial Lance
+- Glaciate
+- Gouge
+- Grass Knot
+- Grass Pledge
+- Grassy Glide
+- Gravity
+- Grudge
+- Guard Split
+- Guard Swap
+- Hammer Arm
+- Haze
+- Headlong Rush
+- Heal Block
+- Heal Pulse
+- Healing Wish
+- Heart Swap
+- Hidden Power Flying
+- Hidden Power Ghost
+- Hinder
+- Hold Hands
+- Horn Drill
+- Howl [SS]
+- Hydro Cannon
+- Hyperspace Fury
+- Hyperspace Hole
+- Ice Burn
+- Ice Fang
+- Ice Hammer
+- Ion Deluge
+- Jungle Healing
+- King's Shield
+- Land's Wrath
+- Laser Focus
+- Last Resort
+- Leafage
+- Leech Life [SM]
+- Leer
+- Life Dew
+- Liquidation
+- Low Blow
+- Lucky Chant
+- Lunar Blessing
+- Lunar Dance
+- Lunge
+- Magic Burst
+- Magic Coat
+- Magic Powder
+- Magic Room
+- Magma Storm
+- Magnet Rise
+- Magnetic Flux
+- Magnetic Flux [SM]
+- Magnetic Flux [SS]
+- Manipulate
+- Mat Block
+- Maul
+- Me First
+- Mean Look
+- Meditate
+- Memento
+- Metal Sound
+- Meteor Beam
+- Milk Drink
+- Mind Blown
+- Mind Reader
+- Minimize
+- Miracle Eye
+- Mirror Coat
+- Mirror Move
+- Mirror Shot
+- Mist Ball
+- Misty Explosion
+- Moongeist Beam
+- Natural Gift
+- Nature Power
+- Nature’s Madness
+- Night Shade
+- Outrage
+- Perish Song
+- Petal Dance
+- Phantom Force
+- Plasma Fists
+- Power Whip
+- Psycho Shift
+- Psystrike
+- Pyro Ball
+- Razor Wind
+- Roar of Time
+- Rock Blast
+- Rock Wrecker
+- Role Play
+- Sandstorm Sear
+- Scale Shot
+- Secret Force
+- Secret Sword
+- Seismic Toss
+- Shadow Force
+- Sketch
+- Skitter Smack
+- Sky Attack
+- Sky Drop
+- Sleep Talk
+- Slice
+- Smelling Salts
+- Snipe Shot
+- Solar Blade
+- Spacial Rend
+- Spider Web
+- Spiky Shield
+- Spit Up
+- Springtide Storm
+- Steel Beam
+- Steel Roller
+- Stomping Tantrum
+- Stone Axe
+- Stored Power
+- Storm Throw
+- Strange Steam
+- Stun Spore
+- Submission
+- Sweeping Strike
+- Techno Blast
+- Terrain Pulse
+- Thrash
+- Titanic Slam
+- Triple Threat
+- Trump Card
+- V-Create
+- Venoshock
+- Vital Throw
+- Wake-Up Slap
+- Water Spout
+- Waterfall
+- Weather Ball
+- Wicked Blow
+- Wildbolt Storm
+- Wring Out
+- Zap Cannon
+
+## Abilities
+- Total abilities: 621
+- Not found by name in sources: 0
+- Not done (pending/in progress): 0
+- Done but without test mentions: 0
+
+### Abilities Not Found By Name In Sources
+- None
+
+### Abilities Not Done (Pending/In Progress)
+- None
+
+### Abilities Done Without Test Mentions
+- None

@@ -1,0 +1,631 @@
+{
+  "name": "nidoran-m",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 32,
+    "size": {
+      "category": "tiny",
+      "type": "quad",
+      "height": 0.5,
+      "weight": 9
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 8
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "quadrupedal",
+      "venomous",
+      "underdog",
+      "horned",
+      "pack-mon",
+      "jump-5"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "poison-point"
+        },
+        {
+          "slug": "rivalry"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "hustle"
+        },
+        {
+          "slug": "rough-skin"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "mighty-horn"
+        },
+        {
+          "slug": "giant-tail"
+        }
+      ],
+      "master": [
+        {
+          "slug": "mold-breaker"
+        },
+        {
+          "slug": "stubborn"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 46,
+      "atk": 57,
+      "def": 40,
+      "spa": 40,
+      "spd": 40,
+      "spe": 50
+    },
+    "types": [
+      "poison"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "amnesia",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "beat-up",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bide",
+          "gen": "yellow"
+        },
+        {
+          "name": "blizzard",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "body-slam",
+          "gen": "xd"
+        },
+        {
+          "name": "chip-away",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confusion",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "counter",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "curse",
+          "gen": "crystal"
+        },
+        {
+          "name": "cut",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "defense-curl",
+          "gen": "emerald"
+        },
+        {
+          "name": "detect",
+          "gen": "crystal"
+        },
+        {
+          "name": "dig",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "disable",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "drill-run",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "echoed-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "head-smash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "headbutt",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hone-claws",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "poison-tail",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "protect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rage",
+          "gen": "yellow"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "reflect",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "shadow-claw",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "skull-bash",
+          "gen": "yellow"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "smart-strike",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "strength",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "sucker-punch",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "super-fang",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "supersonic",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "take-down",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thief",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thrash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thunder",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "crystal"
+        },
+        {
+          "name": "venom-drench",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "venoshock",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "leer",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "poison-sting",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "crystal",
+          "level": 1
+        },
+        {
+          "name": "peck",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 5
+        },
+        {
+          "name": "focus-energy",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 10
+        },
+        {
+          "name": "fury-attack",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 15
+        },
+        {
+          "name": "toxic-spikes",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 20
+        },
+        {
+          "name": "double-kick",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 25
+        },
+        {
+          "name": "horn-drill",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 27
+        },
+        {
+          "name": "horn-attack",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 30
+        },
+        {
+          "name": "helping-hand",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 35
+        },
+        {
+          "name": "toxic",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 40
+        },
+        {
+          "name": "captivate",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 43
+        },
+        {
+          "name": "flatter",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 45
+        },
+        {
+          "name": "poison-jab",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 50
+        },
+        {
+          "name": "earth-power",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 55
+        }
+      ]
+    },
+    "captureRate": 235,
+    "eggGroups": [
+      "monster",
+      "ground"
+    ],
+    "evolutions": {
+      "name": "nidoran-m",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "nidorino",
+          "uuid": "Compendium.ptr2e.core-species.Item.u7s8GeGBD6TPhKDD",
+          "methods": [
+            {
+              "type": "level",
+              "level": 16,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "nidoking",
+              "uuid": "Compendium.ptr2e.core-species.Item.KEpWIwDNaQhZxsUS",
+              "methods": [
+                {
+                  "type": "item",
+                  "item": "moon-stone",
+                  "operand": "or",
+                  "held": false
+                },
+                {
+                  "type": "level",
+                  "level": 32,
+                  "operand": "or"
+                }
+              ],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "evolutions": [],
+              "perk": {
+                "x": 26,
+                "y": 26
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.P0atGVioDIxZ5wOr",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "habitats": [
+      "grassland"
+    ],
+    "slug": "nidoran-m",
+    "genderRatio": -1,
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "P0atGVioDIxZ5wOr",
+  "effects": []
+}

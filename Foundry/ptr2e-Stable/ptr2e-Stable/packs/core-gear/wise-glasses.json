@@ -1,0 +1,140 @@
+{
+  "name": "Wise Glasses",
+  "_id": "JhU4x5wZQlVuqvfd",
+  "folder": "6VDJBcrqVDh5bYtA",
+  "img": "systems/ptr2e/img/item-icons/sunglasses.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "equipped",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "combat"
+    ],
+    "actions": [
+      {
+        "name": "Wise Glasses",
+        "slug": "wise-glasses",
+        "type": "passive",
+        "description": "Effect: The user's Special-Category attacks deal 10% more damage.",
+        "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+        "traits": [
+          "Combat"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 10
+        },
+        "cost": {
+          "activation": "complex"
+        }
+      }
+    ],
+    "description": "Effect: The user's Special-Category attacks deal 10% more damage.",
+    "slug": "wise-glasses",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": 0.103,
+      "previous": {
+        "schema": null,
+        "foundry": "12.329",
+        "system": "0.10.0-alpha.2.0.2"
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Wise Glasses",
+      "type": "passive",
+      "_id": "LuvHUkJ3j5mtWvat",
+      "img": "/systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "percentile-modifier",
+            "key": "special-attack-damage",
+            "value": 10,
+            "predicate": [],
+            "label": "Wise Glasses",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.2.0.3",
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "exportSource": null
+      }
+    }
+  ]
+}

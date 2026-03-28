@@ -1,0 +1,275 @@
+{
+  "name": "caterpie",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 10,
+    "size": {
+      "category": "tiny",
+      "type": "length",
+      "height": 0.3,
+      "weight": 2.9
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 5
+      },
+      {
+        "type": "threaded",
+        "value": 5
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "many-legged",
+      "underdog",
+      "bait",
+      "darkvision-15",
+      "wallclimber",
+      "jump-2"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "shield-dust"
+        },
+        {
+          "slug": "run-away"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "unnerve"
+        },
+        {
+          "slug": "stench"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "suction-cups"
+        },
+        {
+          "slug": "anticipation"
+        }
+      ],
+      "master": [
+        {
+          "slug": "gluttony"
+        },
+        {
+          "slug": "coward"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "disguise",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "sleight-of-hand",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "caterpie",
+    "stats": {
+      "hp": 45,
+      "atk": 30,
+      "def": 35,
+      "spa": 20,
+      "spd": 20,
+      "spe": 45
+    },
+    "types": [
+      "bug"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "electroweb",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "string-shot",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bug-bite",
+          "level": 9,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ]
+    },
+    "captureRate": 255,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "caterpie",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "metapod",
+          "uuid": "Compendium.ptr2e.core-species.Item.DLpRR7pFa4VCgCpC",
+          "methods": [
+            {
+              "type": "level",
+              "level": 7,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "butterfree",
+              "uuid": "Compendium.ptr2e.core-species.Item.mKuandwsKyvBQnmG",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 10,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.QEUZx1xKGWHNOHde"
+    },
+    "habitats": [
+      "forest",
+      "jungle"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "QEUZx1xKGWHNOHde",
+  "effects": [],
+  "folder": null
+}

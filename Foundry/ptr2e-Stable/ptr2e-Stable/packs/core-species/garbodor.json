@@ -1,0 +1,510 @@
+{
+  "name": "garbodor",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 569,
+    "size": {
+      "category": "medium",
+      "type": "height",
+      "height": 1.9,
+      "weight": 107.3
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 7
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "venomous",
+      "bipedal",
+      "underdog",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "weak-armor"
+        },
+        {
+          "slug": "stench"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "aftermath"
+        },
+        {
+          "slug": "corrosion"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "venom"
+        },
+        {
+          "slug": "liquid-ooze"
+        }
+      ],
+      "master": [
+        {
+          "slug": "toxic-spill"
+        },
+        {
+          "slug": "flare-boost"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "garbodor",
+    "stats": {
+      "hp": 80,
+      "atk": 95,
+      "def": 82,
+      "spa": 60,
+      "spd": 82,
+      "spe": 75
+    },
+    "types": [
+      "poison"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "pound",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "take-down",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poison-gas",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "metal-claw",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "recycle",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "acid-spray",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "amnesia",
+          "level": 9,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "clear-smog",
+          "level": 12,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-slap",
+          "level": 14,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "toxic-spikes",
+          "level": 15,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge",
+          "level": 18,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stockpile",
+          "level": 21,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-slam",
+          "level": 24,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-bomb",
+          "level": 27,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "level": 30,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "belch",
+          "level": 33,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "pain-split",
+          "level": 39,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "gunk-shot",
+          "level": 43,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "explosion",
+          "level": 48,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "spite",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "drain-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "corrosive-gas",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psychic",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "screech",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "self-destruct",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thief",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spikes",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-polish",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "cross-poison",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "venoshock",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "smack-down",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "venom-drench",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "body-press",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "captureRate": 60,
+    "eggGroups": [
+      "mineral"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "city"
+    ],
+    "evolutions": {
+      "name": "trubbish",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "garbodor",
+          "uuid": "Compendium.ptr2e.core-species.Item.U7MdsL6xXvkbyt3S",
+          "methods": [
+            {
+              "type": "level",
+              "level": 36,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.NRFgLptO0ZGBQO87",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "U7MdsL6xXvkbyt3S",
+  "effects": []
+}

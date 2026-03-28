@@ -1,0 +1,110 @@
+{
+  "name": "Tag Battle at Cerulean Bridge",
+  "description": "Two player-controlled trainers (Ash and Misty) rotate turns independently while fending off Jessie and James on a tight bridge with blockers.",
+  "default_weather": "Clear",
+  "grid": {
+    "width": 12,
+    "height": 8,
+    "blockers": [[5, 0], [5, 1], [5, 6], [5, 7]],
+    "tiles": {
+      "4,2": "difficult",
+      "4,3": "difficult",
+      "7,4": "difficult",
+      "7,5": "difficult"
+    }
+  },
+  "players": [
+    {
+      "name": "Pikachu",
+      "species": "Pikachu",
+      "level": 20,
+      "types": ["Electric"],
+      "hp_stat": 11,
+      "atk": 9,
+      "def": 9,
+      "spatk": 11,
+      "spdef": 10,
+      "spd": 15,
+      "moves": [
+        {"name": "Thunderbolt", "type": "Electric", "category": "Special", "db": 8, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "EOT"},
+        {"name": "Quick Attack", "type": "Normal", "category": "Physical", "db": 4, "ac": 2, "range_kind": "Melee", "freq": "At-Will"},
+        {"name": "Electro Ball", "type": "Electric", "category": "Special", "db": 7, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "Scene"},
+        {"name": "Tail Whip", "type": "Normal", "category": "Status", "db": 0, "ac": null, "range_kind": "CloseBlast", "range_value": 1, "freq": "At-Will"}
+      ],
+      "capabilities": [{"name": "Zapper"}, {"name": "Underdog"}],
+      "movement": {"overland": 7, "swim": 2, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 2, "l_jump": 2, "power": 2}
+    },
+    {
+      "name": "Staryu",
+      "species": "Staryu",
+      "level": 20,
+      "types": ["Water"],
+      "hp_stat": 9,
+      "atk": 8,
+      "def": 10,
+      "spatk": 11,
+      "spdef": 9,
+      "spd": 13,
+      "moves": [
+        {"name": "Water Pulse", "type": "Water", "category": "Special", "db": 7, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "At-Will"},
+        {"name": "Swift", "type": "Normal", "category": "Special", "db": 6, "ac": 2, "range_kind": "Burst", "range_value": 1, "freq": "EOT"},
+        {"name": "Rapid Spin", "type": "Normal", "category": "Physical", "db": 4, "ac": 2, "range_kind": "Melee", "freq": "At-Will"},
+        {"name": "Recover", "type": "Normal", "category": "Status", "db": 0, "ac": null, "range_kind": "Self", "freq": "Scene"}
+      ],
+      "capabilities": [{"name": "Amphibious"}, {"name": "Glow"}],
+      "movement": {"overland": 4, "swim": 8, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 1, "l_jump": 1, "power": 2}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Arbok",
+      "species": "Arbok",
+      "level": 21,
+      "types": ["Poison"],
+      "hp_stat": 12,
+      "atk": 12,
+      "def": 11,
+      "spatk": 8,
+      "spdef": 11,
+      "spd": 12,
+      "moves": [
+        {"name": "Poison Fang", "type": "Poison", "category": "Physical", "db": 6, "ac": 2, "range_kind": "Melee", "freq": "EOT"},
+        {"name": "Wrap", "type": "Normal", "category": "Physical", "db": 4, "ac": 2, "range_kind": "Melee", "freq": "At-Will"},
+        {"name": "Glare", "type": "Normal", "category": "Status", "db": 0, "ac": 4, "range_kind": "Ranged", "range_value": 4, "freq": "Scene"},
+        {"name": "Acid Spray", "type": "Poison", "category": "Special", "db": 6, "ac": 4, "range_kind": "Cone", "range_value": 2, "freq": "EOT"}
+      ],
+      "capabilities": [{"name": "Reach"}],
+      "movement": {"overland": 5, "swim": 3, "sky": 0, "levitate": 0, "burrow": 1, "h_jump": 1, "l_jump": 1, "power": 3}
+    },
+    {
+      "name": "Weezing",
+      "species": "Weezing",
+      "level": 21,
+      "types": ["Poison"],
+      "hp_stat": 13,
+      "atk": 10,
+      "def": 13,
+      "spatk": 11,
+      "spdef": 10,
+      "spd": 8,
+      "moves": [
+        {"name": "Sludge", "type": "Poison", "category": "Special", "db": 7, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "At-Will"},
+        {"name": "Toxic", "type": "Poison", "category": "Status", "db": 0, "ac": 4, "range_kind": "Ranged", "range_value": 6, "freq": "Scene"},
+        {"name": "Smoke Screen", "type": "Normal", "category": "Status", "db": 0, "ac": null, "range_kind": "Burst", "range_value": 1, "freq": "EOT"},
+        {"name": "Self-Destruct", "type": "Normal", "category": "Physical", "db": 12, "ac": 2, "range_kind": "Burst", "range_value": 2, "freq": "Scene"}
+      ],
+      "capabilities": [{"name": "Levitate"}],
+      "movement": {"overland": 2, "swim": 0, "sky": 5, "levitate": 5, "burrow": 0, "h_jump": 1, "l_jump": 1, "power": 2}
+    }
+  ],
+  "metadata": {
+    "player_trainers": [
+      {"identifier": "ash", "name": "Ash", "controller": "player", "start_positions": [[2, 2]], "initiative": 2},
+      {"identifier": "misty", "name": "Misty", "controller": "player", "start_positions": [[2, 5]]}
+    ],
+    "foe_trainers": [
+      {"identifier": "jessie", "name": "Jessie", "controller": "ai", "team": "rocket", "start_positions": [[9, 2]]},
+      {"identifier": "james", "name": "James", "controller": "ai", "team": "rocket", "start_positions": [[9, 5]]}
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "name": "Petal Blizzard",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "petal-blizzard",
+    "actions": [
+      {
+        "slug": "petal-blizzard",
+        "name": "Petal Blizzard",
+        "type": "attack",
+        "traits": [
+          "wind"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "physical",
+        "power": 90,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "7nYDBnojY4IEIGnj",
+  "effects": []
+}

@@ -1,0 +1,691 @@
+{
+  "name": "eelektross",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 604,
+    "size": {
+      "category": "small",
+      "type": "length",
+      "height": 2.1,
+      "weight": 80.5
+    },
+    "diet": [
+      "ergovore-carnivore"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 7
+      },
+      {
+        "type": "swim",
+        "value": 10
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "em-sense-15",
+      "hover",
+      "zapper",
+      "serpentine",
+      "pack-mon",
+      "gilled",
+      "fully-evolved",
+      "jump-3"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "plus"
+        },
+        {
+          "slug": "static"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "transistor"
+        },
+        {
+          "slug": "scavenger"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "ambush"
+        },
+        {
+          "slug": "amphibious"
+        }
+      ],
+      "master": [
+        {
+          "slug": "galvanize"
+        },
+        {
+          "slug": "marine-apex"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "eelektross",
+    "stats": {
+      "hp": 85,
+      "atk": 115,
+      "def": 80,
+      "spa": 105,
+      "spd": 80,
+      "spe": 50
+    },
+    "types": [
+      "electric"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "acid",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "coil",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "crunch",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "crush-claw",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "discharge",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "gastro-acid",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "headbutt",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "ion-deluge",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 1
+        },
+        {
+          "name": "thrash",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "zap-cannon",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "wild-charge",
+          "gen": "scarlet-violet",
+          "level": 5
+        }
+      ],
+      "tutor": [
+        {
+          "name": "acid-spray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acrobatics",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aqua-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "body-press",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bounce",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "brick-break",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bulk-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charge-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "close-combat",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confuse-ray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "cut",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dragon-claw",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dragon-pulse",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dragon-tail",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "drain-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "eerie-impulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "electric-terrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "electro-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "electroweb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heavy-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hex",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hone-claws",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "knock-off",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "liquidation",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lunge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magnet-rise",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "outrage",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "power-up-punch",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "roar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "strength",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "super-fang",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "supercell-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "superpower",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "throat-chop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thunder",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "u-turn",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "volt-switch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "captureRate": 45,
+    "eggGroups": [
+      "indeterminate"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "cave",
+      "lake",
+      "river",
+      "riverside",
+      "beach"
+    ],
+    "evolutions": {
+      "name": "tynamo",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "eelektrik",
+          "uuid": "Compendium.ptr2e.core-species.Item.vltop3pwPMgTaT6v",
+          "methods": [
+            {
+              "type": "level",
+              "level": 20,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "eelektross",
+              "uuid": "Compendium.ptr2e.core-species.Item.x9B4tiWtriPFSOgr",
+              "methods": [
+                {
+                  "type": "item",
+                  "item": "thunder-stone",
+                  "operand": "or",
+                  "held": false
+                },
+                {
+                  "type": "level",
+                  "level": 42,
+                  "operand": "or"
+                }
+              ],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "evolutions": [],
+              "perk": {
+                "x": 26,
+                "y": 26
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.OyQ6MlS6rT3mfvGD",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "x9B4tiWtriPFSOgr",
+  "effects": []
+}

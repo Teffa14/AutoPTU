@@ -1,0 +1,102 @@
+{
+  "name": "Sludge",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "slug": "sludge",
+    "actions": [
+      {
+        "slug": "sludge",
+        "name": "Sludge",
+        "type": "attack",
+        "traits": [
+          "blast-1"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 65,
+        "accuracy": 100,
+        "types": [
+          "poison"
+        ],
+        "description": "<p>Effect: On hit, all valid targets have a 30% chance of gaining @Affliction[poison] 5.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "grade": "B",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "JyY5EGIMXjZ4p62a",
+  "effects": [
+    {
+      "name": "Sludge",
+      "type": "passive",
+      "_id": "t55kVM0wzpWGvjI2",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "sludge-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.poisoncondititem",
+            "predicate": [],
+            "chance": 30,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.0",
+        "createdTime": 1736675928952,
+        "modifiedTime": 1736675959455,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

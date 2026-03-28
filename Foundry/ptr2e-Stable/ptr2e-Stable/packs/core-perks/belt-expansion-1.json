@@ -1,0 +1,151 @@
+{
+  "name": "Belt Expansion 1",
+  "type": "perk",
+  "folder": "oMMIXyKwOCIxMHrK",
+  "system": {
+    "prerequisites": [],
+    "cost": 1,
+    "description": "<p>Gain an additional Belt slot.</p>",
+    "actions": [],
+    "slug": "belt-expansion-1",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "variant": "tiered",
+    "mode": "coexist",
+    "nodes": [
+      {
+        "x": 181,
+        "y": 53,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "trained-wielder",
+          "dress-to-impress",
+          "out-of-options",
+          "dual-wielder",
+          "dimensional-scream"
+        ],
+        "tier": {
+          "rank": null,
+          "uuid": null
+        },
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Tactician.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        }
+      },
+      {
+        "x": null,
+        "y": null,
+        "hidden": false,
+        "type": "normal",
+        "connected": [],
+        "tier": {
+          "rank": 2,
+          "uuid": "Compendium.ptr2e.core-perks.Item.sJ1B6djHXWc4F5Ez"
+        },
+        "config": {
+          "texture": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        }
+      },
+      {
+        "x": null,
+        "y": null,
+        "hidden": false,
+        "type": "normal",
+        "connected": [],
+        "tier": {
+          "rank": 3,
+          "uuid": "Compendium.ptr2e.core-perks.Item.wWAAPsxfOC8nGPGm"
+        },
+        "config": {
+          "texture": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        }
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "resilience",
+      "archetype": "backpacker"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "zAKTLdBrA5eeGCsX",
+  "img": "systems/ptr2e/img/perk-icons/Tactician.svg",
+  "effects": [
+    {
+      "name": "Belt Expansion",
+      "type": "passive",
+      "_id": "lVg2p1y5m9hhxAjN",
+      "img": "systems/ptr2e/img/perk-icons/Tactician.svg",
+      "system": {
+        "changes": [
+          {
+            "type": "basic",
+            "key": "system.inventory.belt.max",
+            "value": 1,
+            "predicate": [],
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "<p>Gain an additional Belt slot.</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.1.beta",
+        "createdTime": 1737934804061,
+        "modifiedTime": 1754299607462,
+        "lastModifiedBy": "tXAZ3QUgjuwX4gdV",
+        "exportSource": null
+      }
+    }
+  ]
+}

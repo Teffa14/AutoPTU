@@ -1,0 +1,109 @@
+{
+  "name": "Sprint",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "or": [
+          {
+            "gte": [
+              "{actor|skills.running.mod}",
+              35
+            ]
+          },
+          {
+            "gte": [
+              "{actor|skills.flying.mod}",
+              35
+            ]
+          },
+          {
+            "gte": [
+              "{actor|skills.swim.mod}",
+              35
+            ]
+          }
+        ]
+      }
+    ],
+    "cost": 2,
+    "description": "<p>Trigger: The user declares Rush or Leap.<br><br>Effect: The user doubles the amount of Movement Score gained with the triggering Action, and if they only move in a straight line this Activation, they gain an additional +3 to that Movement Score.</p>",
+    "actions": [
+      {
+        "name": "Sprint",
+        "slug": "sprint",
+        "description": "Effect: The user doubles the amount of Movement Score gained with the triggering Action, and if they only move in a straight line this Activation, they gain an additional +3 to that Movement Score.",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 2,
+          "trigger": "Trigger: The user declares Rush or Leap."
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 0
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "variant": null,
+        "ephemeralVariant": false,
+        "hidden": false
+      }
+    ],
+    "slug": "sprint",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "improved-burrow",
+          "swimming-lessons",
+          "freeclimber",
+          "root-2",
+          "hardy-trekker",
+          "mankey-see-mankey-do"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#0000ff",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Exploration.svg",
+          "tint": "#ffffff",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 131,
+        "y": 17,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": "exploration"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "vxp5hyhlVJozIaNR",
+  "img": "systems/ptr2e/img/perk-icons/Exploration.svg",
+  "effects": [],
+  "folder": "1osM6JY51pvLkJ3Q"
+}

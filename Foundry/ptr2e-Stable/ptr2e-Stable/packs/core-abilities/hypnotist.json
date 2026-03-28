@@ -1,0 +1,136 @@
+{
+  "name": "Hypnotist",
+  "type": "ability",
+  "img": "icons/magic/control/hypnosis-mesmerism-pendulum.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "interrupt-3"
+        ],
+        "name": "Hypnotist",
+        "slug": "hypnotist-active",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: A creature moves to a space within 5m of the user that was previously not within a 5m radius of the user.<br><br>Effect: The user may spend 3PP to use Hypnosis against the creature as a Free Action Interrupt.</p>",
+        "img": "icons/magic/control/hypnosis-mesmerism-pendulum.webp"
+      },
+      {
+        "traits": [],
+        "name": "Hypnotist",
+        "slug": "hypnotist-passive",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "description": "<p>Passive: The user's Hypnosis gains Danger Close.</p>",
+        "img": "icons/magic/control/hypnosis-mesmerism-pendulum.webp",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 10
+        }
+      }
+    ],
+    "description": "<p>Effect: Connection - Hypnosis. <br><br>Interrupt Trigger: An enemy moves into range, allowing the user to activate Hypnosis as a Free Action Interrupt.<br><br>Passive: The user's Hypnosis gains Danger Close.</p>",
+    "traits": [
+      "partial-automation",
+      "connection"
+    ],
+    "slug": "hypnotist",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "NvSkgeJFdm9bintV",
+  "effects": [
+    {
+      "name": "Hypnotist",
+      "type": "passive",
+      "_id": "12kGPEsZxafjfNQ6",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.s4q86Yo0UJilvVI0",
+            "predicate": [
+              "ability:hypnotist:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "allowDuplicate": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737403414513,
+        "modifiedTime": 1754319221960,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

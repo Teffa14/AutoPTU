@@ -1,0 +1,38 @@
+[
+  {
+    "cost": 3000,
+    "description": "A Shield is an Off-Hand defensive item held in one hand or braced to an arm. Light Shields grant +2 Evasion. They may be readied as a Standard Action to instead grant +4 Evasion and 10 Damage Reduction until the end of your next turn, but also cause you to become Slowed for that duration. If used Two-Handed, light shields can also function as a Small Melee Weapon.",
+    "name": "Light Shield",
+    "slot": "Off-Hand",
+    "tags": [
+      "melee",
+      "shield",
+      "small",
+      "weapon"
+    ]
+  },
+  {
+    "cost": 4500,
+    "description": "A Shield is an Off-Hand defensive item held in one hand or braced to an arm. Heavy Shields grant +2 Evasion and may be readied as a Standard Action to grant +6 Evasion and 15 Damage Reduction until the end of your next turn, but also cause you to become Slowed for that duration. If used Two-Handed, shields can also function as a Small Melee Weapon.",
+    "name": "Heavy Shield",
+    "slot": "Off-Hand",
+    "tags": [
+      "melee",
+      "shield",
+      "small",
+      "weapon"
+    ]
+  },
+  {
+    "cost": 3000,
+    "description": "A Shield is an Off-Hand defensive item held in one hand or braced to an arm. Shields grant +1 Evasion. They may be readied as a Standard Action to instead grant +4 Evasion and 10 Damage Reduction until the end of your next turn, but also cause you to become Slowed for that duration. If used Two-Handed, shields can also function as a Small Melee Weapon.",
+    "name": "Shield [9-15 Playtest]",
+    "slot": "Off-Hand",
+    "tags": [
+      "melee",
+      "shield",
+      "small",
+      "weapon"
+    ]
+  }
+]

@@ -1,0 +1,50 @@
+{
+  "name": "Brave Bird",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "system": {
+    "slug": "brave-bird",
+    "actions": [
+      {
+        "slug": "brave-bird",
+        "name": "Brave Bird",
+        "type": "attack",
+        "traits": [
+          "recoil-1-3",
+          "dash",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "physical",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "flying"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "fcUDCDoj4wCKGfuT",
+  "effects": []
+}

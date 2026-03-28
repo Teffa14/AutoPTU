@@ -1,0 +1,79 @@
+{
+  "name": "Shadow Force",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "shadow-force",
+    "actions": [
+      {
+        "slug": "shadow-force",
+        "name": "Shadow Force (Resolution)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "set-up",
+          "pass-4",
+          "crushing",
+          "pierce",
+          "contact",
+          "priority-40"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "The user used Shadow Force (Set-Up) as their last Action."
+        },
+        "category": "physical",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>Trigger: The user used Shadow Force (Set-Up) as their last Action.</p><p>Effect: The user freely Moves up to double the Movement Score of their choice before attacking with this Attack.</p>",
+        "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+        "predicate": []
+      },
+      {
+        "name": "Shadow Force (Set-Up)",
+        "slug": "shadow-force-set-up",
+        "description": "<p>Effect: The user gains @Affliction[invisible 2], @Affliction[transient 2], and freely Moves up to half the Movement Score of their choice.</p>",
+        "traits": [
+          "legendary",
+          "set-up",
+          "defensive",
+          "priority-20"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "ghost"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "3FUbV3cOXazvisJ0",
+  "effects": []
+}

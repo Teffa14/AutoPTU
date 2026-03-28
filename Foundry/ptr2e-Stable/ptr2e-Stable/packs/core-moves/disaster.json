@@ -1,0 +1,115 @@
+{
+  "name": "Disaster",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "disaster",
+    "actions": [
+      {
+        "slug": "disaster",
+        "name": "Disaster",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "blast-2",
+          "explode"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 80,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>Effect: On hit, all valid targets are @Affliction[bound 7]. While @Affliction[bound], they also suffer from @Affliction[cursed]. This @Affliction[bound] effect can be removed with an Intense Movement-related Skill, Acrobatics, Lift, Navigate, Natural World, Survival, or Track Skill Check taken as a Complex Action.</p>",
+        "img": "systems/ptr2e/img/svg/ghost_icon.svg"
+      }
+    ],
+    "grade": "A",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "KT79n71DZy0Ms4IF",
+  "effects": [
+    {
+      "name": "Disaster",
+      "type": "passive",
+      "_id": "CtNfnTwIlcpUJIHL",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "disaster-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.boundconditiitem",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "disaster-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.cursedcondititem",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.0",
+        "createdTime": 1736472536136,
+        "modifiedTime": 1736472578155,
+        "lastModifiedBy": "IcBpMqhFuTck9VpX"
+      }
+    }
+  ]
+}

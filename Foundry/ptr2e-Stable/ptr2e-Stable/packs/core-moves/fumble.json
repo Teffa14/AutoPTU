@@ -1,0 +1,51 @@
+{
+  "name": "Fumble",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "fumble",
+    "actions": [
+      {
+        "slug": "fumble",
+        "name": "Fumble",
+        "type": "attack",
+        "traits": [
+          "basic",
+          "danger-close"
+        ],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0,
+          "trigger": "<p>Activated by an Effect.</p>"
+        },
+        "category": "physical",
+        "power": 40,
+        "accuracy": 100,
+        "types": [
+          "untyped"
+        ],
+        "description": "<p>Trigger: Activated by an Effect.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "xoFyO6Z8yZJ9Ko8e",
+  "effects": [],
+  "folder": "EpCOePz8omfXbp34"
+}

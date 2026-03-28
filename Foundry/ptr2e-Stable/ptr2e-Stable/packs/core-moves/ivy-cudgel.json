@@ -1,0 +1,52 @@
+{
+  "name": "Ivy Cudgel",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "ivy-cudgel",
+    "actions": [
+      {
+        "slug": "ivy-cudgel",
+        "name": "Ivy Cudgel",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "crit-2",
+          "blast-1",
+          "hammer",
+          "contact"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 2,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "uSp7iRwvQHZZ3M1Y",
+  "effects": []
+}

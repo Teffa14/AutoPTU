@@ -1,0 +1,85 @@
+{
+  "name": "Ralts-Class Sandwiches",
+  "type": "perk",
+  "folder": "zrVtKATNxzLNxTUZ",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.husbandry.mod}",
+          60
+        ]
+      },
+      "item:perk:lechonk-class-sandwiches"
+    ],
+    "cost": 4,
+    "description": "<p>These sandwiches are made with a love for the craft that the diner can really feel. They confer the same benefits as the Lechonk-class sandwich, but for one skill-check in the following day they can instead gain a +30 benefit instead of the +10 passively granted.</p>",
+    "actions": [
+      {
+        "name": "Ralts-Class Sandwiches",
+        "slug": "ralts-class-sandwiches",
+        "description": "These sandwiches are made with a love for the craft that the diner can really feel. They confer the same benefits as the Lechonk-class sandwich, but for one skill-check in the following day they can instead gain a +30 benefit instead of the +10 passively granted. These filling sandwiches confer a +10 to all Skill checks made in the following day, and allow you to gain an additional +20 on one skill check of your choosing in the following day.",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "type": "camping",
+        "traits": [],
+        "range": {
+          "target": "object",
+          "unit": "m",
+          "distance": 0
+        },
+        "img": "icons/svg/explosion.svg",
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "ralts-class-sandwiches",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": null,
+        "y": null,
+        "hidden": false,
+        "type": "normal",
+        "connected": [],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Chef.svg",
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "tint": null,
+          "scale": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "finesse",
+      "archetype": "chef"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "lg2U6UJc7cWi6vhP",
+  "img": "systems/ptr2e/img/perk-icons/Chef.svg",
+  "effects": []
+}

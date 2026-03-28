@@ -1,0 +1,50 @@
+{
+  "name": "Precision Fletch",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "precision-fletch",
+    "actions": [
+      {
+        "slug": "precision-fletch",
+        "name": "Precision Fletch",
+        "type": "attack",
+        "traits": [
+          "missile",
+          "crit-1",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "description": ">",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "lFR711cPGcY3M7zz",
+  "effects": []
+}

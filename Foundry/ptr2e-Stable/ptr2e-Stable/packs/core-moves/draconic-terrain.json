@@ -1,0 +1,49 @@
+{
+  "name": "Draconic Terrain",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "draconic-terrain",
+    "actions": [
+      {
+        "slug": "draconic-terrain",
+        "name": "Draconic Terrain",
+        "type": "attack",
+        "traits": [
+          "terrain"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "status",
+        "types": [
+          "dragon"
+        ],
+        "description": "<p>Effect: The Terrain type is set to Draconic Terrain for 3 rounds.</p>",
+        "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+        "summon": "Compendium.ptr2e.core-summons.Item.Cru1SkGkZY92tqXK",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "dDcChKwDs3CqVb8p",
+  "effects": []
+}

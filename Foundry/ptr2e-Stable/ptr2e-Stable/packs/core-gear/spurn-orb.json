@@ -1,0 +1,57 @@
+{
+  "name": "Spurn Orb",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 7,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "consumableType": "other",
+    "traits": [
+      "combat",
+      "consumable",
+      "wonder-orb",
+      "fling"
+    ],
+    "description": "<p>All foes in the Room are freely teleported to random places on the Floor, other than the current Room, and are removed from the combat.</p>",
+    "quantity": 1,
+    "slug": "spurn-orb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "u9bCyvDgEvpINC2y",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

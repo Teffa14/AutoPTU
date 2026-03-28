@@ -1,0 +1,78 @@
+{
+  "name": "Solar Beam",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "solar-beam",
+    "actions": [
+      {
+        "slug": "solar-beam-resolution",
+        "name": "Solar Beam (Resolution)",
+        "type": "attack",
+        "traits": [
+          "set-up",
+          "defensive",
+          "ray",
+          "environ",
+          "flinch-50"
+        ],
+        "range": {
+          "target": "line",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "The user used Solar Beam (Set-Up) as their last Action."
+        },
+        "category": "special",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "<p>Trigger: The user used Solar Beam (Set-Up) as their last Action.</p><p>Effect: If the weather is not Sunny or Clear when this Action is declared, this Attack’s Power is reduced by 50%.</p>",
+        "img": "systems/ptr2e/img/svg/grass_icon.svg",
+        "predicate": []
+      },
+      {
+        "name": "Solar Beam (Set-Up)",
+        "slug": "solar-beam-set-up",
+        "description": "<p>Effect: The user gains +1 DEF and SPATK Stage for 5 Activations, and is @Affliction[braced 2]. If Sunny Weather is present, the user may use Solar Beam (Resolution) as a Free Action upon resolving this Attack.</p>",
+        "traits": [
+          "set-up",
+          "defensive",
+          "environ",
+          "priority-20"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/grass_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "delay": 3
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "grass"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Gp7VqdWhp2x8pjhw",
+  "effects": []
+}

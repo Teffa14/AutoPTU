@@ -1,0 +1,80 @@
+{
+  "name": "Tera Starstorm",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "tera-starstorm",
+    "actions": [
+      {
+        "slug": "tera-starstorm",
+        "name": "Tera Starstorm",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "blast-2"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "special",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "tera-starstorm-stellar",
+        "name": "Tera Starstorm (Stellar)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "blast-5"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6,
+          "trigger": "<p>The user is currently in their Stellar Forme.</p>"
+        },
+        "category": "special",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Tigger: The user is currently in their Stellar Forme.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "tera-starstorm",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "LNZi0GDKv5mYjS7F",
+  "effects": []
+}

@@ -1,0 +1,50 @@
+{
+  "foe:Squirtle": {
+    "action_type": {
+      "defend": 9.999998767976692
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "side3:Walrein": {
+    "action_type": {
+      "defend": 3.439
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "player:Pansage": {
+    "action_type": {
+      "defend": 5.6953279000000006
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "side2:Goodra Hisuian": {
+    "action_type": {
+      "defend": 9.921448327887212
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "foe:Staraptor": {
+    "action_type": {
+      "defend": 2.71
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "player:Dreepy": {
+    "action_type": {
+      "defend": 9.892247363356944
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  }
+}

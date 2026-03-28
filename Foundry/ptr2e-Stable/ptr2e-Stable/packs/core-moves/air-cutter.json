@@ -1,0 +1,50 @@
+{
+  "name": "Air Cutter",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "system": {
+    "slug": "air-cutter",
+    "actions": [
+      {
+        "slug": "air-cutter",
+        "name": "Air Cutter",
+        "type": "attack",
+        "traits": [
+          "crit-1",
+          "wind",
+          "sharp"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "special",
+        "power": 60,
+        "accuracy": 95,
+        "types": [
+          "flying"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "tzBM2qbr1HMhMd35",
+  "effects": []
+}

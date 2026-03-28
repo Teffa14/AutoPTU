@@ -1,0 +1,541 @@
+{
+  "name": "tangela",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 114,
+    "size": {
+      "category": "small",
+      "type": "quad",
+      "height": 1,
+      "weight": 35
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 6
+      },
+      {
+        "type": "threaded",
+        "value": 8
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "underdog",
+      "jump-3"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "chlorophyll"
+        },
+        {
+          "slug": "leaf-guard"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "overgrow"
+        },
+        {
+          "slug": "regenerator"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "seaweed"
+        },
+        {
+          "slug": "grass-pelt"
+        }
+      ],
+      "master": [
+        {
+          "slug": "infiltrator"
+        },
+        {
+          "slug": "tangling-hair"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "disguise",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "tangela",
+    "stats": {
+      "hp": 65,
+      "atk": 55,
+      "def": 115,
+      "spa": 100,
+      "spd": 40,
+      "spe": 60
+    },
+    "types": [
+      "grass"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "reflect",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "flail",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "nature-power",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "endeavor",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "wake-up-slap",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "power-swap",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "leaf-storm",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rage-powder",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "firered-leafgreen"
+        },
+        {
+          "name": "headbutt",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "body-slam",
+          "gen": "xd"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "pain-split",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "synthesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "psych-up",
+          "gen": "emerald"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "worry-seed",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "grassy-glide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "cut",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "take-down",
+          "gen": "yellow"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "rage",
+          "gen": "yellow"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bide",
+          "gen": "yellow"
+        },
+        {
+          "name": "skull-bash",
+          "gen": "yellow"
+        },
+        {
+          "name": "flash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thief",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "curse",
+          "gen": "crystal"
+        },
+        {
+          "name": "protect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sweet-scent",
+          "gen": "crystal"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "bullet-seed",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "bind",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "absorb",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "constrict",
+          "level": 1,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "stun-spore",
+          "level": 4,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "growth",
+          "level": 8,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "confusion",
+          "level": 10,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "mega-drain",
+          "level": 12,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "vine-whip",
+          "level": 16,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "poison-powder",
+          "level": 20,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "ancient-power",
+          "level": 24,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "knock-off",
+          "level": 28,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "giga-drain",
+          "level": 32,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "natural-gift",
+          "level": 33,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-powder",
+          "level": 36,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "leech-seed",
+          "level": 39,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "slam",
+          "level": 40,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "tickle",
+          "level": 44,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "wring-out",
+          "level": 46,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "power-whip",
+          "level": 48,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "amnesia",
+          "level": 49,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "ingrain",
+          "level": 52,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "grassy-terrain",
+          "level": 56,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ]
+    },
+    "captureRate": 85,
+    "eggGroups": [
+      "plant"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "tangela",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "tangrowth",
+          "uuid": "Compendium.ptr2e.core-species.Item.j0soYophB9nL2Lbt",
+          "methods": [
+            {
+              "type": "move",
+              "move": "ancient-power",
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.PqMo8dAwuPml7Zz7"
+    },
+    "habitats": [
+      "jungle",
+      "grassland",
+      "swamp"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "PqMo8dAwuPml7Zz7",
+  "effects": [],
+  "folder": null
+}

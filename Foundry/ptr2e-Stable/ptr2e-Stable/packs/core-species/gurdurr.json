@@ -1,0 +1,594 @@
+{
+  "name": "gurdurr",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 533,
+    "size": {
+      "category": "small",
+      "type": "height",
+      "height": 1.2,
+      "weight": 40
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 4
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "well-built",
+      "wielder",
+      "natural-steel",
+      "jump-2"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "guts"
+        },
+        {
+          "slug": "anger-point"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "sheer-force"
+        },
+        {
+          "slug": "iron-fist"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "stamina"
+        },
+        {
+          "slug": "infuriate"
+        }
+      ],
+      "master": [
+        {
+          "slug": "hustle"
+        },
+        {
+          "slug": "juggernaut"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "gurdurr",
+    "stats": {
+      "hp": 85,
+      "atk": 105,
+      "def": 85,
+      "spa": 40,
+      "spd": 50,
+      "spe": 40
+    },
+    "types": [
+      "fighting"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "leer",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "low-kick",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "pound",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "rock-throw",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "bide",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 8
+        },
+        {
+          "name": "focus-energy",
+          "gen": "scarlet-violet",
+          "level": 12
+        },
+        {
+          "name": "bulk-up",
+          "gen": "scarlet-violet",
+          "level": 16
+        },
+        {
+          "name": "rock-slide",
+          "gen": "scarlet-violet",
+          "level": 20
+        },
+        {
+          "name": "wake-up-slap",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 20
+        },
+        {
+          "name": "chip-away",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 24
+        },
+        {
+          "name": "slam",
+          "gen": "scarlet-violet",
+          "level": 24
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet",
+          "level": 30
+        },
+        {
+          "name": "dynamic-punch",
+          "gen": "scarlet-violet",
+          "level": 36
+        },
+        {
+          "name": "hammer-arm",
+          "gen": "scarlet-violet",
+          "level": 42
+        },
+        {
+          "name": "stone-edge",
+          "gen": "scarlet-violet",
+          "level": 48
+        },
+        {
+          "name": "superpower",
+          "gen": "scarlet-violet",
+          "level": 54
+        },
+        {
+          "name": "focus-punch",
+          "gen": "scarlet-violet",
+          "level": 60
+        }
+      ],
+      "tutor": [
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "block",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "brick-break",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "brutal-swing",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "close-combat",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "coaching",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "counter",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "defog",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "detect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "drain-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "high-horsepower",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "knock-off",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "low-sweep",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mach-punch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mega-kick",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mega-punch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "power-up-punch",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "retaliate",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "revenge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "reversal",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "smack-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "strength",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "wide-guard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "work-up",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "captureRate": 90,
+    "eggGroups": [
+      "humanshape"
+    ],
+    "genderRatio": 2,
+    "habitats": [
+      "forest",
+      "city",
+      "mountain",
+      "tundra"
+    ],
+    "evolutions": {
+      "name": "timburr",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "gurdurr",
+          "uuid": "Compendium.ptr2e.core-species.Item.HGtXGrQdZylgI9t6",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "and"
+            }
+          ],
+          "perk": {
+            "x": 26,
+            "y": 26
+          },
+          "evolutions": [
+            {
+              "name": "conkeldurr",
+              "uuid": "Compendium.ptr2e.core-species.Item.ZRUIkeJACO2GV2cI",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 38,
+                  "operand": "or"
+                },
+                {
+                  "type": "item",
+                  "item": "linking-cord",
+                  "operand": "or",
+                  "held": false
+                }
+              ],
+              "perk": {
+                "x": 26,
+                "y": 26
+              },
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "evolutions": []
+            }
+          ]
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.g7v24VDuWAUFBwDm",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "HGtXGrQdZylgI9t6",
+  "effects": []
+}

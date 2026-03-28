@@ -1,0 +1,106 @@
+{
+  "name": "Meteor Mash",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "meteor-mash",
+    "actions": [
+      {
+        "slug": "meteor-mash",
+        "name": "Meteor Mash",
+        "type": "attack",
+        "traits": [
+          "punch",
+          "dash",
+          "crushing",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 90,
+        "accuracy": 90,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Effect: On hit, the user has a 20% chance of increasing their ATK Stage by +1 for 5 Activations.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "xpZK7MUf1eFdnvBe",
+  "effects": [
+    {
+      "name": "Meteor Mash",
+      "type": "passive",
+      "_id": "ddTerIbMRzqRrCbS",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "meteor-mash-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.ZGwaMlzUwkSuCPyH",
+            "predicate": [],
+            "chance": 20,
+            "affects": "self",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.2",
+        "createdTime": 1737240263002,
+        "modifiedTime": 1737240289013,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS"
+      }
+    }
+  ]
+}

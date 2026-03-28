@@ -1,0 +1,389 @@
+{
+  "name": "poipole",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "poison"
+    ],
+    "stats": {
+      "hp": 67,
+      "atk": 73,
+      "def": 67,
+      "spa": 73,
+      "spd": 67,
+      "spe": 73
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "growl",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "acid",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "peck",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "helping-hand",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-pulse",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fury-attack",
+          "level": 7,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fell-stinger",
+          "level": 14,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "charm",
+          "level": 21,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "venoshock",
+          "level": 28,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "venom-drench",
+          "level": 35,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "nasty-plot",
+          "level": 42,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poison-jab",
+          "level": 49,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "gastro-acid",
+          "level": 56,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "level": 63,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snatch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "covet",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "pin-missile",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic-spikes",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "echoed-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.6,
+      "weight": 1.8,
+      "category": "small",
+      "type": "height"
+    },
+    "captureRate": 83,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "poipole",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "naganadel",
+          "uuid": "Compendium.ptr2e.core-species.Item.23vcFFjklURWxdwI",
+          "methods": [
+            {
+              "type": "move",
+              "move": "dragon-pulse",
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.A16SczAsH6QDzUjL",
+      "methods": []
+    },
+    "number": 803,
+    "traits": [
+      "pokemon",
+      "hover",
+      "underdog",
+      "pack-mon",
+      "venomous",
+      "ultra-beast",
+      "jump-2"
+    ],
+    "diet": [
+      "omnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "beast-boost"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "merciless"
+        },
+        {
+          "slug": "poison-touch"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "corrosion"
+        },
+        {
+          "slug": "iron-barbs"
+        }
+      ],
+      "master": [
+        {
+          "slug": "deadeye"
+        },
+        {
+          "slug": "supervenom"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 11
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ultrology",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "science"
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "poipole",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "A16SczAsH6QDzUjL",
+  "effects": []
+}

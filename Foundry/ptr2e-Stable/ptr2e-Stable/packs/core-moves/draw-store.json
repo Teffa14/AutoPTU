@@ -1,0 +1,41 @@
+{
+  "name": "Draw/Store",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "draw-store",
+    "actions": [
+      {
+        "slug": "draw-store",
+        "name": "Draw/Store",
+        "type": "generic",
+        "traits": [
+          "manipulate",
+          "contact",
+          "basic"
+        ],
+        "range": {
+          "target": "object",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple"
+        },
+        "description": "<p>Effect: The user may take a Held item from one of their their Item Slots, a Container, or within reach, making it Held, or store an equipped Held item in a Container or an available, applicable Item Slot.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "DcJ7GBQWcUL9mtYI",
+  "effects": [],
+  "folder": "EpCOePz8omfXbp34"
+}

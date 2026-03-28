@@ -1,0 +1,862 @@
+Attack Coverage Report
+
+Total attacks in ATTACK_LOG: 856
+Overrides entries: 553
+
+Per-attack summary (ATTACK_LOG order):
+- Move: Status | Notes
+- ------: -------- | -------
+- Absorb: done | Heals half the damage dealt and logs the absorption event. | override: Heals half the damage dealt and logs the absorption event. | override_status: done
+- Accelerock: done | Logs `accelerock_dash` so Dash priority is documented. | override: Logs `accelerock_dash` so Dash priority is documented. | override_status: done
+- Acid: done | Already handles the 10% SP. DEF drop for 5 activations on hit. | override: Already handles the 10% SP. DEF drop for 5 activations on hit. | override_status: done
+- Acid Armor: done | Set-up/resolution flow already recognized. | override: Set-up/resolution flow already recognized. | override_status: done
+- Acid Spray: done | Lowers SP. DEF by -2 stages for five activations when it hits. | override: Lowers SP. DEF by -2 stages for five activations when it hits. | override_status: done
+- Acrobatics: done | No-item users gain +5 DB, lifting the effective base to 11. | override: No-item users gain +5 DB, lifting the effective base to 11. | override_status: done
+- Acupressure: done | Roll 1d8 to buff Attack/Defense/S. Atk/S. Def/Speed/Accuracy (+2 CS), 8 picks the lowest stat. | override: Roll 1d8 to buff Attack/Defense/S. Atk/S. Def/Speed/Accuracy (+2 CS), 8 picks the lowest stat. | override_status: done
+- Aerial Ace: done | Always-hit accuracy already handled upstream. | override: Always-hit accuracy already handled upstream. | override_status: done
+- Aeroblast: done | Even accuracy rolls now trigger criticals. | override: Even accuracy rolls now trigger criticals. | override_status: done
+- After You: done | Schedules the target to act immediately after the caster. | override: Schedules the target to act immediately after the caster. | override_status: done
+- Agility: done | Increases Speed by +2 CS with an accompanying log event. | override: Increases Speed by +2 CS with an accompanying log event. | override_status: done
+- Air Cutter: done | Rolls ≥18 become forced criticals and emit an event. | override: Rolls ≥18 become forced criticals and emit an event. | override_status: done
+- Air Slash: done | Rolls ≥15 inflict Flinch on the defender. | override: Rolls ≥15 inflict Flinch on the defender. | override_status: done
+- Ally Switch: done | Swaps the user/ally positions and logs the switch. | override: Swaps the user/ally positions and logs the switch. | override_status: done
+- Amnesia: done | Buffs Special Defense by +2 CS and records the change. | override: Buffs Special Defense by +2 CS and records the change. | override_status: done
+- Anchor Shot: done | Requires the user to be on an Anchor Token; traps the target for 2 rounds. | override: Requires the user to be on an Anchor Token; traps the target for 2 rounds. | override_status: done
+- Ancient Power: done | Rolls ≥19 raise every combat stage by +1 CS. | override: Rolls ≥19 raise every combat stage by +1 CS. | override_status: done
+- Apple Acid: done | Lowers the target's Special Defense by 1 CS on hit. | override: Lowers the target's Special Defense by 1 CS on hit. | override_status: done
+- Aqua Jet: done | Logs the priority attack so the 1st-strike effect is recorded. | override: Logs the priority attack so the 1st-strike effect is recorded. | override_status: done
+- Aqua Ring: done | Applies a healing coat that ticks each turn. | override: Applies a healing coat that ticks each turn. | override_status: done
+- Aqua Tail: done | Records the pass-through strike in the log. | override: Records the pass-through strike in the log. | override_status: done
+- Arcane Fury: done | Makes the target Vulnerable on rolls of 19+. | override: Makes the target Vulnerable on rolls of 19+. | override_status: done
+- Arcane Storm: done | Slows and makes each target Vulnerable for 1 round. | override: Slows and makes each target Vulnerable for 1 round. | override_status: done
+- Arm Thrust: done | Five Strike handling already covers the multi-hit behavior. | override: Five Strike handling already covers the multi-hit behavior. | override_status: done
+- Aromatherapy: done | Cures one status from each ally. | override: Cures one status from each ally. | override_status: done
+- Aromatic Mist: done | Raises each ally’s SP. DEF by +1 CS. | override: Raises each ally’s SP. DEF by +1 CS. | override_status: done
+- Assist: done | Selects an ally’s move and logs which one was borrowed. | override: Selects an ally’s move and logs which one was borrowed. | override_status: done
+- Assurance: done | Boosts to DB 12 after the target has taken damage this round. | override: Boosts to DB 12 after the target has taken damage this round. | override_status: done
+- Astonish: done | Flinches on ≥15 rolls and auto-flinches unaware foes. | override: Flinches on ≥15 rolls and auto-flinches unaware foes. | override_status: done
+- Astral Barrage: done | Slows legal targets for one round on hit. | override: Slows legal targets for one round on hit. | override_status: done
+- Attack of Opportunity: done | Attack of Opportunity triggers are handled by the interrupt/shift logic. | override: Attack of Opportunity triggers are handled by the interrupt/shift logic. | override_status: done
+- Attack Order: done | Critical hit threshold lowered to 18+ with a logged crit roll. | override: Critical hit threshold lowered to 18+ with a logged crit roll. | override_status: done
+- Attract: done | Infatuates only opposite-gender targets; fails vs same-gender/genderless. | override: Infatuates only opposite-gender targets; fails vs same-gender/genderless. | override_status: done
+- Aura Sphere: done | Cannot miss and already modeled via AC=None in the data. | override: Cannot miss and already modeled via AC=None in the data. | override_status: done
+- Aura Wheel: done | Raises the user's Speed by +1 CS on hit. | override: Raises the user's Speed by +1 CS on hit. | override_status: done
+- Aurora Beam: done | Lowers the target's Attack by -1 CS on rolls of 18+. | override: Lowers the target's Attack by -1 CS on rolls of 18+. | override_status: done
+- Aurora Veil: done | Applies an Aurora Veil blessing to allies during hail. | override: Applies an Aurora Veil blessing to allies during hail. | override_status: done
+- Autotomize: done | Raises the user's Speed by +2 CS. | override: Raises the user's Speed by +2 CS. | override_status: done
+- Avalanche: done | Queues as a set-up move; DB 12 if the target damaged the user this round. | override: Queues as a set-up move; DB 12 if the target damaged the user this round. | override_status: done
+- Baby-Doll Eyes: done | Lowers the target's Attack by -1 CS. | override: Lowers the target's Attack by -1 CS. | override_status: done
+- Backswing: done | Enforces Large Melee Weapon requirement. | override: Enforces Large Melee Weapon requirement. | override_status: done
+- Bane: done | Applies 3-turn tick damage and a -2 save penalty each turn. | override: Applies 3-turn tick damage and a -2 save penalty each turn. | override_status: done
+- Baneful Bunker: done | Blocks the next hit and poisons melee attackers. | override: Blocks the next hit and poisons melee attackers. | override_status: done
+- Barb Barrage: done | Poisons on 17+ and can auto-max Five Strike once per scene if the target has a status. | override: Poisons on 17+ and can auto-max Five Strike once per scene if the target has a status. | override_status: done
+- Barrage: done | Five Strike handling already covers the multi-hit behavior. | override: Five Strike handling already covers the multi-hit behavior. | override_status: done
+- Barrier: done | Places up to 4 barrier segments as blocking terrain on the grid. | override: Places up to 4 barrier segments as blocking terrain on the grid. | override_status: done
+- Bash!: done | On 15+ rolls, sets the target's initiative to 0 next round. | override: On 15+ rolls, sets the target's initiative to 0 next round. | override_status: done
+- Baton Pass: done | Switches with an ally, transferring combat stages and coats. | override: Switches with an ally, transferring combat stages and coats. | override_status: done
+- Beak Blast: done | Declares a setup; burns melee attackers, then shifts and attacks at end of round. | override: Declares a setup; burns melee attackers, then shifts and attacks at end of round. | override_status: done
+- Beat Up: done | Triggers adjacent allies to make Struggle attacks after the hit. | override: Triggers adjacent allies to make Struggle attacks after the hit. | override_status: done
+- Behemoth Bash: done | DB increases by +2 per positive CS on the target, up to DB 20. | override: DB increases by +2 per positive CS on the target, up to DB 20. | override_status: done
+- Behemoth Blade: done | DB increases by +2 per positive CS on the target, up to DB 20. | override: DB increases by +2 per positive CS on the target, up to DB 20. | override_status: done
+- Belch: done | Requires trading a Digestion/Food Buff earlier in the scene. | override: Requires trading a Digestion/Food Buff earlier in the scene. | override_status: done
+- Belly Drum: done | Cuts the user's HP to about 50% and raises Attack to +6 CS. | override: Cuts the user's HP to about 50% and raises Attack to +6 CS. | override_status: done
+- Bestow: done | Transfers the user's held item or uses it on the target. | override: Transfers the user's held item or uses it on the target. | override_status: done
+- Bide: done | Stores damage taken, then releases it to adjacent foes. | override: Stores damage taken, then releases it to adjacent foes. | override_status: done
+- Bind: done | Applies Bind/Grappled/Trapped for 3 activations with tick damage. | override: Applies Bind/Grappled/Trapped for 3 activations with tick damage. | override_status: done
+- Bite: done | Flinches the target on a 30% roll. | override: Flinches the target on a 30% roll. | override_status: done
+- Bitter Malice: done | Lowers the target's Attack by -1 CS for 5 activations. | override: Lowers the target's Attack by -1 CS for 5 activations. | override_status: done
+- Blast Burn: done | Applies the Exhaust penalty for the following turn. | override: Applies the Exhaust penalty for the following turn. | override_status: done
+- Blaze Kick: done | Burns the target on a 10% roll. | override: Burns the target on a 10% roll. | override_status: done
+- Bleakwind Storm: done | Flinches on 15+ and freezes on 19+. | override: Flinches on 15+ and freezes on 19+. | override_status: done
+- Bleed!: done | Applies Bleed for 3 turns, ticking damage each turn. | override: Applies Bleed for 3 turns, ticking damage each turn. | override_status: done
+- Blind: done | Stealth contest can inflict Blinded for 1 activation. | override: Stealth contest can inflict Blinded for 1 activation. | override_status: done
+- Blizzard: done | Freezes on 15+ and cannot miss during hail. | override: Freezes on 15+ and cannot miss during hail. | override_status: done
+- Block: done | Leaves the target Stuck and Trapped until the user's next turn. | override: Leaves the target Stuck and Trapped until the user's next turn. | override_status: done
+- Blue Flare: done | Burns on 17+. | override: Burns on 17+. | override_status: done
+- Body Press: done | Uses the user's Defense for damage calculation. | override: Uses the user's Defense for damage calculation. | override_status: done
+- Body Slam: done | Paralyzes the target on rolls of 15+. | override: Paralyzes the target on rolls of 15+. | override_status: done
+- Bolt Beak: done | Deals +10 damage against lower-initiative targets that have not acted. | override: Deals +10 damage against lower-initiative targets that have not acted. | override_status: done
+- Bolt Strike: done | Status tracking already implemented in battle hooks. | override: Status tracking already implemented in battle hooks. | override_status: done
+- Bon Mot: done | Guile contest enrages the target and blocks AP-spend (At-Will only) for 1 round. | override: Guile contest enrages the target and blocks AP-spend (At-Will only) for 1 round. | override_status: done
+- Bone Club: done | Flinches the target on rolls of 18+. | override: Flinches the target on rolls of 18+. | override_status: done
+- Bone Rush: done | Five Strike handling already covers the multi-hit behavior. | override: Five Strike handling already covers the multi-hit behavior. | override_status: done
+- Bonemerang: done | Strike handling already covers the multi-hit behavior. | override: Strike handling already covers the multi-hit behavior. | override_status: done
+- Boomburst: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Bounce: done | Applies Vulnerable and paralyzes on rolls of 16+. | override: Applies Vulnerable and paralyzes on rolls of 16+. | override_status: done
+- Branch Poke: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Brave Bird: done | Recoil handling already covers the user damage. | override: Recoil handling already covers the user damage. | override_status: done
+- Breaking Swipe: done | Lowers the target's Attack by -1 CS. | override: Lowers the target's Attack by -1 CS. | override_status: done
+- Brick Break: done | Shatters Reflect and Light Screen on hit. | override: Shatters Reflect and Light Screen on hit. | override_status: done
+- Brine: done | DB increases to 13 when the target is at or below half HP. | override: DB increases to 13 when the target is at or below half HP. | override_status: done
+- Brutal Swing: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Bubble: done | Lowers Speed by -1 CS on 16+ rolls. | override: Lowers Speed by -1 CS on 16+ rolls. | override_status: done
+- Bubblebeam: done | Lowers Speed by -1 CS on 18+ rolls. | override: Lowers Speed by -1 CS on 18+ rolls. | override_status: done
+- Bug Bite: done | Steals a food buff from the target. | override: Steals a food buff from the target. | override_status: done
+- Bug Buzz: done | Special move resolution already handles its effects. | override: Special move resolution already handles its effects. | override_status: done
+- Bulk Up: done | Raises Attack and Defense by +1 CS. | override: Raises Attack and Defense by +1 CS. | override_status: done
+- Bulldoze: done | Lowers Speed by -1 CS on each hit target. | override: Lowers Speed by -1 CS on each hit target. | override_status: done
+- Bullet Punch: done | Logs the priority attack so the 1st-strike effect is recorded. | override: Logs the priority attack so the 1st-strike effect is recorded. | override_status: done
+- Bullet Seed: done | Five Strike handling already covers the multi-hit behavior. | override: Five Strike handling already covers the multi-hit behavior. | override_status: done
+- Bullseye: done | Critical hit threshold lowered to 16+ when the attack lands. | override: Critical hit threshold lowered to 16+ when the attack lands. | override_status: done
+- Burn Up: done | Removes the user's Fire typing after resolving. | override: Removes the user's Fire typing after resolving. | override_status: done
+- Burning Jealousy: done | Burns nearby foes with raised combat stages once per scene. | override: Burns nearby foes with raised combat stages once per scene. | override_status: done
+- Calm Mind: done | Raises Special Attack and Special Defense by +1 CS. | override: Raises Special Attack and Special Defense by +1 CS. | override_status: done
+- Camouflage: done | Changes the user's type to match weather-based terrain defaults. | override: Changes the user's type to match weather-based terrain defaults. | override_status: done
+- Captivate: done | Lowers Special Attack by -2 CS against opposite-gender targets. | override: Lowers Special Attack by -2 CS against opposite-gender targets. | override_status: done
+- Ceaseless Edge: done | Crits on 19+ and applies a Vortex trap with tick damage. | override: Crits on 19+ and applies a Vortex trap with tick damage. | override_status: done
+- Charge: done | Raises Special Defense by +1 CS and boosts the next Electric attack. | override: Raises Special Defense by +1 CS and boosts the next Electric attack. | override_status: done
+- Charge Beam: done | On hit, rolls 1d20 and raises the user's Special Attack by +1 CS on 7+. | override: On hit, rolls 1d20 and raises the user's Special Attack by +1 CS on 7+. | override_status: done
+- Charm: done | Lowers the target's Attack by -2 CS. | override: Lowers the target's Attack by -2 CS. | override_status: done
+- Chatter: done | Confuses targets on 16+ rolls. | override: Confuses targets on 16+ rolls. | override_status: done
+- Cheap Shot: done | Priority strike handled by existing hooks. | override: Priority strike handled by existing hooks. | override_status: done
+- Chip Away: done | Ignores defense stages and damage reduction for this attack. | override: Ignores defense stages and damage reduction for this attack. | override_status: done
+- Chloroblast: done | Recoil handling already covers the user damage. | override: Recoil handling already covers the user damage. | override_status: done
+- Circle Throw: done | Forced movement handling already covers the push effect. | override: Forced movement handling already covers the push effect. | override_status: done
+- Clamp: done | Grants grapple contest bonuses and deals a tick on gaining dominance. | override: Grants grapple contest bonuses and deals a tick on gaining dominance. | override_status: done
+- Clanging Scales: done | Adds half Defense to damage and lowers the user's Defense by -1 CS. | override: Adds half Defense to damage and lowers the user's Defense by -1 CS. | override_status: done
+- Clangorous Soul: done | Costs 1/3 max HP and raises all combat stages by +1 CS. | override: Costs 1/3 max HP and raises all combat stages by +1 CS. | override_status: done
+- Clear Smog: done | Resets the target's combat stages after hit. | override: Resets the target's combat stages after hit. | override_status: done
+- Close Combat: done | Lowers the user's Defense and Special Defense by -1 CS after damage. | override: Lowers the user's Defense and Special Defense by -1 CS after damage. | override_status: done
+- Coaching: done | Raises the user's and nearby allies' Attack and Defense by +1 CS. | override: Raises the user's and nearby allies' Attack and Defense by +1 CS. | override_status: done
+- Coil: done | Raises Attack, Defense, and Accuracy by +1 CS. | override: Raises Attack, Defense, and Accuracy by +1 CS. | override_status: done
+- Comet Punch: done | Five Strike handling already covers the multi-hit behavior. | override: Five Strike handling already covers the multi-hit behavior. | override_status: done
+- Cone of Force: done | Area resolution already covers the cone effect. | override: Area resolution already covers the cone effect. | override_status: done
+- Confide: done | Lowers the target's Special Attack by -1 CS. | override: Lowers the target's Special Attack by -1 CS. | override_status: done
+- Confuse Ray: done | Inflicts Confused. | override: Inflicts Confused. | override_status: done
+- Confusion: done | Confuses the target on 19+ rolls. | override: Confuses the target on 19+ rolls. | override_status: done
+- Constrict: done | Lowers Speed by -1 CS and allows swift use while grappling. | override: Lowers Speed by -1 CS and allows swift use while grappling. | override_status: done
+- Conversion: done | Changes the user's type to a known move's elemental type. | override: Changes the user's type to a known move's elemental type. | override_status: done
+- Conversion2: done | Changes the user's type to a move type that resists the last damage taken. | override: Changes the user's type to a move type that resists the last damage taken. | override_status: done
+- Copycat: done | Copycat resolves the target's last move. | override: Copycat resolves the target's last move. | override_status: done
+- Core Enforcer: done | Disables a chosen target ability until the end of the encounter. | override: Disables a chosen target ability until the end of the encounter. | override_status: done
+- Corrosive Gas: done | Disables held items for the scene and suppresses Steel's poison immunity. | override: Disables held items for the scene and suppresses Steel's poison immunity. | override_status: done
+- Cosmic Power: done | Raises Defense and Special Defense by +1 CS. | override: Raises Defense and Special Defense by +1 CS. | override_status: done
+- Cotton Guard: done | Raises Defense by +3 CS. | override: Raises Defense by +3 CS. | override_status: done
+- Cotton Spore: done | Lowers Speed by -2 CS. | override: Lowers Speed by -2 CS. | override_status: done
+- Counter: done | Counter logic already implemented with damage reflection. | override: Counter logic already implemented with damage reflection. | override_status: done
+- Court Change: done | Swaps hazards across the field and swaps team blessings. | override: Swaps hazards across the field and swaps team blessings. | override_status: done
+- Covet: done | Steals a held item if the user isn't holding one. | override: Steals a held item if the user isn't holding one. | override_status: done
+- Crabhammer: done | Critical hit threshold lowered to 18+. | override: Critical hit threshold lowered to 18+. | override_status: done
+- Crafty Shield: done | Blocks incoming status moves for nearby allies as an interrupt. | override: Blocks incoming status moves for nearby allies as an interrupt. | override_status: done
+- Cross Chop: done | Critical hit threshold lowered to 16+. | override: Critical hit threshold lowered to 16+. | override_status: done
+- Cross Poison: done | Critical hit threshold lowered to 18+ and poisons on 19+. | override: Critical hit threshold lowered to 18+ and poisons on 19+. | override_status: done
+- Crunch: done | Lowers Defense by -1 CS on 17+. | override: Lowers Defense by -1 CS on 17+. | override_status: done
+- Crush Claw: done | Lowers Defense by -1 CS on even-numbered rolls. | override: Lowers Defense by -1 CS on even-numbered rolls. | override_status: done
+- Crush Grip: done | Damage base scales down by 1 per 10% missing HP on the target. | override: Damage base scales down by 1 per 10% missing HP on the target. | override_status: done
+- Curse: done | Ghost users lose 1/3 max HP to curse a target; non-ghosts raise Attack/Defense and lower Speed. | override: Ghost users lose 1/3 max HP to curse a target; non-ghosts raise Attack/Defense and lower Speed. | override_status: done
+- Cut: done | Ignores up to 5 damage reduction. | override: Ignores up to 5 damage reduction. | override_status: done
+- Dark Pulse: done | Flinches the target on 17+. | override: Flinches the target on 17+. | override_status: done
+- Dark Void: done | Puts the target to sleep. | override: Puts the target to sleep. | override_status: done
+- Dark Void [SM]: done | Puts the target to sleep. | override: Puts the target to sleep. | override_status: done
+- Darkest Lariat: done | Ignores positive Defense stages and damage reduction. | override: Ignores positive Defense stages and damage reduction. | override_status: done
+- Dazzling Gleam: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Deadly Strike: done | Always critical hit when it connects. | override: Always critical hit when it connects. | override_status: done
+- Decorate: done | Raises the target's Attack and Special Attack by +2 CS. | override: Raises the target's Attack and Special Attack by +2 CS. | override_status: done
+- Defend Order: done | Raises Defense and Special Defense by +1 CS. | override: Raises Defense and Special Defense by +1 CS. | override_status: done
+- Defense Curl: done | Applies Curled Up, granting crit immunity, damage reduction, and accuracy penalty. | override: Applies Curled Up, granting crit immunity, damage reduction, and accuracy penalty. | override_status: done
+- Defog: done | Clears weather, hazards, and coats. | override: Clears weather, hazards, and coats. | override_status: done
+- Destiny Bond: done | Binds targets and KOs them if they KO the user before next turn. | override: Binds targets and KOs them if they KO the user before next turn. | override_status: done
+- Detect: done | Auto-triggers on hit to negate the incoming move as a scene reaction. | override: Auto-triggers on hit to negate the incoming move as a scene reaction. | override_status: done
+- Diamond Storm: done | Defense boost handled on hit. | override: Defense boost handled on hit. | override_status: done
+- Dig: done | Set-up/resolution flow already recognized. | override: Set-up/resolution flow already recognized. | override_status: done
+- Dire Claw: done | Inflicts Poisoned/Paralyzed/Flinch on 15+ rolls. | override: Inflicts Poisoned/Paralyzed/Flinch on 15+ rolls. | override_status: done
+- Dirty Trick: done | Uses Hinder, Blind, then Low Blow contests once per target each scene. | override: Uses Hinder, Blind, then Low Blow contests once per target each scene. | override_status: done
+- Disable: done | Auto-triggers on hit to disable the attacker's move; manual use targets last move. | override: Auto-triggers on hit to disable the attacker's move; manual use targets last move. | override_status: done
+- Disarm: done | Combat/Stealth contest can drop the target's held item; Telekinetic focus works at range. | override: Combat/Stealth contest can drop the target's held item; Telekinetic focus works at range. | override_status: done
+- Disarming Voice: done | Never-miss handling already covered. | override: Never-miss handling already covered. | override_status: done
+- Discharge: done | Paralyzes targets on 15+ rolls. | override: Paralyzes targets on 15+ rolls. | override_status: done
+- Disengage: done | Shifts 1 meter without provoking attacks of opportunity. | override: Shifts 1 meter without provoking attacks of opportunity. | override_status: done
+- Dive: done | Set-up/resolution flow already recognized. | override: Set-up/resolution flow already recognized. | override_status: done
+- Dizzy Punch: done | Confuses the target on 17+ rolls. | override: Confuses the target on 17+ rolls. | override_status: done
+- Doom Desire: done | Delayed hit resolution already implemented. | override: Delayed hit resolution already implemented. | override_status: done
+- Double Hit: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Double Iron Bash: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Double Kick: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Double Slap: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Double Swipe: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Double Team: done | Grants 3 activations that boost accuracy or evasion by +2. | override: Grants 3 activations that boost accuracy or evasion by +2. | override_status: done
+- Double-Edge: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Draco Meteor: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Dragon Ascent: done | Lowers the user's Defense and Special Defense by -1 CS. | override: Lowers the user's Defense and Special Defense by -1 CS. | override_status: done
+- Dragon Breath: done | Paralyzes the target on 15+. | override: Paralyzes the target on 15+. | override_status: done
+- Dragon Claw: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Dragon Dance: done | Raises the user's Attack and Speed by +1 CS. | override: Raises the user's Attack and Speed by +1 CS. | override_status: done
+- Dragon Darts: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Dragon Energy: done | Damage base drops by 1 per 10% missing HP. | override: Damage base drops by 1 per 10% missing HP. | override_status: done
+- Dragon Hammer: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Dragon Pulse: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Dragon Rage: done | Deals fixed 15 HP damage on hit. | override: Deals fixed 15 HP damage on hit. | override_status: done
+- Dragon Rush: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Dragon Tail: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Drain Punch: done | Heals the user for half the damage dealt. | override: Heals the user for half the damage dealt. | override_status: done
+- Draining Kiss: done | Heals the user for half the damage dealt. | override: Heals the user for half the damage dealt. | override_status: done
+- Dream Eater: done | Only affects sleeping targets, heals half damage, and does not wake them. | override: Only affects sleeping targets, heals half damage, and does not wake them. | override_status: done
+- Drill Peck: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Drill Run: done | Critical hit threshold lowered to 18+. | override: Critical hit threshold lowered to 18+. | override_status: done
+- Drum Beating: done | Lowers the target's Speed by -1 CS. | override: Lowers the target's Speed by -1 CS. | override_status: done
+- Dual Chop: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Dual Wingbeat: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Dynamax Cannon: done | DB increases by +2 per positive CS on the target, up to DB 20. | override: DB increases by +2 per positive CS on the target, up to DB 20. | override_status: done
+- Dynamic Punch: done | Confuses the target and ignores evasion if the target is flanked. | override: Confuses the target and ignores evasion if the target is flanked. | override_status: done
+- Earth Power: done | Lowers Special Defense by -1 CS on 16+. | override: Lowers Special Defense by -1 CS on 16+. | override_status: done
+- Earthquake: done | Can hit underground targets (Dig). | override: Can hit underground targets (Dig). | override_status: done
+- Echoed Voice: done | Damage base scales with Echoed Voice usage in the prior rounds. | override: Damage base scales with Echoed Voice usage in the prior rounds. | override_status: done
+- Eerie Impulse: done | Lowers the target's Special Attack by -2 CS. | override: Lowers the target's Special Attack by -2 CS. | override_status: done
+- Eerie Spell: done | Once per scene, disables the target's last move used. | override: Once per scene, disables the target's last move used. | override_status: done
+- Egg Bomb: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Electric Terrain: done | Electrifies the field for 5 rounds; grounded Electric attacks gain +10 damage and grounded targets are immune to Sleep. | override: Electrifies the field for 5 rounds; grounded Electric attacks gain +10 damage and grounded targets are immune to Sleep. | override_status: done
+- Electrify: done | Forces damaging Water or Melee attacks to become Electric until end of the user's next turn. | override: Forces damaging Water or Melee attacks to become Electric until end of the user's next turn. | override_status: done
+- Electro Ball: done | Adds user Speed and target Speed into the damage calculation. | override: Adds user Speed and target Speed into the damage calculation. | override_status: done
+- Electroweb: done | Lowers Speed by -1 CS on all targets hit. | override: Lowers Speed by -1 CS on all targets hit. | override_status: done
+- Embargo: done | Disables held items for the encounter; only one target at a time. | override: Disables held items for the encounter; only one target at a time. | override_status: done
+- Ember: done | Burns the target on 18+. | override: Burns the target on 18+. | override_status: done
+- Encore: done | Roll 1d6 to apply Confused, Suppressed, or Enraged. | override: Roll 1d6 to apply Confused, Suppressed, or Enraged. | override_status: done
+- Endeavor: done | Deals tick damage equal to the user's injury count. | override: Deals tick damage equal to the user's injury count. | override_status: done
+- Endure: done | Grants Endure to leave the user at 1 HP if a hit would KO them. | override: Grants Endure to leave the user at 1 HP if a hit would KO them. | override_status: done
+- Energy Ball: done | Lowers the target's Special Defense by -1 CS on 17+. | override: Lowers the target's Special Defense by -1 CS on 17+. | override_status: done
+- Energy Blast: done | Raises the user's Special Attack by +1 CS on 19+. | override: Raises the user's Special Attack by +1 CS on 19+. | override_status: done
+- Energy Sphere: done | Raises the user's Special Defense by +1 CS on 19+. | override: Raises the user's Special Defense by +1 CS on 19+. | override_status: done
+- Energy Vortex: done | Applies Vortex and Trapped. | override: Applies Vortex and Trapped. | override_status: done
+- Entrainment: done | Grants one of the user's abilities for 3 turns. | override: Grants one of the user's abilities for 3 turns. | override_status: done
+- Eruption: done | Damage base drops by 1 per 10% missing HP. | override: Damage base drops by 1 per 10% missing HP. | override_status: done
+- Esper Wing: done | Critical hit threshold lowered to 18+. | override: Critical hit threshold lowered to 18+. | override_status: done
+- Eternabeam: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- EW Adept: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- EW Expert: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Expanding Force: done | Creates Psychic Terrain in a Burst 7 for 5 rounds once per scene. | override: Creates Psychic Terrain in a Burst 7 for 5 rounds once per scene. | override_status: done
+- Explosion: done | User loses HP equal to current HP plus 50% max HP. | override: User loses HP equal to current HP plus 50% max HP. | override_status: done
+- Extrasensory: done | Flinches the target on 19+. | override: Flinches the target on 19+. | override_status: done
+- Extreme Speed: done | Logs the priority attack so the 1st-strike effect is recorded. | override: Logs the priority attack so the 1st-strike effect is recorded. | override_status: done
+- Facade: done | DB doubles to 14 when the user has a persistent status affliction. | override: DB doubles to 14 when the user has a persistent status affliction. | override_status: done
+- Fairy Lock: done | Traps and slows legal targets while the user remains on the field. | override: Traps and slows legal targets while the user remains on the field. | override_status: done
+- Fairy Wind: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Fake Out: done | On the join turn, resolves with Priority and flinches the target. | override: On the join turn, resolves with Priority and flinches the target. | override_status: done
+- Fake Tears: done | Lowers the target's Special Defense by -2 CS on hit. | override: Lowers the target's Special Defense by -2 CS on hit. | override_status: done
+- False Surrender: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- False Swipe: done | Never drops the target below 1 HP. | override: Never drops the target below 1 HP. | override_status: done
+- Façade: done | DB doubles to 14 when the user has a persistent status affliction. | override: DB doubles to 14 when the user has a persistent status affliction. | override_status: done
+- Feather Dance: done | Lowers every legal target's Attack by -2 Combat Stages. | override: Lowers every legal target's Attack by -2 Combat Stages. | override_status: done
+- Feint: done | Bypasses and removes shielding effects on the target. | override: Bypasses and removes shielding effects on the target. | override_status: done
+- Feint Attack: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Fell Stinger: done | Raises the user's Attack by +2 CS after it knocks out the target. | override: Raises the user's Attack by +2 CS after it knocks out the target. | override_status: done
+- Fell Stinger [SM]: done | Raises the user's Attack by +2 CS after it knocks out the target. | override: Raises the user's Attack by +2 CS after it knocks out the target. | override_status: done
+- Fiery Dance: done | Raises the user's Special Attack by +1 CS on even-numbered rolls. | override: Raises the user's Special Attack by +1 CS on even-numbered rolls. | override_status: done
+- Fiery Wrath: done | Flinches the target on 17+ and may be used as Fire once per scene. | override: Flinches the target on 17+ and may be used as Fire once per scene. | override_status: done
+- Final Gambit: done | Self-faints (HP set to 0) and then deals damage equal to the HP lost, ignoring item triggers. | override: Self-faints (HP set to 0) and then deals damage equal to the HP lost, ignoring item triggers. | override_status: done
+- Fire Blast: done | Burns the target on rolls of 19+. | override: Burns the target on rolls of 19+. | override_status: done
+- Fire Fang: done | Burns or Flinches on rolls of 18-19 (coin flip) and both on 20, logging both status events. | override: Burns or Flinches on rolls of 18-19 (coin flip) and both on 20, logging both status events. | override_status: done
+- Fire Lash: done | Lowers the target's Defense by -1 CS when it hits. | override: Lowers the target's Defense by -1 CS when it hits. | override_status: done
+- Fire Pledge: done | Tracks pledge combos; Fire+Grass creates fire hazards, Fire+Water creates Rainbow. | override: Tracks pledge combos; Fire+Grass creates fire hazards, Fire+Water creates Rainbow. | override_status: done
+- Fire Punch: done | Burns the target on rolls of 19+. | override: Burns the target on rolls of 19+. | override_status: done
+- Fire Spin: done | Applies Vortex and Trapped for 3 rounds on hit. | override: Applies Vortex and Trapped for 3 rounds on hit. | override_status: done
+- First Impression: done | On the join turn, resolves with Priority and flinches the target. | override: On the join turn, resolves with Priority and flinches the target. | override_status: done
+- Fishious Rend: done | Bonus +10 damage versus lower-initiative foes (tracked by fishious_rend_bonus). | override: Bonus +10 damage versus lower-initiative foes (tracked by fishious_rend_bonus). | override_status: done
+- Fissure: done | Rolls 1d100 versus 30 + level difference to instantly faint the foe; the log records the roll amount. | override: Rolls 1d100 versus 30 + level difference to instantly faint the foe; the log records the roll amount. | override_status: done
+- Flail: done | DB increases by +1 per injury on the user. | override: DB increases by +1 per injury on the user. | override_status: done
+- Flame Burst: done | Adjacent allies that are cardinally adjacent to the target lose 5 HP when the hit lands. | override: Adjacent allies that are cardinally adjacent to the target lose 5 HP when the hit lands. | override_status: done
+- Flame Charge: done | Raises the user's Speed by +1 Combat Stage after resolving. | override: Raises the user's Speed by +1 Combat Stage after resolving. | override_status: done
+- Flame Wheel: done | Burns the target on rolls of 19+. | override: Burns the target on rolls of 19+. | override_status: done
+- Flamethrower: done | Burns the target on rolls of 19+. | override: Burns the target on rolls of 19+. | override_status: done
+- Flare Blitz: done | Burns the target on rolls of 19+ plus applies the usual recoil handling (logged separately). | override: Burns the target on rolls of 19+ plus applies the usual recoil handling (logged separately). | override_status: done
+- Flash: done | Lowers every legal target's Accuracy by -1. | override: Lowers every legal target's Accuracy by -1. | override_status: done
+- Flash Cannon: done | Lowers the target's Special Defense by -1 CS on rolls of 17+. | override: Lowers the target's Special Defense by -1 CS on rolls of 17+. | override_status: done
+- Flatter: done | Raises the target's Special Attack by +1 CS and confuses them. | override: Raises the target's Special Attack by +1 CS and confuses them. | override_status: done
+- Fleur Cannon: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Fling: done | Consumes the held item and logs the thrown item. | override: Consumes the held item and logs the thrown item. | override_status: done
+- Flip Turn: done | Switches the user out after dealing damage; ignores Trapped. | override: Switches the user out after dealing damage; ignores Trapped. | override_status: done
+- Flirt: done | Infatuates the target (charm check not modeled). | override: Infatuates the target (charm check not modeled). | override_status: done
+- Floral Healing: done | Heals 1/2 max HP or 2/3 in Grassy Terrain. | override: Heals 1/2 max HP or 2/3 in Grassy Terrain. | override_status: done
+- Flower Shield: done | Raises Defense of Grass-type targets by +2 CS. | override: Raises Defense of Grass-type targets by +2 CS. | override_status: done
+- Fly: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Flying Press: done | Chooses Fighting or Flying type damage based on effectiveness. | override: Chooses Fighting or Flying type damage based on effectiveness. | override_status: done
+- Flying Press [SM]: done | Chooses Fighting or Flying type damage based on effectiveness. | override: Chooses Fighting or Flying type damage based on effectiveness. | override_status: done
+- Focus Blast: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Focus Energy: done | Applies Pumped and extends the critical range by 2 until switching. | override: Applies Pumped and extends the critical range by 2 until switching. | override_status: done
+- Focus Punch: done | Set-up move; fails if user takes 25%+ max HP damage before resolving. | override: Set-up move; fails if user takes 25%+ max HP damage before resolving. | override_status: done
+- Follow Me: done | Redirects foes to the user until the end of the next turn. | override: Redirects foes to the user until the end of the next turn. | override_status: done
+- Force Palm: done | Paralyzes the target on 18+. | override: Paralyzes the target on 18+. | override_status: done
+- Foresight: done | For the rest of the turn, Normal/Fighting moves can hit Ghosts. | override: For the rest of the turn, Normal/Fighting moves can hit Ghosts. | override_status: done
+- Forest's Curse: done | Adds the Grass type for 5 turns. | override: Adds the Grass type for 5 turns. | override_status: done
+- Foul Play: done | Uses the target's Attack stat for damage. | override: Uses the target's Attack stat for damage. | override_status: done
+- Freeze Shock: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Freeze-Dry: done | Treats Water as weak to Ice when calculating effectiveness. | override: Treats Water as weak to Ice when calculating effectiveness. | override_status: done
+- Freezing Glare: done | Freezes on 19+ and may switch to Ice type once per scene. | override: Freezes on 19+ and may switch to Ice type once per scene. | override_status: done
+- Frenzy Plant: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Frost Breath: done | Always crits if it hits. | override: Always crits if it hits. | override_status: done
+- Frustration: done | DB becomes 9 minus the user's Loyalty value. | override: DB becomes 9 minus the user's Loyalty value. | override_status: done
+- Furious Strikes: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Fury Attack: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Fury Cutter: done | DB scales with consecutive hits and resets on miss/no damage. | override: DB scales with consecutive hits and resets on miss/no damage. | override_status: done
+- Fury Swipes: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Fusion Bolt: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Fusion Flare: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Future Sight: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Gastro Acid: done | Suppresses one of the target's abilities for the encounter. | override: Suppresses one of the target's abilities for the encounter. | override_status: done
+- Gear Grind: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Gear Up: done | Plus/Minus targets gain +1 Attack and Special Attack. | override: Plus/Minus targets gain +1 Attack and Special Attack. | override_status: done
+- Gear Up [SS]: done | Steel-typed targets gain +1 Attack and Special Attack. | override: Steel-typed targets gain +1 Attack and Special Attack. | override_status: done
+- Geomancy: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Giga Drain: done | Heals half the damage dealt. | override: Heals half the damage dealt. | override_status: done
+- Giga Impact: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Glacial Lance: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Glaciate: done | Lowers Speed by -1 CS and even rolls slow grounded targets. | override: Lowers Speed by -1 CS and even rolls slow grounded targets. | override_status: done
+- Glare: done | Paralyzes the target on hit. | override: Paralyzes the target on hit. | override_status: done
+- Gouge: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Grapple: done | Uses the grapple contest and applies Grappled/Vulnerable on success. | override: Uses the grapple contest and applies Grappled/Vulnerable on success. | override_status: done
+- Grass Knot: done | DB equals twice the target's Weight Class. | override: DB equals twice the target's Weight Class. | override_status: done
+- Grass Pledge: done | Tracks pledge combos; fire creates hazards, water slows and -2 Speed. | override: Tracks pledge combos; fire creates hazards, water slows and -2 Speed. | override_status: done
+- Grass Whistle: done | Puts the target to Sleep. | override: Puts the target to Sleep. | override_status: done
+- Grassy Glide: done | Priority on Grassy Terrain; may create Grassy Terrain after hit. | override: Priority on Grassy Terrain; may create Grassy Terrain after hit. | override_status: done
+- Grassy Terrain: done | Creates Grassy Terrain for 5 rounds. | override: Creates Grassy Terrain for 5 rounds. | override_status: done
+- Grav Apple: done | Lowers the target's Defense by -1 CS. | override: Lowers the target's Defense by -1 CS. | override_status: done
+- Gravity: done | Creates Gravity/Warped terrain for 5 rounds with +2 accuracy. | override: Creates Gravity/Warped terrain for 5 rounds with +2 accuracy. | override_status: done
+- Growl: done | Lowers Attack by -1 CS on hit. | override: Lowers Attack by -1 CS on hit. | override_status: done
+- Growth: done | Raises Attack and Special Attack; doubled in sun. | override: Raises Attack and Special Attack; doubled in sun. | override_status: done
+- Grudge: done | Marks the user to Suppress the attacker after a KO (interrupt style). | override: Marks the user to Suppress the attacker after a KO (interrupt style). | override_status: done
+- Guard Split: done | Applies -5 DEF/SPDEF stat modifiers to the target and 5 damage reduction to the user. | override: Applies -5 DEF/SPDEF stat modifiers to the target and 5 damage reduction to the user. | override_status: done
+- Guard Swap: done | Swaps Defense and Special Defense combat stages between user and target. | override: Swaps Defense and Special Defense combat stages between user and target. | override_status: done
+- Guillotine: done | Rolls a level-based d100 check to faint the target. | override: Rolls a level-based d100 check to faint the target. | override_status: done
+- Gunk Shot: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Gust: done | Boosts DB against Fly/Sky Drop targets and logs the airborne hit. | override: Boosts DB against Fly/Sky Drop targets and logs the airborne hit. | override_status: done
+- Gyro Ball: done | Adds bonus damage based on Speed difference. | override: Adds bonus damage based on Speed difference. | override_status: done
+- Hail: done | Sets Hail weather and logs the weather change. | override: Sets Hail weather and logs the weather change. | override_status: done
+- Hammer Arm: done | Lowers the user's Speed by -1 CS on hit. | override: Lowers the user's Speed by -1 CS on hit. | override_status: done
+- Harden: done | Raises the user's Defense by +1 CS. | override: Raises the user's Defense by +1 CS. | override_status: done
+- Haze: done | Resets combat stages for all combatants. | override: Resets combat stages for all combatants. | override_status: done
+- Head Charge: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Head Smash: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Headbutt: done | Flinches on 15+ rolls. | override: Flinches on 15+ rolls. | override_status: done
+- Headlong Rush: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Heal Bell: done | Cures persistent status ailments in range. | override: Cures persistent status ailments in range. | override_status: done
+- Heal Block: done | Prevents healing until the target switches or takes a breather. | override: Prevents healing until the target switches or takes a breather. | override_status: done
+- Heal Order: done | Heals 50% of max HP. | override: Heals 50% of max HP. | override_status: done
+- Heal Pulse: done | Heals 50% of max HP on a non-self target. | override: Heals 50% of max HP on a non-self target. | override_status: done
+- Healing Wish: done | User faints to restore target HP, injuries, and move frequency. | override: User faints to restore target HP, injuries, and move frequency. | override_status: done
+- Heart Stamp: done | Flinches on 15+ rolls. | override: Flinches on 15+ rolls. | override_status: done
+- Heart Swap: done | Swaps combat stages between user and target. | override: Swaps combat stages between user and target. | override_status: done
+- Heat Crash: done | Damage base scales with weight class difference. | override: Damage base scales with weight class difference. | override_status: done
+- Heat Wave: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Heavy Slam: done | Damage base scales with weight class difference. | override: Damage base scales with weight class difference. | override_status: done
+- Helping Hand: done | Grants +2 accuracy and +10 damage to the target's next attack this round. | override: Grants +2 accuracy and +10 damage to the target's next attack this round. | override_status: done
+- Hex: done | Once per scene, increases DB to 13 versus afflicted targets. | override: Once per scene, increases DB to 13 versus afflicted targets. | override_status: done
+- Hidden Power: done | Assigns and persists Hidden Power's elemental type. | override: Assigns and persists Hidden Power's elemental type. | override_status: done
+- Hidden Power Bug: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Dark: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Dragon: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Electric: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Fairy: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Fighting: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Fire: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Flying: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Ghost: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Grass: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Ground: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Ice: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Poison: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Psychic: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Rock: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Steel: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- Hidden Power Water: done | Typed variant uses base data; no special hook needed. | override: Typed variant uses base data; no special hook needed. | override_status: done
+- High Horsepower: done | Sprint usage grants Smite and logs the sprint follow-up. | override: Sprint usage grants Smite and logs the sprint follow-up. | override_status: done
+- High Jump Kick: done | Miss recoil (1/4 max HP) unless blocked by a shield; blocked under Gravity. | override: Miss recoil (1/4 max HP) unless blocked by a shield; blocked under Gravity. | override_status: done
+- Hinder: done | Opposed Athletics contest applies Slowed and Hindered for 1 round. | override: Opposed Athletics contest applies Slowed and Hindered for 1 round. | override_status: done
+- Hold Hands: done | Applies Cheered to both combatants and grants 3 ticks of temp HP. | override: Applies Cheered to both combatants and grants 3 ticks of temp HP. | override_status: done
+- Hone Claws: done | Raises Attack and Accuracy by +1 CS. | override: Raises Attack and Accuracy by +1 CS. | override_status: done
+- Horn Attack: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Horn Drill: done | D100 execute check based on level difference. | override: D100 execute check based on level difference. | override_status: done
+- Horn Leech: done | Drains half the damage dealt. | override: Drains half the damage dealt. | override_status: done
+- Howl: done | Raises the user's Attack by +1 CS. | override: Raises the user's Attack by +1 CS. | override_status: done
+- Howl [SS]: done | Burst 1 allies gain +1 Attack CS. | override: Burst 1 allies gain +1 Attack CS. | override_status: done
+- Hurricane: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Hydro Cannon: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Hydro Pump: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Hyper Beam: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Hyper Fang: done | Flinches the target on 19+. | override: Flinches the target on 19+. | override_status: done
+- Hyper Voice: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Hyperspace Fury: done | Bypasses interrupts and lowers the user's Defense by -1 CS. | override: Bypasses interrupts and lowers the user's Defense by -1 CS. | override_status: done
+- Hyperspace Hole: done | Bypasses interrupts and teleports between hits when possible. | override: Bypasses interrupts and teleports between hits when possible. | override_status: done
+- Hypnosis: done | Puts the target to Sleep. | override: Puts the target to Sleep. | override_status: done
+- Ice Ball: done | Consecutive uses scale DB by +3 up to DB 15 and reset on miss. | override: Consecutive uses scale DB by +3 up to DB 15 and reset on miss. | override_status: done
+- Ice Beam: done | Freezes the target on 19+. | override: Freezes the target on 19+. | override_status: done
+- Ice Burn: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Ice Fang: done | 18-19 inflicts Freeze or Flinch; 20 inflicts both. | override: 18-19 inflicts Freeze or Flinch; 20 inflicts both. | override_status: done
+- Ice Hammer: done | Lowers the user's Speed by -1 CS. | override: Lowers the user's Speed by -1 CS. | override_status: done
+- Ice Punch: done | Freezes the target on 19+. | override: Freezes the target on 19+. | override_status: done
+- Ice Shard: done | Logs the priority strike. | override: Logs the priority strike. | override_status: done
+- Icicle Crash: done | Flinches on 15+. | override: Flinches on 15+. | override_status: done
+- Icicle Spear: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Icy Wind: done | Lowers Speed by -1 CS on hit targets. | override: Lowers Speed by -1 CS on hit targets. | override_status: done
+- Imprison: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Incinerate: done | Drops a held item on hit and logs when none are found. | override: Drops a held item on hit and logs when none are found. | override_status: done
+- Infernal Parade: done | Burns on 17+ and gains DB 12 once per scene vs afflicted targets. | override: Burns on 17+ and gains DB 12 once per scene vs afflicted targets. | override_status: done
+- Inferno: done | Burns the target and can ignore evasion in open terrain. | override: Burns the target and can ignore evasion in open terrain. | override_status: done
+- Infestation: done | Applies Vortex and Trapped for 3 rounds. | override: Applies Vortex and Trapped for 3 rounds. | override_status: done
+- Ingrain: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Instruct: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Intercept Melee: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Intercept Ranged: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Ion Deluge: done | Creates a short-lived ion zone that electrifies Normal moves. | override: Creates a short-lived ion zone that electrifies Normal moves. | override_status: done
+- Iron Defense: done | Raises Defense by +2 CS. | override: Raises Defense by +2 CS. | override_status: done
+- Iron Head: done | Flinches on 15+. | override: Flinches on 15+. | override_status: done
+- Iron Tail: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Jaw Lock: done | Triggers a free Grapple contest on hit. | override: Triggers a free Grapple contest on hit. | override_status: done
+- Judgement: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Jump Kick: done | Miss recoil (1/4 max HP) unless blocked by shields; unusable under Gravity. | override: Miss recoil (1/4 max HP) unless blocked by shields; unusable under Gravity. | override_status: done
+- Jungle Healing: done | Heals allies in burst for 1/4 max HP and cures persistent/volatile statuses. | override: Heals allies in burst for 1/4 max HP and cures persistent/volatile statuses. | override_status: done
+- Karate Chop: done | Critical hit threshold lowered to 17+. | override: Critical hit threshold lowered to 17+. | override_status: done
+- Kinesis: done | Applies a one-use interrupt that imposes a -4 accuracy penalty. | override: Applies a one-use interrupt that imposes a -4 accuracy penalty. | override_status: done
+- King's Shield: done | Sets up a blocking interrupt that lowers Attack by -2 CS on melee hits. | override: Sets up a blocking interrupt that lowers Attack by -2 CS on melee hits. | override_status: done
+- Knock Off: done | Removes a held item from the target. | override: Removes a held item from the target. | override_status: done
+- Land's Wrath: done | Logs Groundshaper grant (no extra mechanics yet). | override: Logs Groundshaper grant (no extra mechanics yet). | override_status: done
+- Laser Focus: done | Grants a guaranteed critical hit on the next damaging attack. | override: Grants a guaranteed critical hit on the next damaging attack. | override_status: done
+- Lash Out: done | Boosts to DB 15 after losing CS, once per target per scene. | override: Boosts to DB 15 after losing CS, once per target per scene. | override_status: done
+- Last Resort: done | Requires five other distinct moves since the last switch. | override: Requires five other distinct moves since the last switch. | override_status: done
+- Lava Plume: done | Burns targets on 16+. | override: Burns targets on 16+. | override_status: done
+- Leaf Blade: done | Critical hit threshold lowered to 18+. | override: Critical hit threshold lowered to 18+. | override_status: done
+- Leaf Storm: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Leaf Tornado: done | Center small/medium targets are missed; 15+ lowers Accuracy by -1 CS. | override: Center small/medium targets are missed; 15+ lowers Accuracy by -1 CS. | override_status: done
+- Leafage: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Leech Life: done | Heals half the damage dealt. | override: Heals half the damage dealt. | override_status: done
+- Leech Life [SM]: done | Heals half the damage dealt. | override: Heals half the damage dealt. | override_status: done
+- Leech Seed: done | Applies Leech Seed ticks for 1/10 max HP and heals the source. | override: Applies Leech Seed ticks for 1/10 max HP and heals the source. | override_status: done
+- Leer: done | Lowers Defense by -1 CS on hit. | override: Lowers Defense by -1 CS on hit. | override_status: done
+- Lick: done | Paralyzes on 15+. | override: Paralyzes on 15+. | override_status: done
+- Life Dew: done | Heals allies in burst for 1/4 max HP. | override: Heals allies in burst for 1/4 max HP. | override_status: done
+- Light of Ruin: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Light Screen: done | Applies a Light Screen blessing with two charges. | override: Applies a Light Screen blessing with two charges. | override_status: done
+- Liquidation: done | Lowers Defense by -1 CS on 17+. | override: Lowers Defense by -1 CS on 17+. | override_status: done
+- Lock-On: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Lovely Kiss: done | Puts the target to sleep. | override: Puts the target to sleep. | override_status: done
+- Low Blow: done | Opposed Acrobatics; on success inflicts Vulnerable and Bashed. | override: Opposed Acrobatics; on success inflicts Vulnerable and Bashed. | override_status: done
+- Low Kick: done | DB equals twice the target's Weight Class. | override: DB equals twice the target's Weight Class. | override_status: done
+- Low Sweep: done | Lowers Speed by -1 CS on hit. | override: Lowers Speed by -1 CS on hit. | override_status: done
+- Lucky Chant: done | Applies a three-charge blessing that negates critical hits. | override: Applies a three-charge blessing that negates critical hits. | override_status: done
+- Lunar Blessing: done | Heals 50% max HP, clears statuses, and grants an evasion bonus. | override: Heals 50% max HP, clears statuses, and grants an evasion bonus. | override_status: done
+- Lunar Dance: done | User faints to restore target HP, heal injuries, and refresh move frequency. | override: User faints to restore target HP, heal injuries, and refresh move frequency. | override_status: done
+- Lunge: done | After sprint, applies -5 damage penalty to the target's next attack. | override: After sprint, applies -5 damage penalty to the target's next attack. | override_status: done
+- Luster Purge: done | Even-numbered rolls lower Special Defense by -1 CS. | override: Even-numbered rolls lower Special Defense by -1 CS. | override_status: done
+- Mach Punch: done | Logs the priority strike. | override: Logs the priority strike. | override_status: done
+- Magic Burst: done | Prevents attacks of opportunity for 1 round on hit foes. | override: Prevents attacks of opportunity for 1 round on hit foes. | override_status: done
+- Magic Coat: done | Readies a status-reflecting interrupt that blocks non-damaging status moves. | override: Readies a status-reflecting interrupt that blocks non-damaging status moves. | override_status: done
+- Magic Powder: done | Adds the Psychic type for 5 turns. | override: Adds the Psychic type for 5 turns. | override_status: done
+- Magic Room: done | Starts Magic Room for 5 rounds (static item suppression not modeled). | override: Suppresses static item effects while active. | override_status: done
+- Magical Leaf: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Magma Storm: done | Applies Vortex and Trapped even on a miss. | override: Applies Vortex and Trapped even on a miss. | override_status: done
+- Magnet Bomb: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Magnet Rise: done | Grants levitation for 5 turns. | override: Grants levitation for 5 turns. | override_status: done
+- Magnetic Flux: done | Raises Defense and Special Defense for Plus/Minus targets. | override: Raises Defense and Special Defense for Plus/Minus targets. | override_status: done
+- Magnetic Flux [SM]: done | Raises Defense and Special Defense for Plus/Minus targets. | override: Raises Defense and Special Defense for Plus/Minus targets. | override_status: done
+- Magnetic Flux [SS]: done | Adjusts Defense and Special Defense for Electric/Magnetic targets. | override: Adjusts Defense and Special Defense for Electric/Magnetic targets. | override_status: done
+- Magnitude: done | Rolls a d6 to set the damage base and logs the roll. | override: Rolls a d6 to set the damage base and logs the roll. | override_status: done
+- Maneuver: done | Handled via trainer maneuver system. | override: Handled via trainer maneuver system. | override_status: done
+- Manipulate: done | Triggers trainer social maneuvers based on the user's best social skill. | override: Triggers trainer social maneuvers based on the users best social skill. | override_status: done
+- Mat Block: done | Round 1 shield that blocks an incoming attack for adjacent allies. | override: Round 1 shield that blocks an incoming attack for adjacent allies. | override_status: done
+- Maul: done | Flinches the target. | override: Flinches the target. | override_status: done
+- Me First: done | Copies a faster foe's declared damaging attack as an interrupt. | override: Copies a faster foes declared damaging attack as an interrupt. | override_status: done
+- Mean Look: done | Applies Trapped and Slowed for the encounter. | override: Applies Trapped and Slowed for the encounter. | override_status: done
+- Meditate: done | Raises the user's Attack by +1 CS. | override: Raises the user's Attack by +1 CS. | override_status: done
+- Mega Drain: done | Heals half the damage dealt. | override: Heals half the damage dealt. | override_status: done
+- Mega Kick: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Mega Punch: done | No special hook beyond baseline resolution. | override: No special hook beyond baseline resolution. | override_status: done
+- Megahorn: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Memento: done | Lowers all combat stages by -2 CS on the target. | override: Lowers all combat stages by -2 CS on the target. | override_status: done
+- Metal Burst: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Metal Claw: done | Raises Attack by +1 CS on 18+. | override: Raises Attack by +1 CS on 18+. | override_status: done
+- Metal Sound: done | Lowers Special Defense by -2 CS on hit targets. | override: Lowers Special Defense by -2 CS on hit targets. | override_status: done
+- Meteor Assault: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Meteor Beam: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Meteor Mash: done | Raises Attack by +1 CS on 15+. | override: Raises Attack by +1 CS on 15+. | override_status: done
+- Metronome: done | Selects a random legal move to execute. | override: Selects a random legal move to execute. | override_status: done
+- MH Adept: done | Monster Hunter perk entry tracked externally. | override: Monster Hunter perk entry tracked externally. | override_status: done
+- MH Expert: done | Monster Hunter perk entry tracked externally. | override: Monster Hunter perk entry tracked externally. | override_status: done
+- Milk Drink: done | Restores 50% max HP to the target. | override: Restores 50% max HP to the target. | override_status: done
+- Mimic: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Mind Blown: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Mind Reader: done | Marks a target for auto-hit or auto-miss through the next turn. | override: Marks a target for auto-hit or auto-miss through the next turn. | override_status: done
+- Minimize: done | Grants evasion and shrinks the user. | override: Grants evasion and shrinks the user. | override_status: done
+- Miracle Eye: done | Psychic moves can hit Dark targets for the rest of the turn. | override: Psychic moves can hit Dark targets for the rest of the turn. | override_status: done
+- Mirror Coat: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Mirror Move: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Mirror Shot: done | Lowers Accuracy by -2 on 16+. | override: Lowers Accuracy by -2 on 16+. | override_status: done
+- Mist: done | Applies a three-charge blessing that blocks combat stage drops. | override: Applies a three-charge blessing that blocks combat stage drops. | override_status: done
+- Mist Ball: done | Even-numbered rolls lower Special Attack by -1 CS. | override: Even-numbered rolls lower Special Attack by -1 CS. | override_status: done
+- Misty Explosion: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Misty Terrain: done | Sets Misty Terrain for 5 rounds, blocks status/confusion for grounded targets, and halves Dragon damage. | override: Sets Misty Terrain for 5 rounds, blocks status/confusion for grounded targets, and halves Dragon damage. | override_status: done
+- Moonblast: done | Lowers Special Attack by -1 CS on 15+. | override: Lowers Special Attack by -1 CS on 15+. | override_status: done
+- Moongeist Beam: done | Ignores defensive abilities. | override: Ignores defensive abilities. | override_status: done
+- Moonlight: done | Bespoke move hook supported by autonomous engine.
+- Morning Sun: done | Bespoke move hook supported by autonomous engine.
+- Mountain Gale: done | Bespoke move hook supported by autonomous engine.
+- Mud Bomb: done | Bespoke move hook supported by autonomous engine.
+- Mud Shot: done | Bespoke move hook supported by autonomous engine.
+- Mud Sport: done | Bespoke move hook supported by autonomous engine.
+- Mud-Slap: done | Bespoke move hook supported by autonomous engine.
+- Muddy Water: done | Bespoke move hook supported by autonomous engine.
+- Multi-Attack: done | Bespoke move hook supported by autonomous engine.
+- Multi-Attack [SS]: done | Bespoke move hook supported by autonomous engine.
+- Mystical Fire: done | Bespoke move hook supported by autonomous engine.
+- Mystical Power: done | Bespoke move hook supported by autonomous engine.
+- Name: done | Bespoke move hook supported by autonomous engine.
+- Nasty Plot: done | Bespoke move hook supported by autonomous engine.
+- Natural Gift: done | Bespoke move hook supported by autonomous engine.
+- Nature Power: done | Bespoke move hook supported by autonomous engine.
+- Nature's Madness: done | Bespoke move hook supported by autonomous engine.
+- Needle Arm: done | Bespoke move hook supported by autonomous engine.
+- Night Daze: done | Bespoke move hook supported by autonomous engine.
+- Night Shade: done | Bespoke move hook supported by autonomous engine.
+- Night Slash: done | Bespoke move hook + Critical hit on accuracy rolls of 18+ supported by autonomous engine.
+- Nightmare: done | Bespoke move hook + Applies Bad Sleep to sleeping targets supported by autonomous engine.
+- No Retreat: done | Bespoke move hook + Raises all stats by +1 CS and prevents switching out supported by autonomous engine.
+- Noble Roar: done | Bespoke move hook + Lowers Attack and Special Attack by -1 CS on hit supported by autonomous engine.
+- Nuzzle: done | Bespoke move hook + Paralyzes the target on hit supported by autonomous engine.
+- Oblivion Wing: done | Bespoke move hook supported by autonomous engine.
+- Obstruct: done | Bespoke move hook supported by autonomous engine.
+- Octazooka: done | Bespoke move hook supported by autonomous engine.
+- Octolock: done | Bespoke move hook supported by autonomous engine.
+- Odor Sleuth: done | Bespoke move hook supported by autonomous engine.
+- OH Adept: done | Placeholder move entry has no combat effect in the engine data. | override: Placeholder move entry has no combat effect in the engine data. | override_status: done
+- Ominous Wind: done | Bespoke move hook supported by autonomous engine.
+- Origin Pulse: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Outrage: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Overdrive: done | No bespoke effect beyond baseline damage. | override: No bespoke effect beyond baseline damage. | override_status: done
+- Overheat: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Pain Split: done | Bespoke move hook supported by autonomous engine.
+- Parabolic Charge: done | Bespoke move hook supported by autonomous engine.
+- Parabolic Charge [SM]: done | Bespoke move hook supported by autonomous engine.
+- Parting Shot: done | Bespoke move hook supported by autonomous engine.
+- Pay Day: done | Bespoke move hook supported by autonomous engine.
+- Payback: done | Bespoke move hook supported by autonomous engine.
+- Peck: done | No bespoke effect beyond baseline damage. | override: No bespoke effect beyond baseline damage. | override_status: done
+- Perish Song: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Petal Blizzard: done | No bespoke effect beyond baseline damage. | override: No bespoke effect beyond baseline damage. | override_status: done
+- Petal Dance: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Phantom Force: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Photon Geyser: done | Bespoke move hook supported by autonomous engine.
+- Pierce!: done | Bespoke move hook supported by autonomous engine.
+- Pin Missile: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Plasma Fists: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Play Nice: done | Bespoke move hook supported by autonomous engine.
+- Play Rough: done | Bespoke move hook supported by autonomous engine.
+- Pluck: done | Bespoke move hook supported by autonomous engine.
+- Poison Fang: done | Bespoke move hook supported by autonomous engine.
+- Poison Gas: done | Bespoke move hook supported by autonomous engine.
+- Poison Jab: done | Bespoke move hook supported by autonomous engine.
+- Poison Powder: done | Bespoke move hook supported by autonomous engine.
+- Poison Sting: done | Bespoke move hook supported by autonomous engine.
+- Poison Tail: done | Bespoke move hook supported by autonomous engine.
+- Pollen Puff: done | Bespoke move hook supported by autonomous engine.
+- Poltergeist: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Pound: done | No bespoke effect beyond baseline damage. | override: No bespoke effect beyond baseline damage. | override_status: done
+- Powder: done | Bespoke move hook supported by autonomous engine.
+- Powder Snow: done | Bespoke move hook supported by autonomous engine.
+- Power Gem: done | No bespoke effect beyond baseline damage. | override: No bespoke effect beyond baseline damage. | override_status: done
+- Power Shift: done | Bespoke move hook supported by autonomous engine.
+- Power Split: done | Bespoke move hook supported by autonomous engine.
+- Power Swap: done | Bespoke move hook supported by autonomous engine.
+- Power Trick: done | Bespoke move hook supported by autonomous engine.
+- Power Trip: done | Bespoke move hook supported by autonomous engine.
+- Power Whip: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Power-Up Punch: done | Bespoke move hook supported by autonomous engine.
+- Precipice Blades: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Present: done | Bespoke move hook supported by autonomous engine.
+- Prismatic Laser: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Protect: done | Bespoke move hook supported by autonomous engine.
+- Psybeam: done | Bespoke move hook supported by autonomous engine.
+- Psych Up: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Psychic: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Psychic Fangs: done | Bespoke move hook supported by autonomous engine.
+- Psychic Terrain: done | Bespoke move hook supported by autonomous engine.
+- Psycho Boost: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Psycho Cut: done | Bespoke move hook supported by autonomous engine.
+- Psycho Shift: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Psyshield Bash: done | Bespoke move hook supported by autonomous engine.
+- Psyshock: done | Bespoke move hook supported by autonomous engine.
+- Psystrike: done | Bespoke move hook supported by autonomous engine.
+- Psywave: done | Bespoke move hook supported by autonomous engine.
+- Punishment: done | Bespoke move hook supported by autonomous engine.
+- Purify: done | Bespoke move hook supported by autonomous engine.
+- Pursuit: done | Bespoke move hook supported by autonomous engine.
+- Push: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Pyro Ball: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Quash: done | Bespoke move hook supported by autonomous engine.
+- Quick Attack: done | Bespoke move hook supported by autonomous engine.
+- Quick Guard: done | Bespoke move hook supported by autonomous engine.
+- Quiver Dance: done | Bespoke move hook supported by autonomous engine.
+- Rage: done | Bespoke move hook supported by autonomous engine.
+- Rage Powder: done | Bespoke move hook supported by autonomous engine.
+- Raging Fury: done | Bespoke move hook supported by autonomous engine.
+- Rain Dance: done | Bespoke move hook supported by autonomous engine.
+- Rapid Spin: done | Bespoke move hook supported by autonomous engine.
+- Rapid Spin [SS]: done | Bespoke move hook supported by autonomous engine.
+- Razor Leaf: done | Bespoke move hook supported by autonomous engine.
+- Razor Shell: done | Bespoke move hook supported by autonomous engine.
+- Razor Wind: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Recover: done | Bespoke move hook supported by autonomous engine.
+- Recycle: done | Bespoke move hook supported by autonomous engine.
+- Reflect: done | Bespoke move hook supported by autonomous engine.
+- Reflect Type: done | Bespoke move hook supported by autonomous engine.
+- Refresh: done | Bespoke move hook supported by autonomous engine.
+- Relic Song: done | Bespoke move hook supported by autonomous engine.
+- Rending Spell: done | Bespoke move hook supported by autonomous engine.
+- Resonance Beam: done | Bespoke move hook supported by autonomous engine.
+- Rest: done | Bespoke move hook supported by autonomous engine.
+- Retaliate: done | Bespoke move hook supported by autonomous engine.
+- Return: done | Bespoke move hook supported by autonomous engine.
+- Revelation Dance: done | Bespoke move hook supported by autonomous engine.
+- Revenge: done | Bespoke move hook supported by autonomous engine.
+- Reversal: done | Bespoke move hook supported by autonomous engine.
+- Riposte: done | Bespoke move hook supported by autonomous engine.
+- Rising Voltage: done | Bespoke move hook supported by autonomous engine.
+- Roar: done | Bespoke move hook supported by autonomous engine.
+- Roar of Time: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Rock Blast: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Rock Climb: done | Bespoke move hook supported by autonomous engine.
+- Rock Polish: done | Bespoke move hook supported by autonomous engine.
+- Rock Slide: done | Bespoke move hook supported by autonomous engine.
+- Rock Smash: done | Bespoke move hook supported by autonomous engine.
+- Rock Throw: done | Bespoke move hook supported by autonomous engine.
+- Rock Tomb: done | Bespoke move hook supported by autonomous engine.
+- Rock Wrecker: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Role Play: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Rolling Kick: done | Bespoke move hook supported by autonomous engine.
+- Rollout: done | Bespoke move hook supported by autonomous engine.
+- Roost: done | Bespoke move hook supported by autonomous engine.
+- Rototiller: done | Bespoke move hook supported by autonomous engine.
+- Round: done | Bespoke move hook supported by autonomous engine.
+- Sacred Fire: done | Bespoke move hook supported by autonomous engine.
+- Sacred Sword: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Safeguard: done | Bespoke move hook supported by autonomous engine.
+- Salvo: done | Bespoke move hook supported by autonomous engine.
+- Sand Attack: done | Bespoke move hook supported by autonomous engine.
+- Sand Tomb: done | Bespoke move hook supported by autonomous engine.
+- Sandstorm: done | Bespoke move hook supported by autonomous engine.
+- Sandstorm Sear: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Scald: done | Bespoke move hook supported by autonomous engine.
+- Scale Shot: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Scary Face: done | Bespoke move hook supported by autonomous engine.
+- Scorching Sands: done | Bespoke move hook supported by autonomous engine.
+- Scratch: done | Bespoke move hook supported by autonomous engine.
+- Screech: done | Bespoke move hook supported by autonomous engine.
+- Searing Shot: done | Bespoke move hook supported by autonomous engine.
+- Secret Force: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Secret Power: done | Bespoke move hook supported by autonomous engine.
+- Secret Sword: done | Bespoke move hook supported by autonomous engine.
+- Seed Bomb: done | Bespoke move hook supported by autonomous engine.
+- Seed Flare: done | Bespoke move hook supported by autonomous engine.
+- Seismic Toss: done | Bespoke move hook supported by autonomous engine.
+- Self-Destruct: done | Bespoke move hook supported by autonomous engine.
+- Shadow Ball: done | Bespoke move hook supported by autonomous engine.
+- Shadow Bone: done | Bespoke move hook supported by autonomous engine.
+- Shadow Claw: done | Bespoke move hook supported by autonomous engine.
+- Shadow Force: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Shadow Punch: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Shadow Sneak: done | Bespoke move hook supported by autonomous engine.
+- Sharpen: done | Bespoke move hook supported by autonomous engine.
+- Sheer Cold: done | Bespoke move hook supported by autonomous engine.
+- Shell Side Arm: done | Bespoke move hook supported by autonomous engine.
+- Shell Smash: done | Bespoke move hook supported by autonomous engine.
+- Shell Trap: done | Hook implemented.
+- Shelter: done | Hook implemented.
+- Shift Gear: done | Hook implemented.
+- Shock Wave: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Shore Up: done | Hook implemented.
+- Signal Beam: done | Hook implemented.
+- Silver Wind: done | Hook implemented.
+- Simple Beam: done | Hook implemented.
+- Sing: done | Hook implemented.
+- Sketch: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Skill Swap: done | Hook implemented.
+- Skitter Smack: done | Hook implemented.
+- Skull Bash: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Sky Attack: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Sky Drop: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Sky Uppercut: done | Hook implemented.
+- Slack Off: done | Hook implemented.
+- Slam: done | Hook implemented.
+- Slash: done | Hook implemented.
+- Sleep Powder: done | Hook implemented.
+- Sleep Talk: done | Hook implemented.
+- Slice: done | Hook implemented.
+- Sludge: done | Hook implemented.
+- Sludge Bomb: done | Hook implemented.
+- Sludge Wave: done | Hook implemented.
+- Smack Down: done | Bespoke move hook supported by autonomous engine.
+- Smart Strike: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Smelling Salts: done | Bespoke move hook supported by autonomous engine.
+- Smog: done | Bespoke move hook supported by autonomous engine.
+- Smokescreen: done | Bespoke move hook supported by autonomous engine.
+- Snap Trap: done | Bespoke move hook supported by autonomous engine.
+- Snarl: done | Bespoke move hook supported by autonomous engine.
+- Snatch: done | Bespoke move hook supported by autonomous engine.
+- Snipe Shot: done | Bespoke move hook supported by autonomous engine.
+- Snore: done | Bespoke move hook supported by autonomous engine.
+- Soak: done | Bespoke move hook supported by autonomous engine.
+- Soft-Boiled: done | Bespoke move hook supported by autonomous engine.
+- Solar Beam: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Solar Blade: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Sonic Boom: done | Bespoke move hook supported by autonomous engine.
+- Spacial Rend: done | Bespoke move hook supported by autonomous engine.
+- Spark: done | Bespoke move hook supported by autonomous engine.
+- Sparkling Aria: done | Bespoke move hook supported by autonomous engine.
+- Spectral Thief: done | Bespoke move hook supported by autonomous engine.
+- Speed Swap: done | Bespoke move hook supported by autonomous engine.
+- Spider Web: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Spike Cannon: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Spikes: done | Bespoke move hook supported by autonomous engine.
+- Spiky Shield: done | Bespoke move hook supported by autonomous engine.
+- Spirit Break: done | Bespoke move hook supported by autonomous engine.
+- Spirit Lance: done | Hook implemented.
+- Spirit Shackle: done | Hook implemented.
+- Spit Up: done | Hook implemented.
+- Spite: done | Hook implemented.
+- Splash: done | Hook implemented.
+- Spore: done | Hook implemented.
+- Spotlight: done | Hook implemented.
+- Springtide Storm: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Sprint: done | Hook implemented.
+- Stealth Rock: done | Hook implemented.
+- Steam Eruption: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Steamroller: done | Hook implemented.
+- Steel Beam: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Steel Roller: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Steel Wing: done | Hook implemented.
+- Sticky Web: done | Hook implemented.
+- Stockpile: done | Hook implemented.
+- Stomp: done | Hook implemented.
+- Stomping Tantrum: done | Hook implemented.
+- Stone Axe: done | Hook implemented.
+- Stone Edge: done | Hook implemented.
+- Stored Power: done | Hook implemented.
+- Storm Throw: done | Hook implemented.
+- Strange Steam: done | Hook implemented.
+- Strength: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Strength Sap: done | Hook implemented.
+- String Shot: done | Hook implemented.
+- Struggle: done | Hook implemented.
+- Struggle Bug: done | Hook implemented.
+- Struggle+: done | Hook implemented.
+- Stuff Cheeks: done | Bespoke move hook supported by autonomous engine.
+- Stun Spore: done | Hook implemented.
+- Submission: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Substitute: done | Hook implemented.
+- Sucker Punch: done | Hook implemented.
+- Sucker Punch [SM]: done | Hook implemented.
+- Sunny Day: done | Hook implemented.
+- Sunsteel Strike: done | Hook implemented.
+- Super Fang: done | Hook implemented.
+- Superpower: done | Hook implemented.
+- Supersonic: done | Hook implemented.
+- Surf: done | Hook implemented.
+- Surging Strikes: done | Hook implemented.
+- Swagger: done | Hook implemented.
+- Swagger [SM]: done | Hook implemented.
+- Swallow: done | Hook implemented.
+- Sweeping Strike: done | Hook implemented.
+- Sweet Kiss: done | Hook implemented.
+- Sweet Scent: done | Hook implemented.
+- Swift: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Switcheroo: done | Hook implemented.
+- Swords Dance: done | Hook implemented.
+- Synchronoise: done | Hook implemented.
+- Synthesis: done | Hook implemented.
+- Tackle: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Tackle [SM]: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Tail Glow: done | Hook implemented.
+- Tail Slap: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Tail Whip: done | Hook implemented.
+- Tailwind: done | Hook implemented.
+- Take Aim: done | Hook implemented.
+- Take Down: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Take Heart: done | Hook implemented.
+- Tar Shot: done | Hook implemented.
+- Taunt: done | Hook implemented.
+- Tearful Look: done | Hook implemented.
+- Teatime: done | Bespoke move hook supported by autonomous engine.
+- Techno Blast: done | Hook implemented.
+- Teeter Dance: done | Hook implemented.
+- Telekinesis: done | Hook implemented.
+- Teleport: done | Hook implemented.
+- Terrain Pulse: done | Hook implemented.
+- Terrorize: done | Hook implemented.
+- Thief: done | Hook implemented.
+- Thousand Arrows: done | Hook implemented.
+- Thousand Waves: done | Hook implemented.
+- Thrash: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Throat Chop: done | Hook implemented.
+- Thunder: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Thunder Cage: done | Hook implemented.
+- Thunder Fang: done | Hook implemented.
+- Thunder Punch: done | Hook implemented.
+- Thunder Shock: done | Hook implemented.
+- Thunder Wave: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Thunder Wave [SM]: done | Hook implemented.
+- Thunderbolt: done | Hook implemented.
+- Thunderous Kick: done | Hook implemented.
+- Tickle: done | Hook implemented.
+- Titanic Slam: done | Hook implemented.
+- Topsy-Turvy: done | Hook implemented.
+- Torment: done | Hook implemented.
+- Toxic: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Toxic Spikes: done | Hook implemented.
+- Toxic Threads: done | Hook implemented.
+- Transform: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Tri Attack: done | Hook implemented.
+- Trick: done | Hook implemented.
+- Trick Room: done | Hook implemented.
+- Trick-or-Treat: done | Hook implemented.
+- Trip: done | Bespoke move hook supported by autonomous engine.
+- Triple Arrows: done | Hook implemented.
+- Triple Axel: done | Hook implemented.
+- Triple Kick: done | Hook implemented.
+- Triple Kick [LA]: done | Hook implemented.
+- Triple Threat: done | Hook implemented.
+- Trop Kick: done | Hook implemented.
+- Trump Card: done | Hook implemented.
+- Twineedle: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Twister: done | Hook implemented.
+- U-Turn: done | Hook implemented.
+- Uproar: done | Hook implemented.
+- V-Create: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Vacuum Wave: done | Hook implemented.
+- Venom Drench: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Venoshock: done | Hook implemented.
+- Vicegrip: done | Hook implemented.
+- Victory Dance: done | Hook implemented.
+- Vine Whip: done | Hook implemented.
+- Vital Throw: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Volt Switch: done | Hook implemented.
+- Volt Tackle: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Wake-Up Slap: done | Hook implemented.
+- Water Gun: done | Hook implemented.
+- Water Pledge: done | Bespoke move hook supported by autonomous engine.
+- Water Pulse: done | Hook implemented.
+- Water Shuriken: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Water Shuriken [SM]: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Water Sport: done | Hook implemented.
+- Water Spout: done | Hook implemented.
+- Waterfall: done | Hook implemented.
+- Wave Crash: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Wear Down: done | Hook implemented.
+- Weather Ball: done | Hook implemented.
+- Whirlpool: done | Hook implemented.
+- Whirlwind: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Wicked Blow: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Wide Guard: done | Hook implemented.
+- Wild Charge: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Wildbolt Storm: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Will-O-Wisp: done | Hook implemented.
+- Wing Attack: done | Hook implemented.
+- Wish: done | Hook implemented.
+- Withdraw: done | Hook implemented.
+- Wonder Room: done | Hook implemented.
+- Wood Hammer: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Work Up: done | Hook implemented.
+- Worry Seed: done | Hook implemented.
+- Wounding Strike: done | Hook implemented.
+- Wrap: done | Hook implemented.
+- Wring Out: done | Hook implemented.
+- X-Scissor: done | Hook implemented.
+- Yawn: done | Implemented via explicit hook or generic handling. | override: Implemented via explicit hook or generic handling. | override_status: done
+- Zap Cannon: done | Hook implemented.
+- Zen Headbutt: done | Hook implemented.
+- Zing Zap: done | Hook implemented.

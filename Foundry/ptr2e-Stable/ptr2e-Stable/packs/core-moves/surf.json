@@ -1,0 +1,51 @@
+{
+  "name": "Surf",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "surf",
+    "actions": [
+      {
+        "slug": "surf",
+        "name": "Surf",
+        "type": "attack",
+        "traits": [
+          "field"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "special",
+        "power": 90,
+        "accuracy": 100,
+        "types": [
+          "water"
+        ],
+        "description": "<p>Effect: The user may freely relocate themself to any open square in Range. This attack ignores any EVA Stage increases of swimming targets.</p>",
+        "img": "systems/ptr2e/img/svg/water_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "wGUb0OCzpxaRB31M",
+  "effects": []
+}

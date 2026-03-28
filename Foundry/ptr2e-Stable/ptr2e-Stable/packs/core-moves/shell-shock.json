@@ -1,0 +1,117 @@
+{
+  "name": "Shell Shock",
+  "type": "move",
+  "_id": "pittprd1e3TajcRB",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "shell-shock",
+    "actions": [
+      {
+        "name": "Shell Shock",
+        "slug": "shell-shock",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "explode",
+          "sonic",
+          "blast-2"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "types": [
+          "steel"
+        ],
+        "category": "special",
+        "power": 90,
+        "accuracy": 85,
+        "description": "<p>Effect: On hit, all valid targets have a 30% chance of gaining @Affliction[confused] 5 and @Affliction[hindered] 5.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [
+    {
+      "name": "Shell Shock",
+      "type": "passive",
+      "_id": "eVHCcfMsUQf3JQRU",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "shell-shock-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.confusedconditem",
+            "predicate": [],
+            "chance": 30,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "shell-shock-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.hinderedconditem",
+            "predicate": [],
+            "chance": 30,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.5",
+        "createdTime": 1737318262339,
+        "modifiedTime": 1737318329886,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

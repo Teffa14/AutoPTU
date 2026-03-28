@@ -1,0 +1,508 @@
+{
+  "name": "petilil",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 548,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.5,
+      "weight": 6.6
+    },
+    "diet": [
+      "phototroph"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 3
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "underdog",
+      "floratic",
+      "herb-production",
+      "plant-grower",
+      "jump-2"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "own-tempo"
+        },
+        {
+          "slug": "leaf-guard"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "chlorophyll"
+        },
+        {
+          "slug": "wimp-out"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "flower-veil"
+        },
+        {
+          "slug": "seed-sower"
+        }
+      ],
+      "master": [
+        {
+          "slug": "healer"
+        },
+        {
+          "slug": "natural-cure"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 5,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "petilil",
+    "stats": {
+      "hp": 45,
+      "atk": 35,
+      "def": 50,
+      "spa": 70,
+      "spd": 50,
+      "spe": 30
+    },
+    "types": [
+      "grass"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "absorb",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "growth",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "level": 3,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stun-spore",
+          "level": 6,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mega-drain",
+          "level": 9,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "level": 12,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aromatherapy",
+          "level": 12,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "magical-leaf",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-powder",
+          "level": 18,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-drain",
+          "level": 21,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leech-seed",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "after-you",
+          "level": 27,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "energy-ball",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "synthesis",
+          "level": 33,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "level": 36,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "entrainment",
+          "level": 39,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leaf-storm",
+          "level": 42,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "bide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "encore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sweet-scent",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ingrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grass-whistle",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "healing-wish",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "worry-seed",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "heal-bell",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "covet",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "laser-focus",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "grassy-glide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "cut",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dream-eater",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "flash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "bullet-seed",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "pollen-puff",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "captureRate": 190,
+    "eggGroups": [
+      "plant"
+    ],
+    "genderRatio": 8,
+    "habitats": [
+      "forest",
+      "woodland"
+    ],
+    "evolutions": {
+      "name": "petilil",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "lilligant",
+          "uuid": "Compendium.ptr2e.core-species.Item.dpvNsJefNt4NVTcf",
+          "methods": [
+            {
+              "type": "item",
+              "item": "sun-stone",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 33,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "lilligant-hisuian",
+          "uuid": "Compendium.ptr2e.core-species.Item.6NotUlR2wosVkA2O",
+          "methods": [
+            {
+              "type": "item",
+              "item": "dawn-stone",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 33,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.ztjgQKgB9YCStlVs"
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "ztjgQKgB9YCStlVs",
+  "effects": [],
+  "folder": null
+}

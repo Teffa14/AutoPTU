@@ -1,0 +1,367 @@
+{
+  "name": "dreepy",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "ghost",
+      "dragon"
+    ],
+    "stats": {
+      "hp": 28,
+      "atk": 60,
+      "def": 30,
+      "spa": 40,
+      "spd": 30,
+      "spe": 82
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "astonish",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "bite",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "infestation",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "quick-attack",
+          "gen": "scarlet-violet",
+          "level": 1
+        }
+      ],
+      "tutor": [
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "baton-pass",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confuse-ray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "disable",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-team",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "draco-meteor",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-tail",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grudge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sucker-punch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.5,
+      "weight": 2,
+      "category": "tiny",
+      "type": "length"
+    },
+    "captureRate": 45,
+    "eggGroups": [
+      "indeterminate",
+      "dragon"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "dreepy",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "drakloak",
+          "uuid": "Compendium.ptr2e.core-species.Item.RDGFEtj1sZPtuo3y",
+          "methods": [
+            {
+              "type": "level",
+              "level": 20,
+              "operand": "and"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": [
+            {
+              "name": "dragapult",
+              "uuid": "Compendium.ptr2e.core-species.Item.T3n8FlfAh9bUxrKk",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 55,
+                  "operand": "and"
+                }
+              ],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "evolutions": [],
+              "perk": {
+                "x": 26,
+                "y": 26
+              }
+            }
+          ],
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.D7EFVprVAaeNuqrX",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 885,
+    "traits": [
+      "pokemon",
+      "living-weapon",
+      "missile",
+      "breathless",
+      "hover",
+      "jet",
+      "pack-mon",
+      "phasing",
+      "jump-2"
+    ],
+    "diet": [
+      "nullivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "clear-body"
+        },
+        {
+          "slug": "infiltrator"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "cursed-body"
+        },
+        {
+          "slug": "rock-head"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "aerodynamic"
+        },
+        {
+          "slug": "artillery"
+        }
+      ],
+      "master": [
+        {
+          "slug": "perforate"
+        },
+        {
+          "slug": "sniper"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 21
+      }
+    ],
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ghosts",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ride",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "badland",
+      "lake",
+      "riverside",
+      "beach"
+    ],
+    "slug": "dreepy",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "D7EFVprVAaeNuqrX",
+  "effects": []
+}

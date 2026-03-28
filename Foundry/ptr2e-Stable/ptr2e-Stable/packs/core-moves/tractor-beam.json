@@ -1,0 +1,101 @@
+{
+  "name": "Tractor Beam",
+  "type": "move",
+  "_id": "iuF0phDA7IUForGE",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "tractor-beam",
+    "actions": [
+      {
+        "name": "Tractor Beam",
+        "slug": "tractor-beam",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "types": [
+          "steel"
+        ],
+        "category": "status",
+        "accuracy": 100,
+        "description": "<p>Effect: The target is @Affliction[lifted] 5.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [
+    {
+      "name": "Tractor Beam",
+      "type": "passive",
+      "_id": "4gVAGRiF4pPpd6TU",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "tractor-beam-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.liftedcondititem",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.5",
+        "createdTime": 1737325015826,
+        "modifiedTime": 1737325051639,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

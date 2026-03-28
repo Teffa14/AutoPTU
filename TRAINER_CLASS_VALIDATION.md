@@ -1,0 +1,119 @@
+# Trainer Class Validation
+
+Generated: 2026-03-04T02:15:47.691670+00:00
+
+- Classes: 69
+- Missing mechanics: 61
+- Ambiguous unlockables (OR branches): 23
+- Multi-class mentions: 0
+
+## Missing Mechanics
+- Ace Trainer
+- Apparition
+- Arcanist
+- Athlete
+- Attack Ace
+- Backpacker
+- Berserker
+- Capture Specialist
+- Cheerleader [Playtest]
+- Chef
+- Commander
+- Coordinator
+- Defense Ace
+- Druid
+- Earth Shaker
+- Enduring Soul
+- Fashionista
+- Fire Bringer
+- Fortress
+- Frost Touched
+- Glamour Weaver
+- Glitch Bender
+- Herald of Pride
+- Hex Maniac
+- Hobbyist
+- Hunter
+- Juggler
+- Maelstrom
+- Marksman
+- Martial Artist
+- Medic
+- Mentor
+- Miasmic
+- Ninja
+- Oracle
+- Prism
+- Provocateur
+- Researcher
+- Rider
+- Rogue
+- Roughneck
+- Rune Master
+- Sage
+- Shade Caller
+- Skirmisher
+- Spark Master
+- Special Attack Ace
+- Special Defense Ace
+- Speed Ace
+- Stat Ace
+- Steelheart
+- Stone Warrior
+- Style Expert
+- Survivalist
+- Swarmlord
+- Telekinetic
+- Telepath
+- Trickster
+- Tumbler
+- Warper
+- Wind Runner
+
+## Ambiguous Unlockables (OR Branches)
+- Apparition -> Silent Assassin
+- Prereq: Apparition, Adept Intimidate or Occult Education
+- Coordinator -> Nuanced Performance
+- Prereq: Coordinator, Expert Charm, Command, Guile, Intimidate, or Intuition
+- Fortress -> Guardian's Punishment
+- Prereq: Fortress, Expert Combat or Focus
+- Fortress -> Wall of Iron
+- Prereq: Fortress, Adept Combat or Focus
+- Hobbyist -> Dabbler
+- Prereq: Hobbyist, Expert General Education or Perception
+- Hobbyist -> Look and Learn
+- Prereq: Hobbyist, Expert General Education or Perception
+- Hunter -> Hunter's Reflexes
+- Prereq: Hunter, Adept Stealth or Survival
+- Hunter -> Surprise!
+- Prereq: Hunter, Adept Stealth or Survival
+- Juggler -> Emergency Release
+- Prereq: Juggler, Expert Acrobatics or Guile
+- Juggler -> Round Trip
+- Prereq: Juggler, Adept Acrobatics or Guile
+- Marksman -> Clear Shot
+- Prereq: Marksman, Expert Perception or Combat
+- Marksman -> Crippling Shot
+- Prereq: Marksman, Expert Perception or Combat
+- Marksman -> Dead-Eye Shot
+- Prereq: Marksman, Master Combat or Perception
+- Marksman -> Overwatch
+- Prereq: Marksman, Adept Perception or Combat
+- Prism -> Prismatic Alignment
+- Prereq: 4 Prism Features, Master Charm or General Education
+- Prism -> Sparkle
+- Prereq: Prism, Expert Charm or General Education
+- Skirmisher -> Swift Strikes
+- Prereq: 4 Skirmisher Features, Master Combat or Acrobatics
+- Steelheart -> Impenetrable
+- Prereq: Steelheart, Expert Athletics or Focus
+- Steelheart -> Man of Steel
+- Prereq: Steelheart, Master Athletics or Focus
+- Steelheart -> Master of Arms
+- Prereq: Steelheart, Expert Athletics or Focus
+- Steelheart -> Reactive Armour
+- Prereq: Steelheart, Adept Athletics or Focus
+- Telepath -> Capability.Mental Assault
+- Prereq: Telepath, Expert Focus or Intuition
+- Telepath -> Mental Assault
+- Prereq: Telepath, Expert Focus or Intuition

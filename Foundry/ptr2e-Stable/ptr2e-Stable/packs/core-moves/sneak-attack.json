@@ -1,0 +1,53 @@
+{
+  "name": "Sneak Attack",
+  "type": "move",
+  "_id": "FFywXU5xLqmapUrV",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "sneak-attack",
+    "actions": [
+      {
+        "name": "Sneak Attack Attack",
+        "slug": "sneak-attack",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/dark_icon.svg",
+        "traits": [
+          "dash",
+          "priority-10",
+          "contact",
+          "crit-1"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "types": [
+          "dark"
+        ],
+        "category": "physical",
+        "power": 40,
+        "accuracy": 100,
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

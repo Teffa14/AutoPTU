@@ -1,0 +1,48 @@
+{
+  "name": "Sparkling Aria",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "sparkling-aria",
+    "actions": [
+      {
+        "slug": "sparkling-aria",
+        "name": "Sparkling Aria",
+        "type": "attack",
+        "traits": [
+          "sonic"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "special",
+        "power": 90,
+        "accuracy": 100,
+        "types": [
+          "water"
+        ],
+        "description": "<p>Effect: On hit, the user may choose to deal no damage to all valid targets and instead cure them of @Affliction[burn], @Affliction[confused], @Affliction[charmed], and @Affliction[enraged].</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "cqLTmahdDiRczo0k",
+  "effects": []
+}

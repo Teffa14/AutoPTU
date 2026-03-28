@@ -1,0 +1,50 @@
+{
+  "name": "Storm Throw",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "storm-throw",
+    "actions": [
+      {
+        "slug": "storm-throw",
+        "name": "Storm Throw",
+        "type": "attack",
+        "traits": [
+          "crit-4",
+          "push-4",
+          "grapple"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "description": "<p>Effect: On hit, the target loses @Affliction[grapple] if applicable and is Pushed.",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "ViPvD33GB5Ou7Eqj",
+  "effects": []
+}

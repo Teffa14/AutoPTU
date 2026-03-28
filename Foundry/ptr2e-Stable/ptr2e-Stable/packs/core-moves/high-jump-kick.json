@@ -1,0 +1,52 @@
+{
+  "name": "High Jump Kick",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "high-jump-kick",
+    "actions": [
+      {
+        "slug": "high-jump-kick",
+        "name": "High Jump Kick",
+        "type": "attack",
+        "traits": [
+          "crash-1-2",
+          "dash",
+          "contact",
+          "kick"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 130,
+        "accuracy": 90,
+        "types": [
+          "fighting"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "VgDCfzEkW4Gt6vA5",
+  "effects": []
+}

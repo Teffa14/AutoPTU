@@ -1,0 +1,701 @@
+{
+  "name": "celebi",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 251,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.6,
+      "weight": 5
+    },
+    "diet": [
+      "phototroph"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 15
+      },
+      {
+        "type": "overland",
+        "value": 10
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "hover",
+      "legendary",
+      "aura-user",
+      "paradox-sense",
+      "time-traveller",
+      "telekinetic-6",
+      "glow-2",
+      "shadow-purification",
+      "fully-evolved",
+      "jump-4"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "temporal-rift"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "natural-cure"
+        },
+        {
+          "slug": "pastel-veil"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "grassy-surge"
+        },
+        {
+          "slug": "gifted-mind"
+        }
+      ],
+      "master": [
+        {
+          "slug": "avenger"
+        },
+        {
+          "slug": "neurolize"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "aura-sense",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "history",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "legendary",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "medicine",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "paradox",
+        "value": 80,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "profession-archaeology",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychic",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "research",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "teaching",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "celebi",
+    "stats": {
+      "hp": 100,
+      "atk": 100,
+      "def": 100,
+      "spa": 100,
+      "spd": 100,
+      "spe": 100
+    },
+    "types": [
+      "grass",
+      "psychic"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "aerial-ace",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "aura-sphere",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "charge-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "curse",
+          "gen": "crystal"
+        },
+        {
+          "name": "cut",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "defense-curl",
+          "gen": "emerald"
+        },
+        {
+          "name": "detect",
+          "gen": "crystal"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "dream-eater",
+          "gen": "xd"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "earth-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "echoed-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "expanding-force",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "flash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "grassy-glide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "grassy-terrain",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "imprison",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "laser-focus",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "last-resort",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "leaf-blade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "light-screen",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "metronome",
+          "gen": "firered-leafgreen"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "nasty-plot",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "nightmare",
+          "gen": "xd"
+        },
+        {
+          "name": "pollen-puff",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "psych-up",
+          "gen": "emerald"
+        },
+        {
+          "name": "psychic",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "psychic-terrain",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psycho-cut",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "reflect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "silver-wind",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "skill-swap",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "solar-blade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "sucker-punch",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "sweet-scent",
+          "gen": "crystal"
+        },
+        {
+          "name": "swift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "firered-leafgreen"
+        },
+        {
+          "name": "synthesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "telekinesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trick",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trick-room",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "u-turn",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "weather-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wonder-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "worry-seed",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "confusion",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "heal-bell",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "magical-leaf",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 10
+        },
+        {
+          "name": "safeguard",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 10
+        },
+        {
+          "name": "baton-pass",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 20
+        },
+        {
+          "name": "ancient-power",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 30
+        },
+        {
+          "name": "life-dew",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 40
+        },
+        {
+          "name": "natural-gift",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 46
+        },
+        {
+          "name": "leech-seed",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 50
+        },
+        {
+          "name": "heal-block",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 55
+        },
+        {
+          "name": "recover",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 60
+        },
+        {
+          "name": "future-sight",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 70
+        },
+        {
+          "name": "healing-wish",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 80
+        },
+        {
+          "name": "leaf-storm",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 90
+        },
+        {
+          "name": "perish-song",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 100
+        }
+      ]
+    },
+    "captureRate": 30,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "evolutions": {
+      "name": "celebi",
+      "details": null,
+      "evolutions": [],
+      "uuid": null,
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Johto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "genderRatio": -1,
+    "habitats": []
+  },
+  "_id": "eg95jmD1zeBcV5NJ",
+  "effects": []
+}

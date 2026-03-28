@@ -1,0 +1,959 @@
+{
+  "count": 159,
+  "traits": [
+    {
+      "trait": "10-strike",
+      "label": "10 Strike",
+      "move": "Magnitude",
+      "campaign": "keyword_demos/10-strike_demo"
+    },
+    {
+      "trait": "16-strike",
+      "label": "16 Strike",
+      "move": "Mourning Dance",
+      "campaign": "keyword_demos/16-strike_demo"
+    },
+    {
+      "trait": "20-strike",
+      "label": "20 Strike",
+      "move": "Thousand Fists",
+      "campaign": "keyword_demos/20-strike_demo"
+    },
+    {
+      "trait": "3-strike",
+      "label": "3 Strike",
+      "move": "Surging Strikes",
+      "campaign": "keyword_demos/3-strike_demo"
+    },
+    {
+      "trait": "4-strike",
+      "label": "4 Strike",
+      "move": "Little Blizzard",
+      "campaign": "keyword_demos/4-strike_demo"
+    },
+    {
+      "trait": "5-strike",
+      "label": "5 Strike",
+      "move": "Arm Thrust",
+      "campaign": "keyword_demos/5-strike_demo"
+    },
+    {
+      "trait": "6-strike",
+      "label": "6 Strike",
+      "move": "Mach Stinger V",
+      "campaign": "keyword_demos/6-strike_demo"
+    },
+    {
+      "trait": "7-strike",
+      "label": "7 Strike",
+      "move": "Strike of the Seven Stars",
+      "campaign": "keyword_demos/7-strike_demo"
+    },
+    {
+      "trait": "8-strike",
+      "label": "8 Strike",
+      "move": "Raddle Star",
+      "campaign": "keyword_demos/8-strike_demo"
+    },
+    {
+      "trait": "adaptable",
+      "label": "Adaptable",
+      "move": "Arcane Fury",
+      "campaign": "keyword_demos/adaptable_demo"
+    },
+    {
+      "trait": "arcane",
+      "label": "Arcane",
+      "move": "Arcane Fury",
+      "campaign": "keyword_demos/arcane_demo"
+    },
+    {
+      "trait": "aura",
+      "label": "Aura",
+      "move": "Aura Sphere",
+      "campaign": "keyword_demos/aura_demo"
+    },
+    {
+      "trait": "basic",
+      "label": "Basic",
+      "move": "Astonish",
+      "campaign": "keyword_demos/basic_demo"
+    },
+    {
+      "trait": "blast-1",
+      "label": "Blast 1",
+      "move": "Attack Order",
+      "campaign": "keyword_demos/blast-1_demo"
+    },
+    {
+      "trait": "blast-2",
+      "label": "Blast 2",
+      "move": "Blast Burn",
+      "campaign": "keyword_demos/blast-2_demo"
+    },
+    {
+      "trait": "blast-3",
+      "label": "Blast 3",
+      "move": "Doom Desire",
+      "campaign": "keyword_demos/blast-3_demo"
+    },
+    {
+      "trait": "blast-4",
+      "label": "Blast 4",
+      "move": "Bleakwind Storm",
+      "campaign": "keyword_demos/blast-4_demo"
+    },
+    {
+      "trait": "blast-5",
+      "label": "Blast 5",
+      "move": "Core Enforcer",
+      "campaign": "keyword_demos/blast-5_demo"
+    },
+    {
+      "trait": "blast-6",
+      "label": "Blast 6",
+      "move": "Astral Barrage",
+      "campaign": "keyword_demos/blast-6_demo"
+    },
+    {
+      "trait": "blast-7",
+      "label": "Blast 7",
+      "move": "Calamitous Paradox Upsurge",
+      "campaign": "keyword_demos/blast-7_demo"
+    },
+    {
+      "trait": "blast-9",
+      "label": "Blast 9",
+      "move": "Light that Burn the Sky",
+      "campaign": "keyword_demos/blast-9_demo"
+    },
+    {
+      "trait": "bone",
+      "label": "Bone",
+      "move": "Bone Club",
+      "campaign": "keyword_demos/bone_demo"
+    },
+    {
+      "trait": "command",
+      "label": "Command",
+      "move": "Become Giant!",
+      "campaign": "keyword_demos/command_demo"
+    },
+    {
+      "trait": "contact",
+      "label": "Contact",
+      "move": "Accelerock",
+      "campaign": "keyword_demos/contact_demo"
+    },
+    {
+      "trait": "crash-1-2",
+      "label": "Crash 1 2",
+      "move": "High Jump Kick",
+      "campaign": "keyword_demos/crash-1-2_demo"
+    },
+    {
+      "trait": "crit-1",
+      "label": "Crit 1",
+      "move": "Air Cutter",
+      "campaign": "keyword_demos/crit-1_demo"
+    },
+    {
+      "trait": "crit-2",
+      "label": "Crit 2",
+      "move": "Spacial Rend",
+      "campaign": "keyword_demos/crit-2_demo"
+    },
+    {
+      "trait": "crit-3",
+      "label": "Crit 3",
+      "move": "Aeroblast",
+      "campaign": "keyword_demos/crit-3_demo"
+    },
+    {
+      "trait": "crit-4",
+      "label": "Crit 4",
+      "move": "Cheap Shot",
+      "campaign": "keyword_demos/crit-4_demo"
+    },
+    {
+      "trait": "crushing",
+      "label": "Crushing",
+      "move": "Astonish",
+      "campaign": "keyword_demos/crushing_demo"
+    },
+    {
+      "trait": "curl",
+      "label": "Curl",
+      "move": "Aura Wheel",
+      "campaign": "keyword_demos/curl_demo"
+    },
+    {
+      "trait": "dance",
+      "label": "Dance",
+      "move": "Acrobatics",
+      "campaign": "keyword_demos/dance_demo"
+    },
+    {
+      "trait": "danger-close",
+      "label": "Danger Close",
+      "move": "Aerial Ace",
+      "campaign": "keyword_demos/danger-close_demo"
+    },
+    {
+      "trait": "dash",
+      "label": "Dash",
+      "move": "Accelerock",
+      "campaign": "keyword_demos/dash_demo"
+    },
+    {
+      "trait": "defensive",
+      "label": "Defensive",
+      "move": "Bide",
+      "campaign": "keyword_demos/defensive_demo"
+    },
+    {
+      "trait": "defrost",
+      "label": "Defrost",
+      "move": "Blue Flare",
+      "campaign": "keyword_demos/defrost_demo"
+    },
+    {
+      "trait": "delay-1",
+      "label": "Delay 1",
+      "move": "Circle Throw",
+      "campaign": "keyword_demos/delay-1_demo"
+    },
+    {
+      "trait": "delay-2",
+      "label": "Delay 2",
+      "move": "Whirlwind",
+      "campaign": "keyword_demos/delay-2_demo"
+    },
+    {
+      "trait": "delay-3",
+      "label": "Delay 3",
+      "move": "Beak Blast",
+      "campaign": "keyword_demos/delay-3_demo"
+    },
+    {
+      "trait": "desperation-1-3",
+      "label": "Desperation 1 3",
+      "move": "Final Gasp",
+      "campaign": "keyword_demos/desperation-1-3_demo"
+    },
+    {
+      "trait": "digimon",
+      "label": "Digimon",
+      "move": "Acceleration (Digimon)",
+      "campaign": "keyword_demos/digimon_demo"
+    },
+    {
+      "trait": "double-strike",
+      "label": "Double Strike",
+      "move": "Bonemerang",
+      "campaign": "keyword_demos/double-strike_demo"
+    },
+    {
+      "trait": "drain-1-2",
+      "label": "Drain 1 2",
+      "move": "Absorb",
+      "campaign": "keyword_demos/drain-1-2_demo"
+    },
+    {
+      "trait": "drain-1-3",
+      "label": "Drain 1 3",
+      "move": "Vampire Fang",
+      "campaign": "keyword_demos/drain-1-3_demo"
+    },
+    {
+      "trait": "drain-1-4",
+      "label": "Drain 1 4",
+      "move": "Branch Drain",
+      "campaign": "keyword_demos/drain-1-4_demo"
+    },
+    {
+      "trait": "drain-1-8",
+      "label": "Drain 1 8",
+      "move": "Bramble Bite",
+      "campaign": "keyword_demos/drain-1-8_demo"
+    },
+    {
+      "trait": "drain-3-16",
+      "label": "Drain 3 16",
+      "move": "Night Raid",
+      "campaign": "keyword_demos/drain-3-16_demo"
+    },
+    {
+      "trait": "drain-3-4",
+      "label": "Drain 3 4",
+      "move": "Draining Kiss",
+      "campaign": "keyword_demos/drain-3-4_demo"
+    },
+    {
+      "trait": "drain-5-16",
+      "label": "Drain 5 16",
+      "move": "Cook of the Abyss",
+      "campaign": "keyword_demos/drain-5-16_demo"
+    },
+    {
+      "trait": "draw-in",
+      "label": "Draw In",
+      "move": "Bide",
+      "campaign": "keyword_demos/draw-in_demo"
+    },
+    {
+      "trait": "earthbound",
+      "label": "Earthbound",
+      "move": "Bulldoze",
+      "campaign": "keyword_demos/earthbound_demo"
+    },
+    {
+      "trait": "effect",
+      "label": "Effect",
+      "move": "Penetra Laser",
+      "campaign": "keyword_demos/effect_demo"
+    },
+    {
+      "trait": "environ",
+      "label": "Environ",
+      "move": "Aurora Veil",
+      "campaign": "keyword_demos/environ_demo"
+    },
+    {
+      "trait": "evolution",
+      "label": "Evolution",
+      "move": "Mega Evolve!",
+      "campaign": "keyword_demos/evolution_demo"
+    },
+    {
+      "trait": "execute",
+      "label": "Execute",
+      "move": "Fissure",
+      "campaign": "keyword_demos/execute_demo"
+    },
+    {
+      "trait": "explode",
+      "label": "Explode",
+      "move": "Beak Blast",
+      "campaign": "keyword_demos/explode_demo"
+    },
+    {
+      "trait": "field",
+      "label": "Field",
+      "move": "Chatter",
+      "campaign": "keyword_demos/field_demo"
+    },
+    {
+      "trait": "flat",
+      "label": "Flat",
+      "move": "Dragon Rage",
+      "campaign": "keyword_demos/flat_demo"
+    },
+    {
+      "trait": "flinch-10",
+      "label": "Flinch 10",
+      "move": "Dig",
+      "campaign": "keyword_demos/flinch-10_demo"
+    },
+    {
+      "trait": "flinch-15",
+      "label": "Flinch 15",
+      "move": "Ice Ball",
+      "campaign": "keyword_demos/flinch-15_demo"
+    },
+    {
+      "trait": "flinch-20",
+      "label": "Flinch 20",
+      "move": "Ally Switch",
+      "campaign": "keyword_demos/flinch-20_demo"
+    },
+    {
+      "trait": "flinch-25",
+      "label": "Flinch 25",
+      "move": "Superspread",
+      "campaign": "keyword_demos/flinch-25_demo"
+    },
+    {
+      "trait": "flinch-30",
+      "label": "Flinch 30",
+      "move": "Dive",
+      "campaign": "keyword_demos/flinch-30_demo"
+    },
+    {
+      "trait": "flinch-40",
+      "label": "Flinch 40",
+      "move": "Bide",
+      "campaign": "keyword_demos/flinch-40_demo"
+    },
+    {
+      "trait": "flinch-50",
+      "label": "Flinch 50",
+      "move": "Eternabeam",
+      "campaign": "keyword_demos/flinch-50_demo"
+    },
+    {
+      "trait": "flinch-60",
+      "label": "Flinch 60",
+      "move": "Sky Attack",
+      "campaign": "keyword_demos/flinch-60_demo"
+    },
+    {
+      "trait": "flinch-70",
+      "label": "Flinch 70",
+      "move": "Freeze Shock",
+      "campaign": "keyword_demos/flinch-70_demo"
+    },
+    {
+      "trait": "fling",
+      "label": "Fling",
+      "move": "Fling",
+      "campaign": "keyword_demos/fling_demo"
+    },
+    {
+      "trait": "friendly",
+      "label": "Friendly",
+      "move": "Attack Order",
+      "campaign": "keyword_demos/friendly_demo"
+    },
+    {
+      "trait": "gas",
+      "label": "Gas",
+      "move": "Superspread",
+      "campaign": "keyword_demos/gas_demo"
+    },
+    {
+      "trait": "grapple",
+      "label": "Grapple",
+      "move": "Circle Throw",
+      "campaign": "keyword_demos/grapple_demo"
+    },
+    {
+      "trait": "hammer",
+      "label": "Hammer",
+      "move": "Bone Club",
+      "campaign": "keyword_demos/hammer_demo"
+    },
+    {
+      "trait": "hazard",
+      "label": "Hazard",
+      "move": "Ceaseless Edge",
+      "campaign": "keyword_demos/hazard_demo"
+    },
+    {
+      "trait": "healing",
+      "label": "Healing",
+      "move": "Aqua Ring",
+      "campaign": "keyword_demos/healing_demo"
+    },
+    {
+      "trait": "horn",
+      "label": "Horn",
+      "move": "Drill Peck",
+      "campaign": "keyword_demos/horn_demo"
+    },
+    {
+      "trait": "interrupt-1",
+      "label": "Interrupt 1",
+      "move": "Attack of Opportunity",
+      "campaign": "keyword_demos/interrupt-1_demo"
+    },
+    {
+      "trait": "interrupt-2",
+      "label": "Interrupt 2",
+      "move": "Conversion 2",
+      "campaign": "keyword_demos/interrupt-2_demo"
+    },
+    {
+      "trait": "interrupt-3",
+      "label": "Interrupt 3",
+      "move": "Counter",
+      "campaign": "keyword_demos/interrupt-3_demo"
+    },
+    {
+      "trait": "interrupt-4",
+      "label": "Interrupt 4",
+      "move": "Endure",
+      "campaign": "keyword_demos/interrupt-4_demo"
+    },
+    {
+      "trait": "interrupt-5",
+      "label": "Interrupt 5",
+      "move": "Ally Switch",
+      "campaign": "keyword_demos/interrupt-5_demo"
+    },
+    {
+      "trait": "interrupt-6",
+      "label": "Interrupt 6",
+      "move": "Baneful Bunker",
+      "campaign": "keyword_demos/interrupt-6_demo"
+    },
+    {
+      "trait": "interrupt-7",
+      "label": "Interrupt 7",
+      "move": "Quick Guard",
+      "campaign": "keyword_demos/interrupt-7_demo"
+    },
+    {
+      "trait": "jaw",
+      "label": "Jaw",
+      "move": "Bite",
+      "campaign": "keyword_demos/jaw_demo"
+    },
+    {
+      "trait": "kick",
+      "label": "Kick",
+      "move": "Blaze Kick",
+      "campaign": "keyword_demos/kick_demo"
+    },
+    {
+      "trait": "legendary",
+      "label": "Legendary",
+      "move": "Aeroblast",
+      "campaign": "keyword_demos/legendary_demo"
+    },
+    {
+      "trait": "light",
+      "label": "Light",
+      "move": "Flash",
+      "campaign": "keyword_demos/light_demo"
+    },
+    {
+      "trait": "linked",
+      "label": "Linked",
+      "move": "Stockpile",
+      "campaign": "keyword_demos/linked_demo"
+    },
+    {
+      "trait": "manipulate",
+      "label": "Manipulate",
+      "move": "Acupressure",
+      "campaign": "keyword_demos/manipulate_demo"
+    },
+    {
+      "trait": "mascot",
+      "label": "Mascot",
+      "move": "Baddy Bad",
+      "campaign": "keyword_demos/mascot_demo"
+    },
+    {
+      "trait": "max",
+      "label": "Max",
+      "move": "E-Max Blastwave",
+      "campaign": "keyword_demos/max_demo"
+    },
+    {
+      "trait": "melee",
+      "label": "Melee",
+      "move": "Starlight Velocity",
+      "campaign": "keyword_demos/melee_demo"
+    },
+    {
+      "trait": "missile",
+      "label": "Missile",
+      "move": "Aura Sphere",
+      "campaign": "keyword_demos/missile_demo"
+    },
+    {
+      "trait": "move-locked",
+      "label": "Move Locked",
+      "move": "Sketch",
+      "campaign": "keyword_demos/move-locked_demo"
+    },
+    {
+      "trait": "paradox",
+      "label": "Paradox",
+      "move": "Burning Bulwark",
+      "campaign": "keyword_demos/paradox_demo"
+    },
+    {
+      "trait": "partial-automation",
+      "label": "Partial Automation",
+      "move": "Blizzard",
+      "campaign": "keyword_demos/partial-automation_demo"
+    },
+    {
+      "trait": "pass-1",
+      "label": "Pass 1",
+      "move": "Flare Blitz",
+      "campaign": "keyword_demos/pass-1_demo"
+    },
+    {
+      "trait": "pass-12",
+      "label": "Pass 12",
+      "move": "Max Quake",
+      "campaign": "keyword_demos/pass-12_demo"
+    },
+    {
+      "trait": "pass-15",
+      "label": "Pass 15",
+      "move": "Dragonic Impact",
+      "campaign": "keyword_demos/pass-15_demo"
+    },
+    {
+      "trait": "pass-2",
+      "label": "Pass 2",
+      "move": "Cut",
+      "campaign": "keyword_demos/pass-2_demo"
+    },
+    {
+      "trait": "pass-3",
+      "label": "Pass 3",
+      "move": "Avalanche",
+      "campaign": "keyword_demos/pass-3_demo"
+    },
+    {
+      "trait": "pass-4",
+      "label": "Pass 4",
+      "move": "Behemoth Bash",
+      "campaign": "keyword_demos/pass-4_demo"
+    },
+    {
+      "trait": "pass-5",
+      "label": "Pass 5",
+      "move": "Sunsteel Strike",
+      "campaign": "keyword_demos/pass-5_demo"
+    },
+    {
+      "trait": "pass-6",
+      "label": "Pass 6",
+      "move": "V-create",
+      "campaign": "keyword_demos/pass-6_demo"
+    },
+    {
+      "trait": "pass-7",
+      "label": "Pass 7",
+      "move": "Bolt Strike",
+      "campaign": "keyword_demos/pass-7_demo"
+    },
+    {
+      "trait": "phenomenon",
+      "label": "Phenomenon",
+      "move": "Become Giant!",
+      "campaign": "keyword_demos/phenomenon_demo"
+    },
+    {
+      "trait": "pierce",
+      "label": "Pierce",
+      "move": "Brick Break",
+      "campaign": "keyword_demos/pierce_demo"
+    },
+    {
+      "trait": "pledge",
+      "label": "Pledge",
+      "move": "Fire Pledge",
+      "campaign": "keyword_demos/pledge_demo"
+    },
+    {
+      "trait": "powder",
+      "label": "Powder",
+      "move": "Cotton Spore",
+      "campaign": "keyword_demos/powder_demo"
+    },
+    {
+      "trait": "priority-10",
+      "label": "Priority 10",
+      "move": "Accelerock",
+      "campaign": "keyword_demos/priority-10_demo"
+    },
+    {
+      "trait": "priority-2",
+      "label": "Priority 2",
+      "move": "Winning Knuckle",
+      "campaign": "keyword_demos/priority-2_demo"
+    },
+    {
+      "trait": "priority-20",
+      "label": "Priority 20",
+      "move": "Ally Switch",
+      "campaign": "keyword_demos/priority-20_demo"
+    },
+    {
+      "trait": "priority-3",
+      "label": "Priority 3",
+      "move": "Mach Stinger V",
+      "campaign": "keyword_demos/priority-3_demo"
+    },
+    {
+      "trait": "priority-30",
+      "label": "Priority 30",
+      "move": "Fake Out",
+      "campaign": "keyword_demos/priority-30_demo"
+    },
+    {
+      "trait": "priority-40",
+      "label": "Priority 40",
+      "move": "Bounce",
+      "campaign": "keyword_demos/priority-40_demo"
+    },
+    {
+      "trait": "priority-50",
+      "label": "Priority 50",
+      "move": "Phantom Force",
+      "campaign": "keyword_demos/priority-50_demo"
+    },
+    {
+      "trait": "priority-60",
+      "label": "Priority 60",
+      "move": "Geomancy",
+      "campaign": "keyword_demos/priority-60_demo"
+    },
+    {
+      "trait": "pulse",
+      "label": "Pulse",
+      "move": "Arcane Fury",
+      "campaign": "keyword_demos/pulse_demo"
+    },
+    {
+      "trait": "punch",
+      "label": "Punch",
+      "move": "Arm Thrust",
+      "campaign": "keyword_demos/punch_demo"
+    },
+    {
+      "trait": "push-1",
+      "label": "Push 1",
+      "move": "Expanding Force",
+      "campaign": "keyword_demos/push-1_demo"
+    },
+    {
+      "trait": "push-12",
+      "label": "Push 12",
+      "move": "Twinkle Tackle",
+      "campaign": "keyword_demos/push-12_demo"
+    },
+    {
+      "trait": "push-15",
+      "label": "Push 15",
+      "move": "G-Max One Blow",
+      "campaign": "keyword_demos/push-15_demo"
+    },
+    {
+      "trait": "push-2",
+      "label": "Push 2",
+      "move": "Giga Impact",
+      "campaign": "keyword_demos/push-2_demo"
+    },
+    {
+      "trait": "push-3",
+      "label": "Push 3",
+      "move": "Expanding Force",
+      "campaign": "keyword_demos/push-3_demo"
+    },
+    {
+      "trait": "push-4",
+      "label": "Push 4",
+      "move": "Storm Throw",
+      "campaign": "keyword_demos/push-4_demo"
+    },
+    {
+      "trait": "push-5",
+      "label": "Push 5",
+      "move": "Cone of Force",
+      "campaign": "keyword_demos/push-5_demo"
+    },
+    {
+      "trait": "push-6",
+      "label": "Push 6",
+      "move": "Dragon Tail",
+      "campaign": "keyword_demos/push-6_demo"
+    },
+    {
+      "trait": "push-x",
+      "label": "Push X",
+      "move": "Circle Throw",
+      "campaign": "keyword_demos/push-x_demo"
+    },
+    {
+      "trait": "ray",
+      "label": "Ray",
+      "move": "Aurora Beam",
+      "campaign": "keyword_demos/ray_demo"
+    },
+    {
+      "trait": "reach",
+      "label": "Reach",
+      "move": "Bramble Bite",
+      "campaign": "keyword_demos/reach_demo"
+    },
+    {
+      "trait": "recoil-1-2",
+      "label": "Recoil 1 2",
+      "move": "Chloroblast",
+      "campaign": "keyword_demos/recoil-1-2_demo"
+    },
+    {
+      "trait": "recoil-1-3",
+      "label": "Recoil 1 3",
+      "move": "Brave Bird",
+      "campaign": "keyword_demos/recoil-1-3_demo"
+    },
+    {
+      "trait": "recoil-1-4",
+      "label": "Recoil 1 4",
+      "move": "Head Charge",
+      "campaign": "keyword_demos/recoil-1-4_demo"
+    },
+    {
+      "trait": "recoil-1-8",
+      "label": "Recoil 1 8",
+      "move": "Comet Crash",
+      "campaign": "keyword_demos/recoil-1-8_demo"
+    },
+    {
+      "trait": "requires-rework",
+      "label": "Requires Rework",
+      "move": "Magic Coat",
+      "campaign": "keyword_demos/requires-rework_demo"
+    },
+    {
+      "trait": "resolution",
+      "label": "Resolution",
+      "move": "Ultimate Flare",
+      "campaign": "keyword_demos/resolution_demo"
+    },
+    {
+      "trait": "room",
+      "label": "Room",
+      "move": "Fire Pledge",
+      "campaign": "keyword_demos/room_demo"
+    },
+    {
+      "trait": "schadenfreude-attack",
+      "label": "Schadenfreude Attack",
+      "move": "Schadenfreude",
+      "campaign": "keyword_demos/schadenfreude-attack_demo"
+    },
+    {
+      "trait": "set-up",
+      "label": "Set Up",
+      "move": "Bide",
+      "campaign": "keyword_demos/set-up_demo"
+    },
+    {
+      "trait": "sharp",
+      "label": "Sharp",
+      "move": "Aerial Ace",
+      "campaign": "keyword_demos/sharp_demo"
+    },
+    {
+      "trait": "shield",
+      "label": "Shield",
+      "move": "Aurora Veil",
+      "campaign": "keyword_demos/shield_demo"
+    },
+    {
+      "trait": "shrink",
+      "label": "Shrink",
+      "move": "Minimize",
+      "campaign": "keyword_demos/shrink_demo"
+    },
+    {
+      "trait": "sky",
+      "label": "Sky",
+      "move": "Gust",
+      "campaign": "keyword_demos/sky_demo"
+    },
+    {
+      "trait": "smite",
+      "label": "Smite",
+      "move": "Piercing Drone",
+      "campaign": "keyword_demos/smite_demo"
+    },
+    {
+      "trait": "social",
+      "label": "Social",
+      "move": "Astonish",
+      "campaign": "keyword_demos/social_demo"
+    },
+    {
+      "trait": "sonic",
+      "label": "Sonic",
+      "move": "Boomburst",
+      "campaign": "keyword_demos/sonic_demo"
+    },
+    {
+      "trait": "stage-change",
+      "label": "Stage Change",
+      "move": "G-Max Tartness",
+      "campaign": "keyword_demos/stage-change_demo"
+    },
+    {
+      "trait": "substitute",
+      "label": "Substitute",
+      "move": "Substitute",
+      "campaign": "keyword_demos/substitute_demo"
+    },
+    {
+      "trait": "summon",
+      "label": "Summon",
+      "move": "Crystal Cloud",
+      "campaign": "keyword_demos/summon_demo"
+    },
+    {
+      "trait": "tail",
+      "label": "Tail",
+      "move": "Aqua Tail",
+      "campaign": "keyword_demos/tail_demo"
+    },
+    {
+      "trait": "teleport",
+      "label": "Teleport",
+      "move": "Ally Switch",
+      "campaign": "keyword_demos/teleport_demo"
+    },
+    {
+      "trait": "terrain",
+      "label": "Terrain",
+      "move": "Electric Terrain",
+      "campaign": "keyword_demos/terrain_demo"
+    },
+    {
+      "trait": "transform",
+      "label": "Transform",
+      "move": "Transform",
+      "campaign": "keyword_demos/transform_demo"
+    },
+    {
+      "trait": "trap",
+      "label": "Trap",
+      "move": "Clamp",
+      "campaign": "keyword_demos/trap_demo"
+    },
+    {
+      "trait": "unreliable",
+      "label": "Unreliable",
+      "move": "Fissure",
+      "campaign": "keyword_demos/unreliable_demo"
+    },
+    {
+      "trait": "use-opponents-stats",
+      "label": "Use Opponents Stats",
+      "move": "Foul Play",
+      "campaign": "keyword_demos/use-opponents-stats_demo"
+    },
+    {
+      "trait": "weapon",
+      "label": "Weapon",
+      "move": "Divine Pierce",
+      "campaign": "keyword_demos/weapon_demo"
+    },
+    {
+      "trait": "weather",
+      "label": "Weather",
+      "move": "Hail",
+      "campaign": "keyword_demos/weather_demo"
+    },
+    {
+      "trait": "wind",
+      "label": "Wind",
+      "move": "Aeroblast",
+      "campaign": "keyword_demos/wind_demo"
+    },
+    {
+      "trait": "zenith",
+      "label": "Zenith",
+      "move": "10,000,000 Volt Thunderbolt",
+      "campaign": "keyword_demos/zenith_demo"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "Covet",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "covet",
+    "actions": [
+      {
+        "slug": "covet",
+        "name": "Covet",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: On hit, the user steals a random item in the target's [Accessory], [Belt], or [Held] slots and equips it to itself in a [Held] slot. If the user already has a [Held] slot occupied, the stolen item is dropped on the ground in a square adjacent to the user.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "6dqYz1hDJNunBl49",
+  "effects": []
+}

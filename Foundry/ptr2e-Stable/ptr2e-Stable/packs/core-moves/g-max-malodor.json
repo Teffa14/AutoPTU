@@ -1,0 +1,51 @@
+{
+  "name": "G-Max Malodor",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "slug": "g-max-malodor",
+    "actions": [
+      {
+        "slug": "g-max-malodor",
+        "name": "G-Max Malodor",
+        "type": "attack",
+        "traits": [
+          "max",
+          "move-locked",
+          "sky",
+          "weather"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "poison"
+        ],
+        "description": "<p>Effect: The Weather is set to Smoggy for 5 rounds, and all valid targets gain @Affliction[blight] 8.</p><p>The user may spend up to 6 additional PP, increasing the Power of this attack by 15 per PP spent.</p><p>Requirement: User is a Dynamaxed Garbodor and has a Poison-Type attack on their Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "VZMs7ir8ukiGwFsD",
+  "effects": []
+}

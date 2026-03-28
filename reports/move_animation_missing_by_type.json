@@ -1,0 +1,2592 @@
+{
+  "summary": {
+    "total_moves": 854,
+    "exact_animation_matches": 346,
+    "missing_exact_animation": 508,
+    "coverage_percent": 40.52
+  },
+  "missing_by_type": {
+    "Normal": [
+      {
+        "name": "Acupressure",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "After You",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Arcane Fury",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Arcane Storm",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Assist",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Backswing",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Bane",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Barrage",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Bash!",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Belly Drum",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Bestow",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Bind",
+        "category": "Static",
+        "type": "Normal"
+      },
+      {
+        "name": "Bleed!",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Block",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Body Slam",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Boomburst",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Bullseye",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Camouflage",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Captivate",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Cheap Shot",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Chip Away",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Comet Punch",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Cone of Force",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Confide",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Conversion2",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Copycat",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Court Change",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Crush Claw",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Cut",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Deadly Strike",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Defense Curl",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Dizzy Punch",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Double Hit",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Double Slap",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Double Swipe",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Double Team",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Double-Edge",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Echoed Voice",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Endeavor",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Endure",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Energy Blast",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Energy Sphere",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Energy Vortex",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Entrainment",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Explosion",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Extreme Speed",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Facade",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Fa\u00e7ade",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Feint",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Flail",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Frustration",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Furious Strikes",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Fury Attack",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Fury Swipes",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Gouge",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Growth",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Harden",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Head Charge",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Headbutt",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Helping Hand",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Horn Attack",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Howl [SS]",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Hyper Voice",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Laser Focus",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Lovely Kiss",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Magic Burst",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Maul",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Mega Punch",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Metronome",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Mimic",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Mind Reader",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Minimize",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Morning Sun",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Multi-Attack [SS]",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Natural Gift",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Nature Power",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Noble Roar",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Pain Split",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Perish Song",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Pierce!",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Play Nice",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Pound",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Power Shift",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Psych Up",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Quick Attack",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Rage",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Rapid Spin",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Rapid Spin [SS]",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Razor Wind",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Recover",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Reflect Type",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Refresh",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Rending Spell",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Resonance Beam",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Return",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Revelation Dance",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Riposte",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Rock Climb",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Round",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Salvo",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Scratch",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Secret Force",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Secret Power",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Self-Destruct",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Simple Beam",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Sing",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Sketch",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Skull Bash",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Slam",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Slice",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Smelling Salts",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Snore",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Soft-Boiled",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Sonic Boom",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Spirit Lance",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Spit Up",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Splash",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Stockpile",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Stomp",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Strength",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Stuff Cheeks",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Super Fang",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Swagger [SM]",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Swallow",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Sweeping Strike",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Swords Dance",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Tackle",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Tackle [SM]",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Tail Whip",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Take Aim",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Take Down",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Tearful Look",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Teeter Dance",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Terrain Pulse",
+        "category": "Special",
+        "type": "Normal"
+      },
+      {
+        "name": "Thrash",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Tickle",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Titanic Slam",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Transform",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Triple Threat",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Wear Down",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Whirlwind",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Work Up",
+        "category": "Status",
+        "type": "Normal"
+      },
+      {
+        "name": "Wounding Strike",
+        "category": "Physical",
+        "type": "Normal"
+      },
+      {
+        "name": "Wrap",
+        "category": "Static",
+        "type": "Normal"
+      },
+      {
+        "name": "Wring Out",
+        "category": "Special",
+        "type": "Normal"
+      }
+    ],
+    "Psychic": [
+      {
+        "name": "Agility",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Ally Switch",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Calm Mind",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Cosmic Power",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Esper Wing",
+        "category": "Special",
+        "type": "Psychic"
+      },
+      {
+        "name": "Expanding Force",
+        "category": "Special",
+        "type": "Psychic"
+      },
+      {
+        "name": "Extrasensory",
+        "category": "Special",
+        "type": "Psychic"
+      },
+      {
+        "name": "Future Sight",
+        "category": "Special",
+        "type": "Psychic"
+      },
+      {
+        "name": "Guard Split",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Guard Swap",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Heal Block",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Heal Pulse",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Heart Stamp",
+        "category": "Physical",
+        "type": "Psychic"
+      },
+      {
+        "name": "Heart Swap",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Hidden Power Psychic",
+        "category": "Special",
+        "type": "Psychic"
+      },
+      {
+        "name": "Hypnosis",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Imprison",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Instruct",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Kinesis",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Lunar Blessing",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Lunar Dance",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Magic Powder",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Meditate",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Mist Ball",
+        "category": "Special",
+        "type": "Psychic"
+      },
+      {
+        "name": "Mystical Power",
+        "category": "Special",
+        "type": "Psychic"
+      },
+      {
+        "name": "Photon Geyser",
+        "category": "Special",
+        "type": "Psychic"
+      },
+      {
+        "name": "Power Split",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Power Swap",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Power Trick",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Psychic Fangs",
+        "category": "Physical",
+        "type": "Psychic"
+      },
+      {
+        "name": "Psyshield Bash",
+        "category": "Physical",
+        "type": "Psychic"
+      },
+      {
+        "name": "Psyshock",
+        "category": "Special",
+        "type": "Psychic"
+      },
+      {
+        "name": "Psywave",
+        "category": "Special",
+        "type": "Psychic"
+      },
+      {
+        "name": "Rest",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Role Play",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Skill Swap",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Speed Swap",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Stored Power",
+        "category": "Special",
+        "type": "Psychic"
+      },
+      {
+        "name": "Synchronoise",
+        "category": "Special",
+        "type": "Psychic"
+      },
+      {
+        "name": "Take Heart",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Telekinesis",
+        "category": "Status",
+        "type": "Psychic"
+      },
+      {
+        "name": "Zen Headbutt",
+        "category": "Physical",
+        "type": "Psychic"
+      }
+    ],
+    "Fighting": [
+      {
+        "name": "Arm Thrust",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Body Press",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Brick Break",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Circle Throw",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Close Combat",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Coaching",
+        "category": "Status",
+        "type": "Fighting"
+      },
+      {
+        "name": "Counter",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Cross Chop",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Double Kick",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Dynamic Punch",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Final Gambit",
+        "category": "Special",
+        "type": "Fighting"
+      },
+      {
+        "name": "Flying Press",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Flying Press [SM]",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Focus Blast",
+        "category": "Special",
+        "type": "Fighting"
+      },
+      {
+        "name": "Hammer Arm",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Hidden Power Fighting",
+        "category": "Special",
+        "type": "Fighting"
+      },
+      {
+        "name": "High Jump Kick",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Jump Kick",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Karate Chop",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Low Kick",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Low Sweep",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Mach Punch",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Octolock",
+        "category": "Status",
+        "type": "Fighting"
+      },
+      {
+        "name": "Power-Up Punch",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Quick Guard",
+        "category": "Status",
+        "type": "Fighting"
+      },
+      {
+        "name": "Reversal",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Rolling Kick",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Secret Sword",
+        "category": "Special",
+        "type": "Fighting"
+      },
+      {
+        "name": "Storm Throw",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Submission",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Superpower",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Triple Arrows",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Triple Kick",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Triple Kick [LA]",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Vacuum Wave",
+        "category": "Special",
+        "type": "Fighting"
+      },
+      {
+        "name": "Victory Dance",
+        "category": "Status",
+        "type": "Fighting"
+      },
+      {
+        "name": "Vital Throw",
+        "category": "Physical",
+        "type": "Fighting"
+      },
+      {
+        "name": "Wake-Up Slap",
+        "category": "Physical",
+        "type": "Fighting"
+      }
+    ],
+    "Dark": [
+      {
+        "name": "Assurance",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Beat Up",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Ceaseless Edge",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Dark Void [SM]",
+        "category": "Status",
+        "type": "Dark"
+      },
+      {
+        "name": "Darkest Lariat",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Embargo",
+        "category": "Status",
+        "type": "Dark"
+      },
+      {
+        "name": "Feint Attack",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Fiery Wrath",
+        "category": "Special",
+        "type": "Dark"
+      },
+      {
+        "name": "Fling",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Foul Play",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Hidden Power Dark",
+        "category": "Special",
+        "type": "Dark"
+      },
+      {
+        "name": "Jaw Lock",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Knock Off",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Lash Out",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Memento",
+        "category": "Status",
+        "type": "Dark"
+      },
+      {
+        "name": "Night Slash",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Parting Shot",
+        "category": "Status",
+        "type": "Dark"
+      },
+      {
+        "name": "Payback",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Power Trip",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Punishment",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Pursuit",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Quash",
+        "category": "Status",
+        "type": "Dark"
+      },
+      {
+        "name": "Snarl",
+        "category": "Special",
+        "type": "Dark"
+      },
+      {
+        "name": "Snatch",
+        "category": "Status",
+        "type": "Dark"
+      },
+      {
+        "name": "Sucker Punch",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Sucker Punch [SM]",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Switcheroo",
+        "category": "Status",
+        "type": "Dark"
+      },
+      {
+        "name": "Thief",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Throat Chop",
+        "category": "Physical",
+        "type": "Dark"
+      },
+      {
+        "name": "Topsy-Turvy",
+        "category": "Status",
+        "type": "Dark"
+      },
+      {
+        "name": "Wicked Blow",
+        "category": "Physical",
+        "type": "Dark"
+      }
+    ],
+    "Electric": [
+      {
+        "name": "Bolt Beak",
+        "category": "Physical",
+        "type": "Electric"
+      },
+      {
+        "name": "Bolt Strike",
+        "category": "Physical",
+        "type": "Electric"
+      },
+      {
+        "name": "Charge",
+        "category": "Status",
+        "type": "Electric"
+      },
+      {
+        "name": "Eerie Impulse",
+        "category": "Status",
+        "type": "Electric"
+      },
+      {
+        "name": "Electrify",
+        "category": "Status",
+        "type": "Electric"
+      },
+      {
+        "name": "Hidden Power Electric",
+        "category": "Special",
+        "type": "Electric"
+      },
+      {
+        "name": "Magnet Rise",
+        "category": "Status",
+        "type": "Electric"
+      },
+      {
+        "name": "Magnetic Flux",
+        "category": "Status",
+        "type": "Electric"
+      },
+      {
+        "name": "Magnetic Flux [SM]",
+        "category": "Status",
+        "type": "Electric"
+      },
+      {
+        "name": "Magnetic Flux [SS]",
+        "category": "Status",
+        "type": "Electric"
+      },
+      {
+        "name": "Nuzzle",
+        "category": "Physical",
+        "type": "Electric"
+      },
+      {
+        "name": "Overdrive",
+        "category": "Special",
+        "type": "Electric"
+      },
+      {
+        "name": "Parabolic Charge",
+        "category": "Special",
+        "type": "Electric"
+      },
+      {
+        "name": "Parabolic Charge [SM]",
+        "category": "Special",
+        "type": "Electric"
+      },
+      {
+        "name": "Plasma Fists",
+        "category": "Physical",
+        "type": "Electric"
+      },
+      {
+        "name": "Rising Voltage",
+        "category": "Special",
+        "type": "Electric"
+      },
+      {
+        "name": "Shock Wave",
+        "category": "Special",
+        "type": "Electric"
+      },
+      {
+        "name": "Spark",
+        "category": "Physical",
+        "type": "Electric"
+      },
+      {
+        "name": "Thunder Fang",
+        "category": "Physical",
+        "type": "Electric"
+      },
+      {
+        "name": "Thunder Punch",
+        "category": "Physical",
+        "type": "Electric"
+      },
+      {
+        "name": "Thunder Shock",
+        "category": "Special",
+        "type": "Electric"
+      },
+      {
+        "name": "Thunder Wave",
+        "category": "Status",
+        "type": "Electric"
+      },
+      {
+        "name": "Thunder Wave [SM]",
+        "category": "Status",
+        "type": "Electric"
+      },
+      {
+        "name": "Thunderbolt",
+        "category": "Special",
+        "type": "Electric"
+      },
+      {
+        "name": "Volt Switch",
+        "category": "Special",
+        "type": "Electric"
+      },
+      {
+        "name": "Volt Tackle",
+        "category": "Physical",
+        "type": "Electric"
+      },
+      {
+        "name": "Wild Charge",
+        "category": "Physical",
+        "type": "Electric"
+      },
+      {
+        "name": "Zap Cannon",
+        "category": "Special",
+        "type": "Electric"
+      },
+      {
+        "name": "Zing Zap",
+        "category": "Physical",
+        "type": "Electric"
+      }
+    ],
+    "Fire": [
+      {
+        "name": "Blast Burn",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Blue Flare",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Burn Up",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Burning Jealousy",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Ember",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Fiery Dance",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Fire Fang",
+        "category": "Physical",
+        "type": "Fire"
+      },
+      {
+        "name": "Fire Lash",
+        "category": "Physical",
+        "type": "Fire"
+      },
+      {
+        "name": "Fire Pledge",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Fire Punch",
+        "category": "Physical",
+        "type": "Fire"
+      },
+      {
+        "name": "Flame Burst",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Flame Charge",
+        "category": "Physical",
+        "type": "Fire"
+      },
+      {
+        "name": "Flame Wheel",
+        "category": "Physical",
+        "type": "Fire"
+      },
+      {
+        "name": "Flamethrower",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Flare Blitz",
+        "category": "Physical",
+        "type": "Fire"
+      },
+      {
+        "name": "Heat Crash",
+        "category": "Physical",
+        "type": "Fire"
+      },
+      {
+        "name": "Hidden Power Fire",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Incinerate",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Inferno",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Lava Plume",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Overheat",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Raging Fury",
+        "category": "Special",
+        "type": "Fire"
+      },
+      {
+        "name": "Sacred Fire",
+        "category": "Physical",
+        "type": "Fire"
+      },
+      {
+        "name": "V-Create",
+        "category": "Physical",
+        "type": "Fire"
+      }
+    ],
+    "Grass": [
+      {
+        "name": "Absorb",
+        "category": "Special",
+        "type": "Grass"
+      },
+      {
+        "name": "Branch Poke",
+        "category": "Physical",
+        "type": "Grass"
+      },
+      {
+        "name": "Bullet Seed",
+        "category": "Physical",
+        "type": "Grass"
+      },
+      {
+        "name": "Forest's Curse",
+        "category": "Status",
+        "type": "Grass"
+      },
+      {
+        "name": "Grass Pledge",
+        "category": "Special",
+        "type": "Grass"
+      },
+      {
+        "name": "Grass Whistle",
+        "category": "Status",
+        "type": "Grass"
+      },
+      {
+        "name": "Grassy Glide",
+        "category": "Physical",
+        "type": "Grass"
+      },
+      {
+        "name": "Grassy Terrain",
+        "category": "Status",
+        "type": "Grass"
+      },
+      {
+        "name": "Hidden Power Grass",
+        "category": "Special",
+        "type": "Grass"
+      },
+      {
+        "name": "Jungle Healing",
+        "category": "Status",
+        "type": "Grass"
+      },
+      {
+        "name": "Leaf Blade",
+        "category": "Physical",
+        "type": "Grass"
+      },
+      {
+        "name": "Leaf Storm",
+        "category": "Special",
+        "type": "Grass"
+      },
+      {
+        "name": "Leafage",
+        "category": "Physical",
+        "type": "Grass"
+      },
+      {
+        "name": "Mega Drain",
+        "category": "Special",
+        "type": "Grass"
+      },
+      {
+        "name": "Power Whip",
+        "category": "Physical",
+        "type": "Grass"
+      },
+      {
+        "name": "Razor Leaf",
+        "category": "Physical",
+        "type": "Grass"
+      },
+      {
+        "name": "Seed Flare",
+        "category": "Special",
+        "type": "Grass"
+      },
+      {
+        "name": "Sleep Powder",
+        "category": "Status",
+        "type": "Grass"
+      },
+      {
+        "name": "Snap Trap",
+        "category": "Physical",
+        "type": "Grass"
+      },
+      {
+        "name": "Solar Beam",
+        "category": "Special",
+        "type": "Grass"
+      },
+      {
+        "name": "Strength Sap",
+        "category": "Status",
+        "type": "Grass"
+      },
+      {
+        "name": "Stun Spore",
+        "category": "Status",
+        "type": "Grass"
+      },
+      {
+        "name": "Synthesis",
+        "category": "Status",
+        "type": "Grass"
+      },
+      {
+        "name": "Vine Whip",
+        "category": "Physical",
+        "type": "Grass"
+      }
+    ],
+    "Water": [
+      {
+        "name": "Aqua Ring",
+        "category": "Status",
+        "type": "Water"
+      },
+      {
+        "name": "Aqua Tail",
+        "category": "Physical",
+        "type": "Water"
+      },
+      {
+        "name": "Bubble",
+        "category": "Special",
+        "type": "Water"
+      },
+      {
+        "name": "Bubblebeam",
+        "category": "Special",
+        "type": "Water"
+      },
+      {
+        "name": "Clamp",
+        "category": "Static",
+        "type": "Water"
+      },
+      {
+        "name": "Fishious Rend",
+        "category": "Physical",
+        "type": "Water"
+      },
+      {
+        "name": "Flip Turn",
+        "category": "Physical",
+        "type": "Water"
+      },
+      {
+        "name": "Hidden Power Water",
+        "category": "Special",
+        "type": "Water"
+      },
+      {
+        "name": "Life Dew",
+        "category": "Status",
+        "type": "Water"
+      },
+      {
+        "name": "Liquidation",
+        "category": "Physical",
+        "type": "Water"
+      },
+      {
+        "name": "Octazooka",
+        "category": "Special",
+        "type": "Water"
+      },
+      {
+        "name": "Rain Dance",
+        "category": "Status",
+        "type": "Water"
+      },
+      {
+        "name": "Snipe Shot",
+        "category": "Special",
+        "type": "Water"
+      },
+      {
+        "name": "Soak",
+        "category": "Status",
+        "type": "Water"
+      },
+      {
+        "name": "Water Gun",
+        "category": "Special",
+        "type": "Water"
+      },
+      {
+        "name": "Water Pledge",
+        "category": "Special",
+        "type": "Water"
+      },
+      {
+        "name": "Water Shuriken [SM]",
+        "category": "Special",
+        "type": "Water"
+      },
+      {
+        "name": "Water Sport",
+        "category": "Status",
+        "type": "Water"
+      },
+      {
+        "name": "Water Spout",
+        "category": "Special",
+        "type": "Water"
+      },
+      {
+        "name": "Waterfall",
+        "category": "Physical",
+        "type": "Water"
+      },
+      {
+        "name": "Wave Crash",
+        "category": "Physical",
+        "type": "Water"
+      }
+    ],
+    "Poison": [
+      {
+        "name": "Acid",
+        "category": "Special",
+        "type": "Poison"
+      },
+      {
+        "name": "Acid Armor",
+        "category": "Status",
+        "type": "Poison"
+      },
+      {
+        "name": "Acid Spray",
+        "category": "Special",
+        "type": "Poison"
+      },
+      {
+        "name": "Baneful Bunker",
+        "category": "Status",
+        "type": "Poison"
+      },
+      {
+        "name": "Barb Barrage",
+        "category": "Physical",
+        "type": "Poison"
+      },
+      {
+        "name": "Belch",
+        "category": "Special",
+        "type": "Poison"
+      },
+      {
+        "name": "Corrosive Gas",
+        "category": "Status",
+        "type": "Poison"
+      },
+      {
+        "name": "Dire Claw",
+        "category": "Physical",
+        "type": "Poison"
+      },
+      {
+        "name": "Hidden Power Poison",
+        "category": "Special",
+        "type": "Poison"
+      },
+      {
+        "name": "Poison Fang",
+        "category": "Physical",
+        "type": "Poison"
+      },
+      {
+        "name": "Poison Gas",
+        "category": "Status",
+        "type": "Poison"
+      },
+      {
+        "name": "Poison Powder",
+        "category": "Status",
+        "type": "Poison"
+      },
+      {
+        "name": "Purify",
+        "category": "Status",
+        "type": "Poison"
+      },
+      {
+        "name": "Shell Side Arm",
+        "category": "Special",
+        "type": "Poison"
+      },
+      {
+        "name": "Sludge",
+        "category": "Special",
+        "type": "Poison"
+      },
+      {
+        "name": "Toxic",
+        "category": "Status",
+        "type": "Poison"
+      },
+      {
+        "name": "Toxic Spikes",
+        "category": "Status",
+        "type": "Poison"
+      },
+      {
+        "name": "Toxic Threads",
+        "category": "Status",
+        "type": "Poison"
+      }
+    ],
+    "unknown": [
+      {
+        "name": "Attack of Opportunity",
+        "category": "--",
+        "type": ""
+      },
+      {
+        "name": "Blind",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Bon Mot",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Dirty Trick",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Disarm",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Disengage",
+        "category": "--",
+        "type": ""
+      },
+      {
+        "name": "Flirt",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Grapple",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Hinder",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Intercept Melee",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Intercept Ranged",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Low Blow",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Maneuver",
+        "category": "Category",
+        "type": ""
+      },
+      {
+        "name": "Manipulate",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Push",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Sprint",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Terrorize",
+        "category": "Status",
+        "type": ""
+      },
+      {
+        "name": "Trip",
+        "category": "Status",
+        "type": ""
+      }
+    ],
+    "Flying": [
+      {
+        "name": "Acrobatics",
+        "category": "Physical",
+        "type": "Flying"
+      },
+      {
+        "name": "Beak Blast",
+        "category": "Physical",
+        "type": "Flying"
+      },
+      {
+        "name": "Bleakwind Storm",
+        "category": "Special",
+        "type": "Flying"
+      },
+      {
+        "name": "Bounce",
+        "category": "Physical",
+        "type": "Flying"
+      },
+      {
+        "name": "Drill Peck",
+        "category": "Physical",
+        "type": "Flying"
+      },
+      {
+        "name": "Dual Wingbeat",
+        "category": "Physical",
+        "type": "Flying"
+      },
+      {
+        "name": "Feather Dance",
+        "category": "Status",
+        "type": "Flying"
+      },
+      {
+        "name": "Hidden Power Flying",
+        "category": "Special",
+        "type": "Flying"
+      },
+      {
+        "name": "Mirror Move",
+        "category": "Status",
+        "type": "Flying"
+      },
+      {
+        "name": "Oblivion Wing",
+        "category": "Special",
+        "type": "Flying"
+      },
+      {
+        "name": "Peck",
+        "category": "Physical",
+        "type": "Flying"
+      },
+      {
+        "name": "Pluck",
+        "category": "Physical",
+        "type": "Flying"
+      },
+      {
+        "name": "Sky Attack",
+        "category": "Physical",
+        "type": "Flying"
+      },
+      {
+        "name": "Sky Drop",
+        "category": "Physical",
+        "type": "Flying"
+      },
+      {
+        "name": "Wing Attack",
+        "category": "Physical",
+        "type": "Flying"
+      }
+    ],
+    "Steel": [
+      {
+        "name": "Behemoth Bash",
+        "category": "Physical",
+        "type": "Steel"
+      },
+      {
+        "name": "Behemoth Blade",
+        "category": "Physical",
+        "type": "Steel"
+      },
+      {
+        "name": "Bullet Punch",
+        "category": "Physical",
+        "type": "Steel"
+      },
+      {
+        "name": "Gear Grind",
+        "category": "Physical",
+        "type": "Steel"
+      },
+      {
+        "name": "Gear Up",
+        "category": "Status",
+        "type": "Steel"
+      },
+      {
+        "name": "Gear Up [SS]",
+        "category": "Status",
+        "type": "Steel"
+      },
+      {
+        "name": "Heavy Slam",
+        "category": "Physical",
+        "type": "Steel"
+      },
+      {
+        "name": "Hidden Power Steel",
+        "category": "Special",
+        "type": "Steel"
+      },
+      {
+        "name": "Iron Defense",
+        "category": "Status",
+        "type": "Steel"
+      },
+      {
+        "name": "Metal Claw",
+        "category": "Physical",
+        "type": "Steel"
+      },
+      {
+        "name": "Shelter",
+        "category": "Status",
+        "type": "Steel"
+      },
+      {
+        "name": "Shift Gear",
+        "category": "Status",
+        "type": "Steel"
+      },
+      {
+        "name": "Smart Strike",
+        "category": "Physical",
+        "type": "Steel"
+      },
+      {
+        "name": "Steel Beam",
+        "category": "Special",
+        "type": "Steel"
+      },
+      {
+        "name": "Steel Wing",
+        "category": "Physical",
+        "type": "Steel"
+      }
+    ],
+    "Bug": [
+      {
+        "name": "Attack Order",
+        "category": "Physical",
+        "type": "Bug"
+      },
+      {
+        "name": "Defend Order",
+        "category": "Status",
+        "type": "Bug"
+      },
+      {
+        "name": "Fell Stinger [SM]",
+        "category": "Physical",
+        "type": "Bug"
+      },
+      {
+        "name": "Fury Cutter",
+        "category": "Physical",
+        "type": "Bug"
+      },
+      {
+        "name": "Heal Order",
+        "category": "Status",
+        "type": "Bug"
+      },
+      {
+        "name": "Hidden Power Bug",
+        "category": "Special",
+        "type": "Bug"
+      },
+      {
+        "name": "Infestation",
+        "category": "Special",
+        "type": "Bug"
+      },
+      {
+        "name": "Leech Life [SM]",
+        "category": "Physical",
+        "type": "Bug"
+      },
+      {
+        "name": "Lunge",
+        "category": "Physical",
+        "type": "Bug"
+      },
+      {
+        "name": "Pin Missile",
+        "category": "Physical",
+        "type": "Bug"
+      },
+      {
+        "name": "Pollen Puff",
+        "category": "Special",
+        "type": "Bug"
+      },
+      {
+        "name": "Signal Beam",
+        "category": "Special",
+        "type": "Bug"
+      },
+      {
+        "name": "Twineedle",
+        "category": "Physical",
+        "type": "Bug"
+      }
+    ],
+    "Ghost": [
+      {
+        "name": "Astonish",
+        "category": "Physical",
+        "type": "Ghost"
+      },
+      {
+        "name": "Bitter Malice",
+        "category": "Special",
+        "type": "Ghost"
+      },
+      {
+        "name": "Destiny Bond",
+        "category": "Status",
+        "type": "Ghost"
+      },
+      {
+        "name": "Hex",
+        "category": "Special",
+        "type": "Ghost"
+      },
+      {
+        "name": "Hidden Power Ghost",
+        "category": "Special",
+        "type": "Ghost"
+      },
+      {
+        "name": "Infernal Parade",
+        "category": "Special",
+        "type": "Ghost"
+      },
+      {
+        "name": "Lick",
+        "category": "Physical",
+        "type": "Ghost"
+      },
+      {
+        "name": "Night Shade",
+        "category": "Special",
+        "type": "Ghost"
+      },
+      {
+        "name": "Nightmare",
+        "category": "Status",
+        "type": "Ghost"
+      },
+      {
+        "name": "Phantom Force",
+        "category": "Physical",
+        "type": "Ghost"
+      },
+      {
+        "name": "Poltergeist",
+        "category": "Physical",
+        "type": "Ghost"
+      },
+      {
+        "name": "Shadow Force",
+        "category": "Physical",
+        "type": "Ghost"
+      },
+      {
+        "name": "Trick-or-Treat",
+        "category": "Status",
+        "type": "Ghost"
+      }
+    ],
+    "Rock": [
+      {
+        "name": "Accelerock",
+        "category": "Physical",
+        "type": "Rock"
+      },
+      {
+        "name": "Ancient Power",
+        "category": "Special",
+        "type": "Rock"
+      },
+      {
+        "name": "Diamond Storm",
+        "category": "Physical",
+        "type": "Rock"
+      },
+      {
+        "name": "Head Smash",
+        "category": "Physical",
+        "type": "Rock"
+      },
+      {
+        "name": "Hidden Power Rock",
+        "category": "Special",
+        "type": "Rock"
+      },
+      {
+        "name": "Power Gem",
+        "category": "Special",
+        "type": "Rock"
+      },
+      {
+        "name": "Rock Blast",
+        "category": "Physical",
+        "type": "Rock"
+      },
+      {
+        "name": "Rock Slide",
+        "category": "Physical",
+        "type": "Rock"
+      },
+      {
+        "name": "Rock Throw",
+        "category": "Physical",
+        "type": "Rock"
+      },
+      {
+        "name": "Rock Wrecker",
+        "category": "Physical",
+        "type": "Rock"
+      },
+      {
+        "name": "Smack Down",
+        "category": "Physical",
+        "type": "Rock"
+      },
+      {
+        "name": "Stone Edge",
+        "category": "Physical",
+        "type": "Rock"
+      },
+      {
+        "name": "Wide Guard",
+        "category": "Status",
+        "type": "Rock"
+      }
+    ],
+    "Ice": [
+      {
+        "name": "Aurora Beam",
+        "category": "Special",
+        "type": "Ice"
+      },
+      {
+        "name": "Avalanche",
+        "category": "Physical",
+        "type": "Ice"
+      },
+      {
+        "name": "Hail",
+        "category": "Status",
+        "type": "Ice"
+      },
+      {
+        "name": "Hidden Power Ice",
+        "category": "Special",
+        "type": "Ice"
+      },
+      {
+        "name": "Ice Ball",
+        "category": "Physical",
+        "type": "Ice"
+      },
+      {
+        "name": "Ice Beam",
+        "category": "Special",
+        "type": "Ice"
+      },
+      {
+        "name": "Ice Fang",
+        "category": "Physical",
+        "type": "Ice"
+      },
+      {
+        "name": "Ice Punch",
+        "category": "Physical",
+        "type": "Ice"
+      },
+      {
+        "name": "Ice Shard",
+        "category": "Physical",
+        "type": "Ice"
+      },
+      {
+        "name": "Icicle Crash",
+        "category": "Physical",
+        "type": "Ice"
+      },
+      {
+        "name": "Mountain Gale",
+        "category": "Physical",
+        "type": "Ice"
+      },
+      {
+        "name": "Triple Axel",
+        "category": "Physical",
+        "type": "Ice"
+      }
+    ],
+    "Dragon": [
+      {
+        "name": "Breaking Swipe",
+        "category": "Physical",
+        "type": "Dragon"
+      },
+      {
+        "name": "Clangorous Soul",
+        "category": "Status",
+        "type": "Dragon"
+      },
+      {
+        "name": "Draco Meteor",
+        "category": "Special",
+        "type": "Dragon"
+      },
+      {
+        "name": "Dragon Hammer",
+        "category": "Physical",
+        "type": "Dragon"
+      },
+      {
+        "name": "Dragon Rage",
+        "category": "Special",
+        "type": "Dragon"
+      },
+      {
+        "name": "Dragon Rush",
+        "category": "Physical",
+        "type": "Dragon"
+      },
+      {
+        "name": "Dual Chop",
+        "category": "Physical",
+        "type": "Dragon"
+      },
+      {
+        "name": "Dynamax Cannon",
+        "category": "Special",
+        "type": "Dragon"
+      },
+      {
+        "name": "Eternabeam",
+        "category": "Special",
+        "type": "Dragon"
+      },
+      {
+        "name": "Hidden Power Dragon",
+        "category": "Special",
+        "type": "Dragon"
+      },
+      {
+        "name": "Roar of Time",
+        "category": "Special",
+        "type": "Dragon"
+      }
+    ],
+    "Fairy": [
+      {
+        "name": "Aromatic Mist",
+        "category": "Status",
+        "type": "Fairy"
+      },
+      {
+        "name": "Charm",
+        "category": "Status",
+        "type": "Fairy"
+      },
+      {
+        "name": "Disarming Voice",
+        "category": "Special",
+        "type": "Fairy"
+      },
+      {
+        "name": "Flower Shield",
+        "category": "Status",
+        "type": "Fairy"
+      },
+      {
+        "name": "Hidden Power Fairy",
+        "category": "Special",
+        "type": "Fairy"
+      },
+      {
+        "name": "Light of Ruin",
+        "category": "Special",
+        "type": "Fairy"
+      },
+      {
+        "name": "Play Rough",
+        "category": "Physical",
+        "type": "Fairy"
+      },
+      {
+        "name": "Spirit Break",
+        "category": "Physical",
+        "type": "Fairy"
+      },
+      {
+        "name": "Strange Steam",
+        "category": "Special",
+        "type": "Fairy"
+      },
+      {
+        "name": "Sweet Kiss",
+        "category": "Status",
+        "type": "Fairy"
+      }
+    ],
+    "Ground": [
+      {
+        "name": "Bone Club",
+        "category": "Physical",
+        "type": "Ground"
+      },
+      {
+        "name": "Bone Rush",
+        "category": "Physical",
+        "type": "Ground"
+      },
+      {
+        "name": "Bulldoze",
+        "category": "Physical",
+        "type": "Ground"
+      },
+      {
+        "name": "Drill Run",
+        "category": "Physical",
+        "type": "Ground"
+      },
+      {
+        "name": "Headlong Rush",
+        "category": "Physical",
+        "type": "Ground"
+      },
+      {
+        "name": "Hidden Power Ground",
+        "category": "Special",
+        "type": "Ground"
+      },
+      {
+        "name": "Sandstorm Sear",
+        "category": "Special",
+        "type": "Ground"
+      },
+      {
+        "name": "Scorching Sands",
+        "category": "Special",
+        "type": "Ground"
+      },
+      {
+        "name": "Thousand Arrows",
+        "category": "Physical",
+        "type": "Ground"
+      },
+      {
+        "name": "Thousand Waves",
+        "category": "Physical",
+        "type": "Ground"
+      }
+    ],
+    "--": [
+      {
+        "name": "EW Adept",
+        "category": "--",
+        "type": "--"
+      },
+      {
+        "name": "EW Expert",
+        "category": "--",
+        "type": "--"
+      },
+      {
+        "name": "MH Adept",
+        "category": "--",
+        "type": "--"
+      },
+      {
+        "name": "MH Expert",
+        "category": "--",
+        "type": "--"
+      },
+      {
+        "name": "OH Adept",
+        "category": "--",
+        "type": "--"
+      }
+    ],
+    "Type": [
+      {
+        "name": "Name",
+        "category": "Category",
+        "type": "Type"
+      }
+    ]
+  }
+}

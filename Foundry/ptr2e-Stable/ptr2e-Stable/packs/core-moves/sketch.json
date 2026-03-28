@@ -1,0 +1,48 @@
+{
+  "name": "Sketch",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "sketch",
+    "actions": [
+      {
+        "slug": "sketch",
+        "name": "Sketch",
+        "type": "attack",
+        "traits": [
+          "move-locked"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 5
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: The user permanently copies an attack the target has used by spending PP equal to the PP cost of the attack to be copied. The user must have seen the target use the attack recently in order to copy it. The copied attack is added to the user's Active attack List. If the user's Active attack List is full, the copied attack is added to the user's Known Attacks List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "wxoELV5tLA5axoVc",
+  "effects": []
+}

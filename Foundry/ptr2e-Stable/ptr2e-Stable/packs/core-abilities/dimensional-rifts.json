@@ -1,0 +1,235 @@
+{
+  "name": "Dimensional Rifts",
+  "type": "ability",
+  "img": "systems/ptr2e/img/conditions/vortex.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "legendary",
+          "interrupt-1"
+        ],
+        "name": "Dimensional Rifts",
+        "slug": "dimensional-rifts-active",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3,
+          "trigger": "<p>The user declares Hyperspace Hole.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user declares Hyperspace Hole.</p><p>Effect: The user leaves behind a Rift after resolving the triggering attack. At the end of a round, the user freely uses Metronome for each active Rift, originating its effect from a Rift that has not had a Metronome resolved through it, on a nearby target chosen by the user. A Rift lasts for 3 Rounds.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "slug": "hyperspace-fury-unbound",
+        "name": "Hyperspace Fury (Unbound)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "crushing",
+          "punch",
+          "blast-3",
+          "pierce",
+          "contact"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7,
+          "trigger": "<p>The user is in its Unbound Forme.</p>"
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "free": true,
+        "variant": "hyperspace-fury",
+        "description": "<p>The user is in its Unbound Forme.</p><p>Effect: On resolution, the user loses -1 DEF Stage for 5 activations.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "hyperspace-fury-all-out",
+        "name": "Hyperspace Fury (All-Out)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "crushing",
+          "punch",
+          "flinch-40",
+          "pierce",
+          "contact"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 7,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 11,
+          "trigger": "<p>The user is in its Unbound Forme.</p>"
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "free": true,
+        "variant": "hyperspace-fury",
+        "description": "<p>The user is in its Unbound Forme.</p><p>Effect: On resolution, the user loses -1 DEF Stage for 5 activations.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "traits": [
+          "legendary"
+        ],
+        "name": "Dimensional Rifts",
+        "slug": "dimensional-rifts",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "description": "<p>Passive: The user can choose to originate their attacks (other than Hyperspace Hole and Hyperspace Fury) any space within 10m of the user, and any such spaces can be treated as the user's space for originating Abilities (such as Magician). When in Unbound Forme, the user's Hyperspace Hole is replaced with Hyperspace Fury.</p>",
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 10
+        }
+      }
+    ],
+    "description": "<p>Trigger: The user declares Hyperspace Hole or Hyperspace Fury.</p><p>Effect: Connection - Hyperspace Hole. At the end of a round, the user freely uses Metronome for each active Rift, originating its effect from a Rift that has not had a Metronome resolved through it, on a nearby target chosen by the user. A Rift lasts for 3 Rounds. When declaring Hyperspace Fury, the user can use Hyperspace Fury (Unbound) and Hyperspace Fury (All-Out).</p><p>Passive: The user can choose to originate their attacks (other than Hyperspace Hole and Hyperspace Fury) any space within 10m of the user, and any such spaces can be treated as the user's space for originating Abilities (such as Magician). When in Unbound Forme, the user's Hyperspace Hole is replaced with Hyperspace Fury.</p>",
+    "traits": [
+      "legendary",
+      "connection"
+    ],
+    "slug": "dimensional-rifts",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "0VYQA1KldrgnPZL7",
+  "effects": [
+    {
+      "name": "Dimensional Rifts",
+      "type": "passive",
+      "_id": "2La4pa52nRGWCHps",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.45AOpbdj7b05bGeT",
+            "predicate": [
+              "ability:dimensional-rifts:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "reevaluateOnUpdate": true,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          },
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.i7b6zggR16BmZOQm",
+            "predicate": [
+              "ability:dimensional-rifts:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737396590591,
+        "modifiedTime": 1754317676457,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

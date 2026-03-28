@@ -1,0 +1,306 @@
+{
+  "name": "combee",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 415,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.3,
+      "weight": 5.5
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 11
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "underdog",
+      "honey-gather",
+      "winged",
+      "pack-mon",
+      "guster",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "hustle"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "angry-buzz"
+        },
+        {
+          "slug": "pollen-field"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "multi-headed"
+        },
+        {
+          "slug": "regenerator"
+        }
+      ],
+      "master": [
+        {
+          "slug": "power-leech"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 30,
+      "atk": 30,
+      "def": 42,
+      "spa": 30,
+      "spd": 42,
+      "spe": 70
+    },
+    "types": [
+      "flying",
+      "bug"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "bug-bite",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "gust",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "struggle-bug",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "sweet-scent",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "bug-buzz",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 29
+        }
+      ],
+      "tutor": [
+        {
+          "name": "air-cutter",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endeavor",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "lunge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "ominous-wind",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "string-shot",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "swift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "tailwind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "captureRate": 120,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 1,
+    "habitats": [
+      "forest",
+      "cave"
+    ],
+    "evolutions": {
+      "name": "combee",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "vespiquen",
+          "uuid": "Compendium.ptr2e.core-species.Item.DmtwbwJnTIgpwUK0",
+          "methods": [
+            {
+              "type": "gender",
+              "gender": "female",
+              "operand": "and"
+            },
+            {
+              "type": "level",
+              "level": 21,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.v9agBcB1ewBRiDPX",
+      "methods": []
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "slug": "combee",
+    "publication": {
+      "source": "PTR 2e Core - Sinnoh Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "v9agBcB1ewBRiDPX",
+  "effects": []
+}

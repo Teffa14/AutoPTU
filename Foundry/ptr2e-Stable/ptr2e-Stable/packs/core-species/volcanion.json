@@ -1,0 +1,564 @@
+{
+  "name": "volcanion",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 721,
+    "size": {
+      "category": "large",
+      "type": "quad",
+      "height": 1.7,
+      "weight": 195
+    },
+    "diet": [
+      "overland-10"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 5
+      },
+      {
+        "type": "flight",
+        "value": 5
+      }
+    ],
+    "traits": [
+      "fountain",
+      "firestarter",
+      "heater",
+      "glow-3",
+      "legendary",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "flash-boil"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "water-absorb"
+        },
+        {
+          "slug": "magma-armor"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "steam-engine"
+        },
+        {
+          "slug": "cloud-cover"
+        }
+      ],
+      "master": [
+        {
+          "slug": "storm-drain"
+        },
+        {
+          "slug": "vaporization"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "legendary",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 80,
+      "atk": 110,
+      "def": 120,
+      "spa": 130,
+      "spd": 90,
+      "spe": 70
+    },
+    "types": [
+      "fire",
+      "water"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "fire-spin",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "steam-eruption",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "water-gun",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "leer",
+          "gen": "scarlet-violet",
+          "level": 6
+        },
+        {
+          "name": "weather-ball",
+          "gen": "scarlet-violet",
+          "level": 12
+        },
+        {
+          "name": "flame-charge",
+          "gen": "scarlet-violet",
+          "level": 18
+        },
+        {
+          "name": "water-pulse",
+          "gen": "scarlet-violet",
+          "level": 24
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet",
+          "level": 30
+        },
+        {
+          "name": "incinerate",
+          "gen": "scarlet-violet",
+          "level": 36
+        },
+        {
+          "name": "stomp",
+          "gen": "scarlet-violet",
+          "level": 42
+        },
+        {
+          "name": "body-slam",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 46
+        },
+        {
+          "name": "scald",
+          "gen": "scarlet-violet",
+          "level": 48
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet",
+          "level": 54
+        },
+        {
+          "name": "haze",
+          "gen": "scarlet-violet",
+          "level": 60
+        },
+        {
+          "name": "mist",
+          "gen": "scarlet-violet",
+          "level": 60
+        },
+        {
+          "name": "hydro-pump",
+          "gen": "scarlet-violet",
+          "level": 66
+        },
+        {
+          "name": "flare-blitz",
+          "gen": "scarlet-violet",
+          "level": 78
+        },
+        {
+          "name": "overheat",
+          "gen": "scarlet-violet",
+          "level": 84
+        },
+        {
+          "name": "explosion",
+          "gen": "scarlet-violet",
+          "level": 90
+        }
+      ],
+      "tutor": [
+        {
+          "name": "body-press",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "brick-break",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "cut",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "earth-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "earthquake",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-energy",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gyro-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heat-crash",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heat-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "heavy-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "liquidation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "misty-terrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "roar",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scorching-sands",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "self-destruct",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "smack-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "strength",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "superpower",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "wild-charge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "will-o-wisp",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "captureRate": 15,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "habitats": [],
+    "evolutions": {
+      "name": "volcanion",
+      "details": null,
+      "evolutions": [],
+      "uuid": null,
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "slug": "volcanion",
+    "publication": {
+      "source": "PTR 2e Core - Kalos Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "5udyufcCPl5Ewm0b",
+  "effects": []
+}

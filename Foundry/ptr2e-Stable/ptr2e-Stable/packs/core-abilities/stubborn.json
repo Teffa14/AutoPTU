@@ -1,0 +1,113 @@
+{
+  "name": "Stubborn",
+  "type": "ability",
+  "img": "systems/ptr2e/img/icons/physical_icon.png",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "desperation-1-2"
+        ],
+        "name": "Stubborn",
+        "slug": "stubborn",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: While the user meets the [Desperation 1/2] Condition, the user's ATK Stat is increased by 50%.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: While the user meets the [Desperation 1/2] Condition, the user's ATK Stat is increased by 50%.</p>",
+    "traits": [
+      "desperation-1-2"
+    ],
+    "slug": "stubborn",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "3dPT8q5a6qkcXhNM",
+  "effects": [
+    {
+      "name": "Stubborn",
+      "type": "passive",
+      "_id": "mQ7VB0n20AbEdJF0",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "basic",
+            "key": "system.modifiers.atkMultiplier",
+            "value": {
+              "brackets": [
+                {
+                  "start": 1,
+                  "end": 50,
+                  "value": 0.5
+                }
+              ],
+              "field": "actor|system.health.percent"
+            },
+            "predicate": [],
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1728935479729,
+        "modifiedTime": 1762903951636,
+        "lastModifiedBy": "5ImYyhOS2D6D7ypO",
+        "exportSource": null
+      }
+    }
+  ]
+}

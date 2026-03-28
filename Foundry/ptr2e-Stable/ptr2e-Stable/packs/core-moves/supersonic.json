@@ -1,0 +1,108 @@
+{
+  "name": "Supersonic",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "supersonic",
+    "actions": [
+      {
+        "slug": "supersonic",
+        "name": "Supersonic",
+        "type": "attack",
+        "traits": [
+          "sonic"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "status",
+        "accuracy": 55,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: On hit, all valid targets become @Affliction[confused] 5.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": []
+  },
+  "_id": "4KG7MYxmFy2nqYGT",
+  "effects": [
+    {
+      "name": "Supersonic",
+      "type": "affliction",
+      "_id": "dPCibRe0DvrWhB8g",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "supersonic-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.confusedconditem",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": []
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "priority": 50,
+        "formula": "",
+        "type": "damage"
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.2.2.1",
+        "createdTime": 1726149866389,
+        "modifiedTime": 1726149893579,
+        "lastModifiedBy": "kwBsHDVcAxdQpMPC"
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "name": "Beat Up",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "beat-up",
+    "actions": [
+      {
+        "slug": "beat-up",
+        "name": "Beat Up",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "5-strike"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 15,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "description": "<p>Effect: The number of times this attack \"hits\" due to @Trait[5-Stike] is increased by +1 for each of the users' allies that have the target within their Reach, maxing out at <em>11+d4</em> hits for having 10 allies within Reach.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "V9TPmNdhcCvnw98x",
+  "effects": []
+}

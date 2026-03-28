@@ -1,0 +1,51 @@
+{
+  "name": "Twinkle Tackle",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+  "system": {
+    "slug": "twinkle-tackle",
+    "actions": [
+      {
+        "slug": "twinkle-tackle",
+        "name": "Twinkle Tackle",
+        "type": "attack",
+        "traits": [
+          "zenith",
+          "push-12",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0,
+          "trigger": "<p>User's partner uses Z-Pose! and triggers the appropriate Z-Crystal.</p>"
+        },
+        "category": "special",
+        "power": 180,
+        "accuracy": 100,
+        "types": [
+          "fairy"
+        ],
+        "description": "<p>Trigger: User's partner uses Z-Pose! and triggers the appropriate Z-Crystal.</p><p>Effect: Upon resolving this attack, the user freely uses Misty Terrain.</p><p>Requirement: [Fairy] Z-Crystal as an Accessory Item and a Fairy-Type attack on the user's Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "R6hvW3x0BNEBwZle",
+  "effects": []
+}

@@ -1,0 +1,505 @@
+{
+  "name": "pidgeotto",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 17,
+    "size": {
+      "category": "small",
+      "type": "quad",
+      "height": 1.1,
+      "weight": 30
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 11
+      },
+      {
+        "type": "overland",
+        "value": 4
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "winged",
+      "direction-sense",
+      "jump-4",
+      "guster"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "keen-eye"
+        },
+        {
+          "slug": "tangled-feet"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "flock"
+        },
+        {
+          "slug": "big-pecks"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "early-bird"
+        },
+        {
+          "slug": "windvane"
+        }
+      ],
+      "master": [
+        {
+          "slug": "wind-rider"
+        },
+        {
+          "slug": "wind-force"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 63,
+      "atk": 60,
+      "def": 55,
+      "spa": 50,
+      "spd": 50,
+      "spe": 71
+    },
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "air-cutter",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bide",
+          "gen": "yellow"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "curse",
+          "gen": "crystal"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "detect",
+          "gen": "crystal"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "fly",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "headbutt",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "heat-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "ominous-wind",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "pluck",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "protect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rage",
+          "gen": "yellow"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "reflect",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "sky-attack",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "steel-wing",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "swift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "take-down",
+          "gen": "yellow"
+        },
+        {
+          "name": "thief",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "u-turn",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "work-up",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "sand-attack",
+          "level": 5,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "gust",
+          "level": 9,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "mirror-move",
+          "level": 11,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "quick-attack",
+          "level": 13,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "whirlwind",
+          "level": 17,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "twister",
+          "level": 22,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "feather-dance",
+          "level": 27,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "agility",
+          "level": 32,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "wing-attack",
+          "level": 37,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "roost",
+          "level": 42,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "razor-wind",
+          "level": 45,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "tailwind",
+          "level": 47,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "aerial-ace",
+          "level": 52,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "air-slash",
+          "level": 57,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "hurricane",
+          "level": 62,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ]
+    },
+    "captureRate": 120,
+    "eggGroups": [
+      "flying"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "pidgey",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "pidgeotto",
+          "uuid": "Compendium.ptr2e.core-species.Item.PHlbmAo6Yy55QOwd",
+          "methods": [
+            {
+              "type": "level",
+              "level": 18,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "pidgeot",
+              "uuid": "Compendium.ptr2e.core-species.Item.0ITXciewxMERsUpo",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 36,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "perk": {
+                "x": 26,
+                "y": 26
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.4SfdmzV3FAUxlffS",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "habitats": [
+      "forest",
+      "field",
+      "grassland"
+    ],
+    "slug": "pidgeotto",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "PHlbmAo6Yy55QOwd",
+  "effects": []
+}

@@ -1,0 +1,48 @@
+{
+  "name": "Power Gem",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "power-gem",
+    "actions": [
+      {
+        "slug": "power-gem",
+        "name": "Power Gem",
+        "type": "attack",
+        "traits": [
+          "missile"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "special",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "rock"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "tmMi8VhcpLeLODLe",
+  "effects": []
+}

@@ -1,0 +1,472 @@
+{
+  "name": "greavard",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "ghost"
+    ],
+    "stats": {
+      "hp": 50,
+      "atk": 61,
+      "def": 60,
+      "spa": 30,
+      "spd": 55,
+      "spe": 34
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "growl",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lick",
+          "level": 3,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tail-whip",
+          "level": 6,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bite",
+          "level": 6,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "roar",
+          "level": 9,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "headbutt",
+          "level": 12,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "level": 16,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "crunch",
+          "level": 28,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "play-rough",
+          "level": 32,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "level": 37,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "phantom-force",
+          "level": 41,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "level": 46,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-edge",
+          "level": 52,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "disable",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "destiny-bond",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "memento",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "yawn",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "howl",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-sneak",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "night-shade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confuse-ray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pain-split",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "uproar",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endeavor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hex",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snarl",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-fangs",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poltergeist",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.6,
+      "weight": 35,
+      "category": "small",
+      "type": "quad"
+    },
+    "captureRate": 120,
+    "eggGroups": [
+      "ground"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "greavard",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "houndstone",
+          "uuid": "Compendium.ptr2e.core-species.Item.bWmeTixM3M19meOu",
+          "methods": [
+            {
+              "type": "level",
+              "level": 30,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.qClR8DEJOTcbdwFm"
+    },
+    "number": 971,
+    "traits": [
+      "pokemon",
+      "breathless",
+      "darkvision-15",
+      "glow-1",
+      "lifesense",
+      "pack-mon",
+      "keen-scent",
+      "underdog",
+      "jump-3"
+    ],
+    "diet": [
+      "nullivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "pickup"
+        },
+        {
+          "slug": "fluffy"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "cute-charm"
+        },
+        {
+          "slug": "guard-down"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "friend-guard"
+        },
+        {
+          "slug": "tired-yawn"
+        }
+      ],
+      "master": [
+        {
+          "slug": "strong-jaw"
+        },
+        {
+          "slug": "cursed-body"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 5
+      },
+      {
+        "type": "burrow",
+        "value": 2
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "forest",
+      "mountain",
+      "tundra",
+      "ruin"
+    ],
+    "slug": "greavard",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "qClR8DEJOTcbdwFm",
+  "effects": [],
+  "folder": null
+}

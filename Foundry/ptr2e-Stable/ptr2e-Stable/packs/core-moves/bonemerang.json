@@ -1,0 +1,53 @@
+{
+  "name": "Bonemerang",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "bonemerang",
+    "actions": [
+      {
+        "slug": "bonemerang",
+        "name": "Bonemerang",
+        "type": "attack",
+        "traits": [
+          "double-strike",
+          "missile",
+          "bone",
+          "hammer"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 50,
+        "accuracy": 90,
+        "types": [
+          "ground"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "BuLj8HMf31VqGeCa",
+  "effects": []
+}

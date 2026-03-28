@@ -1,0 +1,91 @@
+{
+  "name": "Hypnotic Suggestion",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      "trait:telepath"
+    ],
+    "cost": 3,
+    "description": "<p>Make an opposed Occult (Psychic) test versus the target of the Hypnotic Suggestion. If you win, you may implant a suggestion in their mind as to what they should do as if it were their own idea, before erasing the memory of being influenced. If the Suggestion clashes with the target's core values, then they receive +40 to their skill check to resist.</p>",
+    "actions": [
+      {
+        "name": "Hypnotic Suggestion",
+        "slug": "hypnotic-suggestion",
+        "description": "<p>Make an opposed Occult (Psychic) test versus the target of the Hypnotic Suggestion. If you win, you may implant a suggestion in their mind as to what they should do as if it were there own idea, before erasing the memory of being influenced. If the Suggestion clashes with the target's core values, then they receive +40 to their skill check to resist.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "delay": null,
+          "priority": null
+        },
+        "type": "exploration",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "hypnotic-suggestion",
+    "traits": [],
+    "_migration": {
+      "version": 0.108,
+      "previous": {
+        "schema": null,
+        "foundry": "12.330",
+        "system": "0.10.0-alpha.3.2.0"
+      }
+    },
+    "nodes": [
+      {
+        "connected": [
+          "psychoportation",
+          "detect-minds",
+          "telepathic-potential",
+          "conceal-mind",
+          "planar-tactician"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/svg/psychic_icon.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 144,
+        "y": 129,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "finesse",
+      "archetype": "psychic"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "BQY0NiJMPOWEaeLY",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "effects": [],
+  "folder": "F4b52L00KrAtdPu5"
+}

@@ -1,0 +1,865 @@
+{
+  "name": "genesect",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 649,
+    "size": {
+      "category": "small",
+      "type": "height",
+      "height": 1.5,
+      "weight": 82.5
+    },
+    "diet": [
+      "electovore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 15
+      },
+      {
+        "type": "swim",
+        "value": 5
+      },
+      {
+        "type": "burrow",
+        "value": 5
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "legendary",
+      "breathless",
+      "glow-1",
+      "darkvision-15",
+      "ir-vision-15",
+      "fossil",
+      "rapid",
+      "bipedal",
+      "jump-5"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "destructive-design"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "mega-launcher"
+        },
+        {
+          "slug": "full-metal-body"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "sighting-system"
+        },
+        {
+          "slug": "infiltrator"
+        }
+      ],
+      "master": [
+        {
+          "slug": "analytic"
+        },
+        {
+          "slug": "fatal-precision"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "electronics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "handiwork",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "mechanics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychology",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ride",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 75,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "genesect",
+    "stats": {
+      "hp": 71,
+      "atk": 120,
+      "def": 95,
+      "spa": 120,
+      "spd": 95,
+      "spe": 99
+    },
+    "types": [
+      "bug",
+      "steel"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "fury-cutter",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "quick-attack",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "screech",
+          "gen": "sword-shield",
+          "level": 7
+        },
+        {
+          "name": "metal-claw",
+          "gen": "sword-shield",
+          "level": 14
+        },
+        {
+          "name": "fell-stinger",
+          "gen": "sword-shield",
+          "level": 21
+        },
+        {
+          "name": "magnet-bomb",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 22
+        },
+        {
+          "name": "flame-charge",
+          "gen": "sword-shield",
+          "level": 28
+        },
+        {
+          "name": "slash",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 29
+        },
+        {
+          "name": "metal-sound",
+          "gen": "sword-shield",
+          "level": 35
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 40
+        },
+        {
+          "name": "x-scissor",
+          "gen": "sword-shield",
+          "level": 42
+        },
+        {
+          "name": "tri-attack",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 44
+        },
+        {
+          "name": "magnet-rise",
+          "gen": "sword-shield",
+          "level": 49
+        },
+        {
+          "name": "bug-buzz",
+          "gen": "sword-shield",
+          "level": 56
+        },
+        {
+          "name": "simple-beam",
+          "gen": "sword-shield",
+          "level": 63
+        },
+        {
+          "name": "zap-cannon",
+          "gen": "sword-shield",
+          "level": 70
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 73
+        },
+        {
+          "name": "lock-on",
+          "gen": "sword-shield",
+          "level": 77
+        },
+        {
+          "name": "techno-blast",
+          "gen": "sword-shield",
+          "level": 84
+        },
+        {
+          "name": "self-destruct",
+          "gen": "sword-shield",
+          "level": 91
+        }
+      ],
+      "tutor": [
+        {
+          "name": "aerial-ace",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "blaze-kick",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "blizzard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bug-bite",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "charge-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "electroweb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "explosion",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fly",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "gravity",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hone-claws",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-head",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "last-resort",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "leech-life",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "light-screen",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psychic",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "recycle",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "reflect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-polish",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "shadow-claw",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "steel-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "struggle-bug",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swift",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "telekinesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thunder",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "u-turn",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "captureRate": 10,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "habitats": [],
+    "evolutions": {
+      "name": "genesect",
+      "details": null,
+      "evolutions": [],
+      "uuid": null,
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "8YpGuXpgy0SOA7Rz",
+  "effects": [
+    {
+      "name": "High Speed Forme",
+      "type": "form",
+      "_id": "cE5kqD0wRxYepzPr",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-option",
+            "key": "manual-forme-toggle",
+            "value": "forme:high-speed-forme:active",
+            "domain": "all",
+            "toggleable": true,
+            "label": "Toggle: High Speed Forme Forme",
+            "predicate": [],
+            "alwaysActive": false,
+            "count": false,
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "suboptions": [],
+            "state": false
+          },
+          {
+            "type": "stats-alteration",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "",
+            "value": 0,
+            "hp": null,
+            "atk": -40,
+            "def": 15,
+            "spa": -40,
+            "spd": 15,
+            "spe": 50,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "system.skills.flying.value",
+            "value": 65,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "system.skills.running.value",
+            "value": -40,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "system.skills.climb.value",
+            "value": -10,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "system.skills.swim.value",
+            "value": 15,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "system.movement.flight.method",
+            "value": "flight",
+            "mode": 5,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "system.movement.flight.value",
+            "value": 37,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "system.movement.overland.value",
+            "value": -7,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "system.movement.burrow.value",
+            "value": 5,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "system.movement.swim.value",
+            "value": 13,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "remove-trait",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "",
+            "value": "bipedal",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "",
+            "value": "quadrupedal",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "remove-trait",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "",
+            "value": "rapid",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "",
+            "value": "jet",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:high-speed-forme:active"
+            ],
+            "key": "",
+            "value": "hover",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "trigger": "manual",
+        "conditions": []
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "1.1.2.beta",
+        "createdTime": 1742429907042,
+        "modifiedTime": 1742430977205,
+        "lastModifiedBy": "01onCaJSVMVOgMDI"
+      }
+    }
+  ]
+}

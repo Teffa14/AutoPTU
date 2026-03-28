@@ -1,0 +1,113 @@
+{
+  "name": "Hammer Arm",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "hammer-arm",
+    "actions": [
+      {
+        "slug": "hammer-arm",
+        "name": "Hammer Arm",
+        "type": "attack",
+        "traits": [
+          "crushing",
+          "contact",
+          "hammer"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 90,
+        "types": [
+          "fighting"
+        ],
+        "description": "<p>Effect: On hit, the user loses -1 SPD Stage for 5 Activations.</p>",
+        "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": []
+  },
+  "_id": "8Cz8RZllldCmYvQm",
+  "effects": [
+    {
+      "name": "Hammer Arm",
+      "type": "passive",
+      "_id": "RV9bwFg7UMfDGEjL",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "hammer-arm-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.HLAV9dhz632Rfp1K",
+            "predicate": [],
+            "chance": 100,
+            "affects": "self",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": [],
+            "isFixedChance": false,
+            "dontMerge": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.347",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.3.0.0",
+        "createdTime": 1729550516542,
+        "modifiedTime": 1729550539250,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS",
+        "exportSource": null
+      }
+    }
+  ]
+}

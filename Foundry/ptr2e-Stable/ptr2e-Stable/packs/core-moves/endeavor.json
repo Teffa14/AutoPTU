@@ -1,0 +1,48 @@
+{
+  "name": "Endeavor",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "endeavor",
+    "actions": [
+      {
+        "slug": "endeavor",
+        "name": "Endeavor",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "physical",
+        "power": null,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: Reduces the targets' HP to match the user's current HP.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "KQAFaapoBxfiS3me",
+  "effects": []
+}

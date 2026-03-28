@@ -1,0 +1,78 @@
+{
+  "name": "Mega Stone",
+  "img": "systems/ptr2e/img/item-icons/mega stone.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": false
+    },
+    "rarity": "unique",
+    "traits": [
+      "evolution",
+      "phenomenon",
+      "species"
+    ],
+    "actions": [
+      {
+        "slug": "mega-evolve-mega-stone",
+        "name": "Mega Evolve! (Mega Stone)",
+        "type": "generic",
+        "traits": [
+          "evolution",
+          "phenomenon",
+          "command"
+        ],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free",
+          "powerPoints": 6,
+          "trigger": "<p>The user shares their Species Trait with a held Mega Stone, and the user is within 50m of an ally holding a Key Stone.</p>"
+        },
+        "description": "<p>Trigger: The user shares their Species Trait with a held Mega Stone, and the user is within 50m of an ally holding a Key Stone.</p><p>Effect: The user undergoes Mega Evolution.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: Allows creature that matches the <Species> Trait to Mega Evolve when equipped.",
+    "slug": "mega-stone",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "XZIA2fPJEaLE2Zeg",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

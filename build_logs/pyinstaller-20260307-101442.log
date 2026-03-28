@@ -1,0 +1,130 @@
+447 INFO: PyInstaller: 6.19.0, contrib hooks: 2026.1
+447 INFO: Python: 3.14.3
+475 INFO: Platform: Windows-11-10.0.26200-SP0
+475 INFO: Python environment: C:\Python314
+478 INFO: Removing temporary files and cleaning cache in C:\Users\tefa1\AppData\Local\pyinstaller
+532 INFO: Module search paths (PYTHONPATH):
+['C:\\Users\\tefa1\\AutoPTU',
+ 'C:\\Python314\\python314.zip',
+ 'C:\\Python314\\DLLs',
+ 'C:\\Python314\\Lib',
+ 'C:\\Python314',
+ 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages',
+ '__editable__.auto_ptu-0.1.0.finder.__path_hook__',
+ 'C:\\Python314\\Lib\\site-packages',
+ 'C:\\Users\\tefa1\\AutoPTU']
+1170 INFO: Appending 'datas' from .spec
+1732 INFO: checking Analysis
+1732 INFO: Building Analysis because Analysis-00.toc is non existent
+1732 INFO: Looking for Python shared library...
+1732 INFO: Using Python shared library: C:\Python314\python314.dll
+1732 INFO: Running Analysis Analysis-00.toc
+1732 INFO: Target bytecode optimization level: 0
+1732 INFO: Initializing module dependency graph...
+1746 INFO: Initializing module graph hook caches...
+1836 INFO: Analyzing modules for base_library.zip ...
+4177 INFO: Processing standard module hook 'hook-encodings.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+7482 INFO: Processing standard module hook 'hook-difflib.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+7513 INFO: Processing standard module hook 'hook-heapq.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+7717 INFO: Processing standard module hook 'hook-pickle.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+12215 INFO: Caching module dependency graph...
+12254 INFO: Analyzing C:\Users\tefa1\AutoPTU\auto_ptu_launcher.py
+12408 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+12629 INFO: Processing standard module hook 'hook-xml.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+13310 INFO: Processing standard module hook 'hook-sysconfig.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+13332 INFO: Processing standard module hook 'hook-_ctypes.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+14114 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+14117 INFO: SetuptoolsInfo: initializing cached setuptools info...
+18736 INFO: Processing standard module hook 'hook-xml.dom.domreg.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+19545 INFO: Processing standard module hook 'hook-platform.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+22490 INFO: Processing standard module hook 'hook-pandas.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+24453 INFO: Processing standard module hook 'hook-numpy.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+33272 INFO: Processing standard module hook 'hook-zoneinfo.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+36825 INFO: Processing standard module hook 'hook-pandas.io.formats.style.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+42653 INFO: Processing standard module hook 'hook-pandas.plotting.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+44226 INFO: Processing standard module hook 'hook-dateutil.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+44549 INFO: Processing pre-safe-import-module hook 'hook-six.moves.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+48810 INFO: Processing standard module hook 'hook-sqlite3.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+49532 INFO: Processing standard module hook 'hook-pandas.io.clipboard.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+50003 INFO: Processing standard module hook 'hook-xml.etree.cElementTree.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+50607 INFO: Processing standard module hook 'hook-pytest.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+51245 INFO: Processing standard module hook 'hook-pygments.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+53429 INFO: Processing standard module hook 'hook-py.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+53935 INFO: Processing pre-safe-import-module hook 'hook-packaging.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+54586 INFO: Processing pre-safe-import-module hook 'hook-tomli.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+54587 INFO: Setuptools: 'tomli' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.tomli'!
+54608 INFO: Processing standard module hook 'hook-setuptools.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+54726 INFO: Processing pre-safe-import-module hook 'hook-distutils.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+54861 INFO: Processing pre-safe-import-module hook 'hook-jaraco.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+54862 INFO: Setuptools: 'jaraco' appears to be a full setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco'!
+54892 INFO: Processing pre-safe-import-module hook 'hook-more_itertools.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+54892 INFO: Setuptools: 'more_itertools' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.more_itertools'!
+55887 INFO: Processing standard module hook 'hook-setuptools._vendor.jaraco.text.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+55889 INFO: Processing pre-safe-import-module hook 'hook-importlib_resources.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+55920 INFO: Processing pre-safe-import-module hook 'hook-backports.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+55921 INFO: Setuptools: 'backports' appears to be a full setuptools-vendored copy - creating alias to 'setuptools._vendor.backports'!
+56370 INFO: Processing pre-safe-import-module hook 'hook-importlib_metadata.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+56371 INFO: Setuptools: 'importlib_metadata' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.importlib_metadata'!
+56422 INFO: Processing standard module hook 'hook-setuptools._vendor.importlib_metadata.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks'
+56603 INFO: Processing pre-safe-import-module hook 'hook-zipp.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+56604 INFO: Setuptools: 'zipp' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.zipp'!
+59358 INFO: Processing pre-safe-import-module hook 'hook-wheel.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+59359 INFO: Setuptools: 'wheel' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.wheel'!
+71640 INFO: Analyzing hidden import 'rich._unicode_data.unicode4-1-0'
+71666 INFO: Analyzing hidden import 'rich._unicode_data.unicode5-0-0'
+71685 INFO: Analyzing hidden import 'rich._unicode_data.unicode5-1-0'
+71709 INFO: Analyzing hidden import 'rich._unicode_data.unicode5-2-0'
+71731 INFO: Analyzing hidden import 'rich._unicode_data.unicode6-0-0'
+71760 INFO: Analyzing hidden import 'rich._unicode_data.unicode6-1-0'
+71784 INFO: Analyzing hidden import 'rich._unicode_data.unicode6-2-0'
+71810 INFO: Analyzing hidden import 'rich._unicode_data.unicode6-3-0'
+71833 INFO: Analyzing hidden import 'rich._unicode_data.unicode7-0-0'
+71862 INFO: Analyzing hidden import 'rich._unicode_data.unicode8-0-0'
+71884 INFO: Analyzing hidden import 'rich._unicode_data.unicode9-0-0'
+71916 INFO: Analyzing hidden import 'rich._unicode_data.unicode10-0-0'
+71941 INFO: Analyzing hidden import 'rich._unicode_data.unicode11-0-0'
+71977 INFO: Analyzing hidden import 'rich._unicode_data.unicode12-0-0'
+72007 INFO: Analyzing hidden import 'rich._unicode_data.unicode12-1-0'
+72038 INFO: Analyzing hidden import 'rich._unicode_data.unicode13-0-0'
+72065 INFO: Analyzing hidden import 'rich._unicode_data.unicode14-0-0'
+72098 INFO: Analyzing hidden import 'rich._unicode_data.unicode15-0-0'
+72123 INFO: Analyzing hidden import 'rich._unicode_data.unicode15-1-0'
+72152 INFO: Analyzing hidden import 'rich._unicode_data.unicode16-0-0'
+72180 INFO: Analyzing hidden import 'rich._unicode_data.unicode17-0-0'
+72207 INFO: Processing module hooks (post-graph stage)...
+72533 INFO: Processing standard module hook 'hook-jinja2.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+83598 INFO: Processing standard module hook 'hook-tzdata.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+84409 INFO: Performing binary vs. data reclassification (25938 entries)
+209512 INFO: Looking for ctypes DLLs
+209614 INFO: Analyzing run-time hooks ...
+209614 INFO: Including custom run-time hook 'scripts\\pyinstaller_rth_env.py'
+209628 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\rthooks'
+209647 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\rthooks'
+209665 INFO: Including run-time hook 'pyi_rth_setuptools.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\rthooks'
+209677 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\PyInstaller\\hooks\\rthooks'
+210339 INFO: Creating base_library.zip...
+210366 INFO: Looking for dynamic libraries
+212536 INFO: Extra DLL search directories (AddDllDirectory): ['C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\pandas.libs', 'C:\\Users\\tefa1\\AppData\\Roaming\\Python\\Python314\\site-packages\\numpy.libs']
+212537 INFO: Extra DLL search directories (PATH): []
+213995 INFO: Warnings written to C:\Users\tefa1\AutoPTU\build\AutoPTU\warn-AutoPTU.txt
+214162 INFO: Graph cross-reference written to C:\Users\tefa1\AutoPTU\build\AutoPTU\xref-AutoPTU.html
+215882 INFO: checking PYZ
+215883 INFO: Building PYZ because PYZ-00.toc is non existent
+215883 INFO: Building PYZ (ZlibArchive) C:\Users\tefa1\AutoPTU\build\AutoPTU\PYZ-00.pyz
+217195 INFO: Building PYZ (ZlibArchive) C:\Users\tefa1\AutoPTU\build\AutoPTU\PYZ-00.pyz completed successfully.
+217677 INFO: checking PKG
+217677 INFO: Building PKG because PKG-00.toc is non existent
+217677 INFO: Building PKG (CArchive) AutoPTU.pkg
+245207 INFO: Building PKG (CArchive) AutoPTU.pkg completed successfully.
+246038 INFO: Bootloader C:\Users\tefa1\AppData\Roaming\Python\Python314\site-packages\PyInstaller\bootloader\Windows-64bit-intel\run.exe
+246038 INFO: checking EXE
+246038 INFO: Building EXE because EXE-00.toc is non existent
+246038 INFO: Building EXE from EXE-00.toc
+246040 INFO: Copying bootloader EXE to C:\Users\tefa1\AutoPTU\dist\AutoPTU.exe
+246166 INFO: Copying icon to EXE
+246232 INFO: Copying 0 resources to EXE
+246233 INFO: Embedding manifest in EXE
+246282 INFO: Appending PKG archive to EXE
+246757 INFO: Fixing EXE headers
+249334 INFO: Building EXE from EXE-00.toc completed successfully.
+250093 INFO: Build complete! The results are available in: C:\Users\tefa1\AutoPTU\dist

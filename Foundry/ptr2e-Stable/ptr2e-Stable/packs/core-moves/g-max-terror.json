@@ -1,0 +1,50 @@
+{
+  "name": "G-Max Terror",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "g-max-terror",
+    "actions": [
+      {
+        "slug": "g-max-terror",
+        "name": "G-Max Terror",
+        "type": "attack",
+        "traits": [
+          "max",
+          "move-locked",
+          "sky"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>Effect: All valid targets gain @Affliction[fear] 5.</p><p>The user may spend up to 6 additional PP, increasing the Power of this attack by 15 per PP spent.</p><p>Requirement: User is a Dynamaxed Gengar and has a Ghost-Type attack on their Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "IwC4DCGPFgxGD8F6",
+  "effects": []
+}

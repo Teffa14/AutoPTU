@@ -1,0 +1,56 @@
+Image 1 card builder concept (cards to build, not a wizard)
+
+What it is
+This screen is the main build workspace. Left is the deck of available cards, center is the character build board with slots, right is an always visible mini sheet.
+
+What the left panel means
+The left panel is a searchable, filterable deck of cards. Tabs switch the pool you are browsing (Features, Edges, Classes). The search bar filters by name and text. The small chips are tag filters. Each card row is a big rectangular card with art thumbnail, name, short effect summary, and prerequisites shown as a live checklist. The card shows a state indicator that the system calculates, available means you can add it now, close means you are missing something, locked means impossible right now, taken means already in build. Cost is shown at the bottom as slot usage or points.
+
+What the center panel means
+The center is not a step list, it is the board you assemble. It has fixed slots at the top for Profile and Class. Under that it has the Features shelf, which is a row of feature slots. Filled slots show the chosen cards. Empty slots show empty placeholders. Below that is an Edges shelf with edge slots and an add edge button. Everything on this board is a drop target. Dragging a card from the left panel into a slot either succeeds or becomes a ghost placement that tells you what prerequisite is missing.
+
+What the right panel means
+The right panel is the mini sheet that never disappears. It shows level, core stats, skill ranks, feature slots used, edge slots used, and points left. It also shows warnings like prereq broken or over budget. Save and load buttons are always present.
+
+Interaction rules implied
+The deck never forces linear order. You can browse anything, but the board enforces hard locks by slot type. Prereqs are never plain text. They are evaluated and rendered as live checks. No card can be added unless its prereq rule evaluates true or you place it as a ghost to plan.
+
+Image 2 paperdoll character sheet concept (visual sheet, same data, not separate logic)
+
+What it is
+This is the character sheet view. It uses a paperdoll to show identity and equipment at a glance, while still keeping the same mini sheet summary on the right. It is not a different character system, it is a different view of the exact same character state.
+
+What the left panel means
+Same deck panel as the card builder, but you are usually browsing cosmetic and gear cards here. You can still filter and search. Cards show prereqs and state exactly the same way.
+
+What the center means
+The trainer avatar is centered as the paperdoll. Around it are equipment slot panels. Left side is outfit slots like hat jacket boots accessories. Right side is trainer gear slots like satchel device key items consumables. Slots are drop targets. When a card is equipped, the slot shows its icon and name. Empty slots show a blank inset placeholder. Hovering a slot shows the mechanical summary and tags, but the paperdoll itself does not hide prereqs or rules, it just visualizes them.
+
+Bottom strip
+The bottom strip is party management. It shows creature team slots as cards with portrait and level and quick status. Empty slots are clearly shown. This is visual and management, not where you resolve combat rules.
+
+Right panel
+Same mini sheet. Always visible. Same save load.
+
+Interaction rules implied
+Equipping is drag drop from deck to slot. Equipping does not bypass prerequisites. If something needs a feature or edge first, it shows close or locked and explains why.
+
+Image 3 combat UI concept (square grid, angled camera, PTU style battle HUD)
+
+What it is
+A tactical battle view where movement and range logic is square grid, but the camera is angled for a polished look. The grid is drawn as square cells on screen, with translucent fills and bright outlines. Terrain is painted under the grid, but the grid remains uniform.
+
+Battlefield and camera
+The board is a rectangular square grid overlay. The camera is a fixed angled view, but the squares remain squares. Units are billboard sprites or flat 2D art placed at tile centers. Depth sorting is by tile y then x so overlap looks right. Selected tiles show colored outlines and glow. Different overlays exist for move range, target range, hazards, blockers.
+
+Top bar
+Global battle controls like zoom undo step reset. Top right shows round count, terrain, weather, and toggles.
+
+Right inspector panel
+This is the active entity inspector. It shows the selected unit name, statuses, actions available, and quick data. It also shows the opposing side overview if needed. This is where you click to choose actions and see their legal targets, not by clicking random UI buttons on the board.
+
+Bottom HUD
+Bottom left is player identity and global resources. Bottom center is turn order and active unit cards. Bottom center also holds quick action slots or queued actions. Bottom right is the battle feed log with the last events. Save load sit below or near the log.
+
+Important integration with what we discussed
+Out of combat is not grid crawling. Grid is for battles only. Outside of combat you use scene images, focus ping, and narration, with Free voice RP, Preset templates, and optional LLM assistance. Combat UI is purely deterministic and does not need LLM. The same Save Load approach exists in all three screens and the same visual language for panels and cards is shared across the whole app.

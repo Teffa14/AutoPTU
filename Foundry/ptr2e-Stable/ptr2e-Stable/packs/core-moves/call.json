@@ -1,0 +1,41 @@
+{
+  "name": "Call!",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "call",
+    "actions": [
+      {
+        "slug": "call",
+        "name": "Call!",
+        "type": "generic",
+        "traits": [
+          "command",
+          "basic"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 1
+        },
+        "description": "<p>Effect: The @Affliction[drowsy], @Affliction[confused], @Affliction[disabled], @Affliction[suppressed], @Affliction[enraged], @Affliction[charmed], @Affliction[fear], and @Affliction[taunted] Afflictions the user is Afflicted with have their Stack counts reduced by 2. A target afflicted with @Affliction[hyper-mode] is cured of @Affliction[hyper-mode].</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "eir0T0FTafp3GG9i",
+  "effects": [],
+  "folder": "EpCOePz8omfXbp34"
+}

@@ -1,0 +1,69 @@
+{
+  "folder": "zrVtKATNxzLNxTUX",
+  "name": "Metamove: Guarded Strike",
+  "type": "perk",
+  "_id": "JdKSUJXZUrgWuHp3",
+  "img": "systems/ptr2e/img/perk-icons/Arcana.svg",
+  "system": {
+    "actions": [],
+    "slug": "metamove-guarded-strike",
+    "description": "<p>When you declare an Attack, spend 2PP. The Attack gains the effect \"On hit, the user gains @Affliction[resolved] 2.\" until the end of user's Activation.</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "metamove-bullseye",
+          "metamove-target-split",
+          "stat-iv-booster-1-13",
+          "improved-overland-16",
+          "improved-overland-12",
+          "stat-iv-booster-1-9",
+          "minor-buff-15",
+          "minor-buff-19",
+          "minor-buff-53",
+          "minor-buff-57",
+          "focused-fire-1"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#808080",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Arcana.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 118,
+        "y": 176,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "resilience",
+      "archetype": "metamove"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "effects": []
+}

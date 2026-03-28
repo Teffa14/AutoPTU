@@ -1,0 +1,274 @@
+{
+  "name": "blipbug",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "bug"
+    ],
+    "stats": {
+      "hp": 25,
+      "atk": 20,
+      "def": 20,
+      "spa": 25,
+      "spd": 45,
+      "spe": 45
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "struggle-bug",
+          "level": 1,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "supersonic",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "recover",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sticky-web",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "infestation",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.4,
+      "weight": 8,
+      "category": "tiny",
+      "type": "length"
+    },
+    "captureRate": 255,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "blipbug",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "dottler",
+          "uuid": "Compendium.ptr2e.core-species.Item.WSZTE98PV6xfzetj",
+          "methods": [
+            {
+              "type": "level",
+              "level": 10,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "orbeetle",
+              "uuid": "Compendium.ptr2e.core-species.Item.TdsKTouFnIQyH4yD",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 30,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.IxJK8LngMTfnx5tr"
+    },
+    "number": 824,
+    "traits": [
+      "pokemon",
+      "many-legged",
+      "blindsight-15",
+      "underdog",
+      "bait",
+      "wallclimber",
+      "telepath",
+      "jump-4"
+    ],
+    "diet": [
+      "herbivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "swarm"
+        },
+        {
+          "slug": "compound-eyes"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "telepathy"
+        },
+        {
+          "slug": "frisk"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "mind-mold"
+        },
+        {
+          "slug": "illuminate"
+        }
+      ],
+      "master": [
+        {
+          "slug": "hypnotist"
+        },
+        {
+          "slug": "psych-out"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 5
+      }
+    ],
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychic",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "psychology",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "read-lips",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "research",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "forest",
+      "field"
+    ],
+    "slug": "blipbug",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "IxJK8LngMTfnx5tr",
+  "effects": [],
+  "folder": null
+}

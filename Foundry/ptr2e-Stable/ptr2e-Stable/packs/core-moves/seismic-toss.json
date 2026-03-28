@@ -1,0 +1,90 @@
+{
+  "name": "Seismic Toss",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "seismic-toss",
+    "actions": [
+      {
+        "slug": "seismic-toss",
+        "name": "Seismic Toss",
+        "type": "attack",
+        "traits": [
+          "contact",
+          "grapple",
+          "flat"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "description": "<p>Effect: This attack deals flat damage based on the user's level.</p><blockquote><p>Damage Formula: Damage = 1.75 x UserLevel</p></blockquote>",
+        "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "traits": [],
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "azHGajJaesHnTtHQ",
+  "effects": [
+    {
+      "name": "Seismic Toss",
+      "type": "passive",
+      "_id": "HFZRBpZ9uhD2TPKA",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "seismic-toss-attack-damage-flat",
+            "value": "floor(@actor.system.advancement.level * 1.75)",
+            "label": "Seismic Toss",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {}
+    }
+  ]
+}

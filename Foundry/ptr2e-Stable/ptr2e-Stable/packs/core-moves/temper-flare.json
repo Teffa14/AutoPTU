@@ -1,0 +1,78 @@
+{
+  "name": "Temper Flare",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "temper-flare",
+    "actions": [
+      {
+        "slug": "temper-flare",
+        "name": "Temper Flare",
+        "type": "attack",
+        "traits": [
+          "defrost"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "category": "special",
+        "power": 75,
+        "accuracy": 100,
+        "types": [
+          "fire"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "temper-flare-reprisal",
+        "name": "Temper Flare (Reprisal)",
+        "type": "attack",
+        "traits": [
+          "defrost"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7,
+          "trigger": "<p>The user missed or failed with an attack since their last Activation.</p>"
+        },
+        "category": "special",
+        "power": 150,
+        "accuracy": 100,
+        "types": [
+          "fire"
+        ],
+        "description": "<p>Trigger: The user missed or failed with an attack since their last Activation.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "temper-flare",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "O0Yf2apCfHigoHWo",
+  "effects": []
+}

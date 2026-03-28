@@ -1,0 +1,48 @@
+{
+  "name": "Safeguard",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "safeguard",
+    "actions": [
+      {
+        "slug": "safeguard",
+        "name": "Safeguard",
+        "type": "attack",
+        "traits": [
+          "defensive"
+        ],
+        "range": {
+          "target": "field",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: The user and their allies cannot be inflicted with [Major Affliction]s for 3 rounds.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "X2ZRPMlCRzbcEwOS",
+  "effects": []
+}

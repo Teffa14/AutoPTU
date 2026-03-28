@@ -1,0 +1,586 @@
+{
+  "name": "inteleon",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "water"
+    ],
+    "stats": {
+      "hp": 70,
+      "atk": 85,
+      "def": 65,
+      "spa": 125,
+      "spd": 65,
+      "spe": 120
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "snipe-shot",
+          "gen": "scarlet-violet",
+          "level": 0
+        },
+        {
+          "name": "acrobatics",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "bind",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "growl",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "pound",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "water-gun",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "water-pulse",
+          "gen": "scarlet-violet",
+          "level": 12
+        },
+        {
+          "name": "tearful-look",
+          "gen": "scarlet-violet",
+          "level": 19
+        },
+        {
+          "name": "sucker-punch",
+          "gen": "scarlet-violet",
+          "level": 24
+        },
+        {
+          "name": "u-turn",
+          "gen": "scarlet-violet",
+          "level": 30
+        },
+        {
+          "name": "liquidation",
+          "gen": "scarlet-violet",
+          "level": 38
+        },
+        {
+          "name": "soak",
+          "gen": "scarlet-violet",
+          "level": 46
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet",
+          "level": 54
+        },
+        {
+          "name": "hydro-pump",
+          "gen": "scarlet-violet",
+          "level": 62
+        }
+      ],
+      "tutor": [
+        {
+          "name": "agility",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "air-cutter",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "air-slash",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aqua-jet",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aqua-ring",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "baton-pass",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bounce",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "breaking-swipe",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dive",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-team",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fell-stinger",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flip-turn",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-energy",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "haze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hydro-cannon",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-shard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icicle-spear",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "metronome",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mist",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "muddy-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scald",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scale-shot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "smack-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snowscape",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "surf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "vacuum-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-pledge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "waterfall",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "weather-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "whirlpool",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "work-up",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.9,
+      "weight": 45.2,
+      "category": "medium",
+      "type": "height"
+    },
+    "captureRate": 45,
+    "eggGroups": [
+      "water1",
+      "ground"
+    ],
+    "genderRatio": 1,
+    "evolutions": {
+      "name": "sobble",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "drizzile",
+          "uuid": "Compendium.ptr2e.core-species.Item.68jfEH0g9W39WJat",
+          "methods": [
+            {
+              "type": "level",
+              "level": 16,
+              "operand": "and"
+            }
+          ],
+          "perk": {
+            "x": 26,
+            "y": 26
+          },
+          "evolutions": [
+            {
+              "name": "inteleon",
+              "uuid": "Compendium.ptr2e.core-species.Item.GbyvZKmp7QdoBP3w",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 35,
+                  "operand": "and"
+                }
+              ],
+              "perk": {
+                "x": 26,
+                "y": 26
+              },
+              "details": null
+            }
+          ],
+          "details": null
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.d2SXW3oVtcbzVoAY",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 818,
+    "traits": [
+      "pokemon",
+      "stealth",
+      "fully-evolved",
+      "gilled",
+      "slippery",
+      "invisibility",
+      "bipedal",
+      "natural-swimmer",
+      "jump-3"
+    ],
+    "diet": [
+      "omnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "torrent"
+        },
+        {
+          "slug": "sniper"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "ambush"
+        },
+        {
+          "slug": "quick-draw"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "infiltrator"
+        },
+        {
+          "slug": "anticipation"
+        }
+      ],
+      "master": [
+        {
+          "slug": "perforate"
+        },
+        {
+          "slug": "artillery"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "swim",
+        "value": 18
+      },
+      {
+        "type": "overland",
+        "value": 12
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "locksmith",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychology",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "sleight-of-hand",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "pond"
+    ],
+    "slug": "inteleon",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "GbyvZKmp7QdoBP3w",
+  "effects": []
+}

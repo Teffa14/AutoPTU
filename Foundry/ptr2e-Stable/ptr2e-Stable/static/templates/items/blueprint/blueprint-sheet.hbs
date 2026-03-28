@@ -1,0 +1,50 @@
+<section class="standard-form">
+  {{#if blueprint}}
+    <fieldset class="species">
+      <legend>Species</legend>
+      <div class="form-group"> 
+        <label>{{localize fields.species.label}}</label>
+        <div class="form-fields species-fields">
+          <select class="species-select" data-tooltip="You can use this dropdown to select a Dynamic Habitat Table instead.">
+            <option value=""></option>
+            {{#each habitats as |habitat|}}
+              <option value="{{habitat.slug}}" {{#if (is habitat.slug ../blueprint._source.species)}}selected{{/if}}>{{habitat.name}}</option>
+            {{/each}}
+          </select>
+          <input type="text" name="species" value="{{blueprint._source.species}}">
+        </div>
+        <p class="hint">{{localize fields.species.hint}}</p>
+      </div>
+      {{formField fields.level value=blueprint._source.level localize=true}}
+      {{formField fields.nature value=blueprint._source.nature localize=true}}
+      {{formField fields.gender value=blueprint._source.gender localize=true}}
+      {{formField fields.shiny value=blueprint._source.shiny localize=true}}
+      {{formField fields.preventEvolution value=blueprint._source.preventEvolution localize=true}}
+    </fieldset>
+    <fieldset class="perk-config">
+      <legend>Perk Generation</legend>
+      <div class="form-group">
+        <label style="flex: 0 0 fit-content; margin-right: 0.5rem;">{{localize "PTR2E.GeneratorConfig.label"}}</label>
+        <div class="form-fields">
+          {{#if blueprint.config}}
+            <a class="content-link" draggable="true" data-action="open-config" data-uuid="{{uuid}}" data-id="{{blueprint.id}}" data-type="GeneratorConfig" data-tooltip-direction="UP" data-tooltip="Open {{#if blueprint.config.label}}{{blueprint.config.label}}{{else}}Perk Generator Config{{/if}}"><i class="fas fa-rectangle-list"></i>{{#if blueprint.config.label}}{{blueprint.config.label}}{{else}}Perk Generator Config{{/if}}</a>
+            <a class="content-link delete" style="flex: 0;" data-action="delete-config" data-uuid="{{uuid}}" data-id="{{blueprint.id}}" data-type="GeneratorConfig" data-tooltip-direction="UP" data-tooltip="Delete {{#if blueprint.config.label}}{{blueprint.config.label}}{{else}}Perk Generator Config{{/if}}"><i class="fas fa-trash m-0"></i></a>
+          {{else}}
+            <div class="empty">
+              <span class="name">No Perk Generator Config created yet, drag one here or <button type="button" data-action="create-config">Create New Config</button></span>
+            </div>
+          {{/if}}
+          <a class="content-link open-global-configs" style="flex: 0;" data-action="open-global-configs" data-tooltip-direction="UP" data-tooltip="Open Global Perk Generator Configs"><i class="fas fa-arrow-up-right-from-square m-0"></i></a>
+        </div>
+        <p class="hint">{{localize "PTR2E.GeneratorConfig.hint"}}</p>
+      </div>
+    </fieldset>
+  {{else}}
+    <div class="empty">
+      <span class="name">No Blueprint has been selected, please select one from the side</span>
+    </div>
+  {{/if}}
+  <div class="footer">
+    <button>Generate Actor(s)</button>
+  </div>
+</section>

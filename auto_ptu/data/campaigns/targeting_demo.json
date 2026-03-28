@@ -1,0 +1,114 @@
+{
+  "name": "Targeting Range Lab",
+  "description": "Purpose-built arena to showcase the new color-coded target picker. Run `auto-ptu play targeting_demo --team-size 2` (or pick the launcher option) to see allies flagged for friendly fire, in-range foes, and line-of-sight blocked enemies in one glance.",
+  "default_weather": "Clear",
+  "grid": {
+    "width": 12,
+    "height": 8,
+    "blockers": [[5, 2], [5, 3], [5, 4], [6, 2], [6, 3], [6, 4]],
+    "tiles": {
+      "3,1": "difficult",
+      "7,6": "water"
+    }
+  },
+  "players": [
+    {
+      "name": "Luxio",
+      "species": "Luxio",
+      "level": 22,
+      "types": ["Electric"],
+      "hp_stat": 11,
+      "atk": 12,
+      "def": 10,
+      "spatk": 11,
+      "spdef": 9,
+      "spd": 12,
+      "moves": [
+        {
+          "name": "Thunderbolt",
+          "type": "Electric",
+          "category": "Special",
+          "db": 8,
+          "ac": 2,
+          "range_kind": "Ranged",
+          "range_value": 6,
+          "freq": "EOT",
+          "effects_text": "Primary demo move for the targeting lab. Fire it to see which allies and foes are in range."
+        },
+        {"name": "Spark", "type": "Electric", "category": "Physical", "db": 6, "ac": 2, "range_kind": "Melee", "freq": "At-Will"},
+        {"name": "Charge Beam", "type": "Electric", "category": "Special", "db": 5, "ac": 2, "range_kind": "Ranged", "range_value": 5, "freq": "At-Will"},
+        {"name": "Leer", "type": "Normal", "category": "Status", "db": 0, "ac": 2, "range_kind": "Cone", "range_value": 2, "freq": "At-Will"}
+      ],
+      "movement": {"overland": 6, "swim": 2, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 2, "l_jump": 2, "power": 3}
+    },
+    {
+      "name": "Ivysaur",
+      "species": "Ivysaur",
+      "level": 22,
+      "types": ["Grass", "Poison"],
+      "hp_stat": 12,
+      "atk": 10,
+      "def": 11,
+      "spatk": 12,
+      "spdef": 11,
+      "spd": 9,
+      "moves": [
+        {"name": "Vine Whip", "type": "Grass", "category": "Physical", "db": 6, "ac": 2, "range_kind": "Ranged", "range_value": 4, "freq": "At-Will"},
+        {"name": "Razor Leaf", "type": "Grass", "category": "Physical", "db": 7, "ac": 3, "range_kind": "Cone", "range_value": 2, "freq": "EOT"},
+        {"name": "Leech Seed", "type": "Grass", "category": "Status", "db": 0, "ac": 2, "range_kind": "Ranged", "range_value": 4, "freq": "Scene"},
+        {"name": "Growl", "type": "Normal", "category": "Status", "db": 0, "ac": null, "range_kind": "CloseBlast", "range_value": 1, "freq": "At-Will"}
+      ],
+      "movement": {"overland": 5, "swim": 2, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 1, "l_jump": 1, "power": 3}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Pidgeotto",
+      "species": "Pidgeotto",
+      "level": 21,
+      "types": ["Normal", "Flying"],
+      "hp_stat": 11,
+      "atk": 11,
+      "def": 9,
+      "spatk": 9,
+      "spdef": 10,
+      "spd": 13,
+      "moves": [
+        {"name": "Wing Attack", "type": "Flying", "category": "Physical", "db": 6, "ac": 2, "range_kind": "Melee", "freq": "At-Will"},
+        {"name": "Quick Attack", "type": "Normal", "category": "Physical", "db": 4, "ac": 2, "range_kind": "Melee", "freq": "At-Will"},
+        {"name": "Twister", "type": "Dragon", "category": "Special", "db": 5, "ac": 2, "range_kind": "Ranged", "range_value": 4, "area_kind": "Burst", "area_value": 1, "freq": "EOT"},
+        {"name": "Sand Attack", "type": "Ground", "category": "Status", "db": 0, "ac": 2, "range_kind": "Ranged", "range_value": 4, "freq": "At-Will"}
+      ],
+      "movement": {"overland": 6, "swim": 2, "sky": 10, "levitate": 0, "burrow": 0, "h_jump": 2, "l_jump": 2, "power": 3}
+    },
+    {
+      "name": "Graveler",
+      "species": "Graveler",
+      "level": 21,
+      "types": ["Rock", "Ground"],
+      "hp_stat": 13,
+      "atk": 12,
+      "def": 13,
+      "spatk": 7,
+      "spdef": 8,
+      "spd": 5,
+      "moves": [
+        {"name": "Rock Throw", "type": "Rock", "category": "Physical", "db": 6, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "At-Will"},
+        {"name": "Smack Down", "type": "Rock", "category": "Physical", "db": 6, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "EOT"},
+        {"name": "Magnitude", "type": "Ground", "category": "Physical", "db": 7, "ac": 4, "range_kind": "Burst", "range_value": 1, "freq": "Scene"},
+        {"name": "Defense Curl", "type": "Normal", "category": "Status", "db": 0, "ac": null, "range_kind": "Self", "freq": "At-Will"}
+      ],
+      "movement": {"overland": 4, "swim": 0, "sky": 0, "levitate": 0, "burrow": 1, "h_jump": 1, "l_jump": 1, "power": 4}
+    }
+  ],
+  "metadata": {
+    "player_trainers": [
+      {"identifier": "lens", "name": "Lens", "controller": "player", "team": "players", "start_positions": [[2, 2]]},
+      {"identifier": "fern", "name": "Fern", "controller": "player", "team": "players", "start_positions": [[2, 5]]}
+    ],
+    "foe_trainers": [
+      {"identifier": "scout", "name": "Storm Scout", "controller": "ai", "team": "rogues", "start_positions": [[8, 2]]},
+      {"identifier": "warden", "name": "Stone Warden", "controller": "ai", "team": "rogues", "start_positions": [[9, 4]]}
+    ]
+  }
+}

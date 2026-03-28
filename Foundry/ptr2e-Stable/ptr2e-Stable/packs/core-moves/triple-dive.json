@@ -1,0 +1,49 @@
+{
+  "name": "Triple Dive",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "triple-dive",
+    "actions": [
+      {
+        "slug": "triple-dive",
+        "name": "Triple Dive",
+        "type": "attack",
+        "traits": [
+          "3-strike",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "physical",
+        "power": 30,
+        "accuracy": 95,
+        "types": [
+          "water"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "ei4yGKJA5bq6gCN7",
+  "effects": []
+}

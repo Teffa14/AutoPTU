@@ -1,0 +1,90 @@
+{
+  "name": "Behemoth Bash",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "behemoth-bash",
+    "actions": [
+      {
+        "slug": "behemoth-bash",
+        "name": "Behemoth Bash",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "dash",
+          "crushing",
+          "contact",
+          "pass-4"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>This move uses Defense for it's offensive stat.</p>",
+        "img": "systems/ptr2e/img/svg/steel_icon.svg",
+        "offensiveStat": "def",
+        "predicate": []
+      },
+      {
+        "slug": "behemoth-bash-giant",
+        "name": "Behemoth Bash (Giant)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "dash",
+          "crushing",
+          "contact",
+          "pass-4"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6,
+          "trigger": "The target is Dynamaxed."
+        },
+        "category": "physical",
+        "power": 200,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Trigger: The target is Dynamaxed.</p>",
+        "variant": "behemoth-bash",
+        "free": true,
+        "img": "systems/ptr2e/img/svg/steel_icon.svg",
+        "offensiveStat": "def",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "AHPBLlzkuYaytEPH",
+  "effects": []
+}

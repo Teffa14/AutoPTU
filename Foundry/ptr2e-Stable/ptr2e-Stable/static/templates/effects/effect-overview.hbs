@@ -1,0 +1,45 @@
+<section class="tab sheet-body {{tabs.overview.cssClass}}" data-tab="overview" data-group="sheet">
+    <aside class="traits"> 
+      <input type="text" class="traits ptr2e-tagify" name="system.traits" value="{{json traits}}" data-dType="JSON"/>
+    </aside>
+    <div class="scroll">
+        {{formField fields.tint value=data.tint localize=true}}
+        
+        {{#if hasDescription}}
+            {{formField fields.description enriched=descriptionHTML value=source.description localize=true toggled=true}}
+        {{/if}}
+
+        {{formField fields.disabled value=data.disabled localize=true}}
+        
+        {{#if isActorEffect}}
+            {{formField fields.origin value=data.origin disabled=true localize=true}}
+        {{/if}}
+        
+        {{#if isItemEffect}}
+            {{formField fields.transfer value=data.transfer localize=true}}
+        {{/if}}
+
+        <div class="form-group">
+            <label>Display on Token</label>
+            <div class="form-fields">
+              <select name="flags.ptr2e.displayOnToken">
+                  <option value="always" {{#if (eq document.flags.ptr2e.displayOnToken "always")}}selected{{/if}}>Always</option>
+                  <option value="never" {{#if (eq document.flags.ptr2e.displayOnToken "never")}}selected{{/if}}>Never</option>
+                  <option value="" {{#if (and (not (eq document.flags.ptr2e.displayOnToken "always")) (not (eq document.flags.ptr2e.displayOnToken "never")))}}selected{{/if}}>Default</option>
+              </select>
+            </div>
+            <p class="hint">Override default foundry logic on whether this effect should show on a token or not. <small>(Does the effect have a duration or any Status Condition?)</small></p>
+        </div>
+
+        <div class="form-group">
+            <label>Status Conditions</label>
+            <div class="form-fields">
+                <multi-select name="statuses">
+                    {{#each statuses as |status|}}
+                    <option value="{{status.id}}" {{status.selected}}>{{status.label}}</option>
+                    {{/each}}
+                </multi-select>
+            </div>
+        </div>
+    </div>
+</section>

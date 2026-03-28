@@ -1,0 +1,80 @@
+{
+  "name": "Rising Voltage",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "rising-voltage",
+    "actions": [
+      {
+        "slug": "rising-voltage",
+        "name": "Rising Voltage",
+        "type": "attack",
+        "traits": [
+          "earthbound",
+          "environ"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "special",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "rising-voltage-terrain",
+        "name": "Rising Voltage (Terrain)",
+        "type": "attack",
+        "traits": [
+          "earthbound",
+          "environ"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "<p>The user is affected by Electric Terrain.</p>"
+        },
+        "category": "special",
+        "power": 140,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "<p>Trigger: The user is affected by Electric Terrain.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "rising-voltage",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "uC3oEhE62n2eCqXN",
+  "effects": []
+}

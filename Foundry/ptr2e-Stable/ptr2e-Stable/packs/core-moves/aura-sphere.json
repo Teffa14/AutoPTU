@@ -1,0 +1,45 @@
+{
+  "name": "Aura Sphere",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "aura-sphere",
+    "actions": [
+      {
+        "slug": "aura-sphere",
+        "name": "Aura Sphere",
+        "type": "attack",
+        "traits": [
+          "aura",
+          "missile",
+          "pulse",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ]
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "dllQTGwUTEQpieyY",
+  "effects": []
+}

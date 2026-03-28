@@ -1,0 +1,528 @@
+{
+  "name": "steenee",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "grass"
+    ],
+    "stats": {
+      "hp": 52,
+      "atk": 40,
+      "def": 48,
+      "spa": 40,
+      "spd": 48,
+      "spe": 62
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "double-slap",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "razor-leaf",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "splash",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flail",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rapid-spin",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "play-nice",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sweet-scent",
+          "level": 16,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magical-leaf",
+          "level": 22,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stomp",
+          "level": 28,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "teeter-dance",
+          "level": 34,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "captivate",
+          "level": 37,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "aromatic-mist",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aromatherapy",
+          "level": 46,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "leaf-storm",
+          "level": 46,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "synthesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "knock-off",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endeavor",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bounce",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "covet",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "worry-seed",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "grassy-glide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "triple-axel",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bullet-seed",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "low-sweep",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "petal-blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "draining-kiss",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grassy-terrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "play-rough",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.7,
+      "weight": 8.2,
+      "category": "small",
+      "type": "height"
+    },
+    "captureRate": 120,
+    "eggGroups": [
+      "plant"
+    ],
+    "genderRatio": 8,
+    "evolutions": {
+      "name": "bounsweet",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "steenee",
+          "uuid": "Compendium.ptr2e.core-species.Item.zc2cWbW2pqlOPHFh",
+          "methods": [
+            {
+              "type": "level",
+              "level": 18,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "tsareena",
+              "uuid": "Compendium.ptr2e.core-species.Item.FbpKFSy1HkCqmpSt",
+              "methods": [
+                {
+                  "type": "move",
+                  "move": "stomp",
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.0dbMwhX9M83zoY8U"
+    },
+    "number": 762,
+    "traits": [
+      "pokemon",
+      "underdog",
+      "bipedal",
+      "calming",
+      "jump-4"
+    ],
+    "diet": [
+      "herbivore",
+      "protosynthesis"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "oblivious"
+        },
+        {
+          "slug": "leaf-guard"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "run-away"
+        },
+        {
+          "slug": "chlorophyll"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "sweet-veil"
+        },
+        {
+          "slug": "flower-veil"
+        }
+      ],
+      "master": [
+        {
+          "slug": "sunbathe"
+        },
+        {
+          "slug": "big-leaves"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 6
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "jungle"
+    ],
+    "slug": "steenee",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "zc2cWbW2pqlOPHFh",
+  "effects": [],
+  "folder": null
+}

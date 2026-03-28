@@ -1,0 +1,81 @@
+{
+  "name": "Depth Charge",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "depth-charge",
+    "actions": [
+      {
+        "slug": "depth-charge",
+        "name": "Depth Charge",
+        "type": "attack",
+        "traits": [
+          "blast-2",
+          "explode"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "special",
+        "power": 70,
+        "accuracy": 85,
+        "types": [
+          "water"
+        ],
+        "img": "systems/ptr2e/img/svg/water_icon.svg",
+        "predicate": []
+      },
+      {
+        "slug": "depth-charge-submerged",
+        "name": "Depth Charge (Submerged)",
+        "type": "attack",
+        "traits": [
+          "blast-2",
+          "explode"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6,
+          "trigger": "Target location is submerged, and valid targets are Swimming."
+        },
+        "category": "special",
+        "power": 140,
+        "accuracy": 100,
+        "types": [
+          "water"
+        ],
+        "description": "<p>Trigger: Target location is submerged, and valid targets are Swimming.</p><p>Effect: This Attack ignores valid targets' EVA Stage increases.</p>",
+        "variant": "depth-charge",
+        "free": true,
+        "img": "systems/ptr2e/img/svg/water_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "uYrOp53quR0k2gqN",
+  "effects": []
+}

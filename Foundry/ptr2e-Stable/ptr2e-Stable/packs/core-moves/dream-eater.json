@@ -1,0 +1,48 @@
+{
+  "name": "Dream Eater",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "dream-eater",
+    "actions": [
+      {
+        "slug": "dream-eater",
+        "name": "Dream Eater",
+        "type": "attack",
+        "traits": [
+          "drain-1-2"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "psychic"
+        ],
+        "description": "<p>Effect: This attack may only be used on a target that has @Affliction[drowsy] or @Affliction[nightmares].</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "RCAvbJMDz10ZckH2",
+  "effects": []
+}

@@ -1,0 +1,1503 @@
+{
+  "name": "wigglytuff",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 40,
+    "size": {
+      "category": "small",
+      "type": "height",
+      "height": 1,
+      "weight": 12
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 5
+      },
+      {
+        "type": "flight",
+        "value": 8
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "inflatable",
+      "hover",
+      "fully-evolved",
+      "jump-3"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "cute-charm"
+        },
+        {
+          "slug": "competitive"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "inflationary"
+        },
+        {
+          "slug": "frisk"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "fur-coat"
+        },
+        {
+          "slug": "singer"
+        }
+      ],
+      "master": [
+        {
+          "slug": "anger-point"
+        },
+        {
+          "slug": "primal-rage"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 140,
+      "atk": 70,
+      "def": 45,
+      "spa": 85,
+      "spd": 50,
+      "spe": 45
+    },
+    "types": [
+      "normal",
+      "fairy"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "alluring-voice",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "amnesia",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "baton-pass",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-press",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bounce",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "brick-break",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bubble-beam",
+          "gen": "yellow"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "charge-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "counter",
+          "gen": "firered-leafgreen"
+        },
+        {
+          "name": "curse",
+          "gen": "crystal"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "detect",
+          "gen": "crystal"
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "drain-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "draining-kiss",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dream-eater",
+          "gen": "xd"
+        },
+        {
+          "name": "dynamic-punch",
+          "gen": "emerald"
+        },
+        {
+          "name": "encore",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endeavor",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "expanding-force",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fake-tears",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "crystal"
+        },
+        {
+          "name": "flash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gravity",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "headbutt",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "heal-bell",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "crystal"
+        },
+        {
+          "name": "ice-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ice-spinner",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "incinerate",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "knock-off",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "laser-focus",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "last-resort",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magical-leaf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mega-kick",
+          "gen": "firered-leafgreen"
+        },
+        {
+          "name": "mega-punch",
+          "gen": "firered-leafgreen"
+        },
+        {
+          "name": "metronome",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "misty-explosion",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "misty-terrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "nasty-plot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "nightmare",
+          "gen": "xd"
+        },
+        {
+          "name": "pain-split",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "power-up-punch",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "emerald"
+        },
+        {
+          "name": "psychic",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-noise",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psyshock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psywave",
+          "gen": "yellow"
+        },
+        {
+          "name": "rage",
+          "gen": "yellow"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "recycle",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "retaliate",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "role-play",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rollout",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "safeguard",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "screech",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "seismic-toss",
+          "gen": "xd"
+        },
+        {
+          "name": "self-destruct",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "skill-swap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "skull-bash",
+          "gen": "yellow"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snatch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "steel-roller",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stored-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "strength",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "submission",
+          "gen": "yellow"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "telekinesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "teleport",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "xd"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "crystal"
+        },
+        {
+          "name": "toxic",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tri-attack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "uproar",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-gun",
+          "gen": "yellow"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "wild-charge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "work-up",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "zap-cannon",
+          "gen": "crystal"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "scarlet-violet"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "bide",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 1
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "charm",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "copycat",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "covet",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "defense-curl",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "disable",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "disarming-voice",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "double-edge",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "double-slap",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 1
+        },
+        {
+          "name": "echoed-voice",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "gyro-ball",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "hyper-voice",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "mimic",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "minimize",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 1
+        },
+        {
+          "name": "pound",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "round",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "sing",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "stockpile",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "sweet-kiss",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "play-rough",
+          "gen": "scarlet-violet",
+          "level": 5
+        }
+      ]
+    },
+    "captureRate": 80,
+    "eggGroups": [
+      "fairy"
+    ],
+    "genderRatio": 6,
+    "evolutions": {
+      "name": "igglybuff",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "jigglypuff",
+          "uuid": "Compendium.ptr2e.core-species.Item.dBdrPrKdHlvyC52Q",
+          "methods": [
+            {
+              "type": "level",
+              "level": 17,
+              "operand": "and"
+            }
+          ],
+          "perk": {
+            "x": 26,
+            "y": 26
+          },
+          "evolutions": [
+            {
+              "name": "wigglytuff",
+              "uuid": "Compendium.ptr2e.core-species.Item.czJSIQDUib6snvcc",
+              "methods": [
+                {
+                  "type": "item",
+                  "item": "moon-stone",
+                  "operand": "or",
+                  "held": false
+                },
+                {
+                  "type": "level",
+                  "level": 25,
+                  "operand": "or"
+                }
+              ],
+              "perk": {
+                "x": 26,
+                "y": 26
+              },
+              "details": null
+            }
+          ],
+          "details": null
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.dgXlKnCPn9LUj3wJ",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "habitats": [
+      "forest",
+      "field"
+    ],
+    "slug": "wigglytuff",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "czJSIQDUib6snvcc",
+  "effects": [
+    {
+      "name": "Mega Wigglytuff X",
+      "type": "form",
+      "_id": "ymUGovv6HReoSTv8",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-option",
+            "key": "manual-forme-toggle",
+            "value": "forme:mega-wigglytuff-x:active",
+            "domain": "all",
+            "toggleable": true,
+            "label": "Toggle: Mega Wigglytuff X Forme",
+            "predicate": [],
+            "alwaysActive": false,
+            "count": false,
+            "mode": 2,
+            "ignored": false,
+            "suboptions": [],
+            "state": false
+          },
+          {
+            "type": "grant-item",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "",
+            "value": "Compendium.ptr2e.core-abilities.Item.MLE0DaKLRYxW26oK",
+            "alterations": [
+              {
+                "mode": 2,
+                "property": "system.free",
+                "value": "true"
+              }
+            ],
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "mode": 2,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "allowDuplicate": true,
+            "track": false,
+            "replaceSelf": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "",
+            "value": "Well Built",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "remove-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "",
+            "value": "jump 3",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "",
+            "value": "jump 4",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "",
+            "value": "fighting",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "remove-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "",
+            "value": "normal",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.type.types",
+            "value": "normal",
+            "mode": 6,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.type.types",
+            "value": "fighting",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "stats-alteration",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "",
+            "value": 0,
+            "hp": null,
+            "atk": 57,
+            "def": 8,
+            "spa": -25,
+            "spd": 17,
+            "spe": 53,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.movement.overland.value",
+            "value": 6,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.movement.flight.value",
+            "value": -2,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.movement.swim.value",
+            "value": 4,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.skills.acrobatics.value",
+            "value": 10,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.skills.climb.value",
+            "value": 20,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.skills.intimidate.value",
+            "value": 35,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.skills.lift.value",
+            "value": 25,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.skills.listen.value",
+            "value": 10,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.skills.running.value",
+            "value": 30,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.skills.spot.value",
+            "value": 10,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.skills.stealth.value",
+            "value": 10,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.skills.survival.value",
+            "value": 20,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-x:active"
+            ],
+            "key": "system.skills.swim.value",
+            "value": 25,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0,
+        "trigger": "manual",
+        "conditions": []
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.1.beta",
+        "createdTime": 1754084712459,
+        "modifiedTime": 1754085784122,
+        "lastModifiedBy": "6zxE5EIsM9axXjpP"
+      }
+    },
+    {
+      "name": "Mega Wigglytuff Y",
+      "type": "form",
+      "_id": "Pyn432X3WeftlHUt",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-option",
+            "key": "manual-forme-toggle",
+            "value": "forme:mega-wigglytuff-y:active",
+            "domain": "all",
+            "toggleable": true,
+            "label": "Toggle: Mega Wigglytuff Y Forme",
+            "predicate": [],
+            "alwaysActive": false,
+            "count": false,
+            "mode": 2,
+            "ignored": false,
+            "suboptions": [],
+            "state": false
+          },
+          {
+            "type": "grant-item",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "",
+            "value": "Compendium.ptr2e.core-abilities.Item.gubM49aBQUdUKGQv",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.free",
+                "value": "true"
+              }
+            ],
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "mode": 2,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "allowDuplicate": true,
+            "track": false,
+            "replaceSelf": false
+          },
+          {
+            "type": "remove-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "",
+            "value": "hover",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "remove-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "",
+            "value": "jump 3",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "",
+            "value": "jump 6",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "",
+            "value": "volatile bomb",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "",
+            "value": "rapid",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "",
+            "value": "firestarter",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "",
+            "value": "tailed",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.type.types",
+            "value": "normal",
+            "mode": 6,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.type.types",
+            "value": "fire",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "remove-trait",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "",
+            "value": "normal",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "stats-alteration",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "",
+            "value": 0,
+            "hp": null,
+            "atk": 24,
+            "def": 4,
+            "spa": 49,
+            "spd": 9,
+            "spe": 14,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.skills.acrobatics.value",
+            "value": 45,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.skills.climb.value",
+            "value": 35,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.skills.intimidate.value",
+            "value": 20,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.skills.listen.value",
+            "value": 25,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.skills.running.value",
+            "value": 45,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.skills.spot.value",
+            "value": 25,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.skills.stealth.value",
+            "value": 30,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.skills.swim.value",
+            "value": 40,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.movement.flight.value",
+            "value": -8,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.movement.overland.value",
+            "value": 8,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-wigglytuff-y:active"
+            ],
+            "key": "system.movement.swim.value",
+            "value": 5,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0,
+        "trigger": "manual",
+        "conditions": []
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.1.beta",
+        "createdTime": 1754085294694,
+        "modifiedTime": 1754086050022,
+        "lastModifiedBy": "6zxE5EIsM9axXjpP"
+      }
+    }
+  ]
+}

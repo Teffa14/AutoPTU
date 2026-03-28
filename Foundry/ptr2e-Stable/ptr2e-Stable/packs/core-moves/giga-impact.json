@@ -1,0 +1,51 @@
+{
+  "name": "Giga Impact",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "giga-impact",
+    "actions": [
+      {
+        "slug": "giga-impact",
+        "name": "Giga Impact",
+        "type": "attack",
+        "traits": [
+          "flinch-30",
+          "dash",
+          "push-2",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 150,
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "a882XHOEfUS8rpnF",
+  "effects": []
+}

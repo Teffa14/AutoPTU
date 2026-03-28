@@ -1,0 +1,56 @@
+{
+  "name": "Blast Seed",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 2,
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "D",
+    "fling": {
+      "type": "fire",
+      "power": 35,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "uncommon",
+    "consumableType": "other",
+    "traits": [
+      "combat",
+      "consumable",
+      "natural",
+      "fling",
+      "seed",
+      "held",
+      "stack-3",
+      "blast-2",
+      "explode",
+      "fling"
+    ],
+    "description": "When consumed, the user attacks with this item's Fling stats in a 3m Cone.",
+    "quantity": 1,
+    "slug": "blast-seed",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "cTf25HNmGzKn3Tu1",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

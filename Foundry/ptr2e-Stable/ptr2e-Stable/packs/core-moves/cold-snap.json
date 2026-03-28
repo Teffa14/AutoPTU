@@ -1,0 +1,77 @@
+{
+  "name": "Cold Snap",
+  "type": "move",
+  "_id": "EfxpZM6iq4Rzmo7n",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "cold-snap",
+    "actions": [
+      {
+        "name": "Cold Snap",
+        "slug": "cold-snap",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "legendary",
+          "blast-2"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 4
+        },
+        "types": [
+          "ice"
+        ],
+        "category": "status",
+        "accuracy": 85,
+        "description": "<p>Effect: On hit, all valid targets gain @Affliction[frostbite] 7.</p>",
+        "predicate": []
+      },
+      {
+        "name": "Cold Snap (Absolute Zero)",
+        "slug": "cold-snap-absolute-zero",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "legendary"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "types": [
+          "ice"
+        ],
+        "category": "status",
+        "accuracy": 85,
+        "description": "<blockquote>Requirement: User must have Absolute Zero slotted as an Active Ability.</blockquote><p>Effect: On hit, all valid targets gain @Affliction[frostbite] 7, and have a 30% chance of gaining @Affliction[frozen] 3.</p>>",
+        "variant": "cold-snap",
+        "free": true,
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "traits": [],
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": []
+}

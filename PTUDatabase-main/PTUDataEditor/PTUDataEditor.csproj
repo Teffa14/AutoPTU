@@ -1,0 +1,74 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <UseWPF>true</UseWPF>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
+        <!-- Work around https://github.com/dotnet/wpf/issues/6792 -->
+
+        <ItemGroup>
+            <FilteredAnalyzer Include="@(Analyzer-&gt;Distinct())" />
+            <Analyzer Remove="@(Analyzer)" />
+            <Analyzer Include="@(FilteredAnalyzer)" />
+        </ItemGroup>
+    </Target>
+
+    <ItemGroup>
+      <None Remove="Resources\Types\Bug.png" />
+      <None Remove="Resources\Types\Dark.png" />
+      <None Remove="Resources\Types\Dragon.png" />
+      <None Remove="Resources\Types\Electric.png" />
+      <None Remove="Resources\Types\Fairy.png" />
+      <None Remove="Resources\Types\Fighting.png" />
+      <None Remove="Resources\Types\Fire.png" />
+      <None Remove="Resources\Types\Flying.png" />
+      <None Remove="Resources\Types\Ghost.png" />
+      <None Remove="Resources\Types\Grass.png" />
+      <None Remove="Resources\Types\Ground.png" />
+      <None Remove="Resources\Types\Ice.png" />
+      <None Remove="Resources\Types\Normal.png" />
+      <None Remove="Resources\Types\Poison.png" />
+      <None Remove="Resources\Types\Psychic.png" />
+      <None Remove="Resources\Types\Rock.png" />
+      <None Remove="Resources\Types\Steel.png" />
+      <None Remove="Resources\Types\Unknown.png" />
+      <None Remove="Resources\Types\Water.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0-preview4" />
+        <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\PTUDatabase\PTUDatabase.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Resources\Types\Bug.png" />
+      <Resource Include="Resources\Types\Dark.png" />
+      <Resource Include="Resources\Types\Dragon.png" />
+      <Resource Include="Resources\Types\Electric.png" />
+      <Resource Include="Resources\Types\Fairy.png" />
+      <Resource Include="Resources\Types\Fighting.png" />
+      <Resource Include="Resources\Types\Fire.png" />
+      <Resource Include="Resources\Types\Flying.png" />
+      <Resource Include="Resources\Types\Ghost.png" />
+      <Resource Include="Resources\Types\Grass.png" />
+      <Resource Include="Resources\Types\Ground.png" />
+      <Resource Include="Resources\Types\Ice.png" />
+      <Resource Include="Resources\Types\Normal.png" />
+      <Resource Include="Resources\Types\Poison.png" />
+      <Resource Include="Resources\Types\Psychic.png" />
+      <Resource Include="Resources\Types\Rock.png" />
+      <Resource Include="Resources\Types\Steel.png" />
+      <Resource Include="Resources\Types\Unknown.png" />
+      <Resource Include="Resources\Types\Water.png" />
+    </ItemGroup>
+
+</Project>

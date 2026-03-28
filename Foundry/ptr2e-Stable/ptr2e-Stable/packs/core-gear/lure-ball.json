@@ -1,0 +1,62 @@
+{
+  "name": "Lure Ball",
+  "img": "systems/ptr2e/img/item-icons/lure ball.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 3,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": 2,
+      "materials": [
+        "3x-tumblestone",
+        "1x-blue-apricorn"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "D",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling",
+      "hunting-ball",
+      "ball"
+    ],
+    "description": "<p>4x Catch Rate modifier if uses on a target that was hooked by a rod, or caught in a snare or net. 1x Catch Rate modifier otherwise</p>",
+    "modifier": 4,
+    "quantity": 1,
+    "slug": "lure-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "Ig4n69h36Vb3g1eg",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

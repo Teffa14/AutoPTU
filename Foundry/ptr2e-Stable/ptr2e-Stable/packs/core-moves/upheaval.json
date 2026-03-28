@@ -1,0 +1,105 @@
+{
+  "name": "Upheaval",
+  "type": "move",
+  "_id": "DLelp3vMFN5rrPi0",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "upheaval",
+    "actions": [
+      {
+        "name": "Upheaval",
+        "slug": "upheaval",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/ground_icon.svg",
+        "traits": [
+          "explode"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "types": [
+          "ground"
+        ],
+        "category": "physical",
+        "power": 150,
+        "accuracy": 100,
+        "description": "<p>Effect: This attack's Power ranges based on how healthy the user is, ranging from 10 to 150.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": [
+    {
+      "name": "Upheaval",
+      "type": "passive",
+      "_id": "ApuuuulKdgqxCEjN",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "upheaval-attack-power",
+            "value": "((@actor.system.health.percent)-100)*1.4",
+            "predicate": [],
+            "label": "Upheaval",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-moves.Item.xf2NuI372VOQGVIL.ActiveEffect.YKMJMRUWhZfZFacZ",
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "1.0.6.beta",
+        "createdTime": 1740185423808,
+        "modifiedTime": 1740185440031,
+        "lastModifiedBy": "UTlFSVhgfIUeTsoW"
+      }
+    }
+  ]
+}

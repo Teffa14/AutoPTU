@@ -1,0 +1,61 @@
+{
+  "name": "Feather Ball",
+  "img": "systems/ptr2e/img/item-icons/feather ball.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 2,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": 2,
+      "materials": [
+        "3x-tumblestone",
+        "1x-basic-apricorn"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "E",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 12,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling",
+      "ball"
+    ],
+    "description": "<p>1x Catch Rate modifier. Catch Rate modifier increases by +0.25x vs creatures that are in Flight.</p>",
+    "modifier": 1.25,
+    "quantity": 1,
+    "slug": "feather-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "OshRvOSAkRGET7Au",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

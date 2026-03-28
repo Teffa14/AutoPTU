@@ -1,0 +1,68 @@
+{
+  "name": "Prismatic Laser",
+  "type": "move",
+  "_id": "pxPNGM7NGikM7k8T",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Prismatic Laser",
+        "slug": "prismatic-laser",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "ray",
+          "legendary",
+          "flinch-40"
+        ],
+        "range": {
+          "target": "line",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "variant": null,
+        "types": [
+          "psychic"
+        ],
+        "category": "special",
+        "power": 160,
+        "accuracy": 100,
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null,
+        "description": ""
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "CYLdyr5mPSDmNpTp": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.328",
+    "systemId": "ptr2e",
+    "systemVersion": "0.10.0-alpha.1.5.2",
+    "createdTime": 1721442213461,
+    "modifiedTime": 1721442466401,
+    "lastModifiedBy": "CYLdyr5mPSDmNpTp"
+  }
+}

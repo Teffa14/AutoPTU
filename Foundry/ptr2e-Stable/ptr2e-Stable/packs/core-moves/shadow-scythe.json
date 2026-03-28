@@ -1,0 +1,51 @@
+{
+  "name": "Shadow Scythe",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-scythe",
+    "actions": [
+      {
+        "slug": "shadow-scythe",
+        "name": "Shadow Scythe",
+        "type": "attack",
+        "traits": [
+          "sharp",
+          "crit-1",
+          "pass-3",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "shadow"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "F1C7Qg0khwkYwkz9",
+  "effects": []
+}

@@ -1,0 +1,79 @@
+{
+  "name": "Round",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "round",
+    "actions": [
+      {
+        "slug": "round",
+        "name": "Round",
+        "type": "attack",
+        "traits": [
+          "sonic"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "special",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "round-double",
+        "name": "Round (Double)",
+        "type": "attack",
+        "traits": [
+          "sonic",
+          "interrupt-1"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "<p>Another creature on the Field resolves Round or Round (Double).</p>"
+        },
+        "category": "special",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Another creature on the Field resolves Round or Round (Double).</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "round",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Sk06NeMcS1RTMcjo",
+  "effects": []
+}

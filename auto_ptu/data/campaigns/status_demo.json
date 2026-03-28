@@ -1,0 +1,76 @@
+{
+  "name": "Status & Push Lab",
+  "description": "Shows the new Paralysis skip + forced movement hooks. Your Machop starts Paralyzed while the foe's Graveler hurls a push-heavy Rock Throw across blockers.",
+  "default_weather": "Clear",
+  "grid": {
+    "width": 10,
+    "height": 6,
+    "blockers": [[4, 2], [5, 2], [4, 3], [5, 3]],
+    "tiles": {
+      "3,1": "difficult",
+      "6,4": "difficult"
+    }
+  },
+  "players": [
+    {
+      "name": "Machop",
+      "species": "Machop",
+      "level": 18,
+      "types": ["Fighting"],
+      "hp_stat": 9,
+      "atk": 12,
+      "def": 9,
+      "spatk": 6,
+      "spdef": 7,
+      "spd": 7,
+      "statuses": [{"name": "Paralyzed"}],
+      "moves": [
+        {
+          "name": "Submission Toss",
+          "type": "Fighting",
+          "category": "Physical",
+          "db": 7,
+          "ac": 4,
+          "range_kind": "Melee",
+          "freq": "EOT",
+          "keywords": ["Push"],
+          "effects_text": "Push the target 2 meters away."
+        },
+        {"name": "Karate Chop", "type": "Fighting", "category": "Physical", "db": 6, "ac": 2, "range_kind": "Melee", "freq": "At-Will"},
+        {"name": "Focus Energy", "type": "Normal", "category": "Status", "db": 0, "ac": null, "range_kind": "Self", "freq": "Scene"}
+      ],
+      "movement": {"overland": 5, "swim": 2, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 2, "l_jump": 2, "power": 3}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Graveler",
+      "species": "Graveler",
+      "level": 18,
+      "types": ["Rock", "Ground"],
+      "hp_stat": 11,
+      "atk": 12,
+      "def": 12,
+      "spatk": 7,
+      "spdef": 9,
+      "spd": 4,
+      "moves": [
+        {
+          "name": "Rock Shove",
+          "type": "Rock",
+          "category": "Physical",
+          "db": 7,
+          "ac": 4,
+          "range_kind": "Ranged",
+          "range_value": 5,
+          "freq": "At-Will",
+          "keywords": ["Push"],
+          "effects_text": "On hit, push the target 2 meters directly away."
+        },
+        {"name": "Stone Edge", "type": "Rock", "category": "Physical", "db": 8, "ac": 3, "range_kind": "Ranged", "range_value": 6, "freq": "Scene"},
+        {"name": "Defense Curl", "type": "Normal", "category": "Status", "db": 0, "ac": null, "range_kind": "Self", "freq": "At-Will"}
+      ],
+      "movement": {"overland": 4, "swim": 0, "sky": 0, "levitate": 0, "burrow": 1, "h_jump": 1, "l_jump": 1, "power": 4}
+    }
+  ]
+}

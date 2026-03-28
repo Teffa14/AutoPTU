@@ -1,0 +1,48 @@
+{
+  "name": "Revelation Dance",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "revelation-dance",
+    "actions": [
+      {
+        "slug": "revelation-dance",
+        "name": "Revelation Dance",
+        "type": "attack",
+        "traits": [
+          "dance"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 90,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: Revelation Dance's damage Type changes to match the user's forme.</p><p>Baile Style Oricorio - Fire</p><p>Pom-Pom Style Oricorio - Electric</p><p>Pa'u Style Oricorio - Psychic</p><p>Sensu Style Oricorio - Ghost",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "3AMEaUqVh8sBidsi",
+  "effects": []
+}

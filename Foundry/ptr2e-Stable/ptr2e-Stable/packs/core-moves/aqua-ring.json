@@ -1,0 +1,43 @@
+{
+  "name": "Aqua Ring",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "aqua-ring",
+    "actions": [
+      {
+        "slug": "aqua-ring",
+        "name": "Aqua Ring",
+        "type": "attack",
+        "traits": [
+          "healing"
+        ],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 1
+        },
+        "category": "status",
+        "types": [
+          "water"
+        ],
+        "description": "<p>Effect: The user gains @Affliction[ringed] 5.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "VXZU46PpYNkTBZeR",
+  "effects": []
+}

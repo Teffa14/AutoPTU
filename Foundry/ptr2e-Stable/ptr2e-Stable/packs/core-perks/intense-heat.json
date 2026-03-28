@@ -1,0 +1,143 @@
+{
+  "name": "Intense Heat",
+  "type": "perk",
+  "folder": "oguAsvaOzTLs8f97",
+  "system": {
+    "prerequisites": [
+      "trait:fire"
+    ],
+    "cost": 2,
+    "description": "<p>Your @Trait[fire] Type moves gain a 20% chance to @Affliction[burn 5], or increase that chance by +20%.</p>",
+    "actions": [
+      {
+        "name": "Intense Heat",
+        "slug": "intense-heat",
+        "description": "<p>Your Fire-Type moves gain a 20% chance to @Affliction[burn], or increase that chance by +20%.</p>",
+        "cost": {
+          "activation": "free"
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 10
+        }
+      }
+    ],
+    "slug": "intense-heat",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 162,
+        "y": 89,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "inner-warmth",
+          "firefly",
+          "midnight-oil",
+          "acceptance",
+          "firestarter",
+          "flare-ignition"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/svg/fire_icon.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": "fire"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "TCYfgKMsSUhsv9Tp",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "effects": [
+    {
+      "name": "Intense Heat",
+      "type": "passive",
+      "_id": "r2W7KKw3xAibk4h4",
+      "img": "systems/ptr2e/img/svg/fire_icon.svg",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "fire-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.burnconditioitem",
+            "predicate": [
+              "origin:enemy"
+            ],
+            "chance": 20,
+            "affects": "target",
+            "priority": null,
+            "alterations": [],
+            "dontMerge": false,
+            "isFixedChance": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "<p>Your @Trait[fire] Type moves gain a 20% chance to @Affliction[burn 5], or increase that chance by +20%.</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.348",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1729380480086,
+        "modifiedTime": 1757798296213,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

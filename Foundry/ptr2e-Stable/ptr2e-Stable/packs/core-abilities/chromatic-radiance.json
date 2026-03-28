@@ -1,0 +1,169 @@
+{
+  "name": "Chromatic Radiance",
+  "type": "ability",
+  "img": "icons/magic/air/weather-sunlight-sky.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "legendary",
+          "environ",
+          "interrupt-5"
+        ],
+        "name": "Chromatic Radiance",
+        "slug": "chromatic-radiance-active",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>The user resolves a Fire-Type attack, and Sunny Weather is present.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user resolves a Fire-Type attack, and Sunny Weather is present.</p><p>Effect: The user recovers 3 Ticks of HP.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [
+          "legendary"
+        ],
+        "name": "Chromatic Radiance",
+        "slug": "chromatic-radiance-passive",
+        "type": "passive",
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>The user recovers HP.</p>"
+        },
+        "range": {
+          "target": "allied-aura",
+          "distance": 10,
+          "unit": "m"
+        },
+        "description": "<p>Trigger: The user recovers HP.</p><p>Effect: Allies within Range recover a Tick of HP. In Sunny Weather, this Ability triggers a second time.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p> Effect: Connection - Sacred Fire. When using a Fire-Type attack while Sunny Weather is active, the user recovers 3 Ticks of HP. Any time the user recovers HP, allies within 10m recover a Tick of HP, which is doubled in Sunny Weather.</p>",
+    "traits": [
+      "connection",
+      "legendary",
+      "environ",
+      "partial-automation"
+    ],
+    "slug": "chromatic-radiance",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "Z2D1B8HhNUAKWaKa",
+  "effects": [
+    {
+      "name": "Chromatic Radiance",
+      "type": "passive",
+      "_id": "A4v3GPvMrH6EhXw9",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.hoQZlSqWhAC3WujH",
+            "predicate": [
+              "ability:chromatic-radiance:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              },
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "allowDuplicate": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "fire-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.4DlXFTVooz07YcDm",
+            "predicate": [
+              "effect:summon:sunny-weather"
+            ],
+            "chance": 100,
+            "isFixedChance": false,
+            "affects": "self",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.changes.0.value",
+                "value": 3
+              }
+            ],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737393714972,
+        "modifiedTime": 1754317111383,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

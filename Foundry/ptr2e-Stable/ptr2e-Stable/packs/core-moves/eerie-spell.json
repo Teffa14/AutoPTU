@@ -1,0 +1,49 @@
+{
+  "name": "Eerie Spell",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "eerie-spell",
+    "actions": [
+      {
+        "slug": "eerie-spell",
+        "name": "Eerie Spell",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "special",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "psychic"
+        ],
+        "description": "<p>Effect: The target loses @Tick[-5 pp]</p>",
+        "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "edB4kf1W5rY7seW3",
+  "effects": []
+}

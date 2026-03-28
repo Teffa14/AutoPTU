@@ -1,0 +1,52 @@
+{
+  "name": "Circle Throw",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "circle-throw",
+    "actions": [
+      {
+        "slug": "circle-throw",
+        "name": "Circle Throw",
+        "type": "attack",
+        "traits": [
+          "push-x",
+          "delay-1",
+          "contact",
+          "grapple"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "delay": 1
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 90,
+        "types": [
+          "fighting"
+        ],
+        "description": "<p>Effect: On hit, the target loses the @Affliction[grapple] if applicable and is Pushed 10m minus their WC (minimum 1m). If the target is an owned Pokémon, they are immediately Recalled.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "3KlcIgcWJFr9EKFx",
+  "effects": []
+}

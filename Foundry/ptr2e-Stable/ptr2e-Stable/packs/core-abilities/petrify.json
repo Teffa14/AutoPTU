@@ -1,0 +1,116 @@
+{
+  "name": "Petrify",
+  "type": "ability",
+  "img": "icons/svg/terror.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "social",
+          "friendly"
+        ],
+        "name": "Petrify",
+        "slug": "petrify",
+        "type": "passive",
+        "cost": {},
+        "range": {
+          "target": "enemy-aura",
+          "distance": 8,
+          "unit": "m"
+        },
+        "description": "<p>Effect: All valid creatures in range have -2 default SPD Stages. When an affected creature leaves the range of this effect, they lose -2 SPD Stages for 5 Activations. NEEDS REAUTOMATED.</p>",
+        "img": "icons/svg/terror.svg",
+        "types": [
+          "untyped"
+        ],
+        "category": "status",
+        "free": true,
+        "predicate": []
+      }
+    ],
+    "description": "<p>Effect: All valid creatures in range have -2 default SPD Stages. When an affected creature leaves the range of this effect, they lose -2 SPD Stages for 5 Activations. NEEDS REAUTOMATED.</p>",
+    "traits": [
+      "social",
+      "friendly",
+      "aura"
+    ],
+    "slug": "petrify",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "13JbJwxpMrrdRTMm",
+  "effects": [
+    {
+      "name": "Petrify",
+      "type": "passive",
+      "_id": "r9Wd2AF52gL2Pcpi",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "intimidate-check",
+            "value": 10,
+            "predicate": [],
+            "label": "Petrify Ability",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "petrify-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.HLAV9dhz632Rfp1K",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.6",
+        "createdTime": 1737563571394,
+        "modifiedTime": 1737563659468,
+        "lastModifiedBy": "IcBpMqhFuTck9VpX"
+      }
+    }
+  ]
+}

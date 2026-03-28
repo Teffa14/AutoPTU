@@ -1,0 +1,56 @@
+{
+  "name": "Dragon Tail",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "dragon-tail",
+    "actions": [
+      {
+        "slug": "dragon-tail",
+        "name": "Dragon Tail",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "push-6",
+          "contact",
+          "tail",
+          "flinch-30"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 2,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "delay": 3
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 90,
+        "types": [
+          "dragon"
+        ],
+        "description": "<p>Effect: If all valid targets collide with Blocking Terrain or another creature, they lose two Ticks of HP. If all valid targets are knocked off a ledge and fall at least 1m, they lose two Ticks of HP and suffer fall damage as applicable.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "pC7JVCKU8zZFfpns",
+  "effects": []
+}

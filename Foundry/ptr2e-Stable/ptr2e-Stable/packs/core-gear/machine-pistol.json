@@ -1,0 +1,231 @@
+{
+  "name": "Machine Pistol",
+  "img": "systems/ptr2e/img/icons/weapon_icon.webp",
+  "type": "weapon",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "held",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "steel",
+      "power": 40,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "traits": [
+      "weapon",
+      "fling",
+      "firearm",
+      "autoload",
+      "steel",
+      "charge-pool-25",
+      "reload-1",
+      "conventional",
+      "modern",
+      "sci-fi"
+    ],
+    "actions": [
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 35,
+        "accuracy": 95,
+        "free": true,
+        "traits": [
+          "missile"
+        ],
+        "name": "Machine Pistol",
+        "slug": "machine-pistol",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 22,
+        "accuracy": 85,
+        "free": true,
+        "traits": [
+          "missile",
+          "7-strike",
+          "firearm"
+        ],
+        "name": "Machine Pistol (Auto)",
+        "slug": "machine-pistol-auto",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "variant": "machine-pistol",
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 95,
+        "accuracy": 75,
+        "free": true,
+        "traits": [
+          "missile",
+          "dash",
+          "firearm",
+          "priority-10"
+        ],
+        "name": "Machine Pistol (Hip Fire)",
+        "slug": "machine-pistol-hip-fire",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "wide-line",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "variant": "machine-pistol",
+        "predicate": []
+      }
+    ],
+    "weaponType": "untyped",
+    "weaponPp": 25,
+    "slug": "machine-pistol",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "description": "<p>A machine pistol is a handgun that is capable of fully automatic fire, including stockless handgun-style submachine guns.</p>"
+  },
+  "_id": "f7hfwLFTRLq8Xdq0",
+  "effects": [
+    {
+      "name": "Machine Pistol",
+      "type": "passive",
+      "_id": "DKGIe0c1HfrXsVu1",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "{item|id}-attack-damage-flat",
+            "value": 32,
+            "predicate": [],
+            "label": "Machine Pistol",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "flat-modifier",
+            "key": "machine-pistol-hip-fire-attack-damage-flat",
+            "value": 32,
+            "predicate": [],
+            "label": "Hip Fire",
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-gear.Item.Ba3EyqpUePgGrfQk.ActiveEffect.uOxpw5kHcRtpv4pa",
+        "duplicateSource": null,
+        "coreVersion": "13.347",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1743901856213,
+        "modifiedTime": 1757632077786,
+        "lastModifiedBy": "UTlFSVhgfIUeTsoW",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "Tn65RZTafVbxqEXT"
+}

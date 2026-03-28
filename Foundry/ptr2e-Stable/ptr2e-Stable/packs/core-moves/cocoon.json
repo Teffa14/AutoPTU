@@ -1,0 +1,64 @@
+{
+  "name": "Cocoon",
+  "type": "move",
+  "_id": "AoeIoPclAZull3th",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Cocoon",
+        "slug": "cocoon",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "variant": null,
+        "types": [
+          "bug"
+        ],
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null,
+        "description": "<p>The user is @Affliction[bound 5] and @Affliction[braced 5]. While afflicted with both of these Afflictions, the user gains @Tick[3] and @Tick[1 pp] at the end of each of their Activations. If either @Affliction[bound] or @Affliction[braced] is removed, the user loses the other.</p>"
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "sort": 11700000,
+  "ownership": {
+    "default": 0,
+    "CYLdyr5mPSDmNpTp": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.327",
+    "systemId": "ptr2e",
+    "systemVersion": "0.10.0-alpha.1.0.4",
+    "createdTime": 1718729134609,
+    "modifiedTime": 1719971994938,
+    "lastModifiedBy": "CYLdyr5mPSDmNpTp"
+  }
+}

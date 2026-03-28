@@ -1,0 +1,594 @@
+{
+  "name": "calyrex-ice-rider",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "form": "ice",
+    "types": [
+      "psychic",
+      "ice"
+    ],
+    "stats": {
+      "hp": 100,
+      "atk": 165,
+      "def": 150,
+      "spa": 85,
+      "spd": 130,
+      "spe": 50
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "pound",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mega-drain",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "growth",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confusion",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "life-dew",
+          "level": 8,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-drain",
+          "level": 16,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psyshock",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "level": 32,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aromatherapy",
+          "level": 40,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "grassy-terrain",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-terrain",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "energy-ball",
+          "level": 48,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic",
+          "level": 56,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leech-seed",
+          "level": 64,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heal-pulse",
+          "level": 72,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "solar-beam",
+          "level": 80,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "future-sight",
+          "level": 88,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "expanding-force",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "pay-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psybeam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "agility",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "metronome",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tri-attack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "baton-pass",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "encore",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "skill-swap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "imprison",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bullet-seed",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magical-leaf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gravity",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "power-swap",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "guard-swap",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick-room",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leaf-storm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wonder-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "magic-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stored-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snarl",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "draining-kiss",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "solar-blade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pollen-puff",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "speed-swap",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-press",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.1,
+      "weight": 7.7,
+      "category": "small",
+      "type": "height"
+    },
+    "captureRate": 2,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "calyrex",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 898,
+    "traits": [
+      "pokemon",
+      "legendary",
+      "telepath",
+      "telekinetic-10",
+      "glow-5",
+      "plant-grower",
+      "pack-leader",
+      "quadrupedal",
+      "ice-stallion",
+      "aura-user",
+      "jump-5"
+    ],
+    "diet": [
+      "herbivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "as-one"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "healer"
+        },
+        {
+          "slug": "unnerve"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "magic-bounce"
+        },
+        {
+          "slug": "forewarn"
+        }
+      ],
+      "master": [
+        {
+          "slug": "magic-guard"
+        },
+        {
+          "slug": "pastel-veil"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 15
+      }
+    ],
+    "skills": [
+      {
+        "slug": "accounting",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "acrobatics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "appraise",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "aura-sense",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "history",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "husbandry",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "medicine",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "legends",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "psychics",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "psychology",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "research",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ride",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "teaching",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "calyrex-ice-rider",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "sBexkWdVdVfEWzQr",
+  "effects": [],
+  "folder": null
+}

@@ -1,0 +1,48 @@
+{
+  "name": "Half-Life",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/nuclear_icon.svg",
+  "system": {
+    "slug": "half-life",
+    "actions": [
+      {
+        "slug": "half-life",
+        "name": "Half-Life",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "accuracy": 90,
+        "types": [
+          "nuclear"
+        ],
+        "description": "<p>Effect: On hit, the Target's current HP is cut in half. This attack always deals a minimum of 1 HP in damage.</p>",
+        "img": "systems/ptr2e/img/svg/nuclear_icon.svg"
+      }
+    ],
+    "grade": "C",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "G12o5lslJoDHkdER",
+  "folder": "EpCOePz8omfXbp35",
+  "effects": []
+}

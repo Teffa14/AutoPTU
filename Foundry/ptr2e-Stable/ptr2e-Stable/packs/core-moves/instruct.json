@@ -1,0 +1,112 @@
+{
+  "name": "Instruct",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "instruct",
+    "actions": [
+      {
+        "slug": "instruct",
+        "name": "Instruct",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "types": [
+          "psychic"
+        ],
+        "description": "<p>Effect: The selected ally may make a extra Activation after this attack resolves.</p>",
+        "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "zoJy7EQuOHHWsG7w",
+  "effects": [
+    {
+      "name": "Instruct",
+      "type": "passive",
+      "_id": "7zuknxnimuEhGzuT",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "instruct-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.advanceffectitem",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.amount",
+                "value": 100
+              },
+              {
+                "mode": 5,
+                "property": "name",
+                "value": "100% Advanced"
+              }
+            ],
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-moves.Item.qzWBfWEqTPCaQdhz.ActiveEffect.k6LdfUlONj28Ydjw",
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.2.1",
+        "createdTime": 1737741423805,
+        "modifiedTime": 1737741445345,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS"
+      }
+    }
+  ]
+}

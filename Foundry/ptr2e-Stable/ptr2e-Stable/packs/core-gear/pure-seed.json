@@ -1,0 +1,52 @@
+{
+  "name": "Pure Seed",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 5,
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 90,
+      "hide": null
+    },
+    "rarity": "rare",
+    "consumableType": "other",
+    "traits": [
+      "consumable",
+      "natural",
+      "seed",
+      "held",
+      "stack-3",
+      "fling"
+    ],
+    "description": "The target and adjacent creatures are warped to the floor's Exit.",
+    "quantity": 1,
+    "slug": "pure-seed",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "2f1zQXYDtZ0LCedZ",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

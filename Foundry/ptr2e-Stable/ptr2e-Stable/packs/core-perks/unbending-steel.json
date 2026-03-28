@@ -1,0 +1,143 @@
+{
+  "folder": "qrlUDsr0ZrNZAnR6",
+  "name": "Unbending Steel",
+  "type": "perk",
+  "system": {
+    "_migration": {
+      "version": 0.109,
+      "previous": null
+    },
+    "actions": [],
+    "slug": "unbending-steel",
+    "description": "<p>You gain Iron Defense as a Connected Move, and may spend an additional 2PP when using Iron Defense to gain @Tick[2 shield].</p>",
+    "traits": [],
+    "prerequisites": [
+      "trait:steel"
+    ],
+    "cost": 2,
+    "nodes": [
+      {
+        "connected": [
+          "guard-up",
+          "stat-iv-booster-1",
+          "improved-overland-3",
+          "stat-iv-booster-1-4",
+          "improved-teleportation",
+          "minor-buff",
+          "minor-buff-6",
+          "minor-buff-44",
+          "minor-buff-48",
+          "ready-for-anything",
+          "dowsing-instinct",
+          "dowsing-organ",
+          "natural-steel",
+          "active-ground"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/svg/steel_icon.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 97,
+        "y": 101,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "resilience",
+      "archetype": "steel"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "Gxv0teWTcPT64AJu",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "effects": [
+    {
+      "name": "Unbending Steel",
+      "type": "passive",
+      "_id": "LGmdT3NOqO6wZK6j",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.qSWTxI39iL7ivEVw",
+            "predicate": [],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "allowDuplicate": true,
+            "track": false,
+            "replaceSelf": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            }
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.2.1",
+        "createdTime": 1737922877806,
+        "modifiedTime": 1737922913974,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

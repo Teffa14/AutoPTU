@@ -1,0 +1,626 @@
+{
+  "name": "mantine",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 226,
+    "size": {
+      "category": "large",
+      "type": "quad",
+      "height": 2.1,
+      "weight": 220
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "swim",
+        "value": 11
+      },
+      {
+        "type": "flight",
+        "value": 6
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "natural-swimmer",
+      "gilled",
+      "fountain",
+      "wavesense-15",
+      "pack-mon",
+      "fully-evolved",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "swift-swim"
+        },
+        {
+          "slug": "water-absorb"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "rain-dish"
+        },
+        {
+          "slug": "water-veil"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "hydration"
+        },
+        {
+          "slug": "regenerator"
+        }
+      ],
+      "master": [
+        {
+          "slug": "drizzle"
+        },
+        {
+          "slug": "giant-wings"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "mantine",
+    "stats": {
+      "hp": 85,
+      "atk": 40,
+      "def": 70,
+      "spa": 80,
+      "spd": 140,
+      "spe": 70
+    },
+    "types": [
+      "flying",
+      "water"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "acrobatics",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "aerial-ace",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "air-cutter",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "amnesia",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "aqua-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "blizzard",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "body-press",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-slam",
+          "gen": "xd"
+        },
+        {
+          "name": "brine",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "curse",
+          "gen": "crystal"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dive",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "earthquake",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hail",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "haze",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hurricane",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "crystal"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-head",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "liquidation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "mirror-coat",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "mud-sport",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "protect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scald",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "slam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "splash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "string-shot",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "surf",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "swift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "tailwind",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "twister",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "water-sport",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "waterfall",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "whirlpool",
+          "gen": "sword-shield"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "bubble",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 1
+        },
+        {
+          "name": "bullet-seed",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "psybeam",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "roost",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 1
+        },
+        {
+          "name": "supersonic",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "water-gun",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "wing-attack",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "confuse-ray",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 11
+        },
+        {
+          "name": "water-pulse",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 12
+        },
+        {
+          "name": "wide-guard",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 16
+        },
+        {
+          "name": "agility",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 20
+        },
+        {
+          "name": "bubble-beam",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 24
+        },
+        {
+          "name": "headbutt",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 28
+        },
+        {
+          "name": "air-slash",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 32
+        },
+        {
+          "name": "aqua-ring",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 36
+        },
+        {
+          "name": "bounce",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 40
+        },
+        {
+          "name": "take-down",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 44
+        },
+        {
+          "name": "hydro-pump",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 48
+        }
+      ]
+    },
+    "captureRate": 60,
+    "eggGroups": [
+      "water1"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "mantyke",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "mantine",
+          "uuid": "Compendium.ptr2e.core-species.Item.ph6Gxb3bUi8Yh711",
+          "methods": [
+            {
+              "type": "level",
+              "level": 24,
+              "operand": "or"
+            },
+            {
+              "type": "item",
+              "item": "water-stone",
+              "operand": "or",
+              "held": false
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": [],
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.1S3QiEuezM4nWTim",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "habitats": [
+      "ocean",
+      "reef"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Johto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "ph6Gxb3bUi8Yh711",
+  "effects": []
+}

@@ -1,0 +1,178 @@
+{
+  "foe:Squirtle": {
+    "action_type": {
+      "defend": 4.736842105348125,
+      "attack": 5.2631578946518776
+    },
+    "target_pref": {
+      "lowest_hp": 5.2631578946518776
+    },
+    "risk_tolerance": {},
+    "move_usage": {
+      "Water Pulse": 5.2631578946518776
+    }
+  },
+  "side3:Walrein": {
+    "action_type": {
+      "defend": 3.439
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "player:Pansage": {
+    "action_type": {
+      "defend": 5.6953279000000006
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "side2:Goodra Hisuian": {
+    "action_type": {
+      "defend": 9.999989866283826
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "foe:Staraptor": {
+    "action_type": {
+      "defend": 2.71
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "player:Dreepy": {
+    "action_type": {
+      "defend": 9.99999919166951
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "foe:Sawk": {
+    "action_type": {
+      "defend": 4.6953786223244585,
+      "attack": 4.923100953198597
+    },
+    "target_pref": {
+      "lowest_hp": 4.923100953198597
+    },
+    "risk_tolerance": {},
+    "move_usage": {
+      "Bind": 4.923100953198597
+    }
+  },
+  "side2:Arcanine Hisuian": {
+    "action_type": {
+      "defend": 4.0951
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "gary:Machop": {
+    "action_type": {
+      "defend": 4.8807056810615395,
+      "attack": 4.473186130015795
+    },
+    "target_pref": {
+      "nearest": 4.473186130015795
+    },
+    "risk_tolerance": {
+      "retreats": 4.325687704900019
+    },
+    "move_usage": {
+      "Tackle": 4.473186130015795
+    }
+  },
+  "gary:Pikachu": {
+    "action_type": {
+      "defend": 1.0791946399535102,
+      "other": 6.861894039100001
+    },
+    "target_pref": {},
+    "risk_tolerance": {
+      "retreats": 0.28242953648100017
+    },
+    "move_usage": {}
+  },
+  "gary:A": {
+    "action_type": {
+      "defend": 3.439
+    },
+    "target_pref": {},
+    "risk_tolerance": {
+      "retreats": 0.81
+    },
+    "move_usage": {}
+  },
+  "foe:Abra": {
+    "action_type": {
+      "defend": 8.332281830033345
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "foe:Magikarp": {
+    "action_type": {
+      "defend": 1.0
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "player:Pikachu": {
+    "action_type": {
+      "attack": 1.0
+    },
+    "target_pref": {
+      "lowest_hp": 1.0
+    },
+    "risk_tolerance": {},
+    "move_usage": {
+      "Thunder Shock": 1.0
+    }
+  },
+  "foe:Sigilyph": {
+    "action_type": {
+      "defend": 6.861894039100001
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "foe:Eevee": {
+    "action_type": {
+      "defend": 9.942735831029779
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "b:Foe": {
+    "action_type": {},
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "side3:Pikipek": {
+    "action_type": {
+      "defend": 4.0951
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "side2:Darmanitan Galar, Zen Mode": {
+    "action_type": {
+      "defend": 8.332281830033345
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  }
+}

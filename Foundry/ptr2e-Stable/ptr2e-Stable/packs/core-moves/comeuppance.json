@@ -1,0 +1,49 @@
+{
+  "name": "Comeuppance",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "comeuppance",
+    "actions": [
+      {
+        "slug": "comeuppance",
+        "name": "Comeuppance",
+        "type": "attack",
+        "traits": [
+          "interrupt-1"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7,
+          "trigger": "<p>The user is damaged by  Attack.</p>"
+        },
+        "category": "physical",
+        "power": null,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "description": "<p>Effect: The user attacks the creature that attacked it, dealing 1.5x the amount of damage it were dealt by the triggering attack (this is not modified by the target's defenses or other effects).</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "VWwskJkjqcH3vXxP",
+  "effects": []
+}

@@ -1,0 +1,85 @@
+{
+  "name": "Lechonk-Class Sandwiches",
+  "type": "perk",
+  "folder": "zrVtKATNxzLNxTUZ",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.husbandry.mod}",
+          40
+        ]
+      },
+      "item:perk:zigzagoon-class-sandwiches"
+    ],
+    "cost": 3,
+    "description": "<p>You are able to make Lechonk-Class Sandwiches. The staple food of the explorer. These reliable sandwiches confer a +10 to all Skill checks made in the following day.</p>",
+    "actions": [
+      {
+        "name": "Lechonk-Class Sandwiches",
+        "slug": "lechonk-class-sandwiches",
+        "description": "<p>You are able to make Lechonk-Class Sandwiches. The staple food of the explorer. These reliable sandwiches confer a +10 to all Skill checks made in the following day.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "type": "camping",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "lechonk-class-sandwiches",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": null,
+        "y": null,
+        "hidden": false,
+        "type": "normal",
+        "connected": [],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Chef.svg",
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "tint": null,
+          "scale": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "finesse",
+      "archetype": "chef"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "pZ9pdfIKMVYtJBeW",
+  "img": "systems/ptr2e/img/perk-icons/Chef.svg",
+  "effects": []
+}

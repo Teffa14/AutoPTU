@@ -1,0 +1,49 @@
+{
+  "name": "Nature's Madness",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+  "system": {
+    "slug": "natures-madness",
+    "actions": [
+      {
+        "slug": "natures-madness",
+        "name": "Nature's Madness",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "blast-3"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "category": "special",
+        "power": null,
+        "accuracy": 90,
+        "types": [
+          "fairy"
+        ],
+        "description": "<p>Effect: On hit, all valid targets have their current HP cut in half. This attack always deals a minimum of 1 HP in damage.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "IDXWn9iHZy95sqmc",
+  "effects": []
+}

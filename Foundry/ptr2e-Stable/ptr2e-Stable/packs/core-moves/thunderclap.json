@@ -1,0 +1,82 @@
+{
+  "name": "Thunderclap",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "thunderclap",
+    "actions": [
+      {
+        "slug": "thunderclap",
+        "name": "Thunderclap",
+        "type": "attack",
+        "traits": [
+          "paradox",
+          "priority-20"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "priority": 2
+        },
+        "category": "special",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "thunderclap-reaction",
+        "name": "Thunderclap (Reaction)",
+        "type": "attack",
+        "traits": [
+          "paradox",
+          "interrupt-2"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "<p>The user is targeted by a  Attack.</p>"
+        },
+        "category": "special",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "<p>Trigger: The user is targeted by a  Attack.</p><p>Effect: The user attacks the triggering creature with this attack. If the target gains @Affliction[fainted] due to damage from this move, the triggering attack fails.</p>",
+        "variant": "thunderclap",
+        "free": true,
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "FDjbkSUzYBcM1pax",
+  "effects": []
+}

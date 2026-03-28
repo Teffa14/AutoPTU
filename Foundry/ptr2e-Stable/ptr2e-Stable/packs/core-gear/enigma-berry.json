@@ -1,0 +1,148 @@
+{
+  "name": "Enigma Berry",
+  "img": "systems/ptr2e/img/item-icons/enigma berry.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 2,
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "untyped",
+      "power": 10,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "food",
+    "traits": [
+      "restorative",
+      "consumable",
+      "natural",
+      "healing",
+      "berry",
+      "fling",
+      "combat"
+    ],
+    "description": "<p>Effect: This item can be retrieved from the Belt and consumed as a Free Action at @Trait[interrupt-2] when the user would take damage from a super effective attack, healing the user @Tick[4].</p>",
+    "quantity": 1,
+    "slug": "enigma-berry",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": [
+      {
+        "name": "Enigma Berry",
+        "slug": "enigma-berry",
+        "description": "<p>Effect: This item can be retrieved from the Belt and consumed as a Free Action at @Trait[interrupt-2] when the user would take damage from a super effective attack, healing the user @Tick[4].</p>",
+        "traits": [
+          "restorative",
+          "consumable",
+          "natural",
+          "healing",
+          "berry",
+          "fling",
+          "combat"
+        ],
+        "type": "generic",
+        "img": "systems/ptr2e/img/item-icons/enigma berry.webp",
+        "cost": {
+          "activation": "simple"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        }
+      }
+    ]
+  },
+  "_id": "KvNesQefbFh983fo",
+  "effects": [
+    {
+      "name": "Enigma Berry",
+      "type": "passive",
+      "_id": "rTGYXHCJtqUtcl5L",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "enigma-berry-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.4DlXFTVooz07YcDm",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": false,
+            "affects": "target",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.changes.0.value",
+                "value": 4
+              }
+            ],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.4.beta",
+        "createdTime": 1758639552537,
+        "modifiedTime": 1758639591520,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ],
+  "folder": "yR1GFstYOCdI2jOz"
+}

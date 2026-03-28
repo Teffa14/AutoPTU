@@ -1,0 +1,49 @@
+{
+  "name": "Doom Desire",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "doom-desire",
+    "actions": [
+      {
+        "slug": "doom-desire",
+        "name": "Doom Desire",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "blast-3"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 25,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "special",
+        "power": 140,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Effect: When this attack is declared, the user rolls to hit valid target(s) at the start of the user's first Activation in the following Round.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "0idrtcsbkR1V3St0",
+  "effects": []
+}

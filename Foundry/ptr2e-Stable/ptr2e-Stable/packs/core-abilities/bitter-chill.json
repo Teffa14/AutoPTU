@@ -1,0 +1,97 @@
+{
+  "name": "Bitter Chill",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "environ"
+        ],
+        "name": "Bitter Chill",
+        "slug": "bitter-chill",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: The user's Ice-Type attacks have 50% more Power in Snowy Weather.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user's Ice-Type attacks have 50% more Power in Snowy Weather.</p>",
+    "traits": [
+      "environ"
+    ],
+    "slug": "bitter-chill",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "zp78HCXCfCidp2MJ",
+  "effects": [
+    {
+      "name": "Bitter Chill",
+      "type": "passive",
+      "_id": "8jaAvS1VZLDCmZ2b",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "percentile-modifier",
+            "key": "ice-attack-power",
+            "value": 50,
+            "predicate": [
+              "effect:summon:snowy-weather"
+            ],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.1.beta",
+        "createdTime": 1753714573243,
+        "modifiedTime": 1753714602311,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

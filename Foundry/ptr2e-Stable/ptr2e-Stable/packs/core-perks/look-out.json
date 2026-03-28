@@ -1,0 +1,84 @@
+{
+  "folder": "c29hnIAtXgwB7FeY",
+  "name": "Look Out!",
+  "type": "perk",
+  "_id": "EBvvOSG44hZTeDCK",
+  "img": "systems/ptr2e/img/perk-icons/Combat.svg",
+  "system": {
+    "actions": [],
+    "slug": "look-out",
+    "description": "<p>You may Intercept an attack against an ally within your available Movement Allowance as a Simple Action Interrupt. This consumes Movement Allowance as normal. If you also possess the perk \"Fearsome Defense\", this instead becomes a Free Action.</p>",
+    "traits": [],
+    "prerequisites": [
+      {
+        "or": [
+          {
+            "gte": [
+              "{actor|skills.running.mod}",
+              35
+            ]
+          },
+          {
+            "gte": [
+              "{actor|skills.swim.mod}",
+              35
+            ]
+          },
+          {
+            "gte": [
+              "{actor|skills.flying.mod}",
+              35
+            ]
+          }
+        ]
+      }
+    ],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 72,
+        "y": 88,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "fearsome-defense",
+          "vigilant-guardian",
+          "martyrs-gift"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Combat.svg",
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "tint": null,
+          "scale": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "resilience",
+      "archetype": "tank"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "effects": []
+}

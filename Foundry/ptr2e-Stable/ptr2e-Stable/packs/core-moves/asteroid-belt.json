@@ -1,0 +1,46 @@
+{
+  "name": "Asteroid Belt",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "asteroid-belt",
+    "actions": [
+      {
+        "slug": "asteroid-belt",
+        "name": "Asteroid Belt",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "rock"
+        ],
+        "description": "<p>Effect: For 5 Activations, the user gains the <q>Orbit</q> condition. When the user is hit by a [Contact] Attack while they have Orbit, the attacker takes a Tick of HP damage.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "7iyGvPhsDdMTxMqY",
+  "effects": []
+}

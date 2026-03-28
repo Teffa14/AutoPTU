@@ -1,0 +1,246 @@
+{
+  "name": "cosmoem",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "psychic"
+    ],
+    "stats": {
+      "hp": 43,
+      "atk": 29,
+      "def": 131,
+      "spa": 29,
+      "spd": 131,
+      "spe": 37
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "teleport",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "cosmic-power",
+          "level": null,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": []
+    },
+    "size": {
+      "height": 0.1,
+      "weight": 999.9,
+      "category": "diminutive",
+      "type": "quad"
+    },
+    "captureRate": 90,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "cosmog",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "cosmoem",
+          "uuid": "Compendium.ptr2e.core-species.Item.HOfS7vBFF6ME2LiA",
+          "methods": [
+            {
+              "type": "level",
+              "level": 43,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "solgaleo",
+              "uuid": "Compendium.ptr2e.core-species.Item.KCaLP0tjvwK3Fqjs",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 53,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            },
+            {
+              "name": "lunala",
+              "uuid": "Compendium.ptr2e.core-species.Item.hpsUcuamiebvodm7",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 53,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.XRRwQRXawRg2oxRH"
+    },
+    "number": 790,
+    "traits": [
+      "pokemon",
+      "legendary",
+      "underdog",
+      "glow-4",
+      "hover",
+      "teleporter",
+      "dangerous-ultra-wormhole",
+      "jump-1"
+    ],
+    "diet": [
+      "nullivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "beast-boost"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "unaware"
+        },
+        {
+          "slug": "magic-bounce"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "sturdy"
+        },
+        {
+          "slug": "magic-guard"
+        }
+      ],
+      "master": [
+        {
+          "slug": "full-metal-body"
+        },
+        {
+          "slug": "shadow-shield"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 6
+      },
+      {
+        "type": "teleport",
+        "value": 6
+      }
+    ],
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "legends",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "psychic",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "ultra-beasts",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "running",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "cosmoem",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "HOfS7vBFF6ME2LiA",
+  "effects": [],
+  "folder": null
+}

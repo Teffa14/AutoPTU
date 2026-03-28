@@ -1,0 +1,99 @@
+{
+  "name": "Banish",
+  "type": "move",
+  "_id": "iaqzJUkhfUPXQ6nV",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "banish",
+    "actions": [
+      {
+        "name": "Banish",
+        "slug": "banish",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [],
+        "range": {
+          "target": "emanation",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "types": [
+          "dark"
+        ],
+        "category": "status",
+        "description": "<p>Effect: All valid targets gain @Affliction[fear] 5.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [
+    {
+      "name": "Banish",
+      "type": "passive",
+      "_id": "JdNcpn6ODux7yxgc",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "banish-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.fearconditioitem",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.2",
+        "createdTime": 1737222874495,
+        "modifiedTime": 1737222895466,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS"
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "name": "Cheap Shot",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "cheap-shot",
+    "actions": [
+      {
+        "slug": "cheap-shot",
+        "name": "Cheap Shot",
+        "type": "attack",
+        "traits": [
+          "crit-4",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "physical",
+        "power": 40,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "AEOUvmvoSQaC4bcp",
+  "effects": []
+}

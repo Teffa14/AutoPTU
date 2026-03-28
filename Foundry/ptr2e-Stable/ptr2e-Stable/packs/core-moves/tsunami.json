@@ -1,0 +1,126 @@
+{
+  "name": "Tsunami",
+  "type": "move",
+  "_id": "2XaWuI8GW96AWkoR",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "tsunami",
+    "actions": [
+      {
+        "name": "Tsunami",
+        "slug": "tsunami",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "delay-2"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "types": [
+          "water"
+        ],
+        "category": "special",
+        "power": 130,
+        "accuracy": 70,
+        "description": "<p>Effect: On resolution, the user loses -1 SPATK, SPDEF, and SPD Stages for 5 Activations.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [
+    {
+      "name": "Tsunami",
+      "type": "passive",
+      "_id": "RAizk0E9lHKFcDwC",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "tsunami-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.1JXumQz0QqthT9Iv",
+            "predicate": [],
+            "chance": 100,
+            "affects": "self",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "tsunami-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.qe5aLBJuwb9eYqvv",
+            "predicate": [],
+            "chance": 100,
+            "affects": "self",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "tsunami-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.HLAV9dhz632Rfp1K",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.5",
+        "createdTime": 1737326221719,
+        "modifiedTime": 1737326307549,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

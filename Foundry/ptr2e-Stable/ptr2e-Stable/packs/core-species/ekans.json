@@ -1,0 +1,651 @@
+{
+  "name": "ekans",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 23,
+    "size": {
+      "category": "small",
+      "type": "length",
+      "height": 2,
+      "weight": 6.9
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 6
+      },
+      {
+        "type": "swim",
+        "value": 6
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "serpentine",
+      "venomous",
+      "keen-scent",
+      "jump-2"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "intimidate"
+        },
+        {
+          "slug": "shed-skin"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "unnerve"
+        },
+        {
+          "slug": "solenoglyphs"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "merciless"
+        },
+        {
+          "slug": "infiltrator"
+        }
+      ],
+      "master": [
+        {
+          "slug": "strong-jaw"
+        },
+        {
+          "slug": "coil-up"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychology",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "ekans",
+    "stats": {
+      "hp": 35,
+      "atk": 60,
+      "def": 44,
+      "spa": 40,
+      "spd": 54,
+      "spe": 55
+    },
+    "types": [
+      "poison"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "aqua-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "beat-up",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bide",
+          "gen": "yellow"
+        },
+        {
+          "name": "bind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "body-slam",
+          "gen": "xd"
+        },
+        {
+          "name": "brutal-swing",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "crunch",
+          "gen": "crystal"
+        },
+        {
+          "name": "curse",
+          "gen": "crystal"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "disable",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "earthquake",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fissure",
+          "gen": "yellow"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "headbutt",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "knock-off",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lash-out",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leech-life",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mega-drain",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "payback",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "poison-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poison-tail",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-fangs",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pursuit",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rage",
+          "gen": "yellow"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "firered-leafgreen"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "scale-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "skull-bash",
+          "gen": "yellow"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snarl",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snatch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "spite",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "strength",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "sucker-punch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "switcheroo",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "torment",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic-spikes",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "venoshock",
+          "gen": "scarlet-violet"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "leer",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "wrap",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "poison-sting",
+          "gen": "scarlet-violet",
+          "level": 4
+        },
+        {
+          "name": "bite",
+          "gen": "scarlet-violet",
+          "level": 9
+        },
+        {
+          "name": "glare",
+          "gen": "scarlet-violet",
+          "level": 12
+        },
+        {
+          "name": "screech",
+          "gen": "scarlet-violet",
+          "level": 17
+        },
+        {
+          "name": "acid",
+          "gen": "scarlet-violet",
+          "level": 20
+        },
+        {
+          "name": "poison-jab",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 24
+        },
+        {
+          "name": "stockpile",
+          "gen": "scarlet-violet",
+          "level": 25
+        },
+        {
+          "name": "acid-spray",
+          "gen": "scarlet-violet",
+          "level": 28
+        },
+        {
+          "name": "slam",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 28
+        },
+        {
+          "name": "mud-bomb",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 33
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet",
+          "level": 33
+        },
+        {
+          "name": "gastro-acid",
+          "gen": "scarlet-violet",
+          "level": 36
+        },
+        {
+          "name": "toxic",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 36
+        },
+        {
+          "name": "belch",
+          "gen": "scarlet-violet",
+          "level": 38
+        },
+        {
+          "name": "haze",
+          "gen": "scarlet-violet",
+          "level": 41
+        },
+        {
+          "name": "coil",
+          "gen": "scarlet-violet",
+          "level": 44
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "scarlet-violet",
+          "level": 49
+        }
+      ]
+    },
+    "captureRate": 220,
+    "eggGroups": [
+      "ground",
+      "dragon"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "ekans",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "arbok",
+          "uuid": "Compendium.ptr2e.core-species.Item.kOLod1LukmD0rxiT",
+          "methods": [
+            {
+              "type": "level",
+              "level": 22,
+              "operand": "and"
+            }
+          ],
+          "perk": {
+            "x": 26,
+            "y": 26
+          },
+          "details": null,
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.ENShFJtjtKJ0yiDU",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "habitats": [
+      "jungle",
+      "grassland"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "ENShFJtjtKJ0yiDU",
+  "effects": []
+}

@@ -1,0 +1,78 @@
+{
+  "name": "Blue Orb",
+  "img": "systems/ptr2e/img/item-icons/blue orb.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "S",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": false
+    },
+    "rarity": "unique",
+    "traits": [
+      "evolution",
+      "phenomenon",
+      "held",
+      "kyogre"
+    ],
+    "actions": [
+      {
+        "name": "Blue Orb",
+        "slug": "blue-orb",
+        "type": "passive",
+        "description": "Effect: When equipped as an Accessory by a [Kyogre], the user may undergo Primal Reversion without needing to have Origin Pulse on their Active List, and without a PP Cost.\nWhen Held by a [Human], they may use a Complex Action to control an unowned [Kyogre].",
+        "traits": [
+          "Evolution",
+          "Phenomenon",
+          "Held",
+          "Kyogre"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: When equipped as an Accessory by a [Kyogre], the user may undergo Primal Reversion without needing to have Origin Pulse on their Active List, and without a PP Cost.\nWhen Held by a [Human], they may use a Complex Action to control an unowned [Kyogre].",
+    "slug": "blue-orb",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "6YFSL1BdMKmV1rKF",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

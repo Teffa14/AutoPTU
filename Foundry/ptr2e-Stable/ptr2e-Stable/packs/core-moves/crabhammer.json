@@ -1,0 +1,52 @@
+{
+  "name": "Crabhammer",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "crabhammer",
+    "actions": [
+      {
+        "slug": "crabhammer",
+        "name": "Crabhammer",
+        "type": "attack",
+        "traits": [
+          "crit-1",
+          "contact",
+          "hammer"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 90,
+        "types": [
+          "water"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "PmKLjJHpja8xjyNa",
+  "effects": []
+}

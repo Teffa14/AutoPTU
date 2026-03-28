@@ -1,0 +1,64 @@
+{
+  "cases": [
+    {
+      "move": "Thunder Wave",
+      "expect": [
+        { "type": "status", "status": "Paralyzed" }
+      ]
+    },
+    {
+      "move": "Will-O-Wisp",
+      "expect": [
+        { "type": "status", "status": "Burned" }
+      ]
+    },
+    {
+      "move": "Spikes",
+      "expect": [
+        { "type": "hazard", "hazard": "spikes" }
+      ]
+    },
+    {
+      "move": "Toxic Spikes",
+      "expect": [
+        { "type": "hazard", "hazard": "toxic_spikes" }
+      ]
+    },
+    {
+      "move": "Stealth Rock",
+      "expect": [
+        { "type": "hazard", "hazard": "stealth_rock" }
+      ]
+    },
+    {
+      "move": "Sticky Web",
+      "expect": [
+        { "type": "hazard", "hazard": "sticky_web" }
+      ]
+    },
+    {
+      "move": "Taunt",
+      "expect": [
+        { "type": "status", "status": "Taunted" }
+      ]
+    },
+    {
+      "move": "Aqua Ring",
+      "expect": [
+        { "type": "status", "status": "Aqua Ring" }
+      ]
+    },
+    {
+      "move": "Leech Seed",
+      "expect": [
+        { "type": "status", "status": "Leech Seed" }
+      ]
+    },
+    {
+      "move": "Hail",
+      "expect": [
+        { "type": "move", "effect": "hail" }
+      ]
+    }
+  ]
+}

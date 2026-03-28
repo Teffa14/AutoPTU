@@ -1,0 +1,53 @@
+{
+  "name": "Perfect Apple",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 13,
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "grass",
+      "power": 50,
+      "accuracy": 95,
+      "hide": null
+    },
+    "rarity": "uncommon",
+    "consumableType": "food",
+    "traits": [
+      "restorative",
+      "consumable",
+      "natural",
+      "healing",
+      "food",
+      "held",
+      "fling"
+    ],
+    "description": "The target is healed up to their Max PP, gains +1 default Stage to a random stat (ATK, DEF, SPATK, SPDEF, SPD, ACC, EVA, CRIT), until their next rest, and is cured of 3 @Affliction[weary].",
+    "quantity": 1,
+    "slug": "perfect-apple",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "hBfH3PFfCbdHV23w",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

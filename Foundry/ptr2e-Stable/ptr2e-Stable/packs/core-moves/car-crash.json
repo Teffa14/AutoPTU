@@ -1,0 +1,51 @@
+{
+  "name": "Car Crash",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "car-crash",
+    "actions": [
+      {
+        "slug": "car-crash",
+        "name": "Car Crash",
+        "type": "attack",
+        "traits": [
+          "execute",
+          "unreliable",
+          "dash",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": -4
+        },
+        "category": "physical",
+        "power": null,
+        "accuracy": 30,
+        "types": [
+          "dark"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "rvy2j643awTE22W0",
+  "effects": []
+}

@@ -1,0 +1,61 @@
+{
+  "name": "Paralyze Heal",
+  "img": "systems/ptr2e/img/item-icons/paralyze heal.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 1,
+    "crafting": {
+      "skill": "medicine",
+      "spans": 2,
+      "materials": [
+        "1x-cheri-berry",
+        "2x-grade-e-berries"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "E",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": true,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "restorative",
+    "traits": [
+      "stack-3",
+      "combat",
+      "restorative",
+      "consumable",
+      "healing"
+    ],
+    "description": "<p>The target is healed of @Affliction[paralysis] and @Affliction[tased].</p>",
+    "quantity": 1,
+    "slug": "paralyze-heal",
+    "stack": 3,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "G9PwywAAEX3DKuZ2",
+  "effects": [],
+  "folder": "srQci2ThhRKdmC6g"
+}

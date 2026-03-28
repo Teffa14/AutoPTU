@@ -1,0 +1,4 @@
+side,slot,species,level,nature,stat_mode,hp,atk,def,spatk,spdef,spd,ability1,item1,move1,move2,move3,move4,move5,move6,move7,move8,move_source1,move_source2,move_source3,move_source4,move_source5,move_source6,move_source7,move_source8,tutor_points
+player,1,Sawk,15,Adamant,pre_nature,8,13,8,3,8,9,Sturdy,,Block,Leer,Bide,Focus Energy,Rock Smash,,,,tutor,level_up,level_up,level_up,tutor,,,,4
+player,2,Porygon2,15,Patient,pre_nature,9,8,9,11,10,6,Trace,,Conversion,Conversion2,Tackle,Sharpen,Psybeam,Agility,,,level_up,level_up,level_up,level_up,level_up,level_up,,,0
+player,3,Illumise,15,Timid,pre_nature,7,5,6,7,8,9,Tinted Lens,,Sweet Scent,Flash,Struggle Bug,Charm,,,,,level_up,tutor,tutor,level_up,,,,,4

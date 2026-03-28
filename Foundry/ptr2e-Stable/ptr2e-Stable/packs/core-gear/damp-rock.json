@@ -1,0 +1,79 @@
+{
+  "name": "Damp Rock",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "held",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": false
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "combat",
+      "belt",
+      "rain",
+      "climate-rock"
+    ],
+    "actions": [
+      {
+        "name": "Damp Rock",
+        "slug": "damp-rock",
+        "type": "generic",
+        "description": "Trigger: The user creates a Rainy Weather effect.\nEffect: The triggering effect's duration is increased by +3.",
+        "traits": [
+          "Combat",
+          "Belt",
+          "Rain",
+          "Climate Rock"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "trigger": "The user creates a Rainy Weather effect."
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Trigger: The user creates a Rainy Weather effect.\nEffect: The triggering effect's duration is increased by +3.",
+    "slug": "damp-rock",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "7SYr7KqKF7KUHY9z",
+  "effects": [],
+  "folder": "PGpYU7mfnRpzOZSm"
+}

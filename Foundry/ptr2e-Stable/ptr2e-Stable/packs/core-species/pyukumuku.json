@@ -1,0 +1,363 @@
+{
+  "name": "pyukumuku",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "water"
+    ],
+    "stats": {
+      "hp": 55,
+      "atk": 60,
+      "def": 130,
+      "spa": 30,
+      "spd": 130,
+      "spe": 5
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "harden",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bide",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "baton-pass",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mud-sport",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "water-sport",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "helping-hand",
+          "level": 5,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "taunt",
+          "level": 10,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "safeguard",
+          "level": 15,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "counter",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "purify",
+          "level": 25,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "curse",
+          "level": 30,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "gastro-acid",
+          "level": 35,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "pain-split",
+          "level": 40,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "recover",
+          "level": 45,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "soak",
+          "level": 50,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "level": 55,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "memento",
+          "level": 60,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "spite",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swagger",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mirror-coat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "tickle",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "venom-drench",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "recycle",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "block",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "screech",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "reflect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psych-up",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hail",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "quash",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.3,
+      "weight": 1.2,
+      "category": "diminutive",
+      "type": "length"
+    },
+    "captureRate": 70,
+    "eggGroups": [
+      "water1"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "pyukumuku",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 771,
+    "traits": [
+      "pokemon",
+      "legless",
+      "fully-evolved",
+      "underdog",
+      "gilled",
+      "jump-4"
+    ],
+    "diet": [
+      "herbivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "innards-out"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "unaware"
+        },
+        {
+          "slug": "venom-glands"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "overcoat"
+        },
+        {
+          "slug": "own-tempo"
+        }
+      ],
+      "master": [
+        {
+          "slug": "merciless"
+        },
+        {
+          "slug": "iron-barbs"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "swim",
+        "value": 3
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ride",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "beach",
+      "reef",
+      "abyss"
+    ],
+    "slug": "pyukumuku",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "FgJYsMf3bR0YESOj",
+  "effects": [],
+  "folder": null
+}

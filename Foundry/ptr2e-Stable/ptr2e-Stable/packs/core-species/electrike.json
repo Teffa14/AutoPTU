@@ -1,0 +1,518 @@
+{
+  "name": "electrike",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 309,
+    "size": {
+      "category": "small",
+      "type": "quad",
+      "height": 0.6,
+      "weight": 15.2
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 10
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "quadrupedal",
+      "underdog",
+      "zapper",
+      "pack-mon",
+      "jump-5"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "lightning-rod"
+        },
+        {
+          "slug": "static"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "minus"
+        },
+        {
+          "slug": "ball-fetch"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "overcharge"
+        },
+        {
+          "slug": "hubris"
+        }
+      ],
+      "master": [
+        {
+          "slug": "drizzle"
+        },
+        {
+          "slug": "electric-burst"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 40,
+      "atk": 45,
+      "def": 40,
+      "spa": 65,
+      "spd": 40,
+      "spe": 65
+    },
+    "types": [
+      "electric"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "agility",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "body-slam",
+          "gen": "xd"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "charge-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "crunch",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "curse",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "eerie-impulse",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "electro-ball",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "fire-fang",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "flame-burst",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "flash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "headbutt",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ice-fang",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "magnet-rise",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "protect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "psychic-fangs",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rising-voltage",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snarl",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "strength",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "swift",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "switcheroo",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thief",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "uproar",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "volt-switch",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thunder-wave",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "leer",
+          "level": 4,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "howl",
+          "level": 8,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "quick-attack",
+          "level": 12,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "spark",
+          "level": 13,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "odor-sleuth",
+          "level": 16,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "shock-wave",
+          "level": 16,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bite",
+          "level": 20,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thunder-fang",
+          "level": 24,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "roar",
+          "level": 28,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "discharge",
+          "level": 32,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "charge",
+          "level": 36,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "wild-charge",
+          "level": 40,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thunder",
+          "level": 44,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ]
+    },
+    "captureRate": 120,
+    "eggGroups": [
+      "ground"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "electrike",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "manectric",
+          "uuid": "Compendium.ptr2e.core-species.Item.3maTHI1KHJVjHFex",
+          "methods": [
+            {
+              "type": "level",
+              "level": 26,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.Q5TpohDTPQasD5wR",
+      "methods": []
+    },
+    "habitats": [
+      "grassland"
+    ],
+    "slug": "electrike",
+    "publication": {
+      "source": "PTR 2e Core - Hoenn Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Q5TpohDTPQasD5wR",
+  "effects": []
+}

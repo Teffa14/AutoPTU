@@ -1,0 +1,62 @@
+{
+  "name": "Heal Ball",
+  "img": "systems/ptr2e/img/item-icons/heal ball.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 2,
+    "crafting": {
+      "skill": "electronics",
+      "spans": 2,
+      "materials": [
+        "6x-tumblestone",
+        "1x-basic-apricorn"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "D",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling",
+      "training-ball",
+      "ball"
+    ],
+    "description": "1x Catch Rate modifier. Upon capture, heals the captured creature's HP, PP, and removes all of its Status Afflictions.",
+    "modifier": 1,
+    "quantity": 1,
+    "slug": "heal-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "4A4CPITprvVAVOkM",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

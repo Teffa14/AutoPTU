@@ -1,0 +1,57 @@
+{
+  "name": "Sleep Lab",
+  "description": "Showcases the persistent Sleep status. Your Snorlax begins the fight asleep for two rounds while a Hypno peppers it with Hypnosis and Dream Eater so you can watch the new wake-up logs. Use this after shipping sleep-centric mechanics to make sure the skip + wake flow still works.",
+  "default_weather": "Clear",
+  "grid": {
+    "width": 12,
+    "height": 6,
+    "blockers": [[5, 2], [5, 3]],
+    "tiles": {
+      "3,1": "difficult",
+      "8,4": "water"
+    }
+  },
+  "players": [
+    {
+      "name": "Snorlax",
+      "species": "Snorlax",
+      "level": 24,
+      "types": ["Normal"],
+      "hp_stat": 18,
+      "atk": 14,
+      "def": 12,
+      "spatk": 10,
+      "spdef": 13,
+      "spd": 5,
+      "statuses": [
+        {"name": "Sleep", "remaining": 2}
+      ],
+      "moves": [
+        {"name": "Body Slam", "type": "Normal", "category": "Physical", "db": 8, "ac": 2, "range_kind": "Melee", "freq": "EOT", "keywords": ["Push"]},
+        {"name": "Snore", "type": "Normal", "category": "Special", "db": 7, "ac": 2, "range_kind": "Burst", "range_value": 1, "freq": "Scene"},
+        {"name": "Rest", "type": "Psychic", "category": "Status", "db": 0, "ac": null, "range_kind": "Self", "freq": "Scene"}
+      ],
+      "movement": {"overland": 3, "swim": 2, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 1, "l_jump": 1, "power": 5}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Hypno",
+      "species": "Hypno",
+      "level": 23,
+      "types": ["Psychic"],
+      "hp_stat": 12,
+      "atk": 9,
+      "def": 10,
+      "spatk": 12,
+      "spdef": 12,
+      "spd": 9,
+      "moves": [
+        {"name": "Confusion", "type": "Psychic", "category": "Special", "db": 6, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "At-Will"},
+        {"name": "Hypnosis", "type": "Psychic", "category": "Status", "db": 0, "ac": 4, "range_kind": "Ranged", "range_value": 4, "freq": "Scene x2"},
+        {"name": "Dream Eater", "type": "Psychic", "category": "Special", "db": 8, "ac": 2, "range_kind": "Melee", "range_value": 1, "freq": "EOT", "effects_text": "Dream Eater does not wake sleeping targets."}
+      ],
+      "movement": {"overland": 5, "swim": 2, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 1, "l_jump": 1, "power": 3}
+    }
+  ]
+}

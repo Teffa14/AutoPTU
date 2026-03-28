@@ -1,0 +1,51 @@
+{
+  "name": "Cleanse Orb",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 5,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "common",
+    "consumableType": "other",
+    "traits": [
+      "combat",
+      "consumable",
+      "wonder-orb",
+      "held",
+      "fling"
+    ],
+    "description": "All Hazards in the Room are cleared on use.",
+    "quantity": 1,
+    "slug": "cleanse-orb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "4OZ69oLQ2PfGgptE",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

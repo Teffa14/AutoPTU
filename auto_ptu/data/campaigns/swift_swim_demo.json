@@ -1,0 +1,78 @@
+{
+  "name": "Swift Swim Lab",
+  "description": "Rain drenches the water channel so your Swift Swim user can outrun a foe stuck on land. Watch the movement preview and range table highlight the doubled swim range while the rival struggles to chase through water.",
+  "default_weather": "Rain",
+  "grid": {
+    "width": 10,
+    "height": 6,
+    "blockers": [[4, 1], [4, 2], [4, 3], [4, 4]],
+    "tiles": {
+      "0,1": "water",
+      "1,1": "water",
+      "2,1": "water",
+      "3,1": "water",
+      "5,1": "water",
+      "6,1": "water",
+      "7,1": "water",
+      "8,1": "water",
+      "9,1": "water",
+      "0,2": "water",
+      "1,2": "water",
+      "2,2": "water",
+      "3,2": "water",
+      "5,2": "water",
+      "6,2": "water",
+      "7,2": "water",
+      "8,2": "water",
+      "9,2": "water",
+      "0,3": "water",
+      "1,3": "water",
+      "2,3": "water",
+      "3,3": "water",
+      "5,3": "water",
+      "6,3": "water",
+      "7,3": "water",
+      "8,3": "water",
+      "9,3": "water"
+    }
+  },
+  "players": [
+    {
+      "name": "Buizel",
+      "species": "Buizel",
+      "level": 20,
+      "types": ["Water"],
+      "hp_stat": 12,
+      "atk": 10,
+      "def": 8,
+      "spatk": 10,
+      "spdef": 8,
+      "spd": 14,
+      "abilities": [{"name": "Swift Swim"}],
+      "moves": [
+        {"name": "Water Gun", "type": "Water", "category": "Special", "db": 6, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "At-Will"},
+        {"name": "Aqua Jet", "type": "Water", "category": "Physical", "db": 7, "ac": 1, "range_kind": "Melee", "freq": "Swift"}
+      ],
+      "movement": {"overland": 5, "swim": 5, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 3, "l_jump": 2, "power": 3}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Quagsire",
+      "species": "Quagsire",
+      "level": 20,
+      "types": ["Water", "Ground"],
+      "hp_stat": 14,
+      "atk": 11,
+      "def": 12,
+      "spatk": 7,
+      "spdef": 9,
+      "spd": 6,
+      "moves": [
+        {"name": "Water Pulse", "type": "Water", "category": "Special", "db": 6, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "At-Will"},
+        {"name": "Earthquake", "type": "Ground", "category": "Physical", "db": 8, "ac": 3, "range_kind": "Melee", "range_value": 3, "freq": "Scene"}
+      ],
+      "movement": {"overland": 4, "swim": 2, "sky": 0, "levitate": 0, "burrow": 1, "h_jump": 2, "l_jump": 1, "power": 4}
+    }
+  ]
+}

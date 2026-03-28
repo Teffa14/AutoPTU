@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap");
+
+:root {
+  --ds-font-sans: "Rajdhani", "Segoe UI", "Trebuchet MS", sans-serif;
+  --ds-font-display: "Orbitron", "Rajdhani", "Segoe UI", sans-serif;
+  --ds-font-mono: "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
+
+  --ds-color-bg-0: #0b1018;
+  --ds-color-bg-1: #111a28;
+  --ds-color-bg-2: #1a263a;
+  --ds-color-panel: #111a2b;
+  --ds-color-panel-strong: #1a263b;
+  --ds-color-panel-soft: #20324d;
+  --ds-color-line: #3a4e6d;
+  --ds-color-line-soft: rgba(138, 168, 214, 0.22);
+  --ds-color-text: #e8f0ff;
+  --ds-color-muted: #9fb4d8;
+  --ds-color-accent: #6ea1ff;
+  --ds-color-accent-soft: rgba(110, 161, 255, 0.2);
+  --ds-color-success: #45c1a5;
+  --ds-color-warning: #f2bb57;
+  --ds-color-danger: #e06464;
+  --ds-color-shadow: rgba(0, 0, 0, 0.35);
+
+  --ds-space-1: 4px;
+  --ds-space-2: 8px;
+  --ds-space-3: 12px;
+  --ds-space-4: 16px;
+  --ds-space-5: 20px;
+  --ds-space-6: 24px;
+
+  --ds-radius-1: 6px;
+  --ds-radius-2: 10px;
+  --ds-radius-3: 14px;
+  --ds-radius-pill: 999px;
+
+  --ds-shadow-1: 0 8px 18px var(--ds-color-shadow);
+  --ds-shadow-2: 0 14px 30px rgba(6, 9, 15, 0.35);
+
+  --ds-z-tooltip: 1000;
+  --ds-z-modal: 1100;
+  --ds-z-toast: 1200;
+
+  --ds-transition-fast: 120ms ease;
+  --ds-transition-base: 180ms ease;
+
+  --ds-break-sm: 720px;
+  --ds-break-md: 980px;
+  --ds-break-lg: 1200px;
+}

@@ -1,0 +1,74 @@
+{
+  "name": "Fly",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "system": {
+    "slug": "fly",
+    "actions": [
+      {
+        "slug": "fly",
+        "name": "Fly (Resolution)",
+        "type": "attack",
+        "traits": [
+          "set-up",
+          "contact",
+          "field",
+          "flinch-40"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 90,
+        "accuracy": 95,
+        "types": [
+          "flying"
+        ],
+        "description": "<p>Trigger: The user used Fly (Set Up) as their last Action.</p><p>Effect: The user freely Moves up to one-and-a-half times their Flight Score (if the user lacks a Flight Score, they may move up to 4m via Flight) before attacking with this Attack.</p>",
+        "img": "systems/ptr2e/img/svg/flying_icon.svg",
+        "predicate": []
+      },
+      {
+        "name": "Fly (Set-Up)",
+        "slug": "fly-set-up",
+        "description": "<p>Effect: The user gains +4 EVA stages for 3 Activations, and freely Moves up to freely Moves up to their Flight Score (if the user lacks a Flight Score, they may move up to 3m via Flight).</p>",
+        "traits": [
+          "set-up",
+          "defensive",
+          "priority-30"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/flying_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "flying"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "jpeWTsX8FjNT5A1J",
+  "effects": []
+}

@@ -1,0 +1,48 @@
+{
+  "name": "Absorb",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "absorb",
+    "actions": [
+      {
+        "slug": "absorb",
+        "name": "Absorb",
+        "type": "attack",
+        "traits": [
+          "drain-1-2"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "category": "special",
+        "power": 20,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "W07yma5fmbXBiLUU",
+  "effects": []
+}

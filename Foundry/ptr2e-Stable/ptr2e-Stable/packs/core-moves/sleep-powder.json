@@ -1,0 +1,105 @@
+{
+  "name": "Sleep Powder",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "sleep-powder",
+    "actions": [
+      {
+        "slug": "sleep-powder",
+        "name": "Sleep Powder",
+        "type": "attack",
+        "traits": [
+          "powder"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 2
+        },
+        "category": "status",
+        "accuracy": 75,
+        "types": [
+          "grass"
+        ],
+        "description": "<p>Effect: On hit, all valid targets gain @Affliction[drowsy] 5.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": []
+  },
+  "_id": "buK9s08GXOcjRSJN",
+  "effects": [
+    {
+      "name": "Sleep Powder",
+      "type": "passive",
+      "_id": "jC1uw2JnsKjWZgY0",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "sleep-powder-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.drowsycondititem",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": []
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.2",
+        "createdTime": 1736895283120,
+        "modifiedTime": 1736895303970,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

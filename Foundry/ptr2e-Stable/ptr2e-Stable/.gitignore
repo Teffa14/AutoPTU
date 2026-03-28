@@ -1,0 +1,43 @@
+# IDE
+.idea/
+.vscode/
+/.vs
+
+
+# Node Modules
+node_modules/
+npm-debug.log
+foundry.js
+
+# Release
+system.zip
+foundry-0.8.3.js
+
+/packs/**/_source/*
+/packs/*.json
+/packs/.gitignore
+/packs/README.md
+dist/
+
+index.html
+
+ptr2e.mjs
+
+vendor.mjs
+
+styles/ptr2e.css
+
+docs/
+
+docstyles.css
+
+static/raw/
+
+static/images/
+
+ptr2e-wiki/
+
+temp.json
+
+.vscode/
+json-assets/

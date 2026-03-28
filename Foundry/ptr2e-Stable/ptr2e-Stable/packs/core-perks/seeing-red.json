@@ -1,0 +1,145 @@
+{
+  "folder": "zrVtKATNxzLNxTUa",
+  "name": "Seeing Red",
+  "type": "perk",
+  "_id": "ZPI6ynhdFdYyxJUx",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "actions": [],
+    "slug": "seeing-red",
+    "description": "<p>When you would gain @Affliction[enraged], the set duration increases by +3 Stacks.<br><br>Connection: Rage</p>",
+    "traits": [],
+    "prerequisites": [
+      "trait:berserker"
+    ],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "frenzied-assault",
+          "berserk",
+          "brain-fog"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/svg/fighting_icon.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 58,
+        "y": 38,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": "berserker"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Seeing Red",
+      "type": "passive",
+      "_id": "Mul9Bgd2zc3DTvj8",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.6OK8vhZYljL4X7cd",
+            "predicate": [],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "mode": 2,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "allowDuplicate": true,
+            "track": false,
+            "replaceSelf": false
+          },
+          {
+            "type": "effect-alteration",
+            "key": "enraged-received",
+            "alterations": [
+              {
+                "mode": 2,
+                "property": "effects.0.duration.turns",
+                "value": 2
+              }
+            ],
+            "value": 0,
+            "mode": 2,
+            "predicate": [],
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-perks.Item.ZPI6ynhdFdYyxJUx.ActiveEffect.Mul9Bgd2zc3DTvj8",
+        "duplicateSource": null,
+        "coreVersion": "13.347",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1733496068419,
+        "modifiedTime": 1755163064898,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

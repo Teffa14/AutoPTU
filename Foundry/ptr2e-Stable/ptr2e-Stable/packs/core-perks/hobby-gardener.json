@@ -1,0 +1,90 @@
+{
+  "name": "Hobby Gardener",
+  "type": "perk",
+  "folder": "CpqiTFuJPCaphgZU",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.natural-world.mod}",
+          20
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>You understand the basics of caring for and propagating plants. You've even managed to keep a house plant alive for several weeks. You can grow Grade E plants as a Camp Action.</p>",
+    "actions": [
+      {
+        "name": "Hobby Gardener",
+        "slug": "hobby-gardener",
+        "description": "<p>You understand the basics of caring for and propagating plants. You've even managed to keep a house plant alive for several weeks. You can grow Grade E plants as a Camp Action.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0,
+          "delay": null,
+          "priority": null
+        },
+        "type": "camping",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "hobby-gardener",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "root-1",
+          "breeder",
+          "nurturing-shoots"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#008000",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Exploration.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": null,
+        "y": null,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "resilience",
+      "archetype": "botany"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "GwAsdCjwvx72W8Um",
+  "img": "systems/ptr2e/img/perk-icons/Exploration.svg",
+  "effects": []
+}

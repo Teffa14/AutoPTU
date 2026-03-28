@@ -1,0 +1,475 @@
+{
+  "name": "vanilluxe",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 584,
+    "size": {
+      "category": "medium",
+      "type": "quad",
+      "height": 1.3,
+      "weight": 57.5
+    },
+    "diet": [
+      "terravore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 6
+      },
+      {
+        "type": "flight",
+        "value": 4
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "fully-evolved",
+      "freezer",
+      "chiller",
+      "breathless",
+      "hover",
+      "awkward-flyer",
+      "legless",
+      "2-headed"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "ice-body"
+        },
+        {
+          "slug": "adaptability"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "snow-warning"
+        },
+        {
+          "slug": "glaciation"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "weak-armor"
+        },
+        {
+          "slug": "refrigerate"
+        }
+      ],
+      "master": [
+        {
+          "slug": "crystallize"
+        },
+        {
+          "slug": "slush-rush"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "vanilluxe",
+    "stats": {
+      "hp": 71,
+      "atk": 95,
+      "def": 85,
+      "spa": 110,
+      "spd": 95,
+      "spe": 79
+    },
+    "types": [
+      "ice"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "mist",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "harden",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "taunt",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "astonish",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "weather-ball",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "icicle-crash",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "freeze-dry",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "icy-wind",
+          "level": 12,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "avalanche",
+          "level": 16,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hail",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "icicle-spear",
+          "level": 24,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mirror-shot",
+          "level": 26,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "uproar",
+          "level": 28,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "acid-armor",
+          "level": 32,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mirror-coat",
+          "level": 38,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "ice-beam",
+          "level": 44,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "blizzard",
+          "level": 52,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sheer-cold",
+          "level": 60,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magnet-rise",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "self-destruct",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "explosion",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "beat-up",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "imprison",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "hyper-voice",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "frost-breath",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "captureRate": 50,
+    "eggGroups": [
+      "mineral"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "ice"
+    ],
+    "evolutions": {
+      "name": "vanillite",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "vanillish",
+          "uuid": "Compendium.ptr2e.core-species.Item.xn7w3ci59QWMwpzJ",
+          "methods": [
+            {
+              "type": "level",
+              "level": 22,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "vanilluxe",
+              "uuid": "Compendium.ptr2e.core-species.Item.lGjCtKAxbsjhfEZZ",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 44,
+                  "operand": "and"
+                }
+              ],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "evolutions": []
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.o9I5950HtNzNR1uS"
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "lGjCtKAxbsjhfEZZ",
+  "effects": [],
+  "folder": null
+}

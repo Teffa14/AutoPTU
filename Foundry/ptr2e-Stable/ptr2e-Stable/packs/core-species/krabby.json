@@ -1,0 +1,533 @@
+{
+  "name": "krabby",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 98,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.4,
+      "weight": 6.5
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 8
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "quadrupedal",
+      "gilled",
+      "wavesense-15",
+      "underdog",
+      "jump-5"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "hyper-cutter"
+        },
+        {
+          "slug": "shell-armor"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "swift-swim"
+        },
+        {
+          "slug": "sheer-force"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "hydration"
+        },
+        {
+          "slug": "mold-breaker"
+        }
+      ],
+      "master": [
+        {
+          "slug": "grip-pincer"
+        },
+        {
+          "slug": "pure-power"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "krabby",
+    "stats": {
+      "hp": 30,
+      "atk": 105,
+      "def": 90,
+      "spa": 25,
+      "spd": 25,
+      "spe": 50
+    },
+    "types": [
+      "water"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "dig",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "agility",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "haze",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "amnesia",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "slash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "endure",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ancient-power",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "knock-off",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "tickle",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "hammer-arm",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "night-slash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "chip-away",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "body-slam",
+          "gen": "xd"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "crystal"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "fury-cutter",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "superpower",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dive",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "liquidation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "cut",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "headbutt",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "take-down",
+          "gen": "yellow"
+        },
+        {
+          "name": "surf",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "blizzard",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "strength",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "rage",
+          "gen": "yellow"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "thief",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "curse",
+          "gen": "crystal"
+        },
+        {
+          "name": "false-swipe",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "whirlpool",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hail",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "brick-break",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "x-scissor",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "hone-claws",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scald",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "leer",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "water-gun",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bubble",
+          "level": 1,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "mud-sport",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "harden",
+          "level": 4,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "vise-grip",
+          "level": 5,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "metal-claw",
+          "level": 8,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "mud-shot",
+          "level": 12,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "protect",
+          "level": 16,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bubble-beam",
+          "level": 20,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "stomp",
+          "level": 24,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "flail",
+          "level": 29,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "razor-shell",
+          "level": 32,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "slam",
+          "level": 36,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "brine",
+          "level": 39,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swords-dance",
+          "level": 40,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "crabhammer",
+          "level": 44,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "guillotine",
+          "level": 48,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ]
+    },
+    "captureRate": 225,
+    "eggGroups": [
+      "water3"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "krabby",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "kingler",
+          "uuid": "Compendium.ptr2e.core-species.Item.n8tea86RqqKitthX",
+          "methods": [
+            {
+              "type": "level",
+              "level": 28,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.y2QiocIQKl6EplCX"
+    },
+    "habitats": [
+      "beach"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "y2QiocIQKl6EplCX",
+  "effects": [],
+  "folder": null
+}

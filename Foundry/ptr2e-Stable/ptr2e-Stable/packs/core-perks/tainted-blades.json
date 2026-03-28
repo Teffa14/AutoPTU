@@ -1,0 +1,135 @@
+{
+  "name": "Tainted Blades",
+  "type": "perk",
+  "system": {
+    "_migration": {
+      "version": 0.109,
+      "previous": null
+    },
+    "actions": [],
+    "description": "<p>You may add the @Trait[poison] type as a second typing to your @Trait[weapon] attacks as a passive benefit.</p>",
+    "traits": [
+      "weapon",
+      "poison"
+    ],
+    "prerequisites": [
+      "trait:poison"
+    ],
+    "cost": 2,
+    "slug": "tainted-blades",
+    "nodes": [
+      {
+        "x": 177,
+        "y": 81,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "covering-fire",
+          "harry",
+          "venomous",
+          "potent-venom",
+          "fictile",
+          "clodsire-flesh"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/svg/poison_icon.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "finesse",
+      "archetype": "poison"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "effects": [
+    {
+      "name": "Tainted Blades",
+      "type": "passive",
+      "_id": "tIbnMrlmtcybWTBh",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-option",
+            "key": "",
+            "value": "tainted-blades",
+            "predicate": [],
+            "domain": "all",
+            "label": "Morgul Blade",
+            "toggleable": true,
+            "count": false,
+            "state": true,
+            "alwaysActive": false,
+            "mode": 2,
+            "ignored": false,
+            "suboptions": []
+          },
+          {
+            "type": "alter-attack",
+            "key": "weapon-trait-attack",
+            "value": "poison",
+            "predicate": [
+              "tainted-blades"
+            ],
+            "mode": 2,
+            "ignored": false,
+            "property": "type",
+            "definition": []
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-perks.Item.qzpbsWBCsiDZlcMD.ActiveEffect.S9NI6JHCCqM3iPYd",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1765236904057,
+        "modifiedTime": 1765236930051,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ],
+  "_id": "a2PlmoZ3TeH0i7eV",
+  "folder": "8nTJNodaluw5G4Y6"
+}

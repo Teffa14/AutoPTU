@@ -1,0 +1,47 @@
+{
+  "name": "Ruination",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "ruination",
+    "actions": [
+      {
+        "slug": "ruination",
+        "name": "Ruination",
+        "type": "attack",
+        "traits": [
+          "legendary"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "special",
+        "accuracy": 90,
+        "types": [
+          "dark"
+        ],
+        "description": "<p>Effect: On hit, all valid target's HP is cut in half. This attack always deals a minimum of 1 HP in damage.</p>",
+        "img": "systems/ptr2e/img/svg/dark_icon.svg"
+      }
+    ],
+    "grade": "C",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "6MiHI8QGhMknDms5",
+  "effects": []
+}

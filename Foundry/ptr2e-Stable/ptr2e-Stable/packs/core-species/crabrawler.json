@@ -1,0 +1,556 @@
+{
+  "name": "crabrawler",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "fighting"
+    ],
+    "stats": {
+      "hp": 47,
+      "atk": 82,
+      "def": 57,
+      "spa": 42,
+      "spd": 47,
+      "spe": 63
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "bubble",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-smash",
+          "level": 5,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leer",
+          "level": 9,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bubble-beam",
+          "level": 13,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pursuit",
+          "level": 13,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "protect",
+          "level": 17,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "brick-break",
+          "level": 22,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "power-up-punch",
+          "level": 22,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "slam",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dizzy-punch",
+          "level": 25,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "payback",
+          "level": 29,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reversal",
+          "level": 33,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "crabhammer",
+          "level": 37,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-defense",
+          "level": 42,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dynamic-punch",
+          "level": 45,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "close-combat",
+          "level": 49,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "amnesia",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "focus-punch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "superpower",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endeavor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wide-guard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thunder-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "drain-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-head",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dual-chop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earthquake",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "knock-off",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bulk-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "scald",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "frost-breath",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "work-up",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "brutal-swing",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "liquidation",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "coaching",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "upper-hand",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.6,
+      "weight": 7,
+      "category": "small",
+      "type": "quad"
+    },
+    "captureRate": 225,
+    "eggGroups": [
+      "water3"
+    ],
+    "genderRatio": 5,
+    "evolutions": {
+      "name": "crabrawler",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "crabominable",
+          "uuid": "Compendium.ptr2e.core-species.Item.4qSoD6IQqOV0iOqd",
+          "methods": [
+            {
+              "type": "item",
+              "item": "ice-stone",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 29,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.kobN2qTt2grUHdC9"
+    },
+    "number": 739,
+    "traits": [
+      "pokemon",
+      "underdog",
+      "many-legged",
+      "wallclimber",
+      "gilled",
+      "delectable",
+      "jump-4"
+    ],
+    "diet": [],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "hyper-cutter"
+        },
+        {
+          "slug": "iron-fist"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "anger-point"
+        },
+        {
+          "slug": "feisty"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "precise-fist"
+        },
+        {
+          "slug": "defiant"
+        }
+      ],
+      "master": [
+        {
+          "slug": "pure-power"
+        },
+        {
+          "slug": "cross-counter"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 9
+      },
+      {
+        "type": "swim",
+        "value": 4
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "forest"
+    ],
+    "slug": "crabrawler",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "kobN2qTt2grUHdC9",
+  "effects": [],
+  "folder": null
+}

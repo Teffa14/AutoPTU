@@ -1,0 +1,495 @@
+{
+  "name": "bunnelby",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 659,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.4,
+      "weight": 5
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 6
+      },
+      {
+        "type": "burrow",
+        "value": 6
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "underdog",
+      "burrower",
+      "semi-bipedal",
+      "jump-4"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "pickup"
+        },
+        {
+          "slug": "cheek-pouch"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "huge-power"
+        },
+        {
+          "slug": "oblivious"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "sand-force"
+        },
+        {
+          "slug": "own-tempo"
+        }
+      ],
+      "master": [
+        {
+          "slug": "moxie"
+        },
+        {
+          "slug": "arena-trap"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "bunnelby",
+    "stats": {
+      "hp": 38,
+      "atk": 36,
+      "def": 38,
+      "spa": 32,
+      "spd": 36,
+      "spe": 57
+    },
+    "types": [
+      "normal"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "leer",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "agility",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mud-slap",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "tackle",
+          "level": 3,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "laser-focus",
+          "level": 6,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "quick-attack",
+          "level": 9,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-slap",
+          "level": 10,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mud-shot",
+          "level": 12,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flail",
+          "level": 15,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-kick",
+          "level": 18,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "level": 21,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dig",
+          "level": 24,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "odor-sleuth",
+          "level": 25,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bounce",
+          "level": 27,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "take-down",
+          "level": 30,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swords-dance",
+          "level": 33,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "earthquake",
+          "level": 36,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "super-fang",
+          "level": 39,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "level": 47,
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "defense-curl",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spikes",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rollout",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "recycle",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endeavor",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "last-resort",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-head",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "cut",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "surf",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "strength",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thief",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "torment",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "brick-break",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulk-up",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "u-turn",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "smack-down",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "work-up",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wild-charge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "power-up-punch",
+          "gen": "omega-ruby-alpha-sapphire"
+        }
+      ]
+    },
+    "captureRate": 255,
+    "eggGroups": [
+      "ground"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "forest",
+      "field",
+      "mountain"
+    ],
+    "evolutions": {
+      "name": "bunnelby",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "diggersby",
+          "uuid": "Compendium.ptr2e.core-species.Item.SORF118CT8ay3ECj",
+          "methods": [
+            {
+              "type": "level",
+              "level": 20,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.LDtCZ8vHNvEdcI87"
+    },
+    "publication": {
+      "source": "PTR 2e Core - Kalos Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "LDtCZ8vHNvEdcI87",
+  "effects": [],
+  "folder": null
+}

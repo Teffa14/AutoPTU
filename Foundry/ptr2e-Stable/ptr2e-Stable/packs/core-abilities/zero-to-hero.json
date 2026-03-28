@@ -1,0 +1,140 @@
+{
+  "name": "Zero to Hero",
+  "type": "ability",
+  "img": "icons/magic/control/silhouette-grow-shrink-blue.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "forme-change"
+        ],
+        "name": "Zero to Hero",
+        "slug": "zero-to-hero",
+        "type": "passive",
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>The user switches-out.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user switches out, or is Hidden while in Combat.</p><p>Effect: The user transforms into their Hero Forme until the end of combat or when the user gains @Affliction[fainted].</p>",
+        "img": "icons/magic/control/silhouette-grow-shrink-blue.webp"
+      },
+      {
+        "traits": [
+          "forme-change"
+        ],
+        "name": "Zero to Hero (Henshin)",
+        "slug": "zero-to-hero-henshin",
+        "type": "generic",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: The user enters their Hero Forme for 5 Activations.</p>",
+        "img": "icons/magic/control/silhouette-grow-shrink-blue.webp"
+      }
+    ],
+    "description": "<p>Effect: Connection - Flip Turn. If the user switches out or becomes Hidden during combat (including if they start Combat while Hidden), the user transforms into their Hero Forme until the end of combat or when the user gains @Affliction[fainted]. The user can spend 6 PP to transform into their Hero Forme for 5 Activations as a Complex Action.</p><p>Passive: The user gains Water Veil and Run Away as Extra Abilities. While the user is in their Hero Forme, they gain Connection - Jet Punch and instead gain Iron Fist and Avenger as Extra Abilities.</p>",
+    "traits": [
+      "forme-change",
+      "innate",
+      "connection"
+    ],
+    "slug": "zero-to-hero",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "gfJ5DPR5rW4LmiZA",
+  "effects": [
+    {
+      "name": "Zero To Hero",
+      "type": "passive",
+      "_id": "gfa3qdsK7eDfydYV",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.mQ7A5gRxvfUfZ8ew",
+            "predicate": [
+              "ability:zero-to-hero:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "allowDuplicate": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737422198535,
+        "modifiedTime": 1754322300794,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "Bitter Blade",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "bitter-blade",
+    "actions": [
+      {
+        "slug": "bitter-blade",
+        "name": "Bitter Blade",
+        "type": "attack",
+        "traits": [
+          "drain-1-2",
+          "pass-2",
+          "sharp",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 90,
+        "accuracy": 100,
+        "types": [
+          "fire"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "CdC2u1OUXsmrXZBj",
+  "effects": []
+}

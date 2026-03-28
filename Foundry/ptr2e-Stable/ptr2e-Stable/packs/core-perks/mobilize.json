@@ -1,0 +1,97 @@
+{
+  "name": "Mobilize",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.leadership.mod}",
+          20
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>Effect: The user spends 4 PP as a Simple Action and sets a Mobilize Summon at 100. While the Summon is active, allies cannot have [interrupt-x] Actions or Abilities triggered by their Movement.</p>",
+    "actions": [
+      {
+        "name": "Mobilize",
+        "slug": "mobilize",
+        "description": "<p>Allied creatures in range cannot have [Interrupt X] Actions or Abilities triggered their by their Movement for 2 Activations.</p>",
+        "range": {
+          "target": "emanation",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 4
+        },
+        "type": "generic",
+        "traits": [
+          "command",
+          "social"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "mobilize",
+    "traits": [
+      "command",
+      "social"
+    ],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 43,
+        "y": 53,
+        "hidden": false,
+        "type": "entry",
+        "connected": [
+          "drill-sergeant",
+          "cheerleader",
+          "hold-the-line",
+          "im-with-you",
+          "chansey-medicine",
+          "root-1",
+          "breeder",
+          "victory-march",
+          "bit-of-a-tosser"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Tactician.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "finesse",
+      "archetype": "support"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "EhfPkS23yRI8VENp",
+  "img": "systems/ptr2e/img/perk-icons/Tactician.svg",
+  "effects": [],
+  "folder": "PAZ8zWUPw7Azm5V6"
+}

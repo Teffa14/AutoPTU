@@ -1,0 +1,870 @@
+# Audit Report
+
+This report summarizes coverage risk areas (handlers/tests) relative to data sources.
+It does NOT claim rulebook parity; it highlights where parity is less certain.
+Moves without special handlers may still be fully implemented by generic rules; lack of a handler alone is not a bug.
+
+## Moves
+- Total moves: 854
+- Moves with special handlers: 0
+- Moves without special handlers: 854
+- Moves without special handlers AND empty/"--" effects text: 83
+- Moves without special handlers BUT with non-empty effects text (handled generically): 771
+
+### Moves Without Handlers + No Effects Text
+- aqua jet
+- aqua tail
+- arm thrust
+- barrage
+- bone rush
+- bonemerang
+- boomburst
+- bullet punch
+- bullet seed
+- comet punch
+- dazzling gleam
+- double hit
+- double kick
+- double slap
+- double swipe
+- double-edge
+- dragon claw
+- dragon darts
+- dragon hammer
+- dragon pulse
+- drill peck
+- dual chop
+- egg bomb
+- ew adept
+- ew expert
+- extreme speed
+- fairy wind
+- fury attack
+- fury swipes
+- gear grind
+- giga impact
+- hidden power bug
+- hidden power dark
+- hidden power dragon
+- hidden power electric
+- hidden power fairy
+- hidden power fighting
+- hidden power fire
+- hidden power flying
+- hidden power ghost
+- hidden power grass
+- hidden power ground
+- hidden power ice
+- hidden power poison
+- hidden power psychic
+- hidden power rock
+- hidden power steel
+- hidden power water
+- horn attack
+- hyper beam
+- ice shard
+- icicle spear
+- light of ruin
+- mach punch
+- mega punch
+- meteor assault
+- mh adept
+- mh expert
+- oh adept
+- peck
+- petal blizzard
+- pin missile
+- pound
+- power gem
+- precipice blades
+- quick attack
+- rock throw
+- scratch
+- seed bomb
+- shadow sneak
+- spike cannon
+- struggle
+- struggle+
+- tail slap
+- vacuum wave
+- vicegrip
+- water shuriken
+- water shuriken [sm]
+- wave crash
+- wild charge
+- wing attack
+- wood hammer
+- x-scissor
+
+### Moves Without Handlers + Effects Text
+- absorb
+- accelerock
+- acid
+- acid armor
+- acid spray
+- acrobatics
+- acupressure
+- aerial ace
+- aeroblast
+- after you
+- agility
+- air cutter
+- air slash
+- ally switch
+- amnesia
+- anchor shot
+- ancient power
+- apple acid
+- aqua ring
+- arcane fury
+- arcane storm
+- aromatherapy
+- aromatic mist
+- assist
+- assurance
+- astonish
+- astral barrage
+- attack of opportunity
+- attack order
+- attract
+- aura sphere
+- aura wheel
+- aurora beam
+- aurora veil
+- autotomize
+- avalanche
+- baby-doll eyes
+- backswing
+- bane
+- baneful bunker
+- barb barrage
+- barrier
+- bash!
+- baton pass
+- beak blast
+- beat up
+- behemoth bash
+- behemoth blade
+- belch
+- belly drum
+- bestow
+- bide
+- bind
+- bite
+- bitter malice
+- blast burn
+- blaze kick
+- bleakwind storm
+- bleed!
+- blind
+- blizzard
+- block
+- blue flare
+- body press
+- body slam
+- bolt beak
+- bolt strike
+- bon mot
+- bone club
+- bounce
+- branch poke
+- brave bird
+- breaking swipe
+- brick break
+- brine
+- brutal swing
+- bubble
+- bubblebeam
+- bug bite
+- bug buzz
+- bulk up
+- bulldoze
+- bullseye
+- burn up
+- burning jealousy
+- calm mind
+- camouflage
+- captivate
+- ceaseless edge
+- charge
+- charge beam
+- charm
+- chatter
+- cheap shot
+- chip away
+- chloroblast
+- circle throw
+- clamp
+- clanging scales
+- clangorous soul
+- clear smog
+- close combat
+- coaching
+- coil
+- cone of force
+- confide
+- confuse ray
+- confusion
+- constrict
+- conversion
+- conversion2
+- copycat
+- core enforcer
+- corrosive gas
+- cosmic power
+- cotton guard
+- cotton spore
+- counter
+- court change
+- covet
+- crabhammer
+- crafty shield
+- cross chop
+- cross poison
+- crunch
+- crush claw
+- crush grip
+- curse
+- cut
+- dark pulse
+- dark void
+- dark void [sm]
+- darkest lariat
+- deadly strike
+- decorate
+- defend order
+- defense curl
+- defog
+- destiny bond
+- detect
+- diamond storm
+- dig
+- dire claw
+- dirty trick
+- disable
+- disarm
+- disarming voice
+- discharge
+- disengage
+- dive
+- dizzy punch
+- doom desire
+- double iron bash
+- double team
+- draco meteor
+- dragon ascent
+- dragon breath
+- dragon dance
+- dragon energy
+- dragon rage
+- dragon rush
+- dragon tail
+- drain punch
+- draining kiss
+- dream eater
+- drill run
+- drum beating
+- dual wingbeat
+- dynamax cannon
+- dynamic punch
+- earth power
+- earthquake
+- echoed voice
+- eerie impulse
+- eerie spell
+- electric terrain
+- electrify
+- electro ball
+- electroweb
+- embargo
+- ember
+- encore
+- endeavor
+- endure
+- energy ball
+- energy blast
+- energy sphere
+- energy vortex
+- entrainment
+- eruption
+- esper wing
+- eternabeam
+- expanding force
+- explosion
+- extrasensory
+- facade
+- fairy lock
+- fake out
+- fake tears
+- false surrender
+- false swipe
+- façade
+- feather dance
+- feint
+- feint attack
+- fell stinger
+- fell stinger [sm]
+- fiery dance
+- fiery wrath
+- final gambit
+- fire blast
+- fire fang
+- fire lash
+- fire pledge
+- fire punch
+- fire spin
+- first impression
+- fishious rend
+- fissure
+- flail
+- flame burst
+- flame charge
+- flame wheel
+- flamethrower
+- flare blitz
+- flash
+- flash cannon
+- flatter
+- fleur cannon
+- fling
+- flip turn
+- flirt
+- floral healing
+- flower shield
+- fly
+- flying press
+- flying press [sm]
+- focus blast
+- focus energy
+- focus punch
+- follow me
+- force palm
+- foresight
+- forest's curse
+- foul play
+- freeze shock
+- freeze-dry
+- freezing glare
+- frenzy plant
+- frost breath
+- frustration
+- furious strikes
+- fury cutter
+- fusion bolt
+- fusion flare
+- future sight
+- gastro acid
+- gear up
+- gear up [ss]
+- geomancy
+- giga drain
+- glacial lance
+- glaciate
+- glare
+- gouge
+- grapple
+- grass knot
+- grass pledge
+- grass whistle
+- grassy glide
+- grassy terrain
+- grav apple
+- gravity
+- growl
+- growth
+- grudge
+- guard split
+- guard swap
+- guillotine
+- gunk shot
+- gust
+- gyro ball
+- hail
+- hammer arm
+- harden
+- haze
+- head charge
+- head smash
+- headbutt
+- headlong rush
+- heal bell
+- heal block
+- heal order
+- heal pulse
+- healing wish
+- heart stamp
+- heart swap
+- heat crash
+- heat wave
+- heavy slam
+- helping hand
+- hex
+- hidden power
+- high horsepower
+- high jump kick
+- hinder
+- hold hands
+- hone claws
+- horn drill
+- horn leech
+- howl
+- howl [ss]
+- hurricane
+- hydro cannon
+- hydro pump
+- hyper fang
+- hyper voice
+- hyperspace fury
+- hyperspace hole
+- hypnosis
+- ice ball
+- ice beam
+- ice burn
+- ice fang
+- ice hammer
+- ice punch
+- icicle crash
+- icy wind
+- imprison
+- incinerate
+- infernal parade
+- inferno
+- infestation
+- ingrain
+- instruct
+- intercept melee
+- intercept ranged
+- ion deluge
+- iron defense
+- iron head
+- iron tail
+- jaw lock
+- judgement
+- jump kick
+- jungle healing
+- karate chop
+- kinesis
+- king's shield
+- knock off
+- land's wrath
+- laser focus
+- lash out
+- last resort
+- lava plume
+- leaf blade
+- leaf storm
+- leaf tornado
+- leafage
+- leech life
+- leech life [sm]
+- leech seed
+- leer
+- lick
+- life dew
+- light screen
+- liquidation
+- lock-on
+- lovely kiss
+- low blow
+- low kick
+- low sweep
+- lucky chant
+- lunar blessing
+- lunar dance
+- lunge
+- luster purge
+- magic burst
+- magic coat
+- magic powder
+- magic room
+- magical leaf
+- magma storm
+- magnet bomb
+- magnet rise
+- magnetic flux
+- magnetic flux [sm]
+- magnetic flux [ss]
+- magnitude
+- maneuver
+- manipulate
+- mat block
+- maul
+- me first
+- mean look
+- meditate
+- mega drain
+- mega kick
+- megahorn
+- memento
+- metal burst
+- metal claw
+- metal sound
+- meteor beam
+- meteor mash
+- metronome
+- milk drink
+- mimic
+- mind blown
+- mind reader
+- minimize
+- miracle eye
+- mirror coat
+- mirror move
+- mirror shot
+- mist
+- mist ball
+- misty explosion
+- misty terrain
+- moonblast
+- moongeist beam
+- moonlight
+- morning sun
+- mountain gale
+- mud bomb
+- mud shot
+- mud sport
+- mud-slap
+- muddy water
+- multi-attack
+- multi-attack [ss]
+- mystical fire
+- mystical power
+- name
+- nasty plot
+- natural gift
+- nature power
+- nature's madness
+- needle arm
+- night daze
+- night shade
+- night slash
+- nightmare
+- no retreat
+- noble roar
+- nuzzle
+- oblivion wing
+- obstruct
+- octazooka
+- octolock
+- odor sleuth
+- ominous wind
+- origin pulse
+- outrage
+- overdrive
+- overheat
+- pain split
+- parabolic charge
+- parabolic charge [sm]
+- parting shot
+- pay day
+- payback
+- perish song
+- petal dance
+- phantom force
+- photon geyser
+- pierce!
+- plasma fists
+- play nice
+- play rough
+- pluck
+- poison fang
+- poison gas
+- poison jab
+- poison powder
+- poison sting
+- poison tail
+- pollen puff
+- poltergeist
+- powder
+- powder snow
+- power shift
+- power split
+- power swap
+- power trick
+- power trip
+- power whip
+- power-up punch
+- present
+- prismatic laser
+- protect
+- psybeam
+- psych up
+- psychic
+- psychic fangs
+- psychic terrain
+- psycho boost
+- psycho cut
+- psycho shift
+- psyshield bash
+- psyshock
+- psystrike
+- psywave
+- punishment
+- purify
+- pursuit
+- push
+- pyro ball
+- quash
+- quick guard
+- quiver dance
+- rage
+- rage powder
+- raging fury
+- rain dance
+- rapid spin
+- rapid spin [ss]
+- razor leaf
+- razor shell
+- razor wind
+- recover
+- recycle
+- reflect
+- reflect type
+- refresh
+- relic song
+- rending spell
+- resonance beam
+- rest
+- retaliate
+- return
+- revelation dance
+- revenge
+- reversal
+- riposte
+- rising voltage
+- roar
+- roar of time
+- rock blast
+- rock climb
+- rock polish
+- rock slide
+- rock smash
+- rock tomb
+- rock wrecker
+- role play
+- rolling kick
+- rollout
+- roost
+- rototiller
+- round
+- sacred fire
+- sacred sword
+- safeguard
+- salvo
+- sand attack
+- sand tomb
+- sandstorm
+- sandstorm sear
+- scald
+- scale shot
+- scary face
+- scorching sands
+- screech
+- searing shot
+- secret force
+- secret power
+- secret sword
+- seed flare
+- seismic toss
+- self-destruct
+- shadow ball
+- shadow bone
+- shadow claw
+- shadow force
+- shadow punch
+- sharpen
+- sheer cold
+- shell side arm
+- shell smash
+- shell trap
+- shelter
+- shift gear
+- shock wave
+- shore up
+- signal beam
+- silver wind
+- simple beam
+- sing
+- sketch
+- skill swap
+- skitter smack
+- skull bash
+- sky attack
+- sky drop
+- sky uppercut
+- slack off
+- slam
+- slash
+- sleep powder
+- sleep talk
+- slice
+- sludge
+- sludge bomb
+- sludge wave
+- smack down
+- smart strike
+- smelling salts
+- smog
+- smokescreen
+- snap trap
+- snarl
+- snatch
+- snipe shot
+- snore
+- soak
+- soft-boiled
+- solar beam
+- solar blade
+- sonic boom
+- spacial rend
+- spark
+- sparkling aria
+- spectral thief
+- speed swap
+- spider web
+- spikes
+- spiky shield
+- spirit break
+- spirit lance
+- spirit shackle
+- spit up
+- spite
+- splash
+- spore
+- spotlight
+- springtide storm
+- sprint
+- stealth rock
+- steam eruption
+- steamroller
+- steel beam
+- steel roller
+- steel wing
+- sticky web
+- stockpile
+- stomp
+- stomping tantrum
+- stone axe
+- stone edge
+- stored power
+- storm throw
+- strange steam
+- strength
+- strength sap
+- string shot
+- struggle bug
+- stuff cheeks
+- stun spore
+- submission
+- substitute
+- sucker punch
+- sucker punch [sm]
+- sunny day
+- sunsteel strike
+- super fang
+- superpower
+- supersonic
+- surf
+- surging strikes
+- swagger
+- swagger [sm]
+- swallow
+- sweeping strike
+- sweet kiss
+- sweet scent
+- swift
+- switcheroo
+- swords dance
+- synchronoise
+- synthesis
+- tackle
+- tackle [sm]
+- tail glow
+- tail whip
+- tailwind
+- take aim
+- take down
+- take heart
+- tar shot
+- taunt
+- tearful look
+- teatime
+- techno blast
+- teeter dance
+- telekinesis
+- teleport
+- terrain pulse
+- terrorize
+- thief
+- thousand arrows
+- thousand waves
+- thrash
+- throat chop
+- thunder
+- thunder cage
+- thunder fang
+- thunder punch
+- thunder shock
+- thunder wave
+- thunder wave [sm]
+- thunderbolt
+- thunderous kick
+- tickle
+- titanic slam
+- topsy-turvy
+- torment
+- toxic
+- toxic spikes
+- toxic threads
+- transform
+- tri attack
+- trick
+- trick room
+- trick-or-treat
+- trip
+- triple arrows
+- triple axel
+- triple kick
+- triple kick [la]
+- triple threat
+- trop kick
+- trump card
+- twineedle
+- twister
+- u-turn
+- uproar
+- v-create
+- venom drench
+- venoshock
+- victory dance
+- vine whip
+- vital throw
+- volt switch
+- volt tackle
+- wake-up slap
+- water gun
+- water pledge
+- water pulse
+- water sport
+- water spout
+- waterfall
+- wear down
+- weather ball
+- whirlpool
+- whirlwind
+- wicked blow
+- wide guard
+- wildbolt storm
+- will-o-wisp
+- wish
+- withdraw
+- wonder room
+- work up
+- worry seed
+- wounding strike
+- wrap
+- wring out
+- yawn
+- zap cannon
+- zen headbutt
+- zing zap

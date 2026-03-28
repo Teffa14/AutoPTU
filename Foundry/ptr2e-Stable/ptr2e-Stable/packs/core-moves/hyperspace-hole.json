@@ -1,0 +1,50 @@
+{
+  "name": "Hyperspace Hole",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "hyperspace-hole",
+    "actions": [
+      {
+        "slug": "hyperspace-hole",
+        "name": "Hyperspace Hole",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "danger-close",
+          "pierce"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "special",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "psychic"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "45AOpbdj7b05bGeT",
+  "effects": []
+}

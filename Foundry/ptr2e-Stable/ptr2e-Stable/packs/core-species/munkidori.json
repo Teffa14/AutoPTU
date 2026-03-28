@@ -1,0 +1,531 @@
+{
+  "name": "munkidori",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "poison",
+      "psychic"
+    ],
+    "stats": {
+      "hp": 88,
+      "atk": 75,
+      "def": 66,
+      "spa": 130,
+      "spd": 90,
+      "spe": 106
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "scratch",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confusion",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fake-out",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flatter",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "level": 8,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psybeam",
+          "level": 16,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "clear-smog",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poison-jab",
+          "level": 32,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-wave",
+          "level": 48,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "nasty-plot",
+          "level": 56,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "future-sight",
+          "level": 64,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "parting-shot",
+          "level": 72,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "night-shade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confuse-ray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "metronome",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "spite",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "baton-pass",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "uproar",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "imprison",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "u-turn",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-claw",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psyshock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "venoshock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acid-spray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stored-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hex",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-terrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lash-out",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poltergeist",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-noise",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1,
+      "weight": 12.2,
+      "category": "small",
+      "type": "height"
+    },
+    "captureRate": 33,
+    "eggGroups": [],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "munkidori",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 1015,
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "legendary",
+      "fully-evolved",
+      "wallclimber",
+      "loyal-three",
+      "jump-5"
+    ],
+    "diet": [
+      "omnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "toxic-chain"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "frisk"
+        },
+        {
+          "slug": "berserk"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "opportunist"
+        },
+        {
+          "slug": "screen-cleaner"
+        }
+      ],
+      "master": [
+        {
+          "slug": "symbiosis"
+        },
+        {
+          "slug": "neuroforce"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 11
+      },
+      {
+        "type": "swim",
+        "value": 5
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "appraise",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "history",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "legends",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "psychic",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "perform-clever",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "performance"
+      },
+      {
+        "slug": "psychology",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "research",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ride",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "sleight-of-hand",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "teaching",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "munkidori",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "IMcFtJHcaAu3F6ZB",
+  "effects": [],
+  "folder": null
+}

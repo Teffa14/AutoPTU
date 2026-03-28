@@ -1,0 +1,110 @@
+{
+  "name": "Rapid Spin",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "rapid-spin",
+    "actions": [
+      {
+        "slug": "rapid-spin",
+        "name": "Rapid Spin",
+        "type": "attack",
+        "traits": [
+          "basic",
+          "contact",
+          "partial-automation"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 50,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: The user gains +1 SPD Stage for 5 Activations. The user also clears any [Hazards] within this attacks's range, and ends any [Trap] attack effects the user is affected by.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "traits": [],
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "MCQGC0NYfdM72QBK",
+  "effects": [
+    {
+      "name": "Rapid Spin",
+      "type": "affliction",
+      "_id": "5hnnsJIol52RGqqz",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "rapid-spin-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.XeiSuS3APUcN0MLM",
+            "predicate": [],
+            "chance": 100,
+            "affects": "self",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": []
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "priority": 50,
+        "formula": "",
+        "type": "damage"
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "1.0.3.beta",
+        "createdTime": 1726142564420,
+        "modifiedTime": 1739388183351,
+        "lastModifiedBy": "tXAZ3QUgjuwX4gdV"
+      }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "name": "Frenzy Rush",
+  "type": "move",
+  "_id": "ZNl94X4B6JuegB6H",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "frenzy-rush",
+    "actions": [
+      {
+        "name": "Frenzy Rush",
+        "slug": "frenzy-rush",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "traits": [
+          "5-strike",
+          "contact",
+          "sharp",
+          "jaw",
+          "horn",
+          "punch",
+          "kick",
+          "tail",
+          "hammer",
+          "adaptable",
+          "weapon",
+          "basic",
+          "crash-1-2"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "types": [
+          "normal"
+        ],
+        "category": "physical",
+        "power": 30,
+        "accuracy": 90,
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": []
+}

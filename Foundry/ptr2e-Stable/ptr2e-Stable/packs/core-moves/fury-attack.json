@@ -1,0 +1,50 @@
+{
+  "name": "Fury Attack",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "fury-attack",
+    "actions": [
+      {
+        "slug": "fury-attack",
+        "name": "Fury Attack",
+        "type": "attack",
+        "traits": [
+          "5-strike",
+          "contact",
+          "horn"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "category": "physical",
+        "power": 15,
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "s4WU11rAFeqgS9y6",
+  "effects": []
+}

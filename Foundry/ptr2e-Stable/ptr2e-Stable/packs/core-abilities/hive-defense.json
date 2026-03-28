@@ -1,0 +1,122 @@
+{
+  "name": "Hive Defense",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive",
+          "interrupt-3"
+        ],
+        "name": "Hive Defense",
+        "slug": "hive-defense",
+        "type": "passive",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3,
+          "trigger": "<p>The user is hit by a Physical- or Special-Category attack.</p>"
+        },
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user is hit by a Physical- or Special-Category attack.</p><p>Effect: The user freely moves up to half of the Movement Score of their choice, and freely uses Infestation, including the triggering creature in its Blast area.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user is hit by a Physical- or Special-Category attack.</p><p>Effect: Connection - Infestation. The user freely moves up to half of the Movement Score of their choice, and freely uses Infestation, including the triggering creature in its Blast area.</p>",
+    "traits": [
+      "defensive",
+      "connection"
+    ],
+    "slug": "hive-defense",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "DBQiulsYTsFjbMc1",
+  "effects": [
+    {
+      "name": "Hive Defense",
+      "type": "passive",
+      "_id": "d5nfE8wT9ZrKC9t1",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.BIG6nxi9Dw2cWq9X",
+            "predicate": [
+              "ability:hive-defense:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "allowDuplicate": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737403169190,
+        "modifiedTime": 1754319167110,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

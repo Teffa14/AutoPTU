@@ -1,0 +1,419 @@
+{
+  "name": "boltund",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "electric"
+    ],
+    "stats": {
+      "hp": 69,
+      "atk": 90,
+      "def": 60,
+      "spa": 90,
+      "spd": 60,
+      "spe": 121
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "tail-whip",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bite",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "electrify",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "nuzzle",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "roar",
+          "level": 15,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spark",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "charm",
+          "level": 28,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "crunch",
+          "level": 34,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "charge",
+          "level": 41,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wild-charge",
+          "level": 48,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "play-rough",
+          "level": 55,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "electric-terrain",
+          "level": 62,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "rising-voltage",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dig",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "agility",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "focus-energy",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swift",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "uproar",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-voice",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulk-up",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-fang",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fire-fang",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "electro-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "volt-switch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snarl",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "eerie-impulse",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psychic-fangs",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 1,
+      "weight": 34,
+      "category": "small",
+      "type": "height"
+    },
+    "captureRate": 50,
+    "eggGroups": [
+      "ground"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "yamper",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "boltund",
+          "uuid": "Compendium.ptr2e.core-species.Item.qlkDxeqdcqS6laEA",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.NlIp9iPQwSvaxEV6"
+    },
+    "number": 836,
+    "traits": [
+      "pokemon",
+      "underdog",
+      "fully-evolved",
+      "quadrupedal",
+      "jump-4"
+    ],
+    "diet": [
+      "omnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "ball-fetch"
+        },
+        {
+          "slug": "rattled"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "strong-jaw"
+        },
+        {
+          "slug": "competitive"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "feisty"
+        },
+        {
+          "slug": "acceleration"
+        }
+      ],
+      "master": [
+        {
+          "slug": "spectral-jaw"
+        },
+        {
+          "slug": "volt-absorb"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 19
+      },
+      {
+        "type": "swim",
+        "value": 6
+      }
+    ],
+    "skills": [
+      {
+        "slug": "accounting",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "acrobatics",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "field"
+    ],
+    "slug": "boltund",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "qlkDxeqdcqS6laEA",
+  "effects": [],
+  "folder": null
+}

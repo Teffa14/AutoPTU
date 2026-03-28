@@ -1,0 +1,49 @@
+{
+  "name": "Role Play",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "role-play",
+    "actions": [
+      {
+        "slug": "role-play",
+        "name": "Role Play",
+        "type": "attack",
+        "traits": [
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "types": [
+          "psychic"
+        ],
+        "description": "<p>Effect: The user gains the target's Basic Ability for 5 Activations. This cannot be used to gain an [Innate] Ability.</p>",
+        "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "EU3IH3pjOelFqVI9",
+  "effects": []
+}

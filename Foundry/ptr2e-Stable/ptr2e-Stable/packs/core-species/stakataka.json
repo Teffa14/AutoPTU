@@ -1,0 +1,443 @@
+{
+  "name": "stakataka",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "rock",
+      "steel"
+    ],
+    "stats": {
+      "hp": 61,
+      "atk": 131,
+      "def": 211,
+      "spa": 53,
+      "spd": 101,
+      "spe": 13
+    },
+    "moves": {
+      "tutor": [
+        {
+          "name": "bind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "role-play",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "superpower",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "recycle",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "skill-swap",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "gravity",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "wonder-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "telekinesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "steel-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "steel-roller",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "meteor-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mega-kick",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-slam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "earthquake",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "reflect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "gyro-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-polish",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "trick-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "smack-down",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "heavy-slam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "heat-crash",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "high-horsepower",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "brutal-swing",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-press",
+          "gen": "sword-shield"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "harden",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-throw",
+          "level": 5,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "level": 10,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stomp",
+          "level": 15,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bide",
+          "level": 17,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "block",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-slide",
+          "level": 25,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wide-guard",
+          "level": 30,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "autotomize",
+          "level": 35,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-blast",
+          "level": 40,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "magnet-rise",
+          "level": 45,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "iron-defense",
+          "level": 50,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "iron-head",
+          "level": 55,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "take-down",
+          "level": 60,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stealth-rock",
+          "level": 65,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-edge",
+          "level": 70,
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 5.5,
+      "weight": 820,
+      "category": "colossal",
+      "type": "quad"
+    },
+    "captureRate": 41,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "stakataka",
+      "details": null,
+      "evolutions": [],
+      "uuid": null,
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 805,
+    "traits": [
+      "pokemon",
+      "ultra-beast",
+      "gestalt",
+      "quadrupedal",
+      "lumbering",
+      "living-prison",
+      "fully-evolved",
+      "jump-1"
+    ],
+    "diet": [
+      "nullivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "beast-boost"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "compound-eyes"
+        },
+        {
+          "slug": "bulletproof"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "battle-armor"
+        },
+        {
+          "slug": "mimicry"
+        }
+      ],
+      "master": [
+        {
+          "slug": "stamina"
+        },
+        {
+          "slug": "power-spot"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "disguise",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "engineering",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 90,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ultrology",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "science"
+      },
+      {
+        "slug": "spot",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "stakataka",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "xyuuRNw2jYBbODQ5",
+  "effects": []
+}

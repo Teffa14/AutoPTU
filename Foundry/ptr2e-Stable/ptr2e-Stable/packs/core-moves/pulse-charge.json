@@ -1,0 +1,67 @@
+{
+  "name": "Pulse Charge",
+  "type": "move",
+  "_id": "6gJTJZOmiS0y8FHd",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Pulse Charge",
+        "slug": "pulse-charge",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "pulse",
+          "5-strike"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "variant": null,
+        "types": [
+          "electric"
+        ],
+        "category": "special",
+        "power": 20,
+        "accuracy": 100,
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null,
+        "description": ""
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "sort": 7600000,
+  "ownership": {
+    "default": 0,
+    "CYLdyr5mPSDmNpTp": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.327",
+    "systemId": "ptr2e",
+    "systemVersion": "0.10.0-alpha.1.0.4",
+    "createdTime": 1718742902901,
+    "modifiedTime": 1719975431968,
+    "lastModifiedBy": "CYLdyr5mPSDmNpTp"
+  }
+}

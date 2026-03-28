@@ -1,0 +1,82 @@
+{
+  "name": "Upper Hand",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "upper-hand",
+    "actions": [
+      {
+        "slug": "upper-hand",
+        "name": "Upper Hand",
+        "type": "attack",
+        "traits": [
+          "punch",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 65,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "upper-hand-reaction",
+        "name": "Upper Hand (Reaction)",
+        "type": "attack",
+        "traits": [
+          "punch",
+          "dash",
+          "interrupt-2",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "<p>The user is targeted by a  Attack.</p>"
+        },
+        "category": "physical",
+        "power": 65,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "description": "<p>Trigger: The user is targeted by a  Attack.</p><p>Effect: The user can freely move up to half of the Movement Score of their choice towards the target and then attacks with Upper Hand, if possible. If the target gains @Affliction[fainted] due to damage from this move, the triggering attack fails.</p>",
+        "variant": "upper-hand",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "PSM4n8qYVeHDnQEk",
+  "effects": []
+}

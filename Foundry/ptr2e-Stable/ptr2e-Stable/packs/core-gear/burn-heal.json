@@ -1,0 +1,55 @@
+{
+  "name": "Burn Heal",
+  "img": "systems/ptr2e/img/item-icons/burn heal.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 1,
+    "crafting": {
+      "skill": "medicine",
+      "spans": 2,
+      "materials": [
+        "1x-rawst-berry",
+        "2x-grade-e-berries"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "E",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "common",
+    "consumableType": "restorative",
+    "traits": [
+      "stack-3",
+      "combat",
+      "held",
+      "restorative",
+      "consumable",
+      "healing"
+    ],
+    "description": "The target is healed of @Affliction[burn] .",
+    "quantity": 1,
+    "slug": "burn-heal",
+    "stack": 3,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "xhp4mTRK8t56XeLt",
+  "effects": [],
+  "folder": "srQci2ThhRKdmC6g"
+}

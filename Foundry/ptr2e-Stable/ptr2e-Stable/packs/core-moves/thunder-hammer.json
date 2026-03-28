@@ -1,0 +1,52 @@
+{
+  "name": "Thunder Hammer",
+  "type": "move",
+  "_id": "VZGkTIz8AkdtTCQn",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "thunder-hammer",
+    "actions": [
+      {
+        "name": "Thunder Hammer",
+        "slug": "thunder-hammer",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/electric_icon.svg",
+        "traits": [
+          "contact",
+          "crushing",
+          "hammer"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "types": [
+          "electric"
+        ],
+        "category": "physical",
+        "power": 120,
+        "accuracy": 80,
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

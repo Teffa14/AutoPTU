@@ -1,0 +1,111 @@
+{
+  "name": "Maneuver Lab",
+  "description": "Single arena to exercise all battle maneuvers: use Disarm/Trip/Push/Dirty Trick/Hinder/Blind/Low Blow/Grapple on the adjacent Bandit, Sprint/Disengage for movement tests, set an Intercept for your ally against the Sniper's ranged attacks, and pick up the Potion from your starting tile to trigger Attack of Opportunity.",
+  "default_weather": "Clear",
+  "grid": {
+    "width": 12,
+    "height": 8,
+    "blockers": [[6, 2], [6, 3], [6, 4]],
+    "tiles": {
+      "3,3": {"items": [{"name": "Potion"}]}
+    }
+  },
+  "players": [
+    {
+      "name": "Brawler",
+      "species": "Machop",
+      "level": 22,
+      "types": ["Fighting"],
+      "hp_stat": 12,
+      "atk": 12,
+      "def": 9,
+      "spatk": 6,
+      "spdef": 7,
+      "spd": 10,
+      "skills": {
+        "combat": 4,
+        "athletics": 4,
+        "acrobatics": 3,
+        "stealth": 2,
+        "focus": 2
+      },
+      "moves": [
+        {"name": "Tackle", "type": "Normal", "category": "Physical", "db": 4, "ac": 2, "range_kind": "Melee", "freq": "At-Will"}
+      ],
+      "movement": {"overland": 6, "swim": 2, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 2, "l_jump": 2, "power": 4}
+    },
+    {
+      "name": "Tactician",
+      "species": "Gallade",
+      "level": 18,
+      "types": ["Psychic", "Fighting"],
+      "hp_stat": 10,
+      "atk": 9,
+      "def": 8,
+      "spatk": 9,
+      "spdef": 8,
+      "spd": 10,
+      "tags": ["Trainer"],
+      "skills": {
+        "guile": 3,
+        "charm": 3,
+        "intimidate": 3,
+        "focus": 3,
+        "acrobatics": 2,
+        "athletics": 2
+      },
+      "moves": [
+        {"name": "Psycho Cut", "type": "Psychic", "category": "Physical", "db": 6, "ac": 2, "range_kind": "Melee", "freq": "At-Will"},
+        {"name": "Confusion", "type": "Psychic", "category": "Special", "db": 4, "ac": 2, "range_kind": "Ranged", "range_value": 4, "freq": "At-Will"}
+      ],
+      "movement": {"overland": 6, "swim": 0, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 2, "l_jump": 2, "power": 3}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Bandit",
+      "species": "Dwebble",
+      "level": 20,
+      "types": ["Bug", "Rock"],
+      "hp_stat": 11,
+      "atk": 9,
+      "def": 12,
+      "spatk": 7,
+      "spdef": 8,
+      "spd": 6,
+      "items": [{"name": "Potion"}],
+      "moves": [
+        {"name": "Rock Throw", "type": "Rock", "category": "Physical", "db": 5, "ac": 2, "range_kind": "Ranged", "range_value": 5, "freq": "At-Will"},
+        {"name": "Bug Bite", "type": "Bug", "category": "Physical", "db": 5, "ac": 2, "range_kind": "Melee", "freq": "At-Will"}
+      ],
+      "movement": {"overland": 5, "swim": 0, "sky": 0, "levitate": 0, "burrow": 1, "h_jump": 1, "l_jump": 1, "power": 2}
+    },
+    {
+      "name": "Sniper",
+      "species": "Pidgeotto",
+      "level": 20,
+      "types": ["Normal", "Flying"],
+      "hp_stat": 10,
+      "atk": 9,
+      "def": 8,
+      "spatk": 9,
+      "spdef": 8,
+      "spd": 12,
+      "moves": [
+        {"name": "Gust", "type": "Flying", "category": "Special", "db": 4, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "At-Will"},
+        {"name": "Quick Attack", "type": "Normal", "category": "Physical", "db": 4, "ac": 2, "range_kind": "Melee", "freq": "At-Will"}
+      ],
+      "movement": {"overland": 6, "swim": 0, "sky": 10, "levitate": 0, "burrow": 0, "h_jump": 2, "l_jump": 2, "power": 2}
+    }
+  ],
+  "metadata": {
+    "player_trainers": [
+      {"identifier": "ringer", "name": "Ringer", "controller": "player", "team": "players", "start_positions": [[3, 3]]},
+      {"identifier": "coach", "name": "Coach", "controller": "player", "team": "players", "start_positions": [[3, 5]]}
+    ],
+    "foe_trainers": [
+      {"identifier": "bandit", "name": "Bandit Crew", "controller": "ai", "team": "foes", "start_positions": [[5, 3]]},
+      {"identifier": "sniper", "name": "Sniper Crew", "controller": "ai", "team": "foes", "start_positions": [[9, 5]]}
+    ]
+  }
+}

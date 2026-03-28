@@ -1,0 +1,93 @@
+{
+  "name": "Ability Lab",
+  "description": "Showcases Poison Heal and the ability hooks. Crobat starts Poisoned and heals for a Tick instead of losing HP while a foe keeps slinging Toxic to keep applying the status so you can read the `Poison Heal` logs.",
+  "default_weather": "Clear",
+  "grid": {
+    "width": 8,
+    "height": 6,
+    "blockers": [[3, 2]],
+    "tiles": {
+      "4,1": "difficult",
+      "5,2": "rough"
+    }
+  },
+  "players": [
+    {
+      "name": "Crobat",
+      "species": "Crobat",
+      "level": 20,
+      "types": ["Poison", "Flying"],
+      "hp_stat": 11,
+      "atk": 12,
+      "def": 8,
+      "spatk": 13,
+      "spdef": 10,
+      "spd": 15,
+      "statuses": [{"name": "Poisoned"}],
+      "abilities": [{"name": "Poison Heal"}],
+      "moves": [
+        {
+          "name": "Poison Fang",
+          "type": "Poison",
+          "category": "Physical",
+          "db": 7,
+          "ac": 3,
+          "range_kind": "Melee",
+          "freq": "At-Will",
+          "effects_text": "Poisons on a critical hit."
+        },
+        {
+          "name": "Air Slash",
+          "type": "Flying",
+          "category": "Special",
+          "db": 7,
+          "ac": 2,
+          "range_kind": "Ranged",
+          "range_value": 6,
+          "freq": "At-Will",
+          "effects_text": "Chance to flinch."
+        }
+      ],
+      "movement": {"overland": 5, "swim": 0, "sky": 5, "levitate": 0, "burrow": 0, "h_jump": 3, "l_jump": 1, "power": 3}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Nidoking",
+      "species": "Nidoking",
+      "level": 20,
+      "types": ["Poison", "Ground"],
+      "hp_stat": 12,
+      "atk": 14,
+      "def": 12,
+      "spatk": 9,
+      "spdef": 9,
+      "spd": 10,
+      "moves": [
+        {
+          "name": "Toxic",
+          "type": "Poison",
+          "category": "Status",
+          "db": 0,
+          "ac": 4,
+          "range_kind": "Melee",
+          "range_value": 1,
+          "freq": "Scene",
+          "effects_text": "Poisons the target."
+        },
+        {
+          "name": "Earth Power",
+          "type": "Ground",
+          "category": "Special",
+          "db": 7,
+          "ac": 3,
+          "range_kind": "Ranged",
+          "range_value": 6,
+          "freq": "At-Will",
+          "effects_text": "May lower Special Defense."
+        }
+      ],
+      "movement": {"overland": 4, "swim": 1, "sky": 0, "levitate": 0, "burrow": 1, "h_jump": 2, "l_jump": 1, "power": 5}
+    }
+  ]
+}

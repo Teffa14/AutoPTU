@@ -1,0 +1,469 @@
+{
+  "name": "mareanie",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "poison",
+      "water"
+    ],
+    "stats": {
+      "hp": 50,
+      "atk": 53,
+      "def": 62,
+      "spa": 43,
+      "spd": 52,
+      "spe": 45
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "poison-sting",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "peck",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wide-guard",
+          "level": 5,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bite",
+          "level": 10,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "venoshock",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "recover",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pin-missile",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "spike-cannon",
+          "level": 29,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "toxic-spikes",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "liquidation",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acid-spray",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "venom-drench",
+          "level": 40,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poison-jab",
+          "level": 45,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "level": 50,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "haze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stockpile",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "infestation",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "spite",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "pain-split",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "knock-off",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snatch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "covet",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "gastro-acid",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "after-you",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hydro-pump",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "surf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hail",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "muddy-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "brine",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scald",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "frost-breath",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "lunge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-spinner",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pounce",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.4,
+      "weight": 8,
+      "category": "medium",
+      "type": "height"
+    },
+    "captureRate": 190,
+    "eggGroups": [
+      "water1"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "mareanie",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "toxapex",
+          "uuid": "Compendium.ptr2e.core-species.Item.iXfdlpzeQYXpU8om",
+          "methods": [
+            {
+              "type": "level",
+              "level": 38,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.yP1fuAFMLapgmOzP"
+    },
+    "number": 747,
+    "traits": [
+      "pokemon",
+      "underdog",
+      "awkward-swimmer",
+      "reach",
+      "pack-mon",
+      "amorphous",
+      "jump-1"
+    ],
+    "diet": [
+      "lithovore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "limber"
+        },
+        {
+          "slug": "regenerator"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "merciless"
+        },
+        {
+          "slug": "malice"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "toxic-debris"
+        },
+        {
+          "slug": "poison-point"
+        }
+      ],
+      "master": [
+        {
+          "slug": "rock-breaker"
+        },
+        {
+          "slug": "scavenger"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "swim",
+        "value": 3
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "disguise",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "beach",
+      "ocean",
+      "reef"
+    ],
+    "slug": "mareanie",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "yP1fuAFMLapgmOzP",
+  "effects": [],
+  "folder": null
+}

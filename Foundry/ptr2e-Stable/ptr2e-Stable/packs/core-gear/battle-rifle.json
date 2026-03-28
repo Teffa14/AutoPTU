@@ -1,0 +1,229 @@
+{
+  "name": "Battle Rifle",
+  "img": "systems/ptr2e/img/icons/weapon_icon.webp",
+  "type": "weapon",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "held",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "steel",
+      "power": 75,
+      "accuracy": 80,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "traits": [
+      "weapon",
+      "fling",
+      "firearm",
+      "autoload",
+      "steel",
+      "charge-pool-10",
+      "reload-1",
+      "conventional",
+      "modern",
+      "sci-fi"
+    ],
+    "actions": [
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 55,
+        "accuracy": 95,
+        "free": true,
+        "traits": [
+          "missile",
+          "firearm"
+        ],
+        "name": "Battle Rifle",
+        "slug": "battle-rifle",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 35,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 125,
+        "accuracy": 80,
+        "free": true,
+        "traits": [
+          "missile",
+          "firearm"
+        ],
+        "name": "Battle Rifle (Auto)",
+        "slug": "battle-rifle-auto",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 28,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "variant": "battle-rifle",
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 60,
+        "accuracy": 75,
+        "free": true,
+        "traits": [
+          "dash",
+          "missile",
+          "firearm"
+        ],
+        "name": "Battle Rifle (Hip Fire)",
+        "slug": "battle-rifle-hip-fire",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "variant": "battle-rifle",
+        "predicate": []
+      }
+    ],
+    "weaponType": "untyped",
+    "weaponPp": 10,
+    "slug": "battle-rifle",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "description": "<p>A battle rifle is a service rifle chambered to fire a fully powered cartridge. The terms was created largely out of a need to differentiate automatic rifles chambered for fully powered cartridges from automatic rifles chambered for intermediate cartridges, which were later categorized as assault rifles.</p>"
+  },
+  "_id": "xPbMEBEaTsw02Ouy",
+  "effects": [
+    {
+      "name": "Battle Rifle",
+      "type": "passive",
+      "_id": "3PMJApkEIhqaZer7",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "{item|id}-attack-damage-flat",
+            "value": 33,
+            "predicate": [],
+            "label": "Battle Rifle",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "flat-modifier",
+            "key": "battle-rifle-auto-attack-damage-flat",
+            "value": 66,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-gear.Item.Ba3EyqpUePgGrfQk.ActiveEffect.uOxpw5kHcRtpv4pa",
+        "duplicateSource": null,
+        "coreVersion": "13.347",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1743893018184,
+        "modifiedTime": 1757632011406,
+        "lastModifiedBy": "UTlFSVhgfIUeTsoW",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "fwBg1GB1fMcgPklo"
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Fallout",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/nuclear_icon.svg",
+  "system": {
+    "slug": "fallout",
+    "actions": [
+      {
+        "slug": "fallout",
+        "name": "Fallout",
+        "type": "attack",
+        "traits": [
+          "weather",
+          "partial-automation"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "types": [
+          "nuclear"
+        ],
+        "description": "<p>Effect: The Weather becomes Glowy for 3 rounds.</p>",
+        "img": "systems/ptr2e/img/svg/nuclear_icon.svg",
+        "summon": "Compendium.ptr2e.core-summons.Item.9a5RrO9eF0kzt9Xn",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "tvJruA8VQvYfNvaV",
+  "folder": "EpCOePz8omfXbp35",
+  "effects": []
+}

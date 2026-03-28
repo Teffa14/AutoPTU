@@ -1,0 +1,79 @@
+{
+  "name": "Assurance",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "assurance",
+    "actions": [
+      {
+        "slug": "assurance",
+        "name": "Assurance",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "assurance-empowered",
+        "name": "Assurance (Empowered)",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "<p>The target has taken damage previously this round.</p>"
+        },
+        "category": "physical",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "description": "<p>Trigger: The target has taken damage previously this round.</p>",
+        "variant": "assurance",
+        "img": "systems/ptr2e/img/svg/dark_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "tvN34FsPsiy2u5U6",
+  "effects": []
+}

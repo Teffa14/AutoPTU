@@ -1,0 +1,51 @@
+{
+  "name": "Slash",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "slash",
+    "actions": [
+      {
+        "slug": "slash",
+        "name": "Slash",
+        "type": "attack",
+        "traits": [
+          "sharp",
+          "crit-1",
+          "pass-2",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "TJCXzhI6pedQZNVV",
+  "effects": []
+}

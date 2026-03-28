@@ -1,0 +1,559 @@
+{
+  "name": "togedemaru",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "steel",
+      "electric"
+    ],
+    "stats": {
+      "hp": 65,
+      "atk": 98,
+      "def": 63,
+      "spa": 40,
+      "spd": 73,
+      "spe": 96
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "nuzzle",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "defense-curl",
+          "level": 5,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rollout",
+          "level": 9,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "charge",
+          "level": 10,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-shock",
+          "level": 15,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fell-stinger",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spark",
+          "level": 25,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "pin-missile",
+          "level": 30,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "magnet-rise",
+          "level": 35,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "zing-zap",
+          "level": 40,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "discharge",
+          "level": 45,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "electric-terrain",
+          "level": 50,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wild-charge",
+          "level": 55,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spiky-shield",
+          "level": 60,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "twineedle",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "flail",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "reversal",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "present",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "encore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "fake-out",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wish",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "tickle",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "disarming-voice",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "super-fang",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "role-play",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endeavor",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bounce",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "covet",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "gravity",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "last-resort",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-head",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "after-you",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "electroweb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "steel-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "steel-roller",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rising-voltage",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "agility",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "reflect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swift",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thief",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "gyro-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "u-turn",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "charge-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "electro-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "volt-switch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "work-up",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "eerie-impulse",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.3,
+      "weight": 3.3,
+      "category": "tiny",
+      "type": "quad"
+    },
+    "captureRate": 180,
+    "eggGroups": [
+      "ground",
+      "fairy"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "togedemaru",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 777,
+    "traits": [
+      "pokemon",
+      "quadrupedal",
+      "zapper",
+      "fully-evolved",
+      "underdog",
+      "pikalike",
+      "jump-4"
+    ],
+    "diet": [
+      "herbivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "iron-barbs"
+        },
+        {
+          "slug": "lightning-rod"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "sturdy"
+        },
+        {
+          "slug": "battery"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "lead-jacket"
+        },
+        {
+          "slug": "loose-quills"
+        }
+      ],
+      "master": [
+        {
+          "slug": "overcharge"
+        },
+        {
+          "slug": "electric-surge"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 15
+      },
+      {
+        "type": "swim",
+        "value": 4
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "electronics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychology",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "sleight-of-hand",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "forest",
+      "field",
+      "industrial"
+    ],
+    "slug": "togedemaru",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "GS63K4RZPOvwHCtC",
+  "effects": [],
+  "folder": null
+}

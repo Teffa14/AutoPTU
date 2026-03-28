@@ -1,0 +1,50 @@
+{
+  "name": "Shadow Devastation",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-devastation",
+    "actions": [
+      {
+        "slug": "shadow-devastation",
+        "name": "Shadow Devastation",
+        "type": "attack",
+        "traits": [
+          "ray",
+          "blast-4",
+          "recoil-1-3"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 10
+        },
+        "category": "special",
+        "power": 130,
+        "accuracy": 85,
+        "types": [
+          "shadow"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "678pWxOGkuV9cx9M",
+  "effects": []
+}

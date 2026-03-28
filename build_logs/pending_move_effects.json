@@ -1,0 +1,566 @@
+[
+  {
+    "name": "Shell Trap",
+    "effects": "If the user is hit by a Melee attack, they may use Shell Trap as an Interrupt."
+  },
+  {
+    "name": "Shelter",
+    "effects": "The user gains +1 CS in Defense and Special Defense, and +2 Evasion."
+  },
+  {
+    "name": "Shift Gear",
+    "effects": "Raise the user\u2019s Attack by +1 CS and Speed by +2 CS."
+  },
+  {
+    "name": "Shore Up",
+    "effects": "The user regains Hit Points equal to half of its full Hit Point value. If it is Sand Storming, the user gains 2/3 of its full Hit Point value. If it is Sunny, Rainy, or Hailing, the user gains 1/4 of its full Hit Point value."
+  },
+  {
+    "name": "Signal Beam",
+    "effects": "Signal Beam Confuses the target on 19+."
+  },
+  {
+    "name": "Silver Wind",
+    "effects": "Silver Wind raises each of the user's stats by +1 CS on 19+."
+  },
+  {
+    "name": "Simple Beam",
+    "effects": "You choose one of the target's Abilities. Simple Beam changes that Ability to Simple for the remainder of the encounter."
+  },
+  {
+    "name": "Sing",
+    "effects": "All legal Targets fall Asleep. On a miss, Sing instead causes targets to become Slowed and suffer a -2 penalty to their Evasion until the end of the user's next turn."
+  },
+  {
+    "name": "Skill Swap",
+    "effects": "The user loses one of their Abilities, selected by the user, and gains one the target\u2019s Abilities, selected at random, for the remainder of encounter. The target loses the copied Ability, and gains the user\u2019s lost Ability. This effect ends if either the target or the user is Switched out or Fainted, but only for that Pok\u00e9mon or Trainer."
+  },
+  {
+    "name": "Skitter Smack",
+    "effects": "The user Shifts up to its Overland Capability, ignoring Attacks of Opportunity, before attacking with Skitter Smack. On a hit, the target\u2019s Special Attack is lowered 1 CS."
+  },
+  {
+    "name": "Sky Uppercut",
+    "effects": "Sky Uppercut may be used as an Interrupt when against a target initiating Bounce, Fly, or Sky Drop. If Sky Uppercut successfully hits its target, the Triggering Move fails (though the target may take their next turn normally.)"
+  },
+  {
+    "name": "Slack Off",
+    "effects": "The user regains HP equal to half of its full HP."
+  },
+  {
+    "name": "Slam",
+    "effects": "Slam may be used as a Free Action at the end of a Sprint Maneuver taken as a Standard Action, as long as the user Shifted at least 3 meters in a straight line towards the target. When used this way, Slam gains the Smite keyword."
+  },
+  {
+    "name": "Slash",
+    "effects": "Slash is a Critical Hit on 18+."
+  },
+  {
+    "name": "Sleep Powder",
+    "effects": "The target falls Asleep."
+  },
+  {
+    "name": "Sleep Talk",
+    "effects": "Select another of the user\u2019s Moves at random; this turn, the user may Shift and use that Move despite being Asleep. Sleep Talk can be only be used by Sleeping targets."
+  },
+  {
+    "name": "Slice",
+    "effects": "Limitation: Melee Weapons Only"
+  },
+  {
+    "name": "Sludge",
+    "effects": "Sludge Poisons the target on 15+."
+  },
+  {
+    "name": "Sludge Bomb",
+    "effects": "Sludge Bomb Poisons the target on 15+."
+  },
+  {
+    "name": "Sludge Wave",
+    "effects": "Sludge Wave Poisons all legal targets on 19+."
+  },
+  {
+    "name": "Spirit Lance",
+    "effects": "Spirit Lance deals +3 damage to all targets for each target beyond the first that it successfully hits."
+  },
+  {
+    "name": "Spirit Shackle",
+    "effects": "The Target is Trapped for 2 rounds."
+  },
+  {
+    "name": "Spit Up",
+    "effects": "For each Stockpiled Count the user has, Spit Up\u2019s Damage Base is increased by +8. If the user has no Stockpiled count, Spit Up cannot be used."
+  },
+  {
+    "name": "Spite",
+    "effects": "Spite may be used as a Free Action that does not take up a Command whenever the user is hit by a Move. That Move becomes Disabled for the attacker."
+  },
+  {
+    "name": "Splash",
+    "effects": "Shift Action - The user may make a single Jump, adding +1 to their Long Jump and High Jump values, and gains +2 Evasion until the end of their next turn. *Grants +1 Long Jump"
+  },
+  {
+    "name": "Spore",
+    "effects": "The target falls Asleep."
+  },
+  {
+    "name": "Spotlight",
+    "effects": "Until the end of the user\u2019s next turn, the target is Blinded and Vulnerable."
+  },
+  {
+    "name": "Sprint",
+    "effects": "Increase your Movement Speeds by 50% for the rest of your turn."
+  },
+  {
+    "name": "Stealth Rock",
+    "effects": "Set 4 square meters of Stealth Rock hazards within 6 meters. If a foe moves within 2 meters of a space occupied by Rocks, move at most one Rock to the offender, then destroy the Rock. When that happens, the Stealth Rock causes a foe to lose a Tick of Hit Points. Stealth Rock is considered to be dealing damage; Apply Weakness and Resistance. Do not apply stats. A Pok\u00e9mon who has been hit by a Stealth Rock Hazard cannot get hit by another in the same encounter until it is returned to a Pok\u00e9 Ball and then sent back out. *Grants Materializer"
+  },
+  {
+    "name": "Steamroller",
+    "effects": "Steamroller Flinches the target on 15+. If the target is Small, Steamroller deals an additional +5 Damage."
+  },
+  {
+    "name": "Steel Wing",
+    "effects": "Steel Wing raises the user's Defense by +1 CS on 15+."
+  },
+  {
+    "name": "Sticky Web",
+    "effects": "Set 8 square meters of Sticky Web hazards within your range such that all 8 meters are adjacent with at least one other space of Sticky Web. Sticky Web causes Terrain to become Slow Terrain, and a grounded foe that runs into the hazard has its Speed lowered by -1 CS and becomes Slowed until the end of their next turn. Flying-type Pokemon and Pokemon and Trainers with Levitate are not affected by Sticky Web. Bug-type Pokemon may move over Sticky Web harmlessly, destroying theHazards as they do so. *Grants Threaded"
+  },
+  {
+    "name": "Stockpile",
+    "effects": "The user adds 1 to their Stockpiled count to a maximum of 3. For each number a Stockpiled count is above 0, raise the user\u2019s Defense and Special Defense by +1 CS each. If a Stockpiled count is set to 0, any Combat Stages gained from the Stockpiled count are removed."
+  },
+  {
+    "name": "Stomp",
+    "effects": "Stomp Flinches the target on 15+. If the target is at least one size category smaller than the user, Stomp deals an additional 10 damage."
+  },
+  {
+    "name": "Stomping Tantrum",
+    "effects": "If the user\u2019s last attack failed or missed, Stomping Tantrum is DB15 instead."
+  },
+  {
+    "name": "Stone Axe",
+    "effects": "Stone Axe is a critical hit on an 18+. Once per scene, on a hit, the target may be put in a Vortex."
+  },
+  {
+    "name": "Stone Edge",
+    "effects": "Stone Edge is a Critical Hit on 17+."
+  },
+  {
+    "name": "Stored Power",
+    "effects": "For every Combat Stage the user has above 0, add +2 to Stored Power\u2019s Damage Base, up to a maximum of Damage Base 20."
+  },
+  {
+    "name": "Storm Throw",
+    "effects": "If Storm Throw hits, it is a Critical Hit."
+  },
+  {
+    "name": "Strange Steam",
+    "effects": "The target is confused on 17+."
+  },
+  {
+    "name": "Strength Sap",
+    "effects": "The user gains Hit Points equal to the higher of the target's Attack or Special Attack; the target then loses -1 CS in that Stat."
+  },
+  {
+    "name": "String Shot",
+    "effects": "Lower the Speed of all legal targets by -1 CS. If this lowers their Speed CS to -6, or if their Speed CS was already at -6, they are instead Stuck. *Grants Threaded"
+  },
+  {
+    "name": "Struggle",
+    "effects": "--"
+  },
+  {
+    "name": "Struggle Bug",
+    "effects": "Lower the Special Attack of all legal targets by -1 CS."
+  },
+  {
+    "name": "Struggle+",
+    "effects": "--"
+  },
+  {
+    "name": "Stun Spore",
+    "effects": "The target is Paralyzed."
+  },
+  {
+    "name": "Substitute",
+    "effects": "The user loses 1/4 of their maximum Hit Points. This Hit Point loss cannot be prevented in any way. The user creates an Illusory Substitute Coat, which has Hit Points equal to 1/4th of the user\u2019s full Hit Points +1. If the user would be hit by a Move or attack, instead the Substitute gets hit. Apply weakness, resistance and stats to the Substitute. The Substitute is immune to Status Afflictions and Status Moves. Moves with the Social or Sonic keywords completely ignore and bypass the Substitute. Once the Substitute has been destroyed, the user may be hit as normal. Substitute cannot be used if the user has less than 1/4 of their full Hit Points."
+  },
+  {
+    "name": "Sucker Punch",
+    "effects": "If an adjacent foe targets the user with a Damaging Attack, Sucker Punch may be used as an Interrupt Move against the triggering foe."
+  },
+  {
+    "name": "Sucker Punch [SM]",
+    "effects": "If an adjacent foe targets the user with a Damaging Attack, Sucker Punch may be used as an Interrupt Move against the triggering foe."
+  },
+  {
+    "name": "Sunny Day",
+    "effects": "The weather becomes Sunny for 5 rounds. While Sunny, Fire-Type Attacks gain a +5 bonus to Damage Rolls, and Water-Type Attacks suffer a -5 Damage penalty."
+  },
+  {
+    "name": "Sunsteel Strike",
+    "effects": "This Move ignores any Abilities that would cause it to fail or miss; those Abilities cannot be activated in response to Sunsteel Strike (ex: Dodge, Wonder Guard)"
+  },
+  {
+    "name": "Super Fang",
+    "effects": "The target loses 1/2 of its current HP."
+  },
+  {
+    "name": "Superpower",
+    "effects": "Superpower lowers the user's Attack and Defense by 1 Combat Stage each."
+  },
+  {
+    "name": "Supersonic",
+    "effects": "The target becomes Confused. On miss, the target suffers a -2 penalty to Accuracy Rolls for one full round."
+  },
+  {
+    "name": "Surf",
+    "effects": "As a Shift Action, the user may Move to any open square in Surf \u2019s area of effect without provoking any Attacks of Opportunity."
+  },
+  {
+    "name": "Surging Strikes",
+    "effects": "If Surging Strikes hits, it is a Critical Hit. After attacking with Surging Strikes, hit or miss, the user may Shift 2m, ignoring Attacks of Opportunity from their target. It may then make an additional attack with this Move on a different target. This effect may be repeated a second time, the third attack targeting a creature that has not yet been targeted by either prior attack. Before making each attack roll, the user can elect to give up triggering all remaining additional shifts and attacks. Surging Strikes gains +3 DB for each attack that is given up."
+  },
+  {
+    "name": "Swagger",
+    "effects": "Raise the target's Attack by +2 CS. The target is Confused."
+  },
+  {
+    "name": "Swagger [SM]",
+    "effects": "Raise the target's Attack by +2 CS. The target is Confused."
+  },
+  {
+    "name": "Swallow",
+    "effects": "If the user\u2019s Stockpiled count is 1, they are healed 25% of their full Hit Point value; if their Stockpiled count is 2, they are healed half of their full Hit Point value; if their Stockpiled count is 3, they are healed back to full Hit Points. After using Swallow, the user\u2019s Stockpiled count is set to 0. If the user has no Stockpiled count, Swallow does nothing."
+  },
+  {
+    "name": "Sweeping Strike",
+    "effects": "You may attempt a Trip Maneuver against the target as a free action.\nLimitation: Short-Range Weapons or Weapons with the Reach Quality Only"
+  },
+  {
+    "name": "Sweet Kiss",
+    "effects": "The target is Confused. On miss, the target suffers a -2 penalty to Accuracy Rolls for one full round."
+  },
+  {
+    "name": "Sweet Scent",
+    "effects": "Targets hit by Sweet Scent gain a -2 Penalty to Evasion. (Total Evasion may not be lowered to a negative value.) *Grants Alluring"
+  },
+  {
+    "name": "Switcheroo",
+    "effects": "The user and the target exchange held items."
+  },
+  {
+    "name": "Swords Dance",
+    "effects": "Raise the user's Attack by +2 CS."
+  },
+  {
+    "name": "Synchronoise",
+    "effects": "Synchronoise can only hit targets that share a type with Synchronoise's user."
+  },
+  {
+    "name": "Synthesis",
+    "effects": "The user regains Hit Points equal to half of its full Hit Point value. If it is Sunny, the user gains 2/3 of its full Hit Point value. If it is Rainy, Sand Storming, or Hailing, the user gains 1/4 of its full Hit Point value."
+  },
+  {
+    "name": "Tail Glow",
+    "effects": "Raise the user\u2019s Special Attack by +3 CS. *Grants Glow"
+  },
+  {
+    "name": "Tail Whip",
+    "effects": "All legal targets have their Defense lowered by -1 CS."
+  },
+  {
+    "name": "Tailwind",
+    "effects": "For the remainder of the encounter, all allied trainers and Pok\u00e9mon gain +5 to their Initiative. Multiple instances of Tailwind cannot stack. *Grants: Guster"
+  },
+  {
+    "name": "Take Aim",
+    "effects": "Raise the user\u2019s Accuracy by +1. If the user performs an Weapon Move on their next turn that deals damage, add its Damage Dice Roll an extra time to the damage."
+  },
+  {
+    "name": "Take Heart",
+    "effects": "The user gains +1 CS in all its stats and cures all of its Status conditions."
+  },
+  {
+    "name": "Tar Shot",
+    "effects": "The target gains a Coat that is automatically expended upon being hit with a Fire Type attack in order to make them one step more vulnerable to that attack. In addition, the target\u2019s Speed is lowered by 1 CS."
+  },
+  {
+    "name": "Taunt",
+    "effects": "The target becomes Enraged."
+  },
+  {
+    "name": "Tearful Look",
+    "effects": "All legal targets lose -1 Attack and Special Attack CS each."
+  },
+  {
+    "name": "Techno Blast",
+    "effects": "Techno Blast\u2019s Type can be any Type while holding the appropriate Drive item or Plate item."
+  },
+  {
+    "name": "Teeter Dance",
+    "effects": "All legal targets are Confused."
+  },
+  {
+    "name": "Telekinesis",
+    "effects": "The target becomes Lifted. While Lifted, they gain the Levitate Ability, are Slowed, and lose all Movement Capabilities except for the Levitate 4 granted by Levitate (reduced to 2 by the Slow condition). While Lifted, the user may not apply any Evasion bonuses to determine whether they are hit by Moves or not. The Lifted target may use a Shift Action to roll 1d20; on a result of 16+, they stop being Lifted. *Grants Telekinetic"
+  },
+  {
+    "name": "Teleport",
+    "effects": "The user Teleports up to X meters, where X is its Teleporter Capability. Any Move that targeted Teleport's user continue through the desired target's space if the Move allows for it as if the user hadn't been there; single target moves simply miss. *Grants Teleporter 4"
+  },
+  {
+    "name": "Terrain Pulse",
+    "effects": "If the user is under the effects of a Terrain, Terrain Pulse has a Damage Base of 10 (3d8+10 / 24). In addition, Terrain Pulse becomes the Type that corresponds with the Move that creates that Terrain. (For example, if in Misty Terrain, it would become Fairy Type.) If the user is under the effects of multiple Terrains, choose one to affect this Move."
+  },
+  {
+    "name": "Terrorize",
+    "effects": "Make an Intimidate Check, opposed by the target\u2019s Intimidate or Focus. If you win, the target loses all Temporary Hit Points and can only use At-Will Frequency Moves for one full round."
+  },
+  {
+    "name": "Thief",
+    "effects": "Thief takes the target's held item and attaches it to Thief's user if the user is not holding anything."
+  },
+  {
+    "name": "Thousand Arrows",
+    "effects": "When calculating Weakness and Resistance for Thousand Arrows, Flying-Typed targets calculate damage as if Ground was neutral to Ice. Thousand Arrows ignores the Levitate Ability, The target is knocked down to ground level, and loses all Sky or Levitate Speeds for 3 turns. During this time, they may be hit by Ground-Type Moves even if normally immune."
+  },
+  {
+    "name": "Thousand Waves",
+    "effects": "Legal Targets are Trapped for 2 Turns."
+  },
+  {
+    "name": "Throat Chop",
+    "effects": "The target cannot use Moves with the Sonic keyword for the next two turns."
+  },
+  {
+    "name": "Thunder Cage",
+    "effects": "The targets are trapped in a Vortex. The DC to escape the Vortex is increased by 3."
+  },
+  {
+    "name": "Thunder Fang",
+    "effects": "Thunder Fang Paralyzes or Flinches on 18-19; flip a coin to determine whether the foe becomes Paralyzed or Flinched. On 20, the foe is both Paralyzed and Flinched."
+  },
+  {
+    "name": "Thunder Punch",
+    "effects": "Thunder Punch Paralyzes the target on 19+."
+  },
+  {
+    "name": "Thunder Shock",
+    "effects": "Thunder Shock Paralyzes the target on 17+. *Grants Zapper"
+  },
+  {
+    "name": "Thunder Wave [SM]",
+    "effects": "Thunder Wave Paralyzes the target. Pok\u00e9mon immune to Electric Attacks are immune to Thunder Wave's effects."
+  },
+  {
+    "name": "Thunderbolt",
+    "effects": "Thunderbolt Paralyzes the target on 19+."
+  },
+  {
+    "name": "Thunderous Kick",
+    "effects": "All legal targets hit lose 1 Defense Combat Stage. Once per Scene, Thunderous Kick may instead be used as an Electric-Type Move."
+  },
+  {
+    "name": "Tickle",
+    "effects": "Lower the target\u2019s Attack and Defense by -1 CS each."
+  },
+  {
+    "name": "Titanic Slam",
+    "effects": "On Even-Numbered Rolls, the target is Slowed for one full round.\nLimitation: Melee Weapons Only"
+  },
+  {
+    "name": "Topsy-Turvy",
+    "effects": "The target\u2019s Combat Stages are inverted; +1 Stage becomes -1 Stage, -3 Stages becomes +3 Stages, etc."
+  },
+  {
+    "name": "Torment",
+    "effects": "The target becomes Suppressed."
+  },
+  {
+    "name": "Toxic Spikes",
+    "effects": "Set 8 square meters of Toxic Spikes within the range such that all 8 meters are adjacent with at least one other space of Toxic Spikes. Toxic Spikes cause Terrain to become Slow Terrain, and a grounded foe that runs into the hazard becomes Poisoned and Slowed until the end of their next turn. If there are 2 layers of Toxic Spikes on the same space, it Badly Poisons the foes instead. Poison-Type Pokemon may move over Toxic Spikes harmlessly, destroying the Hazards as they do so."
+  },
+  {
+    "name": "Toxic Threads",
+    "effects": "The target is Poisoned and receives -1 Speed Combat Stage. If the target is already Poisoned, they instead lose a Tick of Hit Points and receive -2 Speed Combat Stages."
+  },
+  {
+    "name": "Tri Attack",
+    "effects": "Tri Attack gives the target a Status ailment on 17+. If this effect is triggered, roll 1d3; on 1 the target is Paralyzed; on 2 the target is Burned; on 3 the target is Frozen."
+  },
+  {
+    "name": "Trick",
+    "effects": "Both targets must be hit for Trick to succeed. The user may target itself or willing allies with Trick; you do not need to roll for Accuracy Check in these cases. Both targets lose their Held Item and gain the other target's Held Item. If a target has no Held Item, they still can gain the other target's Held Item."
+  },
+  {
+    "name": "Trick Room",
+    "effects": "Starting at the beginning of the next round, for 5 rounds, the area is considered Rewinding. While Rewinding, Initiative is reversed, and participants instead go from lowest Initiative to highest."
+  },
+  {
+    "name": "Trick-or-Treat",
+    "effects": "The target gains the Ghost Type in addition to its other Types for 5 turns."
+  },
+  {
+    "name": "Triple Arrows",
+    "effects": "Targets hit by Triple Arrows lose 1 CS in both  Defense and Special Defense. \n\nAfter attacking with Triple Arrows, hit or miss, the user may Disengage 2m and attack a different target with Triple Arrows. This effect may be repeated a second time, targeting a creature that has not been targeted by either prior attack. Before making each attack roll, the user can elect to give up triggering allremaining additional shifts and attacks. Triple Arrowsgains +1 Accuracy and +1 DB for each attack that is given up. Triple Arrows always benefits from the Technician Ability.\n\nOnce Daily, after all attacks with Triple Arrows have been resolved, the user becomes Pumped. While Pumped, the user\u2019s Critical Range is extended by 2, or 18+ if the Critical Range is not otherwise extended. Being switched will cause this effect to end."
+  },
+  {
+    "name": "Triple Axel",
+    "effects": "After attacking with Triple Axel, hit or miss, the user may Disengage 2m and attack a different target with Triple Axel. This effect may be repeated a second time, targeting a creature that has not been targeted by either prior attack. Before making each attack roll, the user can elect to give up triggering all remaining additional shifts and attacks. Triple Axel gains +1 Accuracy and +1 DB for each attack that is given up. Triple Axel always benefits from the Technician Ability."
+  },
+  {
+    "name": "Triple Kick",
+    "effects": "Make three attacks with Triple Kick. If you hit once, Triple Kick has a DB of 1. If you hit two times, Triple Kick has a DB of 3. If you hit three times, Triple Kick has a DB of 6."
+  },
+  {
+    "name": "Triple Kick [LA]",
+    "effects": "After attacking with Triple Kick, hit or miss, the user may Disengage 2m and attack a different target with Triple Kick. This effect may be repeated a second time, targeting a creature that has not been targeted by either prior attack. Before making each attack roll, the user can elect to give up triggering all remaining additional shifts and attacks. Triple Kick gains +1 Accuracy and +2 DB for each attack that is given up. Triple Kick always benefits from the Technician Ability."
+  },
+  {
+    "name": "Triple Threat",
+    "effects": "Limitation: Large Melee Weapons and Long-Range Weapons Only"
+  },
+  {
+    "name": "Trop Kick",
+    "effects": "The target receives a -5 penalty to damage rolls for 1 round."
+  },
+  {
+    "name": "Trump Card",
+    "effects": "Whenever the user uses Trump Card, the user gains a Trump Count after the attack is resolved. Trump Card's DB is increased by +2 for each Trump Count."
+  },
+  {
+    "name": "Twister",
+    "effects": "Twister Flinches the target on 18+. Small or Medium targets in the central square of the blast are not hit. Any Pok\u00e9mon Airborne as a result of Bounce, Fly, or Sky Drop above the Blast are hit, ignoring range, and Twister has a Damage Base of 8 against those targets instead."
+  },
+  {
+    "name": "U-Turn",
+    "effects": "The user deals damage and then is immediately recalled to its Pok\u00e9 Ball in the same turn. A New Pok\u00e9mon may immediately be sent out. Using U-Turn lets a Trapped user be recalled."
+  },
+  {
+    "name": "Uproar",
+    "effects": "All Pok\u00e9mon and Trainers within 5 meters of the user are cured of Sleep."
+  },
+  {
+    "name": "Vacuum Wave",
+    "effects": "--"
+  },
+  {
+    "name": "Venoshock",
+    "effects": "If the target is Poisoned, Venoshock has a Damage Base of 13 (4d10+10 / 35) instead."
+  },
+  {
+    "name": "Vicegrip",
+    "effects": "--"
+  },
+  {
+    "name": "Victory Dance",
+    "effects": "If the user performs a Fighting Move on their next turn that deals damage, add its Damage Dice Roll an extra time to the damage. Raise the user\u2019s Defense 1 Combat Stage."
+  },
+  {
+    "name": "Vine Whip",
+    "effects": "*Grants: Threaded"
+  },
+  {
+    "name": "Volt Switch",
+    "effects": "If Volt Switch successfully hits its target, the user deals damage and then immediately is returned to its Poke Ball in the same turn. A New Pokemon may immediately be sent out. Using Volt Switch lets a Trapped user be recalled"
+  },
+  {
+    "name": "Wake-Up Slap",
+    "effects": "If the target is Asleep, Wake-Up Slap has a Damage Base of 10 (3d8+10 / 24) instead, and cures the target of Sleep."
+  },
+  {
+    "name": "Water Gun",
+    "effects": "*Grants Fountain"
+  },
+  {
+    "name": "Water Pulse",
+    "effects": "Water Pulse Confuses the target on 17+."
+  },
+  {
+    "name": "Water Sport",
+    "effects": "All targets in the burst, including the user, gain a Coat which grants them 1 Step of Resistance to Fire Type Moves. After a target has been hit by a damaging Fire Type Move, the coat is removed. *Grants Fountain"
+  },
+  {
+    "name": "Water Spout",
+    "effects": "For each 10% of HP the user is missing, Water Spout's Damage Base is reduced by -1. Water Spout creates a 1 meter burst, but also affects an area 10 meters tall straight up."
+  },
+  {
+    "name": "Waterfall",
+    "effects": "Waterfall Flinches the target on 17+."
+  },
+  {
+    "name": "Wear Down",
+    "effects": "Wear Down lowers the target\u2019s Defense by 1 Combat Stage on Even-Numbered Rolls."
+  },
+  {
+    "name": "Weather Ball",
+    "effects": "If it is Sunny, Weather Ball is Fire-Type. If it is Rainy, Weather Ball is Water-Type. If it is Hailing, Weather Ball is Ice-Type. If it is Sandstorming, Weather Ball is Rock-Type. When a weather effect is on the field, Weather Ball has a Damage Base of 10 (3d8+10 / 24). If there are multiple Weather Effects on the field, choose one type for Weather Ball to be that corresponds with an existing Weather Effect."
+  },
+  {
+    "name": "Whirlpool",
+    "effects": "The target is put in a Vortex."
+  },
+  {
+    "name": "Wide Guard",
+    "effects": "If an Ally adjacent to Wide Guard\u2019s user is hit by a Move, you may use Wide Guard as an Interrupt. All targets adjacent to Wide Guard\u2019s user, including the user, are instead not hit by the triggering Move and do not suffer any of its effects."
+  },
+  {
+    "name": "Will-O-Wisp",
+    "effects": "The target is Burned."
+  },
+  {
+    "name": "Wing Attack",
+    "effects": "--"
+  },
+  {
+    "name": "Wish",
+    "effects": "At the end of the user's next turn, the target regains HP equal to half of its full HP. If the user targets itself and is replaced in battle, the replacement is healed by half of its own HP."
+  },
+  {
+    "name": "Withdraw",
+    "effects": "The user becomes Withdrawn. While Withdrawn, the user becomes immune to Critical Hits and gain 15 Damage Reduction. However, while Withdrawn, the user cannot Shift, and may only use self-targeting Moves. The user may stop being Withdrawn as a Shift Action.\nSeptember Playtest: The user\u2019s Defense is raised 1 Combat Stage."
+  },
+  {
+    "name": "Wonder Room",
+    "effects": "For 5 rounds, the area is considered Wondered. While Wondered, each individual Pok\u00e9mon's Defense and Special Defense are switched."
+  },
+  {
+    "name": "Work Up",
+    "effects": "Raise the user\u2019s Attack and Special Attack by +1 CS each."
+  },
+  {
+    "name": "Worry Seed",
+    "effects": "You choose one of the target\u2019s Abilities. Worry Seed changes that Ability to Insomnia for the remainder of the encounter."
+  },
+  {
+    "name": "Wounding Strike",
+    "effects": "The target loses a Tick of Hit Points."
+  },
+  {
+    "name": "Wrap",
+    "effects": "The user gains a +1 Bonus to Accuracy Rolls made to initiate Grapple Maneuvers, and +2 to Skill Checks made to initiate Grapple Maneuvers or gain Dominance. Whenever the user gains Dominance in a Grapple, the target of the Grapple loses a Tick of Hit Points."
+  },
+  {
+    "name": "Wring Out",
+    "effects": "For every 10% the target is below their full HP, Wring Out's Damage Base is reduced by -1."
+  },
+  {
+    "name": "X-Scissor",
+    "effects": "--"
+  },
+  {
+    "name": "Zap Cannon",
+    "effects": "Zap Cannon Paralyzes the target. Zap Cannon ignores the target's Evasion if their are no other combatants or Rough or Blocking Terrain within 2 meters of the target."
+  },
+  {
+    "name": "Zen Headbutt",
+    "effects": "Zen Headbutt Flinches the target on 15+."
+  },
+  {
+    "name": "Zing Zap",
+    "effects": "Zing Zap Flinches the target on 15+."
+  }
+]

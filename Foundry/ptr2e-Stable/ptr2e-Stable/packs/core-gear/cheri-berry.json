@@ -1,0 +1,60 @@
+{
+  "name": "Cheri Berry",
+  "img": "systems/ptr2e/img/item-icons/cheri berry.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 1,
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "E",
+    "fling": {
+      "type": "untyped",
+      "power": 10,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "food",
+    "traits": [
+      "restorative",
+      "consumable",
+      "natural",
+      "healing",
+      "berry",
+      "fling",
+      "combat"
+    ],
+    "description": "<p>Cures the user of @Affliction[paralysis] and @Affliction[tased]. This item can be retrieved from the Belt and consumed as a Free Action at @Trait[interrupt-2] when the user gains either of these Afflictions.</p>",
+    "quantity": 1,
+    "slug": "cheri-berry",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "q2DQxMFnIFAh0XpN",
+  "effects": [],
+  "folder": "yR1GFstYOCdI2jOz"
+}

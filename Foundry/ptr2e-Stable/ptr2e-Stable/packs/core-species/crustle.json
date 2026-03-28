@@ -1,0 +1,500 @@
+{
+  "name": "crustle",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 558,
+    "size": {
+      "category": "medium",
+      "type": "height",
+      "height": 1.4,
+      "weight": 200
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 7
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "creepy-crawly",
+      "fully-evolved",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "sturdy"
+        },
+        {
+          "slug": "shell-armor"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "solid-rock"
+        },
+        {
+          "slug": "weak-armor"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "shed-skin"
+        },
+        {
+          "slug": "discretion"
+        }
+      ],
+      "master": [
+        {
+          "slug": "tough-claws"
+        },
+        {
+          "slug": "scavenger"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "crustle",
+    "stats": {
+      "hp": 70,
+      "atk": 105,
+      "def": 125,
+      "spa": 65,
+      "spd": 75,
+      "spe": 45
+    },
+    "types": [
+      "rock",
+      "bug"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "fury-cutter",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "sand-attack",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "smack-down",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "withdraw",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "bug-bite",
+          "gen": "sword-shield",
+          "level": 12
+        },
+        {
+          "name": "feint-attack",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 13
+        },
+        {
+          "name": "flail",
+          "gen": "sword-shield",
+          "level": 16
+        },
+        {
+          "name": "slash",
+          "gen": "sword-shield",
+          "level": 20
+        },
+        {
+          "name": "rock-slide",
+          "gen": "sword-shield",
+          "level": 24
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "sword-shield",
+          "level": 28
+        },
+        {
+          "name": "rock-blast",
+          "gen": "sword-shield",
+          "level": 32
+        },
+        {
+          "name": "x-scissor",
+          "gen": "sword-shield",
+          "level": 38
+        },
+        {
+          "name": "rock-polish",
+          "gen": "sword-shield",
+          "level": 44
+        },
+        {
+          "name": "shell-smash",
+          "gen": "sword-shield",
+          "level": 50
+        },
+        {
+          "name": "rock-wrecker",
+          "gen": "sword-shield",
+          "level": 56
+        }
+      ],
+      "tutor": [
+        {
+          "name": "aerial-ace",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "block",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "body-press",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "cut",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "dig",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "earthquake",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "heavy-slam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hone-claws",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "knock-off",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "meteor-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sand-tomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "shadow-claw",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "solar-blade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spikes",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "strength",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "struggle-bug",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "captureRate": 75,
+    "eggGroups": [
+      "bug",
+      "mineral"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "cave",
+      "desert"
+    ],
+    "evolutions": {
+      "name": "dwebble",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "crustle",
+          "uuid": "Compendium.ptr2e.core-species.Item.NcciwHnDrpSzhUwS",
+          "methods": [
+            {
+              "type": "level",
+              "level": 34,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.XfOlaTsxp5rIzxtR",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "NcciwHnDrpSzhUwS",
+  "effects": []
+}

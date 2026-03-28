@@ -1,0 +1,49 @@
+{
+  "name": "Psychic Fangs",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "psychic-fangs",
+    "actions": [
+      {
+        "slug": "psychic-fangs",
+        "name": "Psychic Fangs",
+        "type": "attack",
+        "traits": [
+          "jaw",
+          "pierce",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 85,
+        "accuracy": 100,
+        "types": [
+          "psychic"
+        ],
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "9EECDCxKnknuhj6l",
+  "effects": []
+}

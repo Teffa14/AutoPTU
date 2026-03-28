@@ -1,0 +1,59 @@
+{
+  "name": "Revive",
+  "img": "systems/ptr2e/img/item-icons/revive.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 4,
+    "crafting": {
+      "skill": "medicine",
+      "spans": 2,
+      "materials": [
+        "4x-medicinal-leeks"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "D",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": true,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "restorative",
+    "traits": [
+      "combat",
+      "restorative",
+      "consumable",
+      "healing"
+    ],
+    "description": "<p>The target is healed @Tick[8] and recovers 1 stack of Weary.</p>",
+    "quantity": 1,
+    "slug": "revive",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "hgeZRcsXfUP3wLY4",
+  "effects": [],
+  "folder": "srQci2ThhRKdmC6g"
+}

@@ -1,0 +1,34 @@
+<figure>
+    <header class="header">
+        <h2>{{document.name}}</h2>
+    </header>
+    {{#if traits}}
+    <header class="traits">
+        <input type="text" class="traits ptr2e-tagify" value="{{json traits}}" data-dType="JSON" readonly/>
+    </header>
+    {{/if}}
+    <content>
+        <section class="item-description">
+            <fieldset>
+                <legend>Effect Description</legend>
+                {{#if document.system.description}}
+                <article>
+                    {{{document.system.description}}}
+                </article>
+                {{else}}
+                <article class="center">
+                    <small><i>No Effect Description Provided</i></small>
+                </article>
+                {{/if}}
+                {{#if document.system.isSuppressed}}
+                  <footer class="suppressed">
+                    <span class="suppressed">This Ability has been suppressed!</span>
+                  </footer>
+                {{/if}}
+            </fieldset>
+        </section>
+    </content>
+    {{#each actions}}
+      {{> action-embed action=action}}
+    {{/each}}
+</figure>

@@ -1,0 +1,49 @@
+{
+  "name": "Hyper Voice",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "hyper-voice",
+    "actions": [
+      {
+        "slug": "hyper-voice",
+        "name": "Hyper Voice",
+        "type": "attack",
+        "traits": [
+          "sonic",
+          "friendly"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "special",
+        "power": 90,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Bu8cudb0olZOeAu8",
+  "effects": []
+}

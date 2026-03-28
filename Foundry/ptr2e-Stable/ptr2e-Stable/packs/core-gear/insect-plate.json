@@ -1,0 +1,151 @@
+{
+  "name": "Insect Plate",
+  "img": "systems/ptr2e/img/item-icons/insect plate.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "bug",
+      "power": 70,
+      "accuracy": 80,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "unique",
+    "traits": [
+      "combat",
+      "arceus",
+      "plate",
+      "fling",
+      "bug"
+    ],
+    "actions": [
+      {
+        "name": "Insect Plate",
+        "slug": "insect-plate",
+        "type": "passive",
+        "description": "Effect: The user deals 20% more damage with Bug-Type actions and attacks, and takes 20% less damage from Bug-Type actions and attacks.",
+        "traits": [
+          "Held",
+          "Combat",
+          "Arceus",
+          "Plate",
+          "Fling",
+          "Bug"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 10
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: The user deals 20% more damage with Bug-Type actions and attacks, and takes 20% less damage from Bug-Type actions and attacks.",
+    "slug": "insect-plate",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "9J6SzBwKahsV1Au1",
+  "effects": [
+    {
+      "name": "Insect Plate",
+      "type": "passive",
+      "_id": "6IO8x9L4TawUjIpC",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "percentile-modifier",
+            "key": "bug-attack-damage",
+            "value": 20,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "ephemeral-modifier",
+            "key": "bug-attack-damage-percentile",
+            "value": -20,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.4.beta",
+        "createdTime": 1758375441190,
+        "modifiedTime": 1758375465133,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

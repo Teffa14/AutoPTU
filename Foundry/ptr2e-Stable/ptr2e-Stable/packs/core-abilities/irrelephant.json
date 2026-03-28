@@ -1,0 +1,106 @@
+{
+  "name": "Irrelephant",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "innate"
+        ],
+        "name": "Irrelephant",
+        "slug": "irrelephant",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: The user's attacks ignore all Type-based immunities.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user's attacks ignore all Type-based immunities.</p>",
+    "traits": [
+      "innate"
+    ],
+    "slug": "irrelephant",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "TPW8Jsb8TZFaO0nQ",
+  "effects": [
+    {
+      "name": "Irrelephant",
+      "type": "passive",
+      "_id": "xP6bDENFioch2m3f",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "alter-attack",
+            "key": "attack",
+            "value": "ignore-type-immunity",
+            "predicate": [],
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "property": "traits",
+            "definition": []
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-abilities.Item.YrPhPet3F4ECWLyc.ActiveEffect.vppksLLIwgMvshrl",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1765280526664,
+        "modifiedTime": 1765280538276,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

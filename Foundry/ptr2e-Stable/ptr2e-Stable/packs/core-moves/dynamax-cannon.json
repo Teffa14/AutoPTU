@@ -1,0 +1,79 @@
+{
+  "name": "Dynamax Cannon",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "dynamax-cannon",
+    "actions": [
+      {
+        "slug": "dynamax-cannon",
+        "name": "Dynamax Cannon",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "ray"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 9
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "dragon"
+        ],
+        "description": "<p>Effect: This Attack's Power is doubled if the target is Dynamaxed.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "dynamax-cannon-giant",
+        "name": "Dynamax Cannon (Giant)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "ray"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 9,
+          "trigger": "<p>Target is Dynamaxed.</p>"
+        },
+        "category": "special",
+        "power": 200,
+        "accuracy": 100,
+        "types": [
+          "dragon"
+        ],
+        "description": "<p>Trigger: Target is Dynamaxed.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "d8fSDnDZwrFinDuc",
+  "effects": []
+}

@@ -1,0 +1,49 @@
+{
+  "name": "Shadow Down",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-down",
+    "actions": [
+      {
+        "slug": "shadow-down",
+        "name": "Shadow Down",
+        "type": "attack",
+        "traits": [
+          "friendly"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 9
+        },
+        "category": "status",
+        "accuracy": 85,
+        "types": [
+          "shadow"
+        ],
+        "description": "<p>Effect: On hit, all valid targets lose -2 DEF Stage for 5 Activations.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "R4t5pLgeDvmZ3fd6",
+  "effects": []
+}

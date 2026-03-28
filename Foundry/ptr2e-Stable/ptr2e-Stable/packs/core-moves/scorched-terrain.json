@@ -1,0 +1,49 @@
+{
+  "name": "Scorched Terrain",
+  "type": "move",
+  "_id": "yTJz4NC7QFi2fl4j",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "scorched-terrain",
+    "actions": [
+      {
+        "name": "Scorched Terrain",
+        "slug": "scorched-terrain",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/fire_icon.svg",
+        "traits": [
+          "terrain"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "types": [
+          "fire"
+        ],
+        "category": "status",
+        "description": "<p>Effect: The Terrain is set to Scorched Terrain for 3 rounds.</p>",
+        "summon": "Compendium.ptr2e.core-summons.Item.TtzjT8xU8YUyEA8g",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

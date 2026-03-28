@@ -1,0 +1,101 @@
+{
+  "name": "<Type> Style",
+  "type": "perk",
+  "folder": "kWG8zov1UnSKOvEQ",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.leadership.mod}",
+          35
+        ]
+      }
+    ],
+    "cost": 2,
+    "description": "<p>The target adds this Action's [Type] to the next Attack they declare, lasting until the Attack resolves. The user may also be selected as a target for this Action.</p>",
+    "actions": [
+      {
+        "name": "<Type> Style",
+        "slug": "type-style",
+        "description": "<p>The target adds this Action's [Type] to the next Attack they declare, lasting until the Attack resolves. The user may also be selected as a target for this Action.</p>",
+        "type": "generic",
+        "traits": [
+          "social",
+          "command",
+          "type"
+        ],
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 2
+        },
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "img": "icons/svg/explosion.svg",
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "type-style",
+    "traits": [
+      "social",
+      "command",
+      "type"
+    ],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 122,
+        "y": 130,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "rapid-fire-style",
+          "type-style",
+          "magic-armor-style",
+          "type-strategist",
+          "type-tutoring",
+          "improved-overland-6",
+          "improved-flight-6",
+          "hasten-conjuration"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Orders_Training.svg",
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "tint": null,
+          "scale": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "power",
+      "archetype": "type-ace"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "rf1amQ8FoBlQka5c",
+  "img": "systems/ptr2e/img/perk-icons/Orders_Training.svg",
+  "effects": []
+}

@@ -1,0 +1,97 @@
+{
+  "name": "Glowy Weather",
+  "type": "summon",
+  "system": {
+    "_migration": {
+      "version": 0.11,
+      "previous": null
+    },
+    "traits": [
+      "partial-automation",
+      "weather",
+      "nuclear"
+    ],
+    "actions": [],
+    "baseAV": 150,
+    "duration": 3,
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "slug": "glowy-weather",
+    "description": "<p><strong>Glowy</strong> is an odd sensation. The air feels \"charged\", full of energy and invigoration, but also it spurs tension and anxiety. One could say it's the most reasonable \"danger\" response, as this energy is uncomfortable to most creatures, and downright harmful with longer exposure.</p><p><strong><span style=\"text-decoration: underline;\">Effects:</span></strong></p><ul><li>At the end of their Activation, non-Steel- and Nuclear-Type creatures lose a Tick of HP.</li><li>Nuclear-Type creatures gain 30% to their Movement Allowances and their SPD is increased 30%.</li><li>At the end of each round, non-Nuclear-Type creatures have one of their Abilities randomly Nullified 3.</li><li>Non-Steel- and Nuclear-Type creatures are Stunted.</li><li>Steel-Type Attacks have a 15% chance to inflict Unlucky 5. Attacks that would already cause Unlucky 5 instead increase their chance to cause Unlucky by 15%.</li><li>Nuclear-Type Attacks have a 30% chance to inflict Unlucky 5. Attacks that would already cause Unlucky 5 instead increase their chance to cause Unlucky by 30%.</li></ul>"
+  },
+  "img": "systems/ptr2e/img/svg/nuclear_icon.svg",
+  "effects": [
+    {
+      "name": "Glowy Weather",
+      "type": "summon",
+      "_id": "CI0kHPoSIikPh7Ky",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "basic",
+            "key": "system.modifiers.speMultiplier",
+            "value": 0.3,
+            "predicate": [
+              "trait:nuclear"
+            ],
+            "label": "Nuclear SpeedBoost",
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "priority": 50,
+        "formula": "1/16",
+        "type": "damage",
+        "targetType": "all",
+        "targetUuid": null,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": null,
+        "lastModifiedBy": "5ImYyhOS2D6D7ypO",
+        "exportSource": null,
+        "modifiedTime": 1762904476940
+      }
+    }
+  ],
+  "_id": "9a5RrO9eF0kzt9Xn"
+}

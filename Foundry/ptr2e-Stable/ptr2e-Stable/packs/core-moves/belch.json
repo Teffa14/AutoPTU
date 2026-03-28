@@ -1,0 +1,47 @@
+{
+  "name": "Belch",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "slug": "belch",
+    "actions": [
+      {
+        "slug": "belch",
+        "name": "Belch",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "cone",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "The user has consumed a [Food] item during the current combat."
+        },
+        "category": "special",
+        "power": 120,
+        "accuracy": 90,
+        "types": [
+          "poison"
+        ],
+        "description": "<p>Trigger: The user has consumed a [Food] item during the current combat.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "DgqIeYYmWoLinp9T",
+  "effects": []
+}

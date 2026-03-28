@@ -1,0 +1,112 @@
+{
+  "name": "Weather Ball",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "weather-ball",
+    "actions": [
+      {
+        "slug": "weather-ball",
+        "name": "Weather Ball",
+        "type": "attack",
+        "traits": [
+          "pulse",
+          "missile",
+          "environ"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 50,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "weather-ball-weather",
+        "name": "Weather Ball (Weather)",
+        "type": "attack",
+        "traits": [
+          "pulse",
+          "missile",
+          "environ"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "weather-ball",
+        "free": true,
+        "slot": null
+      },
+      {
+        "slug": "weather-ball-intense-weather",
+        "name": "Weather Ball (Intense Weather)",
+        "type": "attack",
+        "traits": [
+          "pulse",
+          "missile",
+          "environ"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 150,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "weather-ball",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "cZHbswFvDLxTRSq2",
+  "effects": []
+}

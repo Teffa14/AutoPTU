@@ -1,0 +1,71 @@
+{
+  "name": "Venoshock",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "slug": "venoshock",
+    "actions": [
+      {
+        "slug": "venoshock",
+        "name": "Venoshock",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "special",
+        "power": 65,
+        "accuracy": 100,
+        "types": [
+          "poison"
+        ],
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "slug": "venoshock-poisoned",
+        "name": "Venoshock (Poisoned)",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "<p>If the target has @Affliction[poison] or @Affliction[blight].</p>"
+        },
+        "category": "special",
+        "power": 130,
+        "accuracy": 100,
+        "types": [
+          "poison"
+        ],
+        "description": "<p>Trigger: If the target has @Affliction[poison] or @Affliction[blight].</p>",
+        "variant": "venoshock",
+        "free": true,
+        "img": "systems/ptr2e/img/svg/poison_icon.svg"
+      }
+    ],
+    "grade": "B",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "jZK67alNjuQdhesC",
+  "effects": []
+}

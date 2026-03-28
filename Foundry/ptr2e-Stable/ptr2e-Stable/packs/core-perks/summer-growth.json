@@ -1,0 +1,136 @@
+{
+  "folder": "eXSEV54jXXZfP27D",
+  "name": "Summer Growth",
+  "type": "perk",
+  "system": {
+    "_migration": {
+      "version": 0.107,
+      "previous": null
+    },
+    "actions": [
+      {
+        "name": "Summer Growth",
+        "slug": "summer-growth",
+        "description": "<p>Trigger: The Weather becomes Sunny.<br><br>Effect: You may spend 3 PP to gain the @Affliction[ringed 5] condition as a free-action interrupt.</p>",
+        "traits": [
+          "interrupt"
+        ],
+        "type": "generic",
+        "img": "systems/ptr2e/img/svg/grass_icon.svg",
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3
+        }
+      }
+    ],
+    "description": "<p>Trigger: The Weather becomes Sunny.<br><br>Effect: You may spend 3 PP to gain the @Affliction[ringed 5] condition as a free-action interrupt.</p>",
+    "traits": [],
+    "prerequisites": [
+      "trait:grass"
+    ],
+    "cost": 3,
+    "slug": "summer-growth",
+    "nodes": [
+      {
+        "x": 52,
+        "y": 133,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "nurturing-shoots",
+          "one-with-the-green",
+          "climatologist",
+          "minor-buff-40",
+          "dryad-striding"
+        ],
+        "config": {
+          "texture": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "effects": [
+    {
+      "name": "Summer Growth",
+      "type": "passive",
+      "_id": "72oJ9rq2JneMyO79",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "summer-growth-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.ringedcondititem",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "self",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1765236062548,
+        "modifiedTime": 1765236096342,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ],
+  "_id": "QjzXMXdTMjA4mQsn"
+}

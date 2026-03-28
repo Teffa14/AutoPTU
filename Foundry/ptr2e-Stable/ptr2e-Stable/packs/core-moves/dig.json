@@ -1,0 +1,76 @@
+{
+  "name": "Dig",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "dig",
+    "actions": [
+      {
+        "slug": "dig-resolution",
+        "name": "Dig (Resolution)",
+        "type": "attack",
+        "traits": [
+          "set-up",
+          "contact",
+          "field",
+          "flinch-10"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1,
+          "trigger": "The user used Dig (Set Up) as their last Action."
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "ground"
+        ],
+        "description": "<p>Trigger: The user used Dig (Set Up) as their last Action.</p><p>Effect: The user freely Moves up to one-and-a-half times their Burrow Score (if the user lacks a Burrow Score, they may move up to 4m via Burrow) before attacking with this Attack.</p>",
+        "img": "systems/ptr2e/img/svg/ground_icon.svg",
+        "predicate": []
+      },
+      {
+        "name": "Dig (Set-Up)",
+        "slug": "dig-action-set-up",
+        "description": "<p>Effect: The user gains +4 EVA stages for 3 Activations, and freely Moves up to their Burrow Score (if the user lacks a Burrow Score, they may move up to 3m via Burrow).</p>",
+        "traits": [
+          "set-up",
+          "defensive",
+          "priority-20"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/ground_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "priority": 2
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "ground"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "90a4UOjXNVJQEjSy",
+  "effects": []
+}

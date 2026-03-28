@@ -1,0 +1,46 @@
+{
+  "name": "Make It Rain",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "make-it-rain",
+    "actions": [
+      {
+        "slug": "make-it-rain",
+        "name": "Make It Rain",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "wide-line",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "special",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Effect: If this Move is used at least once in combat, the user rolls a Difficult Accounting Skill Check. The user and their allies gain +1 to their Resources Skill, gaining an additional +1 Resource per 5 DoS.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "U8kmQcYJoTjJ0W4s",
+  "effects": []
+}

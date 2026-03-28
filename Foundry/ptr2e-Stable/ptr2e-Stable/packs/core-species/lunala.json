@@ -1,0 +1,631 @@
+{
+  "name": "lunala",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "ghost",
+      "psychic"
+    ],
+    "stats": {
+      "hp": 137,
+      "atk": 113,
+      "def": 89,
+      "spa": 137,
+      "spd": 107,
+      "spe": 97
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "confusion",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hypnosis",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "teleport",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "cosmic-power",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "night-shade",
+          "level": 7,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confuse-ray",
+          "level": 14,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "air-slash",
+          "level": 21,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-ball",
+          "level": 28,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "moonlight",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "night-daze",
+          "level": 42,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic",
+          "level": 49,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magic-coat",
+          "level": 49,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "moonblast",
+          "level": 56,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "phantom-force",
+          "level": 63,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dream-eater",
+          "level": 70,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wide-guard",
+          "level": 77,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "level": 84,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "moongeist-beam",
+          "level": null,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "sky-attack",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "spite",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "heat-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trick",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "tailwind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "wonder-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "telekinesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "expanding-force",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "meteor-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poltergeist",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fly",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "roar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "agility",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "future-sight",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "will-o-wisp",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aerial-ace",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "roost",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-claw",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psycho-cut",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "trick-room",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charge-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psyshock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hex",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sky-drop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "acrobatics",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "work-up",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 4,
+      "weight": 120,
+      "category": "huge",
+      "type": "quad"
+    },
+    "captureRate": 3,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "cosmog",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "cosmoem",
+          "uuid": "Compendium.ptr2e.core-species.Item.HOfS7vBFF6ME2LiA",
+          "methods": [
+            {
+              "type": "level",
+              "level": 43,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "solgaleo",
+              "uuid": "Compendium.ptr2e.core-species.Item.KCaLP0tjvwK3Fqjs",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 53,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            },
+            {
+              "name": "lunala",
+              "uuid": "Compendium.ptr2e.core-species.Item.hpsUcuamiebvodm7",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 53,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.XRRwQRXawRg2oxRH"
+    },
+    "number": 792,
+    "traits": [
+      "pokemon",
+      "legendary",
+      "fully-evolved",
+      "hover",
+      "winged",
+      "teleporter",
+      "ultra-wormhole",
+      "telekinetic-6",
+      "glow-8",
+      "z-crystal-creation",
+      "jump-1"
+    ],
+    "diet": [
+      "phototroph"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "cosmic-eclipse"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "unaware"
+        },
+        {
+          "slug": "magic-bounce"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "sturdy"
+        },
+        {
+          "slug": "magic-guard"
+        }
+      ],
+      "master": [
+        {
+          "slug": "shadow-shield"
+        },
+        {
+          "slug": "nocturnal"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 15
+      },
+      {
+        "type": "teleport",
+        "value": 15
+      }
+    ],
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 75,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ghosts",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "legends",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "psychic",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "ultra-beasts",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "running",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "lunala",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "hpsUcuamiebvodm7",
+  "effects": [],
+  "folder": null
+}

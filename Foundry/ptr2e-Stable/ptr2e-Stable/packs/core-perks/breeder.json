@@ -1,0 +1,92 @@
+{
+  "name": "Breeder",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.husbandry.mod}",
+          25
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>You understand the fundamentals of Pokemon Egg Groups and behaviour well enough to breed Pokemon. You may undertake the Breeding Camp Action to perform a Husbandry skill check and produce an Egg.</p>",
+    "actions": [
+      {
+        "name": "Breeder",
+        "slug": "breeder",
+        "description": "<p>You understand the fundamentals of Pokemon Egg Groups and behaviour well enough to breed Pokemon. You may undertake the Breeding Camp Action to perform a Husbandry skill check and produce an Egg.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "type": "camping",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "breeder",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "shiny-mutation",
+          "chansey-medicine",
+          "root-6",
+          "mobilize",
+          "forensic-accountant",
+          "rigorous-fundamentals-2",
+          "pack-mon-2"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#ffff00",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Breeder.svg",
+          "tint": "#151515",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 29,
+        "y": 82,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "resilience",
+      "archetype": "breeding"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "Cb1xb08jFdxHHVae",
+  "img": "systems/ptr2e/img/perk-icons/Breeder.svg",
+  "effects": [],
+  "folder": "aNkYtPlgFsBmX4Q1"
+}

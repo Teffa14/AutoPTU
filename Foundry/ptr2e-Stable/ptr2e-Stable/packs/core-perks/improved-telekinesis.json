@@ -1,0 +1,126 @@
+{
+  "name": "Improved Telekinesis",
+  "type": "perk",
+  "folder": "minorbuffsfolder",
+  "system": {
+    "prerequisites": [
+      "#[Telekinetic X]"
+    ],
+    "cost": 1,
+    "description": "<p>Improve your [Telekinesis X] by 2.</p>",
+    "actions": [
+      {
+        "name": "Improved Telekinesis",
+        "slug": "improved-telekinesis",
+        "description": "<p>Improve your [Telekinesis X] by 2.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false,
+        "hidden": false
+      }
+    ],
+    "slug": "improved-telekinesis",
+    "variant": "multi",
+    "mode": "individual",
+    "nodes": [
+      {
+        "x": 129,
+        "y": 116,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "telekinetic-potential",
+          "stat-iv-booster-1-4",
+          "improved-teleportation"
+        ],
+        "config": {
+          "texture": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      },
+      {
+        "x": 156,
+        "y": 134,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "telekinetic-potential",
+          "stat-iv-booster-1-2",
+          "improved-teleportation-1",
+          "improved-teleportation-2"
+        ],
+        "config": {
+          "texture": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      },
+      {
+        "x": 103,
+        "y": 150,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "stat-iv-booster-1-9",
+          "improved-overland-11",
+          "improved-flight-5",
+          "stat-iv-booster-1-8",
+          "telepathic-potential",
+          "improved-swim-1",
+          "stat-iv-booster-1-12",
+          "improved-overland-15",
+          "mental-alarm"
+        ],
+        "config": {
+          "texture": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "traits": [
+      "minor-buff"
+    ],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "autoUnlock": [],
+    "global": false,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "power",
+      "archetype": "psychic"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null
+  },
+  "_id": "QmK8catssCQpdnaA",
+  "img": "systems/ptr2e/img/icons/feat_icon.webp",
+  "effects": []
+}

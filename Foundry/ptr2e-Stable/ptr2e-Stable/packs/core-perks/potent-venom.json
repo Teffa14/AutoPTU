@@ -1,0 +1,124 @@
+{
+  "name": "Potent Venom",
+  "type": "perk",
+  "folder": "8nTJNodaluw5G4Y6",
+  "system": {
+    "prerequisites": [
+      "trait:poison"
+    ],
+    "cost": 2,
+    "description": "<p>Your @Trait[poison] Type Attacks gain +20% chance to inflict @Affliction[poison 5].</p>",
+    "actions": [],
+    "slug": "potent-venom",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 167,
+        "y": 85,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "venomous",
+          "acceptance",
+          "tainted-blades",
+          "flare-ignition"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/svg/poison_icon.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "resilience",
+      "archetype": "poison"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "TaUuAKRcosusMkC9",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "effects": [
+    {
+      "name": "Potent Venom",
+      "type": "passive",
+      "_id": "cR1z4vapujM8EJUC",
+      "img": "systems/ptr2e/img/svg/poison_icon.svg",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "poison-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.poisoncondititem",
+            "predicate": [
+              "origin:enemy"
+            ],
+            "chance": 20,
+            "affects": "target",
+            "priority": null,
+            "alterations": [],
+            "dontMerge": false,
+            "isFixedChance": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "<p>Your @Trait[poison] Type Attacks gain +20% chance to inflict @Affliction[poison 5].</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.348",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1732569045186,
+        "modifiedTime": 1757798551760,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

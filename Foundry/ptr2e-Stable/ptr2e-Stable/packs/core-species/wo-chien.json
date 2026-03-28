@@ -1,0 +1,429 @@
+{
+  "name": "wo-chien",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "grass",
+      "dark"
+    ],
+    "stats": {
+      "hp": 85,
+      "atk": 85,
+      "def": 100,
+      "spa": 95,
+      "spd": 135,
+      "spe": 70
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "absorb",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "spite",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mean-look",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tickle",
+          "level": 5,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "payback",
+          "level": 10,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poison-powder",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stun-spore",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mega-drain",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leech-seed",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "growth",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ingrain",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dark-pulse",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-drain",
+          "level": 45,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ruination",
+          "level": 50,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "foul-play",
+          "level": 55,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "power-whip",
+          "level": 60,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grassy-terrain",
+          "level": 65,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "knock-off",
+          "level": 70,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leaf-storm",
+          "level": 75,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bullet-seed",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magical-leaf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hex",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snarl",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "solar-blade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pollen-puff",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-press",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lash-out",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.5,
+      "weight": 74.2,
+      "category": "large",
+      "type": "quad"
+    },
+    "captureRate": 13,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "wo-chien",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 1001,
+    "traits": [
+      "pokemon",
+      "legless",
+      "legendary",
+      "telekinetic-2",
+      "treasure-of-ruin",
+      "evil-touch",
+      "wilting-aura",
+      "fully-evolved",
+      "jump-2"
+    ],
+    "diet": [
+      "nullivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "tablets-of-ruin"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "vegetarian"
+        },
+        {
+          "slug": "forewarn"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "clear-body"
+        },
+        {
+          "slug": "grass-pelt"
+        }
+      ],
+      "master": [
+        {
+          "slug": "grassy-surge"
+        },
+        {
+          "slug": "symbiosis"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 7
+      }
+    ],
+    "skills": [
+      {
+        "slug": "appraise",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "archaeology",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "history",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "legends",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "research",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "teaching",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "wo-chien",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "fJYwbaEYRWgLxBUM",
+  "effects": [],
+  "folder": null
+}

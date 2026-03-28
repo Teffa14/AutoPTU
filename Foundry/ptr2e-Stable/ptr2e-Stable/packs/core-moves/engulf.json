@@ -1,0 +1,50 @@
+{
+  "name": "Engulf",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "engulf",
+    "actions": [
+      {
+        "slug": "engulf",
+        "name": "Engulf",
+        "type": "attack",
+        "traits": [
+          "flinch-40"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 50,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>Effect: All @Trait[hazard] and @Trait[shield] effects in Range are cleared, as are the @Affliction[leech], @Affliction[ringed], and @Affliction[bound] Afflictions.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "v7DeY7cPLe5xLE9Y",
+  "effects": []
+}

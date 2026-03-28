@@ -1,0 +1,49 @@
+{
+  "name": "Sheer Cold",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "sheer-cold",
+    "actions": [
+      {
+        "slug": "sheer-cold",
+        "name": "Sheer Cold",
+        "type": "attack",
+        "traits": [
+          "execute",
+          "unreliable"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": -5
+        },
+        "category": "special",
+        "power": null,
+        "accuracy": 30,
+        "types": [
+          "ice"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "zvrfw4Jo89VTpPIs",
+  "effects": []
+}

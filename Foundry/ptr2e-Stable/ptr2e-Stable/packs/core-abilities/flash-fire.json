@@ -1,0 +1,122 @@
+{
+  "name": "Flash Fire",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "interrupt-2",
+          "defensive"
+        ],
+        "name": "Flash Fire",
+        "slug": "flash-fire",
+        "type": "passive",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3,
+          "trigger": "<p>The user is hit by a Fire-Type attack.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user is hit by a Fire-Type attack.</p><p>Effect: The user takes no damage from the triggering attack and is not affected by the triggering attack's effect. Then, the user freely uses Stoke.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user is hit by a Fire-Type attack.</p><p>Effect: Connection - Stoke. The user takes no damage from the triggering attack and is not affected by the triggering attack's effect. Then, the user freely uses Stoke.</p>",
+    "traits": [
+      "connection",
+      "defensive"
+    ],
+    "slug": "flash-fire",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "A89H4xiNBvel78X6",
+  "effects": [
+    {
+      "name": "Flash Fire",
+      "type": "passive",
+      "_id": "LDYjzLioVKUBufMy",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.51bKgpaPceb1kg5n",
+            "predicate": [
+              "ability:flash-fire:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "allowDuplicate": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737398204591,
+        "modifiedTime": 1754318218273,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

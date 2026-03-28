@@ -1,0 +1,53 @@
+{
+  "name": "Blade Clash",
+  "type": "move",
+  "_id": "XYnUAGlKJUVYHuYS",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "blade-clash",
+    "actions": [
+      {
+        "name": "Blade Clash",
+        "slug": "blade-clash",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/steel_icon.svg",
+        "traits": [
+          "contact",
+          "sharp"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "types": [
+          "steel"
+        ],
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "description": "<p>Effect: This attack calculates damage against the target's ATK, rather than DEF.</p>",
+        "defensiveStat": "atk",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": []
+  },
+  "effects": []
+}

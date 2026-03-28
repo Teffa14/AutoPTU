@@ -1,0 +1,48 @@
+{
+  "name": "Metal Burst",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "metal-burst",
+    "actions": [
+      {
+        "slug": "metal-burst",
+        "name": "Metal Burst",
+        "type": "attack",
+        "traits": [
+          "interrupt-3"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "category": "physical",
+        "power": null,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Effect: Trigger: The user is damaged by an attack.</p><p>The user attacks the creature that attacked it, dealing 1.5x the amount of damage it were dealt by the triggering attack (this is not modified by the target's defenses or other effects).</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "XZxtIryjS7XhaRv0",
+  "effects": []
+}

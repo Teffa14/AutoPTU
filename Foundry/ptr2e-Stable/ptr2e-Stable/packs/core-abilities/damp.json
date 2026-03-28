@@ -1,0 +1,40 @@
+{
+  "name": "Damp",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive"
+        ],
+        "name": "Damp",
+        "slug": "damp",
+        "type": "passive",
+        "cost": {},
+        "range": {
+          "target": "aura",
+          "distance": 15,
+          "unit": "m"
+        },
+        "description": "<p>Effect: @Trait[explode] and @Trait[firearm] Attacks and Abilities fail when they are declared in range, consuming their costs as normal. These declared Attacks gain @Affliction[disabled 2] (if the Attack originated from a Weapon, all of that weapon’s @Trait[explode] and @Trait[firearm] Attacks are @Affliction[disabled 2]), and these declared Abilities gain @Affliction[nullified 2].</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: @Trait[explode] and @Trait[firearm] Attacks and Abilities fail when they are declared in range, consuming their costs as normal. These declared Attacks gain @Affliction[disabled 2] (if the Attack originated from a Weapon, all of that weapon’s @Trait[explode] and @Trait[firearm] Attacks are @Affliction[disabled 2]), and these declared Abilities gain @Affliction[nullified 2].</p>",
+    "traits": [],
+    "slug": "damp",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "39Zmt5Nzi2EGf1YV",
+  "effects": []
+}

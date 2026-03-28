@@ -1,0 +1,102 @@
+{
+  "name": "Echo Blast",
+  "type": "move",
+  "_id": "94ptq8J3PI7PcUn2",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Echo Blast",
+        "slug": "echo-blast",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "delay-2",
+          "sonic"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "delay": 2
+        },
+        "variant": null,
+        "types": [
+          "normal"
+        ],
+        "category": "special",
+        "power": 65,
+        "accuracy": 100,
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null,
+        "description": ""
+      },
+      {
+        "name": "Echo Blast (Echoing)",
+        "slug": "echo-blast-echoing",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "delay-2",
+          "danger-close",
+          "sonic"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "delay": 2,
+          "trigger": "<p>Target has been hit with a [Sonic] Attack since the user's last Activation.</p>"
+        },
+        "variant": "echo-blast",
+        "types": [
+          "normal"
+        ],
+        "category": "special",
+        "power": 130,
+        "accuracy": 100,
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null,
+        "description": "<p>Trigger: Target has been hit with a [Sonic] Attack since the user's last Activation.</p>"
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "CYLdyr5mPSDmNpTp": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.328",
+    "systemId": "ptr2e",
+    "systemVersion": "0.10.0-alpha.1.5.2",
+    "createdTime": 1720814147929,
+    "modifiedTime": 1720814394849,
+    "lastModifiedBy": "CYLdyr5mPSDmNpTp"
+  }
+}

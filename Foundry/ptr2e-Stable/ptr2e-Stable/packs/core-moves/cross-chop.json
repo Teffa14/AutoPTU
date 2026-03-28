@@ -1,0 +1,49 @@
+{
+  "name": "Cross Chop",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "cross-chop",
+    "actions": [
+      {
+        "slug": "cross-chop",
+        "name": "Cross Chop",
+        "type": "attack",
+        "traits": [
+          "crit-1",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 80,
+        "types": [
+          "fighting"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "KtlB6yrDuoCSvr5P",
+  "effects": []
+}

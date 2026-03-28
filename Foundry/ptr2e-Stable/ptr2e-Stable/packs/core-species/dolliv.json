@@ -1,0 +1,402 @@
+{
+  "name": "dolliv",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "normal",
+      "grass"
+    ],
+    "stats": {
+      "hp": 52,
+      "atk": 53,
+      "def": 60,
+      "spa": 78,
+      "spd": 78,
+      "spe": 33
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sweet-scent",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "absorb",
+          "level": 5,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "growth",
+          "level": 7,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "razor-leaf",
+          "level": 10,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "level": 13,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flail",
+          "level": 16,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mega-drain",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grassy-terrain",
+          "level": 23,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "seed-bomb",
+          "level": 29,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "energy-ball",
+          "level": 34,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leech-seed",
+          "level": 37,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "terrain-pulse",
+          "level": 42,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "weather-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bullet-seed",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magical-leaf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earth-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leaf-storm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "solar-blade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.6,
+      "weight": 11.9,
+      "category": "tiny",
+      "type": "height"
+    },
+    "captureRate": 120,
+    "eggGroups": [
+      "plant"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "smoliv",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "dolliv",
+          "uuid": "Compendium.ptr2e.core-species.Item.YWuHWaRnNfqZmC46",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "arboliva",
+              "uuid": "Compendium.ptr2e.core-species.Item.Dgi5sESLA9JLPg8f",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 35,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.GFdZuWAOXd2g9vma"
+    },
+    "number": 929,
+    "traits": [
+      "pokemon",
+      "underdog",
+      "bipedal",
+      "jump-2"
+    ],
+    "diet": [
+      "photosynthesis"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "early-bird"
+        },
+        {
+          "slug": "natural-cure"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "harvest"
+        },
+        {
+          "slug": "undergrowth"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "aroma-veil"
+        },
+        {
+          "slug": "flower-veil"
+        }
+      ],
+      "master": [
+        {
+          "slug": "leaf-guard"
+        },
+        {
+          "slug": "natural-cure"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "grassland"
+    ],
+    "slug": "dolliv",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "YWuHWaRnNfqZmC46",
+  "effects": [],
+  "folder": null
+}

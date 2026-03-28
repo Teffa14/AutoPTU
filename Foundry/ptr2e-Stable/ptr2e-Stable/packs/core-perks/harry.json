@@ -1,0 +1,88 @@
+{
+  "folder": "VCEaYPpKcCqDx7yx",
+  "name": "Harry",
+  "type": "perk",
+  "_id": "DZbrFWkgbvlb5SLh",
+  "img": "systems/ptr2e/img/perk-icons/Tactician.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Harry",
+        "slug": "harry",
+        "description": "<p>When wielding a Ranged Weapon you may activate this Perk. Create a Harry Clock with 3 Spans. When attacking targets within line of sight and your first RI, your allies can tick the Harry Clock to gain +1 ACC on their attack. The Harry Clock expires when filled, or at the beginning of your next activation.</p>",
+        "traits": [],
+        "type": "generic",
+        "range": {
+          "target": "object",
+          "unit": "m",
+          "distance": 0
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "delay": null,
+          "priority": null
+        },
+        "img": "icons/svg/explosion.svg",
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "harry",
+    "description": "<p>When wielding a Ranged Weapon you may activate this Perk. Create a Harry Clock with 3 Spans. When attacking targets within line of sight and your first RI, your allies can tick the Harry Clock to gain +1 ACC on their attack. The Harry Clock expires when filled, or at the beginning of your next activation.</p>",
+    "traits": [],
+    "prerequisites": [
+      "trait:wielder"
+    ],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "covering-fire",
+          "tainted-blades",
+          "backpacker-1",
+          "down-the-sights",
+          "yeomanry",
+          "nock-shot"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#804000",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Tactician.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 187,
+        "y": 72,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "finesse",
+      "archetype": "gunslinger"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": []
+}

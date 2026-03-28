@@ -1,0 +1,249 @@
+{
+  "name": "Underdog's Spirit 1",
+  "type": "perk",
+  "folder": "zrVtKATNxzLNxTUb",
+  "system": {
+    "prerequisites": [
+      "trait:underdog",
+      {
+        "gte": [
+          "{actor|level}",
+          25
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>Gain +10 HP Base Stat, up to the Underdog BST Cap.</p>",
+    "actions": [
+      {
+        "name": "Underdog's Spirit 1",
+        "slug": "underdogs-spirit-1",
+        "description": "<p>Gain +10 HP Base Stat, up to the Underdog BST Cap.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0,
+          "delay": null,
+          "priority": null
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "hidden": false,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "underdogs-spirit-1",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 26,
+        "y": 28,
+        "hidden": false,
+        "type": "entry",
+        "connected": [
+          "specialized-underdog"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#ffffff",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Breeder.svg",
+          "tint": "#121212",
+          "scale": null
+        },
+        "tier": null
+      },
+      {
+        "tier": {
+          "rank": 2,
+          "uuid": "Compendium.ptr2e.core-perks.Item.underdogperk0011"
+        },
+        "x": null,
+        "y": null,
+        "connected": [],
+        "hidden": false,
+        "type": "normal",
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        }
+      },
+      {
+        "tier": {
+          "rank": 3,
+          "uuid": "Compendium.ptr2e.core-perks.Item.underdogperk0021"
+        },
+        "x": null,
+        "y": null,
+        "connected": [],
+        "hidden": false,
+        "type": "normal",
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        }
+      },
+      {
+        "tier": {
+          "rank": 4,
+          "uuid": "Compendium.ptr2e.core-perks.Item.underdogperk0031"
+        },
+        "x": null,
+        "y": null,
+        "connected": [],
+        "hidden": false,
+        "type": "normal",
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        }
+      },
+      {
+        "tier": {
+          "rank": 5,
+          "uuid": "Compendium.ptr2e.core-perks.Item.underdogperk0041"
+        },
+        "x": null,
+        "y": null,
+        "connected": [],
+        "hidden": false,
+        "type": "normal",
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        }
+      },
+      {
+        "tier": {
+          "rank": 6,
+          "uuid": "Compendium.ptr2e.core-perks.Item.underdogperk0051"
+        },
+        "x": null,
+        "y": null,
+        "connected": [],
+        "hidden": false,
+        "type": "normal",
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        }
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": "tiered",
+    "mode": "coexist",
+    "global": false,
+    "webs": [],
+    "design": {
+      "arena": null,
+      "approach": null,
+      "archetype": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "underdogperk0001",
+  "img": "systems/ptr2e/img/perk-icons/Breeder.svg",
+  "effects": [
+    {
+      "name": "Underdog's Spirit 1",
+      "type": "passive",
+      "_id": "sa9DKSsGPQSxhX24",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "stats-alteration",
+            "key": "",
+            "value": 0,
+            "hp": 10,
+            "atk": null,
+            "def": null,
+            "spa": null,
+            "spd": null,
+            "spe": null,
+            "predicate": [],
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": "Actor.6K9P8ATjBFtFFA6f.Item.Z0CEcAOmbtkRkHzr.ActiveEffect.ouUENbxP31g1dmNU",
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.3.0.0",
+        "createdTime": 1729377335281,
+        "modifiedTime": 1729377335281,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS",
+        "exportSource": null
+      }
+    }
+  ]
+}

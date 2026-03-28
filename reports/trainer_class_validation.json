@@ -1,0 +1,211 @@
+{
+  "generated_at_utc": "2026-03-04T02:15:47.691670+00:00",
+  "class_count": 69,
+  "missing_mechanics_count": 61,
+  "missing_mechanics": [
+    "Ace Trainer",
+    "Apparition",
+    "Arcanist",
+    "Athlete",
+    "Attack Ace",
+    "Backpacker",
+    "Berserker",
+    "Capture Specialist",
+    "Cheerleader [Playtest]",
+    "Chef",
+    "Commander",
+    "Coordinator",
+    "Defense Ace",
+    "Druid",
+    "Earth Shaker",
+    "Enduring Soul",
+    "Fashionista",
+    "Fire Bringer",
+    "Fortress",
+    "Frost Touched",
+    "Glamour Weaver",
+    "Glitch Bender",
+    "Herald of Pride",
+    "Hex Maniac",
+    "Hobbyist",
+    "Hunter",
+    "Juggler",
+    "Maelstrom",
+    "Marksman",
+    "Martial Artist",
+    "Medic",
+    "Mentor",
+    "Miasmic",
+    "Ninja",
+    "Oracle",
+    "Prism",
+    "Provocateur",
+    "Researcher",
+    "Rider",
+    "Rogue",
+    "Roughneck",
+    "Rune Master",
+    "Sage",
+    "Shade Caller",
+    "Skirmisher",
+    "Spark Master",
+    "Special Attack Ace",
+    "Special Defense Ace",
+    "Speed Ace",
+    "Stat Ace",
+    "Steelheart",
+    "Stone Warrior",
+    "Style Expert",
+    "Survivalist",
+    "Swarmlord",
+    "Telekinetic",
+    "Telepath",
+    "Trickster",
+    "Tumbler",
+    "Warper",
+    "Wind Runner"
+  ],
+  "ambiguous_unlockables_count": 23,
+  "ambiguous_unlockables": [
+    {
+      "class": "Apparition",
+      "unlockable": "Silent Assassin",
+      "prerequisites": "Apparition, Adept Intimidate or Occult Education",
+      "exceptions": []
+    },
+    {
+      "class": "Coordinator",
+      "unlockable": "Nuanced Performance",
+      "prerequisites": "Coordinator, Expert Charm, Command, Guile, Intimidate, or Intuition",
+      "exceptions": []
+    },
+    {
+      "class": "Fortress",
+      "unlockable": "Guardian's Punishment",
+      "prerequisites": "Fortress, Expert Combat or Focus",
+      "exceptions": []
+    },
+    {
+      "class": "Fortress",
+      "unlockable": "Wall of Iron",
+      "prerequisites": "Fortress, Adept Combat or Focus",
+      "exceptions": []
+    },
+    {
+      "class": "Hobbyist",
+      "unlockable": "Dabbler",
+      "prerequisites": "Hobbyist, Expert General Education or Perception",
+      "exceptions": []
+    },
+    {
+      "class": "Hobbyist",
+      "unlockable": "Look and Learn",
+      "prerequisites": "Hobbyist, Expert General Education or Perception",
+      "exceptions": []
+    },
+    {
+      "class": "Hunter",
+      "unlockable": "Hunter's Reflexes",
+      "prerequisites": "Hunter, Adept Stealth or Survival",
+      "exceptions": []
+    },
+    {
+      "class": "Hunter",
+      "unlockable": "Surprise!",
+      "prerequisites": "Hunter, Adept Stealth or Survival",
+      "exceptions": []
+    },
+    {
+      "class": "Juggler",
+      "unlockable": "Emergency Release",
+      "prerequisites": "Juggler, Expert Acrobatics or Guile",
+      "exceptions": []
+    },
+    {
+      "class": "Juggler",
+      "unlockable": "Round Trip",
+      "prerequisites": "Juggler, Adept Acrobatics or Guile",
+      "exceptions": []
+    },
+    {
+      "class": "Marksman",
+      "unlockable": "Clear Shot",
+      "prerequisites": "Marksman, Expert Perception or Combat",
+      "exceptions": []
+    },
+    {
+      "class": "Marksman",
+      "unlockable": "Crippling Shot",
+      "prerequisites": "Marksman, Expert Perception or Combat",
+      "exceptions": []
+    },
+    {
+      "class": "Marksman",
+      "unlockable": "Dead-Eye Shot",
+      "prerequisites": "Marksman, Master Combat or Perception",
+      "exceptions": []
+    },
+    {
+      "class": "Marksman",
+      "unlockable": "Overwatch",
+      "prerequisites": "Marksman, Adept Perception or Combat",
+      "exceptions": []
+    },
+    {
+      "class": "Prism",
+      "unlockable": "Prismatic Alignment",
+      "prerequisites": "4 Prism Features, Master Charm or General Education",
+      "exceptions": []
+    },
+    {
+      "class": "Prism",
+      "unlockable": "Sparkle",
+      "prerequisites": "Prism, Expert Charm or General Education",
+      "exceptions": []
+    },
+    {
+      "class": "Skirmisher",
+      "unlockable": "Swift Strikes",
+      "prerequisites": "4 Skirmisher Features, Master Combat or Acrobatics",
+      "exceptions": []
+    },
+    {
+      "class": "Steelheart",
+      "unlockable": "Impenetrable",
+      "prerequisites": "Steelheart, Expert Athletics or Focus",
+      "exceptions": []
+    },
+    {
+      "class": "Steelheart",
+      "unlockable": "Man of Steel",
+      "prerequisites": "Steelheart, Master Athletics or Focus",
+      "exceptions": []
+    },
+    {
+      "class": "Steelheart",
+      "unlockable": "Master of Arms",
+      "prerequisites": "Steelheart, Expert Athletics or Focus",
+      "exceptions": []
+    },
+    {
+      "class": "Steelheart",
+      "unlockable": "Reactive Armour",
+      "prerequisites": "Steelheart, Adept Athletics or Focus",
+      "exceptions": []
+    },
+    {
+      "class": "Telepath",
+      "unlockable": "Capability.Mental Assault",
+      "prerequisites": "Telepath, Expert Focus or Intuition",
+      "exceptions": []
+    },
+    {
+      "class": "Telepath",
+      "unlockable": "Mental Assault",
+      "prerequisites": "Telepath, Expert Focus or Intuition",
+      "exceptions": []
+    }
+  ],
+  "multi_class_mentions_count": 0,
+  "multi_class_mentions": []
+}

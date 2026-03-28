@@ -1,0 +1,538 @@
+{
+  "name": "runerigus",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 867,
+    "size": {
+      "category": "medium",
+      "type": "height",
+      "height": 1.6,
+      "weight": 66.6
+    },
+    "diet": [
+      "nullivore"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 5
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "spooky",
+      "silent",
+      "darkvision-15",
+      "hover",
+      "fully-evolved",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "wandering-spirit"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "creepy"
+        },
+        {
+          "slug": "malice"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "juggernaut"
+        },
+        {
+          "slug": "fatal-precision"
+        }
+      ],
+      "master": [
+        {
+          "slug": "filter"
+        },
+        {
+          "slug": "haunting"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "archaeology",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ghost",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "runerigus",
+    "stats": {
+      "hp": 58,
+      "atk": 95,
+      "def": 145,
+      "spa": 50,
+      "spd": 105,
+      "spe": 30
+    },
+    "types": [
+      "ground",
+      "ghost"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "astonish",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "haze",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "night-shade",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "scary-face",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "shadow-claw",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "disable",
+          "gen": "sword-shield",
+          "level": 12
+        },
+        {
+          "name": "brutal-swing",
+          "gen": "sword-shield",
+          "level": 16
+        },
+        {
+          "name": "crafty-shield",
+          "gen": "sword-shield",
+          "level": 20
+        },
+        {
+          "name": "hex",
+          "gen": "sword-shield",
+          "level": 24
+        },
+        {
+          "name": "mean-look",
+          "gen": "sword-shield",
+          "level": 28
+        },
+        {
+          "name": "slam",
+          "gen": "sword-shield",
+          "level": 32
+        },
+        {
+          "name": "curse",
+          "gen": "sword-shield",
+          "level": 38
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "sword-shield",
+          "level": 44
+        },
+        {
+          "name": "earthquake",
+          "gen": "sword-shield",
+          "level": 50
+        },
+        {
+          "name": "guard-split",
+          "gen": "sword-shield",
+          "level": 56
+        },
+        {
+          "name": "power-split",
+          "gen": "sword-shield",
+          "level": 56
+        },
+        {
+          "name": "destiny-bond",
+          "gen": "sword-shield",
+          "level": 62
+        }
+      ],
+      "tutor": [
+        {
+          "name": "ally-switch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "amnesia",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-press",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-pulse",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "earth-power",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fake-tears",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "guard-swap",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "imprison",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "nasty-plot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "phantom-force",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poltergeist",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "power-swap",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psychic",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "revenge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sand-tomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "skill-swap",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "taunt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thief",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic-spikes",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "trick",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "trick-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "will-o-wisp",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wonder-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "captureRate": 90,
+    "eggGroups": [
+      "mineral",
+      "indeterminate"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "ruin"
+    ],
+    "evolutions": {
+      "name": "yamask-galarian",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "runerigus",
+          "uuid": "Compendium.ptr2e.core-species.Item.3LWkQftUzvnqxNtg",
+          "methods": [
+            {
+              "type": "level",
+              "level": 34,
+              "operand": "and"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": [],
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.GZZoc4tDvS5c2UGE",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "3LWkQftUzvnqxNtg",
+  "effects": []
+}

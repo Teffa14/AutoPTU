@@ -1,0 +1,203 @@
+{
+  "name": "Intense Heat Weather",
+  "type": "summon",
+  "system": {
+    "_migration": {
+      "version": 0.11,
+      "previous": null
+    },
+    "traits": [
+      "partial-automation",
+      "weather",
+      "fire"
+    ],
+    "actions": [],
+    "baseAV": 150,
+    "duration": 3,
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "slug": "intense-heat-weather",
+    "description": "<p><strong>Intense Heat</strong> is the supercharged sunshine that causes droughts - withering plants and dehydrating all that are present. Fire-Types benefit the most, although the effects on all other Types are more pronounced.</p><p><strong><span style=\"text-decoration: underline;\">Effects:</span></strong></p><ul><li>For the purposes of Abilities, Attacks, Perks, and Traits, this Weather is considered to also be “Sunny”.</li><li>Fire-Type Attacks deal 60% more damage, and all Water-Type Attacks fail to activate.</li><li>Grass-Type creatures gain 60% to their Movement Allowances, and their SPD is increased 30%, but lose a Tick of HP at the end of their Activations.</li><li>Fire-Type Attacks are one step more effective on all Types, and are super effective against Water-Types.</li><li>Creatures cannot be Frozen, and Frozen creatures are cured of Frozen.</li><li>Non-Fire-, Grass-, Rock-, and Ground Types have -1 default DEF.</li><li>Fire-Type Moves and Physical-Category Steel-Type attacks have a 25% chance to inflict Burn 5. Attacks that would already cause Burn instead increase their chance to Burn by 25%.</li></ul>"
+  },
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "effects": [
+    {
+      "name": "Intense Heat",
+      "type": "summon",
+      "_id": "LenoUR3rUsjmFRqO",
+      "img": "systems/ptr2e/img/svg/fire_icon.svg",
+      "system": {
+        "changes": [
+          {
+            "type": "percentile-modifier",
+            "key": "fire-attack-damage",
+            "value": 60,
+            "predicate": [],
+            "label": "Fire Damage Boost",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "percentile-modifier",
+            "key": "water-attack-damage",
+            "value": -100,
+            "predicate": [],
+            "label": "Water Damage Nullification",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "basic",
+            "key": "system.modifiers.speMultiplier",
+            "value": 0.3,
+            "predicate": [
+              "trait:grass"
+            ],
+            "label": "Grass Speed Boost",
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "ephemeral-modifier",
+            "key": "attack-effectiveness-stage",
+            "value": 1,
+            "label": "Fire Effectiveness Boost",
+            "priority": null,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "ephemeral-modifier",
+            "key": "fire-attack-damage-percentile",
+            "value": 1,
+            "predicate": [
+              "target:trait:water"
+            ],
+            "label": "Water Type Fire Weakness",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "roll-option",
+            "key": "",
+            "value": "afflication:frozen",
+            "predicate": [],
+            "domain": "immunities",
+            "toggleable": false,
+            "count": false,
+            "label": "Frozen Immunity",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "suboptions": [],
+            "state": true
+          },
+          {
+            "type": "roll-effect",
+            "key": "attack-effect-chance",
+            "value": "Compendium.ptr2e.core-effects.Item.burnconditioitem",
+            "predicate": [],
+            "label": "Burn Chance Increase",
+            "chance": 25,
+            "affects": "target",
+            "priority": null,
+            "alterations": [],
+            "isFixedChance": false,
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "fire-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.burnconditioitem",
+            "predicate": [],
+            "chance": 25,
+            "affects": "target",
+            "priority": null,
+            "alterations": [],
+            "isFixedChance": false,
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "physical-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.burnconditioitem",
+            "predicate": [
+              "item:trait:steel"
+            ],
+            "chance": 25,
+            "affects": "target",
+            "priority": null,
+            "alterations": [],
+            "isFixedChance": false,
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "priority": 50,
+        "formula": "",
+        "type": "damage",
+        "targetType": "all",
+        "targetUuid": null,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": null,
+        "lastModifiedBy": "5ImYyhOS2D6D7ypO",
+        "exportSource": null,
+        "modifiedTime": 1762905779569
+      }
+    }
+  ],
+  "_id": "CoRSw7YDim16e6P4"
+}

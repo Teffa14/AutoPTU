@@ -1,0 +1,101 @@
+{
+  "name": "Dusty Weather",
+  "type": "summon",
+  "system": {
+    "_migration": {
+      "version": 0.11,
+      "previous": null
+    },
+    "traits": [
+      "partial-automation",
+      "weather",
+      "rock"
+    ],
+    "actions": [],
+    "baseAV": 150,
+    "duration": 3,
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "slug": "dusty-weather",
+    "description": "<p><strong>Dusty</strong> covers both sandstorms and dust bowls - generally windstorms with large amounts of particulate rock or minerals that aren't particularly fun to go through. Creatures who embody the Rock or Ground are at home here, usually, and is basically Snowy without the ice.</p><p><span style=\"text-decoration: underline;\">Effects:</span></p><ul><li>Rock- and Ground-Type creatures have their SPDEF stat increased by 50%.</li><li>At the end of the Round, non-Rock-, Ground- and Steel-Type creatures lose a Tick of HP.</li><li>Non-Ground-, Rock- and Steel-Type creatures are Slowed.</li><li>All Hazards gain the Rock-Type.</li><li>Special-Category Attacks suffer an additional -1 ACC from RIP.</li></ul>"
+  },
+  "img": "icons/magic/air/fog-gas-smoke-brown.webp",
+  "effects": [
+    {
+      "name": "Dusty Weather",
+      "type": "summon",
+      "_id": "iGyrLq3vr5uJN5fZ",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "basic",
+            "key": "system.modifiers.spdMultiplier",
+            "value": 0.5,
+            "predicate": [
+              {
+                "or": [
+                  "trait:ground",
+                  "trait:rock"
+                ]
+              }
+            ],
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "priority": 50,
+        "formula": "1/16",
+        "type": "damage",
+        "targetType": "all",
+        "targetUuid": null,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-summons.Item.2pDL6hkh4fjFIEAe.ActiveEffect.iGyrLq3vr5uJN5fZ",
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": null,
+        "modifiedTime": 1762904382600,
+        "lastModifiedBy": "5ImYyhOS2D6D7ypO",
+        "exportSource": null
+      }
+    }
+  ],
+  "_id": "2pDL6hkh4fjFIEAe"
+}

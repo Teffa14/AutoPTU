@@ -1,0 +1,49 @@
+{
+  "name": "Hive Assault",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "system": {
+    "slug": "hive-assault",
+    "actions": [
+      {
+        "slug": "hive-assault",
+        "name": "Hive Assault",
+        "type": "attack",
+        "traits": [
+          "10-strike",
+          "horn"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 13,
+        "accuracy": 90,
+        "types": [
+          "bug"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "xFlnMFT5FJlDM7Kd",
+  "effects": []
+}

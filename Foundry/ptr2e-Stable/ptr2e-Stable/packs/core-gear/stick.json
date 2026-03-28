@@ -1,0 +1,55 @@
+{
+  "name": "Stick",
+  "img": "systems/ptr2e/img/item-icons/stick.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "held",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "E",
+    "fling": {
+      "type": "grass",
+      "power": 20,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "traits": [
+      "weapon",
+      "stack-10",
+      "grass",
+      "fling"
+    ],
+    "slug": "stick",
+    "stack": 10,
+    "quantity": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "consumableType": "other",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "e9GJnXED87lLyJ2t",
+  "effects": [],
+  "folder": "PhrQtZzEwKPjfmK2"
+}

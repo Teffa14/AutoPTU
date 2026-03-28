@@ -1,0 +1,73 @@
+{
+  "name": "Geomancy",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+  "system": {
+    "slug": "geomancy",
+    "actions": [
+      {
+        "slug": "geomancy-resolution",
+        "name": "Geomancy (Resolution)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "set-up",
+          "priority-60"
+        ],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "trigger": "The user used Geomancy (Set-Up) as their last Action."
+        },
+        "category": "status",
+        "types": [
+          "fairy"
+        ],
+        "description": "<p>Trigger: The user used Geomancy (Set-Up) as their last Action.</p><p>Effect: The user gains +2 SPATK, SPDEF, and SPD Stages for 7 Activations.</p>",
+        "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+        "predicate": []
+      },
+      {
+        "name": "Geomancy (Set-Up)",
+        "slug": "geomancy-set-up",
+        "description": "<p>Effect: The user gains @Affliction[braced 2] and @Tick[3].</p>",
+        "traits": [
+          "legendary",
+          "set-up",
+          "aura",
+          "defensive",
+          "flinch-40"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "fairy"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "IDVUyCYBr3I1UAa9",
+  "effects": []
+}

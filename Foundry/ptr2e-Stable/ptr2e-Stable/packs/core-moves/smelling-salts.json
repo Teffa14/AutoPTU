@@ -1,0 +1,116 @@
+{
+  "name": "Smelling Salts",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "smelling-salts",
+    "actions": [
+      {
+        "slug": "smelling-salts",
+        "name": "Smelling Salts",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "smelling-salts-paralyzed",
+        "name": "Smelling Salts (Paralyzed)",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "<p>The target has @Affliction[paralysis].</p>"
+        },
+        "category": "physical",
+        "power": 140,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: The target has @Affliction[paralysis]..</p><p>Effect: On resolution, the target is cured of The target has @Affliction[paralysis], and is Delayed by 50%.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "smelling-salts",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "qtFxob1JHeUKKR2H",
+  "effects": [
+    {
+      "name": "Smelling Salts",
+      "type": "passive",
+      "_id": "z7y1zzA2z4Rf7Nwm",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "smelling-salts-paralyzed-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.advanceffectitem",
+            "predicate": [],
+            "chance": 100,
+            "dontMerge": true,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.amount",
+                "value": -50
+              },
+              {
+                "mode": 5,
+                "property": "name",
+                "value": "Delay 50%"
+              }
+            ]
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      }
+    }
+  ]
+}

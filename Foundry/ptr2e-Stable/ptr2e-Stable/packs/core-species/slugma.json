@@ -1,0 +1,512 @@
+{
+  "name": "slugma",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 218,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.7,
+      "weight": 35
+    },
+    "diet": [
+      "silicavore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "legless",
+      "heater",
+      "firestarter",
+      "glow-3",
+      "underdog",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "magma-armor"
+        },
+        {
+          "slug": "flame-body"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "weak-armor"
+        },
+        {
+          "slug": "liquid-ooze"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "innards-out"
+        },
+        {
+          "slug": "flash-fire"
+        }
+      ],
+      "master": [
+        {
+          "slug": "furnace"
+        },
+        {
+          "slug": "foundry"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "slugma",
+    "stats": {
+      "hp": 40,
+      "atk": 40,
+      "def": 40,
+      "spa": 70,
+      "spd": 40,
+      "spe": 20
+    },
+    "types": [
+      "fire"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "smokescreen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acid-armor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rollout",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stockpile",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heat-wave",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "memento",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "guard-swap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "inferno",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "defense-curl",
+          "gen": "emerald"
+        },
+        {
+          "name": "self-destruct",
+          "gen": "xd"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "pain-split",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "after-you",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-spin",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earthquake",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "will-o-wisp",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "overheat",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "power-gem",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "smack-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flame-charge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heat-crash",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "high-horsepower",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "temper-flare",
+          "gen": "scarlet-violet"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "smog",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "yawn",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ember",
+          "level": 6,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-throw",
+          "level": 8,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "harden",
+          "level": 13,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "clear-smog",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ancient-power",
+          "level": 22,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flame-burst",
+          "level": 27,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "incinerate",
+          "level": 27,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-slide",
+          "level": 29,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lava-plume",
+          "level": 34,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "amnesia",
+          "level": 36,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "level": 41,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "recover",
+          "level": 43,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flamethrower",
+          "level": 48,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earth-power",
+          "level": 50,
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "captureRate": 200,
+    "eggGroups": [
+      "indeterminate"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "slugma",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "magcargo",
+          "uuid": "Compendium.ptr2e.core-species.Item.UMa2PZX2LdMnpCqu",
+          "methods": [
+            {
+              "type": "level",
+              "level": 34,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.01mAc7dxuo3zcEb6"
+    },
+    "habitats": [
+      "volcano"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Johto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "01mAc7dxuo3zcEb6",
+  "effects": [],
+  "folder": null
+}

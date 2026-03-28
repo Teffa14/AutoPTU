@@ -1,0 +1,190 @@
+{
+  "name": "Special Delivery",
+  "type": "ability",
+  "img": "icons/svg/chest.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [],
+        "name": "Special Delivery",
+        "slug": "special-delivery",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: The user's Fling Power for Gear is increased by 50%.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "slug": "present-sp",
+        "name": "Present (Special Delivery)",
+        "type": "attack",
+        "traits": [
+          "blast-1"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "trigger": "<p>Trigger: User rolls 1 thru 60 on the declaration roll.</p>"
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: User rolls 1 thru 60 on the declaration roll.</p>",
+        "variant": "present",
+        "free": true,
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "present-gift-sp",
+        "name": "Present (Special Gift)",
+        "type": "attack",
+        "traits": [
+          "blast-1",
+          "healing"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "trigger": "<p>Trigger: User rolls 61 thru 100 on the declaration roll.</p>"
+        },
+        "category": "status",
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: User rolls 61 thru 100 on the declaration roll.</p><p>Effect: On hit, all valid enemy targets recover 2 Ticks of HP, and all valid allied targets recover 8 Ticks of HP.</p>",
+        "variant": "present",
+        "free": true,
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "description": "<p>Effect: Connection - Present. The user spends 3 extra PP, to use Present (Special Delivery) in place of Present.</p><p>Passive: The user's Fling Power for Gear is increased by 50%.</p>",
+    "traits": [
+      "connection",
+      "partial-automation"
+    ],
+    "slug": "special-delivery",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "IY5l0838EgcytYTT",
+  "effects": [
+    {
+      "name": "Special Delivery",
+      "type": "passive",
+      "_id": "sSETsychl5pU9nwA",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.dTzHNqMNr83eSDwF",
+            "predicate": [
+              "active:special-delivery:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              },
+              {
+                "mode": 5,
+                "property": "system.actions.1.free",
+                "value": "true"
+              },
+              {
+                "mode": 5,
+                "property": "system.actions.2.free",
+                "value": "true"
+              },
+              {
+                "mode": 5,
+                "property": "system.actions.3.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "allowDuplicate": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737420787500,
+        "modifiedTime": 1754321615603,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

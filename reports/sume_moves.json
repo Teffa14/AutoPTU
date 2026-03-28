@@ -1,0 +1,702 @@
+[
+  {
+    "name": "Fell Stinger",
+    "type": "Bug",
+    "frequency": "At-Will",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "If the user successfully knocks out a target with Fell Stinger, raise their Attack by 2 Combat Stages. Contest",
+    "category": "Physical",
+    "db": "5"
+  },
+  {
+    "name": "First Impression",
+    "type": "Bug",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Priority",
+    "effects": "You may only use First Impression with Priority upon joining an encounter; if you do, First Impression Flinches the target. Switching out resets the requirement of joining an encounter. Contest",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Leech Life",
+    "type": "Bug",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "After the target takes damage, the user gains HP equal to half of the damage they dealt to the target. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Lunge",
+    "type": "Bug",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "Lunge may be used as a Free Action at the end of a Sprint Maneuver taken as a Standard Action, as long as the user Shifted at least 3 meters in a straight line towards the target. When used this way, Lunge's target receives a -5 penalty to damage rolls for 1 round. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Pollen Puff",
+    "type": "Bug",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target",
+    "effects": "Once per Scene, Pollen Puff may instead be used on an ally; when used this way, the target recovers 50% of their maximum Hit Points and the Move has the Healing keyword. Contest",
+    "category": "Special",
+    "db": "9"
+  },
+  {
+    "name": "Brutal Swing",
+    "type": "Dark",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Burst 1 Contest",
+    "effects": "Steady Performance",
+    "category": "Physical",
+    "db": "6"
+  },
+  {
+    "name": "Dark Void",
+    "type": "Dark",
+    "frequency": "EOT",
+    "ac": "10",
+    "range": "Melee 1",
+    "effects": "The target falls Asleep. Once per Scene, Dark Void may be used as if its range were “Burst 5, Friendly” instead. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Darkest Lariat",
+    "type": "Dark",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "This Move ignores the target’s positive Defense Combat Stages and all Damage Reduction. Contest",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Hyperspace Fury",
+    "type": "Dark",
+    "frequency": "Daily",
+    "ac": "2 Damage Base",
+    "range": "Burst 2",
+    "effects": "Interrupts may not be triggered against Hyperspace Fury. The user’s Defense is lowered by -1 Combat Stage. Contest",
+    "category": "Physical",
+    "db": "10"
+  },
+  {
+    "name": "Power Trip",
+    "type": "Dark",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "This Move gains +2 to its Damage Base for every positive Combat Stage held by the user, to a maximum of DB 20. Contest",
+    "category": "Physical",
+    "db": "2"
+  },
+  {
+    "name": "Sucker Punch",
+    "type": "Dark",
+    "frequency": "At-Will",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Interrupt, Trigger",
+    "effects": "If an adjacent foe targets the user with a Damaging Attack, Sucker Punch may be used as an Interrupt Move against the triggering foe. Contest",
+    "category": "Physical",
+    "db": "7"
+  },
+  {
+    "name": "Throat Chop",
+    "type": "Dark",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "The target cannot use Moves with the Sonic keyword for the next two turns. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Clanging Scales",
+    "type": "Dragon",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target or Burst 1",
+    "effects": "The user adds half their Defense Stat to Clanging Scale's Damage Roll. After the Move is resolved, the user's Defense is lowered by 1 CS. Contest",
+    "category": "Special",
+    "db": "11"
+  },
+  {
+    "name": "Core Enforcer",
+    "type": "Dragon",
+    "frequency": "Daily x2",
+    "ac": "2 Damage Base",
+    "range": "6, Ranged Blast 3, Spirit Surge",
+    "effects": "Each target has its Ability disabled until the end of the encounter. If a target has more than one Ability, you choose one of them to disable. Contest",
+    "category": "Special",
+    "db": "10"
+  },
+  {
+    "name": "Dragon Hammer",
+    "type": "Dragon",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target or Line 3 Contest",
+    "effects": "Big Show Electric",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Magnetic Flux",
+    "type": "Electric",
+    "frequency": "Scene x2",
+    "ac": "None",
+    "range": "Burst 4",
+    "effects": "All targets with the Plus or Minus Abilities receive +1 Defense and Special Defense Combat Stages. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Parabolic Charge",
+    "type": "Electric",
+    "frequency": "Scene",
+    "ac": "2 Damage Base",
+    "range": "Cone 2",
+    "effects": "After the targets take damage, the user gains Hit Points equal to half of the total damage they dealt to all targets. Contest",
+    "category": "Special",
+    "db": "7"
+  },
+  {
+    "name": "Plasma Fists",
+    "type": "Electric",
+    "frequency": "Scene",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Smite",
+    "effects": "The target’s next damaging Normal Type Move instead becomes Electric Type. Contest",
+    "category": "Physical",
+    "db": "10"
+  },
+  {
+    "name": "Thunder Wave",
+    "type": "Electric",
+    "frequency": "Scene x2",
+    "ac": "4",
+    "range": "6, 1 Target",
+    "effects": "Thunder Wave Paralyzes the target. Targets immune to Electric Attacks are immune to Thunder Wave’s effects. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Zing Zap",
+    "type": "Electric",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "Zing Zap Flinches the target on 15+. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Fleur Cannon",
+    "type": "Fairy",
+    "frequency": "Scene",
+    "ac": "4 Damage Base",
+    "range": "Line 9, Smite",
+    "effects": "Lower the user’s Special Attack 2 Combat Stages after damage. Contest",
+    "category": "Special",
+    "db": "13"
+  },
+  {
+    "name": "Floral Healing",
+    "type": "Fairy",
+    "frequency": "Daily x2",
+    "ac": "None",
+    "range": "Melee, 1 Target, Healing",
+    "effects": "The target regains Hit Points equal to half of its full Hit Point value. If the field is Grassy Terrain, the target gains 2/3 of its full Hit Point value instead. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Nature’s Madness",
+    "type": "Fairy",
+    "frequency": "Scene",
+    "ac": "4",
+    "range": "4, 1 Target",
+    "effects": "The target loses 1/2 of their current Hit Points. Contest",
+    "category": "Special",
+    "db": ""
+  },
+  {
+    "name": "Flying Press",
+    "type": "Fighting",
+    "frequency": "EOT",
+    "ac": "3 Damage Base",
+    "range": "Melee, 1 Target, Dash",
+    "effects": "Flying Press may deal Flying Type damage if the user wishes. Contest",
+    "category": "Physical",
+    "db": "10"
+  },
+  {
+    "name": "Burn Up",
+    "type": "Fire",
+    "frequency": "Daily x2",
+    "ac": "2 Damage Base",
+    "range": "Burst 1, Smite",
+    "effects": "Until the end of the encounter, the user loses its Fire-Type. Pure Fire-Types instead become Normal-Type. Contest",
+    "category": "Special",
+    "db": "13"
+  },
+  {
+    "name": "Fire Lash",
+    "type": "Fire",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "2, 1 Target",
+    "effects": "The target’s Defense is lowered by 1 Combat Stage. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Mind Blown",
+    "type": "Fire",
+    "frequency": "Daily",
+    "ac": "2 Damage Base",
+    "range": "6, Ranged Blast 3, Smite",
+    "effects": "The user’s Hit Points are reduced by 50% of their full Hit Point value. This Hit Point loss cannot be prevented or reduced in any way. Contest",
+    "category": "Special",
+    "db": "15"
+  },
+  {
+    "name": "Shell Trap",
+    "type": "Fire",
+    "frequency": "Scene",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Interrupt, Trigger",
+    "effects": "If the user is hit by a Melee attack, they may use Shell Trap as an Interrupt. Contest",
+    "category": "Special",
+    "db": "15"
+  },
+  {
+    "name": "Beak Blast",
+    "type": "Flying",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target, Priority",
+    "effects": "Beak Blast must be declared at the start of the round. If the user is hit by a Melee attack this round, their attacker is Burned. At the end of the round, the user may shift and attack with Beak Blast. Contest",
+    "category": "Physical",
+    "db": "10"
+  },
+  {
+    "name": "Moongeist Beam",
+    "type": "Ghost",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Line 6",
+    "effects": "This Move ignores any Abilities that would cause it to fail or miss, such as Dodge or Wonder Guard; those Abilities cannot be activated in response to Moongeist Beam. Contest",
+    "category": "Special",
+    "db": "10"
+  },
+  {
+    "name": "Shadow Bone",
+    "type": "Ghost",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "The target’s Defense is lowered by 1 Combat Stage on a 17+. Contest",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Spectral Thief",
+    "type": "Ghost",
+    "frequency": "Scene",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "Before rolling damage, transfer all Combat Stages on the target to the user. Contest",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Spirit Shackle",
+    "type": "Ghost",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "8, 1 Target",
+    "effects": "The Target is Trapped for 2 rounds. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Leafage",
+    "type": "Grass",
+    "frequency": "At-Will",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target Contest",
+    "effects": "Steady Performance",
+    "category": "Physical",
+    "db": "4"
+  },
+  {
+    "name": "Solar Blade",
+    "type": "Grass",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Set Up Set-Up",
+    "effects": "If the weather is not Sunny, the user gains +1 Combat Stage in Attack and Special Defense, and the user’s turn ends. If the weather is Sunny, immediately proceed to the Resolution Effect instead and this Move loses the Set-Up keyword.",
+    "category": "Physical",
+    "db": "13"
+  },
+  {
+    "name": "Strength Sap",
+    "type": "Grass",
+    "frequency": "Daily x2",
+    "ac": "2",
+    "range": "Melee, 1 Target",
+    "effects": "The user gains Hit Points equal to the higher of the target's Attack or Special Attack; the target then loses 1 Combat Stage in that Stat. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Trop Kick",
+    "type": "Grass",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "The target receives a -5 penalty to damage rolls for 1 round. Contest",
+    "category": "Physical",
+    "db": "7"
+  },
+  {
+    "name": "High Horsepower",
+    "type": "Ground",
+    "frequency": "Scene x2",
+    "ac": "3 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "High Horsepower may be used as a Free Action at the end of a Sprint Maneuver taken as a Standard Action, as long as the user Shifted at least 3 meters in a straight line towards the target. When used this way, High Horsepower gains Smite. Contest",
+    "category": "Physical",
+    "db": "10"
+  },
+  {
+    "name": "Shore Up",
+    "type": "Ground",
+    "frequency": "Daily x2",
+    "ac": "",
+    "range": "Self",
+    "effects": "The user regains Hit Points equal to half of its full Hit Point value. If it is Sand Storming, the user gains 2/3 of its full Hit Point value instead. If it is Sunny, Rainy or Hailing the user gains 1/4 of their full Hit Point value instead. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Stomping Tantrum",
+    "type": "Ground",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "If the user’s last attack failed or missed, Stomping Tantrum is DB 15 (4d10+10 / 45) instead. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Thousand Arrows",
+    "type": "Ground",
+    "frequency": "Scene",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target",
+    "effects": "When calculating Weakness and Resistance for Thousand Arrows, Flying-Typed targets calculate damage as if Flying was neutral to Ground. Thousand Arrows ignores the Levitate ability. The target is knocked down to ground level, and loses all Sky or Levitate Speeds for 3 turns. During this time, they may be hit by Ground-Type Moves even if normally immune. Contest",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Thousand Waves",
+    "type": "Ground",
+    "frequency": "Scene",
+    "ac": "2 Damage Base",
+    "range": "Burst 1, Groundsource",
+    "effects": "Legal Targets are Trapped for 2 rounds. Contest",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Aurora Veil",
+    "type": "Ice",
+    "frequency": "Scene",
+    "ac": "None",
+    "range": "Blessing",
+    "effects": "Blessing – Any user affected by Aurora Veil may activate it when receiving Damage to resist the Damage one step. Aurora Veil may be activated 2 times, and then disappears.",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Ice Hammer",
+    "type": "Ice",
+    "frequency": "EOT",
+    "ac": "4 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "The user’s Speed is lowered by 1 Combat Stage. Contest",
+    "category": "Physical",
+    "db": "10"
+  },
+  {
+    "name": "Laser Focus",
+    "type": "Normal",
+    "frequency": "Scene x2",
+    "ac": "None",
+    "range": "Self",
+    "effects": "The next successful damaging attack made by the user is automatically a Critical Hit. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Multi-Attack",
+    "type": "Normal",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "Multi-Attack is the same Type as the Memory Disc, Plate, or Drive Item held. Contest",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Revelation Dance",
+    "type": "Normal",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target",
+    "effects": "Revelation Dance is the same Type as the user’s primary Type (the first one listed in the Pokédex). Revelation Dance deals +5 Bonus Damage for every other Dance Move used by the user this round, to a maximum of +15. Contest",
+    "category": "Special",
+    "db": "9"
+  },
+  {
+    "name": "Spotlight",
+    "type": "Normal",
+    "frequency": "Daily",
+    "ac": "None",
+    "range": "6, 1 Target, Priority",
+    "effects": "Until the end of the user’s next turn, the target is Blinded and Vulnerable. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Swagger",
+    "type": "Normal",
+    "frequency": "EOT",
+    "ac": "5",
+    "range": "6, 1 Target, Social",
+    "effects": "The target’s Attack is raised 2 Combat Stages. Swagger Confuses the target. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Tackle",
+    "type": "Normal",
+    "frequency": "At-Will",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Dash, Push",
+    "effects": "The target is pushed 2 Meters. Contest",
+    "category": "Physical",
+    "db": "4"
+  },
+  {
+    "name": "Tearful Look",
+    "type": "Normal",
+    "frequency": "EOT",
+    "ac": "2",
+    "range": "Burst 1, Social, Friendly",
+    "effects": "Tearful Look lowers all Legal Targets’ Attack and Special Attack 1 Combat Stage. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Baneful Bunker",
+    "type": "Poison",
+    "frequency": "Scene",
+    "ac": "None",
+    "range": "Self, Interrupt, Shield, Trigger",
+    "effects": "If the user is hit by an attack, the user may use Baneful Bunker. The user is instead not hit by the Move. You do not take any damage nor are you affected by any of the Move’s effects. In addition, if the triggering attack was Melee ranged, the attacker is Poisoned. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Purify",
+    "type": "Poison",
+    "frequency": "Scene",
+    "ac": "None",
+    "range": "Melee, 1 Target",
+    "effects": "The target is cured of all Permanent and Volatile Statuses. For every status removed, the user recovers a Tick of Hit Points. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Toxic Thread",
+    "type": "Poison",
+    "frequency": "Scene x2",
+    "ac": "2",
+    "range": "6, 1 Target",
+    "effects": "The target is Poisoned and has their Speed lowered by 1 Combat Stage. If the target is already Poisoned, they instead lose a Tick of Hit Points and has their Speed lowered by 2 Combat Stages. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Instruct",
+    "type": "Psychic",
+    "frequency": "Scene x2",
+    "ac": "None",
+    "range": "Melee, 1 Target",
+    "effects": "The target immediately reuses the attack it performed last, ignoring frequency, as a Free Action. They may choose new targets for the copied attack. Instruct may not be used if the Target’s last Move was a Set-Up Move, a Trigger Move, or Instruct, or if the Target is currently affected by Exhaust. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Hyperspace Hole",
+    "type": "Psychic",
+    "frequency": "Daily",
+    "ac": "2 Damage Base",
+    "range": "Melee, 3 Targets",
+    "effects": "Make and resolve of Hyperspace Hole’s attacks separately. In between each attack, the user may Shift using their Teleporter capability, ending the Shift next to a legal target. Interrupts may not be triggered against Hyperspace Hole. Contest",
+    "category": "Special",
+    "db": "8"
+  },
+  {
+    "name": "Photon Geyser",
+    "type": "Psychic",
+    "frequency": "Scene",
+    "ac": "2 Damage Base",
+    "range": "Burst 2",
+    "effects": "This attack uses the highest of the user’s Attack or Special Attack Stat, though it remains a Special Move. This Move ignores any Abilities that would cause it to fail or miss, such as Dodge or Wonder Guard; those Abilities cannot be activated in response to Photon Geyser. Contest",
+    "category": "Special",
+    "db": "10"
+  },
+  {
+    "name": "Prismatic Laser",
+    "type": "Psychic",
+    "frequency": "Daily x2",
+    "ac": "4 Damage Base",
+    "range": "Line 8, Smite, Exhaust Contest",
+    "effects": "Exhausting Act",
+    "category": "Special",
+    "db": "16"
+  },
+  {
+    "name": "Psychic Fangs",
+    "type": "Psychic",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "4, 1 Target",
+    "effects": "Light Screen, Reflect and Aurora Veil cannot be declared in response to Psychic Fangs. Contest",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Psychic Terrain",
+    "type": "Psychic",
+    "frequency": "Daily x2",
+    "ac": "None",
+    "range": "Field",
+    "effects": "The Field becomes Weird for five rounds. While the Field is Weird, non-Flying and non- Levitating Pokémon cannot declare Priority or Interrupt Moves outside their own Initiatives. Damaging Psychic-Type attacks deal an additional 10 damage Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Speed Swap",
+    "type": "Psychic",
+    "frequency": "Scene",
+    "ac": "2",
+    "range": "Melee, 1 Target",
+    "effects": "The user and the target trade Initiative values. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Accelerock",
+    "type": "Rock",
+    "frequency": "At-Will",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Priority Contest",
+    "effects": "Saving Grace Steel",
+    "category": "Physical",
+    "db": "4"
+  },
+  {
+    "name": "Anchor Shot",
+    "type": "Steel",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "The Target is Trapped for 2 rounds. Anchor Shot may only be used from the user's Anchor Token. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Gear Up",
+    "type": "Steel",
+    "frequency": "Scene x2",
+    "ac": "",
+    "range": "Burst 4",
+    "effects": "All targets with the Plus or Minus Abilities receive +1 Attack and Special Attack Combat Stages Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Smart Strike",
+    "type": "Steel",
+    "frequency": "EOT",
+    "ac": "None Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "Smart Strike cannot miss. Contest",
+    "category": "Physical",
+    "db": "7"
+  },
+  {
+    "name": "Sunsteel Strike",
+    "type": "Steel",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Close Blast 2",
+    "effects": "This Move ignores any Abilities that would cause it to fail or miss, such as Dodge or Wonder Guard; those Abilities cannot be activated in response to Sunsteel Strike. Contest",
+    "category": "Physical",
+    "db": "10"
+  },
+  {
+    "name": "Liquidation",
+    "type": "Water",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "The target’s Defense is lowered by 1 Combat Stage on a 17+. Contest",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Sparkling Aria",
+    "type": "Water",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 2 Targets",
+    "effects": "When you hit a target with Sparkling Aria, the user may choose to deal no damage and instead cure that target of Burn, Confusion, Infatuation, or Rage. Contest",
+    "category": "Special",
+    "db": "9"
+  },
+  {
+    "name": "Steam Eruption",
+    "type": "Water",
+    "frequency": "Scene",
+    "ac": "3 Damage Base",
+    "range": "Close Blast 3, Smite",
+    "effects": "Steam Eruption burns all legal targets on a 15+. Contest",
+    "category": "Special",
+    "db": "11"
+  },
+  {
+    "name": "Water Shuriken",
+    "type": "Water",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target, Five Strike, Priority Contest",
+    "effects": "Reliable",
+    "category": "Special",
+    "db": "2"
+  }
+]

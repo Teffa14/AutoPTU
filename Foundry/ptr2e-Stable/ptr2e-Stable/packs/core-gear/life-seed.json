@@ -1,0 +1,59 @@
+{
+  "name": "Life Seed",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 4,
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 90,
+      "hide": true,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "consumableType": "other",
+    "traits": [
+      "restorative",
+      "consumable",
+      "natural",
+      "healing",
+      "seed",
+      "stack-3"
+    ],
+    "description": "<p>The target is healed to its Max HP and loses 1 @Affliction[weary].</p>",
+    "quantity": 1,
+    "slug": "life-seed",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "PLIEnGy6HuDcmuVH",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

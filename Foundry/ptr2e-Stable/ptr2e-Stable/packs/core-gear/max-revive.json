@@ -1,0 +1,58 @@
+{
+  "name": "Max Revive",
+  "img": "systems/ptr2e/img/item-icons/max revive.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": "medicine",
+      "spans": 3,
+      "materials": [
+        "7x-medicinal-leeks"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": true,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "consumableType": "restorative",
+    "traits": [
+      "combat",
+      "restorative",
+      "consumable",
+      "healing"
+    ],
+    "description": "<p>The target is healed @Tick[16] and reduces Weary by 1 stack.</p>",
+    "quantity": 1,
+    "slug": "max-revive",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "S5qluVraz0FH7cpZ",
+  "effects": [],
+  "folder": "srQci2ThhRKdmC6g"
+}

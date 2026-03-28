@@ -1,0 +1,445 @@
+{
+  "name": "bellibolt",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "electric"
+    ],
+    "stats": {
+      "hp": 109,
+      "atk": 64,
+      "def": 91,
+      "spa": 103,
+      "spd": 83,
+      "spe": 45
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "mud-slap",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "slack-off",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "thunder-shock",
+          "gen": "scarlet-violet",
+          "level": 7
+        },
+        {
+          "name": "water-gun",
+          "gen": "scarlet-violet",
+          "level": 11
+        },
+        {
+          "name": "charge",
+          "gen": "scarlet-violet",
+          "level": 17
+        },
+        {
+          "name": "spark",
+          "gen": "scarlet-violet",
+          "level": 21
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet",
+          "level": 24
+        },
+        {
+          "name": "flail",
+          "gen": "scarlet-violet",
+          "level": 25
+        },
+        {
+          "name": "discharge",
+          "gen": "scarlet-violet",
+          "level": 32
+        },
+        {
+          "name": "weather-ball",
+          "gen": "scarlet-violet",
+          "level": 36
+        },
+        {
+          "name": "electric-terrain",
+          "gen": "scarlet-violet",
+          "level": 40
+        },
+        {
+          "name": "sucker-punch",
+          "gen": "scarlet-violet",
+          "level": 45
+        },
+        {
+          "name": "zap-cannon",
+          "gen": "scarlet-violet",
+          "level": 50
+        }
+      ],
+      "tutor": [
+        {
+          "name": "acid-spray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charge-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confuse-ray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "eerie-impulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "electro-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "electroweb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-voice",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "muddy-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "supercell-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "volt-switch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wild-charge",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.2,
+      "weight": 113,
+      "category": "small",
+      "type": "height"
+    },
+    "captureRate": 50,
+    "eggGroups": [
+      "water1"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "tadbulb",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "bellibolt",
+          "uuid": "Compendium.ptr2e.core-species.Item.oaHJVMROBaHScmuc",
+          "methods": [
+            {
+              "type": "item",
+              "item": "thunder-stone",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 26,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": [],
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.GH1fNiQXI1jMzLie",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 939,
+    "traits": [
+      "pokemon",
+      "fully-evolved",
+      "gilled",
+      "glow-4",
+      "mud-runner",
+      "zapper",
+      "jump-2"
+    ],
+    "diet": [
+      "ergovore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "electromorphosis"
+        },
+        {
+          "slug": "static"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "damp"
+        },
+        {
+          "slug": "illuminate"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "capacitor"
+        },
+        {
+          "slug": "staunch"
+        }
+      ],
+      "master": [
+        {
+          "slug": "sequence"
+        },
+        {
+          "slug": "regenerator"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 4
+      },
+      {
+        "type": "swim",
+        "value": 4
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "industrial",
+      "pond",
+      "river",
+      "riverside",
+      "swamp"
+    ],
+    "slug": "bellibolt",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "oaHJVMROBaHScmuc",
+  "effects": []
+}

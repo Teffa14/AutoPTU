@@ -1,0 +1,51 @@
+{
+  "name": "Two-Edge Orb",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 7,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "uncommon",
+    "consumableType": "other",
+    "traits": [
+      "combat",
+      "consumable",
+      "wonder-orb",
+      "held",
+      "fling"
+    ],
+    "description": "All creatures on the Floor have their HP halved.",
+    "quantity": 1,
+    "slug": "two-edge-orb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "BiYnS73YQgKXQ1jM",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

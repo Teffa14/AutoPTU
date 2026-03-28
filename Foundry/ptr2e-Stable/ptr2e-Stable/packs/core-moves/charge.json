@@ -1,0 +1,46 @@
+{
+  "name": "Charge",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "charge",
+    "actions": [
+      {
+        "slug": "charge",
+        "name": "Charge",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "electric"
+        ],
+        "description": "<p>Effect: The user gains @Affliction[charged] 1 and +1 SPDEF Stage 5 Activations.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "SyYgWBDdxlHBpXS6",
+  "effects": []
+}

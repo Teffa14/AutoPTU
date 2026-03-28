@@ -1,0 +1,68 @@
+{
+  "folder": "4UhJK1LInml07WJf",
+  "name": "Healing Hands",
+  "type": "perk",
+  "_id": "WEMXwTq9QoAI1B2W",
+  "img": "systems/ptr2e/img/icons/capability_icon.webp",
+  "system": {
+    "actions": [],
+    "slug": "healing-hands",
+    "description": "<p>You heal 25% more HP than normal when utilising [Healing] Actions.</p>",
+    "traits": [],
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.medicine.mod}",
+          50
+        ]
+      }
+    ],
+    "cost": 3,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "chansey-medicine",
+          "fixing-good",
+          "nightingale-pledge"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/icons/capability_icon.webp",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 42,
+        "y": 71,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "resilience",
+      "archetype": "healer"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "effects": []
+}

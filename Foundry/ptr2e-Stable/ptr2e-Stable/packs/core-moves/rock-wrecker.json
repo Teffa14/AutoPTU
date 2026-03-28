@@ -1,0 +1,50 @@
+{
+  "name": "Rock Wrecker",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "rock-wrecker",
+    "actions": [
+      {
+        "slug": "rock-wrecker",
+        "name": "Rock Wrecker",
+        "type": "attack",
+        "traits": [
+          "flinch-40",
+          "blast-3",
+          "missile"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "physical",
+        "power": 150,
+        "accuracy": 90,
+        "types": [
+          "rock"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "lgxMuPDJ0Bpt8fJS",
+  "effects": []
+}

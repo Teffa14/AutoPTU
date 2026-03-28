@@ -1,0 +1,54 @@
+{
+  "name": "Drain Punch",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "drain-punch",
+    "actions": [
+      {
+        "slug": "drain-punch",
+        "name": "Drain Punch",
+        "type": "attack",
+        "traits": [
+          "drain-1-2",
+          "punch",
+          "pulse",
+          "contact",
+          "aura"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 75,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "60l7jRB3D6KfRbHL",
+  "effects": []
+}

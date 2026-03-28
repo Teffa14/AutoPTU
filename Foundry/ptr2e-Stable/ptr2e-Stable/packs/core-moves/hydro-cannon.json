@@ -1,0 +1,49 @@
+{
+  "name": "Hydro Cannon",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "hydro-cannon",
+    "actions": [
+      {
+        "slug": "hydro-cannon",
+        "name": "Hydro Cannon",
+        "type": "attack",
+        "traits": [
+          "flinch-40",
+          "pulse"
+        ],
+        "range": {
+          "target": "line",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "special",
+        "power": 150,
+        "accuracy": 90,
+        "types": [
+          "water"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "kkdRQ0GQqWMHFcGF",
+  "effects": []
+}

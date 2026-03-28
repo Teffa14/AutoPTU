@@ -1,0 +1,47 @@
+{
+  "name": "Spore",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "spore",
+    "actions": [
+      {
+        "slug": "spore",
+        "name": "Spore",
+        "type": "attack",
+        "traits": [
+          "powder"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "<p>Effect: On hit, all valid targets gain @Affliction[drowsy] 5.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "grade": "C",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "PXbl5gqdFngy3cZ3",
+  "effects": []
+}

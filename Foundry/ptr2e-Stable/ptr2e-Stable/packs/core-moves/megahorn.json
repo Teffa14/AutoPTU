@@ -1,0 +1,49 @@
+{
+  "name": "Megahorn",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "system": {
+    "slug": "megahorn",
+    "actions": [
+      {
+        "slug": "megahorn",
+        "name": "Megahorn",
+        "type": "attack",
+        "traits": [
+          "horn",
+          "pierce",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 120,
+        "accuracy": 85,
+        "types": [
+          "bug"
+        ],
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "fwZ7NiY8DCtMdfxz",
+  "effects": []
+}

@@ -1,0 +1,113 @@
+{
+  "name": "Tera Orb",
+  "img": "systems/ptr2e/img/item-icons/tera orb.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "held",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "S",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": true,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "unique",
+    "traits": [
+      "phenomenon",
+      "charge-pool-1"
+    ],
+    "actions": [
+      {
+        "slug": "crystal-pitch",
+        "name": "Crystal Pitch!",
+        "type": "attack",
+        "traits": [
+          "phenomenon",
+          "fling"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "category": "status",
+        "accuracy": 100,
+        "types": [
+          "untyped"
+        ],
+        "description": "<p>Effect: The targeted loses 4 PP, and undergoes Terastilization.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "crystal-pitch-tera-orb-charge",
+        "name": "Crystal Pitch! (Tera Orb Charge)",
+        "type": "attack",
+        "traits": [
+          "phenomenon",
+          "fling"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "category": "status",
+        "accuracy": 100,
+        "types": [
+          "untyped"
+        ],
+        "description": "<p>Effect: The targeted undergoes Terastilization.</p>",
+        "variant": "crystal-pitch",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "description": "Effect: The user may utilize a charge from this Item to pay the PP Cost of Crystal Pitch! for the user or a creature on their Team.",
+    "slug": "tera-orb",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "nY44TowWvFpkMDMb",
+  "effects": [],
+  "folder": "V4skAU6G3OH5fXae"
+}

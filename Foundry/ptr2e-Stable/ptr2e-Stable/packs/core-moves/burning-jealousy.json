@@ -1,0 +1,46 @@
+{
+  "name": "Burning Jealousy",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "burning-jealousy",
+    "actions": [
+      {
+        "slug": "burning-jealousy",
+        "name": "Burning Jealousy",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "cone",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "special",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "fire"
+        ],
+        "description": "<p>Effect: Oh hit, all valid targets with any positive Stage Stages become @Affliction[burn] 5.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "9UgW97p2uziZK7Sl",
+  "effects": []
+}

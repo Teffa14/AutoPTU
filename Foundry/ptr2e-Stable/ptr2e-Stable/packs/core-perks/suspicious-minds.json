@@ -1,0 +1,103 @@
+{
+  "folder": "a1w2zpzavg6qtJFn",
+  "name": "Suspicious Minds",
+  "type": "perk",
+  "_id": "3VLINGTzFiKxDsTG",
+  "img": "systems/ptr2e/img/perk-icons/Occultism.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Suspicious Minds",
+        "slug": "suspicious-minds",
+        "description": "<p>Trigger: A creature in range suffers damage or an effect from the End of Activation effect of a @Trait[dot] Affliction.<br><br>Effect: For each End of Activation @Trait[dot] effect that was triggered on the target, the target loses an additional @Tick[-1]. The affected creature is protected from further instances of this perk until their next activation commences.</p>",
+        "traits": [
+          "interrupt-3"
+        ],
+        "type": "generic",
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3,
+          "trigger": "A creature in range suffers effect damage from an Affliction due to a Stack being removed."
+        },
+        "img": "systems/ptr2e/img/perk-icons/Occultism.svg"
+      }
+    ],
+    "slug": "suspicious-minds",
+    "description": "<p>Trigger: A creature in range suffers damage or an effect from the End of Activation effect of a @Trait[dot] Affliction.<br><br>Effect: For each End of Activation @Trait[dot] effect that was triggered on the target, the target loses an additional @Tick[-1]. The affected creature is protected from further instances of this perk until their next activation commences.</p>",
+    "traits": [
+      "interrupt-3"
+    ],
+    "prerequisites": [
+      {
+        "or": [
+          {
+            "gte": [
+              "{actor|skills.fast-talk.mod}",
+              40
+            ]
+          },
+          {
+            "gte": [
+              "{actor|skills.thaumaturgy.mod}",
+              40
+            ]
+          },
+          {
+            "gte": [
+              "{actor|skills.sleight-of-hand.mod}",
+              40
+            ]
+          }
+        ]
+      }
+    ],
+    "cost": 4,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 154,
+        "y": 69,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "hexcraft",
+          "potent-afflictions",
+          "lasting-harm",
+          "cultivate-weakness",
+          "insidious-wounds"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Occultism.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "finesse",
+      "archetype": "affliction"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": []
+}

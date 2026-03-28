@@ -1,0 +1,53 @@
+{
+  "name": "Quick Seed",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 3,
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 90,
+      "hide": null
+    },
+    "rarity": "rare",
+    "consumableType": "other",
+    "traits": [
+      "combat",
+      "consumable",
+      "natural",
+      "seed",
+      "held",
+      "stack-3",
+      "fling"
+    ],
+    "description": "The target gains +1 SPD Stages, and has its Movements increased by 30%, for 3 activations.",
+    "quantity": 1,
+    "slug": "quick-seed",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "JX95eNeqMKJEqSr5",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

@@ -1,0 +1,71 @@
+{
+  "type": "perk",
+  "name": "Root 6",
+  "folder": "zrVtKATNxzLNxTUc",
+  "img": "icons/svg/door-exit.svg",
+  "system": {
+    "description": "<p>This is an entry perk to the Web, it has no effect on its own.</p><p>Some of the clusters near Root 6 include:</p><ul><li>Taskmaster</li><li>Capture Specialist</li><li>Healer</li><li>Tanking</li><li>Heroic Transformation</li><li>Climatology/Weather</li></ul>",
+    "actions": [],
+    "traits": [],
+    "prerequisites": [],
+    "cost": 5,
+    "slug": "root-6",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 20,
+        "y": 100,
+        "hidden": false,
+        "type": "root",
+        "connected": [
+          "heroic-transformation",
+          "breeder",
+          "masters-whip",
+          "beastmaster",
+          "forensic-accountant",
+          "emergency-retreat",
+          "improved-overland-4",
+          "improved-burrow-2",
+          "improved-overland-8",
+          "improved-flight-4",
+          "rigorous-fundamentals-5",
+          "pack-mon-2",
+          "skill-refinement-1"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#5eaf3c",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "icons/svg/door-exit.svg",
+          "tint": null,
+          "scale": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "effects": [],
+  "_id": "W727dR5XDdJYRKsy"
+}

@@ -1,0 +1,587 @@
+{
+  "name": "moltres",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 146,
+    "size": {
+      "category": "large",
+      "type": "quad",
+      "height": 2,
+      "weight": 60
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 12
+      },
+      {
+        "type": "overland",
+        "value": 4
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "winged",
+      "legendary",
+      "firestarter",
+      "glow-5",
+      "fully-evolved",
+      "jump-2"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "molten-down"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "flame-body"
+        },
+        {
+          "slug": "flaming-soul"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "pyromancy"
+        },
+        {
+          "slug": "drought"
+        }
+      ],
+      "master": [
+        {
+          "slug": "majestic-bird"
+        },
+        {
+          "slug": "fevered-pitch"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "legendary",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "moltres",
+    "stats": {
+      "hp": 90,
+      "atk": 100,
+      "def": 90,
+      "spa": 125,
+      "spd": 85,
+      "spe": 90
+    },
+    "types": [
+      "flying",
+      "fire"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "acrobatics",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aerial-ace",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "air-cutter",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "bide",
+          "gen": "yellow"
+        },
+        {
+          "name": "brave-bird",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "burning-jealousy",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "curse",
+          "gen": "crystal"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "detect",
+          "gen": "crystal"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flame-charge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flare-blitz",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fly",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "headbutt",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "laser-focus",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "mystical-fire",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "ominous-wind",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "pluck",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rage",
+          "gen": "yellow"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "razor-wind",
+          "gen": "yellow"
+        },
+        {
+          "name": "reflect",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "roar",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scorching-sands",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "sky-drop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "steel-wing",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "swift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "tailwind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "temper-flare",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "twister",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "u-turn",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "weather-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "whirlwind",
+          "gen": "yellow"
+        },
+        {
+          "name": "will-o-wisp",
+          "gen": "scarlet-violet"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "gust",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "leer",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "peck",
+          "gen": "yellow",
+          "level": 1
+        },
+        {
+          "name": "ember",
+          "gen": "scarlet-violet",
+          "level": 5
+        },
+        {
+          "name": "fire-spin",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 8
+        },
+        {
+          "name": "safeguard",
+          "gen": "scarlet-violet",
+          "level": 10
+        },
+        {
+          "name": "wing-attack",
+          "gen": "scarlet-violet",
+          "level": 15
+        },
+        {
+          "name": "agility",
+          "gen": "scarlet-violet",
+          "level": 20
+        },
+        {
+          "name": "ancient-power",
+          "gen": "scarlet-violet",
+          "level": 25
+        },
+        {
+          "name": "incinerate",
+          "gen": "scarlet-violet",
+          "level": 30
+        },
+        {
+          "name": "flamethrower",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 32
+        },
+        {
+          "name": "air-slash",
+          "gen": "scarlet-violet",
+          "level": 35
+        },
+        {
+          "name": "roost",
+          "gen": "scarlet-violet",
+          "level": 40
+        },
+        {
+          "name": "heat-wave",
+          "gen": "scarlet-violet",
+          "level": 45
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet",
+          "level": 50
+        },
+        {
+          "name": "hurricane",
+          "gen": "scarlet-violet",
+          "level": 55
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet",
+          "level": 60
+        },
+        {
+          "name": "solar-beam",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 64
+        },
+        {
+          "name": "burn-up",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 65
+        },
+        {
+          "name": "overheat",
+          "gen": "scarlet-violet",
+          "level": 65
+        },
+        {
+          "name": "sky-attack",
+          "gen": "scarlet-violet",
+          "level": 70
+        }
+      ]
+    },
+    "captureRate": 9,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "evolutions": {
+      "name": "moltres",
+      "details": null,
+      "evolutions": [],
+      "uuid": null,
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "genderRatio": -1,
+    "habitats": []
+  },
+  "_id": "KS8Pj7T6dyXKwtL3",
+  "effects": []
+}

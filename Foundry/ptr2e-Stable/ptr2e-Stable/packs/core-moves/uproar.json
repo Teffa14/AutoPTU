@@ -1,0 +1,47 @@
+{
+  "name": "Uproar",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "uproar",
+    "actions": [
+      {
+        "slug": "uproar",
+        "name": "Uproar",
+        "type": "attack",
+        "traits": [
+          "sonic"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 2,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 90,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: The user gains @Affliction[choice-locked] 4. While @Affliction[choice-locked], the user does not consume PP. All creatures within 10m of the user are cured of @Affliction[drowsy].</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "f5q2H8moR4lM7prx",
+  "effects": []
+}

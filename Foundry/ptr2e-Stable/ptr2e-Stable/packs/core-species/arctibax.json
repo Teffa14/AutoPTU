@@ -1,0 +1,446 @@
+{
+  "name": "arctibax",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "ice",
+      "dragon"
+    ],
+    "stats": {
+      "hp": 90,
+      "atk": 95,
+      "def": 66,
+      "spa": 45,
+      "spd": 65,
+      "spe": 62
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leer",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dragon-tail",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icy-wind",
+          "level": 6,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dragon-breath",
+          "level": 12,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-energy",
+          "level": 18,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bite",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-fang",
+          "level": 29,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-beam",
+          "level": 45,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "crunch",
+          "level": 50,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icicle-crash",
+          "level": 55,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "swords-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "outrage",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "brick-break",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aerial-ace",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icicle-spear",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dragon-claw",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dragon-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "avalanche",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "draco-meteor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-head",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snowscape",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.8,
+      "weight": 30,
+      "category": "medium",
+      "type": "quad"
+    },
+    "captureRate": 35,
+    "eggGroups": [
+      "dragon",
+      "mineral"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "frigibax",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "arctibax",
+          "uuid": "Compendium.ptr2e.core-species.Item.90rvcDOyrhSpyYVL",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "baxcalibur",
+              "uuid": "Compendium.ptr2e.core-species.Item.lGxBGj1JZ0INf8Jv",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 55,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.WELsaunxPKQXt4T7"
+    },
+    "number": 997,
+    "traits": [
+      "pokemon",
+      "bladed",
+      "chiller",
+      "darkvision-15",
+      "deep-breath",
+      "freezer",
+      "ir-vision-15",
+      "natural-swimmer",
+      "underdog",
+      "jump-2"
+    ],
+    "diet": [
+      "carnivore",
+      "ergovore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "thermal-exchange"
+        },
+        {
+          "slug": "freezing-point"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "ice-body"
+        },
+        {
+          "slug": "keen-edge"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "glaciation"
+        },
+        {
+          "slug": "frost-coat"
+        }
+      ],
+      "master": [
+        {
+          "slug": "coldflame"
+        },
+        {
+          "slug": "bitter-chill"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 6
+      },
+      {
+        "type": "swim",
+        "value": 4
+      },
+      {
+        "type": "burrow",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychology",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swimming",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "ice",
+      "tundra"
+    ],
+    "slug": "arctibax",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "90rvcDOyrhSpyYVL",
+  "effects": [],
+  "folder": null
+}

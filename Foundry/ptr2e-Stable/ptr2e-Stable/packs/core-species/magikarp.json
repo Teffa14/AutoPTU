@@ -1,0 +1,213 @@
+{
+  "name": "magikarp",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 129,
+    "size": {
+      "category": "tiny",
+      "type": "length",
+      "height": 0.9,
+      "weight": 10
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "swim",
+        "value": 12
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "natural-swimmer",
+      "gilled",
+      "fountain",
+      "underdog",
+      "living-weapon",
+      "jump-8"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "swift-swim"
+        },
+        {
+          "slug": "rattled"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "hydration"
+        },
+        {
+          "slug": "limber"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "marvel-scale"
+        },
+        {
+          "slug": "no-guard"
+        }
+      ],
+      "master": [
+        {
+          "slug": "multiscale"
+        },
+        {
+          "slug": "wyrm-power"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "magikarp",
+    "stats": {
+      "hp": 20,
+      "atk": 10,
+      "def": 55,
+      "spa": 15,
+      "spd": 20,
+      "spe": 80
+    },
+    "types": [
+      "water"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "splash",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tackle",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flail",
+          "level": 25,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "bounce",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hydro-pump",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "captureRate": 255,
+    "eggGroups": [
+      "water2",
+      "dragon"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "magikarp",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "gyarados",
+          "uuid": "Compendium.ptr2e.core-species.Item.wLs36MjrFMgICzpA",
+          "methods": [
+            {
+              "type": "level",
+              "level": 20,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.MfPvVMi1p3RuREz5"
+    },
+    "habitats": [
+      "pond",
+      "lake",
+      "river",
+      "ocean",
+      "reef",
+      "polar"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "MfPvVMi1p3RuREz5",
+  "effects": [],
+  "folder": null
+}

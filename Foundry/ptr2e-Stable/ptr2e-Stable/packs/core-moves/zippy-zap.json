@@ -1,0 +1,52 @@
+{
+  "name": "Zippy Zap",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "zippy-zap",
+    "actions": [
+      {
+        "slug": "zippy-zap",
+        "name": "Zippy Zap",
+        "type": "attack",
+        "traits": [
+          "mascot",
+          "crit-4",
+          "priority-10",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "priority": 1
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "688eKLk0PpR7TUuf",
+  "effects": []
+}

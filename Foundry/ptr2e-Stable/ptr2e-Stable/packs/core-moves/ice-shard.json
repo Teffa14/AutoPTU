@@ -1,0 +1,50 @@
+{
+  "name": "Ice Shard",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "ice-shard",
+    "actions": [
+      {
+        "slug": "ice-shard",
+        "name": "Ice Shard",
+        "type": "attack",
+        "traits": [
+          "missile",
+          "priority-10"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1,
+          "priority": 1
+        },
+        "category": "physical",
+        "power": 40,
+        "accuracy": 100,
+        "types": [
+          "ice"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "VCZ3gj0SoGu1NW8O",
+  "effects": []
+}

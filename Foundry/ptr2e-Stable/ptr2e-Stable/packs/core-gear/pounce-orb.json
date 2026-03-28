@@ -1,0 +1,51 @@
+{
+  "name": "Pounce Orb",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 5,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "common",
+    "consumableType": "other",
+    "traits": [
+      "combat",
+      "consumable",
+      "wonder-orb",
+      "held",
+      "fling"
+    ],
+    "description": "The user freely teleports to a space adjacent to a target in the Room, and freely uses Pounce.",
+    "quantity": 1,
+    "slug": "pounce-orb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "wbIJHPje7814rRiS",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

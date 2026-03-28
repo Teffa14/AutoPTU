@@ -1,0 +1,806 @@
+{
+  "name": "rapidash-galarian",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 78,
+    "form": "galarian",
+    "size": {
+      "category": "large",
+      "type": "quad",
+      "height": 1.7,
+      "weight": 80
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 16
+      },
+      {
+        "type": "swim",
+        "value": 5
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "quadrupedal",
+      "pack-mon",
+      "galarian",
+      "telepath",
+      "aura-user",
+      "horned",
+      "lifesense-15",
+      "glow-3",
+      "fully-evolved",
+      "jump-4"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "run-away"
+        },
+        {
+          "slug": "pastel-veil"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "anticipation"
+        },
+        {
+          "slug": "mighty-horn"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "mystic-blades"
+        },
+        {
+          "slug": "dazzling"
+        }
+      ],
+      "master": [
+        {
+          "slug": "speed-force"
+        },
+        {
+          "slug": "aura-spell"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "aura-sense",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fairy",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychic",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 65,
+      "atk": 100,
+      "def": 70,
+      "spa": 80,
+      "spd": 80,
+      "spe": 105
+    },
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "ally-switch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "baton-pass",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-slam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bounce",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "charm",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "drill-run",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "expanding-force",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "future-sight",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "high-horsepower",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "imprison",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "low-kick",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "magic-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "misty-terrain",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mystical-fire",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "pay-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "play-rough",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psychic-terrain",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "smart-strike",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stored-power",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swift",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "throat-chop",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "trick-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wild-charge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wonder-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "sword-shield"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "confusion",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "growl",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "megahorn",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "psycho-cut",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "quick-attack",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "tail-whip",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "fairy-wind",
+          "gen": "sword-shield",
+          "level": 15
+        },
+        {
+          "name": "agility",
+          "gen": "sword-shield",
+          "level": 20
+        },
+        {
+          "name": "psybeam",
+          "gen": "sword-shield",
+          "level": 25
+        },
+        {
+          "name": "stomp",
+          "gen": "sword-shield",
+          "level": 30
+        },
+        {
+          "name": "heal-pulse",
+          "gen": "sword-shield",
+          "level": 35
+        },
+        {
+          "name": "take-down",
+          "gen": "sword-shield",
+          "level": 43
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "sword-shield",
+          "level": 49
+        },
+        {
+          "name": "psychic",
+          "gen": "sword-shield",
+          "level": 56
+        },
+        {
+          "name": "healing-wish",
+          "gen": "sword-shield",
+          "level": 63
+        }
+      ]
+    },
+    "captureRate": 60,
+    "eggGroups": [
+      "ground"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "ponyta-galarian",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "rapidash-galarian",
+          "uuid": "Compendium.ptr2e.core-species.Item.jtE6vbDMLxALyfEu",
+          "methods": [
+            {
+              "type": "level",
+              "level": 37,
+              "operand": "and"
+            }
+          ],
+          "perk": {
+            "x": 26,
+            "y": 26
+          },
+          "details": null,
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.wSd7PCrT1N0EAXNR",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "habitats": [],
+    "slug": "rapidash",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "jtE6vbDMLxALyfEu",
+  "effects": [
+    {
+      "name": "Mega Rapidash Galarian",
+      "type": "form",
+      "_id": "CN45snRGlKcUeW3M",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-option",
+            "key": "manual-forme-toggle",
+            "value": "forme:mega-rapidash-galarian:active",
+            "domain": "all",
+            "toggleable": true,
+            "label": "Toggle: Mega Rapidash Galarian Forme",
+            "predicate": [],
+            "alwaysActive": false,
+            "count": false,
+            "mode": 2,
+            "ignored": false,
+            "suboptions": [],
+            "state": false
+          },
+          {
+            "type": "grant-item",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "",
+            "value": "Compendium.ptr2e.core-abilities.Item.lW75LfBFpHkKWpPA",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.free",
+                "value": "true"
+              }
+            ],
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "mode": 2,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "allowDuplicate": true,
+            "track": false,
+            "replaceSelf": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "",
+            "value": "winged",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "add-trait",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "",
+            "value": "psycher",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.movement.flight.value",
+            "value": 18,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.movement.overland.value",
+            "value": 2,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.movement.swim.value",
+            "value": 1,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "stats-alteration",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "",
+            "value": 0,
+            "hp": null,
+            "atk": 35,
+            "def": 10,
+            "spa": 10,
+            "spd": 30,
+            "spe": 10,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.acrobatics.value",
+            "value": 15,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.aura-sense.value",
+            "value": 15,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.climb.value",
+            "value": 5,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.flying.value",
+            "value": 45,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.intimidate.value",
+            "value": 15,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.lift.value",
+            "value": 15,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.listen.value",
+            "value": 15,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.leadership.value",
+            "value": 40,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.psychic.value",
+            "value": 15,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.fairy.value",
+            "value": 15,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.running.value",
+            "value": 5,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.spot.value",
+            "value": 10,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.survival.value",
+            "value": 5,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-rapidash-galarian:active"
+            ],
+            "key": "system.skills.swim.value",
+            "value": 10,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0,
+        "trigger": "manual",
+        "conditions": []
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.1.beta",
+        "createdTime": 1754089925458,
+        "modifiedTime": 1754090305823,
+        "lastModifiedBy": "6zxE5EIsM9axXjpP"
+      }
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "name": "Master Ball",
+  "img": "systems/ptr2e/img/item-icons/master ball.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "S",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "unique",
+    "consumableType": "pokeball",
+    "traits": [
+      "belt",
+      "fling",
+      "ball",
+      "danger-close"
+    ],
+    "description": "Will catch any Pokemon without fail. This item cannot miss.",
+    "modifier": 999,
+    "quantity": 1,
+    "slug": "master-ball",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "mxks7lB2rkG3Uedl",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

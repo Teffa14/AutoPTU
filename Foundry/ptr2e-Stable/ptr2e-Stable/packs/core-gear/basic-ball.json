@@ -1,0 +1,61 @@
+{
+  "name": "Basic Ball",
+  "img": "systems/ptr2e/img/item-icons/basic ball.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 1,
+    "crafting": {
+      "skill": "electronics",
+      "spans": 2,
+      "materials": [
+        "2x-tumblestone",
+        "1x-basic-apricorn"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "E",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling",
+      "ball"
+    ],
+    "description": "A basic PokeBall for capturing Pokemon. Gives no bonuses on capture checks.",
+    "modifier": 1,
+    "quantity": 1,
+    "slug": "basic-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "RmxpPT0msnrx1mv4",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

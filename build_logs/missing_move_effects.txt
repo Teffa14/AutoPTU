@@ -1,0 +1,146 @@
+﻿Shell Trap: If the user is hit by a Melee attack, they may use Shell Trap as an Interrupt.
+Shelter: The user gains +1 CS in Defense and Special Defense, and +2 Evasion.
+Shift Gear: Raise the userâ€™s Attack by +1 CS and Speed by +2 CS.
+Shore Up: The user regains Hit Points equal to half of its full Hit Point value. If it is Sand Storming, the user gains 2/3 of its full Hit Point value. If it is Sunny, Rainy, or Hailing, the user gains 1/4 of its full Hit Point value.
+Signal Beam: Signal Beam Confuses the target on 19+.
+Silver Wind: Silver Wind raises each of the user's stats by +1 CS on 19+.
+Simple Beam: You choose one of the target's Abilities. Simple Beam changes that Ability to Simple for the remainder of the encounter.
+Sing: All legal Targets fall Asleep. On a miss, Sing instead causes targets to become Slowed and suffer a -2 penalty to their Evasion until the end of the user's next turn.
+Skill Swap: The user loses one of their Abilities, selected by the user, and gains one the targetâ€™s Abilities, selected at random, for the remainder of encounter. The target loses the copied Ability, and gains the userâ€™s lost Ability. This effect ends if either the target or the user is Switched out or Fainted, but only for that PokÃ©mon or Trainer.
+Skitter Smack: The user Shifts up to its Overland Capability, ignoring Attacks of Opportunity, before attacking with Skitter Smack. On a hit, the targetâ€™s Special Attack is lowered 1 CS.
+Sky Uppercut: Sky Uppercut may be used as an Interrupt when against a target initiating Bounce, Fly, or Sky Drop. If Sky Uppercut successfully hits its target, the Triggering Move fails (though the target may take their next turn normally.)
+Slack Off: The user regains HP equal to half of its full HP.
+Slam: Slam may be used as a Free Action at the end of a Sprint Maneuver taken as a Standard Action, as long as the user Shifted at least 3 meters in a straight line towards the target. When used this way, Slam gains the Smite keyword.
+Slash: Slash is a Critical Hit on 18+.
+Sleep Powder: The target falls Asleep.
+Sleep Talk: Select another of the userâ€™s Moves at random; this turn, the user may Shift and use that Move despite being Asleep. Sleep Talk can be only be used by Sleeping targets.
+Slice: Limitation: Melee Weapons Only
+Sludge: Sludge Poisons the target on 15+.
+Sludge Bomb: Sludge Bomb Poisons the target on 15+.
+Sludge Wave: Sludge Wave Poisons all legal targets on 19+.
+Spirit Lance: Spirit Lance deals +3 damage to all targets for each target beyond the first that it successfully hits.
+Spirit Shackle: The Target is Trapped for 2 rounds.
+Spit Up: For each Stockpiled Count the user has, Spit Upâ€™s Damage Base is increased by +8. If the user has no Stockpiled count, Spit Up cannot be used.
+Spite: Spite may be used as a Free Action that does not take up a Command whenever the user is hit by a Move. That Move becomes Disabled for the attacker.
+Splash: Shift Action - The user may make a single Jump, adding +1 to their Long Jump and High Jump values, and gains +2 Evasion until the end of their next turn. *Grants +1 Long Jump
+Spore: The target falls Asleep.
+Spotlight: Until the end of the userâ€™s next turn, the target is Blinded and Vulnerable.
+Sprint: Increase your Movement Speeds by 50% for the rest of your turn.
+Stealth Rock: Set 4 square meters of Stealth Rock hazards within 6 meters. If a foe moves within 2 meters of a space occupied by Rocks, move at most one Rock to the offender, then destroy the Rock. When that happens, the Stealth Rock causes a foe to lose a Tick of Hit Points. Stealth Rock is considered to be dealing damage; Apply Weakness and Resistance. Do not apply stats. A PokÃ©mon who has been hit by a Stealth Rock Hazard cannot get hit by another in the same encounter until it is returned to a PokÃ© Ball and then sent back out. *Grants Materializer
+Steamroller: Steamroller Flinches the target on 15+. If the target is Small, Steamroller deals an additional +5 Damage.
+Steel Wing: Steel Wing raises the user's Defense by +1 CS on 15+.
+Sticky Web: Set 8 square meters of Sticky Web hazards within your range such that all 8 meters are adjacent with at least one other space of Sticky Web. Sticky Web causes Terrain to become Slow Terrain, and a grounded foe that runs into the hazard has its Speed lowered by -1 CS and becomes Slowed until the end of their next turn. Flying-type Pokemon and Pokemon and Trainers with Levitate are not affected by Sticky Web. Bug-type Pokemon may move over Sticky Web harmlessly, destroying theHazards as they do so. *Grants Threaded
+Stockpile: The user adds 1 to their Stockpiled count to a maximum of 3. For each number a Stockpiled count is above 0, raise the userâ€™s Defense and Special Defense by +1 CS each. If a Stockpiled count is set to 0, any Combat Stages gained from the Stockpiled count are removed.
+Stomp: Stomp Flinches the target on 15+. If the target is at least one size category smaller than the user, Stomp deals an additional 10 damage.
+Stomping Tantrum: If the userâ€™s last attack failed or missed, Stomping Tantrum is DB15 instead.
+Stone Axe: Stone Axe is a critical hit on an 18+. Once per scene, on a hit, the target may be put in a Vortex.
+Stone Edge: Stone Edge is a Critical Hit on 17+.
+Stored Power: For every Combat Stage the user has above 0, add +2 to Stored Powerâ€™s Damage Base, up to a maximum of Damage Base 20.
+Storm Throw: If Storm Throw hits, it is a Critical Hit.
+Strange Steam: The target is confused on 17+.
+Strength Sap: The user gains Hit Points equal to the higher of the target's Attack or Special Attack; the target then loses -1 CS in that Stat.
+String Shot: Lower the Speed of all legal targets by -1 CS. If this lowers their Speed CS to -6, or if their Speed CS was already at -6, they are instead Stuck. *Grants Threaded
+Struggle: --
+Struggle Bug: Lower the Special Attack of all legal targets by -1 CS.
+Struggle+: --
+Stun Spore: The target is Paralyzed.
+Substitute: The user loses 1/4 of their maximum Hit Points. This Hit Point loss cannot be prevented in any way. The user creates an Illusory Substitute Coat, which has Hit Points equal to 1/4th of the userâ€™s full Hit Points +1. If the user would be hit by a Move or attack, instead the Substitute gets hit. Apply weakness, resistance and stats to the Substitute. The Substitute is immune to Status Afflictions and Status Moves. Moves with the Social or Sonic keywords completely ignore and bypass the Substitute. Once the Substitute has been destroyed, the user may be hit as normal. Substitute cannot be used if the user has less than 1/4 of their full Hit Points.
+Sucker Punch: If an adjacent foe targets the user with a Damaging Attack, Sucker Punch may be used as an Interrupt Move against the triggering foe.
+Sucker Punch [SM]: If an adjacent foe targets the user with a Damaging Attack, Sucker Punch may be used as an Interrupt Move against the triggering foe.
+Sunny Day: The weather becomes Sunny for 5 rounds. While Sunny, Fire-Type Attacks gain a +5 bonus to Damage Rolls, and Water-Type Attacks suffer a -5 Damage penalty.
+Sunsteel Strike: This Move ignores any Abilities that would cause it to fail or miss; those Abilities cannot be activated in response to Sunsteel Strike (ex: Dodge, Wonder Guard)
+Super Fang: The target loses 1/2 of its current HP.
+Superpower: Superpower lowers the user's Attack and Defense by 1 Combat Stage each.
+Supersonic: The target becomes Confused. On miss, the target suffers a -2 penalty to Accuracy Rolls for one full round.
+Surf: As a Shift Action, the user may Move to any open square in Surf â€™s area of effect without provoking any Attacks of Opportunity.
+Surging Strikes: If Surging Strikes hits, it is a Critical Hit. After attacking with Surging Strikes, hit or miss, the user may Shift 2m, ignoring Attacks of Opportunity from their target. It may then make an additional attack with this Move on a different target. This effect may be repeated a second time, the third attack targeting a creature that has not yet been targeted by either prior attack. Before making each attack roll, the user can elect to give up triggering all remaining additional shifts and attacks. Surging Strikes gains +3 DB for each attack that is given up.
+Swagger: Raise the target's Attack by +2 CS. The target is Confused.
+Swagger [SM]: Raise the target's Attack by +2 CS. The target is Confused.
+Swallow: If the userâ€™s Stockpiled count is 1, they are healed 25% of their full Hit Point value; if their Stockpiled count is 2, they are healed half of their full Hit Point value; if their Stockpiled count is 3, they are healed back to full Hit Points. After using Swallow, the userâ€™s Stockpiled count is set to 0. If the user has no Stockpiled count, Swallow does nothing.
+Sweeping Strike: You may attempt a Trip Maneuver against the target as a free action.
+Sweet Kiss: The target is Confused. On miss, the target suffers a -2 penalty to Accuracy Rolls for one full round.
+Sweet Scent: Targets hit by Sweet Scent gain a -2 Penalty to Evasion. (Total Evasion may not be lowered to a negative value.) *Grants Alluring
+Switcheroo: The user and the target exchange held items.
+Swords Dance: Raise the user's Attack by +2 CS.
+Synchronoise: Synchronoise can only hit targets that share a type with Synchronoise's user.
+Synthesis: The user regains Hit Points equal to half of its full Hit Point value. If it is Sunny, the user gains 2/3 of its full Hit Point value. If it is Rainy, Sand Storming, or Hailing, the user gains 1/4 of its full Hit Point value.
+Tail Glow: Raise the userâ€™s Special Attack by +3 CS. *Grants Glow
+Tail Whip: All legal targets have their Defense lowered by -1 CS.
+Tailwind: For the remainder of the encounter, all allied trainers and PokÃ©mon gain +5 to their Initiative. Multiple instances of Tailwind cannot stack. *Grants: Guster
+Take Aim: Raise the userâ€™s Accuracy by +1. If the user performs an Weapon Move on their next turn that deals damage, add its Damage Dice Roll an extra time to the damage.
+Take Heart: The user gains +1 CS in all its stats and cures all of its Status conditions.
+Tar Shot: The target gains a Coat that is automatically expended upon being hit with a Fire Type attack in order to make them one step more vulnerable to that attack. In addition, the targetâ€™s Speed is lowered by 1 CS.
+Taunt: The target becomes Enraged.
+Tearful Look: All legal targets lose -1 Attack and Special Attack CS each.
+Techno Blast: Techno Blastâ€™s Type can be any Type while holding the appropriate Drive item or Plate item.
+Teeter Dance: All legal targets are Confused.
+Telekinesis: The target becomes Lifted. While Lifted, they gain the Levitate Ability, are Slowed, and lose all Movement Capabilities except for the Levitate 4 granted by Levitate (reduced to 2 by the Slow condition). While Lifted, the user may not apply any Evasion bonuses to determine whether they are hit by Moves or not. The Lifted target may use a Shift Action to roll 1d20; on a result of 16+, they stop being Lifted. *Grants Telekinetic
+Teleport: The user Teleports up to X meters, where X is its Teleporter Capability. Any Move that targeted Teleport's user continue through the desired target's space if the Move allows for it as if the user hadn't been there; single target moves simply miss. *Grants Teleporter 4
+Terrain Pulse: If the user is under the effects of a Terrain, Terrain Pulse has a Damage Base of 10 (3d8+10 / 24). In addition, Terrain Pulse becomes the Type that corresponds with the Move that creates that Terrain. (For example, if in Misty Terrain, it would become Fairy Type.) If the user is under the effects of multiple Terrains, choose one to affect this Move.
+Terrorize: Make an Intimidate Check, opposed by the targetâ€™s Intimidate or Focus. If you win, the target loses all Temporary Hit Points and can only use At-Will Frequency Moves for one full round.
+Thief: Thief takes the target's held item and attaches it to Thief's user if the user is not holding anything.
+Thousand Arrows: When calculating Weakness and Resistance for Thousand Arrows, Flying-Typed targets calculate damage as if Ground was neutral to Ice. Thousand Arrows ignores the Levitate Ability, The target is knocked down to ground level, and loses all Sky or Levitate Speeds for 3 turns. During this time, they may be hit by Ground-Type Moves even if normally immune.
+Thousand Waves: Legal Targets are Trapped for 2 Turns.
+Throat Chop: The target cannot use Moves with the Sonic keyword for the next two turns.
+Thunder Cage: The targets are trapped in a Vortex. The DC to escape the Vortex is increased by 3.
+Thunder Fang: Thunder Fang Paralyzes or Flinches on 18-19; flip a coin to determine whether the foe becomes Paralyzed or Flinched. On 20, the foe is both Paralyzed and Flinched.
+Thunder Punch: Thunder Punch Paralyzes the target on 19+.
+Thunder Shock: Thunder Shock Paralyzes the target on 17+. *Grants Zapper
+Thunder Wave [SM]: Thunder Wave Paralyzes the target. PokÃ©mon immune to Electric Attacks are immune to Thunder Wave's effects.
+Thunderbolt: Thunderbolt Paralyzes the target on 19+.
+Thunderous Kick: All legal targets hit lose 1 Defense Combat Stage. Once per Scene, Thunderous Kick may instead be used as an Electric-Type Move.
+Tickle: Lower the targetâ€™s Attack and Defense by -1 CS each.
+Titanic Slam: On Even-Numbered Rolls, the target is Slowed for one full round.
+Topsy-Turvy: The targetâ€™s Combat Stages are inverted; +1 Stage becomes -1 Stage, -3 Stages becomes +3 Stages, etc.
+Torment: The target becomes Suppressed.
+Toxic Spikes: Set 8 square meters of Toxic Spikes within the range such that all 8 meters are adjacent with at least one other space of Toxic Spikes. Toxic Spikes cause Terrain to become Slow Terrain, and a grounded foe that runs into the hazard becomes Poisoned and Slowed until the end of their next turn. If there are 2 layers of Toxic Spikes on the same space, it Badly Poisons the foes instead. Poison-Type Pokemon may move over Toxic Spikes harmlessly, destroying the Hazards as they do so.
+Toxic Threads: The target is Poisoned and receives -1 Speed Combat Stage. If the target is already Poisoned, they instead lose a Tick of Hit Points and receive -2 Speed Combat Stages.
+Tri Attack: Tri Attack gives the target a Status ailment on 17+. If this effect is triggered, roll 1d3; on 1 the target is Paralyzed; on 2 the target is Burned; on 3 the target is Frozen.
+Trick: Both targets must be hit for Trick to succeed. The user may target itself or willing allies with Trick; you do not need to roll for Accuracy Check in these cases. Both targets lose their Held Item and gain the other target's Held Item. If a target has no Held Item, they still can gain the other target's Held Item.
+Trick Room: Starting at the beginning of the next round, for 5 rounds, the area is considered Rewinding. While Rewinding, Initiative is reversed, and participants instead go from lowest Initiative to highest.
+Trick-or-Treat: The target gains the Ghost Type in addition to its other Types for 5 turns.
+Triple Arrows: Targets hit by Triple Arrows lose 1 CS in both  Defense and Special Defense. 
+
+After attacking with Triple Arrows, hit or miss, the user may Disengage 2m and attack a different target with Triple Arrows. This effect may be repeated a second time, targeting a creature that has not been targeted by either prior attack. Before making each attack roll, the user can elect to give up triggering allremaining additional shifts and attacks. Triple Arrowsgains +1 Accuracy and +1 DB for each attack that is given up. Triple Arrows always benefits from the Technician Ability.
+
+Once Daily, after all attacks with Triple Arrows have been resolved, the user becomes Pumped. While Pumped, the userâ€™s Critical Range is extended by 2, or 18+ if the Critical Range is not otherwise extended. Being switched will cause this effect to end.
+Triple Axel: After attacking with Triple Axel, hit or miss, the user may Disengage 2m and attack a different target with Triple Axel. This effect may be repeated a second time, targeting a creature that has not been targeted by either prior attack. Before making each attack roll, the user can elect to give up triggering all remaining additional shifts and attacks. Triple Axel gains +1 Accuracy and +1 DB for each attack that is given up. Triple Axel always benefits from the Technician Ability.
+Triple Kick: Make three attacks with Triple Kick. If you hit once, Triple Kick has a DB of 1. If you hit two times, Triple Kick has a DB of 3. If you hit three times, Triple Kick has a DB of 6.
+Triple Kick [LA]: After attacking with Triple Kick, hit or miss, the user may Disengage 2m and attack a different target with Triple Kick. This effect may be repeated a second time, targeting a creature that has not been targeted by either prior attack. Before making each attack roll, the user can elect to give up triggering all remaining additional shifts and attacks. Triple Kick gains +1 Accuracy and +2 DB for each attack that is given up. Triple Kick always benefits from the Technician Ability.
+Triple Threat: Limitation: Large Melee Weapons and Long-Range Weapons Only
+Trop Kick: The target receives a -5 penalty to damage rolls for 1 round.
+Trump Card: Whenever the user uses Trump Card, the user gains a Trump Count after the attack is resolved. Trump Card's DB is increased by +2 for each Trump Count.
+Twister: Twister Flinches the target on 18+. Small or Medium targets in the central square of the blast are not hit. Any PokÃ©mon Airborne as a result of Bounce, Fly, or Sky Drop above the Blast are hit, ignoring range, and Twister has a Damage Base of 8 against those targets instead.
+U-Turn: The user deals damage and then is immediately recalled to its PokÃ© Ball in the same turn. A New PokÃ©mon may immediately be sent out. Using U-Turn lets a Trapped user be recalled.
+Uproar: All PokÃ©mon and Trainers within 5 meters of the user are cured of Sleep.
+Vacuum Wave: --
+Venoshock: If the target is Poisoned, Venoshock has a Damage Base of 13 (4d10+10 / 35) instead.
+Vicegrip: --
+Victory Dance: If the user performs a Fighting Move on their next turn that deals damage, add its Damage Dice Roll an extra time to the damage. Raise the userâ€™s Defense 1 Combat Stage.
+Vine Whip: *Grants: Threaded
+Volt Switch: If Volt Switch successfully hits its target, the user deals damage and then immediately is returned to its Poke Ball in the same turn. A New Pokemon may immediately be sent out. Using Volt Switch lets a Trapped user be recalled
+Wake-Up Slap: If the target is Asleep, Wake-Up Slap has a Damage Base of 10 (3d8+10 / 24) instead, and cures the target of Sleep.
+Water Gun: *Grants Fountain
+Water Pulse: Water Pulse Confuses the target on 17+.
+Water Sport: All targets in the burst, including the user, gain a Coat which grants them 1 Step of Resistance to Fire Type Moves. After a target has been hit by a damaging Fire Type Move, the coat is removed. *Grants Fountain
+Water Spout: For each 10% of HP the user is missing, Water Spout's Damage Base is reduced by -1. Water Spout creates a 1 meter burst, but also affects an area 10 meters tall straight up.
+Waterfall: Waterfall Flinches the target on 17+.
+Wear Down: Wear Down lowers the targetâ€™s Defense by 1 Combat Stage on Even-Numbered Rolls.
+Weather Ball: If it is Sunny, Weather Ball is Fire-Type. If it is Rainy, Weather Ball is Water-Type. If it is Hailing, Weather Ball is Ice-Type. If it is Sandstorming, Weather Ball is Rock-Type. When a weather effect is on the field, Weather Ball has a Damage Base of 10 (3d8+10 / 24). If there are multiple Weather Effects on the field, choose one type for Weather Ball to be that corresponds with an existing Weather Effect.
+Whirlpool: The target is put in a Vortex.
+Wide Guard: If an Ally adjacent to Wide Guardâ€™s user is hit by a Move, you may use Wide Guard as an Interrupt. All targets adjacent to Wide Guardâ€™s user, including the user, are instead not hit by the triggering Move and do not suffer any of its effects.
+Will-O-Wisp: The target is Burned.
+Wing Attack: --
+Wish: At the end of the user's next turn, the target regains HP equal to half of its full HP. If the user targets itself and is replaced in battle, the replacement is healed by half of its own HP.
+Withdraw: The user becomes Withdrawn. While Withdrawn, the user becomes immune to Critical Hits and gain 15 Damage Reduction. However, while Withdrawn, the user cannot Shift, and may only use self-targeting Moves. The user may stop being Withdrawn as a Shift Action.
+September Playtest: The userâ€™s Defense is raised 1 Combat Stage.
+Wonder Room: For 5 rounds, the area is considered Wondered. While Wondered, each individual PokÃ©mon's Defense and Special Defense are switched.
+Work Up: Raise the userâ€™s Attack and Special Attack by +1 CS each.
+Worry Seed: You choose one of the targetâ€™s Abilities. Worry Seed changes that Ability to Insomnia for the remainder of the encounter.
+Wounding Strike: The target loses a Tick of Hit Points.
+Wrap: The user gains a +1 Bonus to Accuracy Rolls made to initiate Grapple Maneuvers, and +2 to Skill Checks made to initiate Grapple Maneuvers or gain Dominance. Whenever the user gains Dominance in a Grapple, the target of the Grapple loses a Tick of Hit Points.
+Wring Out: For every 10% the target is below their full HP, Wring Out's Damage Base is reduced by -1.
+X-Scissor: --
+Zap Cannon: Zap Cannon Paralyzes the target. Zap Cannon ignores the target's Evasion if their are no other combatants or Rough or Blocking Terrain within 2 meters of the target.
+Zen Headbutt: Zen Headbutt Flinches the target on 15+.
+Zing Zap: Zing Zap Flinches the target on 15+.

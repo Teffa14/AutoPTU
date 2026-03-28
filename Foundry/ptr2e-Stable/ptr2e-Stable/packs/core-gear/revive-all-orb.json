@@ -1,0 +1,57 @@
+{
+  "name": "Revive All Orb",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 9,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100,
+      "hide": true,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "consumableType": "other",
+    "traits": [
+      "combat",
+      "consumable",
+      "restorative",
+      "wonder-orb"
+    ],
+    "description": "All allies in the Room are healed of @Affliction[fainted], healing 1 Stack of @Affliction[weary] and have their HP set to 25%.",
+    "quantity": 1,
+    "slug": "revive-all-orb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "xVGVi27Pi9iGuKLq",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

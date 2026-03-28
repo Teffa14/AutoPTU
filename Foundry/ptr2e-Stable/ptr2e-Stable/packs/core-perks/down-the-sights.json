@@ -1,0 +1,133 @@
+{
+  "name": "Down The Sights",
+  "type": "perk",
+  "folder": "W85LoOCz3WlwbyhZ",
+  "system": {
+    "prerequisites": [],
+    "cost": 1,
+    "description": "<p>Your next non-@Trait[contact] Attack gains @Trait[crit-x] or [Crit X+1] until it resolves.</p>",
+    "actions": [
+      {
+        "name": "Down The Sights",
+        "slug": "down-the-sights",
+        "description": "<p>Your next non-[Contact] gains [Crit 1] or [Crit X+1] until it resolves.</p>",
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 2
+        },
+        "type": "generic",
+        "traits": [],
+        "img": "systems/ptr2e/img/perk-icons/Combat.svg",
+        "range": {
+          "target": "self",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "down-the-sights",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 183,
+        "y": 67,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "covering-fire",
+          "harry",
+          "trained-wielder",
+          "root-3",
+          "yeomanry",
+          "needle-threader"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Combat.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "resilience",
+      "archetype": "hunter"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "eHdFNdcyllxflfNA",
+  "img": "systems/ptr2e/img/perk-icons/Combat.svg",
+  "effects": [
+    {
+      "name": "Down The Sights",
+      "type": "passive",
+      "_id": "OP5pQtqdVpPEqv2z",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "down-the-sights-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.GslkeZgUjwbZLKXm",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "self",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1765226024095,
+        "modifiedTime": 1765226047880,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

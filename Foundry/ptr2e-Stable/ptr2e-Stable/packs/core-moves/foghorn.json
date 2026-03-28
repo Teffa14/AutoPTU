@@ -1,0 +1,48 @@
+{
+  "name": "Foghorn",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "foghorn",
+    "actions": [
+      {
+        "slug": "foghorn",
+        "name": "Foghorn",
+        "type": "attack",
+        "traits": [
+          "weather"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: The Weather becomes Foggy for 3 rounds.</p>",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "summon": "Compendium.ptr2e.core-summons.Item.Kv1r7REyDbd8rJua",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "9w7Zluo37ewy3NaQ",
+  "effects": []
+}

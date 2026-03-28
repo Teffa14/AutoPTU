@@ -1,0 +1,413 @@
+{
+  "name": "wiglett",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "water"
+    ],
+    "stats": {
+      "hp": 10,
+      "atk": 55,
+      "def": 25,
+      "spa": 35,
+      "spd": 25,
+      "spe": 95
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "sand-attack",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-gun",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "level": 4,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wrap",
+          "level": 8,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aqua-jet",
+          "level": 12,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "slam",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-pulse",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "headbutt",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "level": 28,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sucker-punch",
+          "level": 32,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "throat-chop",
+          "level": 36,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "liquidation",
+          "level": 40,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "memento",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "final-gambit",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hydro-pump",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "surf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "agility",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "whirlpool",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "muddy-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earth-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "foul-play",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.2,
+      "weight": 1.8,
+      "category": "small",
+      "type": "length"
+    },
+    "captureRate": 255,
+    "eggGroups": [
+      "water3"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "wiglett",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "wugtrio",
+          "uuid": "Compendium.ptr2e.core-species.Item.VuMw5S2mld93qx7T",
+          "methods": [
+            {
+              "type": "level",
+              "level": 26,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.bEqIILd0ziEgbpeK"
+    },
+    "number": 960,
+    "traits": [
+      "pokemon",
+      "darkvision-15",
+      "keen-scent",
+      "pack-mon",
+      "underdog",
+      "wallclimber",
+      "wavesense-15"
+    ],
+    "diet": [
+      "omnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "gooey"
+        },
+        {
+          "slug": "rattled"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "sand-veil"
+        },
+        {
+          "slug": "coward"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "field-explorer"
+        },
+        {
+          "slug": "cascade"
+        }
+      ],
+      "master": [
+        {
+          "slug": "acceleration"
+        },
+        {
+          "slug": "speed-force"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "burrow",
+        "value": 10
+      },
+      {
+        "type": "swim",
+        "value": 5
+      }
+    ],
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "beach",
+      "reef"
+    ],
+    "slug": "wiglett",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "bEqIILd0ziEgbpeK",
+  "effects": [],
+  "folder": null
+}

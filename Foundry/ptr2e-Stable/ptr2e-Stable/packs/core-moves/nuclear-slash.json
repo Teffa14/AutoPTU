@@ -1,0 +1,52 @@
+{
+  "name": "Nuclear Slash",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/nuclear_icon.svg",
+  "system": {
+    "slug": "nuclear-slash",
+    "actions": [
+      {
+        "slug": "nuclear-slash",
+        "name": "Nuclear Slash",
+        "type": "attack",
+        "traits": [
+          "sharp",
+          "crit-1",
+          "pass-2",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 55,
+        "accuracy": 90,
+        "types": [
+          "nuclear"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "UbVBVzd9OWlXIZPP",
+  "folder": "EpCOePz8omfXbp35",
+  "effects": []
+}

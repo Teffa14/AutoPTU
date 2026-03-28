@@ -1,0 +1,47 @@
+{
+  "name": "Tachyon Cutter",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "tachyon-cutter",
+    "actions": [
+      {
+        "slug": "tachyon-cutter",
+        "name": "Tachyon Cutter",
+        "type": "attack",
+        "traits": [
+          "paradox",
+          "double-strike",
+          "sharp",
+          "crit-1",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "special",
+        "power": 50,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "img": "systems/ptr2e/img/svg/steel_icon.svg"
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "VqJRpzwJ7FALtUMB",
+  "effects": []
+}

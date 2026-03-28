@@ -1,0 +1,46 @@
+{
+  "name": "Electro Drift",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "electro-drift",
+    "actions": [
+      {
+        "slug": "electro-drift",
+        "name": "Electro Drift",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "dash",
+          "contact"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "<p>Effect: If this attack deals super effective damage, its Damage is increased by 30%.</p>",
+        "img": "systems/ptr2e/img/svg/electric_icon.svg"
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Ewy6qCginoydpHKm",
+  "effects": []
+}

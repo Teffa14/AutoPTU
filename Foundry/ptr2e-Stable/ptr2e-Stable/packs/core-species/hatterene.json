@@ -1,0 +1,535 @@
+{
+  "name": "hatterene",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "psychic",
+      "fairy"
+    ],
+    "stats": {
+      "hp": 57,
+      "atk": 90,
+      "def": 95,
+      "spa": 136,
+      "spd": 103,
+      "spe": 29
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "confusion",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "disarming-voice",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "play-nice",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "brutal-swing",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "life-dew",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aromatherapy",
+          "level": 15,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "aromatic-mist",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psybeam",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heal-pulse",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dazzling-gleam",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "calm-mind",
+          "level": 37,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic",
+          "level": 46,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "healing-wish",
+          "level": 55,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psycho-cut",
+          "level": 0,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magic-powder",
+          "level": 64,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "expanding-force",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "misty-explosion",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "agility",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "metronome",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "pain-split",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "baton-pass",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "future-sight",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "skill-swap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "imprison",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magical-leaf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gravity",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "power-swap",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "guard-swap",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-claw",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick-room",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "power-whip",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wonder-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psyshock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magic-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stored-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "draining-kiss",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "misty-terrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "play-rough",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mystical-fire",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psychic-terrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-noise",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 2.1,
+      "weight": 5.1,
+      "category": "medium",
+      "type": "height"
+    },
+    "captureRate": 60,
+    "eggGroups": [
+      "fairy"
+    ],
+    "genderRatio": 8,
+    "evolutions": {
+      "name": "hatenna",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "hattrem",
+          "uuid": "Compendium.ptr2e.core-species.Item.hEljjlwX73NAh5YX",
+          "methods": [
+            {
+              "type": "level",
+              "level": 27,
+              "operand": "and"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": [
+            {
+              "name": "hatterene",
+              "uuid": "Compendium.ptr2e.core-species.Item.YrmVHN98gkVrSYpB",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 37,
+                  "operand": "and"
+                }
+              ],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "evolutions": []
+            }
+          ]
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.mbCAnP0byCqVjDfd"
+    },
+    "number": 858,
+    "traits": [
+      "pokemon",
+      "hover",
+      "bipedal",
+      "telepath",
+      "teleporter",
+      "telekinetic-6",
+      "aura-user",
+      "fully-evolved",
+      "illusionist",
+      "jump-2"
+    ],
+    "diet": [
+      "omnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "healer"
+        },
+        {
+          "slug": "anticipation"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "magic-bounce"
+        },
+        {
+          "slug": "telepathy"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "magic-guard"
+        },
+        {
+          "slug": "rattled"
+        }
+      ],
+      "master": [
+        {
+          "slug": "pastel-veil"
+        },
+        {
+          "slug": "serene-grace"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 5
+      },
+      {
+        "type": "teleport",
+        "value": 5
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "aura-sense",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychic",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "fairy",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "psychology",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "woodland",
+      "pond"
+    ],
+    "slug": "hatterene",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "YrmVHN98gkVrSYpB",
+  "effects": [],
+  "folder": null
+}

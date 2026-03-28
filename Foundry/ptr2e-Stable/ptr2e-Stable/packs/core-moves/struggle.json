@@ -1,0 +1,49 @@
+{
+  "name": "Struggle",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "struggle",
+    "actions": [
+      {
+        "slug": "struggle",
+        "name": "Struggle",
+        "type": "attack",
+        "traits": [
+          "adaptable",
+          "basic",
+          "grapple",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "category": "physical",
+        "power": 25,
+        "accuracy": 100,
+        "types": [
+          "untyped"
+        ],
+        "description": "",
+        "free": true,
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg"
+      }
+    ],
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "struggleattaitem",
+  "effects": [],
+  "folder": "EpCOePz8omfXbp34"
+}

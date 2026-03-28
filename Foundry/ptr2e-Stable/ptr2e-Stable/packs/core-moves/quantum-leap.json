@@ -1,0 +1,85 @@
+{
+  "name": "Quantum Leap",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/nuclear_icon.svg",
+  "system": {
+    "slug": "quantum-leap",
+    "actions": [
+      {
+        "name": "Quantum Leap (Resolution)",
+        "slug": "quantum-leap-resolution",
+        "description": "<p>Trigger: The user used Quantum Leap (Set-Up) as their last Action.</p><p>Effect: The user freely Moves up to twice the Movement Score of their choice and is cured of @Affliction[transient] before attacking with this Attack.</p>",
+        "traits": [
+          "legendary",
+          "set-up",
+          "contact",
+          "pierce",
+          "crit-2",
+          "flinch-30"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/nuclear_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "trigger": "The user used Quantum Leap (Set-Up) as their last Action."
+        },
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "types": [
+          "nuclear"
+        ],
+        "category": "physical",
+        "defensiveStat": "spd",
+        "predicate": [],
+        "power": 100,
+        "accuracy": 100
+      },
+      {
+        "name": "Quantum Leap (Set-Up)",
+        "slug": "quantum-leap-set-up",
+        "description": "<p>Effect: The user gains @Affliction[transient 2] and @Affliction[braced 2].</p>",
+        "traits": [
+          "legendary",
+          "set-up",
+          "defensive",
+          "priority-60"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/nuclear_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "nuclear"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "Br2ZtWmGWjb3XTSw",
+  "folder": "EpCOePz8omfXbp35",
+  "effects": []
+}

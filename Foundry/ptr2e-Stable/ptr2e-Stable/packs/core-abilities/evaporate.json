@@ -1,0 +1,120 @@
+{
+  "name": "Evaporate",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive",
+          "interrupt-4"
+        ],
+        "name": "Evaporate",
+        "slug": "evaporate",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 5,
+          "trigger": "<p>The user is hit by a Water-Type attack.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user is hit by a Water-Type attack.</p><p>Effect: The user takes half damage from the attack and is unaffected by the triggering Attack's effects. Then, the user freely uses Mist.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user is hit by a Water-Type attack.</p><p>Effect: Connection - Mist. The user takes half damage from the attack and is unaffected the triggering Attack's effects. Then, the user freely uses Mist.</p>",
+    "traits": [
+      "defensive",
+      "connection"
+    ],
+    "slug": "evaporate",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "tSF30sI3iDjAAYyW",
+  "effects": [
+    {
+      "name": "Evaporate",
+      "type": "passive",
+      "_id": "Tle6tVwzMzA7aUoR",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.kUNtCRHzgIlTVu9W",
+            "predicate": [],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "allowDuplicate": true,
+            "track": false,
+            "replaceSelf": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            }
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.5",
+        "createdTime": 1737398118242,
+        "modifiedTime": 1737398160431,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

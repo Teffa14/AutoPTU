@@ -1,0 +1,136 @@
+{
+  "name": "Flower Gift",
+  "type": "ability",
+  "img": "icons/magic/air/weather-sunlight-sky.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "forme-change",
+          "aura"
+        ],
+        "name": "Flower Gift",
+        "slug": "flower-gift",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "allied-aura",
+          "distance": 15,
+          "unit": "m"
+        },
+        "description": "<p>Effect: While Sunny Weather is active, the user changes to their Sunny Forme. While in Sunny Forme, the ATK and SPDEF stats of the user and allied creatures in range are increased by 50%.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: While in Sunny Weather is active, the user changes to their Sunny Forme. While in Sunny Forme, the ATK and SPDEF stats of the user and allied creatures in range are increased by 50%.</p>",
+    "traits": [
+      "forme-change",
+      "aura"
+    ],
+    "slug": "flower-gift",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "rRGFt0YJ3gI4ExXL",
+  "effects": [
+    {
+      "name": "Flower Gift Aura",
+      "type": "passive",
+      "_id": "058B7L1iBGBjlyih",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "aura",
+            "key": "",
+            "value": 0,
+            "predicate": [
+              "forme:sunshine:active"
+            ],
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "radius": 5,
+            "effects": [
+              {
+                "uuid": "Compendium.ptr2e.core-effects.Item.NxRv9tB4DzNuKc12",
+                "affects": "allies",
+                "events": [
+                  "enter"
+                ],
+                "removeOnExit": true,
+                "includesSelf": false,
+                "appliesSelfOnly": false,
+                "predicate": [
+                  "friend-guard"
+                ]
+              }
+            ],
+            "appearance": {
+              "border": {
+                "color": "#FF0000",
+                "alpha": 0.75
+              },
+              "highlight": {
+                "color": "user-color",
+                "alpha": 0.25
+              },
+              "texture": null
+            },
+            "mergeExisting": true
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-abilities.Item.CzvgRhfvDuRjrtA1.ActiveEffect.WPH789V0rRrGKYvw",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1765277606084,
+        "modifiedTime": 1765277677553,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

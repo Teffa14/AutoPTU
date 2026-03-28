@@ -1,0 +1,278 @@
+{
+  "name": "Submachine Gun",
+  "img": "systems/ptr2e/img/icons/weapon_icon.webp",
+  "type": "weapon",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "held",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "steel",
+      "power": 50,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "traits": [
+      "weapon",
+      "fling",
+      "firearm",
+      "autoload",
+      "steel",
+      "charge-pool-35",
+      "reload-1",
+      "conventional",
+      "modern",
+      "sci-fi"
+    ],
+    "actions": [
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 40,
+        "accuracy": 95,
+        "free": true,
+        "traits": [
+          "missile",
+          "firearm"
+        ],
+        "name": "Submachine Gun",
+        "slug": "submachine-gun",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 105,
+        "accuracy": 85,
+        "free": true,
+        "traits": [
+          "missile",
+          "firearm"
+        ],
+        "name": "Submachine Gun (Burst)",
+        "slug": "submachine-gun-burst",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "variant": "submachine-gun",
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 130,
+        "accuracy": 75,
+        "free": true,
+        "traits": [
+          "missile",
+          "firearm"
+        ],
+        "name": "Submachine Gun (Spray)",
+        "slug": "submachine-gun-spray",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "cone",
+          "distance": 7,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 13
+        },
+        "variant": "submachine-gun",
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 115,
+        "accuracy": 70,
+        "free": true,
+        "traits": [
+          "missile",
+          "dash",
+          "firearm",
+          "priority-10"
+        ],
+        "name": "Submachine Gun (Hip Fire)",
+        "slug": "submachine-gun-hip-fire",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "wide-line",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "variant": "submachine-gun",
+        "predicate": []
+      }
+    ],
+    "description": "<p>A submachine gun (SMG) is a magazine-fed automatic carbine designed to fire handgun cartridges. The term \"submachine gun\" was coined to describe its design concept as an automatic firearm with notably less firepower than a machine gun.</p>",
+    "weaponType": "untyped",
+    "weaponPp": 35,
+    "weaponRange": "Creature",
+    "slug": "submachine-gun",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "lgr7ssZc8fcyeSZn",
+  "effects": [
+    {
+      "name": "Submachine Gun",
+      "type": "passive",
+      "_id": "JTDjo4sEycjYTfRD",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "{item|id}-attack-damage-flat",
+            "value": 37,
+            "predicate": [],
+            "label": "Submachine Gun",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "flat-modifier",
+            "key": "submachine-gun-burst-attack-damage-flat",
+            "value": 74,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "flat-modifier",
+            "key": "submachine-gun-spray-attack-damage-flat",
+            "value": 185,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "flat-modifier",
+            "key": "submachine-gun-hip-fire-attack-damage-flat",
+            "value": 111,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-gear.Item.Ba3EyqpUePgGrfQk.ActiveEffect.uOxpw5kHcRtpv4pa",
+        "duplicateSource": null,
+        "coreVersion": "13.347",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1743901863356,
+        "modifiedTime": 1757631965062,
+        "lastModifiedBy": "UTlFSVhgfIUeTsoW",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "fwBg1GB1fMcgPklo"
+}

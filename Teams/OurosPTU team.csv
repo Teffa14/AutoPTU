@@ -1,0 +1,4 @@
+side,slot,species,level,nature,stat_mode,hp,atk,def,spatk,spdef,spd,ability1,item1,move1,move2,move3,move4,move5,move6,move7,move8,move_source1,move_source2,move_source3,move_source4,move_source5,move_source6,move_source7,move_source8,tutor_points
+player,1,Scyther,15,Adamant,pre_nature,11,15,10,6,8,15,Technician,Eviolite,Quick Attack,Fury Cutter,Wing Attack,Aerial Ace,Pursuit,Double Hit,,,level_up,level_up,level_up,level_up,level_up,level_up,,,0
+player,2,Skarmory,15,Impish,pre_nature,9,9,16,4,7,7,Sturdy,Oran Berry,Peck,Metal Claw,Fury Attack,Swift,Agility,Leer,,,level_up,level_up,level_up,level_up,level_up,level_up,,,0
+player,3,Gligar,15,Impish,pre_nature,10,10,15,4,9,12,Hyper Cutter,Leftovers,Quick Attack,Knock Off,Aerial Ace,Poison Sting,Harden,Sand Attack,,,level_up,level_up,level_up,level_up,level_up,level_up,,,0

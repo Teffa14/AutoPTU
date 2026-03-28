@@ -1,0 +1,53 @@
+{
+  "name": "Pyro Rend",
+  "type": "move",
+  "_id": "4ep5E76ZpTgH0XRs",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "pyro-rend",
+    "actions": [
+      {
+        "name": "Pyro Rend",
+        "slug": "pyro-rend",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/fire_icon.svg",
+        "traits": [
+          "sharp",
+          "contact",
+          "crit-1"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "types": [
+          "fire"
+        ],
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "description": "<p>Effect: This attack calculates damage against the target's SPDEF, rather than DEF.</p>",
+        "defensiveStat": "spd",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": []
+}

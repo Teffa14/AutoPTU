@@ -1,0 +1,518 @@
+{
+  "name": "rabsca",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "bug",
+      "psychic"
+    ],
+    "stats": {
+      "hp": 75,
+      "atk": 50,
+      "def": 85,
+      "spa": 115,
+      "spd": 100,
+      "spe": 45
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confusion",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "defense-curl",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sand-attack",
+          "level": 4,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "struggle-bug",
+          "level": 7,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rollout",
+          "level": 11,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psybeam",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bug-bite",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "extrasensory",
+          "level": 29,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lunge",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "power-swap",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "guard-swap",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "speed-swap",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bug-buzz",
+          "level": 45,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic",
+          "level": 50,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "revival-blessing",
+          "level": null,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "safeguard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confuse-ray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leech-life",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "future-sight",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "skill-swap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "imprison",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "weather-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gravity",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "x-scissor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "power-gem",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earth-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick-room",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psyshock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "electro-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stored-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-terrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "expanding-force",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poltergeist",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pounce",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-noise",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.3,
+      "weight": 3.5,
+      "category": "tiny",
+      "type": "quad"
+    },
+    "captureRate": 70,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "rellor",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "rabsca",
+          "uuid": "Compendium.ptr2e.core-species.Item.Oapfd0DEvlCUZwzC",
+          "methods": [
+            {
+              "type": "level",
+              "level": 22,
+              "operand": "and"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.LWlRLqfhsbWg4qo6"
+    },
+    "number": 954,
+    "traits": [
+      "pokemon",
+      "darkvision-15",
+      "direction-sense",
+      "fully-evolved",
+      "glow-1",
+      "hover",
+      "incubator",
+      "telekinetic-4",
+      "underdog",
+      "jump-6"
+    ],
+    "diet": [
+      "nullivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "synchronize"
+        },
+        {
+          "slug": "telepathy"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "tinted-lens"
+        },
+        {
+          "slug": "magic-bounce"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "imperious-mind"
+        }
+      ],
+      "master": [
+        {
+          "slug": "contrary"
+        },
+        {
+          "slug": "willpower"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 4
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "desert"
+    ],
+    "slug": "rabsca",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Oapfd0DEvlCUZwzC",
+  "effects": [],
+  "folder": null
+}

@@ -1,0 +1,48 @@
+{
+  "name": "Hydro Pump",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "hydro-pump",
+    "actions": [
+      {
+        "slug": "hydro-pump",
+        "name": "Hydro Pump",
+        "type": "attack",
+        "traits": [
+          "ray"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 110,
+        "accuracy": 80,
+        "types": [
+          "water"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "fK1Auf8fdnd5qLCw",
+  "effects": []
+}

@@ -1,0 +1,104 @@
+﻿{
+  "name": "Shed Skin Lab",
+  "description": "Your Shed Skin user begins Burned and the foe keeps reapplying status moves so you can watch the end-phase roll that cures statuses get logged every round.",
+  "default_weather": "Clear",
+  "grid": {
+    "width": 8,
+    "height": 6,
+    "blockers": [[3, 1], [3, 2], [4, 1]],
+    "tiles": {
+      "2, 3": "difficult",
+      "5, 4": "rough"
+    }
+  },
+  "players": [
+    {
+      "name": "Ninetales",
+      "species": "Ninetales",
+      "level": 20,
+      "types": ["Fire"],
+      "hp_stat": 12,
+      "atk": 9,
+      "def": 9,
+      "spatk": 13,
+      "spdef": 11,
+      "spd": 12,
+      "statuses": [
+        {"name": "Burned"}
+      ],
+      "abilities": [
+        {"name": "Shed Skin"}
+      ],
+      "moves": [
+        {
+          "name": "Flamethrower",
+          "type": "Fire",
+          "category": "Special",
+          "db": 8,
+          "ac": 3,
+          "range_kind": "Ranged",
+          "range_value": 5,
+          "freq": "At-Will"
+        },
+        {
+          "name": "Quick Attack",
+          "type": "Normal",
+          "category": "Physical",
+          "db": 6,
+          "ac": 2,
+          "range_kind": "Melee",
+          "freq": "At-Will"
+        }
+      ],
+      "movement": {"overland": 6, "swim": 0, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 2, "l_jump": 1, "power": 3}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Nidoking",
+      "species": "Nidoking",
+      "level": 20,
+      "types": ["Poison", "Ground"],
+      "hp_stat": 12,
+      "atk": 13,
+      "def": 12,
+      "spatk": 9,
+      "spdef": 10,
+      "spd": 10,
+      "moves": [
+        {
+          "name": "Will-O-Wisp",
+          "type": "Fire",
+          "category": "Status",
+          "db": 0,
+          "ac": 4,
+          "range_kind": "Melee",
+          "freq": "Scene",
+          "effects_text": "Burns the target to keep Shed Skin busy."
+        },
+        {
+          "name": "Thunder Wave",
+          "type": "Electric",
+          "category": "Status",
+          "db": 0,
+          "ac": 4,
+          "range_kind": "Ranged",
+          "range_value": 4,
+          "freq": "Scene",
+          "effects_text": "Paralyzes the target as a backup status."
+        },
+        {
+          "name": "Earth Power",
+          "type": "Ground",
+          "category": "Special",
+          "db": 7,
+          "ac": 3,
+          "range_kind": "Ranged",
+          "range_value": 6,
+          "freq": "At-Will"
+        }
+      ],
+      "movement": {"overland": 4, "swim": 1, "sky": 0, "levitate": 0, "burrow": 1, "h_jump": 2, "l_jump": 1, "power": 4}
+    }
+  ]
+}

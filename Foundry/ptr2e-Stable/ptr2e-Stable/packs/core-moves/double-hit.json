@@ -1,0 +1,50 @@
+{
+  "name": "Double Hit",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "double-hit",
+    "actions": [
+      {
+        "slug": "double-hit",
+        "name": "Double Hit",
+        "type": "attack",
+        "traits": [
+          "double-strike",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "category": "physical",
+        "power": 35,
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "nchIkK03kHVWhBRI",
+  "effects": []
+}

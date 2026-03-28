@@ -1,0 +1,418 @@
+{
+  "name": "iron-bundle",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "water",
+      "ice"
+    ],
+    "stats": {
+      "hp": 56,
+      "atk": 80,
+      "def": 114,
+      "spa": 124,
+      "spd": 60,
+      "spe": 136
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "present",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "powder-snow",
+          "level": 7,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "whirlpool",
+          "level": 14,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "level": 21,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "drill-peck",
+          "level": 28,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "freeze-dry",
+          "level": 42,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flip-turn",
+          "level": 49,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-beam",
+          "level": 56,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "agility",
+          "level": 63,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snowscape",
+          "level": 70,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hydro-pump",
+          "level": 77,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aurora-veil",
+          "level": 84,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "level": 91,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "electric-terrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-punch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "encore",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "air-cutter",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "u-turn",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "avalanche",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acrobatics",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "play-rough",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-spinner",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.6,
+      "weight": 11,
+      "category": "small",
+      "type": "height"
+    },
+    "captureRate": 40,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "iron-bundle",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 991,
+    "traits": [
+      "pokemon",
+      "breathless",
+      "darkvision-15",
+      "fountain",
+      "freezer",
+      "fully-evolved",
+      "glow-3",
+      "ir-vision-15",
+      "mind-lock",
+      "natural-swimmer",
+      "paradox",
+      "jump-3"
+    ],
+    "diet": [
+      "nullivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "quark-drive"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "hustle"
+        },
+        {
+          "slug": "cryogenic"
+        },
+        {
+          "slug": "slush-rush"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "north-wind"
+        },
+        {
+          "slug": "bitter-chill"
+        }
+      ],
+      "master": [
+        {
+          "slug": "quick-charge"
+        },
+        {
+          "slug": "winter-joy"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "swim",
+        "value": 20
+      },
+      {
+        "type": "overland",
+        "value": 14
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "computers",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "electronics",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swimming",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "iron-bundle",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "EIKZfrbl2DgUUZS1",
+  "effects": [],
+  "folder": null
+}

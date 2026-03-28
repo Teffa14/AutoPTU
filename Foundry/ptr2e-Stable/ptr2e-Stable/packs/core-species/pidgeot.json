@@ -1,0 +1,723 @@
+{
+  "name": "pidgeot",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 18,
+    "size": {
+      "category": "small",
+      "type": "quad",
+      "height": 1.5,
+      "weight": 39.5
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 15
+      },
+      {
+        "type": "overland",
+        "value": 5
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "winged",
+      "direction-sense",
+      "fully-evolved",
+      "jump-3",
+      "guster"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "keen-eye"
+        },
+        {
+          "slug": "tangled-feet"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "flock"
+        },
+        {
+          "slug": "big-pecks"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "giant-wings"
+        },
+        {
+          "slug": "windvane"
+        }
+      ],
+      "master": [
+        {
+          "slug": "wind-rider"
+        },
+        {
+          "slug": "wind-force"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 83,
+      "atk": 80,
+      "def": 75,
+      "spa": 70,
+      "spd": 70,
+      "spe": 101
+    },
+    "types": [
+      "normal",
+      "flying"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "air-cutter",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bide",
+          "gen": "yellow"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "curse",
+          "gen": "crystal"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "detect",
+          "gen": "crystal"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "facade",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "fly",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "dev"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "headbutt",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "laser-focus",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "ominous-wind",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "pluck",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "protect",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rage",
+          "gen": "yellow"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "reflect",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "rest",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "steel-wing",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "swift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "take-down",
+          "gen": "yellow"
+        },
+        {
+          "name": "thief",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "u-turn",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "work-up",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "heat-wave",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 1
+        },
+        {
+          "name": "sky-attack",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 1
+        },
+        {
+          "name": "sand-attack",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 5
+        },
+        {
+          "name": "gust",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 9
+        },
+        {
+          "name": "mirror-move",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 11
+        },
+        {
+          "name": "quick-attack",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 13
+        },
+        {
+          "name": "whirlwind",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 17
+        },
+        {
+          "name": "twister",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 22
+        },
+        {
+          "name": "feather-dance",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 27
+        },
+        {
+          "name": "agility",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 32
+        },
+        {
+          "name": "wing-attack",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 38
+        },
+        {
+          "name": "roost",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 44
+        },
+        {
+          "name": "tailwind",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 50
+        },
+        {
+          "name": "razor-wind",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 53
+        },
+        {
+          "name": "aerial-ace",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 56
+        },
+        {
+          "name": "air-slash",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 62
+        },
+        {
+          "name": "hurricane",
+          "gen": "brilliant-diamond-and-shining-pearl",
+          "level": 68
+        }
+      ]
+    },
+    "captureRate": 55,
+    "eggGroups": [
+      "flying"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "pidgey",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "pidgeotto",
+          "uuid": "Compendium.ptr2e.core-species.Item.PHlbmAo6Yy55QOwd",
+          "methods": [
+            {
+              "type": "level",
+              "level": 18,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "pidgeot",
+              "uuid": "Compendium.ptr2e.core-species.Item.0ITXciewxMERsUpo",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 36,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "perk": {
+                "x": 26,
+                "y": 26
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.4SfdmzV3FAUxlffS",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "habitats": [
+      "forest",
+      "field",
+      "grassland"
+    ],
+    "slug": "pidgeot",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "0ITXciewxMERsUpo",
+  "effects": [
+    {
+      "name": "Mega Pidgeot",
+      "type": "form",
+      "_id": "mTC5r3xpMvEmhv6X",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-option",
+            "key": "manual-forme-toggle",
+            "value": "forme:mega-pidgeot:active",
+            "domain": "all",
+            "toggleable": true,
+            "label": "Toggle: Mega Pidgeot Forme",
+            "predicate": [],
+            "alwaysActive": false,
+            "count": false,
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "suboptions": [],
+            "state": false
+          },
+          {
+            "type": "stats-alteration",
+            "predicate": [
+              "forme:mega-pidgeot:active"
+            ],
+            "key": "",
+            "value": 0,
+            "hp": null,
+            "atk": null,
+            "def": 5,
+            "spa": 65,
+            "spd": 10,
+            "spe": 20,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-pidgeot:active"
+            ],
+            "key": "system.movement.flight.value",
+            "value": 3,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-pidgeot:active"
+            ],
+            "key": "system.movement.overland.value",
+            "value": 1,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-pidgeot:active"
+            ],
+            "key": "system.skills.acrobatics.value",
+            "value": 5,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-pidgeot:active"
+            ],
+            "key": "system.skills.flying.value",
+            "value": 10,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-pidgeot:active"
+            ],
+            "key": "system.skills.lift.value",
+            "value": 5,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-pidgeot:active"
+            ],
+            "key": "system.skills.navigate.value",
+            "value": 5,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "predicate": [
+              "forme:mega-pidgeot:active"
+            ],
+            "key": "system.skills.spot.value",
+            "value": 5,
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "grant-item",
+            "predicate": [
+              "forme:mega-pidgeot:active"
+            ],
+            "key": "",
+            "value": "Compendium.ptr2e.core-abilities.Item.W45H3yRiERYYYG4e",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.free",
+                "value": "true"
+              }
+            ],
+            "allowDuplicate": false,
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            }
+          },
+          {
+            "type": "token-alterations",
+            "predicate": [
+              "forme:mega-pidgeot:active"
+            ],
+            "key": "",
+            "value": 0,
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "texture": "modules/ptr2e-pkmn-sprites/sprites/018_MEGA.webp",
+            "tint": null,
+            "scale": null,
+            "name": null,
+            "light": null,
+            "alpha": null
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "trigger": "manual",
+        "conditions": []
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "1.0.6.beta",
+        "createdTime": 1740095652675,
+        "modifiedTime": 1740105060299,
+        "lastModifiedBy": "QJgrK2D5gkPoparS"
+      }
+    }
+  ]
+}

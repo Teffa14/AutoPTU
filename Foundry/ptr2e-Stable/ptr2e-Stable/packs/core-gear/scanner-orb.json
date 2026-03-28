@@ -1,0 +1,58 @@
+{
+  "name": "Scanner Orb",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 6,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "consumableType": "other",
+    "traits": [
+      "combat",
+      "consumable",
+      "wonder-orb",
+      "held",
+      "fling"
+    ],
+    "description": "<p>The GM creates Light Sources (radius 1m bright, 3 dim) which Provide Vision on all chests on the floor of the dungeon.</p>",
+    "quantity": 1,
+    "slug": "scanner-orb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "o4rM1Eiq25QWTiH3",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

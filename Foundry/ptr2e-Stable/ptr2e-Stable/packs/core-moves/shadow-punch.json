@@ -1,0 +1,50 @@
+{
+  "name": "Shadow Punch",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "shadow-punch",
+    "actions": [
+      {
+        "slug": "shadow-punch",
+        "name": "Shadow Punch",
+        "type": "attack",
+        "traits": [
+          "punch",
+          "contact",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": null,
+        "types": [
+          "ghost"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "yZqAG8AtZVLnsmhe",
+  "effects": []
+}

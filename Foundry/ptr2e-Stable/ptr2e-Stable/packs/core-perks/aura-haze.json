@@ -1,0 +1,145 @@
+{
+  "name": "Aura Haze",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.aura-sense.mod}",
+          40
+        ]
+      }
+    ],
+    "cost": 2,
+    "description": "<p>Your skill at manipulating your own Aura allows you to create an indistinct haze about yourself.</p><p>You gain the @UUID[Compendium.ptr2e.core-perks.Item.UmbmjzRANft3PAxG.Actions.aura-haze]{Aura Haze} Action which you can use as a Simple Action, spending 2PP, to gain @UUID[Compendium.ptr2e.core-effects.OUBNweJOMjAEtAye]{+1 Evasion Stage}.</p>",
+    "actions": [
+      {
+        "name": "Aura Haze",
+        "slug": "aura-haze",
+        "description": "<p>You gain @UUID[Compendium.ptr2e.core-effects.OUBNweJOMjAEtAye]{+1 Evasion Stage}.</p>",
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 2
+        },
+        "type": "generic",
+        "traits": [
+          "aura"
+        ],
+        "img": "systems/ptr2e/img/perk-icons/Aura.svg",
+        "range": {
+          "target": "self",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "aura-haze",
+    "traits": [
+      "aura"
+    ],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 173,
+        "y": 25,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "aura-user",
+          "shielding-aura",
+          "chi-alignment"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Aura.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "resilience",
+      "archetype": "aura"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "UmbmjzRANft3PAxG",
+  "img": "systems/ptr2e/img/perk-icons/Aura.svg",
+  "effects": [
+    {
+      "name": "Aura Haze",
+      "type": "passive",
+      "_id": "Uh6oIjyCAA77vnOT",
+      "img": "systems/ptr2e/img/perk-icons/Aura.svg",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "aura-haze-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.OUBNweJOMjAEtAye",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "priority": null,
+            "alterations": [],
+            "dontMerge": false,
+            "isFixedChance": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [
+          "aura"
+        ],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "<p>Your skill at manipulating your own Aura allows you to create an indistinct haze about yourself.</p><p>You gain the @UUID[Compendium.ptr2e.core-perks.Item.UmbmjzRANft3PAxG.Actions.aura-haze]{Aura Haze} Action which you can use as a Simple Action, spending 2PP, to gain @UUID[Compendium.ptr2e.core-effects.OUBNweJOMjAEtAye]{+1 Evasion Stage}.</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.1.beta",
+        "createdTime": 1736876041388,
+        "modifiedTime": 1754302549761,
+        "lastModifiedBy": "tXAZ3QUgjuwX4gdV",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "I7ocNlZvZjyhwUcw"
+}

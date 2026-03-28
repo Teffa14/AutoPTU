@@ -1,0 +1,96 @@
+{
+  "name": "Scholar",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.research.mod}",
+          25
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>You gain access to the Research Camp Action. You may not know something then and there in the moment, but with enough dedication and the right resources, you will find out eventually.</p>",
+    "actions": [
+      {
+        "name": "Scholar",
+        "slug": "scholar",
+        "description": "<p>You gain access to the Research Camp Action. You may not know something then and there in the moment, but with enough dedication and the right resources, you will find out eventually.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "type": "camping",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "scholar",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 66,
+        "y": 152,
+        "hidden": false,
+        "type": "entry",
+        "connected": [
+          "hobby-gardener",
+          "palaeontologist",
+          "pokemaniac",
+          "root-5",
+          "climatologist",
+          "mental-alarm",
+          "stat-iv-booster-1-12",
+          "improved-overland-15",
+          "minor-buff-18",
+          "minor-buff-56",
+          "floratic"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#808080",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Knowledge.svg",
+          "tint": "#ffffff",
+          "scale": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "resilience",
+      "archetype": "knowledge"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "KEvYjwxJ3bWLCknR",
+  "img": "systems/ptr2e/img/perk-icons/Knowledge.svg",
+  "effects": [],
+  "folder": "aUkQAkBYAmrv6REK"
+}

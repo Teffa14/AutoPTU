@@ -1,0 +1,43 @@
+{
+  "name": "Mountaineer",
+  "type": "ability",
+  "img": "icons/svg/mountain.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive"
+        ],
+        "name": "Mountaineer",
+        "slug": "mountaineer",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "description": "<p>Effect: The user is immune to Rock-Type attacks and effects.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user is immune to Rock-Type attacks and effects.</p>",
+    "traits": [
+      "defensive"
+    ],
+    "slug": "mountaineer",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "uRP9KecfJjZwhgYL",
+  "effects": []
+}

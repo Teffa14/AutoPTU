@@ -1,0 +1,47 @@
+{
+  "name": "Laser Focus",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "laser-focus",
+    "actions": [
+      {
+        "slug": "laser-focus",
+        "name": "Laser Focus",
+        "type": "attack",
+        "traits": [
+          "aura"
+        ],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: The user's next attack gains [Crit-4].</p>",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "783co7i5n9s15xpq",
+  "effects": []
+}

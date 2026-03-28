@@ -1,0 +1,74 @@
+{
+  "name": "Meteor Beam",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "meteor-beam",
+    "actions": [
+      {
+        "slug": "meteor-beam-resolution",
+        "name": "Meteor Beam (Resolution)",
+        "type": "attack",
+        "traits": [
+          "set-up",
+          "ray",
+          "priority-20"
+        ],
+        "range": {
+          "target": "line",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "The user used Meteor Beam (Set-Up) as their last Action."
+        },
+        "category": "special",
+        "power": 120,
+        "accuracy": 90,
+        "types": [
+          "rock"
+        ],
+        "description": "<p>Trigger: The user used Meteor Beam (Set-Up) as their last Action.</p>",
+        "img": "systems/ptr2e/img/svg/rock_icon.svg",
+        "predicate": []
+      },
+      {
+        "name": "Meteor Beam (Set-Up)",
+        "slug": "meteor-beam-set-up",
+        "description": "<p>Effect: The user gains +1 SPATK and SPD Stage for 5 Activations, and @Affliction[ringed 5].</p>",
+        "traits": [
+          "set-up",
+          "defensive",
+          "flinch-40"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/rock_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "rock"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "qjIdtrGviUe3PExZ",
+  "effects": []
+}

@@ -1,0 +1,494 @@
+{
+  "name": "cryogonal",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 615,
+    "size": {
+      "category": "small",
+      "type": "height",
+      "height": 1.1,
+      "weight": 148
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 10
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "chiller",
+      "freezer",
+      "hover",
+      "fully-evolved"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "refrigerate"
+        },
+        {
+          "slug": "frost-coat"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "ice-body"
+        },
+        {
+          "slug": "snow-warning"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "regenerator"
+        },
+        {
+          "slug": "north-wind"
+        }
+      ],
+      "master": [
+        {
+          "slug": "channeled-strength"
+        },
+        {
+          "slug": "wonder-skin"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "cryogonal",
+    "stats": {
+      "hp": 80,
+      "atk": 50,
+      "def": 50,
+      "spa": 95,
+      "spd": 135,
+      "spe": 105
+    },
+    "types": [
+      "ice"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "bind",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "ice-shard",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "sharpen",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 1
+        },
+        {
+          "name": "confuse-ray",
+          "gen": "scarlet-violet",
+          "level": 4
+        },
+        {
+          "name": "rapid-spin",
+          "gen": "scarlet-violet",
+          "level": 8
+        },
+        {
+          "name": "icy-wind",
+          "gen": "scarlet-violet",
+          "level": 12
+        },
+        {
+          "name": "laser-focus",
+          "gen": "sword-shield",
+          "level": 12
+        },
+        {
+          "name": "haze",
+          "gen": "scarlet-violet",
+          "level": 16
+        },
+        {
+          "name": "mist",
+          "gen": "scarlet-violet",
+          "level": 16
+        },
+        {
+          "name": "ancient-power",
+          "gen": "scarlet-violet",
+          "level": 20
+        },
+        {
+          "name": "aurora-beam",
+          "gen": "scarlet-violet",
+          "level": 24
+        },
+        {
+          "name": "slash",
+          "gen": "scarlet-violet",
+          "level": 28
+        },
+        {
+          "name": "night-slash",
+          "gen": "scarlet-violet",
+          "level": 32
+        },
+        {
+          "name": "freeze-dry",
+          "gen": "scarlet-violet",
+          "level": 36
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet",
+          "level": 40
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet",
+          "level": 40
+        },
+        {
+          "name": "recover",
+          "gen": "scarlet-violet",
+          "level": 44
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet",
+          "level": 48
+        },
+        {
+          "name": "acid-armor",
+          "gen": "scarlet-violet",
+          "level": 52
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet",
+          "level": 56
+        },
+        {
+          "name": "sheer-cold",
+          "gen": "scarlet-violet",
+          "level": 60
+        }
+      ],
+      "tutor": [
+        {
+          "name": "acrobatics",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "aurora-veil",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "avalanche",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "explosion",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "frost-breath",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hail",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-spinner",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icicle-spear",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "knock-off",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "self-destruct",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snowscape",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "triple-axel",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "captureRate": 55,
+    "eggGroups": [
+      "mineral"
+    ],
+    "genderRatio": -1,
+    "habitats": [
+      "ice"
+    ],
+    "evolutions": {
+      "name": "cryogonal",
+      "details": null,
+      "evolutions": []
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "8KYUvekVIs8TyWee",
+  "effects": []
+}

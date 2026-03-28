@@ -1,0 +1,712 @@
+[
+  {
+    "name": "Skitter Smack",
+    "type": "Bug",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Dash, Full Action",
+    "effects": "The user Shifts up to its Overland Capability, ignoring Attacks of Opportunity, before attacking with Skitter Smack. On a hit, the target’s Special Attack is lowered 1 CS. Contest",
+    "category": "Physical",
+    "db": "7"
+  },
+  {
+    "name": "False Surrender",
+    "type": "Dark",
+    "frequency": "EOT",
+    "ac": "None Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "False Surrender cannot miss. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Fiery Wrath",
+    "type": "Dark",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target",
+    "effects": "Fiery Wrath Flinches the target on a 17+. Once per Scene, Fiery Wrath may instead be used as a Fire- Type Move. Contest",
+    "category": "Special",
+    "db": "9"
+  },
+  {
+    "name": "Jaw Lock",
+    "type": "Dark",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "You may perform a Grapple Maneuver against the target as a Free Action. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Lash Out",
+    "type": "Dark",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "If the user has lost CS from a source other than itself since the end of its last turn, Lash Out is instead DB 15 (4d10 + 20 / 45). Any given foe may be the target of this increased damage only once per Scene. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Obstruct",
+    "type": "Dark",
+    "frequency": "Scene",
+    "ac": "None",
+    "range": "Self, Interrupt, Shield, Trigger",
+    "effects": "If the user is hit by a Move, the user may use Obstruct. The user is instead not hit by the Move. You do not take any damage nor are you affected by any of the Move’s effects. In addition, if the triggering attack was Melee ranged, the attacker’s Defense is lowered by 2 Combat Stages. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Wicked Blow",
+    "type": "Dark",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Push",
+    "effects": "If Wicked Blow hits, it is a Critical Hit. The target is Pushed 6 meters minus their Weight Class. On a roll of 15+, the target is also Tripped. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Breaking Swipe",
+    "type": "Dragon",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Close Blast 2",
+    "effects": "The target’s Attack is lowered 1 CS. Contest",
+    "category": "Physical",
+    "db": "6"
+  },
+  {
+    "name": "Clangorous Soul",
+    "type": "Dragon",
+    "frequency": "Scene",
+    "ac": "None",
+    "range": "Self",
+    "effects": "The user loses 1/3rd of their Max Hit Points and has each of its stats raised by +1 Combat Stage. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Dragon Darts",
+    "type": "Dragon",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target, Double Strike; or 6, 2 Targets Contest",
+    "effects": "Double Time",
+    "category": "Physical",
+    "db": "5"
+  },
+  {
+    "name": "Dragon Energy",
+    "type": "Dragon",
+    "frequency": "Daily x2",
+    "ac": "2 Damage Base",
+    "range": "Cone 3 or Line 8",
+    "effects": "For each 10% of HP the user is missing, Dragon Energy’s Damage Base is reduced by 1. Contest",
+    "category": "Special",
+    "db": "15"
+  },
+  {
+    "name": "Dynamax Cannon",
+    "type": "Dragon",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target",
+    "effects": "The DB of Dynamax Cannon increases by +2 for each positive CS the target has, to a maximum of DB 20. Contest",
+    "category": "Special",
+    "db": "10"
+  },
+  {
+    "name": "Eternabeam",
+    "type": "Dragon",
+    "frequency": "Scene",
+    "ac": "4 Damage Base",
+    "range": "Line 6, Smite, Exhaust Contest",
+    "effects": "Seen Nothing Yet",
+    "category": "Special",
+    "db": "16"
+  },
+  {
+    "name": "Scale Shot",
+    "type": "Dragon",
+    "frequency": "EOT",
+    "ac": "4 Damage Base",
+    "range": "6, 1 Target, Five Strike",
+    "effects": "The user’s Speed is raised 1 CS, and the user’s Defense is lowered 1 CS. Contest",
+    "category": "Physical",
+    "db": "3"
+  },
+  {
+    "name": "Aura Wheel",
+    "type": "Electric",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "The user’s Speed is increased 1 CS. Contest",
+    "category": "Physical",
+    "db": "11"
+  },
+  {
+    "name": "Bolt Beak",
+    "type": "Electric",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "Against targets with a lower initiative that have not yet acted this round, Bolt Beak deals +10 damage. Contest",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Magnetic Flux",
+    "type": "Electric",
+    "frequency": "Scene x2",
+    "ac": "None",
+    "range": "Burst 4",
+    "effects": "Choose +1 or -1. All targets that are Electric- Type or have the Magnetic Capability receive that many Defense and Special Defense Combat Stages. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Overdrive",
+    "type": "Electric",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Cone 2, Sonic Contest",
+    "effects": "Attention Grabber",
+    "category": "Special",
+    "db": "8"
+  },
+  {
+    "name": "Rising Voltage",
+    "type": "Electric",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Burst 2, Groundsource, Spirit Surge",
+    "effects": "After Rising Voltage is resolved, you may create Electric Terrain in a Blast 7, centered on the user, that lasts for 5 turns. Any creatures in those spaces are affected as if by the Field Move Electric Terrain, rather than any other Field Move. This Effect may trigger only once per Scene. Contest",
+    "category": "Special",
+    "db": "7"
+  },
+  {
+    "name": "Thunder Cage",
+    "type": "Electric",
+    "frequency": "Daily x2",
+    "ac": "4 Damage Base",
+    "range": "8, Ranged Blast 2, Spirit Surge",
+    "effects": "The targets are trapped in a Vortex. The DC to escape the Vortex is increased by 3. Contest",
+    "category": "Special",
+    "db": "8"
+  },
+  {
+    "name": "Decorate",
+    "type": "Fairy",
+    "frequency": "Scene",
+    "ac": "None",
+    "range": "Melee, 1 Target",
+    "effects": "The target gains +2 CS in both Attack and Special Attack. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Misty Explosion",
+    "type": "Fairy",
+    "frequency": "Daily",
+    "ac": "2 Damage Base",
+    "range": "Burst 3, Friendly, Smite",
+    "effects": "The user’s Hit Points are set to -50% of their full Hit Point value. This Hit Point loss cannot be prevented or reduced in any way. After Misty Explosion is resolved, create Misty Terrain in a Blast 7, centered on the user, that lasts for 5 turns. Any creatures in those spaces are affected as if by the Field Move Misty Terrain, rather than any other Field Move. Contest",
+    "category": "Special",
+    "db": "10"
+  },
+  {
+    "name": "Spirit Break",
+    "type": "Fairy",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "The target’s Special Attack stat is lowered 1 CS. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Strange Steam",
+    "type": "Fairy",
+    "frequency": "Scene x2",
+    "ac": "3 Damage Base",
+    "range": "Burst 1",
+    "effects": "The target is confused on 17+. Contest",
+    "category": "Special",
+    "db": "9"
+  },
+  {
+    "name": "Body Press",
+    "type": "Fighting",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "The user’s Defense Stat is added to the damage roll instead of the Attack Stat. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Coaching",
+    "type": "Fighting",
+    "frequency": "EOT",
+    "ac": "None",
+    "range": "Burst 1",
+    "effects": "The user and any allies in the Burst have their Attack and Defense raised by 1 CS. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Meteor Assault",
+    "type": "Fighting",
+    "frequency": "Daily x2",
+    "ac": "2 Damage Base",
+    "range": "Burst 1, Smite, Exhaust Contest",
+    "effects": "Exhausting Act",
+    "category": "Physical",
+    "db": "15"
+  },
+  {
+    "name": "No Retreat",
+    "type": "Fighting",
+    "frequency": "Scene",
+    "ac": "None",
+    "range": "Self",
+    "effects": "The user gains +1 CS in each stat. In addition, the user may not be recalled or switched out until the end of the Scene, and counts as Slowed for the purposes of any movement that would end further away from the nearest enemy than the user started. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Octolock",
+    "type": "Fighting",
+    "frequency": "Scene",
+    "ac": "2",
+    "range": "Melee, 1 Target",
+    "effects": "The user initiates a Grapple Maneuver with the target, which automatically hits. If successful, until the user no longer has Dominance in the grapple, the target is Trapped and loses 1 CS in Defense and Special Defense at the end of each of their turns. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Thunderous Kick",
+    "type": "Fighting",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "All legal targets hit lose 1 Defense Combat Stage. Once per Scene, Thunderous Kick may instead be used as an Electric-Type Move. Contest",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Burning Jealousy",
+    "type": "Fire",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Burst 1, Spirit Surge",
+    "effects": "After Burning Jealousy has resolved, the user may choose to Burn foes within 5m that have had any CS raised since the beginning of that foe’s last turn. This Effect may trigger only once per Scene. Contest",
+    "category": "Special",
+    "db": "7"
+  },
+  {
+    "name": "Pyro Ball",
+    "type": "Fire",
+    "frequency": "Scene x2",
+    "ac": "4 Damage Base",
+    "range": "6, 1 Target, Smite",
+    "effects": "The target is Burned on 19+. Contest",
+    "category": "Physical",
+    "db": "12"
+  },
+  {
+    "name": "Dual Wingbeat",
+    "type": "Flying",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Double Strike Contest",
+    "effects": "Reliable Ghost",
+    "category": "Physical",
+    "db": "4"
+  },
+  {
+    "name": "Astral Barrage",
+    "type": "Ghost",
+    "frequency": "Daily",
+    "ac": "2 Damage Base",
+    "range": "8, Ranged Blast 2, Smite, Friendly",
+    "effects": "Legal targets hit by Astral Barrage are Slowed for one full round. Contest",
+    "category": "Special",
+    "db": "12"
+  },
+  {
+    "name": "Poltergeist",
+    "type": "Ghost",
+    "frequency": "Scene",
+    "ac": "4 Damage Base",
+    "range": "8, Ranged Blast 3, Smite",
+    "effects": "If a target is holding a Held Item or Main or Off- Hand item, they must either drop it immediately or lose a Tick of Hit Points. This may only cause a target to lose at most one Tick of Hit Points, no matter how many items they were holding. On each of the target’s subsequent turns, if it is still holding the item(s) in question it loses a Tick of Hit Points. Contest",
+    "category": "Physical",
+    "db": "11"
+  },
+  {
+    "name": "Apple Acid",
+    "type": "Grass",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Cone 2",
+    "effects": "The target’s Special Defense is lowered by 1 CS. Contest",
+    "category": "Special",
+    "db": "8"
+  },
+  {
+    "name": "Branch Poke",
+    "type": "Grass",
+    "frequency": "At-Will",
+    "ac": "2 Damage Base",
+    "range": "2, 1 Target Contest",
+    "effects": "Steady Performance",
+    "category": "Physical",
+    "db": "4"
+  },
+  {
+    "name": "Drum Beating",
+    "type": "Grass",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "4, 1 Target",
+    "effects": "The target’s Speed is lowered by 1 CS. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Grassy Glide",
+    "type": "Grass",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, Pass, Spirit Surge",
+    "effects": "If the user is on Grassy Terrain, Grassy Glide may be used with Priority. After Grassy Glide has been resolved, the user may choose to create Grassy Terrain in the spaces Passed over (including those it started and ended in), that lasts for 5 turns. Any creatures in those spaces are affected as if by the Field Move Grassy Terrain, rather than any other Field Move. Contest",
+    "category": "Physical",
+    "db": "7"
+  },
+  {
+    "name": "Grav Apple",
+    "type": "Grass",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target",
+    "effects": "The target’s Defense is lowered by 1 CS. Contest",
+    "category": "Physical",
+    "db": "8"
+  },
+  {
+    "name": "Jungle Healing",
+    "type": "Grass",
+    "frequency": "Daily x2",
+    "ac": "None",
+    "range": "Burst 1",
+    "effects": "The user and any allies in the burst regain Hit Points equal to 1/4 of their Maximum Hit Point Value, and are cured of any Persistent or Volatile Status Conditions. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Snap Trap",
+    "type": "Grass",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "The target is trapped in a Vortex. The DC to escape the Vortex is increased by 3. Contest",
+    "category": "Physical",
+    "db": "4"
+  },
+  {
+    "name": "Scorching Sands",
+    "type": "Ground",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "5, 1 Target",
+    "effects": "Scorching Sands Burns the target on 15+. Contest",
+    "category": "Special",
+    "db": "7"
+  },
+  {
+    "name": "Glacial Lance",
+    "type": "Ice",
+    "frequency": "Daily",
+    "ac": "2 Damage Base",
+    "range": "Line 8, Smite",
+    "effects": "Legal targets hit by Glacial Lance are Stuck and Trapped until the end of their next turn. Contest",
+    "category": "Physical",
+    "db": "13"
+  },
+  {
+    "name": "Triple Axel",
+    "type": "Ice",
+    "frequency": "EOT",
+    "ac": "4 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "After attacking with Triple Axel, hit or miss, the user may Disengage 2m and attack a different target with Triple Axel. This effect may be repeated a second time, targeting a creature that has not been targeted by either prior attack. Before making each attack roll, the user can elect to give up triggering all remaining additional shifts and attacks. Triple Axel gains +1 Accuracy and +1 DB for each attack that is given up. Triple Axel always benefits from the Technician Ability. Contest",
+    "category": "Physical",
+    "db": "6"
+  },
+  {
+    "name": "Court Change",
+    "type": "Normal",
+    "frequency": "Daily",
+    "ac": "None",
+    "range": "Field",
+    "effects": "All Blessings and Hazards swap which side that they belong to. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Howl",
+    "type": "Normal",
+    "frequency": "EOT",
+    "ac": "None",
+    "range": "Burst 1",
+    "effects": "The user and all allies in the Burst have their Attack CS raised by 1. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Multi-Attack",
+    "type": "Normal",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "Multi-Attack is the same Type as the Memory Disc, Plate, or Drive Item held. Contest",
+    "category": "Physical",
+    "db": "12"
+  },
+  {
+    "name": "Rapid Spin",
+    "type": "Normal",
+    "frequency": "At-Will",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Spirit Surge",
+    "effects": "Rapid Spin destroys all Hazards within 5 meters, removes Leech Seeds, and removes the user’s Trapped or Stuck status. If Rapid Spin hits, the user’s speed raises 1 CS. Contest",
+    "category": "Physical",
+    "db": "5"
+  },
+  {
+    "name": "Stuff Cheeks",
+    "type": "Normal",
+    "frequency": "Scene",
+    "ac": "None",
+    "range": "Self",
+    "effects": "The user immediately consumes one of its Food Buffs, regardless of any conditions that need to be met, gaining its benefit if applicable. If a Buff is consumed, the user’s Defense CS is raised by 2. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Teatime",
+    "type": "Normal",
+    "frequency": "Scene",
+    "ac": "None",
+    "range": "Field, Social",
+    "effects": "All participants in the battle may choose to immediately consume one of their Food Buffs, regardless of if the conditions to do so are met. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Terrain Pulse",
+    "type": "Normal",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Close Blast 3",
+    "effects": "If the user is under the effects of a Terrain, Terrain Pulse has a Damage Base of 10 (3d8+10 / 24). In addition, Terrain Pulse becomes the Type that corresponds with the Move that creates that Terrain. (For example, if in Misty Terrain, it would become Fairy Type.) If the user is under the effects of multiple Terrains, choose one to affect this Move. Contest",
+    "category": "Special",
+    "db": "5"
+  },
+  {
+    "name": "Corrosive Gas",
+    "type": "Poison",
+    "frequency": "EOT",
+    "ac": "2",
+    "range": "Burst 1",
+    "effects": "Targets hit have their current Held Item(s) unable to be used for the remainder of the Scene. In addition, Steel-Type targets hit lose their immunity to Poison until they Faint or Take A Breather; Poison instead counts as neutral against Steel. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Shell Side Arm",
+    "type": "Poison",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target",
+    "effects": "This attack uses the highest of the user’s Attack or Special Attack Stat, though this does not change the Class of the Move. In addition, if the target’s Defense is lower than its Special Defense, this attack targets Defense, becoming a Physical Move. The target is poisoned on a 17+. Contest",
+    "category": "Special",
+    "db": "9"
+  },
+  {
+    "name": "Eerie Spell",
+    "type": "Psychic",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target",
+    "effects": "The user may choose to Disable the target’s last Move used. This effect may only be activated once per Scene. Contest",
+    "category": "Special",
+    "db": "8"
+  },
+  {
+    "name": "Expanding Force",
+    "type": "Psychic",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Burst 1, Spirit Surge",
+    "effects": "After Expanding Force is resolved, you may create Psychic Terrain in a Blast 7, centered on the user, that lasts for 5 turns. Any creatures in those spaces are affected as if by the Field Move Psychic Terrain, rather than any other Field Move. This Effect may trigger only once per Scene. Contest",
+    "category": "Special",
+    "db": "8"
+  },
+  {
+    "name": "Freezing Glare",
+    "type": "Psychic",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "6, 1 Target",
+    "effects": "Freezing Glare Freezes the target on a 19+. Once per Scene, Freezing Glare may instead be used as an Ice-Type Move. Contest",
+    "category": "Special",
+    "db": "9"
+  },
+  {
+    "name": "Magic Powder",
+    "type": "Psychic",
+    "frequency": "Daily",
+    "ac": "2",
+    "range": "5, 1 Target",
+    "effects": "The target gains the Psychic Type in addition to its other Types for 5 turns. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Meteor Beam",
+    "type": "Rock",
+    "frequency": "Scene x2",
+    "ac": "4 Damage Base",
+    "range": "Cone 3, Set-Up Set-Up",
+    "effects": "The user’s Special Attack is raised by +1 Combat Stage. Resolution",
+    "category": "Special",
+    "db": "12"
+  },
+  {
+    "name": "Tar Shot",
+    "type": "Rock",
+    "frequency": "Scene",
+    "ac": "2",
+    "range": "Cone 2",
+    "effects": "The target gains a Coat that is automatically expended upon being hit with a Fire Type attack in order to make them one step more vulnerable to that attack. In addition, the target’s Speed is lowered by 1 CS. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Behemoth Bash",
+    "type": "Steel",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "The DB of Behemoth Bash increases by +2 for each positive CS the target has, to a maximum of DB 20. Contest",
+    "category": "Physical",
+    "db": "10"
+  },
+  {
+    "name": "Behemoth Blade",
+    "type": "Steel",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "The DB of Behemoth Blade increases by +2 for each positive CS the target has, to a maximum of DB 20. Contest",
+    "category": "Physical",
+    "db": "10"
+  },
+  {
+    "name": "Double Iron Bash",
+    "type": "Steel",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Double Strike",
+    "effects": "Double Iron Bash Flinches the targets on 15+. This move is affected by Iron Fist. Contest",
+    "category": "Physical",
+    "db": "6"
+  },
+  {
+    "name": "Gear Up",
+    "type": "Steel",
+    "frequency": "Scene x2",
+    "ac": "",
+    "range": "Burst 4",
+    "effects": "All targets that are Steel-Typed receive +1 Attack and Special Attack Combat Stages Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Steel Beam",
+    "type": "Steel",
+    "frequency": "Daily",
+    "ac": "3 Damage Base",
+    "range": "Cone 3, Smite",
+    "effects": "The user’s Hit Points are reduced by 50% of their full Hit Point value. This Hit Point loss cannot be prevented or reduced in any way. Contest",
+    "category": "Special",
+    "db": "14"
+  },
+  {
+    "name": "Steel Roller",
+    "type": "Steel",
+    "frequency": "Daily x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, Pass, Dash, Smite, Spirit Surge",
+    "effects": "Legal targets hit by Steel Roller are Tripped on a roll of 15+. Any Hazards in spaces Passed through or adjacent to those spaces are removed (they are removed before they can affect the user). If the user moves through an area of Terrain, or a Field-range Terrain is active, those effects immediately end. Contest",
+    "category": "Physical",
+    "db": "13"
+  },
+  {
+    "name": "Fishious Rend",
+    "type": "Water",
+    "frequency": "Scene x2",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "Against targets with a lower initiative that have not yet acted this round, Fishious Rend deals +10 damage. Contest",
+    "category": "Physical",
+    "db": "9"
+  },
+  {
+    "name": "Flip Turn",
+    "type": "Water",
+    "frequency": "At-Will",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target, Dash",
+    "effects": "If Flip Turn successfully hits its target, the user deals damage and then immediately is returned to its Poké Ball in the same turn. A New Pokémon may immediately be sent out. Using Flip Turn lets a Trapped user be recalled. Contest",
+    "category": "Physical",
+    "db": "6"
+  },
+  {
+    "name": "Life Dew",
+    "type": "Water",
+    "frequency": "Daily x2",
+    "ac": "None",
+    "range": "Burst 1, Healing",
+    "effects": "The user and all allies in the burst regain Hit Points equal to 1/4 of their Maximum Hit Points. Contest",
+    "category": "Status",
+    "db": ""
+  },
+  {
+    "name": "Snipe Shot",
+    "type": "Water",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "8, 1 Target",
+    "effects": "Snipe Shot is a Critical Hit on 18+. This Move may not be Intercepted, nor may any Abilities, Moves, or Features be activated to change this Move’s target. Any of those existing effects (such as Follow Me) fail. Contest",
+    "category": "Special",
+    "db": "8"
+  },
+  {
+    "name": "Surging Strikes",
+    "type": "Water",
+    "frequency": "EOT",
+    "ac": "2 Damage Base",
+    "range": "Melee, 1 Target",
+    "effects": "If Surging Strikes hits, it is a Critical Hit. After attacking with Surging Strikes, hit or miss, the user may Shift 2m, ignoring Attacks of Opportunity from their target. It may then make an additional attack with this Move on a different target. This effect may be repeated a second time, the third attack targeting a creature that has not yet been targeted by either prior attack. Before making each attack roll, the user can elect to give up triggering all remaining additional shifts and attacks. Surging Strikes gains +3 DB for each attack that is given up. Contest",
+    "category": "Physical",
+    "db": "3"
+  }
+]

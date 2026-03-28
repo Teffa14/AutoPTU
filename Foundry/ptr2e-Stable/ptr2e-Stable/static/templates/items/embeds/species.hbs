@@ -1,0 +1,11 @@
+<figure>
+    <header class="header">
+        <h2>{{formatSlug document.name}} <span class="dexNumber">#{{document.system.number}}</span></h2>
+    </header>
+    {{#if traits}}
+    <header class="traits">
+        <input type="text" class="traits ptr2e-tagify" value="{{json traits}}" data-dType="JSON" readonly/>
+    </header>
+    {{/if}}
+    {{> species-body }}
+</figure>

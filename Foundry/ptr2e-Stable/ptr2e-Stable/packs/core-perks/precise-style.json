@@ -1,0 +1,137 @@
+{
+  "name": "Precise Style",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.leadership.mod}",
+          30
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>The target gains @UUID[Compendium.ptr2e.core-effects.precisecondiitem]{Precise}.</p>",
+    "actions": [
+      {
+        "name": "Precise!",
+        "slug": "precise",
+        "traits": [
+          "command",
+          "style"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 1
+        },
+        "description": "<p>Effect: The target gains @UUID[Compendium.ptr2e.core-effects.precisecondiitem]{Precise}.</p>",
+        "type": "generic",
+        "img": "systems/ptr2e/img/perk-icons/Orders_Training.svg"
+      }
+    ],
+    "slug": "precise-style",
+    "traits": [
+      "command",
+      "style"
+    ],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 89,
+        "y": 130,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "gambit-style",
+          "rapid-style",
+          "improved-overland-13",
+          "stat-iv-booster-1-12"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Orders_Training.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "finesse",
+      "archetype": "support"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "bj0EK3ur1N9ULr4A",
+  "img": "systems/ptr2e/img/perk-icons/Orders_Training.svg",
+  "effects": [
+    {
+      "name": "Precise Style",
+      "type": "passive",
+      "_id": "2cAk70XltE7ba1hF",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "precise-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.precisecondiitem",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "target",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e"
+      }
+    }
+  ],
+  "folder": "JZrGRskscJOkkPWA"
+}

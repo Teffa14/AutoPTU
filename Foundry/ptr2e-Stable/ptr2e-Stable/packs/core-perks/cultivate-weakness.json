@@ -1,0 +1,93 @@
+{
+  "folder": "a1w2zpzavg6qtJFn",
+  "name": "Cultivate Weakness",
+  "type": "perk",
+  "_id": "AtM1ZJB3yDsFOi8S",
+  "img": "systems/ptr2e/img/perk-icons/Knowledge.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Cultivate Weakness",
+        "slug": "cultivate-weakness",
+        "description": "<p>The target is one step weaker towards any &lt;Type&gt; of the user's choosing for 3 Activations.</p>",
+        "traits": [],
+        "type": "generic",
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "img": "icons/svg/explosion.svg",
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "cultivate-weakness",
+    "description": "<p>As a Complex Action costing 5PP, the user may designate a target. The target is one step weaker towards any &lt;Type&gt; of the user's choosing for 3 Activations.</p>",
+    "traits": [],
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.legendary.mod}",
+          25
+        ]
+      }
+    ],
+    "cost": 3,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "stage-vampirism",
+          "logicians-wisdom",
+          "sadism",
+          "acute-affliction",
+          "lasting-harm",
+          "potent-afflictions",
+          "suspicious-minds",
+          "insidious-wounds"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#8000ff",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Knowledge.svg",
+          "tint": "#fdfdfd",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 152,
+        "y": 72,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "finesse",
+      "archetype": "affliction"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "effects": []
+}

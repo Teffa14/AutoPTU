@@ -1,0 +1,4657 @@
+{
+  "generated_from": "Official PTU core evolution policy + Foundry PTR compatibility trees",
+  "lineage": {
+    "abomasnow": [
+      "snover"
+    ],
+    "abra": [],
+    "absol": [],
+    "accelgor": [
+      "shelmet"
+    ],
+    "aegislash": [
+      "doublade",
+      "honedge"
+    ],
+    "aerodactyl": [],
+    "aggron": [
+      "lairon",
+      "aron"
+    ],
+    "aipom": [],
+    "alakazam": [
+      "kadabra",
+      "abra"
+    ],
+    "alcremie": [
+      "milcery"
+    ],
+    "alomomola": [],
+    "altaria": [
+      "swablu"
+    ],
+    "amaura": [],
+    "ambipom": [
+      "aipom"
+    ],
+    "amoonguss": [
+      "foongus"
+    ],
+    "ampharos": [
+      "flaaffy",
+      "mareep"
+    ],
+    "annihilape": [
+      "primeape",
+      "mankey"
+    ],
+    "anorith": [],
+    "appletun": [
+      "applin"
+    ],
+    "applin": [],
+    "araquanid": [
+      "dewpider"
+    ],
+    "arbok": [
+      "ekans"
+    ],
+    "arboliva": [
+      "dolliv",
+      "smoliv"
+    ],
+    "arcanine": [
+      "growlithe"
+    ],
+    "arcanine-hisuian": [
+      "growlithe-hisuian"
+    ],
+    "arceus": [],
+    "archaludon": [
+      "duraludon"
+    ],
+    "archen": [],
+    "archeops": [
+      "archen"
+    ],
+    "archilles": [
+      "raptorch"
+    ],
+    "arctibax": [
+      "frigibax"
+    ],
+    "arctovish": [],
+    "arctozolt": [],
+    "ariados": [
+      "spinarak"
+    ],
+    "arideon": [
+      "eevee"
+    ],
+    "armaldo": [
+      "anorith"
+    ],
+    "armarouge": [
+      "charcadet"
+    ],
+    "aromatisse": [
+      "spritzee"
+    ],
+    "aron": [],
+    "arrokuda": [],
+    "articuno": [],
+    "articuno-galarian": [],
+    "audino": [],
+    "aurorus": [
+      "amaura"
+    ],
+    "avalugg": [
+      "bergmite"
+    ],
+    "avalugg-hisuian": [
+      "bergmite"
+    ],
+    "aveden": [
+      "birbie"
+    ],
+    "aviateon": [
+      "eevee"
+    ],
+    "axew": [],
+    "azelf": [],
+    "azumarill": [
+      "marill",
+      "azurill"
+    ],
+    "azurill": [],
+    "bagon": [],
+    "baltoy": [],
+    "banette": [
+      "shuppet"
+    ],
+    "barbaracle": [
+      "binacle"
+    ],
+    "barboach": [],
+    "barewl": [],
+    "barraskewda": [
+      "arrokuda"
+    ],
+    "basculegion-female": [
+      "basculin"
+    ],
+    "basculegion-male": [
+      "basculin"
+    ],
+    "basculin": [],
+    "bastiodon": [
+      "shieldon"
+    ],
+    "baxcalibur": [
+      "arctibax",
+      "frigibax"
+    ],
+    "bayleef": [
+      "chikorita"
+    ],
+    "beartic": [
+      "cubchoo"
+    ],
+    "beautifly": [
+      "silcoon",
+      "wurmple"
+    ],
+    "beedrill": [
+      "kakuna",
+      "weedle"
+    ],
+    "beheeyem": [
+      "elgyem"
+    ],
+    "beldum": [],
+    "bellibolt": [
+      "tadbulb"
+    ],
+    "bellossom": [
+      "gloom",
+      "oddish"
+    ],
+    "bellsprout": [],
+    "bergmite": [],
+    "bewear": [
+      "stufful"
+    ],
+    "bibarel": [
+      "bidoof"
+    ],
+    "bidoof": [],
+    "binacle": [],
+    "birbie": [],
+    "bisharp": [
+      "pawniard"
+    ],
+    "blacephalon": [],
+    "blastoise": [
+      "wartortle",
+      "squirtle"
+    ],
+    "blaziken": [
+      "combusken",
+      "torchic"
+    ],
+    "blipbug": [],
+    "blissey": [
+      "chansey",
+      "happiny"
+    ],
+    "blitzle": [],
+    "blubelrog": [
+      "folerog",
+      "blubelrog"
+    ],
+    "boldore": [
+      "roggenrola"
+    ],
+    "boltund": [
+      "yamper"
+    ],
+    "bombirdier": [],
+    "bonsly": [],
+    "bouffalant": [],
+    "bounsweet": [],
+    "braixen": [
+      "fennekin"
+    ],
+    "brambleghast": [
+      "bramblin"
+    ],
+    "bramblin": [],
+    "braviary": [
+      "rufflet"
+    ],
+    "braviary-hisuian": [
+      "rufflet"
+    ],
+    "breloom": [
+      "shroomish"
+    ],
+    "brionne": [
+      "popplio"
+    ],
+    "bronzong": [
+      "bronzor"
+    ],
+    "bronzor": [],
+    "brute-bonnet": [],
+    "bruxish": [],
+    "budew": [],
+    "buizel": [],
+    "bulbasaur": [],
+    "buneary": [],
+    "bunnelby": [],
+    "burmy": [],
+    "butterfree": [
+      "metapod",
+      "caterpie"
+    ],
+    "buzzwole": [],
+    "cacnea": [],
+    "cacturne": [
+      "cacnea"
+    ],
+    "calyrex": [],
+    "camerupt": [
+      "numel"
+    ],
+    "capsakid": [],
+    "carbink": [],
+    "carkol": [
+      "rolycoly"
+    ],
+    "carnivine": [],
+    "carracosta": [
+      "tirtouga"
+    ],
+    "carvanha": [],
+    "cascoon": [
+      "wurmple"
+    ],
+    "castform": [],
+    "caterpie": [],
+    "celebi": [],
+    "celesteela": [],
+    "centiskorch": [
+      "sizzlipede"
+    ],
+    "centureon": [
+      "eevee"
+    ],
+    "ceruledge": [
+      "charcadet"
+    ],
+    "cetitan": [
+      "cetoddle"
+    ],
+    "cetoddle": [],
+    "champeon": [
+      "eevee"
+    ],
+    "chandelure": [
+      "lampent",
+      "litwick"
+    ],
+    "chansey": [
+      "chansey"
+    ],
+    "charcadet": [],
+    "charizard": [
+      "charmeleon",
+      "charmander"
+    ],
+    "charjabug": [
+      "grubbin"
+    ],
+    "charmander": [],
+    "charmeleon": [
+      "charmander"
+    ],
+    "chatot": [],
+    "cherrim": [
+      "cherubi"
+    ],
+    "cherubi": [],
+    "chesnaught": [
+      "quilladin",
+      "chespin"
+    ],
+    "chespin": [],
+    "chewtle": [],
+    "chi-yu": [],
+    "chien-pao": [],
+    "chikorita": [],
+    "chimchar": [],
+    "chimecho": [
+      "chingling"
+    ],
+    "chinchou": [],
+    "chingling": [],
+    "chyinmunk": [],
+    "cinccino": [
+      "minccino"
+    ],
+    "cinderace": [
+      "raboot",
+      "scorbunny"
+    ],
+    "clamperl": [],
+    "clauncher": [],
+    "clawitzer": [
+      "clauncher"
+    ],
+    "claydol": [
+      "baltoy"
+    ],
+    "clefable": [
+      "clefairy",
+      "cleffa"
+    ],
+    "clefairy": [
+      "cleffa"
+    ],
+    "cleffa": [],
+    "clobbopus": [],
+    "clodsire": [
+      "wooper-paldean"
+    ],
+    "cloyster": [
+      "shellder"
+    ],
+    "coalossal": [
+      "carkol",
+      "rolycoly"
+    ],
+    "cobalion": [],
+    "cofagrigus": [
+      "yamask"
+    ],
+    "combee": [],
+    "combusken": [
+      "torchic"
+    ],
+    "comfey": [],
+    "companeon": [
+      "eevee"
+    ],
+    "conkeldurr": [
+      "gurdurr",
+      "timburr"
+    ],
+    "copperajah": [
+      "cufant"
+    ],
+    "corphish": [],
+    "corroseon": [
+      "eevee"
+    ],
+    "corsola": [],
+    "corsola-galarian": [],
+    "corviknight": [
+      "corvisquire",
+      "rookidee"
+    ],
+    "corvisquire": [
+      "rookidee"
+    ],
+    "cosmoem": [
+      "cosmog"
+    ],
+    "cosmog": [],
+    "cottonee": [],
+    "crabominable": [
+      "crabrawler"
+    ],
+    "crabrawler": [],
+    "cradily": [
+      "lileep"
+    ],
+    "cramorant": [],
+    "cranidos": [],
+    "crawdaunt": [
+      "corphish"
+    ],
+    "crescemon": [],
+    "cresselia": [],
+    "croagunk": [],
+    "crobat": [
+      "golbat",
+      "zubat"
+    ],
+    "crocalor": [
+      "fuecoco"
+    ],
+    "croconaw": [
+      "totodile"
+    ],
+    "crustle": [
+      "dwebble"
+    ],
+    "cryogonal": [],
+    "cubblfly": [
+      "cubbug"
+    ],
+    "cubbug": [],
+    "cubchoo": [],
+    "cubone": [],
+    "cufant": [],
+    "cursola": [
+      "corsola-galarian"
+    ],
+    "cutiefly": [],
+    "cyclizar": [],
+    "cyndaquil": [],
+    "dachsbun": [
+      "fidough"
+    ],
+    "darkrai": [],
+    "darmanitan-galarian": [
+      "darumaka-galarian"
+    ],
+    "darmanitan-standard": [
+      "darumaka"
+    ],
+    "dartrix": [
+      "rowlet"
+    ],
+    "darumaka": [],
+    "darumaka-galarian": [],
+    "dearewl": [
+      "barewl"
+    ],
+    "decidueye": [
+      "dartrix",
+      "rowlet"
+    ],
+    "decidueye-hisuian": [
+      "dartrix",
+      "rowlet"
+    ],
+    "dedenne": [],
+    "deerling": [],
+    "deino": [],
+    "delcatty": [
+      "skitty"
+    ],
+    "delibird": [],
+    "delphox": [
+      "braixen",
+      "fennekin"
+    ],
+    "deoxys": [],
+    "dewgong": [
+      "seel"
+    ],
+    "dewott": [
+      "oshawott"
+    ],
+    "dewpider": [],
+    "dhelmise": [],
+    "dialga": [],
+    "dianamon": [],
+    "diancie": [],
+    "diggersby": [
+      "bunnelby"
+    ],
+    "diglett": [],
+    "diglett-alolan": [],
+    "dipplin": [
+      "applin"
+    ],
+    "ditto": [],
+    "dodrio": [
+      "doduo"
+    ],
+    "doduo": [],
+    "dolliv": [
+      "smoliv"
+    ],
+    "dondozo": [],
+    "donphan": [
+      "phanpy"
+    ],
+    "dottler": [
+      "blipbug"
+    ],
+    "doublade": [
+      "honedge"
+    ],
+    "dracmon": [],
+    "draconeon": [
+      "eevee"
+    ],
+    "dracovish": [],
+    "dracozolt": [],
+    "dragalge": [
+      "skrelp"
+    ],
+    "dragapult": [
+      "drakloak",
+      "dreepy"
+    ],
+    "dragonair": [
+      "dratini"
+    ],
+    "dragonite": [
+      "dragonair",
+      "dratini"
+    ],
+    "drakloak": [
+      "dreepy"
+    ],
+    "drampa": [],
+    "drapion": [
+      "skorupi"
+    ],
+    "dratini": [],
+    "drednaw": [
+      "chewtle"
+    ],
+    "dreepy": [],
+    "drifblim": [
+      "drifloon"
+    ],
+    "drifloon": [],
+    "drilbur": [],
+    "drizzile": [
+      "sobble"
+    ],
+    "drowzee": [],
+    "druddigon": [],
+    "dubwool": [
+      "wooloo"
+    ],
+    "ducklett": [],
+    "dudunsparce": [
+      "dudunsparce"
+    ],
+    "dugtrio": [
+      "diglett"
+    ],
+    "dugtrio-alolan": [
+      "diglett-alolan"
+    ],
+    "dunseraph": [
+      "dudunsparce"
+    ],
+    "dunsparce": [],
+    "duosion": [
+      "solosis"
+    ],
+    "duraludon": [],
+    "durant": [],
+    "dusclops": [
+      "duskull"
+    ],
+    "dusknoir": [
+      "dusclops",
+      "duskull"
+    ],
+    "duskull": [],
+    "dustox": [
+      "cascoon",
+      "wurmple"
+    ],
+    "dwebble": [],
+    "eelektrik": [
+      "tynamo"
+    ],
+    "eelektross": [
+      "eelektrik",
+      "tynamo"
+    ],
+    "eevee": [],
+    "ekans": [],
+    "eldegoss": [
+      "gossifleur"
+    ],
+    "electabuzz": [
+      "elekid"
+    ],
+    "electivire": [
+      "electabuzz",
+      "elekid"
+    ],
+    "electrike": [],
+    "electrode": [
+      "voltorb"
+    ],
+    "electrode-hisuian": [
+      "voltorb-hisuian"
+    ],
+    "electruxo": [
+      "eletux"
+    ],
+    "elekid": [],
+    "eletux": [],
+    "elgyem": [],
+    "emboar": [
+      "pignite",
+      "tepig"
+    ],
+    "emolga": [],
+    "empoleon": [
+      "prinplup",
+      "piplup"
+    ],
+    "entei": [],
+    "entoeon": [
+      "eevee"
+    ],
+    "escavalier": [
+      "karrablast"
+    ],
+    "espathra": [
+      "flittle"
+    ],
+    "espeon": [
+      "eevee"
+    ],
+    "espurr": [],
+    "eternatus": [],
+    "excadrill": [
+      "drilbur"
+    ],
+    "exeggcute": [],
+    "exeggutor": [
+      "exeggcute"
+    ],
+    "exeggutor-alolan": [
+      "exeggcute"
+    ],
+    "exploud": [
+      "loudred",
+      "whismur"
+    ],
+    "falinks": [],
+    "farfetchd": [],
+    "farfetchd-galarian": [],
+    "farigiraf": [
+      "girafarig"
+    ],
+    "fearow": [
+      "spearow"
+    ],
+    "feebas": [],
+    "fennekin": [],
+    "feraligatr": [
+      "croconaw",
+      "totodile"
+    ],
+    "ferroseed": [],
+    "ferrothorn": [
+      "ferroseed"
+    ],
+    "fezandipiti": [],
+    "fidough": [],
+    "finizen": [],
+    "finneon": [],
+    "flaaffy": [
+      "mareep"
+    ],
+    "flabebe": [],
+    "flamigo": [],
+    "flapple": [
+      "applin"
+    ],
+    "flareon": [
+      "eevee"
+    ],
+    "fletchinder": [
+      "fletchling"
+    ],
+    "fletchling": [],
+    "flittle": [],
+    "floatzel": [
+      "buizel"
+    ],
+    "floette": [
+      "flabebe"
+    ],
+    "floragato": [
+      "sprigatito"
+    ],
+    "florges": [
+      "floette",
+      "flabebe"
+    ],
+    "flutter-mane": [],
+    "flygon": [
+      "vibrava",
+      "trapinch"
+    ],
+    "folerog": [
+      "blubelrog"
+    ],
+    "fomantis": [],
+    "foongus": [],
+    "forretress": [
+      "pineco"
+    ],
+    "fortog": [],
+    "fraxure": [
+      "axew"
+    ],
+    "frigibax": [],
+    "frillish": [],
+    "froakie": [],
+    "frogadier": [
+      "froakie"
+    ],
+    "froslass": [
+      "snorunt"
+    ],
+    "frosmoth": [
+      "snom"
+    ],
+    "fuecoco": [],
+    "furfrou": [],
+    "furret": [
+      "sentret"
+    ],
+    "gabite": [
+      "gible"
+    ],
+    "galarian-darmanitan": [
+      "galarian-darumaka"
+    ],
+    "galarian-darumaka": [],
+    "gallade": [
+      "kirlia",
+      "ralts"
+    ],
+    "galvantula": [
+      "joltik"
+    ],
+    "gararewl": [
+      "dearewl",
+      "barewl"
+    ],
+    "garbodor": [
+      "trubbish"
+    ],
+    "garchomp": [
+      "gabite",
+      "gible"
+    ],
+    "gardevoir": [
+      "kirlia",
+      "ralts"
+    ],
+    "garganacl": [
+      "naclstack",
+      "nacli"
+    ],
+    "gastly": [],
+    "gastrodon": [
+      "shellos"
+    ],
+    "genesect": [],
+    "gengar": [
+      "haunter",
+      "gastly"
+    ],
+    "geodude": [],
+    "geodude-alolan": [],
+    "gholdengo": [
+      "gimmighoul"
+    ],
+    "gible": [],
+    "gigalith": [
+      "boldore",
+      "roggenrola"
+    ],
+    "gimmighoul": [],
+    "gimmighoul-roaming": [],
+    "girafarig": [],
+    "glaceon": [
+      "eevee"
+    ],
+    "glalie": [
+      "snorunt"
+    ],
+    "glameow": [],
+    "glastrier": [],
+    "gligar": [],
+    "glimmet": [],
+    "glimmora": [
+      "glimmet"
+    ],
+    "gliscor": [
+      "gligar"
+    ],
+    "gloom": [
+      "oddish"
+    ],
+    "gogoat": [
+      "skiddo"
+    ],
+    "golbat": [
+      "zubat"
+    ],
+    "goldeen": [],
+    "golduck": [
+      "psyduck"
+    ],
+    "golem": [
+      "graveler",
+      "geodude"
+    ],
+    "golem-alolan": [
+      "graveler-alolan",
+      "geodude-alolan"
+    ],
+    "golett": [],
+    "golisopod": [
+      "wimpod"
+    ],
+    "golurk": [
+      "golett"
+    ],
+    "goodra": [
+      "sliggoo",
+      "goomy"
+    ],
+    "goodra-hisuian": [
+      "sliggoo-hisuian",
+      "goomy"
+    ],
+    "goomy": [],
+    "gorebyss": [
+      "clamperl"
+    ],
+    "gossifleur": [],
+    "gothita": [],
+    "gothitelle": [
+      "gothorita",
+      "gothita"
+    ],
+    "gothorita": [
+      "gothita"
+    ],
+    "gouging-fire": [],
+    "gourgeist": [
+      "pumpkaboo"
+    ],
+    "grafaiai": [
+      "shroodle"
+    ],
+    "gran-dracmon": [
+      "matadormon",
+      "sangloupmon",
+      "dracmon"
+    ],
+    "granbull": [
+      "snubbull"
+    ],
+    "grapploct": [
+      "clobbopus"
+    ],
+    "graveler": [
+      "geodude"
+    ],
+    "graveler-alolan": [
+      "geodude-alolan"
+    ],
+    "great-tusk": [],
+    "greavard": [],
+    "greedent": [
+      "skwovet"
+    ],
+    "greninja": [
+      "frogadier",
+      "froakie"
+    ],
+    "grimer": [],
+    "grimer-alolan": [],
+    "grimmsnarl": [
+      "morgrem",
+      "impidimp"
+    ],
+    "grookey": [],
+    "grotle": [
+      "turtwig"
+    ],
+    "groudon": [],
+    "grovyle": [
+      "treecko"
+    ],
+    "growlithe": [],
+    "growlithe-hisuian": [],
+    "grozard": [],
+    "grubbin": [],
+    "grumpig": [
+      "spoink"
+    ],
+    "gulpin": [],
+    "gumshoos": [
+      "yungoos"
+    ],
+    "gurdurr": [
+      "timburr"
+    ],
+    "guzzlord": [],
+    "gyarados": [
+      "magikarp"
+    ],
+    "hakamo-o": [
+      "jangmo-o"
+    ],
+    "happiny": [],
+    "hariyama": [
+      "makuhita"
+    ],
+    "hatenna": [],
+    "hatterene": [
+      "hattrem",
+      "hatenna"
+    ],
+    "hattrem": [
+      "hatenna"
+    ],
+    "haunter": [
+      "gastly"
+    ],
+    "hawlucha": [],
+    "haxorus": [
+      "fraxure",
+      "axew"
+    ],
+    "heatmor": [],
+    "heatran": [],
+    "heliolisk": [
+      "helioptile"
+    ],
+    "helioptile": [],
+    "heracross": [],
+    "herdier": [
+      "lillipup"
+    ],
+    "hippopotas": [],
+    "hippowdon": [
+      "hippopotas"
+    ],
+    "hitmonchan": [
+      "tyrogue"
+    ],
+    "hitmonlee": [
+      "tyrogue"
+    ],
+    "hitmontop": [
+      "tyrogue"
+    ],
+    "ho-oh": [],
+    "honchkrow": [
+      "murkrow"
+    ],
+    "honedge": [],
+    "hoopa": [],
+    "hoothoot": [],
+    "hoppip": [],
+    "horsea": [],
+    "houndoom": [
+      "houndour"
+    ],
+    "houndour": [],
+    "houndstone": [
+      "greavard"
+    ],
+    "huntail": [
+      "clamperl"
+    ],
+    "hydrapple": [
+      "dipplin",
+      "applin"
+    ],
+    "hydreigon": [
+      "zweilous",
+      "deino"
+    ],
+    "hypno": [
+      "drowzee"
+    ],
+    "igglybuff": [],
+    "illumise": [],
+    "illuseon": [
+      "eevee"
+    ],
+    "impidimp": [],
+    "incineroar": [
+      "torracat",
+      "litten"
+    ],
+    "indeedee-female": [],
+    "indeedee-male": [],
+    "infernape": [
+      "monferno",
+      "chimchar"
+    ],
+    "inkay": [],
+    "inteleon": [
+      "drizzile",
+      "sobble"
+    ],
+    "iron-boulder": [],
+    "iron-bundle": [],
+    "iron-crown": [],
+    "iron-hands": [],
+    "iron-jugulis": [],
+    "iron-leaves": [],
+    "iron-moth": [],
+    "iron-thorns": [],
+    "iron-treads": [],
+    "iron-valiant": [],
+    "ivysaur": [
+      "bulbasaur"
+    ],
+    "jangmo-o": [],
+    "jellicent": [
+      "frillish"
+    ],
+    "jigglypuff": [
+      "igglybuff"
+    ],
+    "jirachi": [],
+    "jolteon": [
+      "eevee"
+    ],
+    "joltik": [],
+    "jumpluff": [
+      "skiploom",
+      "hoppip"
+    ],
+    "jynx": [
+      "smoochum"
+    ],
+    "kabuto": [],
+    "kabutops": [
+      "kabuto"
+    ],
+    "kadabra": [
+      "abra"
+    ],
+    "kakuna": [
+      "weedle"
+    ],
+    "kangaskhan": [],
+    "karrablast": [],
+    "kartana": [],
+    "kecleon": [],
+    "kilowattrel": [
+      "wattrel"
+    ],
+    "kinetmunk": [
+      "chyinmunk"
+    ],
+    "kingambit": [
+      "bisharp",
+      "pawniard"
+    ],
+    "kingdra": [
+      "seadra",
+      "horsea"
+    ],
+    "kingler": [
+      "krabby"
+    ],
+    "kirlia": [
+      "ralts"
+    ],
+    "klang": [
+      "klink"
+    ],
+    "klawf": [],
+    "kleavor": [
+      "scyther"
+    ],
+    "klefki": [],
+    "klink": [],
+    "klinklang": [
+      "klang",
+      "klink"
+    ],
+    "koffing": [],
+    "komala": [],
+    "kommo-o": [
+      "hakamo-o",
+      "jangmo-o"
+    ],
+    "koraidon": [],
+    "krabby": [],
+    "kricketot": [],
+    "kricketune": [
+      "kricketot"
+    ],
+    "krokorok": [
+      "sandile"
+    ],
+    "krookodile": [
+      "krokorok",
+      "sandile"
+    ],
+    "kubfu": [],
+    "kyogre": [],
+    "kyurem": [],
+    "lairon": [
+      "aron"
+    ],
+    "lampent": [
+      "litwick"
+    ],
+    "lanturn": [
+      "chinchou"
+    ],
+    "lapras": [],
+    "larvesta": [],
+    "larvitar": [],
+    "latias": [],
+    "latios": [],
+    "leafeon": [
+      "eevee"
+    ],
+    "leavanny": [
+      "swadloon",
+      "sewaddle"
+    ],
+    "lechonk": [],
+    "ledian": [
+      "ledyba"
+    ],
+    "ledyba": [],
+    "lekismon": [],
+    "lickilicky": [
+      "lickitung"
+    ],
+    "lickitung": [],
+    "liepard": [
+      "purrloin"
+    ],
+    "lileep": [],
+    "lilligant": [
+      "petilil"
+    ],
+    "lilligant-hisuian": [
+      "petilil"
+    ],
+    "lillipup": [],
+    "linoone": [
+      "zigzagoon"
+    ],
+    "linoone-galarian": [
+      "zigzagoon-galarian"
+    ],
+    "litleo": [],
+    "litten": [],
+    "litwick": [],
+    "lokix": [
+      "nymble"
+    ],
+    "lombre": [
+      "lotad"
+    ],
+    "lopunny": [
+      "buneary"
+    ],
+    "lotad": [],
+    "loudred": [
+      "whismur"
+    ],
+    "lucario": [
+      "riolu"
+    ],
+    "ludicolo": [
+      "lombre",
+      "lotad"
+    ],
+    "lugia": [],
+    "lumineon": [
+      "finneon"
+    ],
+    "lunala": [
+      "cosmoem",
+      "cosmog"
+    ],
+    "lunamon": [],
+    "lunatone": [],
+    "lungeon": [
+      "eevee"
+    ],
+    "lurantis": [
+      "fomantis"
+    ],
+    "luvdisc": [],
+    "luxio": [
+      "shinx"
+    ],
+    "luxray": [
+      "luxio",
+      "shinx"
+    ],
+    "lycanroc-dusk": [
+      "rockruff"
+    ],
+    "lycanroc-midday": [
+      "rockruff"
+    ],
+    "lycanroc-midnight": [
+      "rockruff"
+    ],
+    "mabosstiff": [
+      "maschiff"
+    ],
+    "machamp": [
+      "machoke",
+      "machop"
+    ],
+    "machoke": [
+      "machop"
+    ],
+    "machop": [],
+    "magby": [],
+    "magcargo": [
+      "slugma"
+    ],
+    "magearna": [],
+    "magikarp": [],
+    "magmar": [
+      "magby"
+    ],
+    "magmortar": [
+      "magmar",
+      "magby"
+    ],
+    "magnemite": [],
+    "magneton": [
+      "magnemite"
+    ],
+    "magnezone": [
+      "magneton",
+      "magnemite"
+    ],
+    "makuhita": [],
+    "malamar": [
+      "inkay"
+    ],
+    "mamoswine": [
+      "piloswine",
+      "swinub"
+    ],
+    "manaphy": [
+      "phione"
+    ],
+    "mandibuzz": [
+      "vullaby"
+    ],
+    "manectric": [
+      "electrike"
+    ],
+    "mankey": [],
+    "mantine": [
+      "mantyke"
+    ],
+    "mantyke": [],
+    "maractus": [],
+    "mareanie": [],
+    "mareep": [],
+    "marill": [
+      "azurill"
+    ],
+    "marowak": [
+      "cubone"
+    ],
+    "marowak-alolan": [
+      "cubone"
+    ],
+    "marshadow": [],
+    "marshtomp": [
+      "mudkip"
+    ],
+    "maschiff": [],
+    "masquerain": [
+      "surskit"
+    ],
+    "matadormon": [
+      "sangloupmon",
+      "dracmon"
+    ],
+    "maushold": [
+      "tandemaus"
+    ],
+    "mawile": [],
+    "medicham": [
+      "meditite"
+    ],
+    "meditite": [],
+    "meganium": [
+      "bayleef",
+      "chikorita"
+    ],
+    "melmetal": [
+      "meltan"
+    ],
+    "meloetta": [],
+    "meltan": [],
+    "meowscarada": [
+      "floragato",
+      "sprigatito"
+    ],
+    "meowstic-female": [
+      "espurr"
+    ],
+    "meowstic-male": [
+      "espurr"
+    ],
+    "meowth": [],
+    "meowth-alolan": [],
+    "meowth-galarian": [],
+    "mesprit": [],
+    "metagross": [
+      "metang",
+      "beldum"
+    ],
+    "metalynx": [
+      "orchynx"
+    ],
+    "metang": [
+      "beldum"
+    ],
+    "metapod": [
+      "caterpie"
+    ],
+    "mew": [],
+    "mewtwo": [],
+    "mienfoo": [],
+    "mienshao": [
+      "mienfoo"
+    ],
+    "mightyena": [
+      "poochyena"
+    ],
+    "milcery": [],
+    "milotic": [
+      "feebas"
+    ],
+    "miltank": [],
+    "mime-jr": [],
+    "mimikyu": [],
+    "minccino": [],
+    "minun": [],
+    "miraidon": [],
+    "misdreavus": [],
+    "mismagius": [
+      "misdreavus"
+    ],
+    "moltres": [],
+    "moltres-galarian": [],
+    "monferno": [
+      "chimchar"
+    ],
+    "morelull": [],
+    "morgrem": [
+      "impidimp"
+    ],
+    "morpeko": [],
+    "mothim": [
+      "burmy"
+    ],
+    "mr-mime": [
+      "mime-jr"
+    ],
+    "mr-mime-galarian": [
+      "mime-jr"
+    ],
+    "mr-rime": [
+      "mr-mime-galarian",
+      "mime-jr"
+    ],
+    "mudbray": [],
+    "mudkip": [],
+    "mudsdale": [
+      "mudbray"
+    ],
+    "muk": [
+      "grimer"
+    ],
+    "muk-alolan": [
+      "grimer-alolan"
+    ],
+    "munchlax": [],
+    "munkidori": [],
+    "munna": [],
+    "murkrow": [],
+    "musharna": [
+      "munna"
+    ],
+    "nacli": [],
+    "naclstack": [
+      "nacli"
+    ],
+    "naganadel": [
+      "poipole"
+    ],
+    "natu": [],
+    "necrozma": [],
+    "nickit": [],
+    "nidoking": [
+      "nidorino",
+      "nidoran-m"
+    ],
+    "nidoqueen": [
+      "nidorina",
+      "nidoran-f"
+    ],
+    "nidoran-f": [],
+    "nidoran-m": [],
+    "nidorina": [
+      "nidoran-f"
+    ],
+    "nidorino": [
+      "nidoran-m"
+    ],
+    "nihilego": [],
+    "nimflora": [
+      "cubblfly",
+      "cubbug"
+    ],
+    "nincada": [],
+    "ninetales": [
+      "vulpix"
+    ],
+    "ninetales-alolan": [
+      "vulpix-alolan"
+    ],
+    "ninjask": [
+      "nincada"
+    ],
+    "noctowl": [
+      "hoothoot"
+    ],
+    "noibat": [],
+    "noivern": [
+      "noibat"
+    ],
+    "nosepass": [],
+    "numel": [],
+    "nuzleaf": [
+      "seedot"
+    ],
+    "nymble": [],
+    "obsideon": [
+      "eevee"
+    ],
+    "obstagoon": [
+      "linoone-galarian",
+      "zigzagoon-galarian"
+    ],
+    "octillery": [
+      "remoraid"
+    ],
+    "oddish": [],
+    "ogerpon": [],
+    "oinkologne": [
+      "lechonk"
+    ],
+    "okidogi": [],
+    "omanyte": [],
+    "omastar": [
+      "omanyte"
+    ],
+    "onix": [],
+    "oranguru": [],
+    "orbeetle": [
+      "dottler",
+      "blipbug"
+    ],
+    "orchynx": [],
+    "oricorio": [],
+    "orthworm": [],
+    "oshawott": [],
+    "overqwil": [
+      "qwilfish-hisuian"
+    ],
+    "pachirisu": [],
+    "palafin": [
+      "finizen"
+    ],
+    "palkia": [],
+    "palossand": [
+      "sandygast"
+    ],
+    "palpitoad": [
+      "tympole"
+    ],
+    "pancham": [],
+    "pangoro": [
+      "pancham"
+    ],
+    "panpour": [],
+    "pansage": [],
+    "pansear": [],
+    "paras": [],
+    "parasect": [
+      "paras"
+    ],
+    "passimian": [],
+    "patrat": [],
+    "pawmi": [],
+    "pawmo": [
+      "pawmi"
+    ],
+    "pawmot": [
+      "pawmo",
+      "pawmi"
+    ],
+    "pawniard": [],
+    "pecharunt": [],
+    "pelipper": [
+      "wingull"
+    ],
+    "perrserker": [
+      "meowth-galarian"
+    ],
+    "persian": [
+      "meowth"
+    ],
+    "persian-alolan": [
+      "meowth-alolan"
+    ],
+    "petilil": [],
+    "phanpy": [],
+    "phantump": [],
+    "pheromosa": [],
+    "phione": [],
+    "pichu": [],
+    "pidgeot": [
+      "pidgeotto",
+      "pidgey"
+    ],
+    "pidgeotto": [
+      "pidgey"
+    ],
+    "pidgey": [],
+    "pidove": [],
+    "pignite": [
+      "tepig"
+    ],
+    "pikachu": [
+      "pichu"
+    ],
+    "pikipek": [],
+    "piloswine": [
+      "swinub"
+    ],
+    "pincurchin": [],
+    "pineco": [],
+    "pinsir": [],
+    "piplup": [],
+    "plusle": [],
+    "poipole": [],
+    "politoed": [
+      "poliwhirl",
+      "poliwag"
+    ],
+    "poliwag": [],
+    "poliwhirl": [
+      "poliwag"
+    ],
+    "poliwrath": [
+      "poliwhirl",
+      "poliwag"
+    ],
+    "poltchageist": [],
+    "polteageist": [
+      "sinistea"
+    ],
+    "ponyta": [],
+    "ponyta-galarian": [],
+    "poochyena": [],
+    "popplio": [],
+    "porygon": [],
+    "porygon-z": [
+      "porygon2",
+      "porygon"
+    ],
+    "porygon2": [
+      "porygon"
+    ],
+    "primarina": [
+      "brionne",
+      "popplio"
+    ],
+    "primeape": [
+      "mankey"
+    ],
+    "prinplup": [
+      "piplup"
+    ],
+    "probopass": [
+      "nosepass"
+    ],
+    "psyduck": [],
+    "pumpkaboo": [],
+    "pupitar": [
+      "larvitar"
+    ],
+    "purrloin": [],
+    "purugly": [
+      "glameow"
+    ],
+    "pyroar": [
+      "litleo"
+    ],
+    "pyukumuku": [],
+    "quagsire": [
+      "wooper"
+    ],
+    "quaquaval": [
+      "quaxwell",
+      "quaxly"
+    ],
+    "quaxly": [],
+    "quaxwell": [
+      "quaxly"
+    ],
+    "quilava": [
+      "cyndaquil"
+    ],
+    "quilladin": [
+      "chespin"
+    ],
+    "qwilfish": [],
+    "qwilfish-hisuian": [],
+    "raboot": [
+      "scorbunny"
+    ],
+    "rabsca": [
+      "rellor"
+    ],
+    "raging-bolt": [],
+    "raichu": [
+      "pikachu",
+      "pichu"
+    ],
+    "raichu-alolan": [
+      "pikachu",
+      "pichu"
+    ],
+    "raikou": [],
+    "ralts": [],
+    "rampardos": [
+      "cranidos"
+    ],
+    "rapidash": [
+      "ponyta"
+    ],
+    "rapidash-galarian": [
+      "ponyta-galarian"
+    ],
+    "raptorch": [],
+    "raticate": [
+      "rattata"
+    ],
+    "raticate-alolan": [
+      "rattata-alolan"
+    ],
+    "rattata": [],
+    "rattata-alolan": [],
+    "rayquaza": [],
+    "regice": [],
+    "regidrago": [],
+    "regieleki": [],
+    "regigigas": [],
+    "regirock": [],
+    "registeel": [],
+    "relicanth": [],
+    "rellor": [],
+    "remoraid": [],
+    "reshiram": [],
+    "reuniclus": [
+      "duosion",
+      "solosis"
+    ],
+    "revavroom": [
+      "varoom"
+    ],
+    "rhydon": [
+      "rhyhorn"
+    ],
+    "rhyhorn": [],
+    "rhyperior": [
+      "rhydon",
+      "rhyhorn"
+    ],
+    "ribombee": [
+      "cutiefly"
+    ],
+    "rillaboom": [
+      "thwackey",
+      "grookey"
+    ],
+    "riolu": [],
+    "roaring-moon": [],
+    "rockruff": [],
+    "roggenrola": [],
+    "rolycoly": [],
+    "rookidee": [],
+    "roselia": [
+      "budew"
+    ],
+    "roserade": [
+      "roselia",
+      "budew"
+    ],
+    "rotom": [],
+    "rowlet": [],
+    "rufflet": [],
+    "runerigus": [
+      "yamask-galarian"
+    ],
+    "sableye": [],
+    "salamence": [
+      "shelgon",
+      "bagon"
+    ],
+    "salandit": [],
+    "salazzle": [
+      "salandit"
+    ],
+    "samurott": [
+      "dewott",
+      "oshawott"
+    ],
+    "samurott-hisuian": [
+      "dewott",
+      "oshawott"
+    ],
+    "sandaconda": [
+      "silicobra"
+    ],
+    "sandile": [],
+    "sandshrew": [],
+    "sandshrew-alolan": [],
+    "sandslash": [
+      "sandshrew"
+    ],
+    "sandslash-alolan": [
+      "sandshrew-alolan"
+    ],
+    "sandy-shocks": [],
+    "sandygast": [],
+    "sangloupmon": [
+      "dracmon"
+    ],
+    "sawk": [],
+    "sawsbuck": [
+      "deerling"
+    ],
+    "scatterbug": [],
+    "sceptile": [
+      "grovyle",
+      "treecko"
+    ],
+    "scizor": [
+      "scyther"
+    ],
+    "scolipede": [
+      "whirlipede",
+      "venipede"
+    ],
+    "scorbunny": [],
+    "scovillain": [
+      "capsakid"
+    ],
+    "scrafty": [
+      "scraggy"
+    ],
+    "scraggy": [],
+    "scream-tail": [],
+    "scyther": [],
+    "seadra": [
+      "horsea"
+    ],
+    "seaking": [
+      "goldeen"
+    ],
+    "sealeo": [
+      "spheal"
+    ],
+    "seedot": [],
+    "seel": [],
+    "seismitoad": [
+      "palpitoad",
+      "tympole"
+    ],
+    "sentret": [],
+    "serperior": [
+      "servine",
+      "snivy"
+    ],
+    "servine": [
+      "snivy"
+    ],
+    "seviper": [],
+    "sewaddle": [],
+    "sharpedo": [
+      "carvanha"
+    ],
+    "shaymin": [],
+    "shedinja": [],
+    "shelgon": [
+      "bagon"
+    ],
+    "shellder": [],
+    "shellos": [],
+    "shelmet": [],
+    "shieldon": [],
+    "shiftry": [
+      "nuzleaf",
+      "seedot"
+    ],
+    "shiinotic": [
+      "morelull"
+    ],
+    "shinx": [],
+    "shroodle": [],
+    "shroomish": [],
+    "shuckle": [],
+    "shuppet": [],
+    "sigilyph": [],
+    "silcoon": [
+      "wurmple"
+    ],
+    "silicobra": [],
+    "silvally": [
+      "type-null"
+    ],
+    "simipour": [
+      "panpour"
+    ],
+    "simisage": [
+      "pansage"
+    ],
+    "simisear": [
+      "pansear"
+    ],
+    "sinistcha": [
+      "poltchageist"
+    ],
+    "sinistea": [],
+    "sirfetchd": [
+      "farfetchd-galarian"
+    ],
+    "sizzlipede": [],
+    "skarmory": [],
+    "skeledirge": [
+      "crocalor",
+      "fuecoco"
+    ],
+    "skiddo": [],
+    "skiploom": [
+      "hoppip"
+    ],
+    "skitty": [],
+    "skorupi": [],
+    "skrelp": [],
+    "skuntank": [
+      "stunky"
+    ],
+    "skwovet": [],
+    "slaking": [
+      "vigoroth",
+      "slakoth"
+    ],
+    "slakoth": [],
+    "sliggoo": [
+      "goomy"
+    ],
+    "sliggoo-hisuian": [
+      "goomy"
+    ],
+    "slither-wing": [],
+    "slowbro": [
+      "slowpoke"
+    ],
+    "slowbro-galarian": [
+      "slowpoke-galarian"
+    ],
+    "slowking": [
+      "slowpoke"
+    ],
+    "slowking-galarian": [
+      "slowpoke-galarian"
+    ],
+    "slowpoke": [],
+    "slowpoke-galarian": [],
+    "slugma": [],
+    "slurpuff": [
+      "swirlix"
+    ],
+    "smeargle": [],
+    "smoliv": [],
+    "smoochum": [],
+    "sneasel": [],
+    "sneasel-hisuian": [],
+    "sneasler": [
+      "sneasel-hisuian"
+    ],
+    "snivy": [],
+    "snom": [],
+    "snorlax": [
+      "munchlax"
+    ],
+    "snorunt": [],
+    "snover": [],
+    "snubbull": [],
+    "sobble": [],
+    "solgaleo": [
+      "cosmoem",
+      "cosmog"
+    ],
+    "solosis": [],
+    "solrock": [],
+    "spearow": [],
+    "spectrier": [],
+    "spewpa": [
+      "scatterbug"
+    ],
+    "spheal": [],
+    "spidops": [
+      "tarountula"
+    ],
+    "spinarak": [],
+    "spinda": [],
+    "spiritomb": [],
+    "splendifowl": [
+      "aveden",
+      "birbie"
+    ],
+    "spoink": [],
+    "sprigatito": [],
+    "spritzee": [],
+    "squawkabilly": [],
+    "squirtle": [],
+    "stakataka": [],
+    "stantler": [],
+    "staraptor": [
+      "staravia",
+      "starly"
+    ],
+    "staravia": [
+      "starly"
+    ],
+    "starly": [],
+    "starmie": [
+      "staryu"
+    ],
+    "staryu": [],
+    "steelix": [
+      "onix"
+    ],
+    "steenee": [
+      "bounsweet"
+    ],
+    "stonjourner": [],
+    "stoutland": [
+      "herdier",
+      "lillipup"
+    ],
+    "stufful": [],
+    "stunfisk": [],
+    "stunky": [],
+    "sudowoodo": [
+      "bonsly"
+    ],
+    "suicune": [],
+    "sunflora": [
+      "sunkern"
+    ],
+    "sunkern": [],
+    "surskit": [],
+    "swablu": [],
+    "swadloon": [
+      "sewaddle"
+    ],
+    "swalot": [
+      "gulpin"
+    ],
+    "swampert": [
+      "marshtomp",
+      "mudkip"
+    ],
+    "swanna": [
+      "ducklett"
+    ],
+    "swellow": [
+      "taillow"
+    ],
+    "swinub": [],
+    "swirlix": [],
+    "swoobat": [
+      "woobat"
+    ],
+    "sylveon": [
+      "eevee"
+    ],
+    "tadbulb": [],
+    "taillow": [],
+    "talonflame": [
+      "fletchinder",
+      "fletchling"
+    ],
+    "tandemaus": [],
+    "tangela": [],
+    "tangrowth": [
+      "tangela"
+    ],
+    "tapu-bulu": [],
+    "tapu-fini": [],
+    "tapu-koko": [],
+    "tapu-lele": [],
+    "tarountula": [],
+    "tatsugiri": [],
+    "tauros": [],
+    "tauros-paldean": [],
+    "teddiursa": [],
+    "tentacool": [],
+    "tentacruel": [
+      "tentacool"
+    ],
+    "tentomon": [],
+    "tepig": [],
+    "terlard": [
+      "grozard"
+    ],
+    "terrakion": [],
+    "thievul": [
+      "nickit"
+    ],
+    "throh": [],
+    "thwackey": [
+      "grookey"
+    ],
+    "timburr": [],
+    "ting-lu": [],
+    "tinkatink": [],
+    "tinkaton": [
+      "tinkatuff",
+      "tinkatink"
+    ],
+    "tinkatuff": [
+      "tinkatink"
+    ],
+    "tirtouga": [],
+    "toedscool": [],
+    "toedscruel": [
+      "toedscool"
+    ],
+    "tofurang": [
+      "tonemy"
+    ],
+    "togedemaru": [],
+    "togekiss": [
+      "togetic",
+      "togepi"
+    ],
+    "togepi": [],
+    "togetic": [
+      "togepi"
+    ],
+    "tonemy": [],
+    "torchic": [],
+    "torkoal": [],
+    "torracat": [
+      "litten"
+    ],
+    "torterra": [
+      "grotle",
+      "turtwig"
+    ],
+    "totodile": [],
+    "toucannon": [
+      "trumbeak",
+      "pikipek"
+    ],
+    "toxapex": [
+      "mareanie"
+    ],
+    "toxel": [],
+    "toxicroak": [
+      "croagunk"
+    ],
+    "toxtricity": [
+      "toxel"
+    ],
+    "tranquill": [
+      "pidove"
+    ],
+    "trapinch": [],
+    "treecko": [],
+    "trevenant": [
+      "phantump"
+    ],
+    "tricereon": [
+      "eevee"
+    ],
+    "tropius": [],
+    "trubbish": [],
+    "trumbeak": [
+      "pikipek"
+    ],
+    "tsareena": [
+      "steenee",
+      "bounsweet"
+    ],
+    "turtonator": [],
+    "turtwig": [],
+    "tympole": [],
+    "tynamo": [],
+    "type-null": [],
+    "typhlosion": [
+      "quilava",
+      "cyndaquil"
+    ],
+    "typhlosion-hisuian": [
+      "quilava",
+      "cyndaquil"
+    ],
+    "tyranitar": [
+      "pupitar",
+      "larvitar"
+    ],
+    "tyrantrum": [
+      "tyrunt"
+    ],
+    "tyrogue": [],
+    "tyrunt": [],
+    "umbreon": [
+      "eevee"
+    ],
+    "unfezant": [
+      "tranquill",
+      "pidove"
+    ],
+    "unown": [],
+    "ursaluna": [
+      "ursaring",
+      "teddiursa"
+    ],
+    "ursaluna-bloodmoon": [
+      "ursaring",
+      "teddiursa"
+    ],
+    "ursaring": [
+      "teddiursa"
+    ],
+    "urshifu-rapid-strike": [
+      "kubfu"
+    ],
+    "urshifu-rapidstrike": [
+      "kubfu"
+    ],
+    "urshifu-single-strike": [
+      "kubfu"
+    ],
+    "urshifu-singlestrike": [
+      "kubfu"
+    ],
+    "uxie": [],
+    "vanillish": [
+      "vanillite"
+    ],
+    "vanillite": [],
+    "vanilluxe": [
+      "vanillish",
+      "vanillite"
+    ],
+    "vaporeon": [
+      "eevee"
+    ],
+    "varoom": [],
+    "veluza": [],
+    "venipede": [],
+    "venomoth": [
+      "venonat"
+    ],
+    "venonat": [],
+    "venusaur": [
+      "ivysaur",
+      "bulbasaur"
+    ],
+    "vespiquen": [
+      "combee"
+    ],
+    "vibrava": [
+      "trapinch"
+    ],
+    "victini": [],
+    "victreebel": [
+      "weepinbell",
+      "bellsprout"
+    ],
+    "vigoroth": [
+      "slakoth"
+    ],
+    "vikavolt": [
+      "charjabug",
+      "grubbin"
+    ],
+    "vileplume": [
+      "gloom",
+      "oddish"
+    ],
+    "virizion": [],
+    "vivillon": [
+      "spewpa",
+      "scatterbug"
+    ],
+    "volbeat": [],
+    "volcanion": [],
+    "volcarona": [
+      "larvesta"
+    ],
+    "voltorb": [],
+    "voltorb-hisuian": [],
+    "vullaby": [],
+    "vulpix": [],
+    "vulpix-alolan": [],
+    "wailmer": [],
+    "wailord": [
+      "wailmer"
+    ],
+    "walking-wake": [],
+    "walrein": [
+      "sealeo",
+      "spheal"
+    ],
+    "wartortle": [
+      "squirtle"
+    ],
+    "watchog": [
+      "patrat"
+    ],
+    "wattrel": [],
+    "weavile": [
+      "sneasel"
+    ],
+    "weedle": [],
+    "weepinbell": [
+      "bellsprout"
+    ],
+    "weezing": [
+      "koffing"
+    ],
+    "weezing-galarian": [
+      "koffing"
+    ],
+    "whimsicott": [
+      "cottonee"
+    ],
+    "whirlipede": [
+      "venipede"
+    ],
+    "whiscash": [
+      "barboach"
+    ],
+    "whismur": [],
+    "wigglytuff": [
+      "jigglypuff",
+      "igglybuff"
+    ],
+    "wiglett": [],
+    "wimpod": [],
+    "wingull": [],
+    "wispeon": [
+      "eevee"
+    ],
+    "wo-chien": [],
+    "wobbuffet": [
+      "wynaut"
+    ],
+    "woobat": [],
+    "wooloo": [],
+    "wooper": [],
+    "wooper-paldean": [],
+    "wormadam-plant": [
+      "burmy"
+    ],
+    "wormadam-sandy": [
+      "burmy"
+    ],
+    "wormadam-trash": [
+      "burmy"
+    ],
+    "wormon": [],
+    "wugtrio": [
+      "wiglett"
+    ],
+    "wurmple": [],
+    "wynaut": [],
+    "wyrdeer": [
+      "stantler"
+    ],
+    "wyveon": [
+      "eevee"
+    ],
+    "xatu": [
+      "natu"
+    ],
+    "xerneas": [],
+    "xurkitree": [],
+    "yamask": [],
+    "yamask-galarian": [],
+    "yamper": [],
+    "yanma": [],
+    "yanmega": [
+      "yanma"
+    ],
+    "yungoos": [],
+    "yveltal": [],
+    "zangoose": [],
+    "zapdos": [],
+    "zapdos-galarian": [],
+    "zarude": [],
+    "zebstrika": [
+      "blitzle"
+    ],
+    "zekrom": [],
+    "zeraora": [],
+    "zigzagoon": [],
+    "zigzagoon-galarian": [],
+    "zoroark": [
+      "zorua"
+    ],
+    "zoroark-hisuian": [
+      "zorua-hisuian"
+    ],
+    "zorua": [],
+    "zorua-hisuian": [],
+    "zubat": [],
+    "zweilous": [
+      "deino"
+    ]
+  },
+  "profiles": {
+    "foundry_default": {
+      "label": "Foundry Compatibility Dataset",
+      "levels": {
+        "abomasnow": 38,
+        "abra": 1,
+        "absol": 1,
+        "accelgor": 1,
+        "aegislash": 1,
+        "aerodactyl": 1,
+        "aggron": 42,
+        "aipom": 1,
+        "alakazam": 1,
+        "alcremie": 1,
+        "alomomola": 1,
+        "altaria": 31,
+        "amaura": 1,
+        "ambipom": 1,
+        "amoonguss": 35,
+        "ampharos": 30,
+        "annihilape": 40,
+        "anorith": 1,
+        "appletun": 1,
+        "applin": 1,
+        "araquanid": 22,
+        "arbok": 22,
+        "arboliva": 35,
+        "arcanine": 1,
+        "arcanine-hisuian": 1,
+        "arceus": 1,
+        "archaludon": 1,
+        "archen": 1,
+        "archeops": 37,
+        "archilles": 29,
+        "arctibax": 25,
+        "arctovish": 1,
+        "arctozolt": 1,
+        "ariados": 22,
+        "arideon": 25,
+        "armaldo": 34,
+        "armarouge": 1,
+        "aromatisse": 1,
+        "aron": 1,
+        "arrokuda": 1,
+        "articuno": 1,
+        "articuno-galarian": 1,
+        "audino": 1,
+        "aurorus": 39,
+        "avalugg": 37,
+        "avalugg-hisuian": 1,
+        "aveden": 17,
+        "aviateon": 25,
+        "axew": 1,
+        "azelf": 1,
+        "azumarill": 18,
+        "azurill": 1,
+        "bagon": 1,
+        "baltoy": 1,
+        "banette": 33,
+        "barbaracle": 32,
+        "barboach": 1,
+        "barewl": 1,
+        "barraskewda": 26,
+        "basculegion-female": 1,
+        "basculegion-male": 1,
+        "basculin": 1,
+        "bastiodon": 36,
+        "baxcalibur": 55,
+        "bayleef": 16,
+        "beartic": 37,
+        "beautifly": 10,
+        "beedrill": 10,
+        "beheeyem": 34,
+        "beldum": 1,
+        "bellibolt": 1,
+        "bellossom": 1,
+        "bellsprout": 1,
+        "bergmite": 1,
+        "bewear": 27,
+        "bibarel": 15,
+        "bidoof": 1,
+        "binacle": 1,
+        "birbie": 1,
+        "bisharp": 32,
+        "blacephalon": 1,
+        "blastoise": 36,
+        "blaziken": 36,
+        "blipbug": 1,
+        "blissey": 38,
+        "blitzle": 1,
+        "blubelrog": 1,
+        "boldore": 25,
+        "boltund": 25,
+        "bombirdier": 1,
+        "bonsly": 1,
+        "bouffalant": 1,
+        "bounsweet": 1,
+        "braixen": 16,
+        "brambleghast": 1,
+        "bramblin": 1,
+        "braviary": 34,
+        "braviary-hisuian": 1,
+        "breloom": 23,
+        "brionne": 17,
+        "bronzong": 33,
+        "bronzor": 1,
+        "brute-bonnet": 1,
+        "bruxish": 1,
+        "budew": 1,
+        "buizel": 1,
+        "bulbasaur": 1,
+        "buneary": 1,
+        "bunnelby": 1,
+        "burmy": 1,
+        "butterfree": 10,
+        "buzzwole": 1,
+        "cacnea": 1,
+        "cacturne": 32,
+        "calyrex": 1,
+        "camerupt": 33,
+        "capsakid": 1,
+        "carbink": 1,
+        "carkol": 18,
+        "carnivine": 1,
+        "carracosta": 37,
+        "carvanha": 1,
+        "cascoon": 7,
+        "castform": 1,
+        "caterpie": 1,
+        "celebi": 1,
+        "celesteela": 1,
+        "centiskorch": 28,
+        "centureon": 25,
+        "ceruledge": 1,
+        "cetitan": 1,
+        "cetoddle": 1,
+        "champeon": 25,
+        "chandelure": 1,
+        "chansey": 1,
+        "charcadet": 1,
+        "charizard": 36,
+        "charjabug": 17,
+        "charmander": 1,
+        "charmeleon": 16,
+        "chatot": 1,
+        "cherrim": 25,
+        "cherubi": 1,
+        "chesnaught": 36,
+        "chespin": 1,
+        "chewtle": 1,
+        "chi-yu": 1,
+        "chien-pao": 1,
+        "chikorita": 1,
+        "chimchar": 1,
+        "chimecho": 28,
+        "chinchou": 1,
+        "chingling": 1,
+        "chyinmunk": 1,
+        "cinccino": 1,
+        "cinderace": 35,
+        "clamperl": 1,
+        "clauncher": 1,
+        "clawitzer": 37,
+        "claydol": 33,
+        "clefable": 1,
+        "clefairy": 18,
+        "cleffa": 1,
+        "clobbopus": 1,
+        "clodsire": 20,
+        "cloyster": 1,
+        "coalossal": 34,
+        "cobalion": 1,
+        "cofagrigus": 34,
+        "combee": 1,
+        "combusken": 16,
+        "comfey": 1,
+        "companeon": 25,
+        "conkeldurr": 1,
+        "copperajah": 34,
+        "corphish": 1,
+        "corroseon": 25,
+        "corsola": 1,
+        "corsola-galarian": 1,
+        "corviknight": 38,
+        "corvisquire": 18,
+        "cosmoem": 43,
+        "cosmog": 1,
+        "cottonee": 1,
+        "crabominable": 1,
+        "crabrawler": 1,
+        "cradily": 34,
+        "cramorant": 1,
+        "cranidos": 1,
+        "crawdaunt": 30,
+        "crescemon": 1,
+        "cresselia": 1,
+        "croagunk": 1,
+        "crobat": 34,
+        "crocalor": 16,
+        "croconaw": 18,
+        "crustle": 34,
+        "cryogonal": 1,
+        "cubblfly": 10,
+        "cubbug": 1,
+        "cubchoo": 1,
+        "cubone": 1,
+        "cufant": 1,
+        "cursola": 38,
+        "cutiefly": 1,
+        "cyclizar": 1,
+        "cyndaquil": 1,
+        "dachsbun": 26,
+        "darkrai": 1,
+        "darmanitan-galarian": 1,
+        "darmanitan-standard": 1,
+        "dartrix": 17,
+        "darumaka": 1,
+        "darumaka-galarian": 1,
+        "dearewl": 15,
+        "decidueye": 34,
+        "decidueye-hisuian": 1,
+        "dedenne": 1,
+        "deerling": 1,
+        "deino": 1,
+        "delcatty": 1,
+        "delibird": 1,
+        "delphox": 36,
+        "deoxys": 1,
+        "dewgong": 34,
+        "dewott": 17,
+        "dewpider": 1,
+        "dhelmise": 1,
+        "dialga": 1,
+        "dianamon": 1,
+        "diancie": 1,
+        "diggersby": 20,
+        "diglett": 1,
+        "diglett-alolan": 1,
+        "dipplin": 1,
+        "ditto": 1,
+        "dodrio": 31,
+        "doduo": 1,
+        "dolliv": 25,
+        "dondozo": 1,
+        "donphan": 25,
+        "dottler": 10,
+        "doublade": 28,
+        "dracmon": 1,
+        "draconeon": 25,
+        "dracovish": 1,
+        "dracozolt": 1,
+        "dragalge": 38,
+        "dragapult": 55,
+        "dragonair": 25,
+        "dragonite": 55,
+        "drakloak": 20,
+        "drampa": 1,
+        "drapion": 34,
+        "dratini": 1,
+        "drednaw": 22,
+        "dreepy": 1,
+        "drifblim": 28,
+        "drifloon": 1,
+        "drilbur": 1,
+        "drizzile": 16,
+        "drowzee": 1,
+        "druddigon": 1,
+        "dubwool": 24,
+        "ducklett": 1,
+        "dudunsparce": 1,
+        "dugtrio": 26,
+        "dugtrio-alolan": 26,
+        "dunseraph": 1,
+        "dunsparce": 1,
+        "duosion": 21,
+        "duraludon": 1,
+        "durant": 1,
+        "dusclops": 33,
+        "dusknoir": 1,
+        "duskull": 1,
+        "dustox": 10,
+        "dwebble": 1,
+        "eelektrik": 20,
+        "eelektross": 1,
+        "eevee": 1,
+        "ekans": 1,
+        "eldegoss": 20,
+        "electabuzz": 27,
+        "electivire": 1,
+        "electrike": 1,
+        "electrode": 30,
+        "electrode-hisuian": 1,
+        "electruxo": 27,
+        "elekid": 1,
+        "eletux": 1,
+        "elgyem": 1,
+        "emboar": 36,
+        "emolga": 1,
+        "empoleon": 36,
+        "entei": 1,
+        "entoeon": 25,
+        "escavalier": 1,
+        "espathra": 35,
+        "espeon": 1,
+        "espurr": 1,
+        "eternatus": 1,
+        "excadrill": 31,
+        "exeggcute": 1,
+        "exeggutor": 1,
+        "exeggutor-alolan": 1,
+        "exploud": 35,
+        "falinks": 1,
+        "farfetchd": 1,
+        "farfetchd-galarian": 1,
+        "farigiraf": 1,
+        "fearow": 20,
+        "feebas": 1,
+        "fennekin": 1,
+        "feraligatr": 30,
+        "ferroseed": 1,
+        "ferrothorn": 34,
+        "fezandipiti": 1,
+        "fidough": 1,
+        "finizen": 1,
+        "finneon": 1,
+        "flaaffy": 15,
+        "flabebe": 1,
+        "flamigo": 1,
+        "flapple": 1,
+        "flareon": 1,
+        "fletchinder": 17,
+        "fletchling": 1,
+        "flittle": 1,
+        "floatzel": 26,
+        "floette": 19,
+        "floragato": 16,
+        "florges": 1,
+        "flutter-mane": 1,
+        "flygon": 42,
+        "folerog": 18,
+        "fomantis": 1,
+        "foongus": 1,
+        "forretress": 31,
+        "fortog": 1,
+        "fraxure": 28,
+        "frigibax": 1,
+        "frillish": 1,
+        "froakie": 1,
+        "frogadier": 16,
+        "froslass": 1,
+        "frosmoth": 1,
+        "fuecoco": 1,
+        "furfrou": 1,
+        "furret": 15,
+        "gabite": 25,
+        "galarian-darmanitan": 1,
+        "galarian-darumaka": 1,
+        "gallade": 1,
+        "galvantula": 31,
+        "gararewl": 32,
+        "garbodor": 36,
+        "garchomp": 55,
+        "gardevoir": 30,
+        "garganacl": 38,
+        "gastly": 1,
+        "gastrodon": 30,
+        "genesect": 1,
+        "gengar": 1,
+        "geodude": 1,
+        "geodude-alolan": 1,
+        "gholdengo": 1,
+        "gible": 1,
+        "gigalith": 1,
+        "gimmighoul": 1,
+        "gimmighoul-roaming": 1,
+        "girafarig": 1,
+        "glaceon": 1,
+        "glalie": 37,
+        "glameow": 1,
+        "glastrier": 1,
+        "gligar": 1,
+        "glimmet": 1,
+        "glimmora": 35,
+        "gliscor": 1,
+        "gloom": 21,
+        "gogoat": 32,
+        "golbat": 22,
+        "goldeen": 1,
+        "golduck": 33,
+        "golem": 1,
+        "golem-alolan": 1,
+        "golett": 1,
+        "golisopod": 30,
+        "golurk": 37,
+        "goodra": 50,
+        "goodra-hisuian": 50,
+        "goomy": 1,
+        "gorebyss": 1,
+        "gossifleur": 1,
+        "gothita": 1,
+        "gothitelle": 41,
+        "gothorita": 21,
+        "gouging-fire": 1,
+        "gourgeist": 1,
+        "grafaiai": 28,
+        "gran-dracmon": 60,
+        "granbull": 23,
+        "grapploct": 1,
+        "graveler": 25,
+        "graveler-alolan": 25,
+        "great-tusk": 1,
+        "greavard": 1,
+        "greedent": 24,
+        "greninja": 36,
+        "grimer": 1,
+        "grimer-alolan": 1,
+        "grimmsnarl": 37,
+        "grookey": 1,
+        "grotle": 18,
+        "groudon": 1,
+        "grovyle": 16,
+        "growlithe": 1,
+        "growlithe-hisuian": 1,
+        "grozard": 1,
+        "grubbin": 1,
+        "grumpig": 32,
+        "gulpin": 1,
+        "gumshoos": 20,
+        "gurdurr": 25,
+        "guzzlord": 1,
+        "gyarados": 20,
+        "hakamo-o": 25,
+        "happiny": 1,
+        "hariyama": 24,
+        "hatenna": 1,
+        "hatterene": 37,
+        "hattrem": 27,
+        "haunter": 25,
+        "hawlucha": 1,
+        "haxorus": 43,
+        "heatmor": 1,
+        "heatran": 1,
+        "heliolisk": 1,
+        "helioptile": 1,
+        "heracross": 1,
+        "herdier": 16,
+        "hippopotas": 1,
+        "hippowdon": 34,
+        "hitmonchan": 20,
+        "hitmonlee": 20,
+        "hitmontop": 20,
+        "ho-oh": 1,
+        "honchkrow": 1,
+        "honedge": 1,
+        "hoopa": 1,
+        "hoothoot": 1,
+        "hoppip": 1,
+        "horsea": 1,
+        "houndoom": 24,
+        "houndour": 1,
+        "houndstone": 30,
+        "huntail": 1,
+        "hydrapple": 1,
+        "hydreigon": 55,
+        "hypno": 26,
+        "igglybuff": 1,
+        "illumise": 1,
+        "illuseon": 25,
+        "impidimp": 1,
+        "incineroar": 34,
+        "indeedee-female": 1,
+        "indeedee-male": 1,
+        "infernape": 36,
+        "inkay": 1,
+        "inteleon": 35,
+        "iron-boulder": 1,
+        "iron-bundle": 1,
+        "iron-crown": 1,
+        "iron-hands": 1,
+        "iron-jugulis": 1,
+        "iron-leaves": 1,
+        "iron-moth": 1,
+        "iron-thorns": 1,
+        "iron-treads": 1,
+        "iron-valiant": 1,
+        "ivysaur": 16,
+        "jangmo-o": 1,
+        "jellicent": 34,
+        "jigglypuff": 17,
+        "jirachi": 1,
+        "jolteon": 1,
+        "joltik": 1,
+        "jumpluff": 27,
+        "jynx": 27,
+        "kabuto": 1,
+        "kabutops": 35,
+        "kadabra": 16,
+        "kakuna": 7,
+        "kangaskhan": 1,
+        "karrablast": 1,
+        "kartana": 1,
+        "kecleon": 1,
+        "kilowattrel": 25,
+        "kinetmunk": 14,
+        "kingambit": 52,
+        "kingdra": 1,
+        "kingler": 28,
+        "kirlia": 20,
+        "klang": 24,
+        "klawf": 1,
+        "kleavor": 1,
+        "klefki": 1,
+        "klink": 1,
+        "klinklang": 45,
+        "koffing": 1,
+        "komala": 1,
+        "kommo-o": 55,
+        "koraidon": 1,
+        "krabby": 1,
+        "kricketot": 1,
+        "kricketune": 10,
+        "krokorok": 29,
+        "krookodile": 40,
+        "kubfu": 1,
+        "kyogre": 1,
+        "kyurem": 1,
+        "lairon": 27,
+        "lampent": 28,
+        "lanturn": 27,
+        "lapras": 1,
+        "larvesta": 1,
+        "larvitar": 1,
+        "latias": 1,
+        "latios": 1,
+        "leafeon": 1,
+        "leavanny": 31,
+        "lechonk": 1,
+        "ledian": 18,
+        "ledyba": 1,
+        "lekismon": 1,
+        "lickilicky": 30,
+        "lickitung": 1,
+        "liepard": 20,
+        "lileep": 1,
+        "lilligant": 1,
+        "lilligant-hisuian": 1,
+        "lillipup": 1,
+        "linoone": 20,
+        "linoone-galarian": 20,
+        "litleo": 1,
+        "litten": 1,
+        "litwick": 1,
+        "lokix": 24,
+        "lombre": 14,
+        "lopunny": 27,
+        "lotad": 1,
+        "loudred": 18,
+        "lucario": 34,
+        "ludicolo": 1,
+        "lugia": 1,
+        "lumineon": 31,
+        "lunala": 53,
+        "lunamon": 1,
+        "lunatone": 1,
+        "lungeon": 25,
+        "lurantis": 34,
+        "luvdisc": 1,
+        "luxio": 15,
+        "luxray": 30,
+        "lycanroc-dusk": 25,
+        "lycanroc-midday": 25,
+        "lycanroc-midnight": 25,
+        "mabosstiff": 30,
+        "machamp": 1,
+        "machoke": 28,
+        "machop": 1,
+        "magby": 1,
+        "magcargo": 34,
+        "magearna": 1,
+        "magikarp": 1,
+        "magmar": 27,
+        "magmortar": 1,
+        "magnemite": 1,
+        "magneton": 28,
+        "magnezone": 1,
+        "makuhita": 1,
+        "malamar": 30,
+        "mamoswine": 1,
+        "manaphy": 50,
+        "mandibuzz": 34,
+        "manectric": 26,
+        "mankey": 1,
+        "mantine": 1,
+        "mantyke": 1,
+        "maractus": 1,
+        "mareanie": 1,
+        "mareep": 1,
+        "marill": 10,
+        "marowak": 28,
+        "marowak-alolan": 1,
+        "marshadow": 1,
+        "marshtomp": 16,
+        "maschiff": 1,
+        "masquerain": 22,
+        "matadormon": 35,
+        "maushold": 25,
+        "mawile": 1,
+        "medicham": 24,
+        "meditite": 1,
+        "meganium": 32,
+        "melmetal": 56,
+        "meloetta": 1,
+        "meltan": 1,
+        "meowscarada": 36,
+        "meowstic-female": 25,
+        "meowstic-male": 25,
+        "meowth": 1,
+        "meowth-alolan": 1,
+        "meowth-galarian": 1,
+        "mesprit": 1,
+        "metagross": 55,
+        "metalynx": 28,
+        "metang": 20,
+        "metapod": 7,
+        "mew": 1,
+        "mewtwo": 1,
+        "mienfoo": 1,
+        "mienshao": 34,
+        "mightyena": 18,
+        "milcery": 1,
+        "milotic": 1,
+        "miltank": 1,
+        "mime-jr": 1,
+        "mimikyu": 1,
+        "minccino": 1,
+        "minun": 1,
+        "miraidon": 1,
+        "misdreavus": 1,
+        "mismagius": 1,
+        "moltres": 1,
+        "moltres-galarian": 1,
+        "monferno": 14,
+        "morelull": 1,
+        "morgrem": 27,
+        "morpeko": 1,
+        "mothim": 20,
+        "mr-mime": 1,
+        "mr-mime-galarian": 1,
+        "mr-rime": 42,
+        "mudbray": 1,
+        "mudkip": 1,
+        "mudsdale": 30,
+        "muk": 34,
+        "muk-alolan": 34,
+        "munchlax": 1,
+        "munkidori": 1,
+        "munna": 1,
+        "murkrow": 1,
+        "musharna": 1,
+        "nacli": 1,
+        "naclstack": 24,
+        "naganadel": 1,
+        "natu": 1,
+        "necrozma": 1,
+        "nickit": 1,
+        "nidoking": 1,
+        "nidoqueen": 1,
+        "nidoran-f": 1,
+        "nidoran-m": 1,
+        "nidorina": 16,
+        "nidorino": 16,
+        "nihilego": 1,
+        "nimflora": 24,
+        "nincada": 1,
+        "ninetales": 1,
+        "ninetales-alolan": 1,
+        "ninjask": 20,
+        "noctowl": 20,
+        "noibat": 1,
+        "noivern": 38,
+        "nosepass": 1,
+        "numel": 1,
+        "nuzleaf": 14,
+        "nymble": 1,
+        "obsideon": 25,
+        "obstagoon": 35,
+        "octillery": 25,
+        "oddish": 1,
+        "ogerpon": 1,
+        "oinkologne": 18,
+        "okidogi": 1,
+        "omanyte": 1,
+        "omastar": 35,
+        "onix": 1,
+        "oranguru": 1,
+        "orbeetle": 30,
+        "orchynx": 1,
+        "oricorio": 1,
+        "orthworm": 1,
+        "oshawott": 1,
+        "overqwil": 1,
+        "pachirisu": 1,
+        "palafin": 38,
+        "palkia": 1,
+        "palossand": 34,
+        "palpitoad": 25,
+        "pancham": 1,
+        "pangoro": 32,
+        "panpour": 1,
+        "pansage": 1,
+        "pansear": 1,
+        "paras": 1,
+        "parasect": 24,
+        "passimian": 1,
+        "patrat": 1,
+        "pawmi": 1,
+        "pawmo": 18,
+        "pawmot": 30,
+        "pawniard": 1,
+        "pecharunt": 1,
+        "pelipper": 25,
+        "perrserker": 28,
+        "persian": 28,
+        "persian-alolan": 28,
+        "petilil": 1,
+        "phanpy": 1,
+        "phantump": 1,
+        "pheromosa": 1,
+        "phione": 1,
+        "pichu": 1,
+        "pidgeot": 36,
+        "pidgeotto": 18,
+        "pidgey": 1,
+        "pidove": 1,
+        "pignite": 17,
+        "pikachu": 15,
+        "pikipek": 1,
+        "piloswine": 33,
+        "pincurchin": 1,
+        "pineco": 1,
+        "pinsir": 1,
+        "piplup": 1,
+        "plusle": 1,
+        "poipole": 1,
+        "politoed": 1,
+        "poliwag": 1,
+        "poliwhirl": 25,
+        "poliwrath": 1,
+        "poltchageist": 1,
+        "polteageist": 1,
+        "ponyta": 1,
+        "ponyta-galarian": 1,
+        "poochyena": 1,
+        "popplio": 1,
+        "porygon": 1,
+        "porygon-z": 1,
+        "porygon2": 1,
+        "primarina": 34,
+        "primeape": 28,
+        "prinplup": 16,
+        "probopass": 1,
+        "psyduck": 1,
+        "pumpkaboo": 1,
+        "pupitar": 25,
+        "purrloin": 1,
+        "purugly": 30,
+        "pyroar": 35,
+        "pyukumuku": 1,
+        "quagsire": 20,
+        "quaquaval": 36,
+        "quaxly": 1,
+        "quaxwell": 16,
+        "quilava": 14,
+        "quilladin": 16,
+        "qwilfish": 1,
+        "qwilfish-hisuian": 1,
+        "raboot": 16,
+        "rabsca": 22,
+        "raging-bolt": 1,
+        "raichu": 1,
+        "raichu-alolan": 1,
+        "raikou": 1,
+        "ralts": 1,
+        "rampardos": 36,
+        "rapidash": 37,
+        "rapidash-galarian": 37,
+        "raptorch": 1,
+        "raticate": 20,
+        "raticate-alolan": 20,
+        "rattata": 1,
+        "rattata-alolan": 1,
+        "rayquaza": 1,
+        "regice": 1,
+        "regidrago": 1,
+        "regieleki": 1,
+        "regigigas": 1,
+        "regirock": 1,
+        "registeel": 1,
+        "relicanth": 1,
+        "rellor": 1,
+        "remoraid": 1,
+        "reshiram": 1,
+        "reuniclus": 41,
+        "revavroom": 37,
+        "rhydon": 35,
+        "rhyhorn": 1,
+        "rhyperior": 1,
+        "ribombee": 25,
+        "rillaboom": 35,
+        "riolu": 1,
+        "roaring-moon": 1,
+        "rockruff": 1,
+        "roggenrola": 1,
+        "rolycoly": 1,
+        "rookidee": 1,
+        "roselia": 22,
+        "roserade": 1,
+        "rotom": 1,
+        "rowlet": 1,
+        "rufflet": 1,
+        "runerigus": 34,
+        "sableye": 1,
+        "salamence": 55,
+        "salandit": 1,
+        "salazzle": 33,
+        "samurott": 36,
+        "samurott-hisuian": 1,
+        "sandaconda": 36,
+        "sandile": 1,
+        "sandshrew": 1,
+        "sandshrew-alolan": 1,
+        "sandslash": 22,
+        "sandslash-alolan": 1,
+        "sandy-shocks": 1,
+        "sandygast": 1,
+        "sangloupmon": 18,
+        "sawk": 1,
+        "sawsbuck": 34,
+        "scatterbug": 1,
+        "sceptile": 36,
+        "scizor": 1,
+        "scolipede": 30,
+        "scorbunny": 1,
+        "scovillain": 1,
+        "scrafty": 35,
+        "scraggy": 1,
+        "scream-tail": 1,
+        "scyther": 1,
+        "seadra": 32,
+        "seaking": 33,
+        "sealeo": 28,
+        "seedot": 1,
+        "seel": 1,
+        "seismitoad": 36,
+        "sentret": 1,
+        "serperior": 36,
+        "servine": 17,
+        "seviper": 1,
+        "sewaddle": 1,
+        "sharpedo": 30,
+        "shaymin": 1,
+        "shedinja": 1,
+        "shelgon": 25,
+        "shellder": 1,
+        "shellos": 1,
+        "shelmet": 1,
+        "shieldon": 1,
+        "shiftry": 1,
+        "shiinotic": 24,
+        "shinx": 1,
+        "shroodle": 1,
+        "shroomish": 1,
+        "shuckle": 1,
+        "shuppet": 1,
+        "sigilyph": 1,
+        "silcoon": 7,
+        "silicobra": 1,
+        "silvally": 50,
+        "simipour": 1,
+        "simisage": 1,
+        "simisear": 1,
+        "sinistcha": 1,
+        "sinistea": 1,
+        "sirfetchd": 1,
+        "sizzlipede": 1,
+        "skarmory": 1,
+        "skeledirge": 36,
+        "skiddo": 1,
+        "skiploom": 18,
+        "skitty": 1,
+        "skorupi": 1,
+        "skrelp": 1,
+        "skuntank": 34,
+        "skwovet": 1,
+        "slaking": 36,
+        "slakoth": 1,
+        "sliggoo": 20,
+        "sliggoo-hisuian": 1,
+        "slither-wing": 1,
+        "slowbro": 37,
+        "slowbro-galarian": 1,
+        "slowking": 1,
+        "slowking-galarian": 1,
+        "slowpoke": 1,
+        "slowpoke-galarian": 1,
+        "slugma": 1,
+        "slurpuff": 1,
+        "smeargle": 1,
+        "smoliv": 1,
+        "smoochum": 1,
+        "sneasel": 1,
+        "sneasel-hisuian": 1,
+        "sneasler": 1,
+        "snivy": 1,
+        "snom": 1,
+        "snorlax": 34,
+        "snorunt": 1,
+        "snover": 1,
+        "snubbull": 1,
+        "sobble": 1,
+        "solgaleo": 53,
+        "solosis": 1,
+        "solrock": 1,
+        "spearow": 1,
+        "spectrier": 1,
+        "spewpa": 9,
+        "spheal": 1,
+        "spidops": 15,
+        "spinarak": 1,
+        "spinda": 1,
+        "spiritomb": 1,
+        "splendifowl": 31,
+        "spoink": 1,
+        "sprigatito": 1,
+        "spritzee": 1,
+        "squawkabilly": 1,
+        "squirtle": 1,
+        "stakataka": 1,
+        "stantler": 1,
+        "staraptor": 34,
+        "staravia": 14,
+        "starly": 1,
+        "starmie": 1,
+        "staryu": 1,
+        "steelix": 1,
+        "steenee": 18,
+        "stonjourner": 1,
+        "stoutland": 32,
+        "stufful": 1,
+        "stunfisk": 1,
+        "stunky": 1,
+        "sudowoodo": 1,
+        "suicune": 1,
+        "sunflora": 1,
+        "sunkern": 1,
+        "surskit": 1,
+        "swablu": 1,
+        "swadloon": 20,
+        "swalot": 26,
+        "swampert": 36,
+        "swanna": 28,
+        "swellow": 22,
+        "swinub": 1,
+        "swirlix": 1,
+        "swoobat": 20,
+        "sylveon": 1,
+        "tadbulb": 1,
+        "taillow": 1,
+        "talonflame": 35,
+        "tandemaus": 1,
+        "tangela": 1,
+        "tangrowth": 1,
+        "tapu-bulu": 1,
+        "tapu-fini": 1,
+        "tapu-koko": 1,
+        "tapu-lele": 1,
+        "tarountula": 1,
+        "tatsugiri": 1,
+        "tauros": 1,
+        "tauros-paldean": 1,
+        "teddiursa": 1,
+        "tentacool": 1,
+        "tentacruel": 30,
+        "tentomon": 1,
+        "tepig": 1,
+        "terlard": 22,
+        "terrakion": 1,
+        "thievul": 18,
+        "throh": 1,
+        "thwackey": 16,
+        "timburr": 1,
+        "ting-lu": 1,
+        "tinkatink": 1,
+        "tinkaton": 38,
+        "tinkatuff": 18,
+        "tirtouga": 1,
+        "toedscool": 1,
+        "toedscruel": 30,
+        "tofurang": 20,
+        "togedemaru": 1,
+        "togekiss": 1,
+        "togepi": 1,
+        "togetic": 22,
+        "tonemy": 1,
+        "torchic": 1,
+        "torkoal": 1,
+        "torracat": 17,
+        "torterra": 32,
+        "totodile": 1,
+        "toucannon": 28,
+        "toxapex": 38,
+        "toxel": 1,
+        "toxicroak": 33,
+        "toxtricity": 30,
+        "tranquill": 21,
+        "trapinch": 1,
+        "treecko": 1,
+        "trevenant": 1,
+        "tricereon": 25,
+        "tropius": 1,
+        "trubbish": 1,
+        "trumbeak": 14,
+        "tsareena": 1,
+        "turtonator": 1,
+        "turtwig": 1,
+        "tympole": 1,
+        "tynamo": 1,
+        "type-null": 1,
+        "typhlosion": 36,
+        "typhlosion-hisuian": 1,
+        "tyranitar": 55,
+        "tyrantrum": 39,
+        "tyrogue": 1,
+        "tyrunt": 1,
+        "umbreon": 1,
+        "unfezant": 32,
+        "unown": 1,
+        "ursaluna": 1,
+        "ursaluna-bloodmoon": 1,
+        "ursaring": 30,
+        "urshifu-rapid-strike": 1,
+        "urshifu-rapidstrike": 1,
+        "urshifu-single-strike": 1,
+        "urshifu-singlestrike": 1,
+        "uxie": 1,
+        "vanillish": 22,
+        "vanillite": 1,
+        "vanilluxe": 44,
+        "vaporeon": 1,
+        "varoom": 1,
+        "veluza": 1,
+        "venipede": 1,
+        "venomoth": 31,
+        "venonat": 1,
+        "venusaur": 32,
+        "vespiquen": 21,
+        "vibrava": 29,
+        "victini": 1,
+        "victreebel": 1,
+        "vigoroth": 18,
+        "vikavolt": 1,
+        "vileplume": 1,
+        "virizion": 1,
+        "vivillon": 12,
+        "volbeat": 1,
+        "volcanion": 1,
+        "volcarona": 41,
+        "voltorb": 1,
+        "voltorb-hisuian": 1,
+        "vullaby": 1,
+        "vulpix": 1,
+        "vulpix-alolan": 1,
+        "wailmer": 1,
+        "wailord": 40,
+        "walking-wake": 1,
+        "walrein": 44,
+        "wartortle": 16,
+        "watchog": 20,
+        "wattrel": 1,
+        "weavile": 1,
+        "weedle": 1,
+        "weepinbell": 21,
+        "weezing": 35,
+        "weezing-galarian": 35,
+        "whimsicott": 1,
+        "whirlipede": 22,
+        "whiscash": 30,
+        "whismur": 1,
+        "wigglytuff": 1,
+        "wiglett": 1,
+        "wimpod": 1,
+        "wingull": 1,
+        "wispeon": 25,
+        "wo-chien": 1,
+        "wobbuffet": 15,
+        "woobat": 1,
+        "wooloo": 1,
+        "wooper": 1,
+        "wooper-paldean": 1,
+        "wormadam-plant": 20,
+        "wormadam-sandy": 20,
+        "wormadam-trash": 20,
+        "wormon": 1,
+        "wugtrio": 26,
+        "wurmple": 1,
+        "wynaut": 1,
+        "wyrdeer": 1,
+        "wyveon": 25,
+        "xatu": 25,
+        "xerneas": 1,
+        "xurkitree": 1,
+        "yamask": 1,
+        "yamask-galarian": 1,
+        "yamper": 1,
+        "yanma": 1,
+        "yanmega": 1,
+        "yungoos": 1,
+        "yveltal": 1,
+        "zangoose": 1,
+        "zapdos": 1,
+        "zapdos-galarian": 1,
+        "zarude": 1,
+        "zebstrika": 27,
+        "zekrom": 1,
+        "zeraora": 1,
+        "zigzagoon": 1,
+        "zigzagoon-galarian": 1,
+        "zoroark": 30,
+        "zoroark-hisuian": 30,
+        "zorua": 1,
+        "zorua-hisuian": 1,
+        "zubat": 1,
+        "zweilous": 25
+      },
+      "notes": "Optional compatibility profile. Level methods use listed levels. Item, stone, trade, and other methods are treated as obtainable at level 1.",
+      "source": "Foundry PTR core-species",
+      "version": "Compatibility: Foundry-derived raw evolution gating"
+    },
+    "ptu_builder_105": {
+      "label": "Official PTU Core Rules",
+      "levels": {
+        "abomasnow": 38,
+        "abra": 1,
+        "absol": 1,
+        "accelgor": 15,
+        "aegislash": 15,
+        "aerodactyl": 1,
+        "aggron": 42,
+        "aipom": 1,
+        "alakazam": 15,
+        "alcremie": 15,
+        "alomomola": 1,
+        "altaria": 31,
+        "amaura": 1,
+        "ambipom": 1,
+        "amoonguss": 35,
+        "ampharos": 30,
+        "annihilape": 40,
+        "anorith": 1,
+        "appletun": 15,
+        "applin": 1,
+        "araquanid": 22,
+        "arbok": 22,
+        "arboliva": 35,
+        "arcanine": 15,
+        "arcanine-hisuian": 15,
+        "arceus": 1,
+        "archaludon": 15,
+        "archen": 1,
+        "archeops": 37,
+        "archilles": 29,
+        "arctibax": 25,
+        "arctovish": 1,
+        "arctozolt": 1,
+        "ariados": 22,
+        "arideon": 25,
+        "armaldo": 34,
+        "armarouge": 15,
+        "aromatisse": 15,
+        "aron": 1,
+        "arrokuda": 1,
+        "articuno": 1,
+        "articuno-galarian": 1,
+        "audino": 1,
+        "aurorus": 39,
+        "avalugg": 37,
+        "avalugg-hisuian": 15,
+        "aveden": 17,
+        "aviateon": 25,
+        "axew": 1,
+        "azelf": 1,
+        "azumarill": 18,
+        "azurill": 1,
+        "bagon": 1,
+        "baltoy": 1,
+        "banette": 33,
+        "barbaracle": 32,
+        "barboach": 1,
+        "barewl": 1,
+        "barraskewda": 26,
+        "basculegion-female": 1,
+        "basculegion-male": 1,
+        "basculin": 1,
+        "bastiodon": 36,
+        "baxcalibur": 55,
+        "bayleef": 16,
+        "beartic": 37,
+        "beautifly": 10,
+        "beedrill": 10,
+        "beheeyem": 34,
+        "beldum": 1,
+        "bellibolt": 15,
+        "bellossom": 15,
+        "bellsprout": 1,
+        "bergmite": 1,
+        "bewear": 27,
+        "bibarel": 15,
+        "bidoof": 1,
+        "binacle": 1,
+        "birbie": 1,
+        "bisharp": 32,
+        "blacephalon": 1,
+        "blastoise": 36,
+        "blaziken": 36,
+        "blipbug": 1,
+        "blissey": 38,
+        "blitzle": 1,
+        "blubelrog": 1,
+        "boldore": 25,
+        "boltund": 25,
+        "bombirdier": 1,
+        "bonsly": 1,
+        "bouffalant": 1,
+        "bounsweet": 1,
+        "braixen": 16,
+        "brambleghast": 15,
+        "bramblin": 1,
+        "braviary": 34,
+        "braviary-hisuian": 15,
+        "breloom": 23,
+        "brionne": 17,
+        "bronzong": 33,
+        "bronzor": 1,
+        "brute-bonnet": 1,
+        "bruxish": 1,
+        "budew": 1,
+        "buizel": 1,
+        "bulbasaur": 1,
+        "buneary": 1,
+        "bunnelby": 1,
+        "burmy": 1,
+        "butterfree": 10,
+        "buzzwole": 1,
+        "cacnea": 1,
+        "cacturne": 32,
+        "calyrex": 1,
+        "camerupt": 33,
+        "capsakid": 1,
+        "carbink": 1,
+        "carkol": 18,
+        "carnivine": 1,
+        "carracosta": 37,
+        "carvanha": 1,
+        "cascoon": 7,
+        "castform": 1,
+        "caterpie": 1,
+        "celebi": 1,
+        "celesteela": 1,
+        "centiskorch": 28,
+        "centureon": 25,
+        "ceruledge": 15,
+        "cetitan": 15,
+        "cetoddle": 1,
+        "champeon": 25,
+        "chandelure": 15,
+        "chansey": 1,
+        "charcadet": 1,
+        "charizard": 36,
+        "charjabug": 17,
+        "charmander": 1,
+        "charmeleon": 16,
+        "chatot": 1,
+        "cherrim": 25,
+        "cherubi": 1,
+        "chesnaught": 36,
+        "chespin": 1,
+        "chewtle": 1,
+        "chi-yu": 1,
+        "chien-pao": 1,
+        "chikorita": 1,
+        "chimchar": 1,
+        "chimecho": 28,
+        "chinchou": 1,
+        "chingling": 1,
+        "chyinmunk": 1,
+        "cinccino": 15,
+        "cinderace": 35,
+        "clamperl": 1,
+        "clauncher": 1,
+        "clawitzer": 37,
+        "claydol": 33,
+        "clefable": 15,
+        "clefairy": 18,
+        "cleffa": 1,
+        "clobbopus": 1,
+        "clodsire": 20,
+        "cloyster": 15,
+        "coalossal": 34,
+        "cobalion": 1,
+        "cofagrigus": 34,
+        "combee": 1,
+        "combusken": 16,
+        "comfey": 1,
+        "companeon": 25,
+        "conkeldurr": 15,
+        "copperajah": 34,
+        "corphish": 1,
+        "corroseon": 25,
+        "corsola": 1,
+        "corsola-galarian": 1,
+        "corviknight": 38,
+        "corvisquire": 18,
+        "cosmoem": 43,
+        "cosmog": 1,
+        "cottonee": 1,
+        "crabominable": 15,
+        "crabrawler": 1,
+        "cradily": 34,
+        "cramorant": 1,
+        "cranidos": 1,
+        "crawdaunt": 30,
+        "crescemon": 1,
+        "cresselia": 1,
+        "croagunk": 1,
+        "crobat": 34,
+        "crocalor": 16,
+        "croconaw": 18,
+        "crustle": 34,
+        "cryogonal": 1,
+        "cubblfly": 10,
+        "cubbug": 1,
+        "cubchoo": 1,
+        "cubone": 1,
+        "cufant": 1,
+        "cursola": 38,
+        "cutiefly": 1,
+        "cyclizar": 1,
+        "cyndaquil": 1,
+        "dachsbun": 26,
+        "darkrai": 1,
+        "darmanitan-galarian": 15,
+        "darmanitan-standard": 15,
+        "dartrix": 17,
+        "darumaka": 1,
+        "darumaka-galarian": 1,
+        "dearewl": 15,
+        "decidueye": 34,
+        "decidueye-hisuian": 15,
+        "dedenne": 1,
+        "deerling": 1,
+        "deino": 1,
+        "delcatty": 15,
+        "delibird": 1,
+        "delphox": 36,
+        "deoxys": 1,
+        "dewgong": 34,
+        "dewott": 17,
+        "dewpider": 1,
+        "dhelmise": 1,
+        "dialga": 1,
+        "dianamon": 1,
+        "diancie": 1,
+        "diggersby": 20,
+        "diglett": 1,
+        "diglett-alolan": 1,
+        "dipplin": 15,
+        "ditto": 1,
+        "dodrio": 31,
+        "doduo": 1,
+        "dolliv": 25,
+        "dondozo": 1,
+        "donphan": 25,
+        "dottler": 10,
+        "doublade": 28,
+        "dracmon": 1,
+        "draconeon": 25,
+        "dracovish": 1,
+        "dracozolt": 1,
+        "dragalge": 38,
+        "dragapult": 55,
+        "dragonair": 25,
+        "dragonite": 55,
+        "drakloak": 20,
+        "drampa": 1,
+        "drapion": 34,
+        "dratini": 1,
+        "drednaw": 22,
+        "dreepy": 1,
+        "drifblim": 28,
+        "drifloon": 1,
+        "drilbur": 1,
+        "drizzile": 16,
+        "drowzee": 1,
+        "druddigon": 1,
+        "dubwool": 24,
+        "ducklett": 1,
+        "dudunsparce": 1,
+        "dugtrio": 26,
+        "dugtrio-alolan": 26,
+        "dunseraph": 1,
+        "dunsparce": 1,
+        "duosion": 21,
+        "duraludon": 1,
+        "durant": 1,
+        "dusclops": 33,
+        "dusknoir": 15,
+        "duskull": 1,
+        "dustox": 10,
+        "dwebble": 1,
+        "eelektrik": 20,
+        "eelektross": 15,
+        "eevee": 1,
+        "ekans": 1,
+        "eldegoss": 20,
+        "electabuzz": 27,
+        "electivire": 15,
+        "electrike": 1,
+        "electrode": 30,
+        "electrode-hisuian": 15,
+        "electruxo": 27,
+        "elekid": 1,
+        "eletux": 1,
+        "elgyem": 1,
+        "emboar": 36,
+        "emolga": 1,
+        "empoleon": 36,
+        "entei": 1,
+        "entoeon": 25,
+        "escavalier": 15,
+        "espathra": 35,
+        "espeon": 15,
+        "espurr": 1,
+        "eternatus": 1,
+        "excadrill": 31,
+        "exeggcute": 1,
+        "exeggutor": 15,
+        "exeggutor-alolan": 15,
+        "exploud": 35,
+        "falinks": 1,
+        "farfetchd": 1,
+        "farfetchd-galarian": 1,
+        "farigiraf": 1,
+        "fearow": 20,
+        "feebas": 1,
+        "fennekin": 1,
+        "feraligatr": 30,
+        "ferroseed": 1,
+        "ferrothorn": 34,
+        "fezandipiti": 1,
+        "fidough": 1,
+        "finizen": 1,
+        "finneon": 1,
+        "flaaffy": 15,
+        "flabebe": 1,
+        "flamigo": 1,
+        "flapple": 15,
+        "flareon": 15,
+        "fletchinder": 17,
+        "fletchling": 1,
+        "flittle": 1,
+        "floatzel": 26,
+        "floette": 19,
+        "floragato": 16,
+        "florges": 15,
+        "flutter-mane": 1,
+        "flygon": 42,
+        "folerog": 18,
+        "fomantis": 1,
+        "foongus": 1,
+        "forretress": 31,
+        "fortog": 1,
+        "fraxure": 28,
+        "frigibax": 1,
+        "frillish": 1,
+        "froakie": 1,
+        "frogadier": 16,
+        "froslass": 15,
+        "frosmoth": 15,
+        "fuecoco": 1,
+        "furfrou": 1,
+        "furret": 15,
+        "gabite": 25,
+        "galarian-darmanitan": 15,
+        "galarian-darumaka": 1,
+        "gallade": 15,
+        "galvantula": 31,
+        "gararewl": 32,
+        "garbodor": 36,
+        "garchomp": 55,
+        "gardevoir": 30,
+        "garganacl": 38,
+        "gastly": 1,
+        "gastrodon": 30,
+        "genesect": 1,
+        "gengar": 15,
+        "geodude": 1,
+        "geodude-alolan": 1,
+        "gholdengo": 15,
+        "gible": 1,
+        "gigalith": 15,
+        "gimmighoul": 1,
+        "gimmighoul-roaming": 1,
+        "girafarig": 1,
+        "glaceon": 15,
+        "glalie": 37,
+        "glameow": 1,
+        "glastrier": 1,
+        "gligar": 1,
+        "glimmet": 1,
+        "glimmora": 35,
+        "gliscor": 15,
+        "gloom": 21,
+        "gogoat": 32,
+        "golbat": 22,
+        "goldeen": 1,
+        "golduck": 33,
+        "golem": 15,
+        "golem-alolan": 15,
+        "golett": 1,
+        "golisopod": 30,
+        "golurk": 37,
+        "goodra": 50,
+        "goodra-hisuian": 50,
+        "goomy": 1,
+        "gorebyss": 15,
+        "gossifleur": 1,
+        "gothita": 1,
+        "gothitelle": 41,
+        "gothorita": 21,
+        "gouging-fire": 1,
+        "gourgeist": 15,
+        "grafaiai": 28,
+        "gran-dracmon": 60,
+        "granbull": 23,
+        "grapploct": 1,
+        "graveler": 25,
+        "graveler-alolan": 25,
+        "great-tusk": 1,
+        "greavard": 1,
+        "greedent": 24,
+        "greninja": 36,
+        "grimer": 1,
+        "grimer-alolan": 1,
+        "grimmsnarl": 37,
+        "grookey": 1,
+        "grotle": 18,
+        "groudon": 1,
+        "grovyle": 16,
+        "growlithe": 1,
+        "growlithe-hisuian": 1,
+        "grozard": 1,
+        "grubbin": 1,
+        "grumpig": 32,
+        "gulpin": 1,
+        "gumshoos": 20,
+        "gurdurr": 25,
+        "guzzlord": 1,
+        "gyarados": 20,
+        "hakamo-o": 25,
+        "happiny": 1,
+        "hariyama": 24,
+        "hatenna": 1,
+        "hatterene": 37,
+        "hattrem": 27,
+        "haunter": 25,
+        "hawlucha": 1,
+        "haxorus": 43,
+        "heatmor": 1,
+        "heatran": 1,
+        "heliolisk": 15,
+        "helioptile": 1,
+        "heracross": 1,
+        "herdier": 16,
+        "hippopotas": 1,
+        "hippowdon": 34,
+        "hitmonchan": 20,
+        "hitmonlee": 20,
+        "hitmontop": 20,
+        "ho-oh": 1,
+        "honchkrow": 15,
+        "honedge": 1,
+        "hoopa": 1,
+        "hoothoot": 1,
+        "hoppip": 1,
+        "horsea": 1,
+        "houndoom": 24,
+        "houndour": 1,
+        "houndstone": 30,
+        "huntail": 15,
+        "hydrapple": 1,
+        "hydreigon": 55,
+        "hypno": 26,
+        "igglybuff": 1,
+        "illumise": 1,
+        "illuseon": 25,
+        "impidimp": 1,
+        "incineroar": 34,
+        "indeedee-female": 1,
+        "indeedee-male": 1,
+        "infernape": 36,
+        "inkay": 1,
+        "inteleon": 35,
+        "iron-boulder": 1,
+        "iron-bundle": 1,
+        "iron-crown": 1,
+        "iron-hands": 1,
+        "iron-jugulis": 1,
+        "iron-leaves": 1,
+        "iron-moth": 1,
+        "iron-thorns": 1,
+        "iron-treads": 1,
+        "iron-valiant": 1,
+        "ivysaur": 16,
+        "jangmo-o": 1,
+        "jellicent": 34,
+        "jigglypuff": 17,
+        "jirachi": 1,
+        "jolteon": 15,
+        "joltik": 1,
+        "jumpluff": 27,
+        "jynx": 27,
+        "kabuto": 1,
+        "kabutops": 35,
+        "kadabra": 16,
+        "kakuna": 7,
+        "kangaskhan": 1,
+        "karrablast": 1,
+        "kartana": 1,
+        "kecleon": 1,
+        "kilowattrel": 25,
+        "kinetmunk": 14,
+        "kingambit": 52,
+        "kingdra": 15,
+        "kingler": 28,
+        "kirlia": 20,
+        "klang": 24,
+        "klawf": 1,
+        "kleavor": 15,
+        "klefki": 1,
+        "klink": 1,
+        "klinklang": 45,
+        "koffing": 1,
+        "komala": 1,
+        "kommo-o": 55,
+        "koraidon": 1,
+        "krabby": 1,
+        "kricketot": 1,
+        "kricketune": 10,
+        "krokorok": 29,
+        "krookodile": 40,
+        "kubfu": 1,
+        "kyogre": 1,
+        "kyurem": 1,
+        "lairon": 27,
+        "lampent": 28,
+        "lanturn": 27,
+        "lapras": 1,
+        "larvesta": 1,
+        "larvitar": 1,
+        "latias": 1,
+        "latios": 1,
+        "leafeon": 15,
+        "leavanny": 31,
+        "lechonk": 1,
+        "ledian": 18,
+        "ledyba": 1,
+        "lekismon": 1,
+        "lickilicky": 30,
+        "lickitung": 1,
+        "liepard": 20,
+        "lileep": 1,
+        "lilligant": 15,
+        "lilligant-hisuian": 15,
+        "lillipup": 1,
+        "linoone": 20,
+        "linoone-galarian": 20,
+        "litleo": 1,
+        "litten": 1,
+        "litwick": 1,
+        "lokix": 24,
+        "lombre": 14,
+        "lopunny": 27,
+        "lotad": 1,
+        "loudred": 18,
+        "lucario": 34,
+        "ludicolo": 15,
+        "lugia": 1,
+        "lumineon": 31,
+        "lunala": 53,
+        "lunamon": 1,
+        "lunatone": 1,
+        "lungeon": 25,
+        "lurantis": 34,
+        "luvdisc": 1,
+        "luxio": 15,
+        "luxray": 30,
+        "lycanroc-dusk": 25,
+        "lycanroc-midday": 25,
+        "lycanroc-midnight": 25,
+        "mabosstiff": 30,
+        "machamp": 15,
+        "machoke": 28,
+        "machop": 1,
+        "magby": 1,
+        "magcargo": 34,
+        "magearna": 1,
+        "magikarp": 1,
+        "magmar": 27,
+        "magmortar": 15,
+        "magnemite": 1,
+        "magneton": 28,
+        "magnezone": 15,
+        "makuhita": 1,
+        "malamar": 30,
+        "mamoswine": 1,
+        "manaphy": 50,
+        "mandibuzz": 34,
+        "manectric": 26,
+        "mankey": 1,
+        "mantine": 15,
+        "mantyke": 1,
+        "maractus": 1,
+        "mareanie": 1,
+        "mareep": 1,
+        "marill": 10,
+        "marowak": 28,
+        "marowak-alolan": 15,
+        "marshadow": 1,
+        "marshtomp": 16,
+        "maschiff": 1,
+        "masquerain": 22,
+        "matadormon": 35,
+        "maushold": 25,
+        "mawile": 1,
+        "medicham": 24,
+        "meditite": 1,
+        "meganium": 32,
+        "melmetal": 56,
+        "meloetta": 1,
+        "meltan": 1,
+        "meowscarada": 36,
+        "meowstic-female": 25,
+        "meowstic-male": 25,
+        "meowth": 1,
+        "meowth-alolan": 1,
+        "meowth-galarian": 1,
+        "mesprit": 1,
+        "metagross": 55,
+        "metalynx": 28,
+        "metang": 20,
+        "metapod": 7,
+        "mew": 1,
+        "mewtwo": 1,
+        "mienfoo": 1,
+        "mienshao": 34,
+        "mightyena": 18,
+        "milcery": 1,
+        "milotic": 15,
+        "miltank": 1,
+        "mime-jr": 1,
+        "mimikyu": 1,
+        "minccino": 1,
+        "minun": 1,
+        "miraidon": 1,
+        "misdreavus": 1,
+        "mismagius": 15,
+        "moltres": 1,
+        "moltres-galarian": 1,
+        "monferno": 14,
+        "morelull": 1,
+        "morgrem": 27,
+        "morpeko": 1,
+        "mothim": 20,
+        "mr-mime": 1,
+        "mr-mime-galarian": 1,
+        "mr-rime": 42,
+        "mudbray": 1,
+        "mudkip": 1,
+        "mudsdale": 30,
+        "muk": 34,
+        "muk-alolan": 34,
+        "munchlax": 1,
+        "munkidori": 1,
+        "munna": 1,
+        "murkrow": 1,
+        "musharna": 15,
+        "nacli": 1,
+        "naclstack": 24,
+        "naganadel": 1,
+        "natu": 1,
+        "necrozma": 1,
+        "nickit": 1,
+        "nidoking": 15,
+        "nidoqueen": 15,
+        "nidoran-f": 1,
+        "nidoran-m": 1,
+        "nidorina": 16,
+        "nidorino": 16,
+        "nihilego": 1,
+        "nimflora": 24,
+        "nincada": 1,
+        "ninetales": 15,
+        "ninetales-alolan": 15,
+        "ninjask": 20,
+        "noctowl": 20,
+        "noibat": 1,
+        "noivern": 38,
+        "nosepass": 1,
+        "numel": 1,
+        "nuzleaf": 14,
+        "nymble": 1,
+        "obsideon": 25,
+        "obstagoon": 35,
+        "octillery": 25,
+        "oddish": 1,
+        "ogerpon": 1,
+        "oinkologne": 18,
+        "okidogi": 1,
+        "omanyte": 1,
+        "omastar": 35,
+        "onix": 1,
+        "oranguru": 1,
+        "orbeetle": 30,
+        "orchynx": 1,
+        "oricorio": 1,
+        "orthworm": 1,
+        "oshawott": 1,
+        "overqwil": 1,
+        "pachirisu": 1,
+        "palafin": 38,
+        "palkia": 1,
+        "palossand": 34,
+        "palpitoad": 25,
+        "pancham": 1,
+        "pangoro": 32,
+        "panpour": 1,
+        "pansage": 1,
+        "pansear": 1,
+        "paras": 1,
+        "parasect": 24,
+        "passimian": 1,
+        "patrat": 1,
+        "pawmi": 1,
+        "pawmo": 18,
+        "pawmot": 30,
+        "pawniard": 1,
+        "pecharunt": 1,
+        "pelipper": 25,
+        "perrserker": 28,
+        "persian": 28,
+        "persian-alolan": 28,
+        "petilil": 1,
+        "phanpy": 1,
+        "phantump": 1,
+        "pheromosa": 1,
+        "phione": 1,
+        "pichu": 1,
+        "pidgeot": 36,
+        "pidgeotto": 18,
+        "pidgey": 1,
+        "pidove": 1,
+        "pignite": 17,
+        "pikachu": 15,
+        "pikipek": 1,
+        "piloswine": 33,
+        "pincurchin": 1,
+        "pineco": 1,
+        "pinsir": 1,
+        "piplup": 1,
+        "plusle": 1,
+        "poipole": 1,
+        "politoed": 15,
+        "poliwag": 1,
+        "poliwhirl": 25,
+        "poliwrath": 15,
+        "poltchageist": 1,
+        "polteageist": 15,
+        "ponyta": 1,
+        "ponyta-galarian": 1,
+        "poochyena": 1,
+        "popplio": 1,
+        "porygon": 1,
+        "porygon-z": 15,
+        "porygon2": 15,
+        "primarina": 34,
+        "primeape": 28,
+        "prinplup": 16,
+        "probopass": 15,
+        "psyduck": 1,
+        "pumpkaboo": 1,
+        "pupitar": 25,
+        "purrloin": 1,
+        "purugly": 30,
+        "pyroar": 35,
+        "pyukumuku": 1,
+        "quagsire": 20,
+        "quaquaval": 36,
+        "quaxly": 1,
+        "quaxwell": 16,
+        "quilava": 14,
+        "quilladin": 16,
+        "qwilfish": 1,
+        "qwilfish-hisuian": 1,
+        "raboot": 16,
+        "rabsca": 22,
+        "raging-bolt": 1,
+        "raichu": 15,
+        "raichu-alolan": 15,
+        "raikou": 1,
+        "ralts": 1,
+        "rampardos": 36,
+        "rapidash": 37,
+        "rapidash-galarian": 37,
+        "raptorch": 1,
+        "raticate": 20,
+        "raticate-alolan": 20,
+        "rattata": 1,
+        "rattata-alolan": 1,
+        "rayquaza": 1,
+        "regice": 1,
+        "regidrago": 1,
+        "regieleki": 1,
+        "regigigas": 1,
+        "regirock": 1,
+        "registeel": 1,
+        "relicanth": 1,
+        "rellor": 1,
+        "remoraid": 1,
+        "reshiram": 1,
+        "reuniclus": 41,
+        "revavroom": 37,
+        "rhydon": 35,
+        "rhyhorn": 1,
+        "rhyperior": 15,
+        "ribombee": 25,
+        "rillaboom": 35,
+        "riolu": 1,
+        "roaring-moon": 1,
+        "rockruff": 1,
+        "roggenrola": 1,
+        "rolycoly": 1,
+        "rookidee": 1,
+        "roselia": 22,
+        "roserade": 15,
+        "rotom": 1,
+        "rowlet": 1,
+        "rufflet": 1,
+        "runerigus": 34,
+        "sableye": 1,
+        "salamence": 55,
+        "salandit": 1,
+        "salazzle": 33,
+        "samurott": 36,
+        "samurott-hisuian": 15,
+        "sandaconda": 36,
+        "sandile": 1,
+        "sandshrew": 1,
+        "sandshrew-alolan": 1,
+        "sandslash": 22,
+        "sandslash-alolan": 15,
+        "sandy-shocks": 1,
+        "sandygast": 1,
+        "sangloupmon": 18,
+        "sawk": 1,
+        "sawsbuck": 34,
+        "scatterbug": 1,
+        "sceptile": 36,
+        "scizor": 15,
+        "scolipede": 30,
+        "scorbunny": 1,
+        "scovillain": 15,
+        "scrafty": 35,
+        "scraggy": 1,
+        "scream-tail": 1,
+        "scyther": 1,
+        "seadra": 32,
+        "seaking": 33,
+        "sealeo": 28,
+        "seedot": 1,
+        "seel": 1,
+        "seismitoad": 36,
+        "sentret": 1,
+        "serperior": 36,
+        "servine": 17,
+        "seviper": 1,
+        "sewaddle": 1,
+        "sharpedo": 30,
+        "shaymin": 1,
+        "shedinja": 1,
+        "shelgon": 25,
+        "shellder": 1,
+        "shellos": 1,
+        "shelmet": 1,
+        "shieldon": 1,
+        "shiftry": 15,
+        "shiinotic": 24,
+        "shinx": 1,
+        "shroodle": 1,
+        "shroomish": 1,
+        "shuckle": 1,
+        "shuppet": 1,
+        "sigilyph": 1,
+        "silcoon": 7,
+        "silicobra": 1,
+        "silvally": 50,
+        "simipour": 15,
+        "simisage": 15,
+        "simisear": 15,
+        "sinistcha": 15,
+        "sinistea": 1,
+        "sirfetchd": 15,
+        "sizzlipede": 1,
+        "skarmory": 1,
+        "skeledirge": 36,
+        "skiddo": 1,
+        "skiploom": 18,
+        "skitty": 1,
+        "skorupi": 1,
+        "skrelp": 1,
+        "skuntank": 34,
+        "skwovet": 1,
+        "slaking": 36,
+        "slakoth": 1,
+        "sliggoo": 20,
+        "sliggoo-hisuian": 15,
+        "slither-wing": 1,
+        "slowbro": 37,
+        "slowbro-galarian": 15,
+        "slowking": 15,
+        "slowking-galarian": 15,
+        "slowpoke": 1,
+        "slowpoke-galarian": 1,
+        "slugma": 1,
+        "slurpuff": 15,
+        "smeargle": 1,
+        "smoliv": 1,
+        "smoochum": 1,
+        "sneasel": 1,
+        "sneasel-hisuian": 1,
+        "sneasler": 15,
+        "snivy": 1,
+        "snom": 1,
+        "snorlax": 34,
+        "snorunt": 1,
+        "snover": 1,
+        "snubbull": 1,
+        "sobble": 1,
+        "solgaleo": 53,
+        "solosis": 1,
+        "solrock": 1,
+        "spearow": 1,
+        "spectrier": 1,
+        "spewpa": 9,
+        "spheal": 1,
+        "spidops": 15,
+        "spinarak": 1,
+        "spinda": 1,
+        "spiritomb": 1,
+        "splendifowl": 31,
+        "spoink": 1,
+        "sprigatito": 1,
+        "spritzee": 1,
+        "squawkabilly": 1,
+        "squirtle": 1,
+        "stakataka": 1,
+        "stantler": 1,
+        "staraptor": 34,
+        "staravia": 14,
+        "starly": 1,
+        "starmie": 15,
+        "staryu": 1,
+        "steelix": 15,
+        "steenee": 18,
+        "stonjourner": 1,
+        "stoutland": 32,
+        "stufful": 1,
+        "stunfisk": 1,
+        "stunky": 1,
+        "sudowoodo": 1,
+        "suicune": 1,
+        "sunflora": 15,
+        "sunkern": 1,
+        "surskit": 1,
+        "swablu": 1,
+        "swadloon": 20,
+        "swalot": 26,
+        "swampert": 36,
+        "swanna": 28,
+        "swellow": 22,
+        "swinub": 1,
+        "swirlix": 1,
+        "swoobat": 20,
+        "sylveon": 15,
+        "tadbulb": 1,
+        "taillow": 1,
+        "talonflame": 35,
+        "tandemaus": 1,
+        "tangela": 1,
+        "tangrowth": 1,
+        "tapu-bulu": 1,
+        "tapu-fini": 1,
+        "tapu-koko": 1,
+        "tapu-lele": 1,
+        "tarountula": 1,
+        "tatsugiri": 1,
+        "tauros": 1,
+        "tauros-paldean": 1,
+        "teddiursa": 1,
+        "tentacool": 1,
+        "tentacruel": 30,
+        "tentomon": 1,
+        "tepig": 1,
+        "terlard": 22,
+        "terrakion": 1,
+        "thievul": 18,
+        "throh": 1,
+        "thwackey": 16,
+        "timburr": 1,
+        "ting-lu": 1,
+        "tinkatink": 1,
+        "tinkaton": 38,
+        "tinkatuff": 18,
+        "tirtouga": 1,
+        "toedscool": 1,
+        "toedscruel": 30,
+        "tofurang": 20,
+        "togedemaru": 1,
+        "togekiss": 15,
+        "togepi": 1,
+        "togetic": 10,
+        "tonemy": 1,
+        "torchic": 1,
+        "torkoal": 1,
+        "torracat": 17,
+        "torterra": 32,
+        "totodile": 1,
+        "toucannon": 28,
+        "toxapex": 38,
+        "toxel": 1,
+        "toxicroak": 33,
+        "toxtricity": 30,
+        "tranquill": 21,
+        "trapinch": 1,
+        "treecko": 1,
+        "trevenant": 15,
+        "tricereon": 25,
+        "tropius": 1,
+        "trubbish": 1,
+        "trumbeak": 14,
+        "tsareena": 1,
+        "turtonator": 1,
+        "turtwig": 1,
+        "tympole": 1,
+        "tynamo": 1,
+        "type-null": 1,
+        "typhlosion": 36,
+        "typhlosion-hisuian": 15,
+        "tyranitar": 55,
+        "tyrantrum": 39,
+        "tyrogue": 1,
+        "tyrunt": 1,
+        "umbreon": 15,
+        "unfezant": 32,
+        "unown": 1,
+        "ursaluna": 15,
+        "ursaluna-bloodmoon": 15,
+        "ursaring": 30,
+        "urshifu-rapid-strike": 15,
+        "urshifu-rapidstrike": 15,
+        "urshifu-single-strike": 15,
+        "urshifu-singlestrike": 15,
+        "uxie": 1,
+        "vanillish": 22,
+        "vanillite": 1,
+        "vanilluxe": 44,
+        "vaporeon": 15,
+        "varoom": 1,
+        "veluza": 1,
+        "venipede": 1,
+        "venomoth": 31,
+        "venonat": 1,
+        "venusaur": 32,
+        "vespiquen": 21,
+        "vibrava": 29,
+        "victini": 1,
+        "victreebel": 15,
+        "vigoroth": 18,
+        "vikavolt": 15,
+        "vileplume": 15,
+        "virizion": 1,
+        "vivillon": 12,
+        "volbeat": 1,
+        "volcanion": 1,
+        "volcarona": 41,
+        "voltorb": 1,
+        "voltorb-hisuian": 1,
+        "vullaby": 1,
+        "vulpix": 1,
+        "vulpix-alolan": 1,
+        "wailmer": 1,
+        "wailord": 40,
+        "walking-wake": 1,
+        "walrein": 44,
+        "wartortle": 16,
+        "watchog": 20,
+        "wattrel": 1,
+        "weavile": 15,
+        "weedle": 1,
+        "weepinbell": 21,
+        "weezing": 35,
+        "weezing-galarian": 35,
+        "whimsicott": 15,
+        "whirlipede": 22,
+        "whiscash": 30,
+        "whismur": 1,
+        "wigglytuff": 15,
+        "wiglett": 1,
+        "wimpod": 1,
+        "wingull": 1,
+        "wispeon": 25,
+        "wo-chien": 1,
+        "wobbuffet": 15,
+        "woobat": 1,
+        "wooloo": 1,
+        "wooper": 1,
+        "wooper-paldean": 1,
+        "wormadam-plant": 20,
+        "wormadam-sandy": 20,
+        "wormadam-trash": 20,
+        "wormon": 1,
+        "wugtrio": 26,
+        "wurmple": 1,
+        "wynaut": 1,
+        "wyrdeer": 1,
+        "wyveon": 25,
+        "xatu": 25,
+        "xerneas": 1,
+        "xurkitree": 1,
+        "yamask": 1,
+        "yamask-galarian": 1,
+        "yamper": 1,
+        "yanma": 1,
+        "yanmega": 1,
+        "yungoos": 1,
+        "yveltal": 1,
+        "zangoose": 1,
+        "zapdos": 1,
+        "zapdos-galarian": 1,
+        "zarude": 1,
+        "zebstrika": 27,
+        "zekrom": 1,
+        "zeraora": 1,
+        "zigzagoon": 1,
+        "zigzagoon-galarian": 1,
+        "zoroark": 30,
+        "zoroark-hisuian": 30,
+        "zorua": 1,
+        "zorua-hisuian": 1,
+        "zubat": 1,
+        "zweilous": 25
+      },
+      "notes": "This is the builder default. Friendship and item/stone methods follow official PTU builder policy, and known PTU-specific source mismatches can be patched per species. Other methods keep the compatible source behavior.",
+      "source": "PTU 1.05 core evolution policy + local official overrides",
+      "version": "Default: Friendship=10, Item/Stone=15, known official species corrections"
+    }
+  }
+}

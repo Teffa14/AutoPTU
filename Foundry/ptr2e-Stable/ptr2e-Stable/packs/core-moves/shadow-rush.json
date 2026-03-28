@@ -1,0 +1,50 @@
+{
+  "name": "Shadow Rush",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-rush",
+    "actions": [
+      {
+        "slug": "shadow-rush",
+        "name": "Shadow Rush",
+        "type": "attack",
+        "traits": [
+          "recoil-1-4",
+          "dash",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 85,
+        "accuracy": 90,
+        "types": [
+          "shadow"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "9BG9Rx5i54zyKpU5",
+  "effects": []
+}

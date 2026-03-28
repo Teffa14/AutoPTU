@@ -1,0 +1,51 @@
+{
+  "name": "Plasma Fists",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "plasma-fists",
+    "actions": [
+      {
+        "slug": "plasma-fists",
+        "name": "Plasma Fists",
+        "type": "attack",
+        "traits": [
+          "punch",
+          "dash",
+          "legendary",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "<p>Effect: On hit, all of user's Normal Type attacks become Electric Type for 5 Activations.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "6ZvqfZJZMSaXsvuG",
+  "effects": []
+}

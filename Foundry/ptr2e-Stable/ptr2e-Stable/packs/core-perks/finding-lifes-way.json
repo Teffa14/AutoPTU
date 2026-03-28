@@ -1,0 +1,124 @@
+{
+  "name": "Finding Life's Way",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      "item:perk:palaeontologist",
+      {
+        "gte": [
+          "{actor|skills.palaeontology.mod}",
+          50
+        ]
+      },
+      {
+        "xof": [
+          {
+            "gte": [
+              "{actor|skills.archaeology.mod}",
+              50
+            ]
+          },
+          {
+            "gte": [
+              "{actor|skills.biology.mod}",
+              50
+            ]
+          },
+          {
+            "gte": [
+              "{actor|skills.botany.mod}",
+              50
+            ]
+          },
+          {
+            "gte": [
+              "{actor|skills.geology.mod}",
+              50
+            ]
+          },
+          {
+            "gte": [
+              "{actor|skills.zoology.mod}",
+              50
+            ]
+          }
+        ],
+        "x": 2
+      }
+    ],
+    "cost": 1,
+    "description": "<p>You may use the “Revival” Downtime Action during Camp without the need for a Reanimation Machine or similar means.</p>",
+    "actions": [
+      {
+        "name": "Finding Life's Way",
+        "slug": "finding-lifes-way",
+        "description": "<p>You may use the “Revival” Downtime Action during Camp without the need for a Reanimation Machine or similar means.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "type": "generic",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "finding-lifes-way",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 76,
+        "y": 136,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "palaeontologist",
+          "yesterday-and-today",
+          "superior-specimen"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Knowledge.svg",
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "tint": null,
+          "scale": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "power",
+      "archetype": "palaeontology"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "tBR0myB9zvUXhYw6",
+  "img": "systems/ptr2e/img/perk-icons/Knowledge.svg",
+  "effects": [],
+  "folder": "aUkQAkBYAmrv6REK"
+}

@@ -1,0 +1,357 @@
+{
+  "name": "pecharunt",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "poison",
+      "ghost"
+    ],
+    "stats": {
+      "hp": 88,
+      "atk": 88,
+      "def": 160,
+      "spa": 88,
+      "spd": 88,
+      "spe": 88
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "smog",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poison-gas",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "memento",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "astonish",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "withdraw",
+          "level": 8,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "destiny-bond",
+          "level": 16,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fake-tears",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "parting-shot",
+          "level": 32,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-ball",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "malignant-chain",
+          "level": 48,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "level": 56,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "nasty-plot",
+          "level": 64,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "recover",
+          "level": 72,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "defense-curl",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rollout",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mean-look",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "night-shade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "spite",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "imprison",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "venoshock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acid-spray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "foul-play",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hex",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "phantom-force",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poltergeist",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.3,
+      "weight": 0.3,
+      "category": "medium",
+      "type": "height"
+    },
+    "captureRate": 27,
+    "eggGroups": [],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "pecharunt",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 1025,
+    "slug": "pecharunt",
+    "traits": [
+      "pokemon",
+      "hover",
+      "legendary",
+      "glow-2",
+      "venomous",
+      "breathless",
+      "jump-3"
+    ],
+    "diet": [],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "poison-puppeteer"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "merciless"
+        },
+        {
+          "slug": "poison-absorb"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "corrosion"
+        },
+        {
+          "slug": "shell-armor"
+        }
+      ],
+      "master": [
+        {
+          "slug": "benevolent-gift"
+        },
+        {
+          "slug": "serene-grace"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 14
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "aura-sense",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "disguise",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "husbandry",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "medicine",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychology",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "fODwDeRoB655G8HK",
+  "effects": [],
+  "folder": null
+}

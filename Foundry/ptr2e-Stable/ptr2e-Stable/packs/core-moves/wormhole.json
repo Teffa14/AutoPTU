@@ -1,0 +1,53 @@
+{
+  "name": "Wormhole",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "wormhole",
+    "actions": [
+      {
+        "slug": "wormhole",
+        "name": "Wormhole",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "dash",
+          "pass-6",
+          "priority-20",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "priority": 2
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "psychic"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "ujtbYdepPwT8WpK3",
+  "effects": []
+}

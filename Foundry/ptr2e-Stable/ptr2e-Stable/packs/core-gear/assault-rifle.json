@@ -1,0 +1,261 @@
+{
+  "name": "Assault Rifle",
+  "img": "systems/ptr2e/img/icons/weapon_icon.webp",
+  "type": "weapon",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "held",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "steel",
+      "power": 75,
+      "accuracy": 80,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 2,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "weapon",
+      "fling",
+      "firearm",
+      "autoload",
+      "steel",
+      "reload-1",
+      "charge-pool-24",
+      "conventional",
+      "modern",
+      "sci-fi"
+    ],
+    "actions": [
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 35,
+        "accuracy": 95,
+        "free": true,
+        "traits": [
+          "missile",
+          "firearm"
+        ],
+        "name": "Assault Rifle",
+        "slug": "assault-rifle",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 21,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 60,
+        "accuracy": 90,
+        "free": true,
+        "traits": [
+          "missile",
+          "firearm"
+        ],
+        "name": "Assault Rifle (Burst)",
+        "slug": "assault-rifle-burst",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 21,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "variant": "assault-rifle",
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 30,
+        "accuracy": 85,
+        "free": true,
+        "traits": [
+          "missile",
+          "6-strike",
+          "firearm"
+        ],
+        "name": "Assault Rifle (Auto)",
+        "slug": "assault-rifle-auto",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 21,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "variant": "assault-rifle",
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 35,
+        "accuracy": 70,
+        "free": true,
+        "traits": [
+          "dash",
+          "missile",
+          "5-strike",
+          "firearm"
+        ],
+        "name": "Assault Rifle (Hip Fire)",
+        "slug": "assault-rifle-hip-fire",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "wide-line",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "variant": "assault-rifle",
+        "predicate": []
+      }
+    ],
+    "weaponType": "untyped",
+    "weaponPp": 18,
+    "slug": "assault-rifle",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "description": "<p>An assault rifle is a select fire rifle that uses an intermediate-rifle cartridge and a detachable magazine. A common primary weapon of modern armies in contemporary settings.</p>"
+  },
+  "_id": "Ba3EyqpUePgGrfQk",
+  "effects": [
+    {
+      "name": "Assault Rifle",
+      "type": "passive",
+      "_id": "uOxpw5kHcRtpv4pa",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "{item|id}-attack-damage-flat",
+            "value": 22,
+            "predicate": [],
+            "label": "Assault Rifle",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "flat-modifier",
+            "key": "assault-rifle-burst-attack-damage-flat",
+            "value": 44,
+            "predicate": [],
+            "label": "Burst",
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.347",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1743632386665,
+        "modifiedTime": 1757632018306,
+        "lastModifiedBy": "UTlFSVhgfIUeTsoW",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "fwBg1GB1fMcgPklo"
+}

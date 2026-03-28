@@ -1,0 +1,112 @@
+{
+  "name": "Feedback",
+  "type": "ability",
+  "img": "systems/ptr2e/img/item-icons/lucky%20punch.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive",
+          "interrupt-2"
+        ],
+        "name": "Feedback",
+        "slug": "feedback",
+        "type": "passive",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3,
+          "trigger": "<p>The user is hit by a Physical- or Special-Category Attack.</p>"
+        },
+        "range": {
+          "target": "creature",
+          "distance": 8,
+          "unit": "m"
+        },
+        "description": "<p>Trigger: The user is hit by a Physical- or Special-Category Attack.</p><p>Effect: The attacking creature takes two Ticks of HP damage.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user is hit by a Physical- or Special-Category Attack.</p><p>Effect: The attacking creature takes two Ticks of HP damage.</p>",
+    "traits": [
+      "defensive"
+    ],
+    "slug": "feedback",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "6I3avjOnSCjM7LLh",
+  "effects": [
+    {
+      "name": "Feedback",
+      "type": "passive",
+      "_id": "2ilRhy8HdpOQ1wqp",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "damaging-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.4DlXFTVooz07YcDm",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": false,
+            "affects": "origin",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.changes.0.value",
+                "value": -2
+              }
+            ],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1757875098876,
+        "modifiedTime": 1757875272511,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

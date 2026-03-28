@@ -1,0 +1,51 @@
+{
+  "name": "G-Max Gravitas",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "g-max-gravitas",
+    "actions": [
+      {
+        "slug": "g-max-gravitas",
+        "name": "G-Max Gravitas",
+        "type": "attack",
+        "traits": [
+          "max",
+          "move-locked",
+          "sky",
+          "blast-7"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "psychic"
+        ],
+        "description": "<p>Effect: All valid targets are @Affliction[grounded] 5.</p><p>The user may spend up to 6 additional PP, increasing the Power of this attack by 15 per PP spent.</p><p>Requirement: User is a Dynamaxed Orbeetle and has a Psychic-Type attack on their Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "SjWNIr5r2QjHMMYL",
+  "effects": []
+}

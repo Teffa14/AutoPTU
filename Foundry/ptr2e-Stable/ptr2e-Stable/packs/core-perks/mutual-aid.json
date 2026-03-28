@@ -1,0 +1,67 @@
+{
+  "folder": "4UhJK1LInml07WJf",
+  "name": "Mutual Aid",
+  "type": "perk",
+  "_id": "TnOyCtPpVIoFL02k",
+  "img": "systems/ptr2e/img/perk-icons/Knowledge.svg",
+  "system": {
+    "actions": [],
+    "slug": "mutual-aid",
+    "description": "<p>When healing another creature, you may spend an additional 4PP to also benefit from the healing applied to the creature.</p>",
+    "traits": [],
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.medicine.mod}",
+          45
+        ]
+      }
+    ],
+    "cost": 3,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "cautious-healer",
+          "martyrs-gift"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#000080",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Knowledge.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 58,
+        "y": 80,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "resilience",
+      "archetype": "healer"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "effects": []
+}

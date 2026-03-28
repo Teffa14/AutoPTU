@@ -1,0 +1,46 @@
+{
+  "name": "Stoke",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "stoke",
+    "actions": [
+      {
+        "slug": "stoke",
+        "name": "Stoke",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "fire"
+        ],
+        "description": "<p>Effect: The user gains @Affliction[stoked] 1 and +1 SPD Stage for 5 Activations.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "51bKgpaPceb1kg5n",
+  "effects": []
+}

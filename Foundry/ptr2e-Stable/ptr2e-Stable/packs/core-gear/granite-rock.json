@@ -1,0 +1,50 @@
+{
+  "name": "Granite Rock",
+  "img": "systems/ptr2e/img/icons/weapon_icon.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "rock",
+      "power": 60,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "common",
+    "traits": [
+      "weapon",
+      "blunt",
+      "stack-20",
+      "rock",
+      "lob",
+      "fling"
+    ],
+    "slug": "granite-rock",
+    "stack": 20,
+    "quantity": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "consumableType": "other",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "N2kcxxRYD0p0HPz9",
+  "effects": [],
+  "folder": "MKaFm5Pvt7tvgdAa"
+}

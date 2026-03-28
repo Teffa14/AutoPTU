@@ -1,0 +1,477 @@
+{
+  "name": "cufant",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "steel"
+    ],
+    "stats": {
+      "hp": 72,
+      "atk": 80,
+      "def": 49,
+      "spa": 40,
+      "spd": 49,
+      "spe": 40
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "growl",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rollout",
+          "level": 5,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-smash",
+          "level": 10,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bulldoze",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stomp",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-defense",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "strength",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-head",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "play-rough",
+          "level": 45,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "high-horsepower",
+          "level": 50,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "superpower",
+          "level": 55,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "whirlwind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fissure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "defense-curl",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "belch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "steel-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "steel-roller",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mega-kick",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earthquake",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "screech",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "brick-break",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endeavor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earth-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "power-whip",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heavy-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "work-up",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "brutal-swing",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-press",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.2,
+      "weight": 100,
+      "category": "medium",
+      "type": "quad"
+    },
+    "captureRate": 190,
+    "eggGroups": [
+      "ground",
+      "mineral"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "cufant",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "copperajah",
+          "uuid": "Compendium.ptr2e.core-species.Item.n2W7jTlhfZD4s7Ce",
+          "methods": [
+            {
+              "type": "level",
+              "level": 34,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.PMBo8fpPg7jUFpgy"
+    },
+    "number": 878,
+    "traits": [
+      "pokemon",
+      "quadrupedal",
+      "lumbering",
+      "pack-mon",
+      "underdog",
+      "jump-1"
+    ],
+    "diet": [
+      "herbivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "sheer-force"
+        },
+        {
+          "slug": "heavy-metal"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "filter"
+        },
+        {
+          "slug": "intimidate"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "sand-force"
+        },
+        {
+          "slug": "sand-rush"
+        }
+      ],
+      "master": [
+        {
+          "slug": "huge-power"
+        },
+        {
+          "slug": "mold-breaker"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 4
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "jungle",
+      "grassland",
+      "cave",
+      "badland",
+      "riverside"
+    ],
+    "slug": "cufant",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "PMBo8fpPg7jUFpgy",
+  "effects": [],
+  "folder": null
+}

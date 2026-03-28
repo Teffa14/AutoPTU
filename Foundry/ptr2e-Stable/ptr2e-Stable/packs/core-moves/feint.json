@@ -1,0 +1,51 @@
+{
+  "name": "Feint",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "feint",
+    "actions": [
+      {
+        "slug": "feint",
+        "name": "Feint",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "priority-20",
+          "contact",
+          "pierce"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "priority": 2
+        },
+        "category": "physical",
+        "power": 30,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "PjOZd4TXRrr4PyHx",
+  "effects": []
+}

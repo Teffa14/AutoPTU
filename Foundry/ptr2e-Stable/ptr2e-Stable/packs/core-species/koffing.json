@@ -1,0 +1,520 @@
+{
+  "name": "koffing",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 109,
+    "size": {
+      "category": "small",
+      "type": "height",
+      "height": 0.6,
+      "weight": 1
+    },
+    "diet": [
+      "waste"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 6
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "hover",
+      "venomous",
+      "volatile-bomb"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "venom"
+        },
+        {
+          "slug": "stench"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "inflationary"
+        },
+        {
+          "slug": "neutralizing-gas"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "pollution"
+        },
+        {
+          "slug": "flare-boost"
+        }
+      ],
+      "master": [
+        {
+          "slug": "aftermath"
+        },
+        {
+          "slug": "merciless"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "koffing",
+    "stats": {
+      "hp": 40,
+      "atk": 65,
+      "def": 95,
+      "spa": 60,
+      "spd": 45,
+      "spe": 35
+    },
+    "types": [
+      "poison"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "acid-spray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "bide",
+          "gen": "yellow"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "corrosive-gas",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "crystal"
+        },
+        {
+          "name": "flash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "grudge",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "headbutt",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "incinerate",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "pain-split",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "payback",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psybeam",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "psywave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rage",
+          "gen": "yellow"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rollout",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "screech",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "spite",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stockpile",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "crystal"
+        },
+        {
+          "name": "torment",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic-spikes",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "venom-drench",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "venoshock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "will-o-wisp",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "zap-cannon",
+          "gen": "crystal"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "poison-gas",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "smog",
+          "gen": "scarlet-violet",
+          "level": 4
+        },
+        {
+          "name": "smokescreen",
+          "gen": "scarlet-violet",
+          "level": 8
+        },
+        {
+          "name": "clear-smog",
+          "gen": "scarlet-violet",
+          "level": 12
+        },
+        {
+          "name": "assurance",
+          "gen": "scarlet-violet",
+          "level": 16
+        },
+        {
+          "name": "sludge",
+          "gen": "scarlet-violet",
+          "level": 20
+        },
+        {
+          "name": "haze",
+          "gen": "scarlet-violet",
+          "level": 24
+        },
+        {
+          "name": "self-destruct",
+          "gen": "scarlet-violet",
+          "level": 28
+        },
+        {
+          "name": "gyro-ball",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 29
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet",
+          "level": 32
+        },
+        {
+          "name": "toxic",
+          "gen": "scarlet-violet",
+          "level": 36
+        },
+        {
+          "name": "belch",
+          "gen": "scarlet-violet",
+          "level": 40
+        },
+        {
+          "name": "explosion",
+          "gen": "scarlet-violet",
+          "level": 44
+        },
+        {
+          "name": "memento",
+          "gen": "scarlet-violet",
+          "level": 48
+        },
+        {
+          "name": "destiny-bond",
+          "gen": "scarlet-violet",
+          "level": 52
+        }
+      ]
+    },
+    "captureRate": 190,
+    "eggGroups": [
+      "indeterminate"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "koffing",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "weezing",
+          "uuid": "Compendium.ptr2e.core-species.Item.4zROgjTcxyrG3HF8",
+          "methods": [
+            {
+              "type": "level",
+              "level": 35,
+              "operand": "and"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": [],
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        },
+        {
+          "name": "weezing-galarian",
+          "uuid": "Compendium.ptr2e.core-species.Item.gsze5spZEJAlNw3M",
+          "methods": [
+            {
+              "type": "level",
+              "level": 35,
+              "operand": "and"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": [],
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.QB3Tz0dzVhY9mlzk",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "habitats": [
+      "city",
+      "volcano"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "QB3Tz0dzVhY9mlzk",
+  "effects": []
+}

@@ -1,0 +1,62 @@
+{
+  "name": "Fearmonger",
+  "type": "ability",
+  "img": "icons/svg/terror.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "friendly",
+          "interrupt-1"
+        ],
+        "name": "Fearmonger",
+        "slug": "fearmonger-hit",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 2,
+          "trigger": "<p>A creature hits the user with a [Contact] attack.</p>",
+          "delay": null,
+          "priority": null
+        },
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "description": "<p>Effect: The user’s Attacks have a 20% chance to inflict Affliction[paralysis 5] on targets that have @Affliction[fear]. NEEDS AUTOMATION</p>"
+      },
+      {
+        "traits": [],
+        "name": "Fearmonger",
+        "slug": "fearmonger",
+        "type": "passive",
+        "cost": {},
+        "range": {
+          "target": "enemy-aura",
+          "distance": 8,
+          "unit": "m"
+        },
+        "description": "<p>Effect: Valid targets in range are @Affliction[fear] and @Affliction[suppressed]. NEEDS AUTOMATION</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user’s Attacks have a 20% chance to inflict Affliction[paralysis 5] on targets that have @Affliction[fear]. Enemy creatures within 8m have @Affliction[fear] and @Affliction[suppressed]. NEEDS AUTOMATION.</p>",
+    "traits": [
+      "friendly"
+    ],
+    "slug": "fearmonger",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "PM4HEKaK4F3GHfO6",
+  "effects": []
+}

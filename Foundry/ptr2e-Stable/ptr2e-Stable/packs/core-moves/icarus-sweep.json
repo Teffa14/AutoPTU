@@ -1,0 +1,52 @@
+{
+  "name": "Icarus Sweep",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "system": {
+    "slug": "icarus-sweep",
+    "actions": [
+      {
+        "slug": "icarus-sweep",
+        "name": "Icarus Sweep",
+        "type": "attack",
+        "traits": [
+          "kick",
+          "priority-10",
+          "contact",
+          "push-3"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 2,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "priority": 1
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "flying"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "C3lFIFdSs44IVgxX",
+  "effects": []
+}

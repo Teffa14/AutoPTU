@@ -1,0 +1,111 @@
+{
+  "name": "Defiant",
+  "type": "ability",
+  "img": "systems/ptr2e/img/icons/physical_icon.png",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "interrupt-2"
+        ],
+        "name": "Defiant",
+        "slug": "defiant",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>A negative [Stage Change] effect from another creature is applied to the user.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: A negative [Stage Change] effect from another creature is applied to the user.</p><p>Effect: The user gains @UUID[Compendium.ptr2e.core-effects.Item.g1Gt9mJWimAqrqZ0]{+2 ATK Stage} for 5 Activations.</p><p></p>",
+        "img": "systems/ptr2e/img/icons/physical_icon.png"
+      }
+    ],
+    "description": "<p>Trigger: A negative [Stage Change] effect from another creature is applied to the user.</p><p>Effect: The user gains @UUID[Compendium.ptr2e.core-effects.Item.g1Gt9mJWimAqrqZ0]{+2 ATK Stage} for 5 Activations.</p>",
+    "traits": [],
+    "slug": "defiant",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "zkPwckV2p2C4AjFp",
+  "effects": [
+    {
+      "name": "Defiant",
+      "type": "passive",
+      "_id": "AtxTtATg56OHCBz7",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-note",
+            "key": "effect-applied",
+            "value": "{actor|link}'s {item|link} may be able to activate as they just had an effect applied!",
+            "predicate": [],
+            "visibility": null,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "defiant-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.g1Gt9mJWimAqrqZ0",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "self",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-abilities.Item.zkPwckV2p2C4AjFp.ActiveEffect.AtxTtATg56OHCBz7",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1746198074555,
+        "modifiedTime": 1765277977272,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

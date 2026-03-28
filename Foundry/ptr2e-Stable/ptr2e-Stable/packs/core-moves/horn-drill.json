@@ -1,0 +1,51 @@
+{
+  "name": "Horn Drill",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "horn-drill",
+    "actions": [
+      {
+        "slug": "horn-drill",
+        "name": "Horn Drill",
+        "type": "attack",
+        "traits": [
+          "execute",
+          "unreliable",
+          "horn",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": -5
+        },
+        "category": "physical",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "dFqT5GedbWILkriq",
+  "effects": []
+}

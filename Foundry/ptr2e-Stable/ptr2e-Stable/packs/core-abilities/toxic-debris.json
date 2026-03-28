@@ -1,0 +1,142 @@
+{
+  "name": "Toxic Debris",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive",
+          "hazard"
+        ],
+        "name": "Toxic Debris (Reaction)",
+        "slug": "toxic-debris-reaction",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 2,
+          "trigger": "<p>The user is hit by a Physical-Category Attack.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user is hit by a Physical-Category Attack.</p><p>Effect: The user freely uses Toxic Spikes.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [
+          "hazard"
+        ],
+        "name": "Toxic Debris (Immediate)",
+        "slug": "toxic-debris-immediate",
+        "type": "passive",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 2,
+          "trigger": "<p>The user resolves Toxic Spikes.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user resolves Toxic Spikes.</p><p>Effect: All creatures occupying spaces shared by the triggering-attack's hazards gain @Affliction[poison] 1.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user is hit by a Physical-Category Attack.</p><p>Effect: Connection - Toxic Spikes. The user freely uses Toxic Spikes. Passive: When using Toxic Spikes, the user can spend an additional 2 PP to have creatures occupying spaces shared by the triggering-attack's hazards gain @Affliction[poison] 1.</p>",
+    "traits": [
+      "defensive",
+      "connection"
+    ],
+    "slug": "toxic-debris",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "oOaKiFGlZvb15mXs",
+  "effects": [
+    {
+      "name": "Toxic Debris",
+      "type": "passive",
+      "_id": "RiqFLLZFPaCctz3h",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.ZPdwItj91QOBjAgC",
+            "predicate": [
+              "ability:toxic-debris:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "allowDuplicate": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737421720524,
+        "modifiedTime": 1754322169319,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

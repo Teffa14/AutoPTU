@@ -1,0 +1,48 @@
+{
+  "name": "Nightmare",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "nightmare",
+    "actions": [
+      {
+        "slug": "nightmare",
+        "name": "Nightmare",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>Effect: This attack can only be used on a target afflicted with @Affliction[drowsy]. On hit, the target's @Affliction[drowsy] condition is changed to @Affliction[nightmares] and the duration is increased by 5 Activations.</p>",
+        "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "oZbObxyay184GL8l",
+  "effects": []
+}

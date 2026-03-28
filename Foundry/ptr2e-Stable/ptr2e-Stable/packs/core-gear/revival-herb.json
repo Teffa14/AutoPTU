@@ -1,0 +1,60 @@
+{
+  "name": "Revival Herb",
+  "img": "systems/ptr2e/img/item-icons/revival herb.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 5,
+    "crafting": {
+      "skill": "medicine",
+      "spans": 4,
+      "materials": [
+        "3x-medicinal-leeks",
+        "1-balm-mushroom"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": true,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "consumableType": "restorative",
+    "traits": [
+      "restorative",
+      "consumable",
+      "natural",
+      "healing"
+    ],
+    "description": "<p>The target recovers @Tick[16] and reduces their @Affliction[weary] stacks by 1. May not be used in combat.</p>",
+    "quantity": 1,
+    "slug": "revival-herb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "TFpBTVjfKyFSa1Uc",
+  "effects": [],
+  "folder": "fWXwbB0LHCXeB5EW"
+}

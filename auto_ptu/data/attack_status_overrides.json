@@ -1,0 +1,2214 @@
+{
+  "absorb": {
+    "note": "Heals half the damage dealt and logs the absorption event.",
+    "status": "done"
+  },
+  "accelerock": {
+    "note": "Logs `accelerock_dash` so Dash priority is documented.",
+    "status": "done"
+  },
+  "acid": {
+    "note": "Already handles the 10% SP. DEF drop for 5 activations on hit.",
+    "status": "done"
+  },
+  "acid armor": {
+    "note": "Set-up/resolution flow already recognized.",
+    "status": "done"
+  },
+  "acid spray": {
+    "note": "Lowers SP. DEF by -2 stages for five activations when it hits.",
+    "status": "done"
+  },
+  "acrobatics": {
+    "note": "No-item users gain +5 DB, lifting the effective base to 11.",
+    "status": "done"
+  },
+  "acupressure": {
+    "note": "Roll 1d8 to buff Attack/Defense/S. Atk/S. Def/Speed/Accuracy (+2 CS), 8 picks the lowest stat.",
+    "status": "done"
+  },
+  "aerial ace": {
+    "note": "Always-hit accuracy already handled upstream.",
+    "status": "done"
+  },
+  "aeroblast": {
+    "note": "Even accuracy rolls now trigger criticals.",
+    "status": "done"
+  },
+  "after you": {
+    "note": "Schedules the target to act immediately after the caster.",
+    "status": "done"
+  },
+  "agility": {
+    "note": "Increases Speed by +2 CS with an accompanying log event.",
+    "status": "done"
+  },
+  "air cutter": {
+    "note": "Rolls \u226518 become forced criticals and emit an event.",
+    "status": "done"
+  },
+  "air slash": {
+    "note": "Rolls \u226515 inflict Flinch on the defender.",
+    "status": "done"
+  },
+  "ally switch": {
+    "note": "Swaps the user/ally positions and logs the switch.",
+    "status": "done"
+  },
+  "amnesia": {
+    "note": "Buffs Special Defense by +2 CS and records the change.",
+    "status": "done"
+  },
+  "anchor shot": {
+    "note": "Requires the user to be on an Anchor Token; traps the target for 2 rounds.",
+    "status": "done"
+  },
+  "ancient power": {
+    "note": "Rolls \u226519 raise every combat stage by +1 CS.",
+    "status": "done"
+  },
+  "apple acid": {
+    "note": "Lowers the target's Special Defense by 1 CS on hit.",
+    "status": "done"
+  },
+  "aqua jet": {
+    "note": "Logs the priority attack so the 1st-strike effect is recorded.",
+    "status": "done"
+  },
+  "aqua ring": {
+    "note": "Applies a healing coat that ticks each turn.",
+    "status": "done"
+  },
+  "aqua tail": {
+    "note": "Records the pass-through strike in the log.",
+    "status": "done"
+  },
+  "arcane fury": {
+    "note": "Makes the target Vulnerable on rolls of 19+.",
+    "status": "done"
+  },
+  "arcane storm": {
+    "note": "Slows and makes each target Vulnerable for 1 round.",
+    "status": "done"
+  },
+  "arm thrust": {
+    "note": "Five Strike handling already covers the multi-hit behavior.",
+    "status": "done"
+  },
+  "aromatherapy": {
+    "note": "Cures one status from each ally.",
+    "status": "done"
+  },
+  "aromatic mist": {
+    "note": "Raises each ally\u2019s SP. DEF by +1 CS.",
+    "status": "done"
+  },
+  "assist": {
+    "note": "Selects an ally\u2019s move and logs which one was borrowed.",
+    "status": "done"
+  },
+  "assurance": {
+    "note": "Boosts to DB 12 after the target has taken damage this round.",
+    "status": "done"
+  },
+  "astonish": {
+    "note": "Flinches on \u226515 rolls and auto-flinches unaware foes.",
+    "status": "done"
+  },
+  "astral barrage": {
+    "note": "Slows legal targets for one round on hit.",
+    "status": "done"
+  },
+  "attack of opportunity": {
+    "note": "Attack of Opportunity triggers are handled by the interrupt/shift logic.",
+    "status": "done"
+  },
+  "attack order": {
+    "note": "Critical hit threshold lowered to 18+ with a logged crit roll.",
+    "status": "done"
+  },
+  "attract": {
+    "note": "Infatuates only opposite-gender targets; fails vs same-gender/genderless.",
+    "status": "done"
+  },
+  "aura sphere": {
+    "note": "Cannot miss and already modeled via AC=None in the data.",
+    "status": "done"
+  },
+  "aura wheel": {
+    "note": "Raises the user's Speed by +1 CS on hit.",
+    "status": "done"
+  },
+  "aurora beam": {
+    "note": "Lowers the target's Attack by -1 CS on rolls of 18+.",
+    "status": "done"
+  },
+  "aurora veil": {
+    "note": "Applies an Aurora Veil blessing to allies during hail.",
+    "status": "done"
+  },
+  "autotomize": {
+    "note": "Raises the user's Speed by +2 CS.",
+    "status": "done"
+  },
+  "avalanche": {
+    "note": "Queues as a set-up move; DB 12 if the target damaged the user this round.",
+    "status": "done"
+  },
+  "baby-doll eyes": {
+    "note": "Lowers the target's Attack by -1 CS.",
+    "status": "done"
+  },
+  "backswing": {
+    "note": "Enforces Large Melee Weapon requirement.",
+    "status": "done"
+  },
+  "bane": {
+    "note": "Applies 3-turn tick damage and a -2 save penalty each turn.",
+    "status": "done"
+  },
+  "baneful bunker": {
+    "note": "Blocks the next hit and poisons melee attackers.",
+    "status": "done"
+  },
+  "barb barrage": {
+    "note": "Poisons on 17+ and can auto-max Five Strike once per scene if the target has a status.",
+    "status": "done"
+  },
+  "barrage": {
+    "note": "Five Strike handling already covers the multi-hit behavior.",
+    "status": "done"
+  },
+  "barrier": {
+    "note": "Places up to 4 barrier segments as blocking terrain on the grid.",
+    "status": "done"
+  },
+  "bash!": {
+    "note": "On 15+ rolls, sets the target's initiative to 0 next round.",
+    "status": "done"
+  },
+  "baton pass": {
+    "note": "Switches with an ally, transferring combat stages and coats.",
+    "status": "done"
+  },
+  "beak blast": {
+    "note": "Declares a setup; burns melee attackers, then shifts and attacks at end of round.",
+    "status": "done"
+  },
+  "beat up": {
+    "note": "Triggers adjacent allies to make Struggle attacks after the hit.",
+    "status": "done"
+  },
+  "behemoth bash": {
+    "note": "DB increases by +2 per positive CS on the target, up to DB 20.",
+    "status": "done"
+  },
+  "behemoth blade": {
+    "note": "DB increases by +2 per positive CS on the target, up to DB 20.",
+    "status": "done"
+  },
+  "belch": {
+    "note": "Requires trading a Digestion/Food Buff earlier in the scene.",
+    "status": "done"
+  },
+  "belly drum": {
+    "note": "Cuts the user's HP to about 50% and raises Attack to +6 CS.",
+    "status": "done"
+  },
+  "bestow": {
+    "note": "Transfers the user's held item or uses it on the target.",
+    "status": "done"
+  },
+  "bide": {
+    "note": "Stores damage taken, then releases it to adjacent foes.",
+    "status": "done"
+  },
+  "bind": {
+    "note": "Applies Bind/Grappled/Trapped for 3 activations with tick damage.",
+    "status": "done"
+  },
+  "bite": {
+    "note": "Flinches the target on a 30% roll.",
+    "status": "done"
+  },
+  "bitter malice": {
+    "note": "Lowers the target's Attack by -1 CS for 5 activations.",
+    "status": "done"
+  },
+  "blast burn": {
+    "note": "Applies the Exhaust penalty for the following turn.",
+    "status": "done"
+  },
+  "blaze kick": {
+    "note": "Burns the target on a 10% roll.",
+    "status": "done"
+  },
+  "bleakwind storm": {
+    "note": "Flinches on 15+ and freezes on 19+.",
+    "status": "done"
+  },
+  "bleed!": {
+    "note": "Applies Bleed for 3 turns, ticking damage each turn.",
+    "status": "done"
+  },
+  "blind": {
+    "note": "Stealth contest can inflict Blinded for 1 activation.",
+    "status": "done"
+  },
+  "blizzard": {
+    "note": "Freezes on 15+ and cannot miss during hail.",
+    "status": "done"
+  },
+  "block": {
+    "note": "Leaves the target Stuck and Trapped until the user's next turn.",
+    "status": "done"
+  },
+  "blue flare": {
+    "note": "Burns on 17+.",
+    "status": "done"
+  },
+  "body press": {
+    "note": "Uses the user's Defense for damage calculation.",
+    "status": "done"
+  },
+  "body slam": {
+    "note": "Paralyzes the target on rolls of 15+.",
+    "status": "done"
+  },
+  "bolt beak": {
+    "note": "Deals +10 damage against lower-initiative targets that have not acted.",
+    "status": "done"
+  },
+  "bolt strike": {
+    "note": "Status tracking already implemented in battle hooks.",
+    "status": "done"
+  },
+  "bon mot": {
+    "note": "Guile contest enrages the target and blocks AP-spend (At-Will only) for 1 round.",
+    "status": "done"
+  },
+  "bone club": {
+    "note": "Flinches the target on rolls of 18+.",
+    "status": "done"
+  },
+  "bone rush": {
+    "note": "Five Strike handling already covers the multi-hit behavior.",
+    "status": "done"
+  },
+  "bonemerang": {
+    "note": "Strike handling already covers the multi-hit behavior.",
+    "status": "done"
+  },
+  "boomburst": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "bounce": {
+    "note": "Applies Vulnerable and paralyzes on rolls of 16+.",
+    "status": "done"
+  },
+  "branch poke": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "brave bird": {
+    "note": "Recoil handling already covers the user damage.",
+    "status": "done"
+  },
+  "breaking swipe": {
+    "note": "Lowers the target's Attack by -1 CS.",
+    "status": "done"
+  },
+  "brick break": {
+    "note": "Shatters Reflect and Light Screen on hit.",
+    "status": "done"
+  },
+  "brine": {
+    "note": "DB increases to 13 when the target is at or below half HP.",
+    "status": "done"
+  },
+  "brutal swing": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "bubble": {
+    "note": "Lowers Speed by -1 CS on 16+ rolls.",
+    "status": "done"
+  },
+  "bubblebeam": {
+    "note": "Lowers Speed by -1 CS on 18+ rolls.",
+    "status": "done"
+  },
+  "bug bite": {
+    "note": "Steals a food buff from the target.",
+    "status": "done"
+  },
+  "bug buzz": {
+    "note": "Special move resolution already handles its effects.",
+    "status": "done"
+  },
+  "bulk up": {
+    "note": "Raises Attack and Defense by +1 CS.",
+    "status": "done"
+  },
+  "bulldoze": {
+    "note": "Lowers Speed by -1 CS on each hit target.",
+    "status": "done"
+  },
+  "bullet punch": {
+    "note": "Logs the priority attack so the 1st-strike effect is recorded.",
+    "status": "done"
+  },
+  "bullet seed": {
+    "note": "Five Strike handling already covers the multi-hit behavior.",
+    "status": "done"
+  },
+  "bullseye": {
+    "note": "Critical hit threshold lowered to 16+ when the attack lands.",
+    "status": "done"
+  },
+  "burn up": {
+    "note": "Removes the user's Fire typing after resolving.",
+    "status": "done"
+  },
+  "burning jealousy": {
+    "note": "Burns nearby foes with raised combat stages once per scene.",
+    "status": "done"
+  },
+  "calm mind": {
+    "note": "Raises Special Attack and Special Defense by +1 CS.",
+    "status": "done"
+  },
+  "camouflage": {
+    "note": "Changes the user's type to match weather-based terrain defaults.",
+    "status": "done"
+  },
+  "captivate": {
+    "note": "Lowers Special Attack by -2 CS against opposite-gender targets.",
+    "status": "done"
+  },
+  "ceaseless edge": {
+    "note": "Crits on 19+ and applies a Vortex trap with tick damage.",
+    "status": "done"
+  },
+  "charge": {
+    "note": "Raises Special Defense by +1 CS and boosts the next Electric attack.",
+    "status": "done"
+  },
+  "charge beam": {
+    "note": "On hit, rolls 1d20 and raises the user's Special Attack by +1 CS on 7+.",
+    "status": "done"
+  },
+  "charm": {
+    "note": "Lowers the target's Attack by -2 CS.",
+    "status": "done"
+  },
+  "chatter": {
+    "note": "Confuses targets on 16+ rolls.",
+    "status": "done"
+  },
+  "cheap shot": {
+    "note": "Priority strike handled by existing hooks.",
+    "status": "done"
+  },
+  "chip away": {
+    "note": "Ignores defense stages and damage reduction for this attack.",
+    "status": "done"
+  },
+  "chloroblast": {
+    "note": "Recoil handling already covers the user damage.",
+    "status": "done"
+  },
+  "circle throw": {
+    "note": "Forced movement handling already covers the push effect.",
+    "status": "done"
+  },
+  "clamp": {
+    "note": "Grants grapple contest bonuses and deals a tick on gaining dominance.",
+    "status": "done"
+  },
+  "clanging scales": {
+    "note": "Adds half Defense to damage and lowers the user's Defense by -1 CS.",
+    "status": "done"
+  },
+  "clangorous soul": {
+    "note": "Costs 1/3 max HP and raises all combat stages by +1 CS.",
+    "status": "done"
+  },
+  "clear smog": {
+    "note": "Resets the target's combat stages after hit.",
+    "status": "done"
+  },
+  "close combat": {
+    "note": "Lowers the user's Defense and Special Defense by -1 CS after damage.",
+    "status": "done"
+  },
+  "coaching": {
+    "note": "Raises the user's and nearby allies' Attack and Defense by +1 CS.",
+    "status": "done"
+  },
+  "coil": {
+    "note": "Raises Attack, Defense, and Accuracy by +1 CS.",
+    "status": "done"
+  },
+  "comet punch": {
+    "note": "Five Strike handling already covers the multi-hit behavior.",
+    "status": "done"
+  },
+  "cone of force": {
+    "note": "Area resolution already covers the cone effect.",
+    "status": "done"
+  },
+  "confide": {
+    "note": "Lowers the target's Special Attack by -1 CS.",
+    "status": "done"
+  },
+  "confuse ray": {
+    "note": "Inflicts Confused.",
+    "status": "done"
+  },
+  "confusion": {
+    "note": "Confuses the target on 19+ rolls.",
+    "status": "done"
+  },
+  "constrict": {
+    "note": "Lowers Speed by -1 CS and allows swift use while grappling.",
+    "status": "done"
+  },
+  "conversion": {
+    "note": "Changes the user's type to a known move's elemental type.",
+    "status": "done"
+  },
+  "conversion2": {
+    "note": "Changes the user's type to a move type that resists the last damage taken.",
+    "status": "done"
+  },
+  "copycat": {
+    "note": "Copycat resolves the target's last move.",
+    "status": "done"
+  },
+  "core enforcer": {
+    "note": "Disables a chosen target ability until the end of the encounter.",
+    "status": "done"
+  },
+  "corrosive gas": {
+    "note": "Disables held items for the scene and suppresses Steel's poison immunity.",
+    "status": "done"
+  },
+  "cosmic power": {
+    "note": "Raises Defense and Special Defense by +1 CS.",
+    "status": "done"
+  },
+  "cotton guard": {
+    "note": "Raises Defense by +3 CS.",
+    "status": "done"
+  },
+  "cotton spore": {
+    "note": "Lowers Speed by -2 CS.",
+    "status": "done"
+  },
+  "counter": {
+    "note": "Counter logic already implemented with damage reflection.",
+    "status": "done"
+  },
+  "court change": {
+    "note": "Swaps hazards across the field and swaps team blessings.",
+    "status": "done"
+  },
+  "covet": {
+    "note": "Steals a held item if the user isn't holding one.",
+    "status": "done"
+  },
+  "crabhammer": {
+    "note": "Critical hit threshold lowered to 18+.",
+    "status": "done"
+  },
+  "crafty shield": {
+    "note": "Blocks incoming status moves for nearby allies as an interrupt.",
+    "status": "done"
+  },
+  "cross chop": {
+    "note": "Critical hit threshold lowered to 16+.",
+    "status": "done"
+  },
+  "cross poison": {
+    "note": "Critical hit threshold lowered to 18+ and poisons on 19+.",
+    "status": "done"
+  },
+  "crunch": {
+    "note": "Lowers Defense by -1 CS on 17+.",
+    "status": "done"
+  },
+  "crush claw": {
+    "note": "Lowers Defense by -1 CS on even-numbered rolls.",
+    "status": "done"
+  },
+  "crush grip": {
+    "note": "Damage base scales down by 1 per 10% missing HP on the target.",
+    "status": "done"
+  },
+  "curse": {
+    "note": "Ghost users lose 1/3 max HP to curse a target; non-ghosts raise Attack/Defense and lower Speed.",
+    "status": "done"
+  },
+  "cut": {
+    "note": "Ignores up to 5 damage reduction.",
+    "status": "done"
+  },
+  "dark pulse": {
+    "note": "Flinches the target on 17+.",
+    "status": "done"
+  },
+  "dark void": {
+    "note": "Puts the target to sleep.",
+    "status": "done"
+  },
+  "dark void [sm]": {
+    "note": "Puts the target to sleep.",
+    "status": "done"
+  },
+  "darkest lariat": {
+    "note": "Ignores positive Defense stages and damage reduction.",
+    "status": "done"
+  },
+  "dazzling gleam": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "deadly strike": {
+    "note": "Always critical hit when it connects.",
+    "status": "done"
+  },
+  "decorate": {
+    "note": "Raises the target's Attack and Special Attack by +2 CS.",
+    "status": "done"
+  },
+  "defend order": {
+    "note": "Raises Defense and Special Defense by +1 CS.",
+    "status": "done"
+  },
+  "defense curl": {
+    "note": "Applies Curled Up, granting crit immunity, damage reduction, and accuracy penalty.",
+    "status": "done"
+  },
+  "defog": {
+    "note": "Clears weather, hazards, and coats.",
+    "status": "done"
+  },
+  "destiny bond": {
+    "note": "Binds targets and KOs them if they KO the user before next turn.",
+    "status": "done"
+  },
+  "detect": {
+    "note": "Auto-triggers on hit to negate the incoming move as a scene reaction.",
+    "status": "done"
+  },
+  "diamond storm": {
+    "note": "Defense boost handled on hit.",
+    "status": "done"
+  },
+  "dig": {
+    "note": "Set-up/resolution flow already recognized.",
+    "status": "done"
+  },
+  "dire claw": {
+    "note": "Inflicts Poisoned/Paralyzed/Flinch on 15+ rolls.",
+    "status": "done"
+  },
+  "dirty trick": {
+    "note": "Uses Hinder, Blind, then Low Blow contests once per target each scene.",
+    "status": "done"
+  },
+  "disable": {
+    "note": "Auto-triggers on hit to disable the attacker's move; manual use targets last move.",
+    "status": "done"
+  },
+  "disarm": {
+    "note": "Combat/Stealth contest can drop the target's held item; Telekinetic focus works at range.",
+    "status": "done"
+  },
+  "disarming voice": {
+    "note": "Never-miss handling already covered.",
+    "status": "done"
+  },
+  "discharge": {
+    "note": "Paralyzes targets on 15+ rolls.",
+    "status": "done"
+  },
+  "disengage": {
+    "note": "Shifts 1 meter without provoking attacks of opportunity.",
+    "status": "done"
+  },
+  "dive": {
+    "note": "Set-up/resolution flow already recognized.",
+    "status": "done"
+  },
+  "dizzy punch": {
+    "note": "Confuses the target on 17+ rolls.",
+    "status": "done"
+  },
+  "doom desire": {
+    "note": "Delayed hit resolution already implemented.",
+    "status": "done"
+  },
+  "double hit": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "double iron bash": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "double kick": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "double slap": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "double swipe": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "double team": {
+    "note": "Grants 3 activations that boost accuracy or evasion by +2.",
+    "status": "done"
+  },
+  "double-edge": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "draco meteor": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "dragon ascent": {
+    "note": "Lowers the user's Defense and Special Defense by -1 CS.",
+    "status": "done"
+  },
+  "dragon breath": {
+    "note": "Paralyzes the target on 15+.",
+    "status": "done"
+  },
+  "dragon claw": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "dragon dance": {
+    "note": "Raises the user's Attack and Speed by +1 CS.",
+    "status": "done"
+  },
+  "dragon darts": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "dragon energy": {
+    "note": "Damage base drops by 1 per 10% missing HP.",
+    "status": "done"
+  },
+  "dragon hammer": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "dragon pulse": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "dragon rage": {
+    "note": "Deals fixed 15 HP damage on hit.",
+    "status": "done"
+  },
+  "dragon rush": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "dragon tail": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "drain punch": {
+    "note": "Heals the user for half the damage dealt.",
+    "status": "done"
+  },
+  "draining kiss": {
+    "note": "Heals the user for half the damage dealt.",
+    "status": "done"
+  },
+  "dream eater": {
+    "note": "Only affects sleeping targets, heals half damage, and does not wake them.",
+    "status": "done"
+  },
+  "drill peck": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "drill run": {
+    "note": "Critical hit threshold lowered to 18+.",
+    "status": "done"
+  },
+  "drum beating": {
+    "note": "Lowers the target's Speed by -1 CS.",
+    "status": "done"
+  },
+  "dual chop": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "dual wingbeat": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "dynamax cannon": {
+    "note": "DB increases by +2 per positive CS on the target, up to DB 20.",
+    "status": "done"
+  },
+  "dynamic punch": {
+    "note": "Confuses the target and ignores evasion if the target is flanked.",
+    "status": "done"
+  },
+  "earth power": {
+    "note": "Lowers Special Defense by -1 CS on 16+.",
+    "status": "done"
+  },
+  "earthquake": {
+    "note": "Can hit underground targets (Dig).",
+    "status": "done"
+  },
+  "echoed voice": {
+    "note": "Damage base scales with Echoed Voice usage in the prior rounds.",
+    "status": "done"
+  },
+  "eerie impulse": {
+    "note": "Lowers the target's Special Attack by -2 CS.",
+    "status": "done"
+  },
+  "eerie spell": {
+    "note": "Once per scene, disables the target's last move used.",
+    "status": "done"
+  },
+  "egg bomb": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "electric terrain": {
+    "note": "Electrifies the field for 5 rounds; grounded Electric attacks gain +10 damage and grounded targets are immune to Sleep.",
+    "status": "done"
+  },
+  "electrify": {
+    "note": "Forces damaging Water or Melee attacks to become Electric until end of the user's next turn.",
+    "status": "done"
+  },
+  "electro ball": {
+    "note": "Adds user Speed and target Speed into the damage calculation.",
+    "status": "done"
+  },
+  "electroweb": {
+    "note": "Lowers Speed by -1 CS on all targets hit.",
+    "status": "done"
+  },
+  "embargo": {
+    "note": "Disables held items for the encounter; only one target at a time.",
+    "status": "done"
+  },
+  "ember": {
+    "note": "Burns the target on 18+.",
+    "status": "done"
+  },
+  "encore": {
+    "note": "Roll 1d6 to apply Confused, Suppressed, or Enraged.",
+    "status": "done"
+  },
+  "endeavor": {
+    "note": "Deals tick damage equal to the user's injury count.",
+    "status": "done"
+  },
+  "endure": {
+    "note": "Grants Endure to leave the user at 1 HP if a hit would KO them.",
+    "status": "done"
+  },
+  "energy ball": {
+    "note": "Lowers the target's Special Defense by -1 CS on 17+.",
+    "status": "done"
+  },
+  "energy blast": {
+    "note": "Raises the user's Special Attack by +1 CS on 19+.",
+    "status": "done"
+  },
+  "energy sphere": {
+    "note": "Raises the user's Special Defense by +1 CS on 19+.",
+    "status": "done"
+  },
+  "energy vortex": {
+    "note": "Applies Vortex and Trapped.",
+    "status": "done"
+  },
+  "entrainment": {
+    "note": "Grants one of the user's abilities for 3 turns.",
+    "status": "done"
+  },
+  "eruption": {
+    "note": "Damage base drops by 1 per 10% missing HP.",
+    "status": "done"
+  },
+  "esper wing": {
+    "note": "Critical hit threshold lowered to 18+.",
+    "status": "done"
+  },
+  "eternabeam": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "ew adept": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "ew expert": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "expanding force": {
+    "note": "Creates Psychic Terrain in a Burst 7 for 5 rounds once per scene.",
+    "status": "done"
+  },
+  "explosion": {
+    "note": "User loses HP equal to current HP plus 50% max HP.",
+    "status": "done"
+  },
+  "extrasensory": {
+    "note": "Flinches the target on 19+.",
+    "status": "done"
+  },
+  "extreme speed": {
+    "note": "Logs the priority attack so the 1st-strike effect is recorded.",
+    "status": "done"
+  },
+  "facade": {
+    "note": "DB doubles to 14 when the user has a persistent status affliction.",
+    "status": "done"
+  },
+  "fairy lock": {
+    "note": "Traps and slows legal targets while the user remains on the field.",
+    "status": "done"
+  },
+  "fairy wind": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "fake out": {
+    "note": "On the join turn, resolves with Priority and flinches the target.",
+    "status": "done"
+  },
+  "fake tears": {
+    "note": "Lowers the target's Special Defense by -2 CS on hit.",
+    "status": "done"
+  },
+  "false surrender": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "false swipe": {
+    "note": "Never drops the target below 1 HP.",
+    "status": "done"
+  },
+  "fa\u00e7ade": {
+    "note": "DB doubles to 14 when the user has a persistent status affliction.",
+    "status": "done"
+  },
+  "feather dance": {
+    "note": "Lowers every legal target's Attack by -2 Combat Stages.",
+    "status": "done"
+  },
+  "feint": {
+    "note": "Bypasses and removes shielding effects on the target.",
+    "status": "done"
+  },
+  "feint attack": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "fell stinger": {
+    "note": "Raises the user's Attack by +2 CS after it knocks out the target.",
+    "status": "done"
+  },
+  "fell stinger [sm]": {
+    "note": "Raises the user's Attack by +2 CS after it knocks out the target.",
+    "status": "done"
+  },
+  "fiery dance": {
+    "note": "Raises the user's Special Attack by +1 CS on even-numbered rolls.",
+    "status": "done"
+  },
+  "fiery wrath": {
+    "note": "Flinches the target on 17+ and may be used as Fire once per scene.",
+    "status": "done"
+  },
+  "final gambit": {
+    "note": "Self-faints (HP set to 0) and then deals damage equal to the HP lost, ignoring item triggers.",
+    "status": "done"
+  },
+  "fire blast": {
+    "note": "Burns the target on rolls of 19+.",
+    "status": "done"
+  },
+  "fire fang": {
+    "note": "Burns or Flinches on rolls of 18-19 (coin flip) and both on 20, logging both status events.",
+    "status": "done"
+  },
+  "fire lash": {
+    "note": "Lowers the target's Defense by -1 CS when it hits.",
+    "status": "done"
+  },
+  "fire pledge": {
+    "note": "Tracks pledge combos; Fire+Grass creates fire hazards, Fire+Water creates Rainbow.",
+    "status": "done"
+  },
+  "fire punch": {
+    "note": "Burns the target on rolls of 19+.",
+    "status": "done"
+  },
+  "fire spin": {
+    "note": "Applies Vortex and Trapped for 3 rounds on hit.",
+    "status": "done"
+  },
+  "first impression": {
+    "note": "On the join turn, resolves with Priority and flinches the target.",
+    "status": "done"
+  },
+  "fishious rend": {
+    "note": "Bonus +10 damage versus lower-initiative foes (tracked by fishious_rend_bonus).",
+    "status": "done"
+  },
+  "fissure": {
+    "note": "Rolls 1d100 versus 30 + level difference to instantly faint the foe; the log records the roll amount.",
+    "status": "done"
+  },
+  "flail": {
+    "note": "DB increases by +1 per injury on the user.",
+    "status": "done"
+  },
+  "flame burst": {
+    "note": "Adjacent allies that are cardinally adjacent to the target lose 5 HP when the hit lands.",
+    "status": "done"
+  },
+  "flame charge": {
+    "note": "Raises the user's Speed by +1 Combat Stage after resolving.",
+    "status": "done"
+  },
+  "flame wheel": {
+    "note": "Burns the target on rolls of 19+.",
+    "status": "done"
+  },
+  "flamethrower": {
+    "note": "Burns the target on rolls of 19+.",
+    "status": "done"
+  },
+  "flare blitz": {
+    "note": "Burns the target on rolls of 19+ plus applies the usual recoil handling (logged separately).",
+    "status": "done"
+  },
+  "flash": {
+    "note": "Lowers every legal target's Accuracy by -1.",
+    "status": "done"
+  },
+  "flash cannon": {
+    "note": "Lowers the target's Special Defense by -1 CS on rolls of 17+.",
+    "status": "done"
+  },
+  "flatter": {
+    "note": "Raises the target's Special Attack by +1 CS and confuses them.",
+    "status": "done"
+  },
+  "fleur cannon": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "fling": {
+    "note": "Consumes the held item and logs the thrown item.",
+    "status": "done"
+  },
+  "flip turn": {
+    "note": "Switches the user out after dealing damage; ignores Trapped.",
+    "status": "done"
+  },
+  "flirt": {
+    "note": "Infatuates the target (charm check not modeled).",
+    "status": "done"
+  },
+  "floral healing": {
+    "note": "Heals 1/2 max HP or 2/3 in Grassy Terrain.",
+    "status": "done"
+  },
+  "flower shield": {
+    "note": "Raises Defense of Grass-type targets by +2 CS.",
+    "status": "done"
+  },
+  "fly": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "flying press": {
+    "note": "Chooses Fighting or Flying type damage based on effectiveness.",
+    "status": "done"
+  },
+  "flying press [sm]": {
+    "note": "Chooses Fighting or Flying type damage based on effectiveness.",
+    "status": "done"
+  },
+  "focus blast": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "focus energy": {
+    "note": "Applies Pumped and extends the critical range by 2 until switching.",
+    "status": "done"
+  },
+  "focus punch": {
+    "note": "Set-up move; fails if user takes 25%+ max HP damage before resolving.",
+    "status": "done"
+  },
+  "follow me": {
+    "note": "Redirects foes to the user until the end of the next turn.",
+    "status": "done"
+  },
+  "force palm": {
+    "note": "Paralyzes the target on 18+.",
+    "status": "done"
+  },
+  "foresight": {
+    "note": "For the rest of the turn, Normal/Fighting moves can hit Ghosts.",
+    "status": "done"
+  },
+  "forest's curse": {
+    "note": "Adds the Grass type for 5 turns.",
+    "status": "done"
+  },
+  "foul play": {
+    "note": "Uses the target's Attack stat for damage.",
+    "status": "done"
+  },
+  "freeze shock": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "freeze-dry": {
+    "note": "Treats Water as weak to Ice when calculating effectiveness.",
+    "status": "done"
+  },
+  "freezing glare": {
+    "note": "Freezes on 19+ and may switch to Ice type once per scene.",
+    "status": "done"
+  },
+  "frenzy plant": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "frost breath": {
+    "note": "Always crits if it hits.",
+    "status": "done"
+  },
+  "frustration": {
+    "note": "DB becomes 9 minus the user's Loyalty value.",
+    "status": "done"
+  },
+  "furious strikes": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "fury attack": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "fury cutter": {
+    "note": "DB scales with consecutive hits and resets on miss/no damage.",
+    "status": "done"
+  },
+  "fury swipes": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "fusion bolt": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "fusion flare": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "future sight": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "gastro acid": {
+    "note": "Suppresses one of the target's abilities for the encounter.",
+    "status": "done"
+  },
+  "gear grind": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "gear up": {
+    "note": "Plus/Minus targets gain +1 Attack and Special Attack.",
+    "status": "done"
+  },
+  "gear up [ss]": {
+    "note": "Steel-typed targets gain +1 Attack and Special Attack.",
+    "status": "done"
+  },
+  "geomancy": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "giga drain": {
+    "note": "Heals half the damage dealt.",
+    "status": "done"
+  },
+  "giga impact": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "glacial lance": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "glaciate": {
+    "note": "Lowers Speed by -1 CS and even rolls slow grounded targets.",
+    "status": "done"
+  },
+  "glare": {
+    "note": "Paralyzes the target on hit.",
+    "status": "done"
+  },
+  "gouge": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "grapple": {
+    "note": "Uses the grapple contest and applies Grappled/Vulnerable on success.",
+    "status": "done"
+  },
+  "grass knot": {
+    "note": "DB equals twice the target's Weight Class.",
+    "status": "done"
+  },
+  "grass pledge": {
+    "note": "Tracks pledge combos; fire creates hazards, water slows and -2 Speed.",
+    "status": "done"
+  },
+  "grass whistle": {
+    "note": "Puts the target to Sleep.",
+    "status": "done"
+  },
+  "grassy glide": {
+    "note": "Priority on Grassy Terrain; may create Grassy Terrain after hit.",
+    "status": "done"
+  },
+  "grassy terrain": {
+    "note": "Creates Grassy Terrain for 5 rounds.",
+    "status": "done"
+  },
+  "grav apple": {
+    "note": "Lowers the target's Defense by -1 CS.",
+    "status": "done"
+  },
+  "gravity": {
+    "note": "Creates Gravity/Warped terrain for 5 rounds with +2 accuracy.",
+    "status": "done"
+  },
+  "growl": {
+    "note": "Lowers Attack by -1 CS on hit.",
+    "status": "done"
+  },
+  "growth": {
+    "note": "Raises Attack and Special Attack; doubled in sun.",
+    "status": "done"
+  },
+  "grudge": {
+    "note": "Marks the user to Suppress the attacker after a KO (interrupt style).",
+    "status": "done"
+  },
+  "guard split": {
+    "note": "Applies -5 DEF/SPDEF stat modifiers to the target and 5 damage reduction to the user.",
+    "status": "done"
+  },
+  "guard swap": {
+    "note": "Swaps Defense and Special Defense combat stages between user and target.",
+    "status": "done"
+  },
+  "guillotine": {
+    "note": "Rolls a level-based d100 check to faint the target.",
+    "status": "done"
+  },
+  "gunk shot": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "gust": {
+    "note": "Boosts DB against Fly/Sky Drop targets and logs the airborne hit.",
+    "status": "done"
+  },
+  "gyro ball": {
+    "note": "Adds bonus damage based on Speed difference.",
+    "status": "done"
+  },
+  "hail": {
+    "note": "Sets Hail weather and logs the weather change.",
+    "status": "done"
+  },
+  "hammer arm": {
+    "note": "Lowers the user's Speed by -1 CS on hit.",
+    "status": "done"
+  },
+  "harden": {
+    "note": "Raises the user's Defense by +1 CS.",
+    "status": "done"
+  },
+  "haze": {
+    "note": "Resets combat stages for all combatants.",
+    "status": "done"
+  },
+  "head charge": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "head smash": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "headbutt": {
+    "note": "Flinches on 15+ rolls.",
+    "status": "done"
+  },
+  "headlong rush": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "heal bell": {
+    "note": "Cures persistent status ailments in range.",
+    "status": "done"
+  },
+  "heal block": {
+    "note": "Prevents healing until the target switches or takes a breather.",
+    "status": "done"
+  },
+  "heal order": {
+    "note": "Heals 50% of max HP.",
+    "status": "done"
+  },
+  "heal pulse": {
+    "note": "Heals 50% of max HP on a non-self target.",
+    "status": "done"
+  },
+  "healing wish": {
+    "note": "User faints to restore target HP, injuries, and move frequency.",
+    "status": "done"
+  },
+  "heart stamp": {
+    "note": "Flinches on 15+ rolls.",
+    "status": "done"
+  },
+  "heart swap": {
+    "note": "Swaps combat stages between user and target.",
+    "status": "done"
+  },
+  "heat crash": {
+    "note": "Damage base scales with weight class difference.",
+    "status": "done"
+  },
+  "heat wave": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "heavy slam": {
+    "note": "Damage base scales with weight class difference.",
+    "status": "done"
+  },
+  "helping hand": {
+    "note": "Grants +2 accuracy and +10 damage to the target's next attack this round.",
+    "status": "done"
+  },
+  "hex": {
+    "note": "Once per scene, increases DB to 13 versus afflicted targets.",
+    "status": "done"
+  },
+  "hidden power": {
+    "note": "Assigns and persists Hidden Power's elemental type.",
+    "status": "done"
+  },
+  "hidden power bug": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power dark": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power dragon": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power electric": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power fairy": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power fighting": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power fire": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power flying": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power ghost": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power grass": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power ground": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power ice": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power poison": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power psychic": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power rock": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power steel": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "hidden power water": {
+    "note": "Typed variant uses base data; no special hook needed.",
+    "status": "done"
+  },
+  "high horsepower": {
+    "note": "Sprint usage grants Smite and logs the sprint follow-up.",
+    "status": "done"
+  },
+  "high jump kick": {
+    "note": "Miss recoil (1/4 max HP) unless blocked by a shield; blocked under Gravity.",
+    "status": "done"
+  },
+  "hinder": {
+    "note": "Opposed Athletics contest applies Slowed and Hindered for 1 round.",
+    "status": "done"
+  },
+  "hold hands": {
+    "note": "Applies Cheered to both combatants and grants 3 ticks of temp HP.",
+    "status": "done"
+  },
+  "hone claws": {
+    "note": "Raises Attack and Accuracy by +1 CS.",
+    "status": "done"
+  },
+  "horn attack": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "horn drill": {
+    "note": "D100 execute check based on level difference.",
+    "status": "done"
+  },
+  "horn leech": {
+    "note": "Drains half the damage dealt.",
+    "status": "done"
+  },
+  "howl": {
+    "note": "Raises the user's Attack by +1 CS.",
+    "status": "done"
+  },
+  "howl [ss]": {
+    "note": "Burst 1 allies gain +1 Attack CS.",
+    "status": "done"
+  },
+  "hurricane": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "hydro cannon": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "hydro pump": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "hyper beam": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "hyper fang": {
+    "note": "Flinches the target on 19+.",
+    "status": "done"
+  },
+  "hyper voice": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "hyperspace fury": {
+    "note": "Bypasses interrupts and lowers the user's Defense by -1 CS.",
+    "status": "done"
+  },
+  "hyperspace hole": {
+    "note": "Bypasses interrupts and teleports between hits when possible.",
+    "status": "done"
+  },
+  "hypnosis": {
+    "note": "Puts the target to Sleep.",
+    "status": "done"
+  },
+  "ice ball": {
+    "note": "Consecutive uses scale DB by +3 up to DB 15 and reset on miss.",
+    "status": "done"
+  },
+  "ice beam": {
+    "note": "Freezes the target on 19+.",
+    "status": "done"
+  },
+  "ice burn": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "ice fang": {
+    "note": "18-19 inflicts Freeze or Flinch; 20 inflicts both.",
+    "status": "done"
+  },
+  "ice hammer": {
+    "note": "Lowers the user's Speed by -1 CS.",
+    "status": "done"
+  },
+  "ice punch": {
+    "note": "Freezes the target on 19+.",
+    "status": "done"
+  },
+  "ice shard": {
+    "note": "Logs the priority strike.",
+    "status": "done"
+  },
+  "icicle crash": {
+    "note": "Flinches on 15+.",
+    "status": "done"
+  },
+  "icicle spear": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "icy wind": {
+    "note": "Lowers Speed by -1 CS on hit targets.",
+    "status": "done"
+  },
+  "imprison": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "incinerate": {
+    "note": "Drops a held item on hit and logs when none are found.",
+    "status": "done"
+  },
+  "infernal parade": {
+    "note": "Burns on 17+ and gains DB 12 once per scene vs afflicted targets.",
+    "status": "done"
+  },
+  "inferno": {
+    "note": "Burns the target and can ignore evasion in open terrain.",
+    "status": "done"
+  },
+  "infestation": {
+    "note": "Applies Vortex and Trapped for 3 rounds.",
+    "status": "done"
+  },
+  "ingrain": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "instruct": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "intercept melee": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "intercept ranged": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "ion deluge": {
+    "note": "Creates a short-lived ion zone that electrifies Normal moves.",
+    "status": "done"
+  },
+  "iron defense": {
+    "note": "Raises Defense by +2 CS.",
+    "status": "done"
+  },
+  "iron head": {
+    "note": "Flinches on 15+.",
+    "status": "done"
+  },
+  "iron tail": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "jaw lock": {
+    "note": "Triggers a free Grapple contest on hit.",
+    "status": "done"
+  },
+  "judgement": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "jump kick": {
+    "note": "Miss recoil (1/4 max HP) unless blocked by shields; unusable under Gravity.",
+    "status": "done"
+  },
+  "jungle healing": {
+    "note": "Heals allies in burst for 1/4 max HP and cures persistent/volatile statuses.",
+    "status": "done"
+  },
+  "karate chop": {
+    "note": "Critical hit threshold lowered to 17+.",
+    "status": "done"
+  },
+  "kinesis": {
+    "note": "Applies a one-use interrupt that imposes a -4 accuracy penalty.",
+    "status": "done"
+  },
+  "king's shield": {
+    "note": "Sets up a blocking interrupt that lowers Attack by -2 CS on melee hits.",
+    "status": "done"
+  },
+  "knock off": {
+    "note": "Removes a held item from the target.",
+    "status": "done"
+  },
+  "land's wrath": {
+    "note": "Logs Groundshaper grant (no extra mechanics yet).",
+    "status": "done"
+  },
+  "laser focus": {
+    "note": "Grants a guaranteed critical hit on the next damaging attack.",
+    "status": "done"
+  },
+  "lash out": {
+    "note": "Boosts to DB 15 after losing CS, once per target per scene.",
+    "status": "done"
+  },
+  "last resort": {
+    "note": "Requires five other distinct moves since the last switch.",
+    "status": "done"
+  },
+  "lava plume": {
+    "note": "Burns targets on 16+.",
+    "status": "done"
+  },
+  "leaf blade": {
+    "note": "Critical hit threshold lowered to 18+.",
+    "status": "done"
+  },
+  "leaf storm": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "leaf tornado": {
+    "note": "Center small/medium targets are missed; 15+ lowers Accuracy by -1 CS.",
+    "status": "done"
+  },
+  "leafage": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "leech life": {
+    "note": "Heals half the damage dealt.",
+    "status": "done"
+  },
+  "leech life [sm]": {
+    "note": "Heals half the damage dealt.",
+    "status": "done"
+  },
+  "leech seed": {
+    "note": "Applies Leech Seed ticks for 1/10 max HP and heals the source.",
+    "status": "done"
+  },
+  "leer": {
+    "note": "Lowers Defense by -1 CS on hit.",
+    "status": "done"
+  },
+  "lick": {
+    "note": "Paralyzes on 15+.",
+    "status": "done"
+  },
+  "life dew": {
+    "note": "Heals allies in burst for 1/4 max HP.",
+    "status": "done"
+  },
+  "light of ruin": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "light screen": {
+    "note": "Applies a Light Screen blessing with two charges.",
+    "status": "done"
+  },
+  "liquidation": {
+    "note": "Lowers Defense by -1 CS on 17+.",
+    "status": "done"
+  },
+  "lock-on": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "lovely kiss": {
+    "note": "Puts the target to sleep.",
+    "status": "done"
+  },
+  "low blow": {
+    "note": "Opposed Acrobatics; on success inflicts Vulnerable and Bashed.",
+    "status": "done"
+  },
+  "low kick": {
+    "note": "DB equals twice the target's Weight Class.",
+    "status": "done"
+  },
+  "low sweep": {
+    "note": "Lowers Speed by -1 CS on hit.",
+    "status": "done"
+  },
+  "lucky chant": {
+    "note": "Applies a three-charge blessing that negates critical hits.",
+    "status": "done"
+  },
+  "lunar blessing": {
+    "note": "Heals 50% max HP, clears statuses, and grants an evasion bonus.",
+    "status": "done"
+  },
+  "lunar dance": {
+    "note": "User faints to restore target HP, heal injuries, and refresh move frequency.",
+    "status": "done"
+  },
+  "lunge": {
+    "note": "After sprint, applies -5 damage penalty to the target's next attack.",
+    "status": "done"
+  },
+  "luster purge": {
+    "note": "Even-numbered rolls lower Special Defense by -1 CS.",
+    "status": "done"
+  },
+  "mach punch": {
+    "note": "Logs the priority strike.",
+    "status": "done"
+  },
+  "magic burst": {
+    "note": "Prevents attacks of opportunity for 1 round on hit foes.",
+    "status": "done"
+  },
+  "magic coat": {
+    "note": "Readies a status-reflecting interrupt that blocks non-damaging status moves.",
+    "status": "done"
+  },
+  "magic powder": {
+    "note": "Adds the Psychic type for 5 turns.",
+    "status": "done"
+  },
+  "magic room": {
+    "note": "Suppresses static item effects while active.",
+    "status": "done"
+  },
+  "magical leaf": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "magma storm": {
+    "note": "Applies Vortex and Trapped even on a miss.",
+    "status": "done"
+  },
+  "magnet bomb": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "magnet rise": {
+    "note": "Grants levitation for 5 turns.",
+    "status": "done"
+  },
+  "magnetic flux": {
+    "note": "Raises Defense and Special Defense for Plus/Minus targets.",
+    "status": "done"
+  },
+  "magnetic flux [sm]": {
+    "note": "Raises Defense and Special Defense for Plus/Minus targets.",
+    "status": "done"
+  },
+  "magnetic flux [ss]": {
+    "note": "Adjusts Defense and Special Defense for Electric/Magnetic targets.",
+    "status": "done"
+  },
+  "magnitude": {
+    "note": "Rolls a d6 to set the damage base and logs the roll.",
+    "status": "done"
+  },
+  "maneuver": {
+    "note": "Handled via trainer maneuver system.",
+    "status": "done"
+  },
+  "manipulate": {
+    "note": "Triggers trainer social maneuvers based on the users best social skill.",
+    "status": "done"
+  },
+  "mat block": {
+    "note": "Round 1 shield that blocks an incoming attack for adjacent allies.",
+    "status": "done"
+  },
+  "maul": {
+    "note": "Flinches the target.",
+    "status": "done"
+  },
+  "me first": {
+    "note": "Copies a faster foes declared damaging attack as an interrupt.",
+    "status": "done"
+  },
+  "mean look": {
+    "note": "Applies Trapped and Slowed for the encounter.",
+    "status": "done"
+  },
+  "meditate": {
+    "note": "Raises the user's Attack by +1 CS.",
+    "status": "done"
+  },
+  "mega drain": {
+    "note": "Heals half the damage dealt.",
+    "status": "done"
+  },
+  "mega kick": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "mega punch": {
+    "note": "No special hook beyond baseline resolution.",
+    "status": "done"
+  },
+  "megahorn": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "memento": {
+    "note": "Lowers all combat stages by -2 CS on the target.",
+    "status": "done"
+  },
+  "metal burst": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "metal claw": {
+    "note": "Raises Attack by +1 CS on 18+.",
+    "status": "done"
+  },
+  "metal sound": {
+    "note": "Lowers Special Defense by -2 CS on hit targets.",
+    "status": "done"
+  },
+  "meteor assault": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "meteor beam": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "meteor mash": {
+    "note": "Raises Attack by +1 CS on 15+.",
+    "status": "done"
+  },
+  "metronome": {
+    "note": "Selects a random legal move to execute.",
+    "status": "done"
+  },
+  "mh adept": {
+    "note": "Monster Hunter perk entry tracked externally.",
+    "status": "done"
+  },
+  "mh expert": {
+    "note": "Monster Hunter perk entry tracked externally.",
+    "status": "done"
+  },
+  "milk drink": {
+    "note": "Restores 50% max HP to the target.",
+    "status": "done"
+  },
+  "mimic": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "mind blown": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "mind reader": {
+    "note": "Marks a target for auto-hit or auto-miss through the next turn.",
+    "status": "done"
+  },
+  "minimize": {
+    "note": "Grants evasion and shrinks the user.",
+    "status": "done"
+  },
+  "miracle eye": {
+    "note": "Psychic moves can hit Dark targets for the rest of the turn.",
+    "status": "done"
+  },
+  "mirror coat": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "mirror move": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "mirror shot": {
+    "note": "Lowers Accuracy by -2 on 16+.",
+    "status": "done"
+  },
+  "mist": {
+    "note": "Applies a three-charge blessing that blocks combat stage drops.",
+    "status": "done"
+  },
+  "mist ball": {
+    "note": "Even-numbered rolls lower Special Attack by -1 CS.",
+    "status": "done"
+  },
+  "misty explosion": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "misty terrain": {
+    "note": "Sets Misty Terrain for 5 rounds, blocks status/confusion for grounded targets, and halves Dragon damage.",
+    "status": "done"
+  },
+  "moonblast": {
+    "note": "Lowers Special Attack by -1 CS on 15+.",
+    "status": "done"
+  },
+  "moongeist beam": {
+    "note": "Ignores defensive abilities.",
+    "status": "done"
+  },
+  "oh adept": {
+    "note": "Placeholder move entry has no combat effect in the engine data.",
+    "status": "done"
+  },
+  "origin pulse": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "outrage": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "overdrive": {
+    "note": "No bespoke effect beyond baseline damage.",
+    "status": "done"
+  },
+  "overheat": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "peck": {
+    "note": "No bespoke effect beyond baseline damage.",
+    "status": "done"
+  },
+  "perish song": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "petal blizzard": {
+    "note": "No bespoke effect beyond baseline damage.",
+    "status": "done"
+  },
+  "petal dance": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "phantom force": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "pin missile": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "plasma fists": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "poltergeist": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "pound": {
+    "note": "No bespoke effect beyond baseline damage.",
+    "status": "done"
+  },
+  "power gem": {
+    "note": "No bespoke effect beyond baseline damage.",
+    "status": "done"
+  },
+  "power whip": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "precipice blades": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "prismatic laser": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "psych up": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "psychic": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "psycho boost": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "psycho shift": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "push": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "pyro ball": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "razor wind": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "roar of time": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "rock blast": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "rock wrecker": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "role play": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "sacred sword": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "sandstorm sear": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "scale shot": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "secret force": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "shadow force": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "shadow punch": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "shock wave": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "sketch": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "skull bash": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "sky attack": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "sky drop": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "smart strike": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "solar beam": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "solar blade": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "spider web": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "spike cannon": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "springtide storm": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "steam eruption": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "steel beam": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "steel roller": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "strength": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "submission": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "swift": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "tackle": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "tackle [sm]": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "tail slap": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "take down": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "thrash": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "thunder": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "thunder wave": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "toxic": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "transform": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "twineedle": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "v-create": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "venom drench": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "vital throw": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "volt tackle": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "water shuriken": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "water shuriken [sm]": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "wave crash": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "whirlwind": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "wicked blow": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "wild charge": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "wildbolt storm": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "wood hammer": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  },
+  "yawn": {
+    "note": "Implemented via explicit hook or generic handling.",
+    "status": "done"
+  }
+}

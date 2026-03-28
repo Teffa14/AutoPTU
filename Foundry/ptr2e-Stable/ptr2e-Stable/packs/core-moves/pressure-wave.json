@@ -1,0 +1,52 @@
+{
+  "name": "Pressure Wave",
+  "type": "move",
+  "_id": "3sW2cnSDFm8C8HAF",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "pressure-wave",
+    "actions": [
+      {
+        "name": "Pressure Wave",
+        "slug": "pressure-wave",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "earthbound",
+          "priority-10",
+          "pulse"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "types": [
+          "ground"
+        ],
+        "category": "physical",
+        "power": 40,
+        "accuracy": 100,
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

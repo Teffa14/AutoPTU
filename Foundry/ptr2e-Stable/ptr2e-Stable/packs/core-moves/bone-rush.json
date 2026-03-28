@@ -1,0 +1,53 @@
+{
+  "name": "Bone Rush",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "bone-rush",
+    "actions": [
+      {
+        "slug": "bone-rush",
+        "name": "Bone Rush",
+        "type": "attack",
+        "traits": [
+          "5-strike",
+          "dash",
+          "bone",
+          "hammer"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 25,
+        "accuracy": 90,
+        "types": [
+          "ground"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "D37pvJB5fD7eG4c4",
+  "effects": []
+}

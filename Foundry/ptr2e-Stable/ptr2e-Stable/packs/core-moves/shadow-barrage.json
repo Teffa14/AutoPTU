@@ -1,0 +1,49 @@
+{
+  "name": "Shadow Barrage",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-barrage",
+    "actions": [
+      {
+        "slug": "shadow-barrage",
+        "name": "Shadow Barrage",
+        "type": "attack",
+        "traits": [
+          "missile",
+          "5-strike"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 25,
+        "accuracy": 100,
+        "types": [
+          "shadow"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "nvwHiIfxfZtSPk0d",
+  "effects": []
+}

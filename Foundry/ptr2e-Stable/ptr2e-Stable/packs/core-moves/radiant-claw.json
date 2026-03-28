@@ -1,0 +1,53 @@
+{
+  "name": "Radiant Claw",
+  "type": "move",
+  "_id": "ltoPWw8KlfJflb8r",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "radiant-claw",
+    "actions": [
+      {
+        "name": "Radiant Claw",
+        "slug": "radiant-claw",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+        "traits": [
+          "sharp",
+          "dash",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "types": [
+          "dragon"
+        ],
+        "category": "physical",
+        "power": 70,
+        "accuracy": 100,
+        "description": "<p>Effect: This attack calculates damage against the target's SPDEF, rather than DEF.</p>",
+        "defensiveStat": "spd",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": []
+}

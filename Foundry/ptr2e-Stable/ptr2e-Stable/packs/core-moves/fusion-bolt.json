@@ -1,0 +1,78 @@
+{
+  "name": "Fusion Bolt",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "fusion-bolt",
+    "actions": [
+      {
+        "slug": "fusion-bolt",
+        "name": "Fusion Bolt",
+        "type": "attack",
+        "traits": [
+          "legendary"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "fusion-bolt-overdrive",
+        "name": "Fusion Bolt (Overdrive)",
+        "type": "attack",
+        "traits": [
+          "legendary"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "<p>Fusion Flare was used by another creature during the current or previous round.</p>"
+        },
+        "category": "physical",
+        "power": 200,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "<p>Trigger: Fusion Flare was used by another creature during the current or previous round.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "variant": "fusion-bolt",
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "nRBM1Zfd0uYiXR5r",
+  "effects": []
+}

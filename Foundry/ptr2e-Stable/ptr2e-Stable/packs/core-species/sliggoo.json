@@ -1,0 +1,516 @@
+{
+  "name": "sliggoo",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 705,
+    "size": {
+      "category": "medium",
+      "type": "height",
+      "height": 0.8,
+      "weight": 17.5
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 6
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "mud-runner",
+      "fountain",
+      "wallclimber",
+      "underdog",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "sap-sipper"
+        },
+        {
+          "slug": "hydration"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "gooey"
+        },
+        {
+          "slug": "poison-heal"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "amphibious"
+        },
+        {
+          "slug": "regenerator"
+        }
+      ],
+      "master": [
+        {
+          "slug": "blubber-body"
+        },
+        {
+          "slug": "poison-absorb"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 5,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "sliggoo",
+    "stats": {
+      "hp": 68,
+      "atk": 75,
+      "def": 53,
+      "spa": 83,
+      "spd": 113,
+      "spe": 60
+    },
+    "types": [
+      "dragon"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-gun",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "absorb",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bubble",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "acid-armor",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dragon-breath",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bide",
+          "level": 13,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "protect",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flail",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "recover",
+          "level": 23,
+          "gen": "dev"
+        },
+        {
+          "name": "water-pulse",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dragon-pulse",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "curse",
+          "level": 43,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "level": 49,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "muddy-water",
+          "level": 56,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acid-spray",
+          "level": 0,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "outrage",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "draco-meteor",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "dev"
+        },
+        {
+          "name": "venom-drench",
+          "gen": null
+        },
+        {
+          "name": "spine-dart",
+          "gen": null
+        },
+        {
+          "name": "toxicrash",
+          "gen": null
+        }
+      ]
+    },
+    "captureRate": 35,
+    "eggGroups": [
+      "dragon"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "swamp"
+    ],
+    "evolutions": {
+      "name": "goomy",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "sliggoo",
+          "uuid": "Compendium.ptr2e.core-species.Item.3xSuDKZXchqrwt67",
+          "methods": [
+            {
+              "type": "level",
+              "level": 20,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "goodra",
+              "uuid": "Compendium.ptr2e.core-species.Item.eKlXb1U35vt44vZQ",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 50,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "perk": {
+                "x": 26,
+                "y": 26
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.ch9abdxnjppXGWjH",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Kalos Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "3xSuDKZXchqrwt67",
+  "effects": []
+}

@@ -1,0 +1,593 @@
+{
+  "name": "exeggcute",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 102,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.4,
+      "weight": 2.5
+    },
+    "diet": [
+      "photosynthesis"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 4
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "legless",
+      "gestalt",
+      "plant-grower",
+      "telekinetic-4",
+      "telepath",
+      "underdog",
+      "jump-3"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "chlorophyll"
+        },
+        {
+          "slug": "harvest"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "mind-mold"
+        },
+        {
+          "slug": "natural-cure"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "magic-bounce"
+        },
+        {
+          "slug": "skill-link"
+        }
+      ],
+      "master": [
+        {
+          "slug": "solar-power"
+        },
+        {
+          "slug": "drought"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 5,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "exeggcute",
+    "stats": {
+      "hp": 60,
+      "atk": 40,
+      "def": 80,
+      "spa": 60,
+      "spd": 45,
+      "spe": 40
+    },
+    "types": [
+      "grass",
+      "psychic"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "moonlight",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "ancient-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "nature-power",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "ingrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "skill-swap",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "block",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lucky-chant",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "power-swap",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "leaf-storm",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "grassy-terrain",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "double-edge",
+          "gen": "xd"
+        },
+        {
+          "name": "mimic",
+          "gen": "xd"
+        },
+        {
+          "name": "self-destruct",
+          "gen": "xd"
+        },
+        {
+          "name": "dream-eater",
+          "gen": "xd"
+        },
+        {
+          "name": "explosion",
+          "gen": "firered-leafgreen"
+        },
+        {
+          "name": "substitute",
+          "gen": "xd"
+        },
+        {
+          "name": "nightmare",
+          "gen": "xd"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "emerald"
+        },
+        {
+          "name": "rollout",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "swagger",
+          "gen": "xd"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "gravity",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "telekinesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "grassy-glide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "headbutt",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "take-down",
+          "gen": "yellow"
+        },
+        {
+          "name": "strength",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "toxic",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "rage",
+          "gen": "yellow"
+        },
+        {
+          "name": "teleport",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bide",
+          "gen": "yellow"
+        },
+        {
+          "name": "egg-bomb",
+          "gen": "yellow"
+        },
+        {
+          "name": "flash",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "psywave",
+          "gen": "yellow"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "imprison",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick-room",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psyshock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stored-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-noise",
+          "gen": "scarlet-violet"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "absorb",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hypnosis",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "barrage",
+          "level": 1,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "reflect",
+          "level": 5,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leech-seed",
+          "level": 10,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mega-drain",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stun-spore",
+          "level": 16,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "poison-powder",
+          "level": 18,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "sleep-powder",
+          "level": 20,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "confusion",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "synthesis",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psybeam",
+          "level": 27,
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "bullet-seed",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-drain",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "natural-gift",
+          "level": 37,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "extrasensory",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "uproar",
+          "level": 45,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic",
+          "level": 47,
+          "gen": "black-white"
+        },
+        {
+          "name": "worry-seed",
+          "level": 50,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "solar-beam",
+          "level": 55,
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "captureRate": 90,
+    "eggGroups": [
+      "plant"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "exeggcute",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "exeggutor",
+          "uuid": "Compendium.ptr2e.core-species.Item.R5WkIbNYLi4z0iId",
+          "methods": [
+            {
+              "type": "item",
+              "item": "leaf-stone",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 40,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        },
+        {
+          "name": "exeggutor-alolan",
+          "uuid": "Compendium.ptr2e.core-species.Item.e7o4THSc1aHuDpIL",
+          "methods": [
+            {
+              "type": "level",
+              "level": 40,
+              "operand": "or"
+            },
+            {
+              "type": "item",
+              "item": "sun-stone",
+              "operand": "or",
+              "held": false
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.qHahjcAVwtMtOMp7"
+    },
+    "habitats": [
+      "forest",
+      "jungle"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "qHahjcAVwtMtOMp7",
+  "effects": [],
+  "folder": null
+}

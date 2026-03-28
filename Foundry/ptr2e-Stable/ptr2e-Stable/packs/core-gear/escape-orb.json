@@ -1,0 +1,50 @@
+{
+  "name": "Escape Orb",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 2,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "D",
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "common",
+    "consumableType": "other",
+    "traits": [
+      "consumable",
+      "wonder-orb",
+      "held",
+      "fling"
+    ],
+    "description": "Transports the user and all allies to the nearest settlement, checkpoint, or dungeon exit.",
+    "quantity": 1,
+    "slug": "escape-orb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "jZ8FJ4ntjCFUJ15s",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Sand Decker",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "sand-decker",
+    "actions": [
+      {
+        "slug": "sand-decker",
+        "name": "Sand Decker",
+        "type": "attack",
+        "traits": [
+          "punch"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "ground"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "2gCZzg55fG6yCTto",
+  "effects": []
+}

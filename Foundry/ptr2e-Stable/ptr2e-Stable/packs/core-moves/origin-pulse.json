@@ -1,0 +1,49 @@
+{
+  "name": "Origin Pulse",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "origin-pulse",
+    "actions": [
+      {
+        "slug": "origin-pulse",
+        "name": "Origin Pulse",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "pulse"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 7,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 110,
+        "accuracy": 85,
+        "types": [
+          "water"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "5PX2ja179MwrtuPA",
+  "effects": []
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Geo Pebble",
+  "img": "systems/ptr2e/img/icons/weapon_icon.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "D",
+    "fling": {
+      "type": "rock",
+      "power": 40,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "common",
+    "traits": [
+      "weapon",
+      "blunt",
+      "stack-20",
+      "rock",
+      "lob",
+      "fling"
+    ],
+    "slug": "geo-pebble",
+    "quantity": 1,
+    "stack": 20,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "consumableType": "other",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "VimvmX9mnSA6fRjt",
+  "effects": [],
+  "folder": "GPebepuiQbZSuf35"
+}

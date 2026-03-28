@@ -1,0 +1,55 @@
+{
+  "name": "Raging Bull",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "raging-bull",
+    "actions": [
+      {
+        "slug": "raging-bull",
+        "name": "Raging Bull",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "pass-2",
+          "pierce",
+          "contact",
+          "horn"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "category": "physical",
+        "power": 90,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: This attack's damage Type depends on the user's form.</p><p>Kantonian - Normal</p><p>Paldean - Fighting</p><p>Blaze - Fire</p><p>Aqua - Water",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "jS7BSirYirZZKRpn",
+  "effects": []
+}

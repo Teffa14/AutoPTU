@@ -1,0 +1,80 @@
+{
+  "name": "Soothing Aura",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.aura-sense.mod}",
+          60
+        ]
+      },
+      "item:perk:aura-bonding"
+    ],
+    "cost": 3,
+    "description": "<p>You may make a Hard (-20) Aura Sense check to try and assuage the aura of a hostile target and calm it, rendering it non-hostile unless provoked.</p><blockquote><p>Please note, this will not function on opponents who are hostile through cold indifference rather than anger or pain.</p></blockquote>",
+    "actions": [
+      {
+        "name": "Soothing Aura",
+        "slug": "soothing-aura",
+        "description": "<p>You may make a Hard (-20) Aura Sense check to try and assuage the aura of a hostile target and calm it, rendering it non-hostile unless provoked.</p><blockquote><p>Please note, this will not function on opponents who are hostile through cold indifference rather than anger or pain.</p></blockquote>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "type": "generic",
+        "traits": [
+          "aura"
+        ],
+        "img": "systems/ptr2e/img/perk-icons/Aura.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "soothing-aura",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 179,
+        "y": 32,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "aura-bonding"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Aura.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "power",
+      "archetype": "aura"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "6m9rPR0KNKTQ2B40",
+  "img": "systems/ptr2e/img/perk-icons/Aura.svg",
+  "effects": [],
+  "folder": "I7ocNlZvZjyhwUcw"
+}

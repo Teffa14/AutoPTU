@@ -1,0 +1,46 @@
+{
+  "name": "Aerial Ace",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "system": {
+    "slug": "aerial-ace",
+    "actions": [
+      {
+        "slug": "aerial-ace",
+        "name": "Aerial Ace",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "sharp",
+          "contact",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "flying"
+        ],
+        "img": "systems/ptr2e/img/svg/flying_icon.svg"
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "DBXIJAzomYlauA52",
+  "effects": []
+}

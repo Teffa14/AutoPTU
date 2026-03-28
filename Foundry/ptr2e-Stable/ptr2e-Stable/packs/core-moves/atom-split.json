@@ -1,0 +1,48 @@
+{
+  "name": "Atom Split",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "atom-split",
+    "actions": [
+      {
+        "slug": "atom-split",
+        "name": "Atom Split",
+        "type": "attack",
+        "traits": [
+          "explode"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 15
+        },
+        "category": "special",
+        "power": 250,
+        "accuracy": 75,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "OZJqR7wH0veJfmTF",
+  "effects": []
+}

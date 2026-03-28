@@ -1,0 +1,50 @@
+{
+  "name": "Supersonic Skystrike",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "system": {
+    "slug": "supersonic-skystrike",
+    "actions": [
+      {
+        "slug": "supersonic-skystrike",
+        "name": "Supersonic Skystrike",
+        "type": "attack",
+        "traits": [
+          "zenith",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0,
+          "trigger": "<p>User's partner uses Z-Pose! and triggers the appropriate Z-Crystal.</p>"
+        },
+        "category": "special",
+        "power": 180,
+        "accuracy": 100,
+        "types": [
+          "flying"
+        ],
+        "description": "<p>Trigger: User's partner uses Z-Pose! and triggers the appropriate Z-Crystal.</p><p>Effect: The user may freely move up to the triple the amont of the Movement Score of their choice when declaring this attack.</p><p>Requirement: [Flying] Z-Crystal as an Accessory Item and a Flying-Type attack on the user's Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "quBFkj8fptxA0lcN",
+  "effects": []
+}

@@ -1,0 +1,141 @@
+{
+  "name": "Cobbled Stone",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "legendary",
+          "defensive"
+        ],
+        "name": "Cobbled Stone",
+        "slug": "cobbled-stone",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 2,
+          "trigger": "<p>The user resolves Atlas Crash.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user resolves Atlas Crash.</p><p>Effect: The user freely uses Stealth Rock as if it were on their Active List.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [
+          "legendary",
+          "defensive"
+        ],
+        "name": "Cobbled Stone",
+        "slug": "cobbled-stone",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "description": "<p>Passive: All of the user's Rock-type attacks gain [Drain 3/8].</p>",
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 10
+        }
+      }
+    ],
+    "description": "<p>Trigger: The user resolves Atlas Crash.</p><p>Effect: The user freely uses Stealth Rock as if it were on their Active List. Passive: All of the user's Rock-type attacks have [Drain 3/8].<br><br>Connection: Atlas Crash</p>",
+    "traits": [
+      "legendary",
+      "defensive"
+    ],
+    "slug": "cobbled-stone",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "WSsH1saeCoCsJOw1",
+  "effects": [
+    {
+      "name": "Cobbled Stone",
+      "type": "passive",
+      "_id": "oBcDxWEwMYpXjzcH",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.nGNLKSSBn9QOTUn6",
+            "predicate": [
+              "ability:cobbled-stone:active"
+            ],
+            "allowDuplicate": false,
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "reevaluateOnUpdate": true,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1739145883001,
+        "modifiedTime": 1754317147585,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

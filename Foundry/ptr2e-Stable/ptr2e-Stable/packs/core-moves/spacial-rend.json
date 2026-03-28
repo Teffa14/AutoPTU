@@ -1,0 +1,82 @@
+{
+  "name": "Spacial Rend",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "spacial-rend",
+    "actions": [
+      {
+        "slug": "spacial-rend",
+        "name": "Spacial Rend",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "crit-2",
+          "sharp",
+          "blast-3"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 95,
+        "types": [
+          "dragon"
+        ],
+        "description": "<p>Effect: On hit, non-[Legendary] targets are @Affliction[lifted] 3.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "spacial-rend-wave",
+        "name": "Spacial Rend (Wave)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "crit-2",
+          "sharp"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 9,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 11
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 95,
+        "types": [
+          "dragon"
+        ],
+        "description": "<p>Effect: On hit, non-[Legendary] targets are @Affliction[lifted] 3.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "spacial-rend",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "SrGEHvXVGd311qxA",
+  "effects": []
+}

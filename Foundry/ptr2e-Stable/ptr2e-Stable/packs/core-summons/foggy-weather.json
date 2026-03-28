@@ -1,0 +1,130 @@
+{
+  "name": "Foggy Weather",
+  "type": "summon",
+  "system": {
+    "_migration": {
+      "version": 0.11,
+      "previous": null
+    },
+    "traits": [
+      "partial-automation",
+      "weather",
+      "normal"
+    ],
+    "actions": [],
+    "baseAV": 150,
+    "duration": 3,
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "slug": "foggy-weather",
+    "description": "<p><strong>Foggy</strong> is pretty simple - a low-rolling, low-visbility wave of fog, obscuring vision as if you were inside a cloud. Notably, if you don't use normal ways to see and perceive, you might be at an advantage.</p><p><span style=\"text-decoration: underline;\"><span style=\"text-decoration: underline;\">Effects:</span></span></p><ul><li>Creatures without special forms of sight have -1 ACC on actions or attacks against creatures outside their Reach.</li><li>Electric-Type Attacks deal 30% less damage.</li><li>Bug-Type creatures possess Low Cover against Ranged attacks and have their SPD increased by 25%.</li><li>Psychic-Type creatures have their SPATK and SPDEF stats increased by 20%.</li><li>Sleight of Hand and Stealth rolls gain +1 DoS, and Navigate and Spot rolls lose -1 DoS.</li></ul>"
+  },
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "effects": [
+    {
+      "name": "Foggy Weather",
+      "type": "summon",
+      "_id": "2P73uDiEOQttMM0O",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "percentile-modifier",
+            "key": "electric-attack-damage",
+            "value": -30,
+            "predicate": [],
+            "label": "Electric Fog Modifier",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "basic",
+            "key": "system.modifiers.speMultiplier",
+            "value": 0.25,
+            "predicate": [
+              "trait:bug"
+            ],
+            "label": "Bug SpeedBoost",
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "key": "system.modifiers.spaMultiplier",
+            "value": 0.2,
+            "predicate": [
+              "trait:psychic"
+            ],
+            "label": "Psychic SPATK",
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "key": "system.modifiers.spdMultiplier",
+            "value": 0.2,
+            "predicate": [
+              "trait:psychic"
+            ],
+            "label": "Psychic SPDEF",
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "priority": 50,
+        "formula": "",
+        "type": "damage",
+        "targetType": "all",
+        "targetUuid": null,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": null,
+        "lastModifiedBy": "5ImYyhOS2D6D7ypO",
+        "exportSource": null,
+        "modifiedTime": 1762904909640
+      }
+    }
+  ],
+  "_id": "Kv1r7REyDbd8rJua"
+}

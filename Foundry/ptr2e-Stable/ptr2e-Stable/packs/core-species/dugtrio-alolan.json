@@ -1,0 +1,611 @@
+{
+  "name": "dugtrio-alolan",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 51,
+    "form": "alolan",
+    "size": {
+      "category": "small",
+      "type": "height",
+      "height": 0.7,
+      "weight": 66.6
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "burrow",
+        "value": 11
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "tremorsense-15",
+      "darkvision-15",
+      "burrower",
+      "pack-mon",
+      "wallclimber",
+      "alolan",
+      "3-headed",
+      "fully-evolved"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "sand-veil"
+        },
+        {
+          "slug": "tangling-hair"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "sand-force"
+        },
+        {
+          "slug": "multi-headed"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "field-explorer"
+        },
+        {
+          "slug": "earth-eater"
+        }
+      ],
+      "master": [
+        {
+          "slug": "quaker"
+        },
+        {
+          "slug": "speed-force"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 35,
+      "atk": 100,
+      "def": 60,
+      "spa": 50,
+      "spd": 70,
+      "spe": 110
+    },
+    "types": [
+      "ground",
+      "steel"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "sand-tomb",
+          "gen": "scarlet-violet",
+          "level": null
+        },
+        {
+          "name": "astonish",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "growl",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "metal-claw",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "night-slash",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "rototiller",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 1
+        },
+        {
+          "name": "sand-attack",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "scratch",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 1
+        },
+        {
+          "name": "screech",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 1
+        },
+        {
+          "name": "tri-attack",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "agility",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 12
+        },
+        {
+          "name": "mud-slap",
+          "gen": "scarlet-violet",
+          "level": 12
+        },
+        {
+          "name": "magnitude",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 14
+        },
+        {
+          "name": "fury-swipes",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 15
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet",
+          "level": 16
+        },
+        {
+          "name": "sucker-punch",
+          "gen": "scarlet-violet",
+          "level": 20
+        },
+        {
+          "name": "slash",
+          "gen": "lets-go-pikachu-lets-go-eevee",
+          "level": 21
+        },
+        {
+          "name": "iron-head",
+          "gen": "scarlet-violet",
+          "level": 24
+        },
+        {
+          "name": "mud-bomb",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 25
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet",
+          "level": 30
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet",
+          "level": 36
+        },
+        {
+          "name": "earth-power",
+          "gen": "scarlet-violet",
+          "level": 42
+        },
+        {
+          "name": "earthquake",
+          "gen": "scarlet-violet",
+          "level": 48
+        },
+        {
+          "name": "fissure",
+          "gen": "scarlet-violet",
+          "level": 54
+        }
+      ],
+      "tutor": [
+        {
+          "name": "aerial-ace",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "beat-up",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "echoed-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endeavor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "foul-play",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "headbutt",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "high-horsepower",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "metal-sound",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "reversal",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scorching-sands",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "shadow-claw",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "smack-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "steel-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "throat-chop",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "lets-go-pikachu-lets-go-eevee"
+        },
+        {
+          "name": "uproar",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "work-up",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "captureRate": 100,
+    "eggGroups": [
+      "ground"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "diglett-alolan",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "dugtrio-alolan",
+          "uuid": "Compendium.ptr2e.core-species.Item.Yx34DYpWI4liXLGd",
+          "methods": [
+            {
+              "type": "level",
+              "level": 26,
+              "operand": "and"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": [],
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.XgqbW9wbPKd1qE3g",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "habitats": [
+      "volcano",
+      "cave",
+      "desert"
+    ],
+    "slug": "dugtrio",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "Yx34DYpWI4liXLGd",
+  "effects": []
+}

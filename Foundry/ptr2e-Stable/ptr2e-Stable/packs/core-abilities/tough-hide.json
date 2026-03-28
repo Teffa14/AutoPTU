@@ -1,0 +1,43 @@
+{
+  "name": "Tough Hide",
+  "type": "ability",
+  "img": "icons/commodities/leather/scales-white.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive"
+        ],
+        "name": "Tough Hide",
+        "slug": "tough-hide",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "description": "<p>Effect: The user's [Contact] attacks do not activate Trigger effects of Abilities.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user's [Contact] attacks do not activate Trigger effects of Abilities.</p>",
+    "traits": [
+      "defensive"
+    ],
+    "slug": "tough-hide",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "uvyHADNSyXJAs5au",
+  "effects": []
+}

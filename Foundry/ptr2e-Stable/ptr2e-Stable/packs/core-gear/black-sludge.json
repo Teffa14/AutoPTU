@@ -1,0 +1,78 @@
+{
+  "name": "Black Sludge",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": false
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "combat",
+      "healing",
+      "defensive"
+    ],
+    "actions": [
+      {
+        "name": "Black Sludge",
+        "slug": "black-sludge",
+        "type": "passive",
+        "description": "Effect: Poison-type creatures heal 1 Tick of HP at the end of each activation. Non Poison-type creatures take 2 ticks of HP as damage at the end of each activation.",
+        "traits": [
+          "Combat",
+          "Healing",
+          "Defensive"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 10
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: Poison-type creatures heal @Tick[2] at the end of each activation. Non Poison-type creatures take @Tick[-2] as damage at the end of each activation.</p>",
+    "slug": "black-sludge",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "3gkmbLFDhHHyJ9yU",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

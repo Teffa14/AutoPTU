@@ -1,0 +1,52 @@
+{
+  "name": "Glacial Lance",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "glacial-lance",
+    "actions": [
+      {
+        "slug": "glacial-lance",
+        "name": "Glacial Lance",
+        "type": "attack",
+        "traits": [
+          "blast-1",
+          "legendary"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "ice"
+        ],
+        "free": true,
+        "img": "systems/ptr2e/img/svg/ice_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "VWtxhdUlCpAZ7pvr",
+  "effects": []
+}

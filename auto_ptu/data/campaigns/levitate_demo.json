@@ -1,0 +1,100 @@
+{
+  "name": "Levitate & Hazard Lab",
+  "description": "Gravelly hazards span the center line while a Levitate user hovers over the spikes. Run this scenario to watch Spikes, Toxic Spikes, Stealth Rock, and Sticky Web all tick, then see a ground move bounce off the Levitate holder with an immunity log.",
+  "default_weather": "Clear",
+  "grid": {
+    "width": 8,
+    "height": 5,
+    "blockers": [[4, 1], [4, 3]],
+    "tiles": {
+      "1,2": {"hazards": {"spikes": 2}},
+      "2,2": {"hazards": {"toxic_spikes": 2}},
+      "3,2": {"hazards": {"stealth_rock": 1}},
+      "4,2": {"hazards": {"sticky_web": 1}}
+    }
+  },
+  "players": [
+    {
+      "name": "Rotom",
+      "species": "Rotom",
+      "level": 20,
+      "types": ["Electric", "Ghost"],
+      "hp_stat": 10,
+      "atk": 8,
+      "def": 9,
+      "spatk": 13,
+      "spdef": 11,
+      "spd": 14,
+      "abilities": [{"name": "Levitate"}],
+      "moves": [
+        {
+          "name": "Thunderbolt",
+          "type": "Electric",
+          "category": "Special",
+          "db": 7,
+          "ac": 2,
+          "range_kind": "Ranged",
+          "range_value": 6,
+          "freq": "At-Will"
+        },
+        {
+          "name": "Shadow Ball",
+          "type": "Ghost",
+          "category": "Special",
+          "db": 7,
+          "ac": 3,
+          "range_kind": "Ranged",
+          "range_value": 6,
+          "freq": "At-Will"
+        }
+      ],
+      "movement": {"overland": 6, "sky": 0, "levitate": 0, "swim": 1, "burrow": 0, "h_jump": 2, "l_jump": 2, "power": 3}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Golem",
+      "species": "Golem",
+      "level": 20,
+      "types": ["Rock", "Ground"],
+      "hp_stat": 12,
+      "atk": 14,
+      "def": 13,
+      "spatk": 8,
+      "spdef": 10,
+      "spd": 7,
+      "moves": [
+        {
+          "name": "Earth Power",
+          "type": "Ground",
+          "category": "Special",
+          "db": 7,
+          "ac": 3,
+          "range_kind": "Ranged",
+          "range_value": 6,
+          "freq": "At-Will"
+        },
+        {
+          "name": "Rock Throw",
+          "type": "Rock",
+          "category": "Physical",
+          "db": 6,
+          "ac": 2,
+          "range_kind": "Ranged",
+          "range_value": 6,
+          "freq": "At-Will",
+          "effects_text": "Can push if the tile is clear."
+        }
+      ],
+      "movement": {"overland": 5, "swim": 0, "sky": 0, "levitate": 0, "burrow": 1, "h_jump": 1, "l_jump": 1, "power": 4}
+    }
+  ],
+  "metadata": {
+    "player_trainers": [
+      {"identifier": "player", "name": "Levitate Trainer", "controller": "player", "team": "players", "start_positions": [[1, 2]]}
+    ],
+    "foe_trainers": [
+      {"identifier": "foe", "name": "Stone Guard", "controller": "ai", "team": "hazards", "start_positions": [[3, 2]]}
+    ]
+  }
+}

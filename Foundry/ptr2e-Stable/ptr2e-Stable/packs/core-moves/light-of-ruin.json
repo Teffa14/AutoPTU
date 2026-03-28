@@ -1,0 +1,52 @@
+{
+  "name": "Light of Ruin",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+  "system": {
+    "slug": "light-of-ruin",
+    "actions": [
+      {
+        "slug": "light-of-ruin",
+        "name": "Light of Ruin",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "ray",
+          "aura",
+          "blast-4",
+          "recoil-1-2"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 10
+        },
+        "category": "special",
+        "power": 140,
+        "accuracy": 90,
+        "types": [
+          "fairy"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "vqh0c1bbeT2iRpSS",
+  "effects": []
+}

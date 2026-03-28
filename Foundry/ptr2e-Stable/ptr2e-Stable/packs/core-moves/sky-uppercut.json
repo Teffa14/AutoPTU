@@ -1,0 +1,50 @@
+{
+  "name": "Sky Uppercut",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "sky-uppercut",
+    "actions": [
+      {
+        "slug": "sky-uppercut",
+        "name": "Sky Uppercut",
+        "type": "attack",
+        "traits": [
+          "punch",
+          "pass-3",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 85,
+        "accuracy": 90,
+        "types": [
+          "fighting"
+        ],
+        "description": "<p>Effect: The user may freely move up to their Overland Score into the air upon declaring this attack. The user does not take damage from falling until their next Activation.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Uqx2XwAfkgsy58Fj",
+  "effects": []
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Max Ooze",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "slug": "max-ooze",
+    "actions": [
+      {
+        "slug": "max-ooze",
+        "name": "Max Ooze",
+        "type": "attack",
+        "traits": [
+          "max",
+          "sky",
+          "weather"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 7,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 50,
+        "accuracy": 100,
+        "types": [
+          "poison"
+        ],
+        "description": "<p>Effect: The Weather becomes Smoggy for the next 3 Rounds.</p><p>The user may spend up to 6 additional PP, increasing the Power of this attack by 15 per PP spent.</p><p>Requirement: User is Dynamaxed and has a Poison-Type attack on their Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "tUHuWxomWCOEUj4l",
+  "effects": []
+}

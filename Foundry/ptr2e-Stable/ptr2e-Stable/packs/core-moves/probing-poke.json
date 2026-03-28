@@ -1,0 +1,49 @@
+{
+  "name": "Probing Poke",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "system": {
+    "slug": "probing-poke",
+    "actions": [
+      {
+        "slug": "probing-poke",
+        "name": "Probing Poke",
+        "type": "attack",
+        "traits": [
+          "basic",
+          "horn"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "category": "physical",
+        "power": 35,
+        "accuracy": 100,
+        "types": [
+          "bug"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "dTEqhLWMJucpRK9O",
+  "effects": []
+}

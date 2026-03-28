@@ -1,0 +1,39 @@
+{
+  "name": "Drop",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "drop",
+    "actions": [
+      {
+        "slug": "drop",
+        "name": "Drop",
+        "type": "generic",
+        "traits": [
+          "manipulate",
+          "contact"
+        ],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free"
+        },
+        "description": "<p>Effect: The user drops a currently equipped Held item into the space they they are occupying. This frees up the user's Held Item Slot.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "qbK1AQEOT6YkmKWG",
+  "effects": [],
+  "folder": "EpCOePz8omfXbp34"
+}

@@ -1,0 +1,62 @@
+{
+  "name": "Dream Ball",
+  "img": "systems/ptr2e/img/item-icons/dream ball.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 4,
+    "crafting": {
+      "skill": "electronics",
+      "spans": 2,
+      "materials": [
+        "10x-tumblestone",
+        "1x-great-apricorn"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling",
+      "training-ball",
+      "ball"
+    ],
+    "description": "<p>4x Catch Rate modifer if used on a target that has @Affliction[drowsy], @Affliction[nightmares], or is sleeping. 1x Catch Rate modifer otherwise.</p>",
+    "modifier": 4,
+    "quantity": 1,
+    "slug": "dream-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "ECMaMJtCh6TyWCOl",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

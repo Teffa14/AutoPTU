@@ -1,0 +1,55 @@
+{
+  "name": "Poison Lab",
+  "description": "Your Victreebel starts badly poisoned while a Nidoqueen drops Toxic Spikes and Glare. Run this scenario to watch the stacks increase each End phase and to hear the logs call out the growing damage every turn.",
+  "default_weather": "Clear",
+  "grid": {
+    "width": 10,
+    "height": 6,
+    "blockers": [[4, 2], [5, 2], [5, 3]],
+    "tiles": {
+      "2,1": "difficult",
+      "7,4": "water"
+    }
+  },
+  "players": [
+    {
+      "name": "Victreebel",
+      "species": "Victreebel",
+      "level": 22,
+      "types": ["Grass", "Poison"],
+      "hp_stat": 15,
+      "atk": 12,
+      "def": 9,
+      "spatk": 14,
+      "spdef": 11,
+      "spd": 10,
+      "statuses": [{"name": "Badly Poisoned"}],
+      "moves": [
+        {"name": "Razor Leaf", "type": "Grass", "category": "Physical", "db": 7, "ac": 2, "range_kind": "Ranged", "range_value": 4, "freq": "At-Will"},
+        {"name": "Sludge Bomb", "type": "Poison", "category": "Special", "db": 8, "ac": 3, "range_kind": "Ranged", "range_value": 6, "freq": "Scene"},
+        {"name": "Sleep Powder", "type": "Grass", "category": "Status", "db": 0, "ac": 4, "range_kind": "Ranged", "range_value": 4, "freq": "Scene"}
+      ],
+      "movement": {"overland": 5, "swim": 2, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 1, "l_jump": 1, "power": 3}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Nidoqueen",
+      "species": "Nidoqueen",
+      "level": 24,
+      "types": ["Poison", "Ground"],
+      "hp_stat": 16,
+      "atk": 14,
+      "def": 12,
+      "spatk": 10,
+      "spdef": 11,
+      "spd": 8,
+      "moves": [
+        {"name": "Toxic Spikes", "type": "Poison", "category": "Status", "db": 0, "ac": 4, "range_kind": "Self", "freq": "Scene"},
+        {"name": "Glare", "type": "Normal", "category": "Status", "db": 0, "ac": 3, "range_kind": "Ranged", "range_value": 4, "freq": "Scene"},
+        {"name": "Earth Power", "type": "Ground", "category": "Special", "db": 7, "ac": 2, "range_kind": "Ranged", "range_value": 5, "freq": "At-Will"}
+      ],
+      "movement": {"overland": 6, "swim": 2, "sky": 0, "levitate": 0, "burrow": 2, "h_jump": 2, "l_jump": 2, "power": 3}
+    }
+  ]
+}

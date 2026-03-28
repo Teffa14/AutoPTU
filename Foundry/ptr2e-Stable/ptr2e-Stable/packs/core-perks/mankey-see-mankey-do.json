@@ -1,0 +1,85 @@
+{
+  "name": "Mankey See, Mankey Do",
+  "type": "perk",
+  "system": {
+    "prerequisites": [],
+    "cost": 1,
+    "description": "<p>If you have observed someone else succeed at a skill check during the current scene, you may gain their skill/10 (rounded up) as a bonus to performing the same skill check for yourself.</p>",
+    "actions": [
+      {
+        "name": "Mankey See, Mankey Do",
+        "slug": "mankey-see-mankey-do",
+        "description": "If you have observed someone else succeed at a skill check during the current scene, you may gain their skill/10 (rounded up) as a bonus to performing the same skill check for yourself.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 2,
+          "delay": null,
+          "priority": null
+        },
+        "type": "generic",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "mankey-see-mankey-do",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "hardy-trekker",
+          "weathered",
+          "sprint",
+          "improved-overland",
+          "improved-threaded"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#804040",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Knowledge.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 116,
+        "y": 17,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "power",
+      "archetype": "knowledge"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "K8K5SEJO0FyRGyYY",
+  "img": "systems/ptr2e/img/perk-icons/Knowledge.svg",
+  "effects": [],
+  "folder": "1osM6JY51pvLkJ3Q"
+}

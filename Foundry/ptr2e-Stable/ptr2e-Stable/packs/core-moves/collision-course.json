@@ -1,0 +1,50 @@
+{
+  "name": "Collision Course",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "collision-course",
+    "actions": [
+      {
+        "slug": "collision-course",
+        "name": "Collision Course",
+        "type": "attack",
+        "traits": [
+          "pass-6",
+          "legendary",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "description": "<p>Effect: If this attack deals super effective damage, its Damage is increased by 30%.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "JvZy6cidIpLDBlJu",
+  "effects": []
+}

@@ -1,0 +1,73 @@
+{
+  "name": "Acupressure",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "acupressure",
+    "actions": [
+      {
+        "slug": "acupressure-self",
+        "name": "Acupressure (Self)",
+        "type": "attack",
+        "traits": [
+          "manipulate"
+        ],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "status",
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: Roll 1d8 and raise the Stages of the stat in the corresponding table by +2 for 5 Activations.</p><ol><li>ATK</li><li>DEF</li><li>SPATK</li><li>SPDEF</li><li>SPD</li><li>ACC</li><li>EVA</li><li>User Choice</li></ol>",
+        "variant": "acupressure",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "predicate": []
+      },
+      {
+        "slug": "acupressure",
+        "name": "Acupressure",
+        "type": "attack",
+        "traits": [
+          "contact",
+          "manipulate"
+        ],
+        "range": {
+          "target": "self",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "status",
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: Roll 1d8 and raise the Stages of the stat in the corresponding table by +2 for 5 Activations.</p><ol><li>ATK</li><li>DEF</li><li>SPATK</li><li>SPDEF</li><li>SPD</li><li>ACC</li><li>EVA</li><li>User Choice</li></ol>",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "DymPJiI57iCzqLp1",
+  "effects": []
+}

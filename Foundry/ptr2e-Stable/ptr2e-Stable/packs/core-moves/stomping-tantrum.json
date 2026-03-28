@@ -1,0 +1,80 @@
+{
+  "name": "Stomping Tantrum",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "stomping-tantrum",
+    "actions": [
+      {
+        "slug": "stomping-tantrum",
+        "name": "Stomping Tantrum",
+        "type": "attack",
+        "traits": [
+          "contact",
+          "crushing"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "physical",
+        "power": 75,
+        "accuracy": 100,
+        "types": [
+          "ground"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "stomping-tantrum-reprisal",
+        "name": "Stomping Tantrum (Reprisal)",
+        "type": "attack",
+        "traits": [
+          "contact",
+          "crushing"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6,
+          "trigger": "<p>The user missed or failed with an attack since their last Activation.</p>"
+        },
+        "category": "physical",
+        "power": 150,
+        "accuracy": 100,
+        "types": [
+          "ground"
+        ],
+        "description": "<p>Trigger: The user missed or failed with an attack since their last Activation.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "stomping-tantrum",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Unoi1NgtyzdkAmfk",
+  "effects": []
+}

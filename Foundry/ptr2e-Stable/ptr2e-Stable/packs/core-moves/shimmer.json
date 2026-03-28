@@ -1,0 +1,50 @@
+{
+  "name": "Shimmer",
+  "type": "move",
+  "_id": "d2pqGaOH5ngClI3i",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "shimmer",
+    "actions": [
+      {
+        "name": "Shimmer",
+        "slug": "shimmer",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "traits": [
+          "basic"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "types": [
+          "normal"
+        ],
+        "category": "special",
+        "power": 30,
+        "accuracy": 100,
+        "description": "<p>Effect: This attack is super effective against the Ghost Type.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

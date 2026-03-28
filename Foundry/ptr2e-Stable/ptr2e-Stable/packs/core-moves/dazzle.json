@@ -1,0 +1,47 @@
+{
+  "name": "Dazzle",
+  "type": "move",
+  "_id": "FoYdphQ2kzwlorh9",
+  "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Dazzle",
+        "slug": "dazzle",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+        "traits": [
+          "basic",
+          "social"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "variant": null,
+        "types": [
+          "fairy"
+        ],
+        "category": "special",
+        "power": 40,
+        "accuracy": 100,
+        "description": ""
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": []
+}

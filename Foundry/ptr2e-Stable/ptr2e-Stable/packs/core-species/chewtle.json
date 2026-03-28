@@ -1,0 +1,396 @@
+{
+  "name": "chewtle",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "water"
+    ],
+    "stats": {
+      "hp": 50,
+      "atk": 64,
+      "def": 50,
+      "spa": 38,
+      "spd": 38,
+      "spe": 44
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-gun",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bite",
+          "level": 7,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "level": 14,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "headbutt",
+          "level": 21,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "counter",
+          "level": 28,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "jaw-lock",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "liquidation",
+          "level": 42,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "level": 49,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "skull-bash",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "gastro-acid",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shell-smash",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dragon-tail",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scale-shot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hydro-pump",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "surf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "waterfall",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "false-swipe",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "crunch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "whirlpool",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "revenge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dive",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.3,
+      "weight": 8.5,
+      "category": "tiny",
+      "type": "quad"
+    },
+    "captureRate": 220,
+    "eggGroups": [
+      "monster",
+      "water1"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "chewtle",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "drednaw",
+          "uuid": "Compendium.ptr2e.core-species.Item.uzsf79FFnr4iFeTG",
+          "methods": [
+            {
+              "type": "level",
+              "level": 22,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.0misXL7ZyVgIVUvs"
+    },
+    "number": 833,
+    "traits": [
+      "pokemon",
+      "quadrupedal",
+      "underdog",
+      "lumbering",
+      "lockjaw",
+      "jump-3"
+    ],
+    "diet": [
+      "omnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "strong-jaw"
+        },
+        {
+          "slug": "shell-armor"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "swift-swim"
+        },
+        {
+          "slug": "infuriate"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "defiant"
+        },
+        {
+          "slug": "storm-drain"
+        }
+      ],
+      "master": [
+        {
+          "slug": "sturdy"
+        },
+        {
+          "slug": "anger-shell"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 5
+      },
+      {
+        "type": "swim",
+        "value": 5
+      }
+    ],
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "pond",
+      "river",
+      "riverside",
+      "swamp"
+    ],
+    "slug": "chewtle",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "0misXL7ZyVgIVUvs",
+  "effects": [],
+  "folder": null
+}

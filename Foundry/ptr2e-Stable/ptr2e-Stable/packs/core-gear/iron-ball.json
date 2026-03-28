@@ -1,0 +1,74 @@
+{
+  "name": "Iron Ball",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "steel",
+      "power": 90,
+      "accuracy": 70,
+      "hide": null
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "combat",
+      "fling"
+    ],
+    "actions": [
+      {
+        "name": "Iron Ball",
+        "slug": "iron-ball",
+        "type": "passive",
+        "description": "Effect: The user's default SPD is decreased by -1, and the user cannot use Fly Movement.",
+        "traits": [
+          "Combat",
+          "Fling"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: The user's default SPD is decreased by -1, and the user cannot use Fly Movement.",
+    "slug": "iron-ball",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "weffJdcwL9wnslSW",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

@@ -1,0 +1,77 @@
+{
+  "name": "Electro Shot",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "electro-shot",
+    "actions": [
+      {
+        "slug": "electro-shot-resolution",
+        "name": "Electro Shot (Resolution)",
+        "type": "attack",
+        "traits": [
+          "set-up",
+          "pulse",
+          "missile",
+          "blast-2",
+          "flinch-50"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "The user used Electro Shot (Set-Up) as their last Action."
+        },
+        "category": "special",
+        "power": 130,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "<p>Trigger: The user used Electro Shot (Set-Up) as their last Action.</p>",
+        "img": "systems/ptr2e/img/svg/electric_icon.svg",
+        "predicate": []
+      },
+      {
+        "name": "Electro Shot (Set-Up)",
+        "slug": "electro-shot-set-up",
+        "description": "<p>Effect: Set-Up: The user ends their Activation. If Rainy Weather is present or the user is affected by Electric Terrain, the user does the Set-Up and resolves this Attack on the same Activation.</p>",
+        "traits": [
+          "set-up",
+          "defensive",
+          "environ",
+          "priority-20"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/electric_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "electric"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "zHuglKIzud50aztv",
+  "effects": []
+}

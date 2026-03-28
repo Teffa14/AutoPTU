@@ -1,0 +1,54 @@
+{
+  "name": "Protein",
+  "img": "systems/ptr2e/img/item-icons/protein.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": "medicine",
+      "spans": 5,
+      "materials": [
+        "3x-kelpsy-berry",
+        "2x-balm-mushrooms",
+        "5x-grade-c-berries"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "S",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "rare",
+    "consumableType": "restorative",
+    "traits": [
+      "held",
+      "restorative",
+      "consumable",
+      "natural",
+      "empowering"
+    ],
+    "description": "The target gains +1 ATK IV.",
+    "quantity": 1,
+    "slug": "protein",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "O5w85gi0lyKOVWSJ",
+  "effects": [],
+  "folder": "Y7AqrGYTyQ9I1vPu"
+}

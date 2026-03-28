@@ -1,0 +1,379 @@
+{
+  "name": "chi-yu",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "fire",
+      "dark"
+    ],
+    "stats": {
+      "hp": 55,
+      "atk": 80,
+      "def": 80,
+      "spa": 135,
+      "spd": 120,
+      "spe": 100
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "ember",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "spite",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mean-look",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flame-wheel",
+          "level": 5,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "payback",
+          "level": 10,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "will-o-wisp",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flame-charge",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "incinerate",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confuse-ray",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "nasty-plot",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dark-pulse",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lava-plume",
+          "level": 45,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ruination",
+          "level": 50,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bounce",
+          "level": 55,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "level": 60,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "inferno",
+          "level": 65,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "memento",
+          "level": 70,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "overheat",
+          "level": 75,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-spin",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "crunch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heat-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flare-blitz",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hex",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snarl",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "burning-jealousy",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lash-out",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "temper-flare",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.4,
+      "weight": 4.9,
+      "category": "small",
+      "type": "quad"
+    },
+    "captureRate": 13,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "chi-yu",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 1004,
+    "traits": [
+      "pokemon",
+      "legendary",
+      "treasure-of-ruin",
+      "breathless",
+      "ruinous-fish",
+      "heater",
+      "glow-4",
+      "jump-1"
+    ],
+    "diet": [
+      "nullivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "beads-of-ruin"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "flame-body"
+        },
+        {
+          "slug": "drought"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "magma-armor"
+        },
+        {
+          "slug": "berserk"
+        }
+      ],
+      "master": [
+        {
+          "slug": "aftermath"
+        },
+        {
+          "slug": "earth-eater"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "swim",
+        "value": 15
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "legends",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "spot",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "chi-yu",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "uCj78A4IKmlSQruo",
+  "effects": [],
+  "folder": null
+}

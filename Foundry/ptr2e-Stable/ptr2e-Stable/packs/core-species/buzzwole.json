@@ -1,0 +1,475 @@
+{
+  "name": "buzzwole",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "fighting",
+      "bug"
+    ],
+    "stats": {
+      "hp": 107,
+      "atk": 139,
+      "def": 139,
+      "spa": 53,
+      "spd": 53,
+      "spe": 79
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "ice-punch",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thunder-punch",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "harden",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "power-up-punch",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "taunt",
+          "level": 5,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "comet-punch",
+          "level": 7,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "fell-stinger",
+          "level": 10,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "vital-throw",
+          "level": 15,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulk-up",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "level": 25,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "leech-life",
+          "level": 29,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "reversal",
+          "level": 30,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mega-punch",
+          "level": 35,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "lunge",
+          "level": 40,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "focus-energy",
+          "level": 45,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dynamic-punch",
+          "level": 50,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "counter",
+          "level": 55,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hammer-arm",
+          "level": 60,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "superpower",
+          "level": 65,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "focus-punch",
+          "level": 70,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "outrage",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endeavor",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bounce",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "drain-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-head",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bug-bite",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dual-chop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "coaching",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-slam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "earthquake",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "false-swipe",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "revenge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "brick-break",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "roost",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "gyro-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "close-combat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "smack-down",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "low-sweep",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "work-up",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "darkest-lariat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "high-horsepower",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 2.4,
+      "weight": 333.6,
+      "category": "huge",
+      "type": "quad"
+    },
+    "captureRate": 41,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "buzzwole",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 794,
+    "traits": [
+      "pokemon",
+      "ultra-beast",
+      "fully-evolved",
+      "quadrupedal",
+      "winged",
+      "jump-4"
+    ],
+    "diet": [
+      "haemovore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "beast-boost"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "intimidate"
+        },
+        {
+          "slug": "opportunist"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "compound-eyes"
+        },
+        {
+          "slug": "iron-fist"
+        }
+      ],
+      "master": [
+        {
+          "slug": "hustle"
+        },
+        {
+          "slug": "juggernaut"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 12
+      },
+      {
+        "type": "overland",
+        "value": 12
+      },
+      {
+        "type": "swim",
+        "value": 4
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 75,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ultrology",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "science"
+      },
+      {
+        "slug": "running",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "buzzwole",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "dywQc3Bbeh67G8cO",
+  "effects": [],
+  "folder": null
+}

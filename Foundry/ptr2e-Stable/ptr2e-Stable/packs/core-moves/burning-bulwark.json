@@ -1,0 +1,51 @@
+{
+  "name": "Burning Bulwark",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "burning-bulwark",
+    "actions": [
+      {
+        "slug": "burning-bulwark",
+        "name": "Burning Bulwark",
+        "type": "attack",
+        "traits": [
+          "shield",
+          "paradox",
+          "interrupt-6"
+        ],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "trigger": "<p>The user is targeted by a damaging attack that lacks[Interrupt X].</p>"
+        },
+        "category": "status",
+        "types": [
+          "fire"
+        ],
+        "description": "<p>Trigger: The user is targeted by an Attack.</p><p>Effect: The triggering attack fails to hit the user, and additional attacks also fail to hit until the end of the user's next Activation. Attacks failing to hit this way do not activate their secondary effects. If the triggering Attack has @Trait[contact], the attacker gains @Affliction[burn] 5.</p><p>On resolution, the user gains @Affliction[disabled] 3 on this Attack.</p>",
+        "img": "systems/ptr2e/img/svg/fire_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "FH15xu2wp3fbz18D",
+  "effects": []
+}

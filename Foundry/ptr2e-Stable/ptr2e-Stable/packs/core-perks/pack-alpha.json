@@ -1,0 +1,148 @@
+{
+  "name": "Pack Alpha",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "or": [
+          {
+            "gte": [
+              "{actor|skills.leadership.mod}",
+              25
+            ]
+          },
+          {
+            "gte": [
+              "{actor|skills.intimidate.mod}",
+              35
+            ]
+          }
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>You gain the @Trait[pack-leader] Trait, and may designate consenting creatures with the @Trait[pack-mon] Trait as members of your pack.</p>",
+    "actions": [
+      {
+        "name": "Pack Alpha",
+        "slug": "pack-alpha",
+        "description": "<p>You gain the [Pack Leader] trait, and may designate consenting creatures with the [Pack Mon] trait as members of your pack.</p>",
+        "cost": {
+          "activation": "free"
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "pack-alpha",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 154,
+        "y": 175,
+        "hidden": false,
+        "type": "entry",
+        "connected": [
+          "pack-mon",
+          "lead-from-behind",
+          "root-4",
+          "packmarked",
+          "minor-buff-33",
+          "yousa-bad-bombin"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Tactician.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [
+      "trait:pack-leader"
+    ],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "power",
+      "archetype": "pack-leader"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "ee07hyZxFObQ5emn",
+  "img": "systems/ptr2e/img/perk-icons/Tactician.svg",
+  "effects": [
+    {
+      "name": "Pack Alpha",
+      "type": "passive",
+      "_id": "m46h0r03OspDM45U",
+      "img": "systems/ptr2e/img/perk-icons/Tactician.svg",
+      "system": {
+        "changes": [
+          {
+            "type": "add-trait",
+            "key": "",
+            "value": "pack-leader",
+            "predicate": [],
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "<p>You gain the @Trait[pack-leader] Trait, and may designate consenting creatures with the @Trait[pack-mon] Trait as members of your pack.</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1739314032552,
+        "modifiedTime": 1754227264436,
+        "lastModifiedBy": "dCIq77b7AO2frs8Z",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "UZGN1glVNXLieg48"
+}

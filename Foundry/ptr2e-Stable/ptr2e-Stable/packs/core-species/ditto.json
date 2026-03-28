@@ -1,0 +1,107 @@
+{
+  "name": "ditto",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 132,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.3,
+      "weight": 4
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 5
+      },
+      {
+        "type": "swim",
+        "value": 5
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "shapeshifter",
+      "amorphous",
+      "genderless",
+      "skill-copy",
+      "multitype-perks",
+      "fully-evolved",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "limber"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "imposter"
+        }
+      ],
+      "advanced": [],
+      "master": []
+    },
+    "skills": [],
+    "stats": {
+      "hp": 48,
+      "atk": 48,
+      "def": 48,
+      "spa": 48,
+      "spd": 48,
+      "spe": 48
+    },
+    "types": [
+      "normal"
+    ],
+    "captureRate": 60,
+    "eggGroups": [
+      "ditto"
+    ],
+    "evolutions": {
+      "name": "ditto",
+      "details": null,
+      "evolutions": [],
+      "uuid": null,
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "transform",
+          "level": 1,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": []
+    },
+    "genderRatio": -1,
+    "habitats": [
+      "forest",
+      "city"
+    ],
+    "slug": "ditto",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core - Kanto Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "mxrt04igU2sWYV12",
+  "effects": []
+}

@@ -1,0 +1,84 @@
+{
+  "folder": "W85LoOCz3WlwbyhZ",
+  "name": "Mightyena Tactic",
+  "type": "perk",
+  "_id": "IIvX9NNmXoCdQegF",
+  "img": "systems/ptr2e/img/perk-icons/Hunting.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Mightyena Tactic",
+        "slug": "mightyena-tactic",
+        "description": "<p>Gain +20 Power when attacking targets that have a net negative SPD stage.</p>",
+        "traits": [],
+        "type": "passive",
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 0
+        },
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0
+        },
+        "img": "systems/ptr2e/img/perk-icons/Hunting.svg",
+        "variant": null,
+        "ephemeralVariant": false,
+        "hidden": false
+      }
+    ],
+    "slug": "mightyena-tactic",
+    "description": "<p>Gain +20 Power when attacking targets that have a net negative SPD stage.</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 64,
+        "y": 180,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "hamstring",
+          "skirmish",
+          "quick-and-the-dead",
+          "run-down",
+          "improved-overland-9"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Hunting.svg",
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "tint": null,
+          "scale": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "finesse",
+      "archetype": "hunter"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "effects": []
+}

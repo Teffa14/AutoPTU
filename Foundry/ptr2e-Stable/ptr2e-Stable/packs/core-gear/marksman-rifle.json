@@ -1,0 +1,238 @@
+{
+  "name": "Marksman Rifle",
+  "img": "systems/ptr2e/img/icons/weapon_icon.webp",
+  "type": "weapon",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "held",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "steel",
+      "power": 50,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "traits": [
+      "weapon",
+      "fling",
+      "firearm",
+      "autoload",
+      "shouldered",
+      "steel",
+      "reload-1",
+      "charge-pool-12",
+      "2-handed",
+      "conventional",
+      "modern",
+      "sci-fi"
+    ],
+    "actions": [
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 70,
+        "accuracy": 95,
+        "free": true,
+        "traits": [
+          "missile",
+          "firearm"
+        ],
+        "name": "Marksman Rifle",
+        "slug": "marksman-rifle",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 45,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "status",
+        "free": true,
+        "traits": [
+          "defensive",
+          "set-up",
+          "flinch-20"
+        ],
+        "name": "Marksman Rifle (Set-Up)",
+        "slug": "marksman-rifle-set-up",
+        "description": "<p>Effect: The user gains +2 ACC Stages for 2 Activations.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "variant": "marksman-rifle",
+        "predicate": []
+      },
+      {
+        "name": "Marksman Rifle (Resolution)",
+        "slug": "marksman-rifle-resolution",
+        "description": "<p>Trigger: The user used Marksman Rifle (Set Up) on their previous Activation.</p><p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "traits": [
+          "weapon",
+          "missile",
+          "crit-2",
+          "firearm"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1,
+          "trigger": "The user used Marksman Rifle (Set Up) on their previous Activation."
+        },
+        "range": {
+          "target": "creature",
+          "distance": 60,
+          "unit": "m"
+        },
+        "types": [
+          "untyped"
+        ],
+        "category": "physical",
+        "predicate": [],
+        "power": 125,
+        "accuracy": 100
+      }
+    ],
+    "weaponType": "untyped",
+    "weaponPp": 10,
+    "slug": "marksman-rifle",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "description": "<p>A designated marksman rifle (DMR) is a modern scoped high-precision rifle used by infantry in the designated marksman (DM) role. DMRs are distinguished from sniper rifles in that they are semi-automatic to provide higher rates of fire and have larger magazine capacities to allow rapid engagement of multiple targets.</p>"
+  },
+  "_id": "pfBrCmn8zAAMmONO",
+  "effects": [
+    {
+      "name": "Marksman Rifle",
+      "type": "passive",
+      "_id": "1HSMOG18JM9beR5u",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "{item|id}-attack-damage-flat",
+            "value": 33,
+            "predicate": [],
+            "label": "Marksman Rifle",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "marksman-rifle-set-up",
+            "value": "Compendium.ptr2e.core-effects.Item.Smwu5LWbBYgjUmPc",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": false,
+            "affects": "self",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "duration.turns",
+                "value": 2
+              }
+            ],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-gear.Item.Ba3EyqpUePgGrfQk.ActiveEffect.uOxpw5kHcRtpv4pa",
+        "duplicateSource": null,
+        "coreVersion": "13.347",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1743904713324,
+        "modifiedTime": 1757632647609,
+        "lastModifiedBy": "UTlFSVhgfIUeTsoW",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "Tn65RZTafVbxqEXT"
+}

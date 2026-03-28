@@ -1,0 +1,93 @@
+{
+  "name": "Pokemaniac",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.zoology.mod}",
+          40
+        ]
+      }
+    ],
+    "cost": 2,
+    "description": "<p>You may make a Science (Zoology) roll to identify the pokemon's level and traits.</p>",
+    "actions": [
+      {
+        "name": "Pokemaniac",
+        "slug": "pokemaniac",
+        "description": "<p>You may make a Science (Zoology) roll to identify the pokemon's level and traits.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "delay": null,
+          "priority": null
+        },
+        "type": "generic",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "pokemaniac",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "hobby-gardener",
+          "scholar",
+          "root-5",
+          "stat-iv-booster-1-8",
+          "improved-flight-5",
+          "stat-iv-booster-1-12"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#008000",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Knowledge.svg",
+          "tint": "#ffffff",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 72,
+        "y": 157,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "power",
+      "archetype": "knowledge"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "C1x4SbzpolXcgEWH",
+  "img": "systems/ptr2e/img/perk-icons/Knowledge.svg",
+  "effects": [],
+  "folder": "aUkQAkBYAmrv6REK"
+}

@@ -1,0 +1,61 @@
+{
+  "name": "Transformation Ability",
+  "type": "perk",
+  "system": {
+    "_migration": {
+      "version": 0.109,
+      "previous": null
+    },
+    "actions": [],
+    "description": "<p>Your Heroic Transformation now comes with a Free Ability, chosen at the time of purchasing this perk. This ability may not have the [Legendary] or [Innate] traits.</p>",
+    "traits": [],
+    "prerequisites": [
+      "item:perk:heroic-transformation"
+    ],
+    "cost": 1,
+    "slug": "transformation-ability",
+    "nodes": [
+      {
+        "connected": [
+          "heroic-transformation"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 8,
+        "y": 85,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "power",
+      "archetype": "hero"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "img": "icons/magic/control/silhouette-grow-shrink-blue.webp",
+  "effects": [],
+  "_id": "XlQc8DJZpuPaaKt2",
+  "folder": "OUVEQyuUswQVLxBO"
+}

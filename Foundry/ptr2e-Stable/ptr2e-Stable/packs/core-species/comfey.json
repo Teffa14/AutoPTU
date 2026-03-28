@@ -1,0 +1,540 @@
+{
+  "name": "comfey",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "fairy"
+    ],
+    "stats": {
+      "hp": 51,
+      "atk": 52,
+      "def": 90,
+      "spa": 82,
+      "spd": 110,
+      "spe": 100
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "wrap",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "growth",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "vine-whip",
+          "level": 3,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "level": 6,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "draining-kiss",
+          "level": 9,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "level": 12,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flower-shield",
+          "level": 12,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "magical-leaf",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "synthesis",
+          "level": 18,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leech-seed",
+          "level": 21,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "natural-gift",
+          "level": 22,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "grass-knot",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sweet-kiss",
+          "level": 27,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "floral-healing",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "petal-blizzard",
+          "level": 33,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bind",
+          "level": 36,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aromatherapy",
+          "level": 36,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "play-rough",
+          "level": 39,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sweet-scent",
+          "level": 42,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "petal-dance",
+          "level": 45,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "grassy-terrain",
+          "level": 48,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "amnesia",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "lucky-chant",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "worry-seed",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "after-you",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leaf-tornado",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "heal-bell",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "pain-split",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trick",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "role-play",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "covet",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "tailwind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "telekinesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "grassy-glide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "encore",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "knock-off",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bullet-seed",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "u-turn",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick-room",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "echoed-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stored-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acrobatics",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "disarming-voice",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pollen-puff",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "alluring-voice",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.1,
+      "weight": 0.3,
+      "category": "diminutive",
+      "type": "quad"
+    },
+    "captureRate": 60,
+    "eggGroups": [
+      "plant"
+    ],
+    "genderRatio": 6,
+    "evolutions": {
+      "name": "comfey",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 764,
+    "traits": [
+      "pokemon",
+      "fully-evolved",
+      "underdog",
+      "hover",
+      "jump-1"
+    ],
+    "diet": [
+      "nullivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "flower-veil"
+        },
+        {
+          "slug": "triage"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "natural-cure"
+        },
+        {
+          "slug": "pastel-veil"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "healer"
+        },
+        {
+          "slug": "aroma-veil"
+        }
+      ],
+      "master": [
+        {
+          "slug": "witchery"
+        },
+        {
+          "slug": "fairy-dust"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 15
+      }
+    ],
+    "skills": [
+      {
+        "slug": "arts-flower-arrangement",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "arts"
+      },
+      {
+        "slug": "conversation",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "handiwork",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "medicine",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fairies",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "running",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "field",
+      "city"
+    ],
+    "slug": "comfey",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "9fi8Nb151ozgTzL8",
+  "effects": [],
+  "folder": null
+}

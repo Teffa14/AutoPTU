@@ -1,0 +1,117 @@
+{
+  "folder": "PGpYU7mfnRpzOZSm",
+  "name": "Shield",
+  "type": "weapon",
+  "system": {
+    "_migration": {
+      "version": 0.104,
+      "previous": null
+    },
+    "slug": "shield",
+    "traits": [],
+    "actions": [],
+    "description": "<p>A standard shield confers Light Cover (+1 Evasion Stage) while equipped in the Wielded/Held Item slot.</p>",
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "carryType": "stowed",
+      "handsHeld": null,
+      "slot": "held"
+    },
+    "grade": "D",
+    "fling": {
+      "type": "untyped",
+      "power": 35,
+      "accuracy": 70,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "quantity": 1,
+    "rarity": "uncommon",
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "ChBTTn5Y92l3vopZ",
+  "img": "icons/equipment/shield/wardoor-wooden-boss-brown.webp",
+  "effects": [
+    {
+      "name": "Shield Equipped",
+      "type": "passive",
+      "_id": "vwCWilRNpvXznB84",
+      "img": "icons/equipment/shield/wardoor-wooden-boss-brown.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "basic",
+            "key": "system.battleStats.evasion.stage",
+            "value": 1,
+            "predicate": [],
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": "always"
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.348",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.4.beta",
+        "createdTime": 1723846044870,
+        "modifiedTime": 1758619848335,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

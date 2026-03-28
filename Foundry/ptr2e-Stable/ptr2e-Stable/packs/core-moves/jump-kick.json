@@ -1,0 +1,52 @@
+{
+  "name": "Jump Kick",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "jump-kick",
+    "actions": [
+      {
+        "slug": "jump-kick",
+        "name": "Jump Kick",
+        "type": "attack",
+        "traits": [
+          "crash-1-2",
+          "dash",
+          "contact",
+          "kick"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 95,
+        "types": [
+          "fighting"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "vNnq6o3D4pSZ4alY",
+  "effects": []
+}

@@ -1,0 +1,84 @@
+{
+  "models": {
+    "legacy_default": {
+      "id": "legacy_default",
+      "path": "C:\\Users\\tefa1\\AutoPTU\\reports\\ai_profiles.json",
+      "parent_id": "",
+      "auto_created": false,
+      "created_at": "2026-03-05T11:59:59.658455+00:00"
+    },
+    "model_20260318_041544_bc82": {
+      "id": "model_20260318_041544_bc82",
+      "path": "C:\\Users\\tefa1\\AutoPTU\\reports\\ai_models\\model_20260318_041544_bc82.json",
+      "parent_id": "legacy_default",
+      "auto_created": true,
+      "created_at": "2026-03-18T04:15:44.435912+00:00"
+    },
+    "model_20260324_105608_7d8d": {
+      "id": "model_20260324_105608_7d8d",
+      "path": "C:\\Users\\tefa1\\AutoPTU\\reports\\ai_models\\model_20260324_105608_7d8d.json",
+      "parent_id": "model_20260318_041544_bc82",
+      "auto_created": true,
+      "created_at": "2026-03-24T10:56:08.531878+00:00"
+    },
+    "ratings": {
+      "id": "ratings",
+      "path": "C:\\Users\\tefa1\\AutoPTU\\reports\\ai_models\\ratings.json",
+      "parent_id": "",
+      "auto_created": true,
+      "created_at": "2026-03-28T00:38:11.591251+00:00"
+    },
+    "model_20260328_005554_e2e4": {
+      "id": "model_20260328_005554_e2e4",
+      "path": "C:\\Users\\tefa1\\AutoPTU\\reports\\ai_models\\model_20260328_005554_e2e4.json",
+      "parent_id": "model_20260324_105608_7d8d",
+      "auto_created": true,
+      "created_at": "2026-03-28T00:55:54.864595+00:00"
+    }
+  },
+  "current_model_id": "model_20260328_005554_e2e4",
+  "active_path": "C:\\Users\\tefa1\\AutoPTU\\reports\\ai_models\\model_20260328_005554_e2e4.json",
+  "baseline_vector": {
+    "foe:Abra|action_type|defend": 6.5132155990000005,
+    "foe:Eevee|action_type|defend": 9.528987130275377,
+    "foe:Magikarp|action_type|defend": 1.0,
+    "foe:Sawk|action_type|attack": 3.653204567922901,
+    "foe:Sawk|action_type|defend": 5.131028886171408,
+    "foe:Sawk|target_pref|lowest_hp": 3.653204567922901,
+    "foe:Sawk|move_usage|Bind": 3.653204567922901,
+    "foe:Sigilyph|action_type|defend": 4.68559,
+    "foe:Squirtle|action_type|attack": 5.235606697861344,
+    "foe:Squirtle|action_type|defend": 4.764393302138659,
+    "foe:Squirtle|target_pref|lowest_hp": 5.235606697861344,
+    "foe:Squirtle|risk_tolerance|retreats": 0.0523347633027361,
+    "foe:Squirtle|move_usage|Water Pulse": 5.235606697861344,
+    "foe:Staraptor|action_type|defend": 2.71,
+    "gary:A|action_type|defend": 3.439,
+    "gary:A|risk_tolerance|retreats": 0.81,
+    "gary:Machop|action_type|attack": 2.997541,
+    "gary:Machop|action_type|defend": 5.14943881114816,
+    "gary:Machop|target_pref|nearest": 2.997541,
+    "gary:Machop|risk_tolerance|retreats": 3.5576628011306104,
+    "gary:Machop|move_usage|Tackle": 2.997541,
+    "gary:Pikachu|action_type|defend": 1.8276255989999999,
+    "gary:Pikachu|action_type|other": 4.68559,
+    "gary:Pikachu|risk_tolerance|retreats": 0.47829690000000014,
+    "player:Dreepy|action_type|defend": 9.999986099154768,
+    "player:Pansage|action_type|defend": 5.6953279000000006,
+    "player:Pikachu|action_type|attack": 1.0,
+    "player:Pikachu|target_pref|lowest_hp": 1.0,
+    "player:Pikachu|move_usage|Thunder Shock": 1.0,
+    "side2:Arcanine Hisuian|action_type|defend": 4.0951,
+    "side2:Goodra Hisuian|action_type|defend": 9.999982838462675,
+    "side3:Walrein|action_type|defend": 3.439
+  },
+  "updates_since_snapshot": 298,
+  "total_updates": 1148,
+  "last_drift_score": 0.327753,
+  "last_rel_l1": 0.233221,
+  "last_churn": 0.705882,
+  "last_auto_model_id": "model_20260328_005554_e2e4",
+  "min_updates": 250,
+  "drift_threshold": 0.35,
+  "check_every": 25
+}

@@ -1,0 +1,39 @@
+{
+  "name": "Sighting System",
+  "type": "ability",
+  "img": "systems/ptr2e/img/conditions/tagged.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [],
+        "name": "Sighting System",
+        "slug": "sighting-system",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "description": "<p>Effect: The user has +3 default ACC when using @Trait[pulse], @Trait[ray], @Trait[missile] and @Trait[explode] Attacks, and the user is Delayed X% upon using these Attacks, where X equals 110 minus the Attack’s base Accuracy.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user has +3 default ACC when using @Trait[pulse], @Trait[ray], @Trait[missile] and @Trait[explode] Attacks, and the user is Delayed X% upon using these Attacks, where X equals 110 minus the Attack’s base Accuracy.</p>",
+    "traits": [],
+    "slug": "sighting-system",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "DbcjQKmgUpOCPREr",
+  "effects": []
+}

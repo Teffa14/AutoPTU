@@ -1,0 +1,52 @@
+{
+  "name": "Megaton Hammer",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "megaton-hammer",
+    "actions": [
+      {
+        "slug": "megaton-hammer",
+        "name": "Megaton Hammer",
+        "type": "attack",
+        "traits": [
+          "pierce",
+          "crushing",
+          "hammer"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "physical",
+        "power": 110,
+        "accuracy": 85,
+        "types": [
+          "steel"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "c32KmbO1Ii4eMvBB",
+  "effects": []
+}

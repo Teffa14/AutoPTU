@@ -1,0 +1,143 @@
+{
+  "name": "Razor Claw",
+  "img": "systems/ptr2e/img/item-icons/razor claw.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "normal",
+      "power": 60,
+      "accuracy": 90,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 6,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "combat",
+      "accessory",
+      "evolution",
+      "consumable"
+    ],
+    "actions": [
+      {
+        "name": "Razor Claw",
+        "slug": "razor-claw",
+        "type": "passive",
+        "description": "Effect: The user's default CRIT is increased by +1.",
+        "traits": [
+          "Combat"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 10
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user has +1 CRIT with and deals +10% Critical Hit damage with @Trait[contact] Attacks.<br><br>May be consumed by certain Species to trigger Evolution.</p>",
+    "slug": "razor-claw",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "pDfVC0IfpRfZpj9q",
+  "effects": [
+    {
+      "name": "Razor Claw",
+      "type": "passive",
+      "_id": "KGzlVU5rbuDr2Qt9",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "stage-modifier",
+            "key": "contact-trait-attack-crit",
+            "value": 1,
+            "predicate": [],
+            "label": "Razor Claw",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.7.beta",
+        "createdTime": 1731793523575,
+        "modifiedTime": 1766207740948,
+        "lastModifiedBy": "UTlFSVhgfIUeTsoW",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "V4skAU6G3OH5fXae"
+}

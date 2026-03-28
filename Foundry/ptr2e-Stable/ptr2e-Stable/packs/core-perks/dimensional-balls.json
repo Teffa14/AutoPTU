@@ -1,0 +1,68 @@
+{
+  "name": "Dimensional Balls",
+  "type": "perk",
+  "folder": "CpqiTFuJPCaphgZU",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.electronics.mod}",
+          90
+        ]
+      },
+      "item:perk:expert-ball-crafting"
+    ],
+    "cost": 2,
+    "description": "<p>You learn the Beast Ball and Strange Ball recipes.</p>",
+    "actions": [],
+    "slug": "dimensional-balls",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "expert-ball-crafting",
+          "type-ball-range-boost"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#400000",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Crafting.svg",
+          "tint": "#ffff00",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": null,
+        "y": null,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "finesse",
+      "archetype": "crafting"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "ImYWjP6qSOdYbfGC",
+  "img": "systems/ptr2e/img/perk-icons/Crafting.svg",
+  "effects": []
+}

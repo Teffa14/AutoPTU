@@ -1,0 +1,49 @@
+{
+  "name": "Dragon Pulse",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "dragon-pulse",
+    "actions": [
+      {
+        "slug": "dragon-pulse",
+        "name": "Dragon Pulse",
+        "type": "attack",
+        "traits": [
+          "pulse",
+          "aura"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "special",
+        "power": 85,
+        "accuracy": 100,
+        "types": [
+          "dragon"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "qR3k4C5gg01R0AET",
+  "effects": []
+}

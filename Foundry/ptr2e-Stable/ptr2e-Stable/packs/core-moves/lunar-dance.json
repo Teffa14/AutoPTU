@@ -1,0 +1,49 @@
+{
+  "name": "Lunar Dance",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "lunar-dance",
+    "actions": [
+      {
+        "slug": "lunar-dance",
+        "name": "Lunar Dance",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "dance"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "psychic"
+        ],
+        "description": "<p>Effect: The user reduces their HP to 0 and gains @Affliction[fainted]. After the user gains @Affliction[fainted], the Target recovers all of its HP and PP, and is cured of all [Major Affliction]s and [Minor Affliction]s. If the user is an owned Pokemon and their Trainer has another Pokemon that is not @Affliction[fainted] in a Poke Ball, that Pokemon may be designated the target of this Attack.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "yj8uSVjgjqrwDUq6",
+  "effects": []
+}

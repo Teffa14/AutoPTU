@@ -1,0 +1,121 @@
+{
+  "name": "Olé",
+  "type": "ability",
+  "img": "icons/equipment/back/cloakcollared-red-gold.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "interrupt-2",
+          "defensive"
+        ],
+        "name": "Olé",
+        "slug": "olé",
+        "type": "generic",
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 2,
+          "trigger": "<p>The user is targeted by an Attack.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user is targeted by an Attack.</p><p>Effect: The user is treated as having +4 EVA against the triggering Attack. If the triggering attack misses, the triggering creature gains @Affliction[taunted] 5 and the user freely Moves 1 space using the Movement Score of their choice.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user is targeted by an Attack.</p><p>Effect: Connection - Taunt. The user is treated as having +4 EVA against the triggering Attack. If the triggering attack misses, the triggering creature gains @Affliction[taunted] 5 and the user freely Moves 1 space using the Movement Score of their choice.</p>",
+    "traits": [
+      "connection"
+    ],
+    "slug": "olé",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "1YuofLNgejQeywbY",
+  "effects": [
+    {
+      "name": "Olé",
+      "type": "passive",
+      "_id": "fzZgeqHFPTU2F2L9",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.IB5iMsqBlnOZpPM9",
+            "predicate": [
+              "ability:ole:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "tier"
+              }
+            ],
+            "priority": null,
+            "allowDuplicate": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737405618153,
+        "modifiedTime": 1754319848596,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

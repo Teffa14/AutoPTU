@@ -1,0 +1,50 @@
+{
+  "name": "Gold Spike",
+  "img": "systems/ptr2e/img/icons/weapon_icon.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "S",
+    "fling": {
+      "type": "normal",
+      "power": 200,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "rare",
+    "traits": [
+      "weapon",
+      "pierce",
+      "stack-10",
+      "normal",
+      "treasure",
+      "fling"
+    ],
+    "slug": "gold-spike",
+    "stack": 10,
+    "quantity": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "consumableType": "other",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Ad2YJanri6JwzZjp",
+  "effects": [],
+  "folder": "AdrC52Rk5crvpmq8"
+}

@@ -1,0 +1,49 @@
+{
+  "name": "Shadow Shave",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-shave",
+    "actions": [
+      {
+        "slug": "shadow-shave",
+        "name": "Shadow Shave",
+        "type": "attack",
+        "traits": [
+          "sharp",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "category": "physical",
+        "power": 40,
+        "accuracy": 100,
+        "types": [
+          "shadow"
+        ],
+        "description": "<p>Effect: The target cannot fall below 1 HP by damage from this Attack.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "7UijKUHK9fjJfmh7",
+  "effects": []
+}

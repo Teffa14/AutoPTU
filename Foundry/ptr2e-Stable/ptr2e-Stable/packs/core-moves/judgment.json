@@ -1,0 +1,52 @@
+{
+  "name": "Judgment",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "judgment",
+    "actions": [
+      {
+        "slug": "judgment",
+        "name": "Judgment",
+        "type": "attack",
+        "traits": [
+          "blast-5",
+          "legendary"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: Judgment's damage changes to match the Type Plate the user is holding.</p>",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "E6mtSx71sinnVvZH",
+  "effects": []
+}

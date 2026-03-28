@@ -1,0 +1,76 @@
+{
+  "name": "Memory",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "untyped",
+      "power": 45,
+      "accuracy": 90,
+      "hide": null
+    },
+    "rarity": "rare",
+    "traits": [
+      "silvally",
+      "memory",
+      "type-fling"
+    ],
+    "actions": [
+      {
+        "name": "Memory",
+        "slug": "memory",
+        "type": "passive",
+        "description": "Effect: The user deals 10% more damage with %lt;Type&gt;-Type actions and attacks, and takes 20% less damage from %lt;Type&gt;-Type actions and attacks. This item does not use an Accessory slot when equipped by a [Silvally].",
+        "traits": [
+          "silvally",
+          "memory",
+          "type-fling"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: The user deals 10% more damage with %lt;Type&gt;-Type actions and attacks, and takes 20% less damage from %lt;Type&gt;-Type actions and attacks. This item does not use an Accessory slot when equipped by a [Silvally].",
+    "slug": "memory",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "t0ZDWUZrSWeFvxTm",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

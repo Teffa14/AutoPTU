@@ -1,0 +1,458 @@
+{
+  "name": "cetoddle",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "ice"
+    ],
+    "stats": {
+      "hp": 108,
+      "atk": 68,
+      "def": 45,
+      "spa": 30,
+      "spd": 40,
+      "spe": 43
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "powder-snow",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "growl",
+          "level": 6,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "echoed-voice",
+          "level": 9,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-shard",
+          "level": 12,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "level": 19,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flail",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "avalanche",
+          "level": 27,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bounce",
+          "level": 31,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "level": 36,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "amnesia",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-spinner",
+          "level": 44,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-edge",
+          "level": 49,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "level": 53,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "belly-drum",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "superpower",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "yawn",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "entrainment",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icicle-crash",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earthquake",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "knock-off",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-voice",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icicle-spear",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heavy-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "play-rough",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "high-horsepower",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "liquidation",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-press",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snowscape",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.2,
+      "weight": 45,
+      "category": "medium",
+      "type": "quad"
+    },
+    "captureRate": 150,
+    "eggGroups": [
+      "ground"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "cetoddle",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "cetitan",
+          "uuid": "Compendium.ptr2e.core-species.Item.0XGIYew2WoqJMp2f",
+          "methods": [
+            {
+              "type": "item",
+              "item": "ice-stone",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 39,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.Q9bQNZHaEqfhZZsy"
+    },
+    "number": 974,
+    "traits": [
+      "pokemon",
+      "chiller",
+      "lumbering",
+      "pack-mon",
+      "underdog",
+      "freezer",
+      "jump-2"
+    ],
+    "diet": [
+      "snowivore",
+      "terravore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "thick-fat"
+        },
+        {
+          "slug": "snow-cloak"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "sheer-force"
+        },
+        {
+          "slug": "slush-rush"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "refrigerate"
+        },
+        {
+          "slug": "frosty-chill"
+        }
+      ],
+      "master": [
+        {
+          "slug": "snow-warning"
+        },
+        {
+          "slug": "deep-freeze"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 4
+      },
+      {
+        "type": "swim",
+        "value": 2
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "ice"
+    ],
+    "slug": "cetoddle",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Q9bQNZHaEqfhZZsy",
+  "effects": [],
+  "folder": null
+}

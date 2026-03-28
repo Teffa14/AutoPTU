@@ -1,0 +1,45 @@
+{
+  "name": "Attack of Opportunity",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "attack-of-opportunity",
+    "actions": [
+      {
+        "slug": "attack-of-opportunity",
+        "name": "Attack of Opportunity",
+        "type": "attack",
+        "traits": [
+          "interrupt-1",
+          "basic"
+        ],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>A creature within the user's Reach uses a Movement to leave the user's Reach, or that creature uses a [Manipulate] Action.</p>",
+          "powerPoints": 2
+        },
+        "category": "status",
+        "types": [
+          "untyped"
+        ],
+        "description": "<p>Trigger: A creature within the user's Reach uses Movement to leave the user's Reach, or that creature uses a [Manipulate] Action.</p><p>Effect: The user uses a [Contact] Attack on their Active List as a Free Action against the target before they leave the user's Reach, consuming PP as normal. Then, the user's next Activation is delayed 20%.</p>",
+        "free": true,
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg"
+      }
+    ],
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "onQ8IjGIE523XM7Z",
+  "effects": [],
+  "folder": "EpCOePz8omfXbp34"
+}

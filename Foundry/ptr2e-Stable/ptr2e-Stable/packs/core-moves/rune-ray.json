@@ -1,0 +1,54 @@
+{
+  "name": "Rune Ray",
+  "type": "move",
+  "_id": "QMFdsFyybf4DoOsU",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "rune-ray",
+    "actions": [
+      {
+        "name": "Rune Ray",
+        "slug": "rune-ray",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "traits": [
+          "ray",
+          "blast-3",
+          "delay-2"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 12,
+          "delay": 2
+        },
+        "types": [
+          "normal"
+        ],
+        "category": "special",
+        "power": 90,
+        "accuracy": 90,
+        "description": "<p>Effect: This attack is treated as being super effective against the target, and doubly super effective if the target possesses at least 2 Types.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

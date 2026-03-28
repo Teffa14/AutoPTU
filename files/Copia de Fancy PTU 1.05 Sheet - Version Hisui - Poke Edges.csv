@@ -1,0 +1,64 @@
+Name,Effect,Prerequisites,Cost
+Skill Improvement,"Rank up one skill that is currently at or below its default level for the species. This Edge may be taken multiple times, each time selecting a different skill",None,1 TP
+Skill Improvement (Acrobatics),Rank up Acrobatics if it is at or below its default level for the species.  May not be selected again for Acrobatics.,None,1 TP
+Skill Improvement (Athletics),Rank up Athletics if it is at or below its default level for the species.  May not be selected again for Athletics.,None,1 TP
+Skill Improvement (Charm),Rank up Charm if it is at or below its default level for the species.  May not be selected again for Charm.,None,1 TP
+Skill Improvement (Combat),Rank up Combat if it is at or below its default level for the species.  May not be selected again for Combat.,None,1 TP
+Skill Improvement (Command),Rank up Command if it is at or below its default level for the species.  May not be selected again for Command.,None,1 TP
+Skill Improvement (General Ed),Rank up General Ed if it is at or below its default level for the species.  May not be selected again for General Ed.,None,1 TP
+Skill Improvement (Medicine Ed),Rank up Medicine Ed if it is at or below its default level for the species.  May not be selected again for Medicine Ed.,None,1 TP
+Skill Improvement (Occult Ed),Rank up Occult Ed if it is at or below its default level for the species.  May not be selected again for Occult Ed.,None,1 TP
+Skill Improvement (Pokémon Ed),Rank up Pokémon Ed if it is at or below its default level for the species.  May not be selected again for Pokémon Ed.,None,1 TP
+Skill Improvement (Technology Ed),Rank up Technology Ed if it is at or below its default level for the species.  May not be selected again for Technology Ed.,None,1 TP
+Skill Improvement (Focus),Rank up Focus if it is at or below its default level for the species.  May not be selected again for Focus.,None,1 TP
+Skill Improvement (Guile),Rank up Guile if it is at or below its default level for the species.  May not be selected again for Guile.,None,1 TP
+Skill Improvement (Intimidate),Rank up Intimidate if it is at or below its default level for the species.  May not be selected again for Intimidate.,None,1 TP
+Skill Improvement (Intuition),Rank up Intuition if it is at or below its default level for the species.  May not be selected again for Intuition.,None,1 TP
+Skill Improvement (Perception),Rank up Perception if it is at or below its default level for the species.  May not be selected again for Perception.,None,1 TP
+Skill Improvement (Stealth),Rank up Stealth if it is at or below its default level for the species.  May not be selected again for Stealth.,None,1 TP
+Skill Improvement (Survival),Rank up Survival if it is at or below its default level for the species.  May not be selected again for Survival.,None,1 TP
+Attack Conflict,"Select Attack or Special Attack. From now on, that Stat does not need to remain higher than Stats it surpasses in Base Relations, and similarly all other Stats surpassed by it do not need to remain lower.",None,1 TP
+Mixed Sweeper Rank 1,"The user gains 3 Stat Points to distribute freely between HP, Defense, Special Defense, or Speed. These bonus points are treated as if they were ""Level Up"" points and do not alter Base Stats.","Level 10, Invested at least 5 Level-Up Stat Points into both Attack and Special Attack",1 TP
+Mixed Sweeper Rank 2,"The user gains 3 Stat Points to distribute freely between HP, Defense, Special Defense, or Speed. These bonus points are treated as if they were ""Level Up"" points and do not alter Base Stats.","Level 20, Invested at least 10 Level-Up Stat Points into both Attack and Special Attack",1 TP
+Mixed Sweeper Rank 3,"The user gains 3 Stat Points to distribute freely between HP, Defense, Special Defense, or Speed. These bonus points are treated as if they were ""Level Up"" points and do not alter Base Stats.","Level 40, Invested at least 15 Level-Up Stat Points into both Attack and Special Attack",1 TP
+Underdog's Strength,The user has each of their Base Stats increased by +1. The user may no longer undergo Evolution.,"Level 15, User is an Underdog Pokémon",1 TP
+Realized Potential,"Subtract the user’s Species Base Stat Total from 45. The user gains Bonus Stat Points equal to the remainder. These Stat Points must follow Base Stat Relations as normal. If the user evolves to a species with a Base Stat Total 45 or higher, Realized Potential is removed and the Tutor Points refunded.","Level 30, User is an Underdog Pokémon",2 TP
+Ability Mastery,"The Pokemon gains an additional Ability, picked from any Ability it could naturally qualify for.",Level 60,3 TP
+Advanced Connection,Choose an Ability with the Connection Keyword that the target has; the Connected Move no longer takes up a Move Slot for the user.,An Ability with the Connection Keyword,1 TP
+Accuracy Training,"Pick a Move with an AC of 3 or higher; the AC of the target Move is permanently lowered by 1. This Poke Edge may be taken up to three times, each time selecting a different Move.",Level 20,1 TP
+Underdog's Lessons,"Choose a Level-Up Move from one of the user’s Final Evolutions that it can learn at or below its current Level. The user learns that Move as if it were a Level-Up Move and can now learn Moves from TMs, HMs, and Tutoring from the lists of that Final Evolution. Underdog’s Lessons may be taken up to three times but must use the same Final Evolution each time in the case of Pokémon with multiple Final Evolutions.",Underdog’s Strength,1 TP
+Capability Training,"Increase Power or a Jump Capability by 1. Capability Training may be taken multiple times, each time increasing a different Capability",Level 20,1 TP
+Capability Training (Power),Increase Power Capability by 1.  Capability Training may not be taken again for Power.,Level 20,1 TP
+Capability Training (High Jump),Increase High Jump Capability by 1.  Capability Training may not be taken again for High Jump.,Level 20,1 TP
+Capability Training (Long Jump),Increase Long Jump Capability by 1.  Capability Training may not be taken again for Long Jump.,Level 20,1 TP
+Advanced Mobility,"Increase one Movement Capability by 2. This Edge may be taken multiple times, but may not be applied more than once to the same Movement Capability.",Level 20,1 TP
+Advanced Mobility (Overland),Increase Overland Movement Capability by 2.  Advanced Mobility may not be taken again for Overland.,Level 20,1 TP
+Advanced Mobility (Sky),Increase Sky Movement Capability by 2.  Advanced Mobility may not be taken again for Sky.,Level 20,1 TP
+Advanced Mobility (Swim),Increase Swim Movement Capability by 2.  Advanced Mobility may not be taken again for Swim.,Level 20,1 TP
+Advanced Mobility (Levitate),Increase Levitate Movement Capability by 2.  Advanced Mobility may not be taken again for Levitate.,Level 20,1 TP
+Advanced Mobility (Burrow),Increase Burrow Movement Capability by 2.  Advanced Mobility may not be taken again for Burrow.,Level 20,1 TP
+Advanced Mobility (Teleporter),Increase Teleporter Movement Capability by 2.  Advanced Mobility may not be taken again for Teleporter.  Does not auto-update.,Level 20,1 TP
+Basic Ranged Attacks,"Choose one of Firestarter, Fountain, Freezer, Guster, Materializer, or Zapper. Struggle Attacks modified by that Capability may now be made at a range of up to 6 meters. This Poke Edge may be taken multiple times, selecting a different Capability each time.","Level 20, one of the Firestarter, Fountain, Freezer, Guster, Materializer, or Zapper Capabilities",1 TP
+Basic Ranged Attacks (Firestarter),Struggle Attacks modified by Firestarter may now be made at a range of up to 6 meters.,"Level 20, Firestarter Capability",1 TP
+Basic Ranged Attacks (Fountain),Struggle Attacks modified by Fountain may now be made at a range of up to 6 meters.,"Level 20, Fountain Capability",1 TP
+Basic Ranged Attacks (Freezer),Struggle Attacks modified by Freezer may now be made at a range of up to 6 meters.,"Level 20, Freezer Capability",1 TP
+Basic Ranged Attacks (Guster),Struggle Attacks modified by Guster may now be made at a range of up to 6 meters.,"Level 20, Guster Capability",1 TP
+Basic Ranged Attacks (Materializer),Struggle Attacks modified by Materializer may now be made at a range of up to 6 meters.,"Level 20, Materializer Capability",1 TP
+Basic Ranged Attacks (Zapper),Struggle Attacks modified by Zapper may now be made at a range of up to 6 meters.,"Level 20, Zapper Capability",1 TP
+Aura Pulse,The Pokemon gains the Aura Pulse Capability,"Level 30, Aura Reading Capability, owned by a Trainer with Aura Pulse",2 TP
+Enticing Bait,"When activating the Alluring Capability, the user adds the higher of its Athletics or Focus Ranks to its d20 roll.","Level 20, Alluring Capability",1 TP
+Extended Invisibility,The user may remain Invisible for up to 8 minutes,"Level 20, Invisibility Capability",1 TP
+Far Reading,The user treats their Focus Rank as 2 higher for the purposes of determining the range of Telepath.,"Level 20, Telepathy Capability",1 TP
+Precise Threading,The user may use their Threaded Capability at a range of 6 meters and with an AC of 3 rather than 6,"Level 20, Threaded Capability",1 TP
+Seismometer,The user's Tremorsense range is increased by a number of meters equal to their Perception Rank.,"Level 20, Tremorsense Capability",1 TP
+TK Mastery,The user treats their Focus Rank as 2 higher for the purposes of the Telekinetic Capability,"Level 20, Telekinetic Capability",1 TP
+Trail Sniffer,The user gets a bonus to all Perception Rolls to use the Tracker Capability equal to their Focus Rank.,"Level 20, Tracker Capability",1 TP
+,Do Porygon Dream Of Mareep,,
+Digital Avatar,The Pokémon may dive into computer systems and networks and gains a 3d6 in Technology Education if it did not previously have a Technology Education Skill.,Datajack Augmentation,1 TP
+Gravity Training,"The Pokémon gains two steps to allocate in any direction to expand its Gravitic Tolerance capability. If it has none, it may acquire one by allocating steps starting from its Home Gravity.",None,1 TP
+Psychic Navigator,Grants the Psychic Navigator Capability.,"Psychic Type, Level 20",2 TP
+Vehicle Training,The Pokémon may drive vehicles that are appropriately outfitted to the species as a Standard Action.,Appropriate Body Type,1 TP
+,Misc/Homebrew,,
+Expand Horizons,The Pokémon gains 3 Tutor Points. A Pokémon may be targeted by Expand Horizons only once.  Must be the Pokémon of a Mentor with the Expand Horizons feature.,Trainer has Mentor & Expand Horizons,0 TP
+Mixed Power [9-15 Playtest],The user gains the Twisted Power Ability.,"Level 10, Invested at least 5 Level-Up Stat Points into both Attack and Special Attack",2 TP
+Twisted Power [2-16 Playtest],The user adds half of their Attack Stat to the damage rolls of their Special Moves; and the user adds half of their Special Attack Stat to the damage of their Physical Moves. This does not change the Damage Class of any attack.,"Level 10, Invested at least 5 Level-Up Stat Points into both Attack and Special Attack",2 TP

@@ -1,0 +1,69 @@
+{
+  "name": "Rainy Training Grounds",
+  "description": "Pikachu now drills rainy initiative order: watch the Start/Command/Action/End logs while Burned Pikachu duels Swift Swim Squirtle across blockers and water tiles.",
+  "default_weather": "Rain",
+  "grid": {
+    "width": 12,
+    "height": 8,
+    "blockers": [[5, 3], [5, 4], [6, 3], [6, 4]],
+    "tiles": {
+      "2,2": "water",
+      "2,3": "water",
+      "2,4": "water",
+      "8,4": "difficult",
+      "9,4": "difficult"
+    }
+  },
+  "players": [
+    {
+      "name": "Demo Trainer",
+      "species": "Pikachu",
+      "level": 20,
+      "types": ["Electric"],
+      "hp_stat": 10,
+      "atk": 10,
+      "def": 10,
+      "spatk": 10,
+      "spdef": 10,
+      "spd": 9,
+      "moves": [
+        {"name": "Thunder Shock", "type": "Electric", "category": "Special", "db": 6, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "At-Will"},
+        {"name": "Quick Attack", "type": "Normal", "category": "Physical", "db": 4, "ac": 2, "range_kind": "Melee", "freq": "At-Will"},
+        {"name": "Rain Dance", "type": "Water", "category": "Status", "db": 0, "ac": null, "range_kind": "Field", "freq": "Scene"},
+        {"name": "Tail Whip", "type": "Normal", "category": "Status", "db": 0, "ac": null, "range_kind": "Burst", "range_value": 1, "freq": "At-Will"}
+      ],
+      "statuses": [{"name": "Burned", "kind": "Persistent"}],
+      "capabilities": [
+        {"name": "Zapper"},
+        {"name": "Underdog"}
+      ],
+      "movement": {"overland": 7, "swim": 2, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 2, "l_jump": 2, "power": 2}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Demo Rival",
+      "species": "Squirtle",
+      "level": 20,
+      "types": ["Water"],
+      "hp_stat": 11,
+      "atk": 9,
+      "def": 11,
+      "spatk": 9,
+      "spdef": 11,
+      "spd": 13,
+      "moves": [
+        {"name": "Tackle", "type": "Normal", "category": "Physical", "db": 4, "ac": 2, "range_kind": "Melee", "freq": "At-Will"},
+        {"name": "Water Pulse", "type": "Water", "category": "Special", "db": 7, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "At-Will"},
+        {"name": "Aqua Jet", "type": "Water", "category": "Physical", "db": 6, "ac": 2, "range_kind": "Melee", "freq": "EOT"},
+        {"name": "Withdraw", "type": "Water", "category": "Status", "db": 0, "ac": null, "range_kind": "Self", "freq": "At-Will"}
+      ],
+      "abilities": [{"name": "Swift Swim"}],
+      "movement": {"overland": 6, "swim": 6, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 1, "l_jump": 1, "power": 2},
+      "capabilities": [
+        {"name": "Torrent"},
+        {"name": "Amphibious"}
+      ]
+    }
+  ]
+}

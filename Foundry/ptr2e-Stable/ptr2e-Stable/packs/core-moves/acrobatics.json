@@ -1,0 +1,81 @@
+{
+  "name": "Acrobatics",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "system": {
+    "slug": "acrobatics",
+    "actions": [
+      {
+        "slug": "acrobatics",
+        "name": "Acrobatics",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "contact",
+          "dance"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 55,
+        "accuracy": 100,
+        "types": [
+          "flying"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "acrobatics-unburdened",
+        "name": "Acrobatics (Unburdened)",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "contact",
+          "dance"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 110,
+        "accuracy": 100,
+        "types": [
+          "flying"
+        ],
+        "description": "<p>Effect: This attack may only be used if the user has no Held or Belt items.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "acrobatics",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "UjHMbt9e98EuLulz",
+  "effects": []
+}

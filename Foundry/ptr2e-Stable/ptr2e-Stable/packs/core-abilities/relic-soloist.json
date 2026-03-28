@@ -1,0 +1,272 @@
+{
+  "name": "Relic Soloist",
+  "type": "ability",
+  "img": "systems/ptr2e/img/perk-icons/Musician.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "legendary"
+        ],
+        "name": "Relic Soloist",
+        "slug": "relic-soloist",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>The user resolves Relic Song.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user resolves Relic Song.</p><p>Effect: The user transforms into its Pirouette Forme. The user may also change to Pirouette Forme as either a Simple Action (4 PP), or as a Downtime Action.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [
+          "legendary"
+        ],
+        "name": "Relic Soloist (Active)",
+        "slug": "relic-soloist-active",
+        "type": "generic",
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 4
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user resolves Relic Song.</p><p>Effect: The user transforms into its Pirouette Forme.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [
+          "legendary"
+        ],
+        "name": "Relic Soloist",
+        "slug": "relic-soloist-downtime",
+        "type": "downtime",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: The user transforms into its Pirouette Forme.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "slug": "relic-song",
+        "name": "Relic Song",
+        "type": "attack",
+        "traits": [
+          "sonic",
+          "friendly",
+          "legendary"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "special",
+        "power": 75,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: On hit, all valid targets have a 30% chance of gaining @Affliction[drowsy] 7.</p>",
+        "free": true,
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "traits": [],
+        "name": "Amplifier",
+        "slug": "amplifier",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: The user's [Sonic] attacks have 30% more Power and have their Range increased by 50%.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [],
+        "name": "Benevolent Gift",
+        "slug": "benevolent-gift",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: The duration of effects caused or created by the user is increased by 2.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user resolves Relic Song</p><p>Effect: Connection - Relic Song. The user transforms into its Pirouette Forme. The user may also change to Pirouette Forme as either a Simple Action (4 PP), or as a Downtime Action. Passive: The user possesses the Abilities - Amplifier and Benevolent Gift",
+    "traits": [
+      "legendary",
+      "connection"
+    ],
+    "slug": "relic-soloist",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "RsbFvEb7DqMVwhMr",
+  "effects": [
+    {
+      "name": "Relic Soloist",
+      "type": "passive",
+      "_id": "x4G83Hdl9sFOm24K",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.n4rGUelHpp7rVQoz",
+            "predicate": [
+              "ability:relic-soloist:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "allowDuplicate": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          },
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-abilities.Item.8GEZyBul46p9V0Fn",
+            "predicate": [
+              "ability:relic-soloist:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          },
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-abilities.Item.ne1QgdwhvAXeeaX8",
+            "predicate": [
+              "ability:relic-soloist:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737418623784,
+        "modifiedTime": 1754321054501,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

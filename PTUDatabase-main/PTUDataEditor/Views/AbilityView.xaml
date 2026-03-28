@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="PTUDataEditor.Views.AbilityView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PTUDataEditor.Views"
+             xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:c="clr-namespace:PTUDataEditor.Controls"
+             xmlns:tc="clr-namespace:PTUDataEditor.TypeConverters"
+             xmlns:ptu="clr-namespace:PTUDatabase;assembly=PTUDatabase"
+             mc:Ignorable="d" d:Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <Label Content="Name:" />
+        <TextBox Text="{Binding Name, Mode=TwoWay}" Grid.Column="1" Margin="3" />
+
+        <Label Content="Trigger:" Grid.Row="1"  />
+        <TextBox Text="{Binding Trigger, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="3" />
+
+        <Label Content="Target:" Grid.Row="2"  />
+        <TextBox Text="{Binding Target, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Margin="3" />
+
+        <Label Content="Frequency:" Grid.Row="3"  />
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1">
+            <ComboBox SelectedValue="{Binding FrequencyType, Mode=TwoWay}" ItemsSource="{tc:Enum {x:Type ptu:FrequencyType}}" SelectedValuePath="Value" DisplayMemberPath="Description" MinWidth="70" Margin="3" />
+            <StackPanel Orientation="Horizontal" Visibility="{Binding FrequencyCountVisible, Converter={StaticResource BoolToVis}}">
+                <TextBlock VerticalAlignment="Center">×</TextBlock>
+                <tk:IntegerUpDown Value="{Binding FrequencyCount, Mode=TwoWay}" Minimum="1" MinWidth="55" Margin="3" />
+            </StackPanel>
+        </StackPanel>
+
+        <Label Content="Unofficial Alternative:" Grid.Row="4"  />
+        <CheckBox IsChecked="{Binding UnofficialAlternative, Mode=TwoWay}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Margin="3" />
+
+        <Label Content="Keywords:" Grid.Row="5" />
+        <c:EnumFlagsListView Value="{Binding Keywords, Mode=TwoWay}" EnumType="{x:Type ptu:MoveRangeKeywords}" Grid.Row="6" MinWidth="220" Margin="3" />
+
+        <Label Content="Effect:" Grid.Row="5" Grid.Column="1" />
+        <TextBox Text="{Binding Effect, Mode=TwoWay}" Grid.Row="6" Grid.Column="1" Margin="3" TextWrapping="Wrap" />
+    </Grid>
+</UserControl>

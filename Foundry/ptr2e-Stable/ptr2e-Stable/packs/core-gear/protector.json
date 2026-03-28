@@ -1,0 +1,65 @@
+{
+  "folder": "V4skAU6G3OH5fXae",
+  "name": "Protector",
+  "type": "equipment",
+  "system": {
+    "_migration": {
+      "version": 0.11,
+      "previous": null
+    },
+    "slug": "protector",
+    "traits": [
+      "accessory",
+      "held",
+      "evolution",
+      "rhyhorn",
+      "rhydon",
+      "rhyperior"
+    ],
+    "actions": [],
+    "description": "<p>Effect: The user takes -15% less damage from Physical-Category Attacks. Rhyhorn, Rhydon, and Rhyperior users take -25% less damage from Special-Category Attacks and have +15% RES.<br><br>A Rhydon may consume this item in order to trigger Evolution.</p>",
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "carryType": "stowed",
+      "handsHeld": null,
+      "slot": "accessory"
+    },
+    "grade": "B",
+    "fling": {
+      "type": "rock",
+      "power": 120,
+      "accuracy": 80,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 4,
+        "unit": "m"
+      }
+    },
+    "quantity": 1,
+    "rarity": "uncommon",
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/gear_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "img": "systems/ptr2e/img/item-icons/protector.webp",
+  "effects": [],
+  "_id": "HCte0tv6rdpKecWM"
+}

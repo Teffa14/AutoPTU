@@ -1,0 +1,394 @@
+{
+  "name": "barraskewda",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "water"
+    ],
+    "stats": {
+      "hp": 61,
+      "atk": 123,
+      "def": 60,
+      "spa": 60,
+      "spd": 50,
+      "spe": 136
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "fury-attack",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bite",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "peck",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aqua-jet",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "throat-chop",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "agility",
+          "level": 18,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dive",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-energy",
+          "level": 32,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "laser-focus",
+          "level": 32,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "crunch",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "liquidation",
+          "level": 48,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-edge",
+          "level": 56,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "scale-shot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flip-turn",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hydro-pump",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "surf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "waterfall",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "whirlpool",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "brick-break",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bounce",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "close-combat",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scald",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "drill-run",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-fangs",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.3,
+      "weight": 30,
+      "category": "small",
+      "type": "length"
+    },
+    "captureRate": 60,
+    "eggGroups": [
+      "water2"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "arrokuda",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "barraskewda",
+          "uuid": "Compendium.ptr2e.core-species.Item.L6HOFG0jAzWiYjS6",
+          "methods": [
+            {
+              "type": "level",
+              "level": 26,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.70lWFjOs4Yjo30mo"
+    },
+    "number": 847,
+    "traits": [
+      "pokemon",
+      "natural-swimmer",
+      "gilled",
+      "wavesense-15",
+      "terrible-eyesight",
+      "living-weapon",
+      "missile",
+      "fully-evolved",
+      "underdog",
+      "jump-1"
+    ],
+    "diet": [
+      "carnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "swift-swim"
+        },
+        {
+          "slug": "propeller-tail"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "drizzle"
+        },
+        {
+          "slug": "defiant"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "strong-jaw"
+        },
+        {
+          "slug": "hustle"
+        }
+      ],
+      "master": [
+        {
+          "slug": "gluttony"
+        },
+        {
+          "slug": "guts"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "swim",
+        "value": 21
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "lake",
+      "river",
+      "ocean",
+      "reef"
+    ],
+    "slug": "barraskewda",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "L6HOFG0jAzWiYjS6",
+  "effects": [],
+  "folder": null
+}

@@ -1,0 +1,85 @@
+{
+  "name": "Detect Minds",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      "trait:telepath"
+    ],
+    "cost": 1,
+    "description": "<p>You can detect the presence of minds within a range equal to your Occult (Psychic) Skill in metres, unless those minds have been concealed in some way.</p>",
+    "actions": [
+      {
+        "name": "Detect Minds",
+        "slug": "detect-minds",
+        "description": "<p>You can detect the presence of minds within a range equal to your Occult (Psychic) Skill in metres, unless those minds have been concealed in some way.</p>",
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 2,
+          "delay": null,
+          "priority": null
+        },
+        "type": "generic",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "detect-minds",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "hypnotic-suggestion",
+          "conceal-mind",
+          "master-mindscanner"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/svg/psychic_icon.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 139,
+        "y": 124,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "finesse",
+      "archetype": "psychic"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "W565Ar8WPA07HEBx",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "effects": [],
+  "folder": "F4b52L00KrAtdPu5"
+}

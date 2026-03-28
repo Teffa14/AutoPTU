@@ -1,0 +1,149 @@
+{
+  "name": "Diamond Dust",
+  "type": "ability",
+  "img": "systems/ptr2e/img/perk-icons/Elamentalist.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "environ"
+        ],
+        "name": "Diamond Dust",
+        "slug": "diamond-dust",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: While Foggy or Snowy Weather is active, the user's Fairy- and Ice-Type attacks have 30% increased Power. The user is treated as having the Psychic Type for the effects of Foggy Weather.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: While Foggy or Snowy Weather is active, the user's Fairy- and Ice-Type attacks have 30% increased Power. The user is immune to the negative effects of Foggy and Snowy Weather. The user is treated as having the Psychic Type for the effects of Foggy Weather.</p>",
+    "traits": [
+      "environ",
+      "partial-automation"
+    ],
+    "slug": "diamond-dust",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "8kQWtD4GaOSWkryX",
+  "effects": [
+    {
+      "name": "Diamond Dust",
+      "type": "passive",
+      "_id": "Fap809apCR5VwnCz",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "percentile-modifier",
+            "key": "fairy-attack-power",
+            "value": 30,
+            "predicate": [
+              "effect:summon:foggy-weather"
+            ],
+            "label": "Fairy Power",
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "percentile-modifier",
+            "key": "fairy-attack-power",
+            "value": 30,
+            "predicate": [
+              "effect:summon:snowy-weather"
+            ],
+            "label": "Fairy Power",
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "add-trait",
+            "key": "",
+            "value": "psychic",
+            "predicate": [
+              "effect:summon:foggy-weather"
+            ],
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "percentile-modifier",
+            "key": "ice-attack-power",
+            "value": 30,
+            "predicate": [
+              "effect:summon:foggy-weather"
+            ],
+            "label": "Ice Power",
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "percentile-modifier",
+            "key": "ice-attack-power",
+            "value": 30,
+            "predicate": [
+              "effect:summon:snowy-weather"
+            ],
+            "label": "Ice Power",
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1765240367540,
+        "modifiedTime": 1765240482737,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

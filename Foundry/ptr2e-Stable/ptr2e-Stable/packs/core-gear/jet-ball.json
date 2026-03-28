@@ -1,0 +1,61 @@
+{
+  "name": "Jet Ball",
+  "img": "systems/ptr2e/img/item-icons/jet ball.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 3,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": 2,
+      "materials": [
+        "9x-tumblestone",
+        "1x-ultra-apricorn"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 20,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling",
+      "ball"
+    ],
+    "description": "<p>3x Catch Rate modifier vs targets in the Flying or Teleportation movement states.</p>",
+    "modifier": 3,
+    "quantity": 1,
+    "slug": "jet-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "g74RkfDpUI6xZAy7",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

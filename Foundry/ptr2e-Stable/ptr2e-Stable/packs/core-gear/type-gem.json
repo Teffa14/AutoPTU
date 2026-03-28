@@ -1,0 +1,50 @@
+{
+  "name": "Type Gem",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "D",
+    "fling": {
+      "type": "untyped",
+      "power": 30,
+      "accuracy": 95,
+      "hide": false
+    },
+    "rarity": "common",
+    "traits": [
+      "combat",
+      "consumable",
+      "held",
+      "stack-3",
+      "type-fling"
+    ],
+    "description": "<p>Trigger: The user declares an Attack that shares a &lt;Type&gt; with the item. Effect: The triggering Attack doesn't consume PP, and has its Power increased by 50% until it is resolved.</p>",
+    "slug": "type-gem",
+    "quantity": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "consumableType": "other",
+    "stack": 1,
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "ZSg2vRJgDD93RzAX",
+  "effects": [],
+  "folder": "V4skAU6G3OH5fXab"
+}

@@ -1,0 +1,51 @@
+{
+  "name": "Warp Seed",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 2,
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 85,
+      "hide": null
+    },
+    "rarity": "uncommon",
+    "consumableType": "other",
+    "traits": [
+      "consumable",
+      "natural",
+      "seed",
+      "held",
+      "stack-3"
+    ],
+    "description": "The target is warped to a random room on the Floor.",
+    "quantity": 1,
+    "slug": "warp-seed",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "MAVCsdO2ZjVMzQJp",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

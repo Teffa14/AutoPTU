@@ -1,0 +1,93 @@
+{
+  "name": "Crescent Ray",
+  "type": "move",
+  "_id": "ijYLLpmhyS7pp4fq",
+  "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Crescent Ray (Resolution)",
+        "slug": "crescent-ray-resolution",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+        "traits": [
+          "set-up",
+          "ray",
+          "environ",
+          "flinch-50"
+        ],
+        "range": {
+          "target": "line",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "The user used Crescent Ray (Set Up) as their last Action."
+        },
+        "types": [
+          "fairy"
+        ],
+        "category": "special",
+        "power": 120,
+        "accuracy": 100,
+        "description": "<p>Trigger: The user used Crescent Ray (Set Up) as their last Action.</p><p>Effect: If the Weather is not Gloomy or Clear when this Action is declared, this Attack’s Power is reduced by 50%.</p>",
+        "predicate": []
+      },
+      {
+        "name": "Crescent Ray (Set-Up)",
+        "slug": "crescent-ray-set-up",
+        "description": "<p>Effect: The user gains +1 SPATK and SPDEF Stage for 5 Activations, and is @Affliction[braced 2]. If Gloomy Weather is present, the user may use Crescent Ray (Resolution) as a Free Action upon resolving this Attack.</p>",
+        "traits": [
+          "set-up",
+          "defensive",
+          "environ",
+          "priority-20"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "delay": 3
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "fairy"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "sort": 2000000,
+  "ownership": {
+    "default": 0,
+    "CYLdyr5mPSDmNpTp": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.327",
+    "systemId": "ptr2e",
+    "systemVersion": "0.10.0-alpha.1.0.4",
+    "createdTime": 1718991660237,
+    "modifiedTime": 1719972458665,
+    "lastModifiedBy": "CYLdyr5mPSDmNpTp"
+  }
+}

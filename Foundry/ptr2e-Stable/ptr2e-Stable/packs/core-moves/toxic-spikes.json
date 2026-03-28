@@ -1,0 +1,49 @@
+{
+  "name": "Toxic Spikes",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "slug": "toxic-spikes",
+    "actions": [
+      {
+        "slug": "toxic-spikes",
+        "name": "Toxic Spikes",
+        "type": "attack",
+        "traits": [
+          "hazard",
+          "blast-4"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "poison"
+        ],
+        "description": "<p>Effect: Poison tipped spikes are spread over the [Blast X] area on standing surfaces. A creature that starts an Activation on a surface containing the Hazard gains @Affliction[poison] 1. A creature that moves through through a space touching a surface containing the Hazard gain @Affliction[poison] 1 for each square travelled. After gaining 4 Stacks of @Affliction[poison] this way during the same Round, the creature's @Affliction[poison] Affliction becomes @Affliction[blight].</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "ZPdwItj91QOBjAgC",
+  "effects": []
+}

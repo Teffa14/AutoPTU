@@ -1,0 +1,120 @@
+{
+  "name": "Periodic Orbit",
+  "type": "ability",
+  "img": "icons/magic/symbols/chevron-elipse-circle-blue.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "legendary"
+        ],
+        "name": "Periodic Orbit",
+        "slug": "periodic-orbit",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 4,
+          "trigger": "<p>The user's next Activation after resolving Wish, Future Sight, or Doom Desire.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user's next Activation after resolving Wish, Future Sight, or Doom Desire.</p><p>Effect: The user freely resolves the attack once more. Periodic Orbit cannot be activated in response to another resolution resulting from a previous Activation of Periodic Orbit.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user's next Activation after resolving Wish, Future Sight, or Doom Desire.</p><p>Effect: Connection - Doom Desire. The user freely resolves the attack once more. Periodic Orbit cannot be activated in response to another resolution resulting from a previous Activation of Periodic Orbit.</p>",
+    "traits": [
+      "legendary"
+    ],
+    "slug": "periodic-orbit",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "7E8xYrokAEsjJ9NW",
+  "effects": [
+    {
+      "name": "Periodic Orbit",
+      "type": "passive",
+      "_id": "5V2MCRnpc1Hem3ZX",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.0idrtcsbkR1V3St0",
+            "predicate": [
+              "ability:periodic-orbit:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "reevaluateOnUpdate": true,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737417496311,
+        "modifiedTime": 1754319946013,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

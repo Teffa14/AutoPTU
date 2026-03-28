@@ -1,0 +1,57 @@
+{
+  "name": "Bluk Berry",
+  "img": "systems/ptr2e/img/item-icons/bluk berry.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 1,
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "E",
+    "fling": {
+      "type": "untyped",
+      "power": 10,
+      "accuracy": 95,
+      "hide": null
+    },
+    "rarity": "common",
+    "consumableType": "food",
+    "traits": [
+      "restorative",
+      "consumable",
+      "natural",
+      "healing",
+      "bait",
+      "berry",
+      "fling",
+      "held",
+      "dry-3",
+      "sweet-1",
+      "combat"
+    ],
+    "description": "The target gains 1 Tick of HP. If the target does not possess [Human] and is not part of a Team, they also gain a Tick of HP, and their Catch Rate increases by x6/5 / x5/6 for 5 Activations if they like/dislike Dry flavors.",
+    "quantity": 1,
+    "slug": "bluk-berry",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "LnnGW1fEEVJxsw5c",
+  "effects": [],
+  "folder": "yR1GFstYOCdI2jOz"
+}

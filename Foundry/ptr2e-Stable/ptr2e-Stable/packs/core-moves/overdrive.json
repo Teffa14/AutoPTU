@@ -1,0 +1,49 @@
+{
+  "name": "Overdrive",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "overdrive",
+    "actions": [
+      {
+        "slug": "overdrive",
+        "name": "Overdrive",
+        "type": "attack",
+        "traits": [
+          "sonic",
+          "friendly"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 9
+        },
+        "category": "special",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "5yy1Y20MoTiohdSd",
+  "effects": []
+}

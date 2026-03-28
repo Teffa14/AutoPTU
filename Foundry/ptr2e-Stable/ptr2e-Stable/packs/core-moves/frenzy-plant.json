@@ -1,0 +1,48 @@
+{
+  "name": "Frenzy Plant",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "frenzy-plant",
+    "actions": [
+      {
+        "slug": "frenzy-plant",
+        "name": "Frenzy Plant",
+        "type": "attack",
+        "traits": [
+          "flinch-40"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "special",
+        "power": 150,
+        "accuracy": 90,
+        "types": [
+          "grass"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "vYuNICgsiIKQRLXu",
+  "effects": []
+}

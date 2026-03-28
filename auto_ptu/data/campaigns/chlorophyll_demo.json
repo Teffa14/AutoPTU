@@ -1,0 +1,53 @@
+{
+  "name": "Chlorophyll Lab",
+  "description": "Sunlight bathes the training field so your Chlorophyll holder moves faster while the foe stays at baseline speeds. Watch the movement preview before each action to see that +2 overland boost light up in the logs.",
+  "default_weather": "Sun",
+  "grid": {
+    "width": 10,
+    "height": 6,
+    "blockers": [[4, 0], [4, 1], [4, 2]],
+    "tiles": {
+      "2,3": "difficult",
+      "5,3": "difficult"
+    }
+  },
+  "players": [
+    {
+      "name": "Bellossom",
+      "species": "Bellossom",
+      "level": 20,
+      "types": ["Grass"],
+      "hp_stat": 12,
+      "atk": 7,
+      "def": 9,
+      "spatk": 13,
+      "spdef": 12,
+      "spd": 10,
+      "abilities": [{"name": "Chlorophyll"}],
+      "moves": [
+        {"name": "Magical Leaf", "type": "Grass", "category": "Special", "db": 6, "ac": 2, "range_kind": "Ranged", "range_value": 5, "freq": "At-Will"},
+        {"name": "Stun Spore", "type": "Grass", "category": "Status", "db": 0, "ac": 4, "range_kind": "Melee", "freq": "Scene"}
+      ],
+      "movement": {"overland": 5, "swim": 0, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 3, "l_jump": 2, "power": 3}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Rattata",
+      "species": "Rattata",
+      "level": 20,
+      "types": ["Normal"],
+      "hp_stat": 11,
+      "atk": 9,
+      "def": 7,
+      "spatk": 6,
+      "spdef": 6,
+      "spd": 11,
+      "moves": [
+        {"name": "Quick Attack", "type": "Normal", "category": "Physical", "db": 6, "ac": 2, "range_kind": "Melee", "freq": "At-Will"},
+        {"name": "Bite", "type": "Dark", "category": "Physical", "db": 7, "ac": 2, "range_kind": "Melee", "freq": "At-Will"}
+      ],
+      "movement": {"overland": 5, "swim": 0, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 3, "l_jump": 2, "power": 3}
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "Outburst",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "outburst",
+    "actions": [
+      {
+        "slug": "outburst",
+        "name": "Outburst",
+        "type": "attack",
+        "traits": [
+          "explode",
+          "sonic"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 16
+        },
+        "category": "special",
+        "power": 250,
+        "accuracy": 85,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: The user's HP becomes 0 on attack resolution.</p>",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "S",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "yIsBG024o84Xtknp",
+  "effects": []
+}

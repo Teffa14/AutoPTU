@@ -1,0 +1,39 @@
+{
+  "name": "Rush",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "rush",
+    "actions": [
+      {
+        "slug": "rush",
+        "name": "Rush",
+        "type": "generic",
+        "traits": [
+          "basic"
+        ],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 0
+        },
+        "description": "<p>The user selects a Movement Type they possess and make a Demanding Skill Check with that Movement Type's associated Skill.</p><p>On a success, the user gains +1m per 2 DoS to that Movement Score for the rest of the round (default 0 at 1 DoS). The user may elect to spend up to 10 PP to increase the result by +10 times by the number of PP spent.</p>",
+        "free": true,
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "JgLLve8pmeAQFVcV",
+  "effects": [],
+  "folder": "EpCOePz8omfXbp34"
+}

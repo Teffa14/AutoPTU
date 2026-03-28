@@ -1,0 +1,48 @@
+{
+  "name": "Giga Drain",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "giga-drain",
+    "actions": [
+      {
+        "slug": "giga-drain",
+        "name": "Giga Drain",
+        "type": "attack",
+        "traits": [
+          "drain-1-2"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "special",
+        "power": 75,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "L2gBdhkIuvmwPPGW",
+  "effects": []
+}

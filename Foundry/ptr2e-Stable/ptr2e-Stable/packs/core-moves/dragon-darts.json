@@ -1,0 +1,49 @@
+{
+  "name": "Dragon Darts",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "dragon-darts",
+    "actions": [
+      {
+        "slug": "dragon-darts",
+        "name": "Dragon Darts",
+        "type": "attack",
+        "traits": [
+          "double-strike",
+          "blast-2",
+          "missile"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 50,
+        "accuracy": 100,
+        "types": [
+          "dragon"
+        ],
+        "img": "systems/ptr2e/img/svg/dragon_icon.svg"
+      }
+    ],
+    "grade": "B",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "YMs1EuRruqKWsi3r",
+  "effects": []
+}

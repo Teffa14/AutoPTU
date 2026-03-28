@@ -1,0 +1,52 @@
+{
+  "name": "Take Down",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "take-down",
+    "actions": [
+      {
+        "slug": "take-down",
+        "name": "Take Down",
+        "type": "attack",
+        "traits": [
+          "recoil-1-4",
+          "dash",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 90,
+        "accuracy": 85,
+        "types": [
+          "normal"
+        ],
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "uO99VTvrh96awdWK",
+  "effects": []
+}

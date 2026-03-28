@@ -1,0 +1,47 @@
+{
+  "name": "Nuclear Waste",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/nuclear_icon.svg",
+  "system": {
+    "slug": "nuclear-waste",
+    "actions": [
+      {
+        "slug": "nuclear-waste",
+        "name": "Nuclear Waste",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "cone",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 6
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": 80,
+        "types": [
+          "nuclear"
+        ],
+        "description": "<p>Effect: On hit, all valid targets gain @Affliction[blight] 8.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "elBKg5hEdg8BEMvU",
+  "folder": "EpCOePz8omfXbp35",
+  "effects": []
+}

@@ -1,0 +1,6 @@
+<li class="directory-item entry document {{#unless fake}}{{@root.documentCls}}{{/unless}} flexrow" data-entry-id="{{ actor.id }}">
+    {{#if actor.thumbnail}}
+    <img class="thumbnail" src="{{ actor.thumbnail }}" alt="{{ actor.name }}" loading="lazy">
+    {{/if}}
+    <a class="entry-name ellipsis" data-action="activateEntry"><span>{{ actor.name }}</span><div class="actor-level">Level {{actor.system.advancement.level}}</div></a>
+</li>

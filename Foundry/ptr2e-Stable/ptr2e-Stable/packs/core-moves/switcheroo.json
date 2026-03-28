@@ -1,0 +1,48 @@
+{
+  "name": "Switcheroo",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "switcheroo",
+    "actions": [
+      {
+        "slug": "switcheroo",
+        "name": "Switcheroo",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "status",
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "description": "<p>Effect: On hit, the user swaps an equipped Held, Accessory, or Belt item with the target's equipped Held, Accessory or Belt item. The swapped items must be equippable in the same Item Slot. Only one creature needs to have an equipped item for this attack to succeed.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "RcjOhuX3C05aas2b",
+  "effects": []
+}

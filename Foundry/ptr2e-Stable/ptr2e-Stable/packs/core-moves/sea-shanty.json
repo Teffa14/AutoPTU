@@ -1,0 +1,106 @@
+{
+  "name": "Sea Shanty",
+  "type": "move",
+  "_id": "EFO2ENjeCTdR4l51",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "sea-shanty",
+    "actions": [
+      {
+        "name": "Sea Shanty",
+        "slug": "sea-shanty",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "sonic",
+          "social",
+          "friendly"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "types": [
+          "water"
+        ],
+        "category": "special",
+        "power": 70,
+        "accuracy": 90,
+        "description": "<p>Effect: On hit, all valid targets have a 20% chance of gaining @Affliction[taunted] 5.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [
+    {
+      "name": "Sea Shanty",
+      "type": "passive",
+      "_id": "WoApFrbaVfOy3Oo2",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "sea-shanty-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.tauntedcondiitem",
+            "predicate": [],
+            "chance": 20,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.5",
+        "createdTime": 1737317326253,
+        "modifiedTime": 1737317356381,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "folder": "UUWElZA9w1KEqZS7",
+  "name": "Galarica Cuff",
+  "type": "equipment",
+  "system": {
+    "_migration": {
+      "version": 0.11,
+      "previous": null
+    },
+    "slug": "galarica-cuff",
+    "traits": [
+      "accessory",
+      "held",
+      "evolution"
+    ],
+    "actions": [],
+    "description": "<p>Effect: @Trait[poison] creatures’ EHR is increased by +15%.<br><br>Slowpoke Galarian can consume this item to trigger Evolution.</p>",
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "carryType": "stowed",
+      "handsHeld": 1,
+      "slot": "accessory"
+    },
+    "grade": "B",
+    "fling": {
+      "type": "poison",
+      "power": 70,
+      "accuracy": 85,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 4,
+        "unit": "m"
+      }
+    },
+    "quantity": 1,
+    "rarity": "uncommon",
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/gear_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "img": "systems/ptr2e/img/item-icons/galarica cuff.webp",
+  "effects": [],
+  "_id": "EQOMo4dUVj7HndYs"
+}

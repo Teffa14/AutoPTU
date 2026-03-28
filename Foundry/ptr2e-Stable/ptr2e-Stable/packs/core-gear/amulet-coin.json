@@ -1,0 +1,81 @@
+{
+  "name": "Amulet Coin",
+  "img": "systems/ptr2e/img/item-icons/amulet coin.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "traits": [
+      "treasure",
+      "lucky"
+    ],
+    "actions": [
+      {
+        "name": "Amulet Coin",
+        "slug": "amulet-coin",
+        "type": "passive",
+        "description": "Effect: The user gains +2 more Resources whenever the Resources skill is increased.",
+        "traits": [
+          "Treasure",
+          "Lucky"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 10
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user gains an additional +1 Resources whenever the Resources skill is increased.</p>",
+    "slug": "amulet-coin",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "IMk75j7jXLFcO8tN",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

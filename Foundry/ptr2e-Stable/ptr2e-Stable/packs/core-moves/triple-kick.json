@@ -1,0 +1,50 @@
+{
+  "name": "Triple Kick",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "triple-kick",
+    "actions": [
+      {
+        "slug": "triple-kick",
+        "name": "Triple Kick",
+        "type": "attack",
+        "traits": [
+          "3-strike",
+          "kick",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "category": "physical",
+        "power": 25,
+        "accuracy": 90,
+        "types": [
+          "fighting"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "xbTRWaqCnA3x5bKC",
+  "effects": []
+}

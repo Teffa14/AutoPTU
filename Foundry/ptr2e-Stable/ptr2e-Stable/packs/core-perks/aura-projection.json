@@ -1,0 +1,83 @@
+{
+  "name": "Aura Projection",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.aura-sense.mod}",
+          25
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>You are able to outwardly transmit surface thoughts and feelings through Aura.</p>",
+    "actions": [
+      {
+        "name": "Aura Projection",
+        "slug": "aura-projection",
+        "description": "<p>You are able to outwardly transmit surface thoughts and feelings through Aura.</p>",
+        "cost": {
+          "activation": "free"
+        },
+        "type": "passive",
+        "traits": [
+          "aura"
+        ],
+        "img": "systems/ptr2e/img/perk-icons/Aura.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "aura-projection",
+    "traits": [
+      "aura"
+    ],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 176,
+        "y": 27,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "aura-user",
+          "aura-bonding",
+          "aura-dampening",
+          "shielding-aura"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Aura.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "power",
+      "archetype": "aura"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "FNa1vZTffzqYCN3p",
+  "img": "systems/ptr2e/img/perk-icons/Aura.svg",
+  "effects": [],
+  "folder": "I7ocNlZvZjyhwUcw"
+}

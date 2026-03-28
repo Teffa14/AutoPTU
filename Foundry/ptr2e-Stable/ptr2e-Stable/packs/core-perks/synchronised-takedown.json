@@ -1,0 +1,96 @@
+{
+  "name": "Synchronised Takedown",
+  "type": "perk",
+  "folder": "UZGN1glVNXLieg48",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.leadership.mod}",
+          50
+        ]
+      },
+      "trait:pack-leader",
+      "item:perk:pile-on",
+      {
+        "gte": [
+          "{actor|skills.stealth.mod}",
+          50
+        ]
+      }
+    ],
+    "cost": 4,
+    "description": "<p>If your Pack has yet to be discovered, you may declare a Synchronised Takedown. All Pack members may get one Attack before combat begins.</p>",
+    "actions": [
+      {
+        "name": "Synchronised Takedown",
+        "slug": "synchronised-takedown",
+        "description": "<p>If your Pack has yet to be discovered, you may declare a Synchronised Takedown. All Pack members may get one Attack before combat begins.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 10,
+          "delay": null,
+          "priority": null
+        },
+        "type": "generic",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "synchronised-takedown",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "pile-on"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#111111",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Tactician.svg",
+          "tint": "#ffffff",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 146,
+        "y": 182,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "finesse",
+      "archetype": "pack-leader"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "F3jNJOuVohlK9fft",
+  "img": "systems/ptr2e/img/perk-icons/Tactician.svg",
+  "effects": []
+}

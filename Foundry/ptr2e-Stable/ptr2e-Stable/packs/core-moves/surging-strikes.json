@@ -1,0 +1,54 @@
+{
+  "name": "Surging Strikes",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "surging-strikes",
+    "actions": [
+      {
+        "slug": "surging-strikes",
+        "name": "Surging Strikes",
+        "type": "attack",
+        "traits": [
+          "crit-4",
+          "dash",
+          "punch",
+          "kick",
+          "3-strike",
+          "legendary",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 25,
+        "accuracy": 100,
+        "types": [
+          "water"
+        ],
+        "description": "<p>Effect: The user ignores any [Defensive] and [Stage Change] effects the target has for this attack’s use.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "QQAU9R1kvgwA4jXl",
+  "effects": []
+}

@@ -1,0 +1,76 @@
+{
+  "name": "Revenge",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "revenge",
+    "actions": [
+      {
+        "slug": "revenge",
+        "name": "Revenge",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+        "predicate": []
+      },
+      {
+        "slug": "revenge-revenger",
+        "name": "Revenge (Revenger)",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "description": "<p>Trigger: The user has been damaged since its last Activation.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "5xhsqbWOJO8k23Pa",
+  "effects": []
+}

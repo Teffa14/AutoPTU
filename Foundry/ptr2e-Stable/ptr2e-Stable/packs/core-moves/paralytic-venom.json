@@ -1,0 +1,78 @@
+{
+  "name": "Paralytic Venom",
+  "type": "move",
+  "_id": "yH35AaKAFxZs5tOa",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "slug": "paralytic-venom",
+    "actions": [
+      {
+        "name": "Paralytic Venom",
+        "slug": "paralytic-venom",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "types": [
+          "poison"
+        ],
+        "category": "status",
+        "accuracy": 90,
+        "description": "<p>Effect: On hit, the target gains @Affliction[poison] 5.</p>",
+        "predicate": []
+      },
+      {
+        "name": "Paralytic Venom (Poisoned)",
+        "slug": "paralytic-venom-poisoned",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/poison_icon.svg",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "<p>The target has @Affliction[poison].</p>"
+        },
+        "variant": "paralytic-venom",
+        "types": [
+          "poison"
+        ],
+        "category": "status",
+        "accuracy": 90,
+        "free": true,
+        "description": "<p>Trigger: The target has @Affliction[poison].</p><p>Effect: On hit, the target gains @Affliction[paralysis] 5.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "<p>Effect: On hit, the target gains @Affliction[poison] 5. If the target has @Affliction[poison], the target instead gains @Affliction[paralysis] 5.</p>"
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

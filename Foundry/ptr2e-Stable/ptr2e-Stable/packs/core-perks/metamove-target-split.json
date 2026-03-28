@@ -1,0 +1,68 @@
+{
+  "folder": "zrVtKATNxzLNxTUX",
+  "name": "Metamove: Target Split",
+  "type": "perk",
+  "_id": "WFRiHWimAAXlmscD",
+  "img": "systems/ptr2e/img/perk-icons/Arcana.svg",
+  "system": {
+    "actions": [],
+    "slug": "metamove-target-split",
+    "description": "<p>When you declare an Attack with the target of \"Creature\", you can freely use the Attack +X more times, spending X*(half of the Attack's base PP, minimum 1) PP to do so, where X can be 3 at most. When doing this, Physical- and Special-Category attacks deal 25% less damage.</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "metamove-empower",
+          "metamove-guarded-strike",
+          "stat-iv-booster-1-13",
+          "improved-overland-16",
+          "improved-overland-12",
+          "root-4",
+          "minor-buff-15",
+          "minor-buff-19",
+          "minor-buff-57",
+          "wound-spring"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#804000",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Arcana.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 122,
+        "y": 176,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "power",
+      "archetype": "metamove"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": []
+}

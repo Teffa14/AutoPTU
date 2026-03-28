@@ -1,0 +1,78 @@
+{
+  "name": "Red Orb",
+  "img": "systems/ptr2e/img/item-icons/red orb.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "S",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "unique",
+    "traits": [
+      "evolution",
+      "phenomenon",
+      "held",
+      "groudon"
+    ],
+    "actions": [
+      {
+        "name": "Red Orb",
+        "slug": "red-orb",
+        "type": "passive",
+        "description": "Effect: When equipped as an Accessory by a [Groudon], the user may undergo Primal Reversion without needing to have Precipice Blades on their Active List, and without a PP Cost.\nWhen Held by a [Human], they may use a Complex Action to control an unowned [Groudon].",
+        "traits": [
+          "Evolution",
+          "Phenomenon",
+          "Held",
+          "Groudon"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: When equipped as an Accessory by a [Groudon], the user may undergo Primal Reversion without needing to have Precipice Blades on their Active List, and without a PP Cost.\nWhen Held by a [Human], they may use a Complex Action to control an unowned [Groudon].",
+    "slug": "red-orb",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "a6sQ0Kvxkcun98Yw",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

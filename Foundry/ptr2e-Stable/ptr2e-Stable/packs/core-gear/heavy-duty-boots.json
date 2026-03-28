@@ -1,0 +1,81 @@
+{
+  "name": "Heavy-Duty Boots",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": true,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "combat",
+      "defensive"
+    ],
+    "actions": [
+      {
+        "name": "Heavy-Duty Boots",
+        "slug": "heavy-duty-boots",
+        "type": "passive",
+        "description": "Effect: The user is unaffected by [Hazard] effects and takes 20% less damage from [Earthbound] attacks and effects.",
+        "traits": [
+          "Combat",
+          "Defensive"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 10
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: The user is unaffected by [Hazard] effects and takes 20% less damage from [Earthbound] attacks and effects.",
+    "slug": "heavy-duty-boots",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "LYDNNpYIk9YGjTHn",
+  "effects": [],
+  "folder": "UUWElZA9w1KEqZS7"
+}

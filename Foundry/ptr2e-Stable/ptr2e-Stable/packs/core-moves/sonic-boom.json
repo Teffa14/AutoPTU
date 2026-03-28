@@ -1,0 +1,92 @@
+{
+  "name": "Sonic Boom",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "sonic-boom",
+    "actions": [
+      {
+        "slug": "sonic-boom",
+        "name": "Sonic Boom",
+        "type": "attack",
+        "traits": [
+          "sonic",
+          "flat"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "special",
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: This attack always deals 35 damage on hit.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "E",
+    "traits": [],
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "wpWy5nsl4AjbSYjs",
+  "effects": [
+    {
+      "name": "Sonic Boom",
+      "type": "passive",
+      "_id": "ZA5HqPkGpWcrkVbX",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "sonic-boom-attack-damage-flat",
+            "value": 35,
+            "predicate": [
+              "item:move:sonic-boom"
+            ],
+            "label": "Sonic Boom",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {}
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "name": "Acrobat",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.acrobatics.mod}",
+          30
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>You gain a +10 to Acrobatics checks when benefitting from a running start.</p>",
+    "actions": [
+      {
+        "name": "Acrobat",
+        "slug": "acrobat",
+        "description": "<p>You gain a +10 to Acrobatics checks when benefitting from a running start.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false,
+        "hidden": false
+      }
+    ],
+    "slug": "acrobat",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "hobby-gardener",
+          "parkour",
+          "drifter",
+          "root-2",
+          "powerlifter",
+          "rigorous-fundamentals"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#004080",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Exploration.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 129,
+        "y": 38,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "finesse",
+      "archetype": "athleticism"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "MDkJ0KhnAvqw0v3J",
+  "img": "systems/ptr2e/img/perk-icons/Exploration.svg",
+  "effects": [
+    {
+      "name": "Acrobat",
+      "type": "passive",
+      "_id": "n57YCl0DLkpYbOm2",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "acrobatics-check",
+            "value": 10,
+            "predicate": [
+              "Manual"
+            ],
+            "label": "Running Start?",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.2.4.3",
+        "createdTime": 1729174484032,
+        "modifiedTime": 1729174565254,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "1osM6JY51pvLkJ3Q"
+}

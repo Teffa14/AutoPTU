@@ -1,0 +1,51 @@
+{
+  "name": "Extreme Speed",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "extreme-speed",
+    "actions": [
+      {
+        "slug": "extreme-speed",
+        "name": "Extreme Speed",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "priority-20",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "priority": 2
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "FMxkce89JzTELo3Z",
+  "effects": []
+}

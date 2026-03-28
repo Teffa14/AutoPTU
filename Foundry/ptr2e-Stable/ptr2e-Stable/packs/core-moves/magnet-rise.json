@@ -1,0 +1,46 @@
+{
+  "name": "Magnet Rise",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "magnet-rise",
+    "actions": [
+      {
+        "slug": "magnet-rise",
+        "name": "Magnet Rise",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 2
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "electric"
+        ],
+        "description": "<p>Effect: The user gains [Hover], and Flight equal to half their highest Base Movement Score for 5 Activations.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "hFYqkcoA1BddDKvk",
+  "effects": []
+}

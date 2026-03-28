@@ -1,0 +1,48 @@
+{
+  "name": "Spirit Bond",
+  "type": "move",
+  "_id": "JzeHetwQ7Uvqw1TA",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "spirit-bond",
+    "actions": [
+      {
+        "name": "Spirit Bond",
+        "slug": "spirit-bond",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "types": [
+          "ghost"
+        ],
+        "category": "status",
+        "accuracy": 100,
+        "description": "<p>Effect: The target gains @Affliction[taunted] 5 and @Affliction[cursed] 5. While afflicted with these Condtions, the target's Attacks that target the user gain [Recoil 1/2].</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

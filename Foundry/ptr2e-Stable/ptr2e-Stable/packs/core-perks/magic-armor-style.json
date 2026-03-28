@@ -1,0 +1,141 @@
+{
+  "folder": "JZrGRskscJOkkPWA",
+  "name": "Magic Armor Style",
+  "type": "perk",
+  "_id": "tXq3fwEuJwbnZk9m",
+  "img": "systems/ptr2e/img/perk-icons/Orders_Training.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Magic Armor!",
+        "slug": "magic-armor",
+        "traits": [
+          "command",
+          "style"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 2
+        },
+        "description": "<p>Effect: The target uses SPDEF in place of their SPATK when using a Special-Category Attack for 1 Activation.</p>",
+        "type": "generic",
+        "img": "systems/ptr2e/img/perk-icons/Orders_Training.svg"
+      }
+    ],
+    "slug": "magic-armor-style",
+    "description": "<p>Simple Action, 2 PP cost. Target self or allied creature. The affected creature uses SPDEF in place of their SPATK when using a Special-Category Attack until the end of their next full Activation.</p>",
+    "traits": [
+      "command",
+      "style"
+    ],
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.leadership.mod}",
+          45
+        ]
+      }
+    ],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 116,
+        "y": 135,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "type-style",
+          "agile-style",
+          "improved-flight-6",
+          "improved-swim-2",
+          "minor-buff-22",
+          "minor-buff-64",
+          "resist-style",
+          "berserker-trainer"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Orders_Training.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "resilience",
+      "archetype": "tactician"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Magic Armor Style",
+      "type": "passive",
+      "_id": "SnFQuB6e0NiPB0ga",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "magic-armor-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.biMxQM9jKDEzR0YG",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "target",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e"
+      }
+    }
+  ]
+}

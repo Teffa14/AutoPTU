@@ -1,0 +1,116 @@
+{
+  "name": "Curveball Technique",
+  "type": "perk",
+  "system": {
+    "prerequisites": [],
+    "cost": 1,
+    "description": "<p>Passive: When using Fling with a [Ball] item, you increase the power of the attack by +15. This perk allows poke balls to deal damage.</p>",
+    "actions": [],
+    "slug": "curveball-technique",
+    "traits": [
+      "capture-specialist"
+    ],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 66,
+        "y": 114,
+        "hidden": false,
+        "type": "entry",
+        "connected": [
+          "snare",
+          "controlled-curve",
+          "fast-pitch",
+          "guard-up",
+          "beastmaster",
+          "climatologist",
+          "improved-overland-4",
+          "lethal-restraint"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Capture%20Spec.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": "capture"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "XOggUhl7hxBP9PHa",
+  "img": "systems/ptr2e/img/perk-icons/Capture%20Spec.svg",
+  "effects": [
+    {
+      "name": "Curveball Technique",
+      "type": "passive",
+      "_id": "fZWzk0UvtbVhsnNo",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "ball-trait-attack-power",
+            "value": 15,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1759921694150,
+        "modifiedTime": 1759921714386,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ],
+  "folder": "ADL1Oc2oQaQK45IU"
+}

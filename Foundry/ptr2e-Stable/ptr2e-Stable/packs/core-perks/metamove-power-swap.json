@@ -1,0 +1,70 @@
+{
+  "folder": "zrVtKATNxzLNxTUX",
+  "name": "Metamove: Power Swap",
+  "type": "perk",
+  "_id": "E2ecuh9UTMZjF7AG",
+  "img": "systems/ptr2e/img/perk-icons/Arcana.svg",
+  "system": {
+    "actions": [],
+    "slug": "metamove-power-swap",
+    "description": "<p>May spend 3PP to change a move from Physical-Category to Special-Category or vice versa.</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "metamove-bullseye",
+          "metamove-dirty-trick",
+          "stat-iv-booster-1-13",
+          "improved-overland-16",
+          "improved-swim-3",
+          "improved-flight-7",
+          "minor-buff-19",
+          "minor-buff-23",
+          "minor-buff-57",
+          "minor-buff-65",
+          "comingling-of-power",
+          "introductory-magecraft"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#800000",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Arcana.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 118,
+        "y": 182,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "power",
+      "archetype": "metamove"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": []
+}

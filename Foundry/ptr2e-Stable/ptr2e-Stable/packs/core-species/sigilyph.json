@@ -1,0 +1,569 @@
+{
+  "name": "sigilyph",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 561,
+    "size": {
+      "category": "medium",
+      "type": "height",
+      "height": 1.4,
+      "weight": 14
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 15
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "hover",
+      "psycher",
+      "telekinetic-4",
+      "fully-evolved",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "wonder-skin"
+        },
+        {
+          "slug": "magic-guard"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "tinted-lens"
+        },
+        {
+          "slug": "sighting-system"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "feedback"
+        },
+        {
+          "slug": "siphon"
+        }
+      ],
+      "master": [
+        {
+          "slug": "supercell"
+        },
+        {
+          "slug": "mystic-power"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "archaeology",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychic",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "sigilyph",
+    "stats": {
+      "hp": 72,
+      "atk": 58,
+      "def": 80,
+      "spa": 103,
+      "spd": 80,
+      "spe": 97
+    },
+    "types": [
+      "flying",
+      "psychic"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "confusion",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "gust",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "miracle-eye",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 1
+        },
+        {
+          "name": "gravity",
+          "gen": "sword-shield",
+          "level": 5
+        },
+        {
+          "name": "psywave",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 8
+        },
+        {
+          "name": "hypnosis",
+          "gen": "sword-shield",
+          "level": 10
+        },
+        {
+          "name": "air-cutter",
+          "gen": "sword-shield",
+          "level": 15
+        },
+        {
+          "name": "psybeam",
+          "gen": "sword-shield",
+          "level": 20
+        },
+        {
+          "name": "whirlwind",
+          "gen": "sword-shield",
+          "level": 25
+        },
+        {
+          "name": "cosmic-power",
+          "gen": "sword-shield",
+          "level": 30
+        },
+        {
+          "name": "synchronoise",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 31
+        },
+        {
+          "name": "mirror-move",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 34
+        },
+        {
+          "name": "air-slash",
+          "gen": "sword-shield",
+          "level": 35
+        },
+        {
+          "name": "psychic",
+          "gen": "sword-shield",
+          "level": 40
+        },
+        {
+          "name": "tailwind",
+          "gen": "sword-shield",
+          "level": 45
+        },
+        {
+          "name": "light-screen",
+          "gen": "sword-shield",
+          "level": 50
+        },
+        {
+          "name": "reflect",
+          "gen": "sword-shield",
+          "level": 50
+        },
+        {
+          "name": "sky-attack",
+          "gen": "sword-shield",
+          "level": 55
+        },
+        {
+          "name": "skill-swap",
+          "gen": "sword-shield",
+          "level": 60
+        }
+      ],
+      "tutor": [
+        {
+          "name": "aerial-ace",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ancient-power",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "charge-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "defog",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dream-eater",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "expanding-force",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fly",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "future-sight",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "heat-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "imprison",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-room",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "pluck",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "power-swap",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psych-up",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "psycho-cut",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psycho-shift",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psyshock",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "roost",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "smack-down",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "speed-swap",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "steel-wing",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stored-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swift",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "telekinesis",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thief",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trick",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "trick-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "captureRate": 50,
+    "eggGroups": [
+      "flying"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "ruin"
+    ],
+    "evolutions": {
+      "name": "sigilyph",
+      "details": null,
+      "evolutions": [],
+      "uuid": null,
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "Tm71a7aC5dRkM8gJ",
+  "effects": []
+}

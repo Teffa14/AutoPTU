@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AutoPTU Character Builder</title>
+    <link rel="stylesheet" href="design-system/tokens.css?v=20260305c" />
+    <link rel="stylesheet" href="design-system/components.css?v=20260305c" />
+    <link rel="stylesheet" href="design-system/layout.css?v=20260305c" />
+    <link rel="stylesheet" href="styles.css?v=20260324k" />
+  </head>
+  <body class="builder-ui">
+    <div id="move-tooltip" class="move-tooltip hidden"></div>
+    <header class="topbar ds-topbar">
+      <div class="brand ds-brand">AutoPTU Character Builder</div>
+      <div class="toolbar ds-toolbar">
+        <span class="ds-pill ouros-sign">Signed: OurosPTU</span>
+        <button id="open-useful-charts" type="button">Useful Charts</button>
+        <a class="ds-pill" href="index.html">Back to Battle</a>
+        <a class="ds-pill" href="ui-gallery.html">UI Gallery</a>
+        <a class="ds-pill" href="character-regression.html">Regression</a>
+      </div>
+    </header>
+    <main class="main-shell builder-shell ds-main-shell">
+      <div class="builder-layout ds-layout-3">
+        <aside class="panel deck-panel ds-panel">
+          <div class="panel-head ds-panel-head">
+            <div class="panel-title ds-panel-title">Available Options</div>
+          </div>
+          <div class="deck-tabs char-steps ds-tab-list">
+            <button class="char-step-btn active" data-step="profile">Profile</button>
+            <button class="char-step-btn" data-step="skills">Skills</button>
+            <button class="char-step-btn" data-step="advancement">Advancement</button>
+            <button class="char-step-btn" data-step="class">Classes</button>
+            <button class="char-step-btn" data-step="features">Features</button>
+            <button class="char-step-btn" data-step="edges">Edges</button>
+            <button class="char-step-btn" data-step="extras">Extras</button>
+            <button class="char-step-btn" data-step="inventory">Inventory</button>
+            <button class="char-step-btn" data-step="pokemon-team">Pokemon Team</button>
+            <button class="char-step-btn" data-step="poke-edges">Poke Edges</button>
+            <button class="char-step-btn" data-step="summary">Summary</button>
+          </div>
+        </aside>
+        <section class="panel board-panel ds-panel">
+          <div class="panel-head ds-panel-head">
+            <div class="panel-title ds-panel-title">Build Your Character</div>
+          </div>
+          <div class="board-content">
+            <div class="char-content">
+              <div id="char-content"></div>
+            </div>
+          </div>
+        </section>
+        <aside class="panel summary-panel ds-panel">
+          <div class="panel-head ds-panel-head">
+            <div class="panel-title ds-panel-title">Character Summary</div>
+          </div>
+          <div id="char-mini-summary" class="char-mini-summary"></div>
+          <div class="char-mini-actions">
+            <button id="char-undo" type="button">Undo</button>
+            <button id="char-redo" type="button">Redo</button>
+            <button id="char-save-local" type="button">Save</button>
+            <button id="char-load-local" type="button">Load</button>
+          </div>
+          <div class="char-mini-actions">
+            <button id="char-snapshot" type="button">Snapshot</button>
+            <button id="char-snapshots-open" type="button">Snapshots</button>
+            <button id="char-guided-toggle" type="button">Guided Mode</button>
+          </div>
+          <div id="char-snapshots-panel" class="char-snapshots-panel hidden"></div>
+          <div class="ouros-footer">Digital Sign: OurosPTU</div>
+        </aside>
+      </div>
+    </main>
+<script src="vendor/sortable.min.js?v=20260305c"></script>
+    <script src="design-system/ui.js?v=20260305c"></script>
+    <script src="logic/prereq_eval.js?v=20260305a"></script>
+    <script src="logic/character_state.js?v=20260305a"></script>
+    <script src="ui/battle_ui.js?v=20260305a"></script>
+    <script src="ui/builder_ui.js?v=20260305a"></script>
+    <script src="ui/paperdoll_ui.js?v=20260305a"></script>
+    <script src="master_dataset.embed.js?v=20260305a"></script>
+    <script src="pokedex_learnset.embed.js?v=20260305a"></script>
+    <script src="app.js?v=20260325h"></script>
+  </body>
+</html>
+

@@ -1,0 +1,164 @@
+{
+  "name": "Electric Surge",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "terrain",
+          "interrupt-4"
+        ],
+        "name": "Electric Surge",
+        "slug": "electric-surge",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 5,
+          "trigger": "<p>The user enters combat or emerges from stealth.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user enters combat or emerges from stealth.</p><p>Effect: The user freely uses Electric Terrain.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [
+          "terrain",
+          "interrupt-2"
+        ],
+        "name": "Electric Surge (Extend)",
+        "slug": "electric-surge-extend",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 2,
+          "trigger": "<p>The user declares Electric Terrain.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user declares Electric Terrain.</p><p>Effect: Increase the number of rounds Electric Terrain persists by 2.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [
+          "terrain",
+          "environ"
+        ],
+        "name": "Electric Surge (Adjacency)",
+        "slug": "electric-surge-adjaceny",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "object",
+          "distance": 5,
+          "unit": "m"
+        },
+        "description": "<p>Passive: If a space within range possesses Electric Terrain, the user is affected by Electric Terrain.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user enters combat or emerges from stealth.</p><p>Effect: Connection - Electric Terrain. The user freely uses Electric Terrain. When the user sets Electric Terrain, they may spend 2 PP to increase the number of rounds Electric Terrain persists by 2.</p><p>Passive: If a space within range possesses Electric Terrain, the user is affected by Electric Terrain.</p>",
+    "traits": [
+      "terrain",
+      "connection",
+      "environ",
+      "partial-automation"
+    ],
+    "slug": "electric-surge",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "dfgFR3b6OQ51IFij",
+  "effects": [
+    {
+      "name": "Electric Surge",
+      "type": "passive",
+      "_id": "Il1P7XTHneiESWml",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.dPSChKwDs2PiIA7p",
+            "predicate": [
+              "ability:electric-surge:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "allowDuplicate": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737397548253,
+        "modifiedTime": 1754317909032,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "name": "E-Max Blastwave",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "e-max-blastwave",
+    "actions": [
+      {
+        "slug": "e-max-blastwave",
+        "name": "E-Max Blastwave",
+        "type": "attack",
+        "traits": [
+          "max",
+          "move-locked",
+          "legendary",
+          "sky",
+          "ray",
+          "flinch-50"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 25,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "dragon"
+        ],
+        "description": "<p>Effect: All valid targets lose -1 ATK, SPAK, and ACC Stages for 7 Activations.</p><p>The user may spend up to 12 additional PP, increasing the Power of this attack by 20 per PP spent.</p><p>Requirement: User is a Dynamaxed Eternamax Eternatus and has a Eternabeam on their Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      },
+      {
+        "slug": "e-max-blastwave",
+        "name": "E-Max Blastwave",
+        "type": "attack",
+        "traits": [
+          "max",
+          "move-locked",
+          "legendary",
+          "sky",
+          "ray",
+          "flinch-50"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 25,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "dragon"
+        ],
+        "description": "<p>Effect: All valid targets lose -1 ATK, SPAK, and ACC Stages for 7 Activations.</p><p>The user may spend up to 12 additional PP, increasing the Power of this attack by 20 per PP spent.</p><p>Requirement: User is a Dynamaxed Eternamax Eternatus and has a Eternabeam on their Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "qS6bv3xrqdI1YACA",
+  "effects": []
+}

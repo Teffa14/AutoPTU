@@ -1,0 +1,63 @@
+{
+  "folder": "V4skAU6G3OH5fXae",
+  "name": "Water Stone",
+  "type": "gear",
+  "system": {
+    "_migration": {
+      "version": 0.109,
+      "previous": null
+    },
+    "slug": "water-stone",
+    "traits": [
+      "evolution",
+      "belt",
+      "held",
+      "charge-pool-6"
+    ],
+    "actions": [],
+    "description": "<p>This item’s Charge Pool refreshes following Camp. While equipped in a Held or Belt Slot, the user may spend Charge in place of PP (1 Tick of the Clock equals 1 PP) for their Water-Type Attacks.</p><p>This is also a catalyst for Evolution. When used to evolve a creature, this item is Consumed.</p>",
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "carryType": "stowed",
+      "handsHeld": 1,
+      "slot": "backpack"
+    },
+    "grade": "C",
+    "fling": {
+      "type": "water",
+      "power": 70,
+      "accuracy": 90,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 7,
+        "unit": "m"
+      }
+    },
+    "quantity": 1,
+    "rarity": "uncommon",
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/gear_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "DbsWyi7ksZtsystW",
+  "img": "systems/ptr2e/img/item-icons/water%20stone.webp",
+  "effects": []
+}

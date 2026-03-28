@@ -1,0 +1,49 @@
+{
+  "name": "Magic Coat",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "magic-coat",
+    "actions": [
+      {
+        "slug": "magic-coat",
+        "name": "Magic Coat",
+        "type": "attack",
+        "traits": [
+          "shield",
+          "requires-rework"
+        ],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 5
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "psychic"
+        ],
+        "description": "<p>Effect: For the next 5 Activations, if the user were to be affected by Hazards or status afflictions by an enemy creature, those Hazards or statuses are reflected onto the enemy creature, as if the user was themselves the originator of the redirected effect.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "5QUcls8d1cgv81hY",
+  "effects": []
+}

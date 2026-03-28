@@ -1,0 +1,131 @@
+{
+  "name": "Enchanting Smile",
+  "type": "perk",
+  "system": {
+    "_migration": {
+      "version": 0.107,
+      "previous": null
+    },
+    "actions": [],
+    "description": "<p>Passive: Your Fairy-Type moves have a 20% chance to inflict Charmed 5. If they would already have a chance to inflict Charmed, that is instead increased by +20%.</p>",
+    "traits": [],
+    "prerequisites": [
+      "trait:fairy"
+    ],
+    "cost": 3,
+    "slug": "enchanting-smile",
+    "nodes": [
+      {
+        "connected": [
+          "hexcraft",
+          "drifter",
+          "root-2",
+          "rigorous-fundamentals-6",
+          "minor-buff-42",
+          "optimism",
+          "sparkler",
+          "faetwixed"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/svg/fairy_icon.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 152,
+        "y": 49,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "power",
+      "archetype": "fairy"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+  "effects": [
+    {
+      "name": "Enchanting Smile",
+      "type": "passive",
+      "_id": "ywb82h9iFePGtVWu",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "fairy-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.charmedcondiitem",
+            "predicate": [
+              "origin:enemy"
+            ],
+            "chance": 20,
+            "affects": "target",
+            "priority": null,
+            "alterations": [],
+            "dontMerge": false,
+            "isFixedChance": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.348",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": null,
+        "modifiedTime": 1757798222476,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ],
+  "_id": "7msvQavxdvyJaW1J",
+  "folder": "JVlvijPZ5VhpbHkZ"
+}

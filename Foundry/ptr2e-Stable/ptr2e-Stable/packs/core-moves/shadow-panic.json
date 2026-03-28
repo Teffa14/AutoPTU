@@ -1,0 +1,49 @@
+{
+  "name": "Shadow Panic",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-panic",
+    "actions": [
+      {
+        "slug": "shadow-panic",
+        "name": "Shadow Panic",
+        "type": "attack",
+        "traits": [
+          "sonic"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "status",
+        "accuracy": 60,
+        "types": [
+          "shadow"
+        ],
+        "description": "<p>Effect: On hit, all valid targets become @Affliction[confused] 5.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "E",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "PsxctPOZBM3u4RWF",
+  "effects": []
+}

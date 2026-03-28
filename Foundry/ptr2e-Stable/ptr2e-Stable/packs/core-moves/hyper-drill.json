@@ -1,0 +1,50 @@
+{
+  "name": "Hyper Drill",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "hyper-drill",
+    "actions": [
+      {
+        "slug": "hyper-drill",
+        "name": "Hyper Drill",
+        "type": "attack",
+        "traits": [
+          "horn",
+          "contact",
+          "pierce"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: The target cannot use a [Defensive] attack or Ability to interrupt this attack.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "4EQmSObeGdSGazOT",
+  "effects": []
+}

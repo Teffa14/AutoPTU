@@ -1,0 +1,111 @@
+{
+  "name": "Dress To Impress",
+  "type": "perk",
+  "system": {
+    "_migration": {
+      "version": 0.109,
+      "previous": null
+    },
+    "actions": [],
+    "description": "<p>You gain an additional Accessory slot. You may not equip more than one instance of the same Accessory.</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 3,
+    "slug": "dress-to-impress",
+    "nodes": [
+      {
+        "x": 185,
+        "y": 58,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "belt-expansion-1",
+          "trained-wielder",
+          "backpacker-1",
+          "dual-wielder"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/icons/equipment_icon.webp",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "finesse",
+      "archetype": "backpacker"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "effects": [
+    {
+      "name": "Dress To Impress",
+      "type": "passive",
+      "_id": "6vToOC0fhANYGmEB",
+      "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "basic",
+            "key": "system.inventory.accessory.max",
+            "value": 1,
+            "predicate": [],
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "<p>You gain an additional Accessory slot. You may not equip more than one instance of the same Accessory.</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.1.beta",
+        "createdTime": 1737934863150,
+        "modifiedTime": 1754299515151,
+        "lastModifiedBy": "tXAZ3QUgjuwX4gdV",
+        "exportSource": null
+      }
+    }
+  ],
+  "_id": "AgjtqgC1JxsZPjSp",
+  "folder": "oMMIXyKwOCIxMHrK"
+}

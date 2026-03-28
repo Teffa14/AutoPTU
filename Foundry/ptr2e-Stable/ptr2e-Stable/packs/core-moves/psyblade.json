@@ -1,0 +1,52 @@
+{
+  "name": "Psyblade",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "psyblade",
+    "actions": [
+      {
+        "slug": "psyblade",
+        "name": "Psyblade",
+        "type": "attack",
+        "traits": [
+          "sharp",
+          "pass-2",
+          "environ",
+          "paradox",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "psychic"
+        ],
+        "description": "<p>Effect: While the user is affected by Electric Terrain, this Attack's Power doubles.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "INSalV1xBvp1pwnU",
+  "effects": []
+}

@@ -1,0 +1,83 @@
+{
+  "name": "Razor Wind",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "razor-wind",
+    "actions": [
+      {
+        "slug": "razor-wind-resolution",
+        "name": "Razor Wind (Resolution)",
+        "type": "attack",
+        "traits": [
+          "set-up",
+          "defensive",
+          "crit-1",
+          "wind",
+          "sharp",
+          "priority-20"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "trigger": "The user used Razor Wind (Set-Up) as their last Action."
+        },
+        "category": "special",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: The user used Razor Wind (Set-Up) as their last Action.</p><p>The user freely Moves up to half the Movement Score of their choice before attacking with this Attack.</p>",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "predicate": []
+      },
+      {
+        "name": "Razor Wind (Set-Up)",
+        "slug": "razor-wind-set-up",
+        "description": "<p>Effect: The user gains +3 EVA Stages for 5 Activations and @Affliction[rebound 3]. If Windy Weather is present, the user may use Razor Wind (Resolution) as a Free Action upon resolving this Attack.</p>",
+        "traits": [
+          "set-up",
+          "defensive",
+          "flinch-30"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "delay": 3
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "normal"
+        ],
+        "category": "physical",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "NuOieSZVQ6CO174A",
+  "effects": []
+}

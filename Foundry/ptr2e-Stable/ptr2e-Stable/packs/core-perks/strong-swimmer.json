@@ -1,0 +1,90 @@
+{
+  "name": "Strong Swimmer",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.swim.mod}",
+          30
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>You are able to hold your breath for longer, and manage your air more carefully while diving. Increase the size of your Breath clock while swimming by 2 Spans.</p>",
+    "actions": [
+      {
+        "name": "Strong Swimmer",
+        "slug": "strong-swimmer",
+        "description": "<p>You are able to hold your breath for longer, and manage your air more carefully while diving. Increase the size of your Breath clock while swimming by 2 Spans.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false,
+        "hidden": false
+      }
+    ],
+    "slug": "strong-swimmer",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "swimming-lessons",
+          "fisheye",
+          "improved-swim",
+          "overboard"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/svg/water_icon.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 151,
+        "y": 19,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "resilience",
+      "archetype": "exploration"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "8biTrHnT6nNeO3in",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "effects": [],
+  "folder": "1osM6JY51pvLkJ3Q"
+}

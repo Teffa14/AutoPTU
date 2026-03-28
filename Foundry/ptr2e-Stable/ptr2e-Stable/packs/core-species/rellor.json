@@ -1,0 +1,368 @@
+{
+  "name": "rellor",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "bug"
+    ],
+    "stats": {
+      "hp": 41,
+      "atk": 50,
+      "def": 60,
+      "spa": 31,
+      "spd": 58,
+      "spe": 30
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "defense-curl",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sand-attack",
+          "level": 4,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "struggle-bug",
+          "level": 7,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rollout",
+          "level": 11,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bug-bite",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "level": 29,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lunge",
+          "level": 35,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "recover",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "memento",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "weather-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "cosmic-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leech-life",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "x-scissor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bug-buzz",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pounce",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.2,
+      "weight": 1,
+      "category": "tiny",
+      "type": "quad"
+    },
+    "captureRate": 190,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "rellor",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "rabsca",
+          "uuid": "Compendium.ptr2e.core-species.Item.Oapfd0DEvlCUZwzC",
+          "methods": [
+            {
+              "type": "level",
+              "level": 22,
+              "operand": "and"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.LWlRLqfhsbWg4qo6"
+    },
+    "number": 953,
+    "traits": [
+      "pokemon",
+      "direction-sense",
+      "mud-runner",
+      "underdog",
+      "jump-6"
+    ],
+    "diet": [
+      "herbivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "compound-eyes"
+        },
+        {
+          "slug": "shed-skin"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "pickup"
+        },
+        {
+          "slug": "sticky-hold"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "sand-veil"
+        },
+        {
+          "slug": "earth-eater"
+        }
+      ],
+      "master": [
+        {
+          "slug": "contrary"
+        },
+        {
+          "slug": "no-guard"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 5,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 5,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "desert"
+    ],
+    "slug": "rellor",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "LWlRLqfhsbWg4qo6",
+  "effects": [],
+  "folder": null
+}

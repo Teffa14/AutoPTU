@@ -1,0 +1,96 @@
+{
+  "name": "Cyclist",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.ride.mod}",
+          25
+        ]
+      }
+    ],
+    "cost": 2,
+    "description": "<p>When riding a [Cycle], your Overland Movement Allowance increases by +3, and you may use Take Down as if it were on your Active List. When riding a [Rotom Device] [Cycle] you get access to Wild Charge instead of Take Down.</p>",
+    "actions": [
+      {
+        "name": "Cyclist",
+        "slug": "cyclist",
+        "description": "<p>When riding a [Cycle], your Overland Movement Allowance increases by +3, and you may use Take Down as if it were on your Active List. When riding a [Rotom Device] [Cycle] you get access to Wild Charge instead of Take Down.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false,
+        "hidden": false
+      }
+    ],
+    "slug": "cyclist",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "hobby-gardener",
+          "improved-overland",
+          "trained-rider",
+          "adhesive-digits",
+          "improved-overland-7",
+          "rigorous-fundamentals",
+          "minor-buff-3",
+          "minor-buff-10",
+          "minor-buff-36",
+          "mounted-specialist"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#e4db1b",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/item-icons/acro%20bike.webp",
+          "tint": "#121212",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 103,
+        "y": 46,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": "cavalier"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "AFU1teCNRoIixS3n",
+  "img": "systems/ptr2e/img/item-icons/acro%20bike.webp",
+  "effects": [],
+  "folder": "1osM6JY51pvLkJ3Q"
+}

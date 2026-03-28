@@ -1,0 +1,52 @@
+{
+  "name": "Mortal Wave",
+  "type": "move",
+  "_id": "grWOhLToxFZIuSkl",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "mortal-wave",
+    "actions": [
+      {
+        "name": "Mortal Wave",
+        "slug": "mortal-wave",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "traits": [
+          "blast-1",
+          "pulse",
+          "aura"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "types": [
+          "normal"
+        ],
+        "category": "special",
+        "power": 110,
+        "accuracy": 85,
+        "description": "<p>Effect: This attack is super effective against the Ghost Type.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": []
+}

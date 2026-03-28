@@ -1,0 +1,92 @@
+{
+  "name": "Backstab",
+  "type": "move",
+  "_id": "Upx4IzsJQjLSZp5m",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Backstab (Resolution)",
+        "slug": "backstab-resolution",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/dark_icon.svg",
+        "traits": [
+          "set-up",
+          "contact",
+          "sharp",
+          "crit-2",
+          "flinch-40"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "The user used Backstab (Set Up) as their last Action."
+        },
+        "types": [
+          "dark"
+        ],
+        "category": "physical",
+        "power": 65,
+        "accuracy": 100,
+        "description": "<p>Trigger: The user used Backstab (Set Up) as their last Action.</p><p>Effect: The user freely Moves up to one-and-a-half times the Movement Score of their choice and attacks with and resolves Backstab. If the target is unaware of the user or is in the middle of a Set-Up attack, the user gains +2 CRIT stages for 3 Activations before rolling Accuracy with this Attack.</p>",
+        "predicate": []
+      },
+      {
+        "name": "Backstab (Set-Up)",
+        "slug": "backstab-set-up",
+        "description": "<p>Effect: The user gains +2 EVA Stages for 3 Activations.</p>",
+        "traits": [
+          "set-up",
+          "defensive",
+          "priority-40"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/dark_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "dark"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "sort": 12800000,
+  "ownership": {
+    "default": 0,
+    "CYLdyr5mPSDmNpTp": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.327",
+    "systemId": "ptr2e",
+    "systemVersion": "0.10.0-alpha.1.0.4",
+    "createdTime": 1718734680723,
+    "modifiedTime": 1719972394261,
+    "lastModifiedBy": "CYLdyr5mPSDmNpTp"
+  }
+}

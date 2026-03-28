@@ -1,0 +1,91 @@
+{
+  "name": "Snare",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.track.mod}",
+          20
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>You gain +1 Capture Power against [Pokemon] that have been entangled in a Net or on a Fishing Line.</p>",
+    "actions": [
+      {
+        "name": "Snare",
+        "slug": "snare",
+        "description": "<p>You gain +1 Capture Power against [Pokemon] that have been entangled in a Net or on a Fishing Line.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false,
+        "hidden": false
+      }
+    ],
+    "slug": "snare",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "curveball-technique",
+          "fisherman",
+          "bug-catcher",
+          "incognito",
+          "rigorous-fundamentals-7"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#808080",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Capture%20Spec.svg",
+          "tint": "#0d0d0d",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 68,
+        "y": 109,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "finesse",
+      "archetype": "capture"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "tw7DjZ6QkzrExVJA",
+  "img": "systems/ptr2e/img/perk-icons/Capture%20Spec.svg",
+  "effects": [],
+  "folder": "ADL1Oc2oQaQK45IU"
+}

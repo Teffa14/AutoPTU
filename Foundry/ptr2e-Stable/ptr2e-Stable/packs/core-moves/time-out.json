@@ -1,0 +1,90 @@
+{
+  "name": "Time Out",
+  "type": "move",
+  "_id": "es8rozAC9teyjDOV",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Time Out (Resolution)",
+        "slug": "time-out-resolution",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "traits": [
+          "legendary",
+          "set-up",
+          "flinch-30"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 7,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "The user used Time Out (Set-Up) as their last Action."
+        },
+        "types": [
+          "normal"
+        ],
+        "category": "status",
+        "accuracy": 85,
+        "description": "<p>Trigger: The user used Time Out (Set-Up) as their last Action.</p><p>Effect: On hit, all legal targets gain @Affliction[suppressed 7], @Affliction[hindered 7], @Affliction[unlucky 7], @Affliction[disabled 7] (decided randomly), and @Affliction[nullified 7] (decided randomly) and are Flinched 50%.</p>",
+        "predicate": []
+      },
+      {
+        "name": "Time Out (Set-Up)",
+        "slug": "time-out-set-up",
+        "description": "<p>Effect: The user gains @Affliction[braced 2]. If the user is hit by a Physical or Special-Category Attack before their next Activation, they may use Time Out (Resolution) as a Free Action at [Interrupt 5].</p>",
+        "traits": [
+          "legendary",
+          "set-up",
+          "defensive",
+          "flinch-50"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "normal"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "CYLdyr5mPSDmNpTp": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.328",
+    "systemId": "ptr2e",
+    "systemVersion": "0.10.0-alpha.1.5.2",
+    "createdTime": 1721065867703,
+    "modifiedTime": 1721066239910,
+    "lastModifiedBy": "CYLdyr5mPSDmNpTp"
+  }
+}

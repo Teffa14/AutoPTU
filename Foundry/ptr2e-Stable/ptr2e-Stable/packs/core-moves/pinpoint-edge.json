@@ -1,0 +1,50 @@
+{
+  "name": "Pinpoint Edge",
+  "type": "move",
+  "_id": "6syusYSZ2VvCuUqG",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "pinpoint-edge",
+    "actions": [
+      {
+        "name": "Pinpoint Edge",
+        "slug": "pinpoint-edge",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/rock_icon.svg",
+        "traits": [
+          "crit-4"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "types": [
+          "rock"
+        ],
+        "category": "physical",
+        "power": 60,
+        "accuracy": 90,
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

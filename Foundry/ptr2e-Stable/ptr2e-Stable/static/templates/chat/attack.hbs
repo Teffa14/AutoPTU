@@ -1,0 +1,193 @@
+<header>
+    <div class="icon">
+        <img src="{{origin.img}}" alt="{{origin.name}}">
+    </div>
+    <h3>{{origin.name}}'s {{attack.name}}</h3>
+    <div class="icon">
+      {{#if selfEffectRolls}}
+        <a data-tooltip="Applicable Self Effects have been applied"><i class="fas fa-star" style="color: #10759e;"></i></a>
+      {{/if}}
+      {{#if pp.cost}}
+        <a data-tooltip="{{#if pp.spent}}{{pp.cost}} PP has been spent.{{else}}Spend {{pp.cost}} PP?{{/if}}" data-action="consume-pp" class="{{#if pp.spent}}spent{{else}}unspent{{/if}}"><i class="fas fa-bolt"></i></a>
+      {{/if}}
+    </div>
+</header>
+<main>
+    <div class="collapse-button">
+        <button type="button" class="collapse-rolls expanded">Hide Info</button>
+    </div>
+    <article class="collapsed justify-content-center" style="border-bottom: 1px solid var(--color-underline-header);">
+        {{> effect-traits traits=attack.traits attack=attack}}
+    </article>
+    {{#each results as |data uuid|}}
+      {{#unless data.rolls.none}}
+          <div class="collapse-button">
+              <button type="button" class="collapse-rolls{{#if @root.defaultExpanded}} expanded{{/if}}" data-uuid="{{uuid}}">Show Rolls for {{data.target.name}}</button>
+          </div>
+          <article class="collapsed">
+              {{#if data.rolls.accuracy}}{{#if @root.metagameInfo.showAccuracyRoll}}{{{data.rolls.accuracy}}}{{/if}}{{/if}}
+              {{#if data.rolls.crit}}{{#if @root.metagameInfo.showAccuracyRoll}}{{{data.rolls.crit}}}{{/if}}{{/if}}
+              {{#if data.rolls.amount}}{{#if @root.metagameInfo.showAccuracyRoll}}{{{data.rolls.amount}}}{{/if}}{{/if}}
+              {{#if data.rolls.damage}}{{#if @root.metagameInfo.showDamageRoll}}{{{data.rolls.damage}}}{{/if}}{{/if}}
+              {{#if @root.metagameInfo.showEffectRolls}}
+              {{#each data.rolls.effects}}
+                  {{{this}}}
+              {{/each}}
+              {{/if}}
+          </article>
+          {{#if data.notes}}
+              <section class="notes">
+                  {{{notes}}}
+              </section>
+          {{/if}}
+      {{/unless}}
+    {{/each}}
+    {{#if selfEffectRolls}}
+      {{#if @root.metagameInfo.showEffectRolls}}
+        <div class="collapse-button">
+            <button type="button" class="collapse-rolls">Show Self Effect Rolls</button>
+        </div>
+        <article class="collapsed">
+          {{#each selfEffectRolls}}{{{this}}}{{/each}}
+        </article>
+      {{/if}}
+    {{/if}}
+</main>
+<footer>
+    <div class="target target-header">
+        <div class="icon">Icon</div>
+        <div class="status">Status</div>
+        {{#if (and hasDamage hasEffect)}}
+            <div class="damage">Damage</div>
+            <div class="effect-rolls">Effect</div>
+        {{else if hasEffect}}
+            <div class="effect-rolls">Effect</div>
+            <div class="damage"><!--spacer--></div>
+        {{else if hasDamage}}
+            <div class="damage">Damage</div>
+            <div class="effect-rolls"><!--spacer--></div>
+        {{else}}
+            <div class="damage"><!--spacer--></div>
+            <div class="effect-rolls"><!--spacer--></div>
+        {{/if}}
+        <div class="apply"><button type="button" class="update-targets" data-tooltip="[Left Click] to add current selected/targeted actors<br>[Left Alt + Left Click] to overwrite targets with currently selected/targeted actors"><i class="fas fa-crosshairs"></i></button></div>
+    </div> 
+    {{#each results as |data uuid|}}
+        <div class="target" data-target-uuid="{{data.target.uuid}}">
+          <div class="icon">
+              <img src="{{data.target.img}}" alt="{{data.target.name}}">
+          </div>
+          {{#with data.hit}}
+          <div class="status" {{#if @root.metagameInfo.showAccuracyTooltip}} data-tooltip="{{this}}" data-tooltip-direction="UP"{{/if}}>
+            {{#if @root.metagameInfo.showAccuracyResult}}
+              <i class="fas fa-{{#if (is this "hit")}}certificate{{else if (is this "critical")}}crosshairs{{else}}times-circle{{/if}}"></i>
+            {{else}}
+              <i class="fas fa-question"></i>
+            {{/if}}
+          </div>
+          {{/with}}
+          {{#if (and @root.hasDamage @root.hasEffect)}}
+            <div class="damage" {{#if @root.metagameInfo.showDamageTooltip}}data-tooltip="{{data.damage}}" data-tooltip-direction="LEFT"{{/if}}>
+              {{#if @root.metagameInfo.showDamageResult}}
+                <span>{{data.damage}}{{#if data.amount}} x {{data.amount}}{{/if}}</span>
+              {{else}}
+                <i class="fas fa-question"></i>
+              {{/if}}
+            </div>
+            {{#if hasCaptureRoll}}
+              <div class="apply">
+                <button type="button" data-action="apply-capture" 
+                  data-tooltip="Make Capture Roll"
+                  data-tooltip-direction="UP">
+                  <i class="fas fa-bolt" style="font-size: unset;"></i>Roll
+                </button>
+            </div>
+            {{else}}
+              <div class="effect-rolls" {{#if @root.metagameInfo.showEffectRollsTooltip}}data-tooltip="target-effect-rolls" data-tooltip-direction="LEFT"{{/if}}>
+                {{#if @root.metagameInfo.showEffectRollsResult}}
+                  <i class="{{#if data.effect.some}}fas{{else}}far{{/if}} fa-star"></i>
+                {{else}}
+                  <i class="fas fa-question"></i>
+                {{/if}}
+              </div>
+            {{/if}}
+          {{else if @root.hasEffect}}
+              <div class="effect-rolls" {{#if @root.metagameInfo.showEffectRollsTooltip}}data-tooltip="target-effect-rolls" data-tooltip-direction="LEFT"{{/if}}>
+                {{#if @root.metagameInfo.showEffectRollsResult}}
+                  <i class="{{#if data.effect.some}}fas{{else}}far{{/if}} fa-star"></i>
+                {{else}}
+                  <i class="fas fa-question"></i>
+                {{/if}}
+              </div>
+              <div class="damage">
+                {{#if hasCaptureRoll}}
+                  <div class="apply">
+                    <button type="button" data-action="apply-capture" 
+                      data-tooltip="Make Capture Roll"
+                      data-tooltip-direction="UP">
+                      <i class="fas fa-bolt" style="font-size: unset;"></i>Roll
+                    </button>
+                  </div>
+                {{/if}}
+              </div>
+          {{else if @root.hasDamage}}
+              <div class="damage" {{#if @root.metagameInfo.showDamageTooltip}}data-tooltip="{{data.damage}}" data-tooltip-direction="LEFT"{{/if}}>
+                {{#if @root.metagameInfo.showDamageResult}}
+                  <span>{{data.damage}}{{#if data.amount}} x {{data.amount}}{{/if}}</span>
+                {{else}}
+                  <i class="fas fa-question"></i>
+                {{/if}}
+              </div>
+              <div class="effect-rolls">
+                {{#if hasCaptureRoll}}
+                  <div class="apply">
+                    <button type="button" data-action="apply-capture" 
+                      data-tooltip="Make Capture Roll"
+                      data-tooltip-direction="UP">
+                      <i class="fas fa-bolt" style="font-size: unset;"></i>Roll
+                    </button>
+                  </div>
+                {{/if}}
+              </div>
+          {{else}}
+              <div class="apply">
+                {{#if hasCaptureRoll}}
+                  <div class="damage">
+                    <button type="button" data-action="apply-capture" 
+                      data-tooltip="Make Capture Roll"
+                      data-tooltip-direction="UP">
+                      <i class="fas fa-bolt" style="font-size: unset;"></i>Roll
+                    </button>
+                  </div>
+                {{/if}}
+              </div>
+              <div class="effect-rolls"><!--spacer--></div>
+          {{/if}}
+          <div class="apply">
+              <button type="button" class="apply-damage" 
+                {{#unless (or @root.hasEffect @root.hasDamage)}}
+                  disabled 
+                  data-tooltip="This attack has no effect or damage to resolve."
+                {{else if (and @root.hasEffect @root.hasDamage)}}
+                  data-tooltip="Apply Damage & Effect(s)"
+                {{else if @root.hasEffect}}
+                  data-tooltip="Apply Effect(s)."
+                {{else if @root.hasDamage}}
+                  data-tooltip="Apply Damage"
+                {{/unless}}>
+                <i class="fas fa-bolt"></i>{{localize "PTR2E.Damage.Apply"}}
+              </button>
+          </div>
+        </div>
+    {{/each}}
+    {{#if (gt results.size 1)}}
+      <div class="target target-footer">
+        <button type="button" class="apply-damage-all-hit" data-tooltip="Apply to all hit targets">
+          <i class="fas fa-bolt"></i>{{localize "PTR2E.Damage.ApplyAllHit"}}
+        </button>
+        <button type="button" class="apply-damage-all" data-tooltip="Apply to all targets, including misses">
+          <i class="fas fa-bolt"></i>{{localize "PTR2E.Damage.ApplyAll"}}
+        </button>
+      </div>
+    {{/if}}
+</footer>

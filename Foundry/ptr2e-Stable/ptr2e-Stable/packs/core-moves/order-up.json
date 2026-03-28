@@ -1,0 +1,74 @@
+{
+  "name": "Order Up",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "order-up",
+    "actions": [
+      {
+        "slug": "order-up",
+        "name": "Order Up",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "dragon"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "order-up-tatsu",
+        "name": "Order Up (Tatsu)",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "<p>The user has a creature with the Commander Ability equipped.</p>"
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "dragon"
+        ],
+        "description": "<p>The user has a creature with the Commander Ability equipped.</p><p>Effect: On hit, the user gains by +1 Stage for 5 Activations, depending on the equipped creature's forme:<ul><li>Curly Form - ATK<.li><li>Droopy Forme - DEF</li><li>Stretchy Forme - SPD</li></ul></p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "order-up",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "3WWJw8YZWfYReCCs",
+  "effects": []
+}

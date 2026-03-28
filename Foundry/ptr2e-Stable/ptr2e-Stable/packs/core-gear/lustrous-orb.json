@@ -1,0 +1,143 @@
+{
+  "name": "Lustrous Orb",
+  "img": "systems/ptr2e/img/item-icons/lustrous orb.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "S",
+    "fling": {
+      "type": "water",
+      "power": 90,
+      "accuracy": 85,
+      "hide": null
+    },
+    "rarity": "unique",
+    "traits": [
+      "forme-change",
+      "palkia",
+      "fling",
+      "fling"
+    ],
+    "actions": [
+      {
+        "name": "Lustrous Orb",
+        "slug": "lustrous-orb",
+        "type": "downtime",
+        "description": "Effect: Boost the user's Dragon and Water-type attack Power by 20%. Allows the user to change to their Forme as a Downtime Action.",
+        "traits": [
+          "Forme-Change",
+          "Palkia",
+          "Fling",
+          "Fling"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 10
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: Boost the user's Dragon and Water-type attack Power by 20%. Allows the user to change to their Forme as a Downtime Action.",
+    "slug": "lustrous-orb",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "Luu6cwt3SJKeGr4n",
+  "effects": [
+    {
+      "name": "Lustrous Orb",
+      "type": "passive",
+      "_id": "YTme9yrGOJYCpsdv",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "percentile-modifier",
+            "key": "dragon-attack-power",
+            "value": 20,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "percentile-modifier",
+            "key": "water-attack-power",
+            "value": 20,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.4.beta",
+        "createdTime": 1758376383261,
+        "modifiedTime": 1758376416552,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

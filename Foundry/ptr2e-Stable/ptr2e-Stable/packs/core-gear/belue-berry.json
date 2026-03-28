@@ -1,0 +1,58 @@
+{
+  "name": "Belue Berry",
+  "img": "systems/ptr2e/img/item-icons/belue berry.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 4,
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": 10,
+      "accuracy": 95,
+      "hide": null
+    },
+    "rarity": "uncommon",
+    "consumableType": "food",
+    "traits": [
+      "restorative",
+      "consumable",
+      "natural",
+      "healing",
+      "bait",
+      "berry",
+      "fling",
+      "held",
+      "spicy-1",
+      "bitter-1",
+      "sour-5",
+      "combat"
+    ],
+    "description": "The target gains 1 Tick of HP. If the target does not possess [Human] and is not part of a Team, they also gain 5 Ticks of HP, 9 PP, and their Catch Rate increases by x16/5 / x5/16 for 5 Activations if they like/dislike Sour flavors.",
+    "quantity": 1,
+    "slug": "belue-berry",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "40z0yGMLiijLoaYJ",
+  "effects": [],
+  "folder": "yR1GFstYOCdI2jOz"
+}

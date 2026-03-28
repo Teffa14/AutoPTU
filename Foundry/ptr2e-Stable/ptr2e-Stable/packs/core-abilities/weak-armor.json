@@ -1,0 +1,112 @@
+{
+  "name": "Weak Armor",
+  "type": "ability",
+  "img": "systems/ptr2e/img/perk-icons/Combat.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "interrupt-1"
+        ],
+        "name": "Weak Armor",
+        "slug": "weak-armor",
+        "type": "passive",
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>The user is hit by a Physical-Category attack.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "description": "<p>Trigger: The user is hit by a Physical-Category attack.</p><p>Effect: The user loses -1 DEF Stage and gains +1 SPD Stage for 5 Activations.</p>",
+        "img": "systems/ptr2e/img/perk-icons/Combat.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user is hit by a Physical-Category attack.</p><p>Effect: The user loses -1 DEF Stage and gains +2 SPD Stage for 5 Activations.</p>",
+    "traits": [],
+    "slug": "weak-armor",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "NlLmGi66S7A0TTjg",
+  "effects": [
+    {
+      "name": "Weak Armor",
+      "type": "passive",
+      "_id": "52m7GUThCrwSyo4e",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "physical-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.bdYCJcqjMNqTpJJQ",
+            "predicate": [],
+            "chance": 100,
+            "affects": "defensive",
+            "dontMerge": false,
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": []
+          },
+          {
+            "type": "roll-effect",
+            "key": "physical-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.XeiSuS3APUcN0MLZ",
+            "predicate": [],
+            "chance": 100,
+            "affects": "defensive",
+            "dontMerge": false,
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": []
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "1.1.3.beta",
+        "createdTime": 1729246091402,
+        "modifiedTime": 1743348724253,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

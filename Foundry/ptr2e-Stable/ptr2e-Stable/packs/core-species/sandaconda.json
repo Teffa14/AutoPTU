@@ -1,0 +1,440 @@
+{
+  "name": "sandaconda",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "ground"
+    ],
+    "stats": {
+      "hp": 72,
+      "atk": 107,
+      "def": 125,
+      "spa": 65,
+      "spd": 70,
+      "spe": 71
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "brutal-swing",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "minimize",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "sand-attack",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "skull-bash",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "wrap",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet",
+          "level": 15
+        },
+        {
+          "name": "headbutt",
+          "gen": "scarlet-violet",
+          "level": 20
+        },
+        {
+          "name": "glare",
+          "gen": "scarlet-violet",
+          "level": 25
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet",
+          "level": 30
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet",
+          "level": 35
+        },
+        {
+          "name": "slam",
+          "gen": "scarlet-violet",
+          "level": 42
+        },
+        {
+          "name": "coil",
+          "gen": "scarlet-violet",
+          "level": 49
+        },
+        {
+          "name": "sand-tomb",
+          "gen": "scarlet-violet",
+          "level": 51
+        }
+      ],
+      "tutor": [
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-press",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "drill-run",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earth-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earthquake",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endeavor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "high-horsepower",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hurricane",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-head",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "outrage",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poison-tail",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scale-shot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scorching-sands",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "screech",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-fang",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 3.8,
+      "weight": 65.5,
+      "category": "large",
+      "type": "length"
+    },
+    "captureRate": 70,
+    "eggGroups": [
+      "ground",
+      "dragon"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "silicobra",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "sandaconda",
+          "uuid": "Compendium.ptr2e.core-species.Item.8fnQo5yUfs0CR1WC",
+          "methods": [
+            {
+              "type": "level",
+              "level": 36,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.43IGnJ13CbMB4Zqp",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 844,
+    "traits": [
+      "pokemon",
+      "serpentine",
+      "fully-evolved",
+      "jump-2"
+    ],
+    "diet": [
+      "carnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "sand-spit"
+        },
+        {
+          "slug": "shed-skin"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "sand-veil"
+        },
+        {
+          "slug": "rough-skin"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "sand-rush"
+        },
+        {
+          "slug": "regenerator"
+        }
+      ],
+      "master": [
+        {
+          "slug": "sand-force"
+        },
+        {
+          "slug": "purifying-salt"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 8
+      },
+      {
+        "type": "swim",
+        "value": 8
+      }
+    ],
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "desert"
+    ],
+    "slug": "sandaconda",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "8fnQo5yUfs0CR1WC",
+  "effects": []
+}

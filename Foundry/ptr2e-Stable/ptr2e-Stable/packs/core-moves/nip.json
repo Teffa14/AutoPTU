@@ -1,0 +1,48 @@
+{
+  "name": "Nip",
+  "type": "move",
+  "_id": "WsHw5ht9DOJA2dwT",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Nip",
+        "slug": "nip",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "traits": [
+          "basic",
+          "contact",
+          "jaw"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "variant": null,
+        "types": [
+          "normal"
+        ],
+        "category": "physical",
+        "power": 30,
+        "accuracy": 100,
+        "description": ""
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": []
+}

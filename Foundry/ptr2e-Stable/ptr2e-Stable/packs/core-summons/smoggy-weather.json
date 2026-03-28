@@ -1,0 +1,140 @@
+{
+  "name": "Smoggy Weather",
+  "type": "summon",
+  "system": {
+    "_migration": {
+      "version": 0.11,
+      "previous": null
+    },
+    "traits": [
+      "partial-automation",
+      "weather",
+      "poison"
+    ],
+    "actions": [],
+    "baseAV": 150,
+    "duration": 3,
+    "slug": "smoggy-weather",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "description": "<p><strong>Smoggy</strong> is the presence of an smothering cloud of pollutants and toxins, which impede the functions and actions of most creatures. The artificial and those with immunities to the toxins are far more likely to take advantage of this enfeebling haze.</p><p><strong><span style=\"text-decoration: underline;\">Effects:</span></strong></p><ul><li>Poison-Type Attacks deal 20% more damage, and have an additional 10% chance to inflict Poison or Blight.</li><li>All non-Poison and Steel-Type creatures take 25% more damage from Physical-Category Attacks.</li><li>At the end of the Round, non-Poison- and Steel-Type creatures lose a Tick of HP.</li><li>While a creature is Poisoned or Blighted, they possess -1 default ACC.</li><li>When a creature takes a Critical Hit from a [Sharp] attack, gain Poisoned 5.</li></ul>"
+  },
+  "img": "icons/magic/death/skeleton-skull-soul-blue.webp",
+  "effects": [
+    {
+      "name": "Smoggy Weather",
+      "type": "summon",
+      "_id": "qRWPnxh1vTIcKAnF",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "percentile-modifier",
+            "key": "poison-attack-damage",
+            "value": 20,
+            "predicate": [],
+            "label": "Poison Damage Increase",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "ephemeral-modifier",
+            "key": "physical-attack-damage-percentile",
+            "value": 25,
+            "predicate": [
+              {
+                "nand": [
+                  "target:trait:poison",
+                  "target:trait:steel"
+                ]
+              }
+            ],
+            "label": "Physical Damage Increase",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "poison-attack-effect-chance",
+            "value": "Compendium.ptr2e.core-effects.Item.poisoncondititem",
+            "predicate": [],
+            "chance": 10,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": [],
+            "isFixedChance": false,
+            "dontMerge": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "poison-attack-effect-chance",
+            "value": "Compendium.ptr2e.core-effects.Item.blightcondititem",
+            "predicate": [],
+            "chance": 10,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": [],
+            "isFixedChance": false,
+            "dontMerge": false
+          }
+        ],
+        "slug": null,
+        "traits": [
+          "partial-automation"
+        ],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "priority": 50,
+        "formula": "1/16",
+        "type": "damage",
+        "targetType": "all",
+        "targetUuid": null,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.0.3.beta",
+        "createdTime": null,
+        "modifiedTime": 1739484678261,
+        "lastModifiedBy": "OCI1vTFsIMTEwU21",
+        "exportSource": null
+      }
+    }
+  ],
+  "_id": "AUpYPhcmwB7BsQ8I"
+}

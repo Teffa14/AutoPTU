@@ -1,0 +1,50 @@
+{
+  "name": "Karate Chop",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "karate-chop",
+    "actions": [
+      {
+        "slug": "karate-chop",
+        "name": "Karate Chop",
+        "type": "attack",
+        "traits": [
+          "crit-1",
+          "basic",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "category": "physical",
+        "power": 50,
+        "accuracy": 90,
+        "types": [
+          "fighting"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "KYtxowWry9owrmaN",
+  "effects": []
+}

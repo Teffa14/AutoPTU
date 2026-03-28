@@ -1,0 +1,60 @@
+{
+  "name": "Golden Apple",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "S",
+    "fling": {
+      "type": "grass",
+      "power": 40,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "consumableType": "food",
+    "traits": [
+      "restorative",
+      "consumable",
+      "natural",
+      "healing",
+      "food",
+      "held",
+      "fling",
+      "mystery-dungeon"
+    ],
+    "description": "<p>The user recovers @Tick[16 pp] and increases their Maximum PP by 5.</p>",
+    "quantity": 1,
+    "slug": "golden-apple",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "KDFRnG4WVB3As6N3",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

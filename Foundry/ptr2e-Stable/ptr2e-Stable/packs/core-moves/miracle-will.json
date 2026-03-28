@@ -1,0 +1,81 @@
+{
+  "name": "Miracle Will",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "miracle-will",
+    "actions": [
+      {
+        "slug": "miracle-will",
+        "name": "Miracle Will",
+        "type": "attack",
+        "traits": [
+          "blast-2",
+          "pulse",
+          "crit-2"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "special",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "psychic"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "miracle-will-ally",
+        "name": "Miracle Will (Ally)",
+        "type": "attack",
+        "traits": [
+          "healing",
+          "blast-2",
+          "pulse"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": 100,
+        "types": [
+          "psychic"
+        ],
+        "description": "<p>Effect: On hit, all valid, allied targets recover 8 Ticks of HP.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "miracle-will",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "cc4J7JBwzqsYlBVO",
+  "effects": []
+}

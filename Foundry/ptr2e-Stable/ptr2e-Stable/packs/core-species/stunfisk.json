@@ -1,0 +1,525 @@
+{
+  "name": "stunfisk",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 618,
+    "size": {
+      "category": "small",
+      "type": "height",
+      "height": 0.7,
+      "weight": 11
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 4
+      },
+      {
+        "type": "swim",
+        "value": 4
+      },
+      {
+        "type": "burrow",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "deep-breath",
+      "tremorsense-15",
+      "zapper",
+      "fully-evolved",
+      "underdog",
+      "jump-3"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "static"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "landslide"
+        },
+        {
+          "slug": "damp"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "hydration"
+        },
+        {
+          "slug": "sand-veil"
+        }
+      ],
+      "master": [
+        {
+          "slug": "water-absorb"
+        },
+        {
+          "slug": "lightning-rod"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 5,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "stunfisk",
+    "stats": {
+      "hp": 109,
+      "atk": 66,
+      "def": 84,
+      "spa": 81,
+      "spd": 99,
+      "spe": 32
+    },
+    "types": [
+      "ground",
+      "electric"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "water-gun",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-shock",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mud-slap",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mud-sport",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bide",
+          "level": 5,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "level": 5,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mud-shot",
+          "level": 10,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "revenge",
+          "level": 15,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "camouflage",
+          "level": 17,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "charge",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mud-bomb",
+          "level": 21,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sucker-punch",
+          "level": 25,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "electric-terrain",
+          "level": 30,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bounce",
+          "level": 35,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "muddy-water",
+          "level": 40,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunderbolt",
+          "level": 45,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "discharge",
+          "level": 45,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flail",
+          "level": 50,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fissure",
+          "level": 55,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "curse",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spite",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spark",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "pain-split",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "yawn",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "astonish",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "me-first",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "earth-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "reflect-type",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "eerie-impulse",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endeavor",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magnet-rise",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "aqua-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "foul-play",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "electroweb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "lash-out",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "surf",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "earthquake",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dig",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "flash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scald",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "captureRate": 75,
+    "eggGroups": [
+      "water1",
+      "indeterminate"
+    ],
+    "genderRatio": 4,
+    "habitats": [],
+    "evolutions": {
+      "name": "stunfisk",
+      "details": null,
+      "evolutions": []
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "PeGpHye7z6x9BCD6",
+  "effects": [],
+  "folder": null
+}

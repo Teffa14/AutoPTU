@@ -1,0 +1,157 @@
+PTU changelog 1.05
+
+Obviously a ton of things have changed, given how much time we've had to work on this. You'll find the biggest changes in the core book and the completely redone Game of Throhs supplement. 
+
+Are you really gonna read this file instead of taking a look for yourself? Well, your call. Maybe just read over the general changes and then skip over to the PDF once you reach the section about Class changes. Then come back and read about the supplements. We probably forgot to write a lot of things down in here anyway. 
+
+----------------------------------------------
+
+Core Book
+
+System Mechanics:
+- Attributes have been removed. Skill Rolls may still be boosted by equipment, Features and Abilities, etc. 
+- Super-effective damage is now 1.5x, and doubly super-effective damage is 2x. Resistances remain the same.
+- Combat Stages are now +20% / -10%
+- More Combat Maneuvers have been added and existing ones altered. 
+	- This includes Attack of Opportunity, and a lot of effects work around this now. 
+- Food items now must be consumed in advance and give a buff that can be used during batle.
+- Weapons now have various grades of quality, and higher quality weapons can grant Moves
+- Scrap is now a mechanic available without the Sustainable Recipes Feature
+- a Social keyword has been applied to Moves like Taunt, Attract, etc which is used by some Features
+- the Intelligence Capability has been removed
+- the Boss Template has been redone to be easier to use. 
+- Daily/X frequency no longer exists. All Daily frequencies have a set number of uses instead of scaling by level. 
+- Features with Stat Tags give only one Stat Tag now. See explanation in Trainer Creation section of changelog
+- Effects such as Features and Abilities that extend the Critical Hit or Effect Ranges of a Move cannot extend them by more than a total of +6 from their natural ranges. 
+- Trainers can Drain 2 AP as an Extended Action to heal themselves of Injuries.
+
+Pokédex and ORAS Changes:
+- movelist has been updated, including tutor moves for Gen VI Pokémon
+- new moves and abilities added
+- new mega evolutions added
+- Diancie added
+- Lots of Pokémon got Naturewalk Capabilities and more Ability choices added
+- Gen VI Pokémon are now woven into the normal dex order
+
+Quality of Life Improvements:
+- There's now a progression table for levels listing how many stat points, edges, and feats you have at each level
+- Status Afflictions, Combat Stages, Weight Classes, and Power Capabilty have been added to Useful Charts
+- There's a big table listing all the Classes now with brief descriptions, their role ratings, and their used skills
+- Capabilities, Abilities, and Moves have been packaged as a separate PDF for convenience. A copy remains in the core PDF as well.
+- form-fillable PDF character sheets are included 
+- a quick summary page for character creation has been added
+
+Trainer Creation:
+- All Trainers begin play with one Training Feature of their choice
+- Backgrounds now uniformly lower 3 Skills to Pathetic, raise 1 Skill to Adept, and raise 1 other Skill to Novice
+	- The minimum Level to use Edges to raise Skills to Adept remains Level 2
+- Trainers now choose 4 Edges and 4 Features at Level 1
+- Trainers now get additional bonuses at levels 5, 10, 20, 30, and 40, which includes an option for taking the "other half" of Stat Tags that were cut. This allows Trainers that mix between combat and non-combat classes to perform better. 
+
+General Edges and Features
+- Of particular note, the general Orders are much improved and give two Orders in a package now, including a new type of Order called a Stratagem which has a more persistent effect once used
+- A couple Features now interact with the Boss Template
+
+Class Changes
+- Seriously, more has changed than has remained the same, so you might as well read through it all.
+- Classes have been reorganized into several categories: Introductory Classes that most new players can grasp easily, Battling Style Classes that hone in on a particular strategy in battle, Specialist Team Classes that focus on Pokémon with a certain trait, Professional Classes which are based on skills that aren't necessarily tied to the typical Pokémon League challenge, Fighting Classes which are non-supernatural Classes meant for Trainer Combat, and Supernatural Classes which are the same category as before. 
+- The Classes that have either remained entirely the same or underwent only minor changes are: 
+	- Coordinator
+	- Enduring Soul
+	- Juggler 
+	- Chronicler (Photographer, but renamed; otherwise is the same)
+	- Style Expert
+- The following Classes have been cut:
+	- Hatcher: some of its functionality lives on in Researcher, and some has simply been made part of Breeding mechanics
+	- Medic: some of its functionality lives on in Researcher
+	- Scientist: redone as Researcher branches
+	- Soldier: its Trained Stat mechanic has been moved to Athlete
+	- Underdog: Poké Edges are now available to boost Underdog Pokémon in similar ways to Underdog Features
+	- Disciple: combined into Aura Guardian
+	- Medium: split up into Hex Maniac and Sage
+- The following entirely new Classes have been added: 
+	- Tumbler: a non-supernatural fighter based on acrobatics
+	- Duelist: an active Pokémon support class built around the Focused Training Feature and gaining momentum in battle
+	- Provocateur: inherited the social move side of Rogue and makes use of the new Manipulate Maneuver
+	- Trickster: a Pokémon support class that specializes in Status-Class Moves 
+- Other Classes saw the following changes (note - each class's entry isn't particularly comprehensive or detailed, just there to give you an idea of what changed):
+	- Ace Trainer: EXP bonus replaced with a new Order that boosts Training Feature effects, Signature Technique options revamped
+	- Athlete: Changed into a full combat class with Trained Stats; basically a Normal-Type Martial Artist
+	- Capture Specialist: Moved False Strike into Capture Techniques, minor changes
+	- Chef: rebuilt to have more customization for your food items, tutors Pokémon Gluttony
+	- Commander: new name for the Mastermind. Lost You Are Not Prepared! in favor of a more Orders-centric design and is no longer as front-loaded as the old version of the Class
+	- Dancer: as shown on the blog
+	- Fashionista: Redone to be more cohesive and focused on Held Items.
+	- Hobbyist: More of a Skill Monkey now. Can now take Features from multiple Classes, and obviously its options have been changed.
+	- Hunter: as shown on the blog, with some additional changes due to the introduction of Attacks of Opportunity
+	- Martial Artist: no longer a [Branch] Class, Cruelty option removed, Move List condensed, Smite and Sparring Partner replaced by Features helping out with Attacks of Opportunity and Combat Maneuvers
+	- Musician: no longer a [Branch] Class, it is now possible to take everything in Musician in one instance
+	- Mentor: base feat combined with Latent Potential and must tutor moves early instead of automatically learning them early, gained an Egg Move Tutor and the ability to give their Pokémon more TP
+	- Researcher: most talent trees have been updated, you'll just have to read them, sorry :< You must select two talent trees when taking Researcher, and each talent tree has four features
+	- Rider: now a Class built around the Agility Training Feature, has some other changes
+	- Rogue: more like a Dark-Type Martial Artist now, inherited the Cruelty Ability from MA, makes use of weapons and the Dirty Trick Maneuver
+	- Roughneck: lost its pokesupport half in favor of more staying power as a fighter
+	- Stat Ace: combined the tutoring feats, balanced the stat maneuver and mastery options, added a Stratagem 
+	- Survivalist: lost Nature Power tutor, gained terrain-based hazards, a terrain-based Order, and some other changes
+	- Taskmaster: renamed version of Lasher, now has better ways to cope with having Injuries on their Pokémon and boosts to their Pokémon based on the number of Injuries they have
+	- Type Ace: each type now has 4 unique features instead of 3, and they have an Order that can refresh moves
+	- Aura Guardian: mashed up with Disciple, can be physical or special now, requires Elemental Connection (Fighting) instead of Mystic Senses
+	- Channeler: almost everything is different. has Orders and a Stratagem now, Channeler's Reach is replaced with a healing effect, and other changes
+	- Hex Maniac: split off from Medium, mostly the same but can refresh its status moves when using Hex
+	- Ninja: no longer a branch class. cut out the acrobatics-related stuff and mostly gave it to Tumbler, now streamlined
+	- Oracle: renamed version of the Clairvoyant, now based on Mystic Senses instead of Psychic Connection, no longer has attack moves but can still help in battle
+	- Sage: split off from Medium, now wholly Blessing based and can also give allies damage reduction in other ways
+	- Telepath: Gained attacking Moves
+	- Telekinetic: PK Combat and PK Finesse were squashed together, gained additional effects on their Moves
+	- Warper: Magic Bounce removed for a disrupting feature that activates when you teleport near foes.
+	
+----------------------------------------------
+
+The Blessed and the Damned
+
+New layout yay! 
+
+Legendary Auras have been rebalanced and adjusted.
+Gifts and other info has been added for Diancie
+A section has been added on how to write a church and pantheon for your setting
+
+----------------------------------------------
+	
+Game of Throhs
+
+Pretty much rewrote the entire book. And gave it a shiny new layout. Yup. 
+
+Notable changes include:
+	- improved write-ups on fantasy genres, adapting fantasy settings to Pokémon, and fantasy variant Pokémon
+	- a section on creating a system of metaphysics for your fantasy world and an example of one
+	- two sample settings for your enjoyment, one of which uses the aforementioned system of metaphysics
+	- a set of guidelines and ideas for creating magical pieces of equipment and other items
+	
+Class Changes: 
+Weapon Specialist has been split up into four Classes as follows:
+	- Fortress: A bulky and defensive melee fighter who can tank and impair foes who are trying to hit their allies
+	- Marksman: A ranged fighter specialized in critical hits and crippling attacks
+	- Skirmisher: A fighter with a speedy and mobile fighting style, suitable for any weapon user
+	- Arcanist: A special attacker using Arcane Weapons and good supplement to other special attacking Classes such as Elementalists and Psychics
+
+A Berserker Class has also been added based on staying Enraged and hitting things really hard, and which can also make use of weapons.
+
+Elementalists have seen changes across the board as well. The ones with the most major changes are: 
+	- Herald of Pride
+	- Glamour Weaver
+	- Frost Touched
+	- Maelstrom (Tide Drinker)
+	- Apparition
+	- Steelheart
+
+Of these, the Herald of Pride, Apparition, and Steelheart are now weapons-oriented as well and work similarly to the dedicated weapon specialist classes. 
+	
+----------------------------------------------
+
+Do Porygon Dream of Mareep?
+
+Note - Porygon is overdue for a number of big overhauls. The 1.05 update is merely a stop-gap that makes some elements of the splat functional and up to date with how the 1.05 core treats things. 
+
+Jailbreaker, Upgrader, and Engineer are now Researcher Talent Trees
+Glitch Bender has been redone to have a more cohesive role as a disrupter in battle
+Weapons have been updated to match the change in core rules

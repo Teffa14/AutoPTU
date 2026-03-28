@@ -1,0 +1,53 @@
+{
+  "name": "Talon Raze",
+  "type": "move",
+  "_id": "yUPs9aZmnrM9gDSY",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "talon-raze",
+    "actions": [
+      {
+        "name": "Talon Raze",
+        "slug": "talon-raze",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "legendary",
+          "sharp",
+          "contact",
+          "3-strike"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "types": [
+          "fighting"
+        ],
+        "category": "physical",
+        "power": 50,
+        "accuracy": 90,
+        "description": "<p>Effect: On resolution, the user loses -1 ATK and SPD Stages for 5 Activations.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": []
+}

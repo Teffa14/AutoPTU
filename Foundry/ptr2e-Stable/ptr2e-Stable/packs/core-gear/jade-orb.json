@@ -1,0 +1,78 @@
+{
+  "name": "Jade Orb",
+  "img": "systems/ptr2e/img/item-icons/jade orb.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "S",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "unique",
+    "traits": [
+      "evolution",
+      "phenomenon",
+      "held",
+      "rayquaza"
+    ],
+    "actions": [
+      {
+        "name": "Jade Orb",
+        "slug": "jade-orb",
+        "type": "passive",
+        "description": "Effect: When equipped as an Accessory by a [Rayquaza], the user may undergo Mega Evolution without needing to have Dragon Ascent on their Active List, and without a PP Cost.\nWhen Held by a [Human], they may use a Complex Action to control an unowned [Rayquaza].",
+        "traits": [
+          "Evolution",
+          "Phenomenon",
+          "Held",
+          "Rayquaza"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: When equipped as an Accessory by a [Rayquaza], the user may undergo Mega Evolution without needing to have Dragon Ascent on their Active List, and without a PP Cost.\nWhen Held by a [Human], they may use a Complex Action to control an unowned [Rayquaza].",
+    "slug": "jade-orb",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "k22nho8Sj5WrXYj0",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

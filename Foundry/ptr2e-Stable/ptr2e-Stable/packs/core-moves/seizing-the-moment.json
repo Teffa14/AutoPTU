@@ -1,0 +1,50 @@
+{
+  "name": "Seizing the Moment",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "seizing-the-moment",
+    "actions": [
+      {
+        "slug": "seizing-the-moment",
+        "name": "Seizing the Moment",
+        "type": "generic",
+        "traits": [
+          "grapple",
+          "basic"
+        ],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "untyped"
+        ],
+        "description": "<p>Effect: This action can only be taken while the user has the @Affliction[grapple] Affliction.<br>Pick one of the following 3 effects:</p><p><ul><li>If the user is in control of the @Affliction[grapple], they may a Lift check, as per Grab. On success, the user may use Breaking Hold on any number of target in the @Affliction[grapple], once per target. On a failure nothing happens, but the user stays in control of the @Affliction[grapple].</li><li>If the user is in control of the @Affliction[grapple], they may escape the @Affliction[grapple].</li><li>If the user is not in control of the @Affliction[grapple], they may make Lift Check (same rules as above) to break free or take control of the @Affliction[grapple]. On succeess, the user may choose to escape the @Affliction[grapple] or take control of the @Affliction[grapple].</li></ul></p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "I40AiRBdVJWdtmAJ",
+  "effects": [],
+  "folder": "EpCOePz8omfXbp34"
+}

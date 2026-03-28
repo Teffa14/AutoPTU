@@ -1,0 +1,461 @@
+{
+  "name": "overqwil",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 904,
+    "size": {
+      "category": "large",
+      "type": "length",
+      "height": 2.5,
+      "weight": 60.5
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "swim",
+        "value": 13
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "natural-swimmer",
+      "gilled",
+      "venomous",
+      "wavesense-15",
+      "inflatable",
+      "fully-evolved",
+      "jump-1"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "poison-point"
+        },
+        {
+          "slug": "swift-swim"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "loose-quills"
+        },
+        {
+          "slug": "intimidate"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "iron-barbs"
+        },
+        {
+          "slug": "intoxicate"
+        }
+      ],
+      "master": [
+        {
+          "slug": "toxic-debris"
+        },
+        {
+          "slug": "inflationary"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "intimidate",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 85,
+      "atk": 115,
+      "def": 95,
+      "spa": 65,
+      "spd": 65,
+      "spe": 85
+    },
+    "types": [
+      "poison",
+      "dark"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "poison-sting",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "harden",
+          "gen": "scarlet-violet",
+          "level": 4
+        },
+        {
+          "name": "bite",
+          "gen": "scarlet-violet",
+          "level": 8
+        },
+        {
+          "name": "fell-stinger",
+          "gen": "scarlet-violet",
+          "level": 12
+        },
+        {
+          "name": "minimize",
+          "gen": "scarlet-violet",
+          "level": 16
+        },
+        {
+          "name": "spikes",
+          "gen": "scarlet-violet",
+          "level": 20
+        },
+        {
+          "name": "brine",
+          "gen": "scarlet-violet",
+          "level": 24
+        },
+        {
+          "name": "barb-barrage",
+          "gen": "scarlet-violet",
+          "level": 28
+        },
+        {
+          "name": "pin-missile",
+          "gen": "scarlet-violet",
+          "level": 32
+        },
+        {
+          "name": "toxic-spikes",
+          "gen": "scarlet-violet",
+          "level": 36
+        },
+        {
+          "name": "stockpile",
+          "gen": "scarlet-violet",
+          "level": 40
+        },
+        {
+          "name": "toxic",
+          "gen": "scarlet-violet",
+          "level": 44
+        },
+        {
+          "name": "crunch",
+          "gen": "scarlet-violet",
+          "level": 48
+        },
+        {
+          "name": "acupressure",
+          "gen": "scarlet-violet",
+          "level": 52
+        },
+        {
+          "name": "destiny-bond",
+          "gen": "scarlet-violet",
+          "level": 56
+        }
+      ],
+      "tutor": [
+        {
+          "name": "agility",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "blizzard",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "chilling-water",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gyro-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "haze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hydro-pump",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ice-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lash-out",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "liquidation",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pain-split",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poison-tail",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reversal",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scale-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scary-face",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "smart-strike",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "spite",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "surf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "throat-chop",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "venoshock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "waterfall",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "captureRate": 60,
+    "eggGroups": [
+      "water2"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "qwilfish-hisuian",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "overqwil",
+          "uuid": "Compendium.ptr2e.core-species.Item.mG7E8BxuMutM8Kpv",
+          "methods": [
+            {
+              "type": "move",
+              "move": "barb-barrage",
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.zCNCrrbTcYl1n9tZ",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "habitats": [
+      "ocean",
+      "polar",
+      "abyss"
+    ],
+    "slug": "overqwil",
+    "publication": {
+      "source": "PTR 2e Core - Hisui Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "mG7E8BxuMutM8Kpv",
+  "effects": []
+}

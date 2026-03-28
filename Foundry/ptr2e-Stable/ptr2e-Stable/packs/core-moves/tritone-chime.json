@@ -1,0 +1,68 @@
+{
+  "name": "Tritone Chime",
+  "type": "move",
+  "_id": "yCNuSPaHG0lA1Otw",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Tritone Chime",
+        "slug": "tritone-chime",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "sonic",
+          "3-strike",
+          "friendly"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "variant": null,
+        "types": [
+          "ghost"
+        ],
+        "category": "special",
+        "power": 25,
+        "accuracy": 85,
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null,
+        "description": ""
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "CYLdyr5mPSDmNpTp": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.328",
+    "systemId": "ptr2e",
+    "systemVersion": "0.10.0-alpha.1.5.2",
+    "createdTime": 1720463354291,
+    "modifiedTime": 1720463447680,
+    "lastModifiedBy": "CYLdyr5mPSDmNpTp"
+  }
+}

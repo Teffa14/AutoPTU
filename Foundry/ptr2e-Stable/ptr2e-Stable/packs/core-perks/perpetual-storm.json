@@ -1,0 +1,117 @@
+{
+  "name": "Perpetual Storm",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      "item:perk:climate-controller",
+      {
+        "or": [
+          {
+            "gte": [
+              "{actor|skills.meteorology.mod}",
+              50
+            ]
+          },
+          {
+            "and": [
+              {
+                "gte": [
+                  "{actor|skills.survival.mod}",
+                  70
+                ]
+              },
+              {
+                "gte": [
+                  "{actor|skills.spiritual.mod}",
+                  70
+                ]
+              },
+              {
+                "gte": [
+                  "{actor|level}",
+                  60
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "cost": 5,
+    "description": "<p>Effect: Weathers created by the user last for +2 additional Rounds. While these Weathers are active, the user and all allies gain @Trait[priority-1] or [Priority X+1] with all of their Actions, and @Trait[flinch-1] and [Flinch X+1] on their Physical- and Special-Category Attacks.</p><p>Passive: the user gains one @Trait[weather] creating Ability (f.e. Drizzle) as a Tutored Ability.</p>",
+    "actions": [
+      {
+        "name": "Perpetual Storm",
+        "slug": "perpetual-storm",
+        "description": "<p>Effect: Weathers created by the user last for +2 additional Rounds. While these Weathers are active, the user and all allies gain @Trait[priority-1] or [Priority X+1] with all of their Actions, and @Trait[flinch-1] and [Flinch X+1] on their Physical- and Special-Category Attacks.",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0,
+          "delay": null,
+          "priority": null
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "hidden": false,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "perpetual-storm",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "climate-controller",
+          "climatologist"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#400080",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Elamentalist.svg",
+          "tint": "#ffffff",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 39,
+        "y": 126,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "finesse",
+      "archetype": "climatology"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "LvxsCjJDbfgyQ7G5",
+  "img": "systems/ptr2e/img/perk-icons/Elamentalist.svg",
+  "effects": [],
+  "folder": "JifQ0uTghmQ9VBPk"
+}

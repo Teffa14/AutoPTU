@@ -1,0 +1,52 @@
+{
+  "name": "Tremor",
+  "type": "move",
+  "_id": "nxP4qVlVXnGSUbbX",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "tremor",
+    "actions": [
+      {
+        "name": "Tremor",
+        "slug": "tremor",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/ground_icon.svg",
+        "traits": [
+          "3-strike",
+          "earthbound"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "types": [
+          "ground"
+        ],
+        "category": "physical",
+        "power": 20,
+        "accuracy": 100,
+        "description": "<p>Effect: On hit, the target has a 40% chance to lose -1 SPD Stage for 5 Activations.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "E",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": []
+}

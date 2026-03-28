@@ -1,0 +1,116 @@
+{
+  "name": "Intense Winds Weather",
+  "type": "summon",
+  "system": {
+    "_migration": {
+      "version": 0.11,
+      "previous": null
+    },
+    "traits": [
+      "partial-automation",
+      "weather",
+      "flying"
+    ],
+    "actions": [],
+    "baseAV": 150,
+    "duration": 3,
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "slug": "intense-winds-weather",
+    "description": "<p><strong>Intense Winds</strong> are, for many, completely unmanageable. Without decent aerodynamics, you'd basically be helpless. But for the lords of the air, they might as well be unassailable in their \"gale-force fortress\".</p><p><strong><span style=\"text-decoration: underline;\">Effects:</span></strong></p><ul><li>For the purposes of Abilities, Attacks, Perks, and Traits, this Weather is considered to also be “Windy”.</li><li>Flying-Type creatures and creatures in the Flying Movement State have their SPD increased 60%.</li><li>[Wind] attacks deal 80% more damage.</li><li>All creatures with a Flight Movement Score have that Score increase by 60%.</li><li>Flying-Type creatures gain a Flight Score equal to 80% of their Overland (minimum 3).</li><li>Flying-Type creatures have their DEF stat increased by 25% and SPDEF stat increased by 25%.</li><li>The Flying Type’s weaknesses are instead neutral.</li><li>All [Dash] and [Reckless] attacks without [Push X] gain [Push 1]. When Pushed, all creatures are Pushed an additional X meters (minimum of 0), where X is equal to 12 minus their Weight Class.</li></ul>"
+  },
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "effects": [
+    {
+      "name": "Intense Winds Weather",
+      "type": "summon",
+      "_id": "sXN4OmKfzYgrtbSg",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "basic",
+            "key": "system.modifiers.speMultiplier",
+            "value": 0.6,
+            "predicate": [
+              {
+                "or": [
+                  "trait:flying",
+                  "movement:flight"
+                ]
+              }
+            ],
+            "label": "Flying SpeedBoost",
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "percentile-modifier",
+            "key": "wind-trait-attack-damage",
+            "value": 80,
+            "predicate": [],
+            "label": "Wind Damage Modifier",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [
+          "partial-automation",
+          "weather"
+        ],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "priority": 50,
+        "formula": "",
+        "type": "damage",
+        "targetType": "all",
+        "targetUuid": null,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-summons.Item.OeB2hndOSCLzlbcp.ActiveEffect.btSZQSeig8xrmoQ4",
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": null,
+        "lastModifiedBy": "5ImYyhOS2D6D7ypO",
+        "exportSource": null,
+        "modifiedTime": 1762905988627
+      }
+    }
+  ],
+  "_id": "Uq4WJydMueMJij91"
+}

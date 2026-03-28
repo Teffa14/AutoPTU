@@ -1,0 +1,139 @@
+{
+  "name": "Present",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "present",
+    "actions": [
+      {
+        "slug": "present",
+        "name": "Present",
+        "type": "attack",
+        "traits": [
+          "blast-1"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "trigger": "<p>User rolls 1 thru 40 on the declaration roll.</p>"
+        },
+        "category": "physical",
+        "power": 40,
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: User rolls 1 thru 40 on the declaration roll.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "present-2",
+        "name": "Present x2",
+        "type": "attack",
+        "traits": [
+          "blast-1"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "trigger": "<p>User rolls 41 thru 60 on the declaration roll.</p>"
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: User rolls 41 thru 60 on the declaration roll.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "present",
+        "free": true,
+        "slot": null
+      },
+      {
+        "slug": "present-3",
+        "name": "Present x3",
+        "type": "attack",
+        "traits": [
+          "blast-1"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "trigger": "<p>Trigger: User rolls 61 thru 70 on the declaration roll.</p>"
+        },
+        "category": "physical",
+        "power": 120,
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: User rolls 61 thru 70 on the declaration roll.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "present",
+        "free": true,
+        "slot": null
+      },
+      {
+        "slug": "present-gift",
+        "name": "Present (Gift)",
+        "type": "attack",
+        "traits": [
+          "blast-1",
+          "healing"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "trigger": "<p>Trigger: User rolls 71 thru 100 on the declaration roll.</p>"
+        },
+        "category": "status",
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: User rolls 71 thru 100 on the declaration roll.</p><p>Effect: On hit, all valid targets recover 4 Ticks of HP.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "present",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "dTzHNqMNr83eSDwF",
+  "effects": []
+}

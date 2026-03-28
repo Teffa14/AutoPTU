@@ -1,0 +1,49 @@
+{
+  "name": "Shadow Wrath",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-wrath",
+    "actions": [
+      {
+        "slug": "shadow-wrath",
+        "name": "Shadow Wrath",
+        "type": "attack",
+        "traits": [
+          "flinch-40",
+          "pulse"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "special",
+        "power": 150,
+        "accuracy": 90,
+        "types": [
+          "shadow"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Ntzj9rWnx0WV4PqF",
+  "effects": []
+}

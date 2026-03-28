@@ -1,0 +1,521 @@
+{
+  "name": "zygarde-complete",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 718,
+    "form": "complete",
+    "size": {
+      "category": "huge",
+      "type": "quad",
+      "height": 4.5,
+      "weight": 610
+    },
+    "diet": [
+      "auravore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 8
+      },
+      {
+        "type": "flight",
+        "value": 4
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "legendary",
+      "gestalt",
+      "aura-user",
+      "glow-5",
+      "tremorsense-15",
+      "jump-2"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "aura-break"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "power-of-alchemy"
+        },
+        {
+          "slug": "power-core"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "rebuild"
+        },
+        {
+          "slug": "perforate"
+        }
+      ],
+      "master": [
+        {
+          "slug": "power-construct"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "aura-sense",
+        "value": 80,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 80,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 80,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "dragon",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "legendary",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "running",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "zygarde",
+    "stats": {
+      "hp": 216,
+      "atk": 100,
+      "def": 121,
+      "spa": 91,
+      "spd": 95,
+      "spe": 85
+    },
+    "types": [
+      "dragon",
+      "ground"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "bind",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bite",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-breath",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thousand-arrows",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thousand-waves",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "core-enforcer",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "haze",
+          "level": 8,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dig",
+          "level": 16,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "safeguard",
+          "level": 24,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "crunch",
+          "level": 32,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-pulse",
+          "level": 40,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "lands-wrath",
+          "level": 48,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "glare",
+          "level": 56,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "camouflage",
+          "level": 59,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sandstorm",
+          "level": 64,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "coil",
+          "level": 72,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "earthquake",
+          "level": 80,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "outrage",
+          "level": 88,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "spite",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "pain-split",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "superpower",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "block",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "earth-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "draco-meteor",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "scale-shot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scorching-sands",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-slam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swift",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "reversal",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "brick-break",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "retaliate",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "high-horsepower",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "breaking-swipe",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "captureRate": 2,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "habitats": [],
+    "publication": {
+      "source": "PTR 2e Core - Kalos Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "OIt7IW7gCn9f5lQ7",
+  "effects": [],
+  "folder": null
+}

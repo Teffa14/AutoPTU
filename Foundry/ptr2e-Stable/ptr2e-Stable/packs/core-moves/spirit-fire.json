@@ -1,0 +1,49 @@
+{
+  "name": "Spirit Fire",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "spirit-fire",
+    "actions": [
+      {
+        "slug": "spirit-fire",
+        "name": "Spirit Fire",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "friendly"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "category": "special",
+        "power": 90,
+        "accuracy": 90,
+        "types": [
+          "fire"
+        ],
+        "description": "<p>Effect: On hit, all valid targets have a 20% chance of gaining @Affliction[burn] 7. On resolution, all allies within 3m of the user gain +1 Stage to a Stat of their choice for 5 Activations.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "7HJX4259e0d7uOl3",
+  "effects": []
+}

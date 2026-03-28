@@ -1,0 +1,49 @@
+{
+  "name": "Hyper Beam",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "hyper-beam",
+    "actions": [
+      {
+        "slug": "hyper-beam",
+        "name": "Hyper Beam",
+        "type": "attack",
+        "traits": [
+          "flinch-30",
+          "ray"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "special",
+        "power": 150,
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Y3qvJL3ytRXXmr5a",
+  "effects": []
+}

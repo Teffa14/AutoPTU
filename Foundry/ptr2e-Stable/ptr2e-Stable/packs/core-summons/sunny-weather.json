@@ -1,0 +1,190 @@
+{
+  "name": "Sunny Weather",
+  "type": "summon",
+  "system": {
+    "_migration": {
+      "version": 0.109,
+      "previous": null
+    },
+    "traits": [
+      "partial-automation",
+      "weather",
+      "fire"
+    ],
+    "actions": [],
+    "baseAV": 150,
+    "duration": 3,
+    "slug": "sunny-weather",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "description": "<p><strong>Sunny</strong> is the presence of harsh, overbearing sunlight, making fires burn hotter, and photosynthesis seemingly improving. Generally, Fire- and Grass- Types benefit from Sunny Weather.</p><p><strong><span style=\"text-decoration: underline;\">Effects:</span></strong></p><ul><li>Fire-Type Attacks deal 30% more damage, and Water-Type Attacks deal 30% less damage.</li><li>Grass-Type creatures gain 30% to their Movement Allowances, and their SPD is increased 15%.</li><li>Fire-Type Attacks are resisted one step less by Water-Types.</li><li>Creatures cannot be Frozen, and Frozen creatures are cured of Frozen.</li><li>Fire-Type Moves and Physical-Category Steel-Type attacks have a 10% chance to inflict Burn 5. Attacks that would already cause Burn instead increase their chance to Burn by 10%.</li></ul>"
+  },
+  "img": "icons/magic/air/weather-sunlight-sky.webp",
+  "effects": [
+    {
+      "name": "Sunny Weather",
+      "type": "summon",
+      "_id": "aHL8giHEWDdT8UTj",
+      "img": "icons/magic/air/weather-sunlight-sky.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "percentile-modifier",
+            "key": "fire-attack-damage",
+            "value": 30,
+            "predicate": [],
+            "label": "Fire Damage Boost",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "percentile-modifier",
+            "key": "water-attack-damage",
+            "value": -30,
+            "predicate": [],
+            "label": "Water Damage Reduction",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "ephemeral-modifier",
+            "key": "fire-attack-effectiveness-stage",
+            "value": 1,
+            "predicate": [
+              "target:trait:water"
+            ],
+            "label": "Neutral Fire Damage to Water",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "basic",
+            "key": "system.modifiers.speMultiplier",
+            "value": 0.15,
+            "predicate": [
+              "trait:grass"
+            ],
+            "label": "Grass Speed Boost",
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-option",
+            "key": "",
+            "value": "affliction:frozen",
+            "predicate": [],
+            "domain": "immunities",
+            "toggleable": false,
+            "count": false,
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "suboptions": [],
+            "state": true
+          },
+          {
+            "type": "roll-effect",
+            "key": "attack-effect-chance",
+            "value": "Compendium.ptr2e.core-effects.Item.burnconditioitem",
+            "predicate": [],
+            "chance": 10,
+            "affects": "target",
+            "priority": null,
+            "alterations": [],
+            "isFixedChance": false,
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "fire-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.burnconditioitem",
+            "predicate": [],
+            "chance": 10,
+            "affects": "target",
+            "priority": null,
+            "alterations": [],
+            "isFixedChance": false,
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "physical-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.burnconditioitem",
+            "predicate": [
+              "item:trait:steel"
+            ],
+            "chance": 10,
+            "affects": "target",
+            "priority": null,
+            "alterations": [],
+            "isFixedChance": false,
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "priority": 50,
+        "formula": "",
+        "type": "damage",
+        "targetType": "all",
+        "targetUuid": null,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": null,
+        "lastModifiedBy": "5ImYyhOS2D6D7ypO",
+        "exportSource": null,
+        "modifiedTime": 1762906400906
+      }
+    }
+  ],
+  "_id": "9cgLo9qwotwZUqPT"
+}

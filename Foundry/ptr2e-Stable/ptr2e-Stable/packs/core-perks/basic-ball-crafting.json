@@ -1,0 +1,95 @@
+{
+  "name": "Basic Ball Crafting",
+  "type": "perk",
+  "folder": "CpqiTFuJPCaphgZU",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.electronics.mod}",
+          25
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>As a Camp Action, you can craft PokeBalls. This Perk also grants you the Basic Ball recipe.</p>",
+    "actions": [
+      {
+        "name": "Basic Ball Crafting",
+        "slug": "basic-ball-crafting",
+        "description": "<p>As a Camp Action, you can craft PokeBalls. This Perk also grants you the Basic Ball recipe.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0,
+          "delay": null,
+          "priority": null
+        },
+        "type": "camping",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "basic-ball-crafting",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "blacksmith",
+          "pokeball-repairs",
+          "weighted-ball-systems",
+          "training-ball-specs",
+          "hunting-ball-specs",
+          "gemcutter",
+          "root-4",
+          "trubbish-class-sandwiches"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#400080",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Crafting.svg",
+          "tint": "#ffffff",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": null,
+        "y": null,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "resilience",
+      "archetype": "crafting"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "nT6V9QuEPMqAy4Xj",
+  "img": "systems/ptr2e/img/perk-icons/Crafting.svg",
+  "effects": []
+}

@@ -1,0 +1,77 @@
+{
+  "name": "Payback",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "payback",
+    "actions": [
+      {
+        "slug": "payback",
+        "name": "Payback",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 50,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "img": "systems/ptr2e/img/svg/dark_icon.svg",
+        "predicate": []
+      },
+      {
+        "slug": "payback-empowered",
+        "name": "Payback (Empowered)",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2,
+          "trigger": "<p>The user has been hit by a  Attack this round.</p>"
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "description": "<p>Trigger: The user has been hit by a Attack this round.</p>",
+        "variant": "payback",
+        "img": "systems/ptr2e/img/svg/dark_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "IWtQyZKNtwfpsM1d",
+  "effects": []
+}

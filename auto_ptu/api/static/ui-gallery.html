@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AutoPTU UI Gallery</title>
+    <link rel="stylesheet" href="design-system/tokens.css" />
+    <link rel="stylesheet" href="design-system/components.css" />
+    <link rel="stylesheet" href="design-system/layout.css" />
+    <link rel="stylesheet" href="styles.css?v=20260304a" />
+  </head>
+  <body>
+    <div id="move-tooltip" class="move-tooltip hidden"></div>
+    <header class="ds-topbar">
+      <div class="ds-brand">AutoPTU UI Gallery</div>
+      <div class="ds-toolbar">
+        <a class="ds-pill" href="index.html">Battle</a>
+        <a class="ds-pill" href="create.html">Builder</a>
+      </div>
+    </header>
+    <main class="ds-main-shell">
+      <div class="ds-layout-3">
+        <section class="ds-panel">
+          <div class="ds-panel-head">
+            <div class="ds-panel-title">Buttons + Pills</div>
+          </div>
+          <div class="ds-card ds-list">
+            <button class="ds-button" data-tooltip="Primary action">Primary</button>
+            <button class="ds-button" disabled>Disabled</button>
+            <span class="ds-pill">Neutral</span>
+            <span class="ds-pill light">Light</span>
+          </div>
+          <div class="ds-card ds-list">
+            <div class="ds-inspector-row">
+              <span>Available</span>
+              <span class="status-pill ds-pill">Available</span>
+            </div>
+            <div class="ds-inspector-row">
+              <span>Close</span>
+              <span class="status-pill ds-pill">Close</span>
+            </div>
+            <div class="ds-inspector-row">
+              <span>Locked</span>
+              <span class="status-pill ds-pill">Locked</span>
+            </div>
+            <div class="ds-inspector-row">
+              <span>Taken</span>
+              <span class="status-pill ds-pill">Taken</span>
+            </div>
+          </div>
+        </section>
+        <section class="ds-panel" data-tab-root>
+          <div class="ds-panel-head">
+            <div class="ds-panel-title">Tabs + Cards</div>
+            <div class="ds-tab-list" data-tablist>
+              <button class="ds-tab" aria-selected="true" data-tab="tab-a">Tab A</button>
+              <button class="ds-tab" aria-selected="false" data-tab="tab-b">Tab B</button>
+            </div>
+          </div>
+          <div class="ds-card active" data-tab-panel="tab-a">Tab A content card.</div>
+          <div class="ds-card" data-tab-panel="tab-b">Tab B content card.</div>
+        </section>
+        <section class="ds-panel">
+          <div class="ds-panel-head">
+            <div class="ds-panel-title">Slots + Log</div>
+          </div>
+          <div class="ds-card ds-list">
+            <div class="ds-slot">Empty Slot</div>
+            <div class="ds-slot invalid">Invalid Slot</div>
+          </div>
+          <div class="ds-log">
+            <div class="log-line log-actions">
+              <span class="log-prefix">ACT</span>
+              <span class="log-text">Trainer commands a move.</span>
+            </div>
+            <div class="log-line log-damage">
+              <span class="log-prefix">DMG</span>
+              <span class="log-text">Critical hit for <span class="log-num">12</span>.</span>
+            </div>
+          </div>
+        </section>
+      </div>
+      <section class="ds-panel">
+        <div class="ds-panel-head">
+          <div class="ds-panel-title">Tooltip, Modal, Accordion</div>
+        </div>
+        <div class="ds-card ds-list">
+          <button class="ds-button" data-tooltip="Tooltip preview" data-tooltip-placement="right">Hover me</button>
+          <button class="ds-button" data-modal-open="gallery-modal">Open Modal</button>
+          <div class="ds-accordion" data-accordion>
+            <button class="ds-accordion-trigger" data-accordion-trigger="acc-1" aria-expanded="false">Accordion One</button>
+            <div class="ds-accordion-panel" data-accordion-panel="acc-1" hidden>
+              Accordion body content.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="gallery-modal" class="ds-modal-overlay hidden" data-modal aria-hidden="true">
+      <div class="ds-modal">
+        <div class="ds-panel-title">Modal Example</div>
+        <p class="ds-inspector-row">Modals use focus management and ESC to close.</p>
+        <div class="ds-toolbar">
+          <button class="ds-button" data-modal-close>Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="design-system/ui.js"></script>
+  </body>
+</html>

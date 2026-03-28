@@ -1,0 +1,486 @@
+{
+  "name": "stufful",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "normal",
+      "fighting"
+    ],
+    "stats": {
+      "hp": 70,
+      "atk": 75,
+      "def": 50,
+      "spa": 45,
+      "spd": 50,
+      "spe": 50
+    },
+    "moves": {
+      "tutor": [
+        {
+          "name": "ice-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thunder-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stomp",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mega-kick",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "defense-curl",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rollout",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "force-palm",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wide-guard",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "focus-punch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "role-play",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-head",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dual-chop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "coaching",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mega-punch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "roar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "earthquake",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "charm",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "taunt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "brick-break",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "aerial-ace",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bulk-up",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "low-sweep",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "work-up",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "leer",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "baby-doll-eyes",
+          "level": 4,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bide",
+          "level": 5,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "payback",
+          "level": 8,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "brutal-swing",
+          "level": 12,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "level": 16,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "strength",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "take-down",
+          "level": 24,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flail",
+          "level": 28,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hammer-arm",
+          "level": 32,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thrash",
+          "level": 36,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "pain-split",
+          "level": 40,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-edge",
+          "level": 44,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "superpower",
+          "level": 48,
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.5,
+      "weight": 6.8,
+      "category": "small",
+      "type": "quad"
+    },
+    "captureRate": 140,
+    "eggGroups": [
+      "ground"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "stufful",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "bewear",
+          "uuid": "Compendium.ptr2e.core-species.Item.OeIcI6sp7gzaVm3T",
+          "methods": [
+            {
+              "type": "level",
+              "level": 27,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.B9vi76K96XXDDrzF"
+    },
+    "number": 759,
+    "traits": [
+      "pokemon",
+      "quadrupedal",
+      "underdog",
+      "jump-3"
+    ],
+    "diet": [
+      "omnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "fluffy"
+        },
+        {
+          "slug": "klutz"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "cute-charm"
+        },
+        {
+          "slug": "frisk"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "anger-point"
+        },
+        {
+          "slug": "iron-fist"
+        }
+      ],
+      "master": [
+        {
+          "slug": "hustle"
+        },
+        {
+          "slug": "guts"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 8
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "forest",
+      "city"
+    ],
+    "slug": "stufful",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "B9vi76K96XXDDrzF",
+  "effects": [],
+  "folder": null
+}

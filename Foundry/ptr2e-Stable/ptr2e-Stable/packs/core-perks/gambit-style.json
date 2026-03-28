@@ -1,0 +1,160 @@
+{
+  "name": "Gambit Style",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.leadership.mod}",
+          35
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>The target gains @UUID[Compendium.ptr2e.core-effects.gambitcondititem]{Gambit}.</p>",
+    "actions": [
+      {
+        "name": "Gambit!",
+        "slug": "gambit",
+        "traits": [
+          "command",
+          "style"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 1
+        },
+        "description": "<p>Effect: The target gains @UUID[Compendium.ptr2e.core-effects.gambitcondititem]{Gambit}.</p>",
+        "type": "generic",
+        "img": "systems/ptr2e/img/perk-icons/Orders_Training.svg"
+      }
+    ],
+    "slug": "gambit-style",
+    "traits": [
+      "command",
+      "style"
+    ],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 95,
+        "y": 125,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "assault-armor-style",
+          "precise-style",
+          "improved-burrow-3",
+          "improved-overland-13",
+          "improved-overland-5"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Orders_Training.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      },
+      {
+        "x": 95,
+        "y": 179,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "up-the-beat",
+          "the-devil-does-bargain",
+          "minor-buff-13",
+          "minor-buff-65",
+          "minor-buff-53"
+        ],
+        "config": {
+          "texture": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "variant": "multi",
+    "mode": "shared",
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "finesse",
+      "archetype": "support"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "DejWRv29FwiYyyeE",
+  "img": "systems/ptr2e/img/perk-icons/Orders_Training.svg",
+  "effects": [
+    {
+      "name": "Gambit Style",
+      "type": "passive",
+      "_id": "tkfwtlJPTYG41EEE",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "gambit-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.gambitcondititem",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "target",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e"
+      }
+    }
+  ],
+  "folder": "JZrGRskscJOkkPWA"
+}

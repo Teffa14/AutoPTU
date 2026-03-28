@@ -1,0 +1,53 @@
+{
+  "name": "Saw Blade",
+  "type": "move",
+  "_id": "3shXx43N4Lh4bsAv",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "saw-blade",
+    "actions": [
+      {
+        "name": "Saw Blade",
+        "slug": "saw-blade",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/steel_icon.svg",
+        "traits": [
+          "sharp",
+          "crit-1",
+          "pass-2",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "types": [
+          "steel"
+        ],
+        "category": "physical",
+        "power": 70,
+        "accuracy": 100,
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

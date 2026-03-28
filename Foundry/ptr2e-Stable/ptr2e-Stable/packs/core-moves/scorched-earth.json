@@ -1,0 +1,99 @@
+{
+  "name": "Scorched Earth",
+  "type": "move",
+  "_id": "OnCQoc5p4Jou9B8j",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "scorched-earth",
+    "actions": [
+      {
+        "name": "Scorched Earth",
+        "slug": "scorched-earth",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "environ",
+          "earthbound"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "variant": null,
+        "types": [
+          "fire"
+        ],
+        "category": "special",
+        "power": 60,
+        "accuracy": 95,
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null,
+        "description": "<p>Effect: If Scorched Terrain is active, this Attack's range changes to <q>Wide Line 5.</q></p>"
+      },
+      {
+        "name": "Scorched Earth (Scorched)",
+        "slug": "scorched-earth-scorched",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "environ",
+          "earthbound"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "<p>Trigger: The user is affected by Scorched Terrain.</p>"
+        },
+        "variant": "scorched-earth",
+        "types": [
+          "fire"
+        ],
+        "category": "special",
+        "power": 60,
+        "accuracy": 95,
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null,
+        "description": "<p>Trigger: The user is affected by Scorched Terrain.</p>"
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "sort": 9100000,
+  "ownership": {
+    "default": 0,
+    "CYLdyr5mPSDmNpTp": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.327",
+    "systemId": "ptr2e",
+    "systemVersion": "0.10.0-alpha.1.0.4",
+    "createdTime": 1719596666337,
+    "modifiedTime": 1719977546398,
+    "lastModifiedBy": "CYLdyr5mPSDmNpTp"
+  }
+}

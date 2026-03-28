@@ -1,0 +1,48 @@
+{
+  "name": "Cinder",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "cinder",
+    "actions": [
+      {
+        "slug": "cinder",
+        "name": "Cinder",
+        "type": "attack",
+        "traits": [
+          "basic"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 2,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "category": "special",
+        "power": 30,
+        "accuracy": 95,
+        "types": [
+          "fire"
+        ],
+        "img": "systems/ptr2e/img/svg/fire_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "E",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "vzxONb0GlZXgjcsd",
+  "effects": []
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Mighty Cleave",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "mighty-cleave",
+    "actions": [
+      {
+        "slug": "mighty-cleave",
+        "name": "Mighty Cleave",
+        "type": "attack",
+        "traits": [
+          "paradox",
+          "crushing",
+          "pierce",
+          "contact"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 95,
+        "accuracy": 100,
+        "types": [
+          "rock"
+        ],
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "9v4PapRDvK5M97Rm",
+  "effects": []
+}

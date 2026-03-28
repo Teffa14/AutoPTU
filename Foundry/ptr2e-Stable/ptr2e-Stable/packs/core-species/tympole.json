@@ -1,0 +1,476 @@
+{
+  "name": "tympole",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 535,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.5,
+      "weight": 4.5
+    },
+    "diet": [
+      "omnivore"
+    ],
+    "movement": [
+      {
+        "type": "swim",
+        "value": 10
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "gilled",
+      "wavesense-15",
+      "underdog",
+      "legless",
+      "pack-mon",
+      "natural-swimmer",
+      "jump-3"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "hydration"
+        },
+        {
+          "slug": "swift-swim"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "own-tempo"
+        },
+        {
+          "slug": "amplifier"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "water-absorb"
+        },
+        {
+          "slug": "torrent"
+        }
+      ],
+      "master": [
+        {
+          "slug": "soundproof"
+        },
+        {
+          "slug": "aquaboost"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "tympole",
+    "stats": {
+      "hp": 50,
+      "atk": 50,
+      "def": 40,
+      "spa": 50,
+      "spd": 40,
+      "spe": 64
+    },
+    "types": [
+      "water"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "growl",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bubble",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "echoed-voice",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "acid",
+          "level": 4,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "supersonic",
+          "level": 8,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mud-shot",
+          "level": 12,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "level": 16,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bubble-beam",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flail",
+          "level": 24,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "uproar",
+          "level": 28,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "aqua-ring",
+          "level": 32,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-voice",
+          "level": 36,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "muddy-water",
+          "level": 40,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rain-dance",
+          "level": 44,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hydro-pump",
+          "level": 48,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "mist",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "refresh",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mud-sport",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "water-pulse",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "earth-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mud-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "after-you",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "venom-drench",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "icy-wind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endeavor",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bounce",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "surf",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "screech",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hail",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "weather-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scald",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "captureRate": 235,
+    "eggGroups": [
+      "water1"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "pond",
+      "swamp"
+    ],
+    "evolutions": {
+      "name": "tympole",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "palpitoad",
+          "uuid": "Compendium.ptr2e.core-species.Item.8MMoK6ZUAxOmn1qW",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "seismitoad",
+              "uuid": "Compendium.ptr2e.core-species.Item.V8gLAwJnbxX27hyD",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 36,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.MlcxWOtdwRChtxzf"
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "MlcxWOtdwRChtxzf",
+  "effects": [],
+  "folder": null
+}

@@ -1,0 +1,48 @@
+{
+  "name": "Acid Rain",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "slug": "acid-rain",
+    "actions": [
+      {
+        "slug": "acid-rain",
+        "name": "Acid Rain",
+        "type": "attack",
+        "traits": [
+          "weather"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "types": [
+          "poison"
+        ],
+        "description": "<p>Effect: The weather becomes Smoggy for 3 rounds.</p>",
+        "img": "systems/ptr2e/img/svg/poison_icon.svg",
+        "summon": "Compendium.ptr2e.core-summons.Item.AUpYPhcmwB7BsQ8I",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "ufutclHyzVOmKmdi",
+  "effects": []
+}

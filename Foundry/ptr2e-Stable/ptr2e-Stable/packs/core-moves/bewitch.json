@@ -1,0 +1,73 @@
+{
+  "name": "Bewitch",
+  "type": "move",
+  "_id": "Wh7nWwzI4J1tdBFD",
+  "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+  "system": {
+    "slug": "bewitch",
+    "actions": [
+      {
+        "name": "Bewitch",
+        "slug": "bewitch",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 7,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "types": [
+          "fairy"
+        ],
+        "category": "special",
+        "power": 55,
+        "accuracy": 100,
+        "predicate": []
+      },
+      {
+        "name": "Bewitch (Afflicted)",
+        "slug": "bewitch-afflicted",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 7,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "trigger": "<p>The target has a [Major Affliction].</p>"
+        },
+        "variant": "bewitch",
+        "types": [
+          "fairy"
+        ],
+        "category": "special",
+        "power": 110,
+        "accuracy": 100,
+        "description": "<p>Trigger: The target has a [Major Affliction].</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": []
+}

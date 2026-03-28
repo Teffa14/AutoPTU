@@ -1,0 +1,46 @@
+{
+  "name": "Power Shift",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "power-shift",
+    "actions": [
+      {
+        "slug": "power-shift",
+        "name": "Power Shift",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: The user's Base ATK stat is swapped with their Base DEF stat and their Base SPATK stat is swapped with their Base SPDEF stat until the end of combat, they switch out, or are @Affliction[fainted].</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "v42xO3KYxGvfE56c",
+  "effects": []
+}

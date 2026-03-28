@@ -1,0 +1,54 @@
+{
+  "name": "Battering Ram",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "battering-ram",
+    "actions": [
+      {
+        "slug": "battering-ram",
+        "name": "Battering Ram",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "pass-2",
+          "contact",
+          "pierce",
+          "hammer"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "rock"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "ti0zhOW1914VMZVg",
+  "effects": []
+}

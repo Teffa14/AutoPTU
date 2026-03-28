@@ -1,0 +1,51 @@
+{
+  "name": "Precipice Blades",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "precipice-blades",
+    "actions": [
+      {
+        "slug": "precipice-blades",
+        "name": "Precipice Blades",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "sharp",
+          "blast-5",
+          "earthbound"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "physical",
+        "power": 120,
+        "accuracy": 85,
+        "types": [
+          "ground"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Y7hP2X0Bt0qKWWIy",
+  "effects": []
+}

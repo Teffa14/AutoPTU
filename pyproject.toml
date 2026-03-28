@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "auto-ptu"
+version = "0.1.0"
+description = "Local automation engine for Pokemon Tabletop United encounters"
+authors = [{name = "Auto Generated"}]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "typer>=0.12",
+    "rich>=13.7",
+    "pydantic>=2.8",
+    "PyYAML>=6.0",
+    "pandas>=2.2",
+    "PyPDF2>=3.0"
+]
+
+[project.scripts]
+auto-ptu = "auto_ptu.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["."]

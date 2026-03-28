@@ -1,0 +1,47 @@
+{
+  "name": "Sweet Veil",
+  "type": "ability",
+  "img": "systems/ptr2e/img/conditions/sleep.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive",
+          "aura"
+        ],
+        "name": "Sweet Veil",
+        "slug": "sweet-veil",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "aura",
+          "distance": 10,
+          "unit": "m"
+        },
+        "description": "<p>Effect: The user is immune to the @Affliction[drowsy] and @Affliction[nightmares] Afflictions. Allied creatures in range have a 50% chance of being cured of @Affliction[drowsy] and @Affliction[nightmares] at the end of their Activations.</p>",
+        "img": "systems/ptr2e/img/conditions/sleep.svg"
+      }
+    ],
+    "description": "<p>Effect: The user is immune to the @Affliction[drowsy] and @Affliction[nightmares] Afflictions. Allied creatures in range have a 50% chance of being cured of @Affliction[drowsy] and @Affliction[nightmares] at the end of their Activations.</p>",
+    "traits": [
+      "defensive",
+      "aura"
+    ],
+    "slug": "sweet-veil",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "1KJWAspSUckVWk6L",
+  "effects": []
+}

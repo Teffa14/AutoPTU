@@ -1,0 +1,152 @@
+<section class="tab sheet-body {{tabs.actions.cssClass}}" data-tab="actions" data-group="sheet">
+    {{!-- <nav class="sheet-tabs sub-tabs tabs" data-group="actions">
+        {{#each subtabs as |tab|}}
+        <a class="{{tab.cssClass}}" data-action="tab" data-group="{{tab.group}}" data-tab="{{tab.id}}">
+            <i class="{{tab.icon}}"></i>
+            <label>{{localize tab.label}}</label>
+        </a>
+        {{/each}}
+    </nav> --}}
+    <nav class="sheet-tabs sub-tabs tabs">
+        {{#each subtabs as |tab|}}
+        <a class="{{tab.cssClass}}" data-action="tab" data-scroll-anchor="{{tab.id}}" data-tooltip="{{localize tab.label}}">
+            <i class="{{tab.icon}}"></i>
+            {{!-- <label>{{localize tab.label}}</label> --}}
+        </a>
+        {{/each}}
+    </nav>
+    <section class="tab sheet-body active {{subtabs.actionsCombat.cssClass}} p-0" data-tab="actionsCombat" data-group="actions">
+        <div class="action-column scroll" id="attack">
+            <div class="header slots">
+                <p>Attack Slots</p>
+                <a class="edit-movelist" data-action="edit-movelist">Known Attacks</a>
+            </div>
+            <div class="action-container move-slots slots scroll">
+                {{#each actor.attacks.actions as |action|}}
+                    {{#if action}}
+                        {{> action action=action direction="LEFT" slot=@index}}
+                    {{else}}
+                        <div class="action empty" data-slot="{{@index}}">
+                            <div class="action-icon"></div>
+                            <span class="action-name">Available Move Slot</span>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+            <div class="header" style="flex: 0 0 50px; margin: 0 0.5rem;">
+                <p>Other Attacks</p>
+            </div>
+            <div class="action-container other-attacks other scroll">
+                {{#each actor.actions.attack as |action|}}
+                    {{#if action.isFree}}
+                        {{> action action=action direction="LEFT"}}
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
+        <div class="action-column scroll" id="generic">
+            <div class="header">
+                <p>Generic Actions</p>
+            </div>
+            <div class="action-container generic scroll">
+                {{#each actions.generic as |action|}}
+                    {{> action action=action direction="LEFT"}}
+                {{/each}}
+            </div>
+        </div>
+        <div class="action-column scroll" id="passive">
+            <div class="header">
+                <p>Passives</p>
+            </div>
+            <div class="action-container passives scroll">
+                {{#each actions.passive as |action|}}
+                    {{#unless action.hidden}}
+                        {{> action action=action direction="RIGHT"}}
+                    {{/unless}}
+                {{/each}}
+            </div>
+        </div> 
+        <div class="action-column scroll" id="camping">
+            <div class="header">
+                <p>Camping Activities</p>
+            </div>
+            <div class="action-container camping scroll">
+                {{#each actions.camping as |action|}}
+                    {{> action action=action direction="LEFT"}}
+                {{/each}}
+            </div>
+        </div>
+        <div class="action-column scroll" id="downtime">
+            <div class="header">
+                <p>Downtime Activities</p>
+            </div>
+            <div class="action-container downtime scroll">
+                {{#each actions.downtime as |action|}}
+                    {{> action action=action direction="RIGHT"}}
+                {{/each}}
+            </div>
+        </div> 
+        <div class="action-column scroll" id="exploration">
+            <div class="header">
+                <p>Exploration Activities</p>
+            </div>
+            <div class="action-container exploration scroll">
+                {{#each actions.exploration as |action|}}
+                    {{> action action=action direction="RIGHT"}}
+                {{/each}}
+            </div>
+        </div>
+    </section>
+    {{!-- <section class="tab sheet-body {{subtabs.actionsDowntime.cssClass}}" data-tab="actionsDowntime" data-group="actions">
+        <fieldset class="camping scroll">
+            <legend>Camping</legend>
+            {{#each actor.actions.camping as |action|}}
+                {{> action action=action direction="LEFT"}}
+            {{/each}}
+        </fieldset>
+        <fieldset class="downtime scroll">
+            <legend>Downtime</legend>
+            {{#each actor.actions.downtime as |action|}}
+                {{> action action=action direction="RIGHT"}}
+            {{/each}}
+        </fieldset>
+    </section>
+    <section class="tab sheet-body {{subtabs.actionsOther.cssClass}}" data-tab="actionsOther" data-group="actions">
+        <fieldset class="generic scroll">
+            <legend>Generic</legend>
+            {{#each actor.actions.generic as |action|}}
+                {{> action action=action direction="LEFT"}}
+            {{/each}}
+            {{#each actor.actions.pokeball as |action|}}
+                {{> action action=action direction="RIGHT"}}
+            {{/each}}
+        </fieldset>
+        <fieldset class="exploration scroll">
+            <legend>Exploration</legend>
+            {{#each actor.actions.exploration as |action|}}
+                {{> action action=action direction="RIGHT"}}
+            {{/each}}
+        </fieldset>
+    </section> --}}
+</section>
+
+{{#*inline "action"}}
+    <div class="{{action.type}} action draggable {{#if action.css.class}}{{action.css.class}}{{/if}}" data-tooltip-direction="{{direction}}" data-slug="{{action.slug}}" data-item-id="{{action.item.id}}" data-parent="{{action.item.uuid}}" data-tooltip="{{action.name}}" {{#if (isdefined slot)}}data-slot="{{slot}}"{{/if}} {{#if action.css.style}}style="{{action.css.style}}"{{/if}}>
+        <div class="action-icon {{#if action.rollable}}rollable{{/if}}" {{#if action.rollable}}data-action="roll-attack"{{/if}} >
+            <img class="icon" src="{{action.img}}"/>
+            <img class="dice" src="icons/svg/d20.svg" data-tooltip="Roll {{action.name}}">
+        </div>
+        <span class="action-name">{{#if (eq action.type "attack")}}<span>{{action.name}}</span>{{else}}{{action.name}}{{/if}}</span>
+        <div class="action-controls item-controls">
+            <a class="item-control item-to-chat" data-tooltip-direction="UP" data-tooltip="Send {{formatSlug action.type}} to chat" data-action="action-to-chat"><i class="fas fa-external-link-alt"></i></a>
+            <a class="item-control item-edit" data-tooltip-direction="UP" data-tooltip="Edit Action" data-action="action-edit">
+                <i class="fas fa-edit"></i>
+            </a>
+            {{#unless (isdefined slot)}}
+                <a class="item-control item-delete" data-tooltip-direction="UP" data-tooltip="Delete Action" data-action="action-delete">
+                    <i class="fas fa-trash"></i>
+                </a>
+            {{/unless}}
+        </div>
+    </div>
+{{/inline}}

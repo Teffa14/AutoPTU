@@ -1,0 +1,551 @@
+{
+  "name": "naganadel",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "poison",
+      "dragon"
+    ],
+    "stats": {
+      "hp": 73,
+      "atk": 73,
+      "def": 73,
+      "spa": 127,
+      "spd": 73,
+      "spe": 121
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "acid",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "air-cutter",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "air-slash",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "dragon-pulse",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "growl",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "helping-hand",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "peck",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "fury-attack",
+          "gen": "sword-shield",
+          "level": 7
+        },
+        {
+          "name": "fell-stinger",
+          "gen": "sword-shield",
+          "level": 14
+        },
+        {
+          "name": "charm",
+          "gen": "sword-shield",
+          "level": 21
+        },
+        {
+          "name": "venoshock",
+          "gen": "sword-shield",
+          "level": 28
+        },
+        {
+          "name": "venom-drench",
+          "gen": "sword-shield",
+          "level": 35
+        },
+        {
+          "name": "nasty-plot",
+          "gen": "sword-shield",
+          "level": 42
+        },
+        {
+          "name": "poison-jab",
+          "gen": "sword-shield",
+          "level": 49
+        },
+        {
+          "name": "gastro-acid",
+          "gen": "sword-shield",
+          "level": 56
+        },
+        {
+          "name": "toxic",
+          "gen": "sword-shield",
+          "level": 63
+        },
+        {
+          "name": "dragon-rush",
+          "gen": "sword-shield",
+          "level": 70
+        }
+      ],
+      "tutor": [
+        {
+          "name": "acrobatics",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "aerial-ace",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "ally-switch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "breaking-swipe",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "cross-poison",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "draco-meteor",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-claw",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "echoed-voice",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fire-blast",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fly",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "heat-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hex",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "laser-focus",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "leech-life",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "outrage",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "pin-missile",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scale-shot",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "shadow-claw",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sky-attack",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sky-drop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "smart-strike",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snarl",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snatch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "spikes",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swift",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "tailwind",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thief",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "throat-chop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic-spikes",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "u-turn",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "x-scissor",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 3.6,
+      "weight": 150,
+      "category": "huge",
+      "type": "height"
+    },
+    "captureRate": 43,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "poipole",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "naganadel",
+          "uuid": "Compendium.ptr2e.core-species.Item.23vcFFjklURWxdwI",
+          "methods": [
+            {
+              "type": "move",
+              "move": "dragon-pulse",
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.A16SczAsH6QDzUjL",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 804,
+    "traits": [
+      "pokemon",
+      "winged",
+      "ultra-beast",
+      "pack-mon",
+      "venomous",
+      "telepath",
+      "fully-evolved",
+      "jump-1"
+    ],
+    "diet": [
+      "omnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "beast-boost"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "merciless"
+        },
+        {
+          "slug": "poison-touch"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "corrosion"
+        },
+        {
+          "slug": "iron-barbs"
+        }
+      ],
+      "master": [
+        {
+          "slug": "deadeye"
+        },
+        {
+          "slug": "supervenom"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 19
+      }
+    ],
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ultrology",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "naganadel",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "23vcFFjklURWxdwI",
+  "effects": []
+}

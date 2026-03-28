@@ -1,0 +1,423 @@
+{
+  "name": "glimmet",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "poison",
+      "rock"
+    ],
+    "stats": {
+      "hp": 48,
+      "atk": 35,
+      "def": 42,
+      "spa": 105,
+      "spd": 60,
+      "spe": 60
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "harden",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "rock-throw",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "smack-down",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "acid-spray",
+          "gen": "scarlet-violet",
+          "level": 7
+        },
+        {
+          "name": "ancient-power",
+          "gen": "scarlet-violet",
+          "level": 11
+        },
+        {
+          "name": "rock-polish",
+          "gen": "scarlet-violet",
+          "level": 15
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "scarlet-violet",
+          "level": 18
+        },
+        {
+          "name": "venoshock",
+          "gen": "scarlet-violet",
+          "level": 22
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet",
+          "level": 26
+        },
+        {
+          "name": "self-destruct",
+          "gen": "scarlet-violet",
+          "level": 29
+        },
+        {
+          "name": "rock-slide",
+          "gen": "scarlet-violet",
+          "level": 33
+        },
+        {
+          "name": "power-gem",
+          "gen": "scarlet-violet",
+          "level": 37
+        },
+        {
+          "name": "acid-armor",
+          "gen": "scarlet-violet",
+          "level": 41
+        },
+        {
+          "name": "sludge-wave",
+          "gen": "scarlet-violet",
+          "level": 46
+        }
+      ],
+      "tutor": [
+        {
+          "name": "confuse-ray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "explosion",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gunk-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "memento",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "meteor-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sand-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "spikes",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic-spikes",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.7,
+      "weight": 8,
+      "category": "tiny",
+      "type": "length"
+    },
+    "captureRate": 130,
+    "eggGroups": [
+      "mineral"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "glimmet",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "glimmora",
+          "uuid": "Compendium.ptr2e.core-species.Item.4EcyYLUUncw5VfWS",
+          "methods": [
+            {
+              "type": "level",
+              "level": 35,
+              "operand": "and"
+            }
+          ],
+          "perk": {
+            "x": 26,
+            "y": 26
+          },
+          "details": null,
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.KsFe5TPm9S33D25K",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 969,
+    "traits": [
+      "pokemon",
+      "breathless",
+      "darkvision-15",
+      "hover",
+      "volatile-bomb",
+      "lithic",
+      "venomous"
+    ],
+    "diet": [
+      "terravore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "toxic-debris"
+        },
+        {
+          "slug": "corrosion"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "aftermath"
+        },
+        {
+          "slug": "loose-rocks"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "toxic-shock"
+        },
+        {
+          "slug": "power-spot"
+        }
+      ],
+      "master": [
+        {
+          "slug": "malice"
+        },
+        {
+          "slug": "permanence"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 6
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "disguise",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "cave"
+    ],
+    "slug": "glimmet",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "KsFe5TPm9S33D25K",
+  "effects": []
+}

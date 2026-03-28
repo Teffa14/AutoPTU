@@ -1,0 +1,54 @@
+{
+  "name": "Bone Smash",
+  "type": "move",
+  "_id": "XWiIyX75tkJ233vX",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "bone-smash",
+    "actions": [
+      {
+        "name": "Bone Smash",
+        "slug": "bone-smash",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "recoil-1-3",
+          "crushing",
+          "contact",
+          "bone",
+          "hammer"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "types": [
+          "ground"
+        ],
+        "category": "physical",
+        "power": 120,
+        "accuracy": 100,
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

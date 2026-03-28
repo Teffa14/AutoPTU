@@ -1,0 +1,82 @@
+{
+  "name": "Cleanse Tag",
+  "img": "systems/ptr2e/img/item-icons/cleanse tag.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "stack-3",
+      "combat",
+      "consumable",
+      "occult"
+    ],
+    "actions": [
+      {
+        "name": "Cleanse Tag",
+        "slug": "cleanse-tag",
+        "type": "passive",
+        "description": "Effect: *Related to camping/downtime? *Helps with the danger rolls?",
+        "traits": [
+          "Exploration"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 10
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>The target is healed of the @Affliction[cursed] Affliction.</p>",
+    "slug": "cleanse-tag",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "XuTgt8zeiCTbnYrZ",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

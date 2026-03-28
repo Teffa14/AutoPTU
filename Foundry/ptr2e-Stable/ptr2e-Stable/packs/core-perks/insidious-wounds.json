@@ -1,0 +1,75 @@
+{
+  "folder": "a1w2zpzavg6qtJFn",
+  "name": "Insidious Wounds",
+  "type": "perk",
+  "_id": "jOnFqon4fCy2Zseh",
+  "img": "systems/ptr2e/img/perk-icons/Ninja.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Insidious Wounds",
+        "slug": "insidious-wounds",
+        "description": "<p>Effect: The user can spend 3 PP as a Complex Action to trigger the End of Activation effects of all @Trait[dot] Afflictions the target possesses, with their Duration/Stack Counts being decreased by -1 each upon this Action's resolution.</p>",
+        "traits": [
+          "interrupt-1"
+        ],
+        "type": "generic",
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 10
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "img": "systems/ptr2e/img/perk-icons/Ninja.svg"
+      }
+    ],
+    "slug": "insidious-wounds",
+    "description": "<p>Effect: The user can spend 3 PP as a Complex Action to trigger the End of Activation effects of all @Trait[dot] Afflictions the target possesses, with their Duration/Stack Counts being decreased by -1 each upon this Action's resolution.</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 150,
+        "y": 69,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "suspicious-minds",
+          "sadism",
+          "cultivate-weakness"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Ninja.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "finesse",
+      "archetype": "affliction"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": []
+}

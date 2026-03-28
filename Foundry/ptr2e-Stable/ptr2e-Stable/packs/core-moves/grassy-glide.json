@@ -1,0 +1,82 @@
+{
+  "name": "Grassy Glide",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "grassy-glide",
+    "actions": [
+      {
+        "slug": "grassy-glide",
+        "name": "Grassy Glide",
+        "type": "attack",
+        "traits": [
+          "environ",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "grassy-glide-terrain",
+        "name": "Grassy Glide (Terrain)",
+        "type": "attack",
+        "traits": [
+          "environ",
+          "contact",
+          "priority-20"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1,
+          "priority": 2,
+          "trigger": "While the user is affected by Grassy Terrain."
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "<p>Trigger: While the user is affected by Grassy Terrain.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "grassy-glide",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "fYErLjpYjYvlKV8H",
+  "effects": []
+}

@@ -1,0 +1,114 @@
+{
+  "name": "Grass Pledge",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "grass-pledge",
+    "actions": [
+      {
+        "slug": "grass-pledge",
+        "name": "Grass Pledge",
+        "type": "attack",
+        "traits": [
+          "pledge"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "fire-grass-pledge",
+        "name": "Fire-Grass Pledge",
+        "type": "attack",
+        "traits": [
+          "pledge",
+          "interrupt-4",
+          "terrain",
+          "blast-3"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6,
+          "trigger": "<p>An ally declares Fire Pledge.</p>"
+        },
+        "category": "special",
+        "power": 150,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "<p>Trigger: An ally declares Fire Pledge.</p><p>Effect: The triggering attack is negated, consuming PP as normal. The user then selects target(s) for this attack. On hit, all valid targets have a 50% chance of gaining @Affliction[burn] 5. The Terrain is set to Scorched Terrain for 3 Rounds.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "grass-pledge",
+        "free": true,
+        "slot": null
+      },
+      {
+        "slug": "grass-water-pledge",
+        "name": "Grass-Water Pledge",
+        "type": "attack",
+        "traits": [
+          "pledge",
+          "interrupt-4",
+          "terrain",
+          "blast-3"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6,
+          "trigger": "<p>An ally declares Water Pledge.</p>"
+        },
+        "category": "special",
+        "power": 150,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "<p>Trigger: An ally declares Water Pledge.</p><p>Effect: The triggering attack is negated, consuming PP as normal. The user then selects target(s) for this attack. On hit, all valid targets have a 30% chance of losing -1 ACC and EVA Stage for 5 Activations. The Terrain is set to Mucky Terrain for 3 Rounds.</p></p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "grass-pledge",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "S3PevmfpuUSrzMBd",
+  "effects": []
+}

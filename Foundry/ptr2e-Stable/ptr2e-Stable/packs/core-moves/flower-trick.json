@@ -1,0 +1,50 @@
+{
+  "name": "Flower Trick",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "flower-trick",
+    "actions": [
+      {
+        "slug": "flower-trick",
+        "name": "Flower Trick",
+        "type": "attack",
+        "traits": [
+          "crit-4",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 70,
+        "types": [
+          "grass"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "ld6jZ3L9ma9tvOxs",
+  "effects": []
+}

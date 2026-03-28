@@ -1,0 +1,9 @@
+{
+  "name": "Example Pack",
+  "priority": 0,
+  "compatibility": {
+    "min_engine": "0.0.0"
+  },
+  "overrides": [],
+  "notes": "Copy this pack to start homebrew moves, abilities, items, or perks."
+}

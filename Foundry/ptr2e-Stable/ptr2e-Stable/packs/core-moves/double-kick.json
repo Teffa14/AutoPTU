@@ -1,0 +1,52 @@
+{
+  "name": "Double Kick",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "double-kick",
+    "actions": [
+      {
+        "slug": "double-kick",
+        "name": "Double Kick",
+        "type": "attack",
+        "traits": [
+          "double-strike",
+          "kick",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "physical",
+        "power": 30,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "acr9kfnlUznridMn",
+  "effects": []
+}

@@ -1,0 +1,52 @@
+{
+  "name": "Horn Leech",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "horn-leech",
+    "actions": [
+      {
+        "slug": "horn-leech",
+        "name": "Horn Leech",
+        "type": "attack",
+        "traits": [
+          "drain-1-2",
+          "contact",
+          "horn"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 75,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "Ki7LREDznF0jR6QG",
+  "effects": []
+}

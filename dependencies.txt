@@ -1,0 +1,15 @@
+Auto PTU Dependencies
+
+Python: >=3.10
+
+Build system:
+- setuptools>=68
+- wheel
+
+Runtime:
+- typer>=0.12
+- rich>=13.7
+- pydantic>=2.8
+- PyYAML>=6.0
+- pandas>=2.2
+- PyPDF2>=3.0

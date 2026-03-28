@@ -1,0 +1,49 @@
+{
+  "name": "Sticky Terrain",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "system": {
+    "slug": "sticky-terrain",
+    "actions": [
+      {
+        "slug": "sticky-terrain",
+        "name": "Sticky Terrain",
+        "type": "attack",
+        "traits": [
+          "terrain"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "types": [
+          "bug"
+        ],
+        "description": "<p>Effect: The Terrain type is set to Sticky Terrain for 3 rounds.</p>",
+        "img": "systems/ptr2e/img/svg/bug_icon.svg",
+        "summon": "Compendium.ptr2e.core-summons.Item.PLNJYWSXWXWzHlb8",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "Ev61RpEoR7LKfLtz",
+  "effects": []
+}

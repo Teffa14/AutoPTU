@@ -1,0 +1,93 @@
+{
+  "name": "Long-Range Psychoportation",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      "trait:teleporter",
+      {
+        "gte": [
+          "{actor|skills.psychic.mod}",
+          60
+        ]
+      }
+    ],
+    "cost": 5,
+    "description": "<p>You may fast travel via Teleportation to any settlement that you have previously visited, along with anyone touching you at the moment of transmission.</p>",
+    "actions": [
+      {
+        "name": "Long-Range Psychoportation",
+        "slug": "long-range-psychoportation",
+        "description": "<p>You may fast travel via Teleportation to any settlement that you have previously visited, along with anyone touching you at the moment of transmission.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 10,
+          "delay": null,
+          "priority": null
+        },
+        "type": "exploration",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "long-range-psychoportation",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "psychoportation",
+          "improved-teleportation-1",
+          "minor-buff-1",
+          "away-with-you",
+          "manifest-psionic-power"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/svg/psychic_icon.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 164,
+        "y": 119,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "power",
+      "archetype": "psychic"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "clK02KrlSlmoP2Ad",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "effects": [],
+  "folder": "F4b52L00KrAtdPu5"
+}

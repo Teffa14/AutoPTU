@@ -1,0 +1,46 @@
+{
+  "name": "Gear Up",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "gear-up",
+    "actions": [
+      {
+        "slug": "gear-up",
+        "name": "Gear Up",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "field",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Effect: The user and all allied creatures with the Ability Plus or Minus increase their ATK Stage and SPATK Stage by +1 for 5 Activations. The Stage increase is doubled for creatures with both abilities.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "X9isn1WUcflDDKoA",
+  "effects": []
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Soul Sucker",
+  "type": "move",
+  "_id": "MZw4I5yGOoNyEzAM",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "soul-sucker",
+    "actions": [
+      {
+        "name": "Soul Sucker",
+        "slug": "soul-sucker",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+        "traits": [
+          "drain-1-2"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "types": [
+          "ghost"
+        ],
+        "category": "special",
+        "power": 60,
+        "accuracy": 100,
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

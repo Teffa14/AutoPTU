@@ -1,0 +1,49 @@
+{
+  "name": "Silver Spike",
+  "img": "systems/ptr2e/img/icons/weapon_icon.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "fairy",
+      "power": 60,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "common",
+    "traits": [
+      "weapon",
+      "pierce",
+      "stack-10",
+      "fairy",
+      "fling"
+    ],
+    "slug": "silver-spike",
+    "quantity": 1,
+    "stack": 10,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "consumableType": "other",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "a5ITaOM99kajuNjh",
+  "effects": [],
+  "folder": "MKaFm5Pvt7tvgdAa"
+}

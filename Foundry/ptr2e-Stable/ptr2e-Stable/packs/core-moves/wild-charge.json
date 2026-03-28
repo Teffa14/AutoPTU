@@ -1,0 +1,50 @@
+{
+  "name": "Wild Charge",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "wild-charge",
+    "actions": [
+      {
+        "slug": "wild-charge",
+        "name": "Wild Charge",
+        "type": "attack",
+        "traits": [
+          "recoil-1-4",
+          "pass-3",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 90,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "OhXh7KfdE51qbNEm",
+  "effects": []
+}

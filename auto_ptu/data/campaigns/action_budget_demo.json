@@ -1,0 +1,86 @@
+{
+  "name": "Action Budget Workshop",
+  "description": "A quick duel that highlights the action budget log. Use your standard attack, then try to attack again before the turn ends; the log will explain that the Standard action was consumed. Shift once and repeat to see the Shift entry. Watch the alternating event log to see the action summary at every Command/Action phase.",
+  "default_weather": "Clear",
+  "grid": {
+    "width": 4,
+    "height": 4
+  },
+  "players": [
+    {
+      "name": "Budget Trainer",
+      "species": "Bulbasaur",
+      "level": 15,
+      "types": [
+        "Grass",
+        "Poison"
+      ],
+      "hp_stat": 12,
+      "atk": 8,
+      "defense": 6,
+      "spatk": 9,
+      "spdef": 8,
+      "spd": 7,
+      "moves": [
+        {
+          "name": "Tackle",
+          "type": "Normal",
+          "category": "Physical",
+          "db": 4,
+          "ac": 2,
+          "range_kind": "Melee",
+          "range_value": 1,
+          "freq": "At-Will"
+        },
+        {
+          "name": "Vine Whip",
+          "type": "Grass",
+          "category": "Physical",
+          "db": 6,
+          "ac": 2,
+          "range_kind": "Melee",
+          "range_value": 1,
+          "freq": "At-Will"
+        }
+      ]
+    }
+  ],
+  "foes": [
+    {
+      "name": "Budget Dummy",
+      "species": "Charmander",
+      "level": 15,
+      "types": [
+        "Fire"
+      ],
+      "hp_stat": 10,
+      "atk": 9,
+      "defense": 6,
+      "spatk": 9,
+      "spdef": 6,
+      "spd": 8,
+      "moves": [
+        {
+          "name": "Scratch",
+          "type": "Normal",
+          "category": "Physical",
+          "db": 6,
+          "ac": 2,
+          "range_kind": "Melee",
+          "range_value": 1,
+          "freq": "At-Will"
+        },
+        {
+          "name": "Ember",
+          "type": "Fire",
+          "category": "Special",
+          "db": 7,
+          "ac": 2,
+          "range_kind": "Ranged",
+          "range_value": 6,
+          "freq": "At-Will"
+        }
+      ]
+    }
+  ]
+}

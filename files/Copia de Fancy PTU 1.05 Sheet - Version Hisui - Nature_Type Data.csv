@@ -1,0 +1,75 @@
+Nature,Raise,Lower,Liked Flavor,Disliked Flavor,Nature,HP,ATK,DEF,SATK,SDEF,SPD,,,,,,,
+Cuddly,HP,ATK,Salty,Spicy,Cuddly,1,-2,0,0,0,0,,,,,,,
+Distracted,HP,DEF,Salty,Sour,Distracted,1,0,-2,0,0,0,,,,,,,
+Proud,HP,SATK,Salty,Dry,Proud,1,0,0,-2,0,0,,,,,,,
+Decisive,HP,SDEF,Salty,Bitter,Decisive,1,0,0,0,-2,0,,,,,,,
+Patient,HP,SPD,Salty,Sweet,Patient,1,0,0,0,0,-2,,,,,,,
+Desperate,ATK,HP,Spicy,Salty,Desperate,-1,2,0,0,0,0,,,,,,,
+Lonely,ATK,DEF,Spicy,Sour,Lonely,0,2,-2,0,0,0,,,,,,,
+Adamant,ATK,SATK,Spicy,Dry,Adamant,0,2,0,-2,0,0,,,,,,,
+Naughty,ATK,SDEF,Spicy,Bitter,Naughty,0,2,0,0,-2,0,,,,,,,
+Brave,ATK,SPD,Spicy,Sweet,Brave,0,2,0,0,0,-2,,,,,,,
+Stark,DEF,HP,Sour,Salty,Stark,-1,0,2,0,0,0,,,,,,,
+Bold,DEF,ATK,Sour,Spicy,Bold,0,-2,2,0,0,0,,,,,,,
+Impish,DEF,SATK,Sour,Dry,Impish,0,0,2,-2,0,0,,,,,,,
+Lax,DEF,SDEF,Sour,Bitter,Lax,0,0,2,0,-2,0,,,,,,,
+Relaxed,DEF,SPD,Sour,Sweet,Relaxed,0,0,2,0,0,-2,,,,,,,
+Curious,SATK,HP,Dry,Salty,Curious,-1,0,0,2,0,0,,,,,,,
+Modest,SATK,ATK,Dry,Spicy,Modest,0,-2,0,2,0,0,,,,,,,
+Mild,SATK,DEF,Dry,Sour,Mild,0,0,-2,2,0,0,,,,,,,
+Rash,SATK,SDEF,Dry,Bitter,Rash,0,0,0,2,-2,0,,,,,,,
+Quiet,SATK,SPD,Dry,Sweet,Quiet,0,0,0,2,0,-2,,,,,,,
+Dreamy,SDEF,HP,Bitter,Salty,Dreamy,-1,0,0,0,2,0,,,,,,,
+Calm,SDEF,ATK,Bitter,Spicy,Calm,0,-2,0,0,2,0,,,,,,,
+Gentle,SDEF,DEF,Bitter,Sour,Gentle,0,0,-2,0,2,0,,,,,,,
+Careful,SDEF,SATK,Bitter,Dry,Careful,0,0,0,-2,2,0,,,,,,,
+Sassy,SDEF,SPD,Bitter,Sweet,Sassy,0,0,0,0,2,-2,,,,,,,
+Skittish,SPD,HP,Sweet,Salty,Skittish,-1,0,0,0,0,2,,,,,,,
+Timid,SPD,ATK,Sweet,Spicy,Timid,0,-2,0,0,0,2,,,,,,,
+Hasty,SPD,DEF,Sweet,Sour,Hasty,0,0,-2,0,0,2,,,,,,,
+Jolly,SPD,SATK,Sweet,Dry,Jolly,0,0,0,-2,0,2,,,,,,,
+Naive,SPD,SDEF,Sweet,Bitter,Naive,0,0,0,0,-2,2,,,,,,,
+Hardy,ATK,ATK,None,None,Hardy,0,0,0,0,0,0,,,,,,,
+Docile,DEF,DEF,None,None,Docile,0,0,0,0,0,0,,,,,,,
+Bashful,SATK,SATK,None,None,Bashful,0,0,0,0,0,0,,,,,,,
+Quirky,SDEF,SDEF,None,None,Quirky,0,0,0,0,0,0,,,,,,,
+Serious,SPD,SPD,None,None,Serious,0,0,0,0,0,0,,,,,,,
+Composed,HP,HP,None,None,Composed,0,0,0,0,0,0,,,,,,,
+Defend v / Attack >,Normal,Fighting,Flying,Poison,Ground,Rock,Bug,Ghost,Steel,Fire,Water,Grass,Electric,Psychic,Ice,Dragon,Dark,Fairy
+Normal,1,2,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1
+Fighting,1,1,2,1,1,0.5,0.5,1,1,1,1,1,1,2,1,1,0.5,2
+Flying,1,0.5,1,1,0,2,0.5,1,1,1,1,0.5,2,1,2,1,1,1
+Poison,1,0.5,1,0.5,2,1,0.5,1,1,1,1,0.5,1,2,1,1,1,0.5
+Ground,1,1,1,0.5,1,0.5,1,1,1,1,2,2,0,1,2,1,1,1
+Rock,0.5,2,0.5,0.5,2,1,1,1,2,0.5,2,2,1,1,1,1,1,1
+Bug,1,0.5,2,1,0.5,2,1,1,1,2,1,0.5,1,1,1,1,1,1
+Ghost,0,0,1,0.5,1,1,0.5,2,1,1,1,1,1,1,1,1,2,1
+Steel,0.5,2,0.5,0,2,0.5,0.5,1,0.5,2,1,0.5,1,0.5,0.5,0.5,1,0.5
+Fire,1,1,1,1,2,2,0.5,1,0.5,0.5,2,0.5,1,1,0.5,1,1,0.5
+Water,1,1,1,1,1,1,1,1,0.5,0.5,0.5,2,2,1,0.5,1,1,1
+Grass,1,1,2,2,0.5,1,2,1,1,2,0.5,0.5,0.5,1,2,1,1,1
+Electric,1,1,0.5,1,2,1,1,1,0.5,1,1,1,0.5,1,1,1,1,1
+Psychic,1,0.5,1,1,1,1,2,2,1,1,1,1,1,0.5,1,1,2,1
+Ice,1,2,1,1,1,2,1,1,2,2,1,1,1,1,0.5,1,1,1
+Dragon,1,1,1,1,1,1,1,1,1,0.5,0.5,0.5,0.5,1,2,2,1,2
+Dark,1,2,1,1,1,1,2,0.5,1,1,1,1,1,0,1,1,0.5,2
+Fairy,1,0.5,1,2,1,1,0.5,1,2,1,1,1,1,1,1,0,0.5,1
+None,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+Normal,,Last Chance,,,,,,,,,,,,,,,,
+Fighting,,Focus,,,,,,,,,,,,,,,,
+Flying,,Mach Speed,,,,,,,,,,,,,,,,
+Poison,,Venom,,,,,,,,,,,,,,,,
+Ground,,Landslide,,,,,,,,,,,,,,,,
+Rock,,Mountain Peak,,,,,,,,,,,,,,,,
+Bug,,Swarm,,,,,,,,,,,,,,,,
+Ghost,,Haunt,,,,,,,,,,,,,,,,
+Steel,,Unbreakable,,,,,,,,,,,,,,,,
+Fire,,Blaze,,,,,,,,,,,,,,,,
+Water,,Torrent,,,,,,,,,,,,,,,,
+Grass,,Overgrow,,,,,,,,,,,,,,,,
+Electric,,Overcharge,,,,,,,,,,,,,,,,
+Psychic,,Mind Mold,,,,,,,,,,,,,,,,
+Ice,,Freezing Point,,,,,,,,,,,,,,,,
+Dragon,,Pure Blooded,,,,,,,,,,,,,,,,
+Dark,,Dark Art,,,,,,,,,,,,,,,,
+Fairy,,Miracle Mile,,,,,,,,,,,,,,,,

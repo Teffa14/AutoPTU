@@ -1,0 +1,50 @@
+{
+  "name": "Shadow Storm",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-storm",
+    "actions": [
+      {
+        "slug": "shadow-storm",
+        "name": "Shadow Storm",
+        "type": "attack",
+        "traits": [
+          "sky",
+          "wind",
+          "blast-3"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 10
+        },
+        "category": "special",
+        "power": 95,
+        "accuracy": 100,
+        "types": [
+          "shadow"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Xsf7hZPJfwGNWpcK",
+  "effects": []
+}

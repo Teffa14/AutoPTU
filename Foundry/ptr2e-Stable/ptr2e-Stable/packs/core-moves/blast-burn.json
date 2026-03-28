@@ -1,0 +1,49 @@
+{
+  "name": "Blast Burn",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "blast-burn",
+    "actions": [
+      {
+        "slug": "blast-burn",
+        "name": "Blast Burn",
+        "type": "attack",
+        "traits": [
+          "flinch-40",
+          "blast-2"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "special",
+        "power": 150,
+        "accuracy": 90,
+        "types": [
+          "fire"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "6s4RhAtOgxnG1b6E",
+  "effects": []
+}

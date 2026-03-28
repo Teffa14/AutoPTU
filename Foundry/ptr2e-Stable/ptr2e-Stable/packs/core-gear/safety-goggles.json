@@ -1,0 +1,74 @@
+{
+  "name": "Safety Goggles",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "worn",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": false
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "combat",
+      "environ"
+    ],
+    "actions": [
+      {
+        "name": "Safety Goggles",
+        "slug": "safety-goggles",
+        "type": "passive",
+        "description": "Effect: The user is unaffected by the effects of [Powder], and is immune to the negative effects of every <Weather Type>.",
+        "traits": [
+          "Combat",
+          "Environ"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: The user is unaffected by the effects of [Powder], and is immune to the negative effects of every <Weather Type>.",
+    "slug": "safety-goggles",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "7a5qSRrQlodyKpVd",
+  "effects": [],
+  "folder": "UUWElZA9w1KEqZS7"
+}

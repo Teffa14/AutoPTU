@@ -1,0 +1,416 @@
+{
+  "name": "centiskorch",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "bug",
+      "fire"
+    ],
+    "stats": {
+      "hp": 100,
+      "atk": 115,
+      "def": 65,
+      "spa": 90,
+      "spd": 90,
+      "spe": 65
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "wrap",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bite",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "ember",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "smokescreen",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "inferno",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flame-wheel",
+          "level": 15,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bug-bite",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "coil",
+          "level": 25,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "slam",
+          "level": 32,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fire-spin",
+          "level": 39,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "crunch",
+          "level": 46,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fire-lash",
+          "level": 53,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "lunge",
+          "level": 60,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "burn-up",
+          "level": 67,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "skitter-smack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scorching-sands",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fire-blast",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "leech-life",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "heat-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "will-o-wisp",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "overheat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flare-blitz",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "x-scissor",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bug-buzz",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-fang",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fire-fang",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "power-whip",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "venoshock",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "scald",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "heat-crash",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mystical-fire",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "brutal-swing",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 3,
+      "weight": 120,
+      "category": "medium",
+      "type": "length"
+    },
+    "captureRate": 75,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "sizzlipede",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "centiskorch",
+          "uuid": "Compendium.ptr2e.core-species.Item.IohkYnCMdlckKUOC",
+          "methods": [
+            {
+              "type": "level",
+              "level": 28,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.OJ2Uf6SBZNepCj5v"
+    },
+    "number": 851,
+    "traits": [
+      "pokemon",
+      "many-legged",
+      "heater",
+      "firestarter",
+      "wallclimber",
+      "fully-evolved",
+      "jump-2"
+    ],
+    "diet": [
+      "carnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "flash-fire"
+        },
+        {
+          "slug": "white-smoke"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "flame-body"
+        },
+        {
+          "slug": "toxic-boost"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "magma-armor"
+        },
+        {
+          "slug": "defiant"
+        }
+      ],
+      "master": [
+        {
+          "slug": "chitin-plates"
+        },
+        {
+          "slug": "combustion"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 10
+      }
+    ],
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimdate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "volcano",
+      "mountain"
+    ],
+    "slug": "centiskorch",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "IohkYnCMdlckKUOC",
+  "effects": [],
+  "folder": null
+}

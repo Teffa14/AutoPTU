@@ -1,0 +1,85 @@
+{
+  "name": "Stayaway Orb",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 4,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "E",
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "other",
+    "traits": [
+      "combat",
+      "consumable",
+      "wonder-orb",
+      "fling"
+    ],
+    "description": "<p>The target is teleported to the nearest Stairs (unless the nearest Stairs would be in the same room) and is removed from the combat encounter.</p>",
+    "quantity": 1,
+    "slug": "stayaway-orb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": [
+      {
+        "name": "Stayaway Orb",
+        "slug": "stayaway-orb",
+        "description": "<p>The target is teleported to the nearest Stairs (unless the nearest Stairs would be in the same room) and is removed from the combat encounter.</p>",
+        "traits": [
+          "combat",
+          "consumable",
+          "wonder-orb",
+          "fling"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+        "cost": {
+          "activation": "complex"
+        },
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "types": [
+          "untyped"
+        ],
+        "category": "status",
+        "free": true,
+        "predicate": []
+      }
+    ]
+  },
+  "_id": "zgtncClL81ICmusK",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

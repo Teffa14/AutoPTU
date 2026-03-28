@@ -1,0 +1,43 @@
+{
+  "name": "Filter",
+  "type": "ability",
+  "img": "icons/magic/defensive/shield-barrier-glowing-blue.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive"
+        ],
+        "name": "Filter",
+        "slug": "filter",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "description": "<p>Effect: Super effective damage against the user is reduced by 25%.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: Super effective damage against the user is reduced by 25%.</p>",
+    "traits": [
+      "defensive"
+    ],
+    "slug": "filter",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "nMyIYhgTztXvdMGh",
+  "effects": []
+}

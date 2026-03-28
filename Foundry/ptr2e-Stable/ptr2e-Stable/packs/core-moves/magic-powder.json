@@ -1,0 +1,48 @@
+{
+  "name": "Magic Powder",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "magic-powder",
+    "actions": [
+      {
+        "slug": "magic-powder",
+        "name": "Magic Powder",
+        "type": "attack",
+        "traits": [
+          "powder"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": 100,
+        "types": [
+          "psychic"
+        ],
+        "description": "<p>Effect: On hit, all valid targets have one of their Type(s) changed to Psychic for 5 Activations. If they already have the Psychic Type, they lose one of their other Type(s), if applicable.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "0nowTFFieneYl1lU",
+  "effects": []
+}

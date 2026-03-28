@@ -1,0 +1,46 @@
+{
+  "name": "New Moon",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "new-moon",
+    "actions": [
+      {
+        "slug": "new-moon",
+        "name": "New Moon",
+        "type": "attack",
+        "traits": [
+          "weather"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "types": [
+          "dark"
+        ],
+        "description": "<p>Effect: The Weather becomes Gloomy for 3 rounds.</p>",
+        "img": "systems/ptr2e/img/svg/dark_icon.svg",
+        "summon": "Compendium.ptr2e.core-summons.Item.IE0BtA3l4YIfPsSv"
+      }
+    ],
+    "grade": "B",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "hDb0r3fgTXBjN9SO",
+  "effects": []
+}

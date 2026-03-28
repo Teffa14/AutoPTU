@@ -1,0 +1,48 @@
+{
+  "name": "Masked Kick",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "system": {
+    "slug": "masked-kick",
+    "actions": [
+      {
+        "slug": "masked-kick",
+        "name": "Masked Kick",
+        "type": "attack",
+        "traits": [
+          "kick",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 130,
+        "accuracy": 85,
+        "types": [
+          "bug"
+        ],
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "fwZ7NiY8DCtMdfxo",
+  "effects": []
+}

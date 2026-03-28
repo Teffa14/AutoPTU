@@ -1,0 +1,102 @@
+{
+  "name": "Man-Eater",
+  "type": "ability",
+  "img": "systems/ptr2e/img/item-icons/razor%20fang.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive",
+          "healing"
+        ],
+        "name": "Man-Eater",
+        "slug": "man-eater",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: The user's [Contact] attacks gain the [Drain 1/16] Trait.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user's [Contact] attacks gain the [Drain 1/16] Trait.</p>",
+    "traits": [
+      "defensive",
+      "healing"
+    ],
+    "slug": "man-eater",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "Snb3Kp9qOy8aqQuc",
+  "effects": [
+    {
+      "name": "Man-Eater",
+      "type": "passive",
+      "_id": "4NWhz5pF5FdLqTvI",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "alter-attack",
+            "key": "contact-trait-attack",
+            "value": "drain-1-16",
+            "predicate": [],
+            "mode": 2,
+            "ignored": false,
+            "property": "traits",
+            "definition": []
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1765280712689,
+        "modifiedTime": 1765280742787,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

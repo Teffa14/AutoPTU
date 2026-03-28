@@ -1,0 +1,49 @@
+{
+  "name": "Snowball",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "snowball",
+    "actions": [
+      {
+        "slug": "snowball",
+        "name": "Snowball",
+        "type": "attack",
+        "traits": [
+          "basic",
+          "missile"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "category": "physical",
+        "power": 45,
+        "accuracy": 95,
+        "types": [
+          "ice"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "W0yVUodemCqxji0e",
+  "effects": []
+}

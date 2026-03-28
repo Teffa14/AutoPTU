@@ -1,0 +1,50 @@
+{
+  "name": "Population Bomb",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "population-bomb",
+    "actions": [
+      {
+        "slug": "population-bomb",
+        "name": "Population Bomb",
+        "type": "attack",
+        "traits": [
+          "10-strike",
+          "sharp",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 20,
+        "accuracy": 90,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Lwv3jkGlUib5TzW8",
+  "effects": []
+}

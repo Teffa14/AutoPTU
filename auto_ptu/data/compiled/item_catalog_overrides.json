@@ -1,0 +1,140 @@
+{
+  "items": [
+    {
+      "name": "Black Belt",
+      "slot": "held",
+      "description": "Boosts the damage of Fighting-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["BlackBelt", "Black Beltz"]
+    },
+    {
+      "name": "Black Glasses",
+      "slot": "held",
+      "description": "Boosts the damage of Dark-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["BlackGlasses", "Black Glassses"]
+    },
+    {
+      "name": "Charcoal",
+      "slot": "held",
+      "description": "Boosts the damage of Fire-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["Charcol"]
+    },
+    {
+      "name": "Dragon Fang",
+      "slot": "held",
+      "description": "Boosts the damage of Dragon-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["DragonFang", "Dragoon Fang"]
+    },
+    {
+      "name": "Hard Stone",
+      "slot": "held",
+      "description": "Boosts the damage of Rock-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["HardStone"]
+    },
+    {
+      "name": "Lucky Egg",
+      "slot": "held",
+      "description": "A valuable held item commonly used for training and experience gain.",
+      "tags": ["held", "training"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["LuckyEgg"]
+    },
+    {
+      "name": "Magnet",
+      "slot": "held",
+      "description": "Boosts the damage of Electric-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["Magnent"]
+    },
+    {
+      "name": "Miracle Seed",
+      "slot": "held",
+      "description": "Boosts the damage of Grass-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["MiracleSeed"]
+    },
+    {
+      "name": "Mystic Water",
+      "slot": "held",
+      "description": "Boosts the damage of Water-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["MysticWater", "Mystic Watre"]
+    },
+    {
+      "name": "Never-Melt Ice",
+      "slot": "held",
+      "description": "Boosts the damage of Ice-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["Nevermelt Ice", "Never Melt Ice", "NeverMeltIce"]
+    },
+    {
+      "name": "Poison Barb",
+      "slot": "held",
+      "description": "Boosts the damage of Poison-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["PoisonBarb"]
+    },
+    {
+      "name": "Sharp Beak",
+      "slot": "held",
+      "description": "Boosts the damage of Flying-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["SharpBeak"]
+    },
+    {
+      "name": "Silk Scarf",
+      "slot": "held",
+      "description": "Boosts the damage of Normal-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["SilkScarf"]
+    },
+    {
+      "name": "Silver Powder",
+      "slot": "held",
+      "description": "Boosts the damage of Bug-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["SilverPowder"]
+    },
+    {
+      "name": "Soft Sand",
+      "slot": "held",
+      "description": "Boosts the damage of Ground-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["SoftSand"]
+    },
+    {
+      "name": "Spell Tag",
+      "slot": "held",
+      "description": "Boosts the damage of Ghost-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["SpellTag"]
+    },
+    {
+      "name": "Twisted Spoon",
+      "slot": "held",
+      "description": "Boosts the damage of Psychic-Type attacks.",
+      "tags": ["held", "type_booster"],
+      "source": "Official PTU Core Rules Supplemental",
+      "aliases": ["TwistedSpoon"]
+    }
+  ]
+}

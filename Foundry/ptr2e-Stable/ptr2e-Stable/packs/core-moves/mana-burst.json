@@ -1,0 +1,109 @@
+{
+  "name": "Mana Burst",
+  "type": "move",
+  "_id": "lOAKrPYIPBjjJTaQ",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "mana-burst",
+    "actions": [
+      {
+        "name": "Mana Burst",
+        "slug": "mana-burst",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "traits": [
+          "explode",
+          "pulse",
+          "adaptable",
+          "arcane"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 85,
+        "accuracy": 90,
+        "description": "<p>Effect: On hit, all valid targets have a 10% chance of losing -1 DEF Stage for 5 Activations.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "traits": []
+  },
+  "effects": [
+    {
+      "name": "Mana Burst",
+      "type": "passive",
+      "_id": "dMhXtTAICHvyGWVE",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "mana-burst-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.qe5aLBJuwb9eYqvv",
+            "predicate": [],
+            "chance": 10,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": []
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-moves.Item.RO4Yx0d7iPMLlmFN.ActiveEffect.43WzaCXIsZArxapg",
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "1.0.7.beta",
+        "createdTime": 1740844624537,
+        "modifiedTime": 1740844698508,
+        "lastModifiedBy": "01onCaJSVMVOgMDI"
+      }
+    }
+  ]
+}

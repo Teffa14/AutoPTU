@@ -1,0 +1,131 @@
+{
+  "name": "Sharp Coral",
+  "type": "ability",
+  "img": "systems/ptr2e/img/perk-icons/Breeder.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "innate"
+        ],
+        "name": "Sharp Coral",
+        "slug": "sharp-coral",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: Doubles the user's Base ATK and SPATK and halves its Base DEF and SPDEF stats.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: Doubles the user's Base ATK and SPATK stats and halves its Base DEF and SPDEF stats.</p>",
+    "traits": [
+      "innate"
+    ],
+    "slug": "sharp-coral",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "CnIA5kLVMECRqSqI",
+  "effects": [
+    {
+      "name": "Sharp Coral",
+      "type": "passive",
+      "_id": "rz0GoF14Na6n86jh",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "basic",
+            "key": "system.attributes.atk.base",
+            "value": 2,
+            "mode": 1,
+            "predicate": [],
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "key": "system.attributes.spa.base",
+            "value": 2,
+            "mode": 1,
+            "predicate": [],
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "key": "system.attributes.def.base",
+            "value": 0.5,
+            "predicate": [],
+            "mode": 1,
+            "priority": null,
+            "ignored": false
+          },
+          {
+            "type": "basic",
+            "key": "system.attributes.spd.base",
+            "value": 0.5,
+            "predicate": [],
+            "mode": 1,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1729470778490,
+        "modifiedTime": 1762903879725,
+        "lastModifiedBy": "5ImYyhOS2D6D7ypO",
+        "exportSource": null
+      }
+    }
+  ]
+}

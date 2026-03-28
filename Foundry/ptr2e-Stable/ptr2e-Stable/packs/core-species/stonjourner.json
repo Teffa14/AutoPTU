@@ -1,0 +1,426 @@
+{
+  "name": "stonjourner",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "rock"
+    ],
+    "stats": {
+      "hp": 100,
+      "atk": 125,
+      "def": 135,
+      "spa": 20,
+      "spd": 20,
+      "spe": 70
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "rock-throw",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "block",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-polish",
+          "level": 6,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-tomb",
+          "level": 12,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gravity",
+          "level": 18,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stomp",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stealth-rock",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-slide",
+          "level": 36,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-slam",
+          "level": 42,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wide-guard",
+          "level": 48,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heavy-slam",
+          "level": 54,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stone-edge",
+          "level": 60,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mega-kick",
+          "level": 66,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ancient-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "meteor-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "low-kick",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earthquake",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "self-destruct",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "superpower",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endeavor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "imprison",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sand-tomb",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "power-gem",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earth-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wonder-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "smack-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "low-sweep",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heat-crash",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "high-horsepower",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "brutal-swing",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "body-press",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hard-press",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 2.5,
+      "weight": 520,
+      "category": "large",
+      "type": "height"
+    },
+    "captureRate": 60,
+    "eggGroups": [
+      "mineral"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "stonjourner",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 874,
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "fully-evolved",
+      "underdog",
+      "breathless",
+      "jump-1"
+    ],
+    "diet": [
+      "nullivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "power-spot"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "friend-guard"
+        },
+        {
+          "slug": "pressure"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "equinox"
+        },
+        {
+          "slug": "power-fists"
+        }
+      ],
+      "master": [
+        {
+          "slug": "petrified"
+        },
+        {
+          "slug": "battle-armor"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 7
+      }
+    ],
+    "skills": [
+      {
+        "slug": "archaeology",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "history",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "geomancy",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "grassland",
+      "ruin"
+    ],
+    "slug": "stonjourner",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "tSCjZIGVR8m7Zqhs",
+  "effects": [],
+  "folder": null
+}

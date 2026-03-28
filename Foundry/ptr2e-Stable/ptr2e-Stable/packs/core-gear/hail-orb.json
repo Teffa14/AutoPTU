@@ -1,0 +1,79 @@
+{
+  "name": "Hail Orb",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 5,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "consumableType": "other",
+    "traits": [
+      "combat",
+      "consumable",
+      "weather",
+      "wonder-orb"
+    ],
+    "description": "<p>The Weather is set to @UUID[Compendium.ptr2e.core-summons.8EVtue4CUOjddZIP]{Snowy Weather} for 3 rounds.</p>",
+    "quantity": 1,
+    "slug": "hail-orb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": [
+      {
+        "name": "Hail Orb",
+        "slug": "hail-orb",
+        "description": "<p>The Weather is set to Snowy on the current Floor.</p>",
+        "traits": [
+          "combat",
+          "consumable",
+          "weather",
+          "wonder-orb"
+        ],
+        "type": "generic",
+        "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+        "cost": {
+          "activation": "simple"
+        },
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        }
+      }
+    ]
+  },
+  "_id": "ouc4BKMdEhOfBH0o",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

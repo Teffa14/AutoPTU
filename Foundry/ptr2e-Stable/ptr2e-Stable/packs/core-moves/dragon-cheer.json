@@ -1,0 +1,124 @@
+{
+  "name": "Dragon Cheer",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "dragon-cheer",
+    "actions": [
+      {
+        "slug": "dragon-cheer",
+        "name": "Dragon Cheer",
+        "type": "attack",
+        "traits": [
+          "sonic",
+          "partial-automation"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "status",
+        "types": [
+          "dragon"
+        ],
+        "description": "<p>Effect: The user and all allies in range gain +1 CRIT Stage for 5 Activations. Dragon-type creature instead gain +2 CRIT Stages for 5 Activations.</p>",
+        "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "VoiUETAcuekeVO32",
+  "effects": [
+    {
+      "name": "Dragon Cheer",
+      "type": "affliction",
+      "_id": "Ea5z2W4QPwWu8M0b",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "dragon-cheer-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.CEdcrWbb1KDTNIKl",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "priority": null,
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "dragon-cheer-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.CEdcrWbb1KDTNIKl",
+            "predicate": [
+              "target:trait:dragon"
+            ],
+            "chance": 100,
+            "affects": "target",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": true,
+        "stacks": 0,
+        "priority": 50,
+        "formula": "",
+        "type": "damage"
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": 5,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "<p>Temporary status condition to apply the effect of Dragon Cheer</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": false,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": "Actor.7Oya3WGVjs2Pgx2h.Item.lvapVW6S8cvvw0BW.ActiveEffect.Ea5z2W4QPwWu8M0b",
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "ptr2e",
+        "systemVersion": "1.3.2.beta",
+        "createdTime": 1717881627901,
+        "modifiedTime": 1747518610662,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS",
+        "exportSource": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "folder": "zrVtKATNxzLNxTUX",
+  "name": "Metamove: Bullseye",
+  "type": "perk",
+  "_id": "3tyxcV5Dbx8BJUe9",
+  "img": "systems/ptr2e/img/perk-icons/Arcana.svg",
+  "system": {
+    "actions": [],
+    "slug": "metamove-bullseye",
+    "description": "<p>You may gain +X ACC stages on the triggering attack, spending 3*X PP as a Free Action.</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "metamove-guarded-strike",
+          "metamove-power-swap",
+          "improved-overland-16",
+          "stat-iv-booster-1-9",
+          "improved-flight-7",
+          "improved-swim-3"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#008000",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Arcana.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 115,
+        "y": 179,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": "metamove"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": []
+}

@@ -1,0 +1,166 @@
+{
+  "name": "Echoed Voice",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "echoed-voice",
+    "actions": [
+      {
+        "slug": "echoed-voice",
+        "name": "Echoed Voice",
+        "type": "attack",
+        "traits": [
+          "sonic"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 2,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "special",
+        "power": 40,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "echoed-voice-1st-echo",
+        "name": "Echoed Voice (1st Echo)",
+        "type": "attack",
+        "traits": [
+          "sonic"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "<p>A creature has resolved Echoed Voice this Round.</p>"
+        },
+        "category": "special",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: A creature has resolved Echoed Voice this Round.</p>",
+        "variant": "echoed-voice",
+        "free": true,
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "echoed-voice-2nd-echo",
+        "name": "Echoed Voice (2nd Echo)",
+        "type": "attack",
+        "traits": [
+          "sonic"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "<p>A creature has resolved Echoed Voice (1st Echo) this Round.</p>"
+        },
+        "category": "special",
+        "power": 120,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: A creature has resolved Echoed Voice (1st Echo) this Round.</p>",
+        "variant": "echoed-voice",
+        "free": true,
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "echoed-voice-3rd-echo",
+        "name": "Echoed Voice (3rd Echo)",
+        "type": "attack",
+        "traits": [
+          "sonic"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "<p>A creature has resolved Echoed Voice (2nd Echo) this Round.</p>"
+        },
+        "category": "special",
+        "power": 160,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: A creature has resolved Echoed Voice (2nd Echo) this Round.</p>",
+        "variant": "echoed-voice",
+        "free": true,
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "echoed-voice-full-blast",
+        "name": "Echoed Voice (Full Blast)",
+        "type": "attack",
+        "traits": [
+          "sonic"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "<p>A creature has resolved Echoed Voice (3rd Echo) this Round.</p>"
+        },
+        "category": "special",
+        "power": 200,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: A creature has resolved Echoed Voice (3rd Echo) this Round.</p>",
+        "variant": "echoed-voice",
+        "free": true,
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "<p>Effect: Each time a creature uses Echoed Voice during a Round, the next used Echoed Voice becomes stronger.</p>"
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "HH6HljL6RxmB1N2n",
+  "effects": []
+}

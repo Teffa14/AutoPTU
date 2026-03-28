@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AutoPTU Web Client</title>
+    <link rel="stylesheet" href="design-system/tokens.css" />
+    <link rel="stylesheet" href="design-system/components.css" />
+    <link rel="stylesheet" href="design-system/layout.css" />
+    <link rel="stylesheet" href="styles.css?v=20260328g" />
+  </head>
+  <body>
+    <div id="move-tooltip" class="move-tooltip hidden"></div>
+    <header class="topbar ds-topbar">
+      <div class="topbar-shell">
+        <div class="topbar-head">
+          <div class="brand ds-brand">AutoPTU Tactical Board</div>
+        </div>
+        <div class="toolbar ds-toolbar battle-utility-row">
+          <div class="utility-group utility-group-primary">
+            <div class="utility-group-title">Battle</div>
+            <button id="start-battle">Start Battle</button>
+            <label class="field">
+              <input id="step-by-step-start" type="checkbox" />
+              Step-by-step
+            </label>
+            <button id="ai-step">Step AI</button>
+            <button id="ai-auto">Auto Off</button>
+            <button id="undo-action">Undo Turn</button>
+            <button id="end-turn">End Turn</button>
+          </div>
+          <div class="utility-group">
+            <div class="utility-group-title">Speed</div>
+            <label class="field">
+              Auto Speed
+              <input id="auto-interval" type="number" min="250" value="1000" />
+            </label>
+            <div class="speed-presets">
+              <button class="speed-btn" data-speed="250">250</button>
+              <button class="speed-btn" data-speed="500">500</button>
+              <button class="speed-btn" data-speed="1000">1000</button>
+              <button class="speed-btn" data-speed="2000">2000</button>
+            </div>
+          </div>
+          <div class="utility-group">
+            <div class="utility-group-title">Replay</div>
+            <label class="field">
+              <input id="cinematic-auto" type="checkbox" />
+              Cinematic Auto
+            </label>
+            <label class="field">
+              Profile
+              <select id="cinematic-profile">
+                <option value="broadcast" selected>Broadcast</option>
+                <option value="movie">Movie</option>
+                <option value="fastcast">Fast Cast</option>
+              </select>
+            </label>
+            <label class="field">
+              Camera
+              <select id="cinematic-speed">
+                <option value="fast">Fast</option>
+                <option value="medium" selected>Medium</option>
+                <option value="slow">Slow</option>
+              </select>
+            </label>
+            <button id="cinematic-export" type="button">Export Replay</button>
+            <span id="cinematic-perf" class="field-pill ds-pill light">Cine: idle</span>
+          </div>
+          <div class="utility-group utility-group-state">
+            <div class="utility-group-title">State</div>
+            <label class="field">
+              <input id="auto-cries" type="checkbox" />
+              Auto Cries
+            </label>
+            <span id="round-info">Round -</span>
+            <span id="terrain-info" class="field-pill ds-pill light">Terrain: -</span>
+            <span id="weather-info" class="field-pill ds-pill light">Weather: -</span>
+            <span id="map-seed" class="field-pill ds-pill light">Seed: -</span>
+            <span id="sprite-status" class="status-pill ds-pill">Sprites: idle</span>
+            <span id="js-status" class="status-pill ds-pill">JS: pending</span>
+          </div>
+        </div>
+        <div class="toolbar ds-toolbar battle-utility-row battle-utility-row-secondary">
+          <div class="utility-group">
+            <div class="utility-group-title">Match Setup</div>
+            <label class="field">
+              Mode
+              <select id="mode-select">
+                <option value="campaign">Campaign (Player vs AI)</option>
+                <option value="random">Random Battle (Player vs AI)</option>
+                <option value="ai">AI vs AI (Step)</option>
+                <option value="ai-random">AI vs AI (Random Battle)</option>
+                <option value="ai-royale">AI vs AI (Battle Royale)</option>
+              </select>
+            </label>
+            <label class="field">
+              Team
+              <input id="team-size" type="number" min="1" value="2" />
+            </label>
+            <label class="field">
+              Active
+              <input id="active-slots" type="number" min="1" value="1" />
+            </label>
+            <label class="field">
+              Min Lvl
+              <input id="min-level" type="number" min="1" value="20" />
+            </label>
+            <label class="field">
+              Max Lvl
+              <input id="max-level" type="number" min="1" value="40" />
+            </label>
+            <label class="field">
+              Sides
+              <input id="side-count" type="number" min="2" value="2" title="Used by AI vs AI (Random Battle) to pick number of teams." />
+            </label>
+            <label class="field">
+              Circle
+              <input id="circle-interval" type="number" min="1" value="3" title="Battle Royale: circle closes every X rounds." />
+            </label>
+          </div>
+          <div class="utility-group">
+            <div class="utility-group-title">AI and Assets</div>
+            <label class="field">
+              AI Brain
+              <select id="ai-model-select"></select>
+            </label>
+            <button id="ai-model-refresh" type="button">Refresh AI</button>
+            <span id="ai-model-math" class="field-pill ds-pill light">Model score: -</span>
+            <button id="download-sprites">Refresh Sprites</button>
+            <button id="open-useful-charts" type="button">Charts</button>
+          </div>
+          <div class="utility-group">
+            <div class="utility-group-title">Roster and Trainer</div>
+            <label class="field">
+              <input id="use-trainer" type="checkbox" />
+              Use Trainer
+            </label>
+            <button id="load-trainer" type="button">Load Trainer</button>
+            <button id="import-trainer" type="button" title="Load a saved trainer JSON profile from disk.">Import Trainer JSON</button>
+            <button id="import-roster-csv" type="button" title="Load explicit player/foe teams from CSV. This is the canonical battle format.">Import Roster CSV</button>
+            <button id="export-roster-csv" type="button" title="Export current battle or creator teams as roster CSV.">Export Roster CSV</button>
+            <button id="clear-roster-csv" type="button" title="Unload the currently imported roster CSV.">Clear Roster CSV</button>
+            <button id="clear-trainer" type="button">Clear Trainer</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="main-shell ds-main-shell">
+      <section class="battle-live-surface">
+      <div class="battle-main-row">
+        <section class="panel grid-panel ds-panel battle-zone-center">
+          <div class="panel-head ds-panel-head">
+            <div class="panel-title ds-panel-title">Battlefield</div>
+            <div class="grid-controls ds-grid-controls">
+              <span id="selected-tile-info" class="field-pill ds-pill light">Tile: -</span>
+              <button id="zoom-in">Zoom +</button>
+              <button id="zoom-out">Zoom -</button>
+              <button id="zoom-fit">Fit</button>
+            </div>
+          </div>
+          <div class="battlefield-stage">
+            <div class="grid-stage">
+              <div class="grid-wrap">
+                <div id="grid" class="grid"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="right-drawer" class="panel log-panel ds-panel battle-zone-right">
+          <div class="panel-head ds-panel-head">
+            <div class="panel-title ds-panel-title">Spectator Feed</div>
+          </div>
+          <div class="battle-state-strip">
+            <span id="sidebar-round-info" class="field-pill ds-pill light">Round -</span>
+            <span id="sidebar-terrain-info" class="field-pill ds-pill light">Terrain: -</span>
+            <span id="sidebar-weather-info" class="field-pill ds-pill light">Weather: -</span>
+          </div>
+          <div id="turn-order-bar" class="turn-order-bar turn-order-strip" aria-label="Initiative order"></div>
+          <div class="log-filters">
+            <label><input type="checkbox" id="log-actions" checked />Actions</label>
+            <label><input type="checkbox" id="log-damage" checked />Damage</label>
+            <label><input type="checkbox" id="log-status" checked />Status</label>
+            <label><input type="checkbox" id="log-phase" checked />Phase</label>
+            <label><input type="checkbox" id="log-autoscroll" checked />Auto-scroll</label>
+            <label><input type="checkbox" id="log-compact" />Compact</label>
+            <button id="log-export" type="button">Export Battle Log</button>
+            <button id="log-clear" type="button">Clear View</button>
+          </div>
+          <div id="log" class="log ds-log"></div>
+        </section>
+      </div>
+      <section id="left-drawer" class="panel info-panel ds-panel battle-combatants-panel battle-zone-bottom">
+        <div class="panel-head ds-panel-head">
+          <div class="panel-title ds-panel-title">Combat HUD</div>
+        </div>
+        <div class="combatant-hud-controls">
+          <div class="status-tabs ds-tab-list" data-tablist>
+            <button class="status-tab ds-tab" aria-selected="true" data-team-filter="all">All</button>
+            <button class="status-tab ds-tab" aria-selected="false" data-team-filter="player">Player</button>
+            <button class="status-tab ds-tab" aria-selected="false" data-team-filter="foe">Foe</button>
+          </div>
+          <label class="toggle-row">
+            <input id="hide-fainted" type="checkbox" />
+            Hide fainted
+          </label>
+        </div>
+        <div id="combatant-list" class="combatant-list"></div>
+      </section>
+      </section>
+      <section class="panel battle-admin-panel ds-panel battle-setup-panel">
+        <div class="panel-head ds-panel-head">
+        <div class="panel-title ds-panel-title">Setup</div>
+        </div>
+        <div class="battle-admin-body">
+          <div class="info-tabs ds-tab-list" data-tablist>
+            <button class="info-tab ds-tab" aria-selected="true" data-tab="battle-admin">Battle Setup</button>
+            <button class="info-tab ds-tab" aria-selected="false" data-tab="classes">Classes</button>
+          </div>
+          <div class="info-tab-panels">
+            <div class="info-tab-panel active" data-tab-panel="battle-admin">
+              <div class="info-columns">
+                <div class="info-column">
+                  <div class="panel-title ds-panel-title">Trainer</div>
+                  <div id="trainer-details" class="combatant-details">No trainer loaded.</div>
+                  <label class="toggle-row" title="When ON, exported CSV includes foe rows for immediate AI vs AI starts.">
+                    <input id="export-roster-mirror" type="checkbox" checked />
+                    Mirror to foe on export (AI vs AI ready)
+                  </label>
+                  <label class="toggle-row" title="When ON, battle start auto-builds roster CSV from creator Pokemon builds if no CSV is loaded.">
+                    <input id="auto-use-creator-roster" type="checkbox" checked />
+                    Auto use creator team on battle start
+                  </label>
+                  <label class="toggle-row" title="When ON, Start Battle is blocked unless a roster CSV is loaded. Auto creator injection is disabled.">
+                    <input id="csv-strict-mode" type="checkbox" />
+                    CSV-first strict mode (require roster CSV)
+                  </label>
+                  <div class="char-feature-meta" title="Quick guide for roster modes.">
+                    CSV-first strict mode enforces explicit CSV teams. Auto-use mode is a convenience fallback only.
+                  </div>
+                  <div id="roster-csv-status" class="char-feature-meta">Roster CSV: none</div>
+                </div>
+                <div class="info-column">
+                  <div class="panel-title ds-panel-title">Tools</div>
+                  <div class="trainer-actions battle-parameter-grid">
+                    <a class="field-pill ds-pill light" href="/create">Character Builder</a>
+                    <a class="field-pill ds-pill light" href="ui-gallery.html">UI Gallery</a>
+                  </div>
+                  <div class="panel-title ds-panel-title">Side Names</div>
+                  <div id="side-name-editor" class="char-feature-meta">Set trainer names for each side.</div>
+                  <div class="panel-title ds-panel-title">Deployment</div>
+                  <div id="deployment-editor" class="char-feature-meta">Choose starters, opening throw tiles, and held-item stat picks from the staged roster.</div>
+                </div>
+              </div>
+            </div>
+            <div class="info-tab-panel" data-tab-panel="classes">
+              <div class="char-create">
+                <div class="char-steps ds-tab-list" data-tablist>
+                  <button class="char-step-btn active" data-step="profile">Profile</button>
+                  <button class="char-step-btn" data-step="builder">Builder</button>
+                  <button class="char-step-btn" data-step="skills">Skills</button>
+                  <button class="char-step-btn" data-step="advancement">Advancement</button>
+                  <button class="char-step-btn" data-step="class">Class</button>
+                  <button class="char-step-btn" data-step="features">Features</button>
+                  <button class="char-step-btn" data-step="edges">Edges</button>
+                  <button class="char-step-btn" data-step="extras">Extras</button>
+                  <button class="char-step-btn" data-step="inventory">Inventory</button>
+                  <button class="char-step-btn" data-step="pokemon-team">Pokemon Team</button>
+                  <button class="char-step-btn" data-step="summary">Summary</button>
+                </div>
+                <div class="char-content">
+                  <div id="char-content"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="legacy-hud-cache" aria-hidden="true">
+            <div id="combatant-details" class="combatant-details">Select a unit.</div>
+            <div id="party-bar" class="party-bar"></div>
+            <div id="move-list" class="move-list"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div id="prompt-overlay" class="prompt-overlay hidden">
+      <div class="prompt-card">
+        <h2>Optional Triggers</h2>
+        <div id="prompt-list" class="prompt-list"></div>
+        <div class="prompt-actions">
+          <button id="prompt-resolve">Resolve</button>
+        </div>
+      </div>
+    </div>
+    <script src="vendor/sortable.min.js"></script>
+    <script src="design-system/ui.js"></script>
+    <script src="logic/prereq_eval.js"></script>
+    <script src="logic/character_state.js"></script>
+    <script src="ui/battle_ui.js"></script>
+    <script src="ui/builder_ui.js"></script>
+    <script src="app.js?v=20260328g"></script>
+  </body>
+</html>

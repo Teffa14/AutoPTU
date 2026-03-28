@@ -1,0 +1,58 @@
+{
+  "name": "Pomeg Berry",
+  "img": "systems/ptr2e/img/item-icons/pomeg berry.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 2,
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "D",
+    "fling": {
+      "type": "untyped",
+      "power": 10,
+      "accuracy": 95,
+      "hide": null
+    },
+    "rarity": "common",
+    "consumableType": "food",
+    "traits": [
+      "restorative",
+      "consumable",
+      "natural",
+      "healing",
+      "bait",
+      "berry",
+      "fling",
+      "held",
+      "spicy-4",
+      "sweet-1",
+      "bitter-1",
+      "combat"
+    ],
+    "description": "The target gains 1 Tick of HP. If the target does not possess [Human] and is not part of a Team, they also gain 2 Ticks of HP, 3 PP, and their Catch Rate increases by x9/5 / x5/9 for 5 Activations if they like/dislike Spicy flavors.",
+    "quantity": 1,
+    "slug": "pomeg-berry",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "EKURIXwLcQFwpts1",
+  "effects": [],
+  "folder": "yR1GFstYOCdI2jOz"
+}

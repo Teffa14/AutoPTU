@@ -1,0 +1,77 @@
+{
+  "name": "Sand Grind",
+  "type": "move",
+  "_id": "CFIHdDLed2iWVQmx",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "sand-grind",
+    "actions": [
+      {
+        "name": "Sand Grind",
+        "slug": "sand-grind",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "types": [
+          "ground"
+        ],
+        "category": "physical",
+        "power": 65,
+        "accuracy": 100,
+        "predicate": []
+      },
+      {
+        "slug": "sand-grind-vulnerable",
+        "name": "Sand Grind (Vulnerable)",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "trigger": "<p>Target's current HP is less than or equal to 50% of their Max HP.</p>"
+        },
+        "category": "physical",
+        "power": 130,
+        "accuracy": 100,
+        "types": [
+          "ground"
+        ],
+        "description": "<p>Trigger: Target's current HP is less than or equal to 50% of their Max HP.</p>",
+        "variant": "sand-grind",
+        "free": true,
+        "img": "systems/ptr2e/img/svg/ground_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "<p>Effect: This attack's Power doubles against targets whose current HP is less than or equal to 50% of their max.</p>"
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

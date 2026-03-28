@@ -1,0 +1,105 @@
+{
+  "name": "Blitz Boxer",
+  "type": "ability",
+  "img": "icons/skills/melee/unarmed-punch-fist-blue.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "intrepid-3-4"
+        ],
+        "name": "Blitz Boxer",
+        "slug": "blitz-boxer",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: While the user meets the [Intrepid 3/4] Condition, the user's [Punch] attacks gain [Priority 1] or [Priority X+1].</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: While the user meets the [Intrepid 3/4] Condition, the user's [Punch] attacks gain [Priority 1] or [Priority X+1].</p>",
+    "traits": [
+      "intrepid-3-4"
+    ],
+    "slug": "blitz-boxer",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "nbYheA5SPskBwCYc",
+  "effects": [
+    {
+      "name": "Blitz Boxer",
+      "type": "passive",
+      "_id": "3jbuCNotmP6EzmtG",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "punch-trait-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.advancecondiitem",
+            "predicate": [
+              "state:intrepid-3-4"
+            ],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "self",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1753729294113,
+        "modifiedTime": 1755876784458,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

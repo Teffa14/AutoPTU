@@ -1,0 +1,44 @@
+{
+  "name": "Guard Down",
+  "type": "ability",
+  "img": "systems/ptr2e/img/icons/physical_icon.png",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "social",
+          "friendly"
+        ],
+        "name": "Guard Down",
+        "slug": "guard-down",
+        "type": "passive",
+        "cost": {},
+        "range": {
+          "target": "enemy-aura",
+          "distance": 8,
+          "unit": "m"
+        },
+        "description": "<p>Effect: All valid creatures in range have -1 default DEF Stage. When an affected creature leaves the range of this effect, they lose -1 DEF Stage for 3 Activations. The user's Attacks have a 10% chance to inflict Flinched 2. NEEDS REAUTOMATED.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: All valid creatures in range have -1 default DEF Stage. When an affected creature leaves the range of this effect, they lose -1 DEF Stage for 3 Activations. The user's Attacks have a 10% chance to inflict Flinched 2. NEEDS REAUTOMATED.</p>",
+    "traits": [
+      "social",
+      "friendly"
+    ],
+    "slug": "guard-down",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "WTCc949kqybFx9TU",
+  "effects": []
+}

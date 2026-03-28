@@ -1,0 +1,49 @@
+{
+  "name": "Shadow Wave",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/shadow_icon.svg",
+  "system": {
+    "slug": "shadow-wave",
+    "actions": [
+      {
+        "slug": "shadow-wave",
+        "name": "Shadow Wave",
+        "type": "attack",
+        "traits": [
+          "pulse",
+          "basic"
+        ],
+        "range": {
+          "target": "cone",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "special",
+        "power": 50,
+        "accuracy": 90,
+        "types": [
+          "shadow"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "PFRFSwoTeCyovxoJ",
+  "effects": []
+}

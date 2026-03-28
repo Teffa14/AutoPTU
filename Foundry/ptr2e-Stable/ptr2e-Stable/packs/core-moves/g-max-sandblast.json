@@ -1,0 +1,52 @@
+{
+  "name": "G-Max Sandblast",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "g-max-sandblast",
+    "actions": [
+      {
+        "slug": "g-max-sandblast",
+        "name": "G-Max Sandblast",
+        "type": "attack",
+        "traits": [
+          "max",
+          "move-locked",
+          "sky",
+          "blast-4",
+          "trap"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 18,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "ground"
+        ],
+        "description": "<p>Effect: All valid targets are @Affliction[bound] 5. While @Affliction[bound], they take two Ticks of HP in damage at the end of each of their Activations.</p><p>The user may spend up to 6 additional PP, increasing the Power of this attack by 15 per PP spent.</p><p>Requirement: User is a Dynamaxed Sandaconda and has a Ground-Type attack on their Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "BYqn4QkmyiX16oUr",
+  "effects": []
+}

@@ -1,0 +1,93 @@
+{
+  "name": "Glacier Crush",
+  "type": "move",
+  "_id": "b2XsJq8rj59RYXnm",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Glacier Crush (Resolution)",
+        "slug": "glacier-crush",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/ice_icon.svg",
+        "traits": [
+          "set-up",
+          "dash",
+          "curl",
+          "contact",
+          "crushing",
+          "priority-20"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "The user used Glacier Crush (Set-Up) as their last Action."
+        },
+        "types": [
+          "ice"
+        ],
+        "category": "physical",
+        "power": 120,
+        "accuracy": 100,
+        "description": "<p>Trigger: The user used Glacier Crush (Set-Up) as their last Action.</p><p>Effect: On hit, the target has a 20% chance of gaining @Affliction[frostbite 5].</p>",
+        "predicate": []
+      },
+      {
+        "name": "Glacier Crush (Set-Up)",
+        "slug": "glacier-crush-set-up",
+        "description": "<p>Effect: The user gains +1 ATK and SPDEF Stage for 5 Activations. If Snowy Weather is present, the user the user may use Glacier Crush (Resolution) as a Free Action upon resolving this Attack.</p>",
+        "traits": [
+          "set-up",
+          "defensive",
+          "flinch-40"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/ice_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "ice"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "CYLdyr5mPSDmNpTp": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.328",
+    "systemId": "ptr2e",
+    "systemVersion": "0.10.0-alpha.1.5.2",
+    "createdTime": 1720811778464,
+    "modifiedTime": 1720812190239,
+    "lastModifiedBy": "CYLdyr5mPSDmNpTp"
+  }
+}

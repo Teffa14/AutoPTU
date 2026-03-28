@@ -1,0 +1,51 @@
+{
+  "name": "Menacing Moonraze Maelstrom",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "menacing-moonraze-maelstrom",
+    "actions": [
+      {
+        "slug": "menacing-moonraze-maelstrom",
+        "name": "Menacing Moonraze Maelstrom",
+        "type": "attack",
+        "traits": [
+          "zenith",
+          "move-locked",
+          "ray"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0,
+          "trigger": "<p>User's partner uses Z-Pose! and triggers the appropriate Z-Power-Crystal.</p>"
+        },
+        "category": "special",
+        "power": 200,
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>Trigger: User's partner uses Z-Pose! and triggers the appropriate Z-Power-Crystal.</p><p>Effect: The user may freely move up to the Movement Score of their choice when declaring this attack. This attack is unaffected by the Abilitiesof other creatures.</p><p>Requirement: [Lunala] Z-Power-Crystal as an Accessory Item and Moongeist Beam on the user's Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "AgMQAxU9bUQjCVO6",
+  "effects": []
+}

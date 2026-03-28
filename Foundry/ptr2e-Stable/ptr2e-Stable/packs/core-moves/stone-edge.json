@@ -1,0 +1,49 @@
+{
+  "name": "Stone Edge",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "stone-edge",
+    "actions": [
+      {
+        "slug": "stone-edge",
+        "name": "Stone Edge",
+        "type": "attack",
+        "traits": [
+          "crit-1",
+          "sharp"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 80,
+        "types": [
+          "rock"
+        ],
+        "description": "<p>Effect: When declared against a target that is @Affliction[grounded], the user gains +2 ACC on that Attack.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "tE7yyUsnqlXXMLrQ",
+  "effects": []
+}

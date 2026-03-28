@@ -1,0 +1,140 @@
+{
+  "name": "Cosmic Power",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "cosmic-power",
+    "actions": [
+      {
+        "slug": "cosmic-power",
+        "name": "Cosmic Power",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "types": [
+          "psychic"
+        ],
+        "description": "<p>Effect: The user gains +1 DEF and SPDEF Stage for 5 Activations. If there is Gloomy Weather, DEF and SPDEF Stages are increased by +2 for 7 Activations instead.</p>",
+        "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+        "predicate": []
+      },
+      {
+        "name": "Cosmic Power (Gloomy)",
+        "slug": "cosmic-power-gloomy",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+        "traits": [
+          "environ"
+        ],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "<p>Gloomy Weather is present.</p>"
+        },
+        "variant": "crystallize",
+        "types": [
+          "rock"
+        ],
+        "category": "status",
+        "description": "<p>Trigger: Dusty Weather is present.</p><p>Effect: The user's DEF and SPDEF Stages increase by +2 for 7 Activations.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": []
+  },
+  "_id": "yF0XYtBJKJJstJDD",
+  "effects": [
+    {
+      "name": "Cosmic Power",
+      "type": "passive",
+      "_id": "NZUmsCmaIe9Dvw4W",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "cosmic-power-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.sMystTj3FBJ00AZp",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": [],
+            "dontMerge": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "cosmic-power-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.jEX7s3GbbAtzgyS3",
+            "predicate": [],
+            "chance": 100,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": [],
+            "dontMerge": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.1.2",
+        "createdTime": 1737224517485,
+        "modifiedTime": 1737224561372,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS"
+      }
+    }
+  ]
+}

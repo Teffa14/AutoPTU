@@ -1,0 +1,52 @@
+{
+  "name": "Breakneck Blitz",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "breakneck-blitz",
+    "actions": [
+      {
+        "slug": "breakneck-blitz",
+        "name": "Breakneck Blitz",
+        "type": "attack",
+        "traits": [
+          "zenith",
+          "dash",
+          "pass-7",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0,
+          "trigger": "<p>User's partner uses Z-Pose! and triggers the appropriate Z-Crystal.</p>"
+        },
+        "category": "physical",
+        "power": 180,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Trigger: User's partner uses Z-Pose! and triggers the appropriate Z-Crystal.</p><p>Effect: The user may freely move up to the Movement Score of their choice when declaring this attack.</p><p>nRequirement: [Normal] Z-Crystal as an Accessory Item and a Normal-Type attack on the user's Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "bouXpPaFHB9PIChX",
+  "effects": []
+}

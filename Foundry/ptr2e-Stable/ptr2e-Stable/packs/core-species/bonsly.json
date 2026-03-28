@@ -1,0 +1,496 @@
+{
+  "name": "bonsly",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 438,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.5,
+      "weight": 15
+    },
+    "diet": [
+      "herbivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "breathless",
+      "silent",
+      "underdog",
+      "baby",
+      "jump-3"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "sturdy"
+        },
+        {
+          "slug": "rock-head"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "rattled"
+        },
+        {
+          "slug": "solid-rock"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "disguise"
+        },
+        {
+          "slug": "pantomime"
+        }
+      ],
+      "master": [
+        {
+          "slug": "sap-sipper"
+        },
+        {
+          "slug": "undergrowth"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "disguise",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "bonsly",
+    "stats": {
+      "hp": 50,
+      "atk": 80,
+      "def": 95,
+      "spa": 10,
+      "spd": 45,
+      "spe": 10
+    },
+    "types": [
+      "rock"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "headbutt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "harden",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "defense-curl",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "self-destruct",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "curse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rollout",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sand-tomb",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rock-polish",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "role-play",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "covet",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "earth-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "foul-play",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "after-you",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "body-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "earthquake",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dig",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "explosion",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mud-slap",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "spikes",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sandstorm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "attract",
+          "gen": "brilliant-diamond-and-shining-pearl"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "brick-break",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "natural-gift",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "power-gem",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "captivate",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "grass-knot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "smack-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trailblaze",
+          "gen": "scarlet-violet"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "fake-tears",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "copycat",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flail",
+          "level": 4,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-throw",
+          "level": 8,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "block",
+          "level": 12,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "slam",
+          "level": 15,
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "mimic",
+          "level": 16,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "feint-attack",
+          "level": 19,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-tomb",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tearful-look",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sucker-punch",
+          "level": 28,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rock-slide",
+          "level": 32,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "low-kick",
+          "level": 36,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "counter",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-edge",
+          "level": 44,
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "captureRate": 220,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "bonsly",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "sudowoodo",
+          "uuid": "Compendium.ptr2e.core-species.Item.oFy9QKAEAHsgijtt",
+          "methods": [
+            {
+              "type": "move",
+              "move": "mimic",
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.xSLD7YhXycnvxbYZ"
+    },
+    "habitats": [
+      "forest",
+      "mountain"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Sinnoh Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "xSLD7YhXycnvxbYZ",
+  "effects": [],
+  "folder": null
+}

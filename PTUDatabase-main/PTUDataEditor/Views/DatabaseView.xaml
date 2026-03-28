@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="PTUDataEditor.Views.DatabaseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PTUDataEditor.Views"
+             xmlns:c="clr-namespace:PTUDataEditor.Controls"
+             xmlns:vm="clr-namespace:PTUDataEditor.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1100"
+             d:DataContext="{x:Static vm:DatabaseViewModel.DesignData}">
+    <UserControl.Resources>
+        <DataTemplate x:Key="BasicNameItemTemplate">
+            <TextBlock Text="{Binding Name}" />
+        </DataTemplate>
+        <DataTemplate x:Key="SpeciesNameItemTemplate">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Width="30" TextAlignment="Right" FontFamily="Consolas" VerticalAlignment="Bottom">
+                    <TextBlock.Style>
+                        <Style>
+                            <Setter Property="TextBlock.Text" Value="{Binding NationalDexNumber}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding NationalDexNumber}" Value="0">
+                                    <Setter Property="TextBlock.Text" Value="?" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <TextBlock Margin="3 0">-</TextBlock>
+                <TextBlock Text="{Binding Name}" />
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <TabControl>
+            <TabItem Header="Pokémon">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <c:EditableListBox x:Name="SpeciesListBox" SelectedIndex="1" ItemsSource="{Binding Species}" SelectedItem="{Binding SelectedSpecies, Mode=TwoWay}" ItemTemplate="{StaticResource SpeciesNameItemTemplate}" Margin="3"
+                                       Add="{Binding AddSpeciesCommand}" Remove="{Binding RemoveSpeciesCommand}"/>
+                    <local:SpeciesView IsEnabled="{Binding SelectedItems.Count, ElementName=SpeciesListBox}" Grid.Column="1" DataContext="{Binding SelectedSpecies, Mode=OneWay}" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Moves">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <c:EditableListBox x:Name="MovesListBox" SelectedIndex="1" ItemsSource="{Binding Moves}" SelectedItem="{Binding SelectedMove, Mode=TwoWay}" ItemTemplate="{StaticResource BasicNameItemTemplate}" Margin="3"
+                                       Add="{Binding AddMoveCommand}" Remove="{Binding RemoveMoveCommand}" />
+                    <local:MoveView IsEnabled="{Binding SelectedItems.Count, ElementName=MovesListBox}" Grid.Column="1" DataContext="{Binding SelectedMove, Mode=OneWay}" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Abilities">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <c:EditableListBox x:Name="AbilitiesListBox" SelectedIndex="1" ItemsSource="{Binding Abilities}" SelectedItem="{Binding SelectedAbility, Mode=TwoWay}" ItemTemplate="{StaticResource BasicNameItemTemplate}" Margin="3"
+                                       Add="{Binding AddAbilityCommand}" Remove="{Binding RemoveAbilityCommand}" />
+                    <local:AbilityView IsEnabled="{Binding SelectedItems.Count, ElementName=AbilitiesListBox}" Grid.Column="1" DataContext="{Binding SelectedAbility, Mode=OneWay}" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Contest Effects">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <c:EditableListBox x:Name="ContestEffectsListBox" ItemsSource="{Binding ContestEffects}" SelectedItem="{Binding SelectedContestEffect, Mode=TwoWay}" ItemTemplate="{StaticResource BasicNameItemTemplate}" Margin="3"
+                                       Add="{Binding AddContestEffectCommand}" Remove="{Binding RemoveContestEffectCommand}" />
+                    <local:ContestEffectView IsEnabled="{Binding SelectedItems.Count, ElementName=ContestEffectsListBox}" Grid.Column="1" DataContext="{Binding SelectedContestEffect, Mode=OneWay}" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

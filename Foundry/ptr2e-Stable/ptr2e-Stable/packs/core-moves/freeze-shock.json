@@ -1,0 +1,77 @@
+{
+  "name": "Freeze Shock",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "freeze-shock",
+    "actions": [
+      {
+        "slug": "freeze-shock-resolution",
+        "name": "Freeze Shock (Resolution)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "set-up",
+          "blast-5",
+          "flinch-70"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4,
+          "trigger": "The user used Freeze Shock (Set-Up) as their last Action."
+        },
+        "category": "physical",
+        "power": 140,
+        "accuracy": 90,
+        "types": [
+          "ice",
+          "electric"
+        ],
+        "description": "<p>Trigger: The user used Freeze Shock (Set-Up) as their last Action.</p><p>Resolution: On hit, all valid targets have a 30% chance of gaining @Affliction[paralysis 7].</p>",
+        "img": "systems/ptr2e/img/svg/ice_icon.svg",
+        "predicate": []
+      },
+      {
+        "name": "Freeze Shock (Set-Up)",
+        "slug": "freeze-shock-set-up",
+        "description": "<p>Effect: The user may freely Move using a Movement Score of their choice, and gains @Affliction[braced 1].</p>",
+        "traits": [
+          "legendary",
+          "set-up",
+          "defensive",
+          "priority-40"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/ice_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "ice"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "5fCRZDJX3ORUba4H",
+  "effects": []
+}

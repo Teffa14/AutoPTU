@@ -1,0 +1,118 @@
+{
+  "name": "Wake-Up Slap",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "wake-up-slap",
+    "actions": [
+      {
+        "slug": "wake-up-slap",
+        "name": "Wake-Up Slap",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "wake-up-slap-sleeper",
+        "name": "Wake-Up Slap (Sleeper)",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "<p>The target has @Affliction[drowsy] or @Affliction[nightmares].</p>"
+        },
+        "category": "physical",
+        "power": 140,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "description": "<p>Trigger: The target has @Affliction[drowsy] or @Affliction[nightmares].</p><p>Effect: On resolution, the target is cured of @Affliction[drowsy] and @Affliction[nightmares], and is Delayed by 50%.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "wake-up-slap",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "0Fa6CTcxg45VyXNP",
+  "effects": [
+    {
+      "name": "Wake-Up Slap",
+      "type": "passive",
+      "_id": "z7y1zzA2z4Rf7Nwm",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "wake-up-slap-sleeper-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.advanceffectitem",
+            "predicate": [],
+            "chance": 100,
+            "dontMerge": true,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.amount",
+                "value": -50
+              },
+              {
+                "mode": 5,
+                "property": "name",
+                "value": "Delay 50%"
+              }
+            ]
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      }
+    }
+  ]
+}

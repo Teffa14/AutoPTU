@@ -1,0 +1,48 @@
+{
+  "name": "Trick-or-Treat",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "trick-or-treat",
+    "actions": [
+      {
+        "slug": "trick-or-treat",
+        "name": "Trick-or-Treat",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "accuracy": 100,
+        "types": [
+          "ghost"
+        ],
+        "description": "<p>Effect: The target gains the Ghost Type in addition to its other Types for 7 Activations.</p>",
+        "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "DqLSfuiRhDFAiF95",
+  "effects": []
+}

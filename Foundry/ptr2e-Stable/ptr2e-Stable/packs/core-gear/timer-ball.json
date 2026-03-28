@@ -1,0 +1,56 @@
+{
+  "name": "Timer Ball",
+  "img": "systems/ptr2e/img/item-icons/timer ball.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 4,
+    "crafting": {
+      "skill": "electronics",
+      "spans": 2,
+      "materials": [
+        "10x-tumblestone",
+        "1x-great-apricorn"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 95,
+      "hide": null
+    },
+    "rarity": "uncommon",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling",
+      "training-ball"
+    ],
+    "description": "Catch Rate modifier increases by 1x at the end of each round, up to a maximum of 8x.",
+    "modifier": 1,
+    "quantity": 1,
+    "slug": "timer-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "RJMD48otYg9d88AO",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

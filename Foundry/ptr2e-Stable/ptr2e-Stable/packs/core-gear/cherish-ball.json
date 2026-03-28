@@ -1,0 +1,57 @@
+{
+  "name": "Cherish Ball",
+  "img": "systems/ptr2e/img/item-icons/cherish ball.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 8,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling",
+      "ball"
+    ],
+    "description": "<p>A fancy, eye-catching ball given out during promotional events. 2x Capture Rate and +25 Critical Capture Chance.</p>",
+    "modifier": 2,
+    "quantity": 1,
+    "slug": "cherish-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "tTsIjyrNL20afchW",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

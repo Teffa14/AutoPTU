@@ -1,0 +1,102 @@
+{
+  "name": "Serpent Trick",
+  "type": "ability",
+  "img": "icons/creatures/reptiles/serpent-horned-green.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [],
+        "name": "Serpent Trick",
+        "slug": "serpent-trick",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: The user's SPD stat is increased by 50%. Whenever the user uses an attack, that attack is @Affliction[choice-locked] 5 (this effect does not stack).</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user's SPD stat is increased by 50%. Whenever the user uses an attack, that attack is @Affliction[choice-locked] 5 (this effect does not stack).</p>",
+    "traits": [
+      "partial-automation"
+    ],
+    "slug": "serpent-trick",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "A1MtPMhipfYKvTEJ",
+  "effects": [
+    {
+      "name": "Serpent Trick",
+      "type": "passive",
+      "_id": "3wZSn7JGoyr1ETZy",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "basic",
+            "key": "system.modifiers.speMultiplier",
+            "value": 0.5,
+            "predicate": [],
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1729470571391,
+        "modifiedTime": 1762903820398,
+        "lastModifiedBy": "5ImYyhOS2D6D7ypO",
+        "exportSource": null
+      }
+    }
+  ]
+}

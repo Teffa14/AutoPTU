@@ -1,0 +1,53 @@
+{
+  "name": "Crystal Rush",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "crystal-rush",
+    "actions": [
+      {
+        "slug": "crystal-rush",
+        "name": "Crystal Rush",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "priority-10",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "priority": 1
+        },
+        "category": "physical",
+        "power": 55,
+        "accuracy": 100,
+        "types": [
+          "rock"
+        ],
+        "description": "<p>Effect: This attack is neutral against all Types, and ignores Type immunities.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "DlWfIdSFTuOpY0YW",
+  "effects": []
+}

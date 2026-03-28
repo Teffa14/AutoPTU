@@ -1,0 +1,5990 @@
+{
+  "summary": {
+    "total_moves": 854,
+    "exact_animation_matches": 346,
+    "missing_exact_animation": 508,
+    "coverage_percent": 40.52
+  },
+  "available": [
+    {
+      "name": "Aerial Ace",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": "Aerial Ace.png",
+      "available": true
+    },
+    {
+      "name": "Aeroblast",
+      "type": "Flying",
+      "category": "Special",
+      "animation": "PRAS- Aeroblast.png",
+      "available": true
+    },
+    {
+      "name": "Air Cutter",
+      "type": "Flying",
+      "category": "Special",
+      "animation": "PRAS- Air Cutter.png",
+      "available": true
+    },
+    {
+      "name": "Air Slash",
+      "type": "Flying",
+      "category": "Special",
+      "animation": "PRAS- Air Slash.png",
+      "available": true
+    },
+    {
+      "name": "Amnesia",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Amnesia.png",
+      "available": true
+    },
+    {
+      "name": "Anchor Shot",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": "PRAS- Anchor Shot.png",
+      "available": true
+    },
+    {
+      "name": "Apple Acid",
+      "type": "Grass",
+      "category": "Special",
+      "animation": "GEN8- Apple Acid.png",
+      "available": true
+    },
+    {
+      "name": "Aqua Jet",
+      "type": "Water",
+      "category": "Physical",
+      "animation": "PRAS- Aqua Jet.png",
+      "available": true
+    },
+    {
+      "name": "Aromatherapy",
+      "type": "Grass",
+      "category": "Status",
+      "animation": "PRAS- Aromatherapy FG.png",
+      "available": true
+    },
+    {
+      "name": "Astral Barrage",
+      "type": "Ghost",
+      "category": "Special",
+      "animation": "GEN8- AstralBarrage.png",
+      "available": true
+    },
+    {
+      "name": "Attract",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Attract BG.png",
+      "available": true
+    },
+    {
+      "name": "Aura Sphere",
+      "type": "Fighting",
+      "category": "Special",
+      "animation": "PRAS- Aura Sphere.png",
+      "available": true
+    },
+    {
+      "name": "Aura Wheel",
+      "type": "Electric",
+      "category": "Physical",
+      "animation": "GEN8- Aura Wheel Ally.png",
+      "available": true
+    },
+    {
+      "name": "Aurora Veil",
+      "type": "Ice",
+      "category": "Status",
+      "animation": "PRAS- Aurora Veil FG.png",
+      "available": true
+    },
+    {
+      "name": "Autotomize",
+      "type": "Steel",
+      "category": "Status",
+      "animation": "PRAS- Autotomize.png",
+      "available": true
+    },
+    {
+      "name": "Baby-Doll Eyes",
+      "type": "Fairy",
+      "category": "Status",
+      "animation": "PRAS- Baby Doll Eyes BG.png",
+      "available": true
+    },
+    {
+      "name": "Barrier",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Barrier.png",
+      "available": true
+    },
+    {
+      "name": "Baton Pass",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Baton Pass.png",
+      "available": true
+    },
+    {
+      "name": "Bide",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Bide.png",
+      "available": true
+    },
+    {
+      "name": "Bite",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": "PRAS- Bite.png",
+      "available": true
+    },
+    {
+      "name": "Blaze Kick",
+      "type": "Fire",
+      "category": "Physical",
+      "animation": "PRAS- Blaze Kick.png",
+      "available": true
+    },
+    {
+      "name": "Blizzard",
+      "type": "Ice",
+      "category": "Special",
+      "animation": "PRAS- Blizzard BG.png",
+      "available": true
+    },
+    {
+      "name": "Bonemerang",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": "PRAS- BoneMerang.png",
+      "available": true
+    },
+    {
+      "name": "Brave Bird",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": "PRAS- Brave Bird.png",
+      "available": true
+    },
+    {
+      "name": "Brine",
+      "type": "Water",
+      "category": "Special",
+      "animation": "PRAS- Brine.png",
+      "available": true
+    },
+    {
+      "name": "Brutal Swing",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": "PRAS- Brutal Swing FG Opp.png",
+      "available": true
+    },
+    {
+      "name": "Bug Bite",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": "PRAS- Bug Bite.png",
+      "available": true
+    },
+    {
+      "name": "Bug Buzz",
+      "type": "Bug",
+      "category": "Special",
+      "animation": "PRAS- Bug Buzz.png",
+      "available": true
+    },
+    {
+      "name": "Bulk Up",
+      "type": "Fighting",
+      "category": "Status",
+      "animation": "PRAS- Bulk Up.png",
+      "available": true
+    },
+    {
+      "name": "Charge Beam",
+      "type": "Electric",
+      "category": "Special",
+      "animation": "PRAS- Charge Beam.png",
+      "available": true
+    },
+    {
+      "name": "Chatter",
+      "type": "Flying",
+      "category": "Special",
+      "animation": "PRAS- Chatter.png",
+      "available": true
+    },
+    {
+      "name": "Chloroblast",
+      "type": "Grass",
+      "category": "Special",
+      "animation": "Custom_Chloroblast.png",
+      "available": true
+    },
+    {
+      "name": "Clanging Scales",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": "PRAS- Clanging Scales.png",
+      "available": true
+    },
+    {
+      "name": "Clear Smog",
+      "type": "Poison",
+      "category": "Special",
+      "animation": "PRAS- Clear Smog.png",
+      "available": true
+    },
+    {
+      "name": "Coil",
+      "type": "Poison",
+      "category": "Status",
+      "animation": "PRAS- Coil.png",
+      "available": true
+    },
+    {
+      "name": "Confuse Ray",
+      "type": "Ghost",
+      "category": "Status",
+      "animation": "PRAS- Confuse Ray.png",
+      "available": true
+    },
+    {
+      "name": "Confusion",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": "PRAS- Confusion BG.png",
+      "available": true
+    },
+    {
+      "name": "Constrict",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Constrict.png",
+      "available": true
+    },
+    {
+      "name": "Conversion",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Conversion.png",
+      "available": true
+    },
+    {
+      "name": "Core Enforcer",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": "GEN8- Core Enforcer.png",
+      "available": true
+    },
+    {
+      "name": "Cotton Guard",
+      "type": "Grass",
+      "category": "Status",
+      "animation": "PRAS- Cotton Guard.png",
+      "available": true
+    },
+    {
+      "name": "Cotton Spore",
+      "type": "Grass",
+      "category": "Status",
+      "animation": "PRAS- Cotton Spore.png",
+      "available": true
+    },
+    {
+      "name": "Covet",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Covet.png",
+      "available": true
+    },
+    {
+      "name": "Crabhammer",
+      "type": "Water",
+      "category": "Physical",
+      "animation": "PRAS- Crabhammer.png",
+      "available": true
+    },
+    {
+      "name": "Crafty Shield",
+      "type": "Fairy",
+      "category": "Status",
+      "animation": "PRAS- Crafty Shield.png",
+      "available": true
+    },
+    {
+      "name": "Cross Poison",
+      "type": "Poison",
+      "category": "Physical",
+      "animation": "PRAS- Cross Poison.png",
+      "available": true
+    },
+    {
+      "name": "Crunch",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": "Crunch.png",
+      "available": true
+    },
+    {
+      "name": "Crush Grip",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Crush Grip.png",
+      "available": true
+    },
+    {
+      "name": "Curse",
+      "type": "Ghost",
+      "category": "Status",
+      "animation": "PRAS- Curse BG.png",
+      "available": true
+    },
+    {
+      "name": "Dark Pulse",
+      "type": "Dark",
+      "category": "Special",
+      "animation": "PRAS- Dark Pulse.png",
+      "available": true
+    },
+    {
+      "name": "Dark Void",
+      "type": "Dark",
+      "category": "Status",
+      "animation": "PRAS- Dark Void BG.png",
+      "available": true
+    },
+    {
+      "name": "Dazzling Gleam",
+      "type": "Fairy",
+      "category": "Special",
+      "animation": "PRAS- Dazzling Gleam.png",
+      "available": true
+    },
+    {
+      "name": "Decorate",
+      "type": "Fairy",
+      "category": "Status",
+      "animation": "GEN8- Decorate.png",
+      "available": true
+    },
+    {
+      "name": "Defog",
+      "type": "Flying",
+      "category": "Status",
+      "animation": "PRAS- Defog.png",
+      "available": true
+    },
+    {
+      "name": "Detect",
+      "type": "Fighting",
+      "category": "Status",
+      "animation": "PRAS- Detect.png",
+      "available": true
+    },
+    {
+      "name": "Dig",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": "PRAS- Dig.png",
+      "available": true
+    },
+    {
+      "name": "Disable",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Disable.png",
+      "available": true
+    },
+    {
+      "name": "Discharge",
+      "type": "Electric",
+      "category": "Special",
+      "animation": "PRAS- Discharge.png",
+      "available": true
+    },
+    {
+      "name": "Dive",
+      "type": "Water",
+      "category": "Physical",
+      "animation": "PRAS- Dive.png",
+      "available": true
+    },
+    {
+      "name": "Doom Desire",
+      "type": "Steel",
+      "category": "Special",
+      "animation": "GEN8- Doom Desire.png",
+      "available": true
+    },
+    {
+      "name": "Double Iron Bash",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": "GEN8- Double Iron Bash.png",
+      "available": true
+    },
+    {
+      "name": "Dragon Ascent",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": "PRAS- Dragon Ascent BG.png",
+      "available": true
+    },
+    {
+      "name": "Dragon Breath",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": "PRAS- Dragonbreath.png",
+      "available": true
+    },
+    {
+      "name": "Dragon Claw",
+      "type": "Dragon",
+      "category": "Physical",
+      "animation": "dragon claw.png",
+      "available": true
+    },
+    {
+      "name": "Dragon Dance",
+      "type": "Dragon",
+      "category": "Status",
+      "animation": "PRAS- Dragon Dance.png",
+      "available": true
+    },
+    {
+      "name": "Dragon Darts",
+      "type": "Dragon",
+      "category": "Physical",
+      "animation": "GEN8- Dragon Darts.png",
+      "available": true
+    },
+    {
+      "name": "Dragon Energy",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": "GEN8- DragonEnergy.png",
+      "available": true
+    },
+    {
+      "name": "Dragon Pulse",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": "PRAS- Dragon Pulse.png",
+      "available": true
+    },
+    {
+      "name": "Dragon Tail",
+      "type": "Dragon",
+      "category": "Physical",
+      "animation": "PRAS- Dragon Tail.png",
+      "available": true
+    },
+    {
+      "name": "Drain Punch",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": "PRAS- Drain Punch.png",
+      "available": true
+    },
+    {
+      "name": "Draining Kiss",
+      "type": "Fairy",
+      "category": "Special",
+      "animation": "PRAS- Draining Kiss.png",
+      "available": true
+    },
+    {
+      "name": "Dream Eater",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": "PRAS- Dream Eater BG.png",
+      "available": true
+    },
+    {
+      "name": "Drum Beating",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": "GEN8- Drum beating.png",
+      "available": true
+    },
+    {
+      "name": "Earth Power",
+      "type": "Ground",
+      "category": "Special",
+      "animation": "PRAS- Earth Power.png",
+      "available": true
+    },
+    {
+      "name": "Earthquake",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": "PRAS- Earthquake BG.png",
+      "available": true
+    },
+    {
+      "name": "Eerie Spell",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": "EerieSpell.png",
+      "available": true
+    },
+    {
+      "name": "Egg Bomb",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Egg Bomb.png",
+      "available": true
+    },
+    {
+      "name": "Electric Terrain",
+      "type": "Electric",
+      "category": "Status",
+      "animation": "PRAS- Electric Terrain BG.png",
+      "available": true
+    },
+    {
+      "name": "Electro Ball",
+      "type": "Electric",
+      "category": "Special",
+      "animation": "PRAS- Electro Ball.png",
+      "available": true
+    },
+    {
+      "name": "Electroweb",
+      "type": "Electric",
+      "category": "Special",
+      "animation": "PRAS- Electroweb.png",
+      "available": true
+    },
+    {
+      "name": "Encore",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Encore.png",
+      "available": true
+    },
+    {
+      "name": "Energy Ball",
+      "type": "Grass",
+      "category": "Special",
+      "animation": "PRAS- Energy Ball.png",
+      "available": true
+    },
+    {
+      "name": "Eruption",
+      "type": "Fire",
+      "category": "Special",
+      "animation": "PRAS- Eruption.png",
+      "available": true
+    },
+    {
+      "name": "Fairy Lock",
+      "type": "Fairy",
+      "category": "Status",
+      "animation": "PRAS- Fairy Lock.png",
+      "available": true
+    },
+    {
+      "name": "Fairy Wind",
+      "type": "Fairy",
+      "category": "Special",
+      "animation": "PRAS- Fairy Wind BG.png",
+      "available": true
+    },
+    {
+      "name": "Fake Out",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "Fakeout.png",
+      "available": true
+    },
+    {
+      "name": "Fake Tears",
+      "type": "Dark",
+      "category": "Status",
+      "animation": "PRAS- FAKE TEARS.png",
+      "available": true
+    },
+    {
+      "name": "False Surrender",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": "GEN8- False Surrender.png",
+      "available": true
+    },
+    {
+      "name": "False Swipe",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- False Swipe.png",
+      "available": true
+    },
+    {
+      "name": "Fell Stinger",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": "PRAS- Fell Stinger.png",
+      "available": true
+    },
+    {
+      "name": "Fire Blast",
+      "type": "Fire",
+      "category": "Special",
+      "animation": "fire blast.png",
+      "available": true
+    },
+    {
+      "name": "Fire Spin",
+      "type": "Fire",
+      "category": "Special",
+      "animation": "PRAS- Fire Spin.png",
+      "available": true
+    },
+    {
+      "name": "First Impression",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": "GEN8- First Impression.png",
+      "available": true
+    },
+    {
+      "name": "Fissure",
+      "type": "Ground",
+      "category": "Status",
+      "animation": "PRAS- Fissure.png",
+      "available": true
+    },
+    {
+      "name": "Flash",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Flash FG.png",
+      "available": true
+    },
+    {
+      "name": "Flash Cannon",
+      "type": "Steel",
+      "category": "Special",
+      "animation": "PRAS- Flash Cannon.png",
+      "available": true
+    },
+    {
+      "name": "Flatter",
+      "type": "Dark",
+      "category": "Status",
+      "animation": "PRAS- Flatter.png",
+      "available": true
+    },
+    {
+      "name": "Fleur Cannon",
+      "type": "Fairy",
+      "category": "Special",
+      "animation": "GEN8- Fleur Cannon.png",
+      "available": true
+    },
+    {
+      "name": "Floral Healing",
+      "type": "Fairy",
+      "category": "Status",
+      "animation": "PRAS- Floral Healing.png",
+      "available": true
+    },
+    {
+      "name": "Fly",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": "PRAS- Fly.png",
+      "available": true
+    },
+    {
+      "name": "Focus Energy",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Focus Energy.png",
+      "available": true
+    },
+    {
+      "name": "Focus Punch",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": "PRAS- Focus Punch BG.png",
+      "available": true
+    },
+    {
+      "name": "Follow Me",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Follow Me.png",
+      "available": true
+    },
+    {
+      "name": "Force Palm",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": "PRAS- Force Palm.png",
+      "available": true
+    },
+    {
+      "name": "Foresight",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Foresight.png",
+      "available": true
+    },
+    {
+      "name": "Freeze Shock",
+      "type": "Ice",
+      "category": "Physical",
+      "animation": "PRAS- Freeze Shock.png",
+      "available": true
+    },
+    {
+      "name": "Freeze-Dry",
+      "type": "Ice",
+      "category": "Special",
+      "animation": "PRAS- Freeze Dry.png",
+      "available": true
+    },
+    {
+      "name": "Freezing Glare",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": "FreezingGlare.png",
+      "available": true
+    },
+    {
+      "name": "Frenzy Plant",
+      "type": "Grass",
+      "category": "Special",
+      "animation": "PRAS- Frenzy Plant BG.png",
+      "available": true
+    },
+    {
+      "name": "Frost Breath",
+      "type": "Ice",
+      "category": "Special",
+      "animation": "PRAS- Frost Breath.png",
+      "available": true
+    },
+    {
+      "name": "Fusion Bolt",
+      "type": "Electric",
+      "category": "Physical",
+      "animation": "GEN8- Fusion Bolt BG.png",
+      "available": true
+    },
+    {
+      "name": "Fusion Flare",
+      "type": "Fire",
+      "category": "Special",
+      "animation": "PRAS- Fusion Flare.png",
+      "available": true
+    },
+    {
+      "name": "Gastro Acid",
+      "type": "Poison",
+      "category": "Status",
+      "animation": "PRAS- Gastro Acid.png",
+      "available": true
+    },
+    {
+      "name": "Geomancy",
+      "type": "Fairy",
+      "category": "Status",
+      "animation": "PRAS- Geomancy BG.png",
+      "available": true
+    },
+    {
+      "name": "Giga Drain",
+      "type": "Grass",
+      "category": "Special",
+      "animation": "PRAS- Giga Drain BG.png",
+      "available": true
+    },
+    {
+      "name": "Giga Impact",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Giga Impact BG.png",
+      "available": true
+    },
+    {
+      "name": "Glacial Lance",
+      "type": "Ice",
+      "category": "Physical",
+      "animation": "GEN8- Glacial Lance.png",
+      "available": true
+    },
+    {
+      "name": "Glaciate",
+      "type": "Ice",
+      "category": "Special",
+      "animation": "PRAS- Glaciate BG.png",
+      "available": true
+    },
+    {
+      "name": "Glare",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Glare BG.png",
+      "available": true
+    },
+    {
+      "name": "Grass Knot",
+      "type": "Grass",
+      "category": "Special",
+      "animation": "PRAS- Grass Knot.png",
+      "available": true
+    },
+    {
+      "name": "Grav Apple",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": "GEN8- Grav Apple.png",
+      "available": true
+    },
+    {
+      "name": "Gravity",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Gravity BG.png",
+      "available": true
+    },
+    {
+      "name": "Growl",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "Growl.png",
+      "available": true
+    },
+    {
+      "name": "Grudge",
+      "type": "Ghost",
+      "category": "Status",
+      "animation": "PRAS- Grudge.png",
+      "available": true
+    },
+    {
+      "name": "Guillotine",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Guillotine BG.png",
+      "available": true
+    },
+    {
+      "name": "Gunk Shot",
+      "type": "Poison",
+      "category": "Physical",
+      "animation": "PRAS- Gunk Shot.png",
+      "available": true
+    },
+    {
+      "name": "Gust",
+      "type": "Flying",
+      "category": "Special",
+      "animation": "Gust.png",
+      "available": true
+    },
+    {
+      "name": "Gyro Ball",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": "PRAS- Gyro Ball.png",
+      "available": true
+    },
+    {
+      "name": "Haze",
+      "type": "Ice",
+      "category": "Status",
+      "animation": "PRAS- Haze FG.png",
+      "available": true
+    },
+    {
+      "name": "Heal Bell",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Heal Bell.png",
+      "available": true
+    },
+    {
+      "name": "Healing Wish",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Healing Wish.png",
+      "available": true
+    },
+    {
+      "name": "Heat Wave",
+      "type": "Fire",
+      "category": "Special",
+      "animation": "PRAS- Heat Wave.png",
+      "available": true
+    },
+    {
+      "name": "Hidden Power",
+      "type": "Normal",
+      "category": "Special",
+      "animation": "PRAS- Hidden Power.png",
+      "available": true
+    },
+    {
+      "name": "High Horsepower",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": "PRAS- High Horse Power.png",
+      "available": true
+    },
+    {
+      "name": "Hold Hands",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "GEN8- Hold Hands.png",
+      "available": true
+    },
+    {
+      "name": "Hone Claws",
+      "type": "Dark",
+      "category": "Status",
+      "animation": "PRAS- Hone Claws.png",
+      "available": true
+    },
+    {
+      "name": "Horn Drill",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Horn Drill BG.png",
+      "available": true
+    },
+    {
+      "name": "Horn Leech",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": "PRAS- Horn Leech.png",
+      "available": true
+    },
+    {
+      "name": "Howl",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Howl.png",
+      "available": true
+    },
+    {
+      "name": "Hurricane",
+      "type": "Flying",
+      "category": "Special",
+      "animation": "PRAS- Hurricane FG.png",
+      "available": true
+    },
+    {
+      "name": "Hydro Cannon",
+      "type": "Water",
+      "category": "Special",
+      "animation": "PRAS- Hydro Cannon BG.png",
+      "available": true
+    },
+    {
+      "name": "Hydro Pump",
+      "type": "Water",
+      "category": "Special",
+      "animation": "PRAS- Hydro Pump.png",
+      "available": true
+    },
+    {
+      "name": "Hyper Beam",
+      "type": "Normal",
+      "category": "Special",
+      "animation": "PRAS- Hyper Beam BG.png",
+      "available": true
+    },
+    {
+      "name": "Hyper Fang",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Hyper Fang BG.png",
+      "available": true
+    },
+    {
+      "name": "Hyperspace Fury",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": "PRAS- Hyper Space Fury.png",
+      "available": true
+    },
+    {
+      "name": "Hyperspace Hole",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": "PRAS- Hyperspace Hole.png",
+      "available": true
+    },
+    {
+      "name": "Ice Burn",
+      "type": "Ice",
+      "category": "Special",
+      "animation": "PRAS- Ice Burn BG.png",
+      "available": true
+    },
+    {
+      "name": "Ice Hammer",
+      "type": "Ice",
+      "category": "Physical",
+      "animation": "PRAS- Ice Hammer.png",
+      "available": true
+    },
+    {
+      "name": "Icicle Spear",
+      "type": "Ice",
+      "category": "Physical",
+      "animation": "PRAS- Icicle Spear.png",
+      "available": true
+    },
+    {
+      "name": "Icy Wind",
+      "type": "Ice",
+      "category": "Special",
+      "animation": "PRAS- Icy Wind BG.png",
+      "available": true
+    },
+    {
+      "name": "Ingrain",
+      "type": "Grass",
+      "category": "Status",
+      "animation": "PRAS- Ingrain.png",
+      "available": true
+    },
+    {
+      "name": "Ion Deluge",
+      "type": "Electric",
+      "category": "Status",
+      "animation": "PRAS- Ion Deluge FG.png",
+      "available": true
+    },
+    {
+      "name": "Iron Head",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": "Iron Head.png",
+      "available": true
+    },
+    {
+      "name": "Iron Tail",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": "PRAS- Iron Tail.png",
+      "available": true
+    },
+    {
+      "name": "Judgement",
+      "type": "Normal",
+      "category": "Special",
+      "animation": "PRAS- Judgement.png",
+      "available": true
+    },
+    {
+      "name": "King's Shield",
+      "type": "Steel",
+      "category": "Status",
+      "animation": "PRAS- King's Shield.png",
+      "available": true
+    },
+    {
+      "name": "Land's Wrath",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": "GEN8- Land's Wrath.png",
+      "available": true
+    },
+    {
+      "name": "Last Resort",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Last Resort.png",
+      "available": true
+    },
+    {
+      "name": "Leaf Tornado",
+      "type": "Grass",
+      "category": "Special",
+      "animation": "PRAS- Leaf Tornado.png",
+      "available": true
+    },
+    {
+      "name": "Leech Life",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": "PRAS- Leech Life.png",
+      "available": true
+    },
+    {
+      "name": "Leech Seed",
+      "type": "Grass",
+      "category": "Status",
+      "animation": "leech-seed.png",
+      "available": true
+    },
+    {
+      "name": "Leer",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "leer.png",
+      "available": true
+    },
+    {
+      "name": "Light Screen",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Light Screen.png",
+      "available": true
+    },
+    {
+      "name": "Lock-On",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Lock On.png",
+      "available": true
+    },
+    {
+      "name": "Lucky Chant",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Lucky Chant.png",
+      "available": true
+    },
+    {
+      "name": "Luster Purge",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": "PRAS- Luster Purge.png",
+      "available": true
+    },
+    {
+      "name": "Magic Coat",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Magic Coat.png",
+      "available": true
+    },
+    {
+      "name": "Magic Room",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Magic Room BG.png",
+      "available": true
+    },
+    {
+      "name": "Magical Leaf",
+      "type": "Grass",
+      "category": "Special",
+      "animation": "PRAS- Magical Leaf.png",
+      "available": true
+    },
+    {
+      "name": "Magma Storm",
+      "type": "Fire",
+      "category": "Special",
+      "animation": "PRAS- Magma Storm.png",
+      "available": true
+    },
+    {
+      "name": "Magnet Bomb",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": "PRAS- Magnet bomb.png",
+      "available": true
+    },
+    {
+      "name": "Magnitude",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": "PRAS- Magnitude BG.png",
+      "available": true
+    },
+    {
+      "name": "Mat Block",
+      "type": "Fighting",
+      "category": "Status",
+      "animation": "PRAS- Mat Block.png",
+      "available": true
+    },
+    {
+      "name": "Me First",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Me first BG.png",
+      "available": true
+    },
+    {
+      "name": "Mean Look",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Mean Look.png",
+      "available": true
+    },
+    {
+      "name": "Mega Kick",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Mega Kick BG.png",
+      "available": true
+    },
+    {
+      "name": "Megahorn",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": "PRAS- Megahorn BG.png",
+      "available": true
+    },
+    {
+      "name": "Metal Burst",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": "PRAS- Metal Burst BG.png",
+      "available": true
+    },
+    {
+      "name": "Metal Sound",
+      "type": "Steel",
+      "category": "Status",
+      "animation": "PRAS- Metal Sound.png",
+      "available": true
+    },
+    {
+      "name": "Meteor Assault",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": "GEN8- Meteor Assault BG Opp.png",
+      "available": true
+    },
+    {
+      "name": "Meteor Beam",
+      "type": "Rock",
+      "category": "Special",
+      "animation": "GEN8- Meteor Beam.png",
+      "available": true
+    },
+    {
+      "name": "Meteor Mash",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": "PRAS- Meteor Mash.png",
+      "available": true
+    },
+    {
+      "name": "Milk Drink",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Milk Drink.png",
+      "available": true
+    },
+    {
+      "name": "Mind Blown",
+      "type": "Fire",
+      "category": "Special",
+      "animation": "PRAS- Mind Blown BG.png",
+      "available": true
+    },
+    {
+      "name": "Miracle Eye",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Miracle Eye.png",
+      "available": true
+    },
+    {
+      "name": "Mirror Coat",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Mirror Coat.png",
+      "available": true
+    },
+    {
+      "name": "Mirror Shot",
+      "type": "Steel",
+      "category": "Special",
+      "animation": "PRAS- Mirror Shot.png",
+      "available": true
+    },
+    {
+      "name": "Mist",
+      "type": "Ice",
+      "category": "Status",
+      "animation": "PRAS- Mist FG.png",
+      "available": true
+    },
+    {
+      "name": "Misty Explosion",
+      "type": "Fairy",
+      "category": "Special",
+      "animation": "GEN8- Misty Explosion.png",
+      "available": true
+    },
+    {
+      "name": "Misty Terrain",
+      "type": "Fairy",
+      "category": "Status",
+      "animation": "PRAS- Misty Terrain BG.png",
+      "available": true
+    },
+    {
+      "name": "Moonblast",
+      "type": "Fairy",
+      "category": "Special",
+      "animation": "PRAS- Moonblast FG.png",
+      "available": true
+    },
+    {
+      "name": "Moongeist Beam",
+      "type": "Ghost",
+      "category": "Special",
+      "animation": "GEN8- Moongeist Beam.png",
+      "available": true
+    },
+    {
+      "name": "Moonlight",
+      "type": "Fairy",
+      "category": "Status",
+      "animation": "PRAS- Moonlight BG.png",
+      "available": true
+    },
+    {
+      "name": "Mud Bomb",
+      "type": "Ground",
+      "category": "Special",
+      "animation": "PRAS- Mud Bomb.png",
+      "available": true
+    },
+    {
+      "name": "Mud Shot",
+      "type": "Ground",
+      "category": "Special",
+      "animation": "PRAS- Mud Shot.png",
+      "available": true
+    },
+    {
+      "name": "Mud Sport",
+      "type": "Ground",
+      "category": "Status",
+      "animation": "PRAS- Mud Sport.png",
+      "available": true
+    },
+    {
+      "name": "Mud-Slap",
+      "type": "Ground",
+      "category": "Special",
+      "animation": "PRAS- Mud Slap.png",
+      "available": true
+    },
+    {
+      "name": "Muddy Water",
+      "type": "Water",
+      "category": "Special",
+      "animation": "PRAS- Muddy Water FG Opp old.png",
+      "available": true
+    },
+    {
+      "name": "Multi-Attack",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Multi Attack.png",
+      "available": true
+    },
+    {
+      "name": "Mystical Fire",
+      "type": "Fire",
+      "category": "Special",
+      "animation": "PRAS- Mystical Fire.png",
+      "available": true
+    },
+    {
+      "name": "Nasty Plot",
+      "type": "Dark",
+      "category": "Status",
+      "animation": "PRAS- Nasty Plot.png",
+      "available": true
+    },
+    {
+      "name": "Nature's Madness",
+      "type": "Fairy",
+      "category": "Special",
+      "animation": "PRAS- Natures Madness BG.png",
+      "available": true
+    },
+    {
+      "name": "Needle Arm",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": "PRAS- Needle Arm.png",
+      "available": true
+    },
+    {
+      "name": "Night Daze",
+      "type": "Dark",
+      "category": "Special",
+      "animation": "PRAS- Night Daze.png",
+      "available": true
+    },
+    {
+      "name": "No Retreat",
+      "type": "Fighting",
+      "category": "Status",
+      "animation": "GEN8- No Retreat.png",
+      "available": true
+    },
+    {
+      "name": "Obstruct",
+      "type": "Dark",
+      "category": "Status",
+      "animation": "GEN8- Obstruct.png",
+      "available": true
+    },
+    {
+      "name": "Odor Sleuth",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Odor Sleuth.png",
+      "available": true
+    },
+    {
+      "name": "Ominous Wind",
+      "type": "Ghost",
+      "category": "Special",
+      "animation": "PRAS- Ominous Wind BG.png",
+      "available": true
+    },
+    {
+      "name": "Origin Pulse",
+      "type": "Water",
+      "category": "Special",
+      "animation": "PRAS- Origin Pulse BG.png",
+      "available": true
+    },
+    {
+      "name": "Outrage",
+      "type": "Dragon",
+      "category": "Physical",
+      "animation": "PRAS- Outrage BG.png",
+      "available": true
+    },
+    {
+      "name": "Pay Day",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Pay Day.png",
+      "available": true
+    },
+    {
+      "name": "Petal Blizzard",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": "PRAS- Petal Blizzard BG.png",
+      "available": true
+    },
+    {
+      "name": "Petal Dance",
+      "type": "Grass",
+      "category": "Special",
+      "animation": "PRAS- Petal Dance.png",
+      "available": true
+    },
+    {
+      "name": "Poison Jab",
+      "type": "Poison",
+      "category": "Physical",
+      "animation": "PRAS- Poison Jab.png",
+      "available": true
+    },
+    {
+      "name": "Poison Sting",
+      "type": "Poison",
+      "category": "Physical",
+      "animation": "PRAS- Poison Sting.png",
+      "available": true
+    },
+    {
+      "name": "Poison Tail",
+      "type": "Poison",
+      "category": "Physical",
+      "animation": "PRAS- Poison Tail.png",
+      "available": true
+    },
+    {
+      "name": "Powder",
+      "type": "Bug",
+      "category": "Status",
+      "animation": "PRAS- Powder.png",
+      "available": true
+    },
+    {
+      "name": "Powder Snow",
+      "type": "Ice",
+      "category": "Special",
+      "animation": "PRAS- Powder Snow.png",
+      "available": true
+    },
+    {
+      "name": "Precipice Blades",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": "GEN8- Precipice Blades BG.png",
+      "available": true
+    },
+    {
+      "name": "Present",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Present.png",
+      "available": true
+    },
+    {
+      "name": "Prismatic Laser",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": "PRAS- Prismatic Laser.png",
+      "available": true
+    },
+    {
+      "name": "Protect",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Protect.png",
+      "available": true
+    },
+    {
+      "name": "Psybeam",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": "PRAS- Psybeam.png",
+      "available": true
+    },
+    {
+      "name": "Psychic",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": "PRAS- Psychic BG.png",
+      "available": true
+    },
+    {
+      "name": "Psychic Terrain",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Psychic Terrain BG.png",
+      "available": true
+    },
+    {
+      "name": "Psycho Boost",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": "PRAS- Psycho Boost BG.png",
+      "available": true
+    },
+    {
+      "name": "Psycho Cut",
+      "type": "Psychic",
+      "category": "Physical",
+      "animation": "PRAS- Psycho Cut.png",
+      "available": true
+    },
+    {
+      "name": "Psycho Shift",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Psycho Shift.png",
+      "available": true
+    },
+    {
+      "name": "Psystrike",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": "PRAS- Psystrike BG.png",
+      "available": true
+    },
+    {
+      "name": "Pyro Ball",
+      "type": "Fire",
+      "category": "Physical",
+      "animation": "GEN8- PyroBall.png",
+      "available": true
+    },
+    {
+      "name": "Quiver Dance",
+      "type": "Bug",
+      "category": "Status",
+      "animation": "PRAS- Quiver Dance.png",
+      "available": true
+    },
+    {
+      "name": "Rage Powder",
+      "type": "Bug",
+      "category": "Status",
+      "animation": "PRAS- Rage Powder.png",
+      "available": true
+    },
+    {
+      "name": "Razor Shell",
+      "type": "Water",
+      "category": "Physical",
+      "animation": "PRAS- Razor Shell.png",
+      "available": true
+    },
+    {
+      "name": "Recycle",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Recycle.png",
+      "available": true
+    },
+    {
+      "name": "Reflect",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Reflect.png",
+      "available": true
+    },
+    {
+      "name": "Relic Song",
+      "type": "Normal",
+      "category": "Special",
+      "animation": "PRAS- Relic Song BG.png",
+      "available": true
+    },
+    {
+      "name": "Retaliate",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Retaliate BG.png",
+      "available": true
+    },
+    {
+      "name": "Revenge",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": "PRAS- Revenge.png",
+      "available": true
+    },
+    {
+      "name": "Roar",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Roar.png",
+      "available": true
+    },
+    {
+      "name": "Rock Polish",
+      "type": "Rock",
+      "category": "Status",
+      "animation": "PRAS- Rock Polish.png",
+      "available": true
+    },
+    {
+      "name": "Rock Smash",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": "PRAS- Rock Smash.png",
+      "available": true
+    },
+    {
+      "name": "Rock Tomb",
+      "type": "Rock",
+      "category": "Physical",
+      "animation": "Rock Tomb.png",
+      "available": true
+    },
+    {
+      "name": "Rollout",
+      "type": "Rock",
+      "category": "Physical",
+      "animation": "PRAS- Rollout.png",
+      "available": true
+    },
+    {
+      "name": "Roost",
+      "type": "Flying",
+      "category": "Status",
+      "animation": "PRAS- Roost.png",
+      "available": true
+    },
+    {
+      "name": "Rototiller",
+      "type": "Ground",
+      "category": "Status",
+      "animation": "PRAS- Rototiller .png",
+      "available": true
+    },
+    {
+      "name": "Sacred Sword",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": "PRAS- Sacred Sword.png",
+      "available": true
+    },
+    {
+      "name": "Safeguard",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Safeguard.png",
+      "available": true
+    },
+    {
+      "name": "Sand Attack",
+      "type": "Ground",
+      "category": "Status",
+      "animation": "PRAS- Sand Attack.png",
+      "available": true
+    },
+    {
+      "name": "Sand Tomb",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": "PRAS- Sand Tomb.png",
+      "available": true
+    },
+    {
+      "name": "Sandstorm",
+      "type": "Rock",
+      "category": "Status",
+      "animation": "PRAS- Sandstorm.png",
+      "available": true
+    },
+    {
+      "name": "Scald",
+      "type": "Water",
+      "category": "Special",
+      "animation": "PRAS- Scald.png",
+      "available": true
+    },
+    {
+      "name": "Scale Shot",
+      "type": "Dragon",
+      "category": "Physical",
+      "animation": "GEN8- Scale Shot.png",
+      "available": true
+    },
+    {
+      "name": "Scary Face",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Scary Face.png",
+      "available": true
+    },
+    {
+      "name": "Screech",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Screech.png",
+      "available": true
+    },
+    {
+      "name": "Searing Shot",
+      "type": "Fire",
+      "category": "Special",
+      "animation": "PRAS- Searing Shot BG.png",
+      "available": true
+    },
+    {
+      "name": "Seed Bomb",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": "PRAS- Seed Bomb.png",
+      "available": true
+    },
+    {
+      "name": "Seismic Toss",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": "PRAS- Seismic Toss.png",
+      "available": true
+    },
+    {
+      "name": "Shadow Ball",
+      "type": "Ghost",
+      "category": "Special",
+      "animation": "PRAS- Shadow Ball.png",
+      "available": true
+    },
+    {
+      "name": "Shadow Bone",
+      "type": "Ghost",
+      "category": "Physical",
+      "animation": "PRAS- Shadow Bone BG.png",
+      "available": true
+    },
+    {
+      "name": "Shadow Claw",
+      "type": "Ghost",
+      "category": "Physical",
+      "animation": "PRAS- Shadow Claw.png",
+      "available": true
+    },
+    {
+      "name": "Shadow Punch",
+      "type": "Ghost",
+      "category": "Physical",
+      "animation": "PRAS- Shadow Punch.png",
+      "available": true
+    },
+    {
+      "name": "Shadow Sneak",
+      "type": "Ghost",
+      "category": "Physical",
+      "animation": "PRAS- Shadow Sneak.png",
+      "available": true
+    },
+    {
+      "name": "Sharpen",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Sharpen.png",
+      "available": true
+    },
+    {
+      "name": "Sheer Cold",
+      "type": "Ice",
+      "category": "Status",
+      "animation": "PRAS- Sheer Cold BG.png",
+      "available": true
+    },
+    {
+      "name": "Shell Smash",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Shell Smash.png",
+      "available": true
+    },
+    {
+      "name": "Shell Trap",
+      "type": "Fire",
+      "category": "Special",
+      "animation": "PRAS- SHell Trap FG.png",
+      "available": true
+    },
+    {
+      "name": "Shore Up",
+      "type": "Ground",
+      "category": "Status",
+      "animation": "PRAS- Shore Up.png",
+      "available": true
+    },
+    {
+      "name": "Silver Wind",
+      "type": "Bug",
+      "category": "Special",
+      "animation": "PRAS- Silver Wind BG.png",
+      "available": true
+    },
+    {
+      "name": "Skitter Smack",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": "GEN8- Skitter Smack fg.png",
+      "available": true
+    },
+    {
+      "name": "Sky Uppercut",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": "PRAS- Sky Uppercut BG.png",
+      "available": true
+    },
+    {
+      "name": "Slack Off",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Slack Off.png",
+      "available": true
+    },
+    {
+      "name": "Slash",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Slash.png",
+      "available": true
+    },
+    {
+      "name": "Sleep Talk",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Sleep Talk.png",
+      "available": true
+    },
+    {
+      "name": "Sludge Bomb",
+      "type": "Poison",
+      "category": "Special",
+      "animation": "PRAS- Sludge Bomb.png",
+      "available": true
+    },
+    {
+      "name": "Sludge Wave",
+      "type": "Poison",
+      "category": "Special",
+      "animation": "PRAS- Sludge Wave FG Opp.png",
+      "available": true
+    },
+    {
+      "name": "Smog",
+      "type": "Poison",
+      "category": "Special",
+      "animation": "PRAS- Smog.png",
+      "available": true
+    },
+    {
+      "name": "Smokescreen",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Smokescreen.png",
+      "available": true
+    },
+    {
+      "name": "Solar Blade",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": "GEN8- Solar Blade.png",
+      "available": true
+    },
+    {
+      "name": "Spacial Rend",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": "PRAS- Spacial Rend BG.png",
+      "available": true
+    },
+    {
+      "name": "Sparkling Aria",
+      "type": "Water",
+      "category": "Special",
+      "animation": "PRAS- Sparkling Aria.png",
+      "available": true
+    },
+    {
+      "name": "Spectral Thief",
+      "type": "Ghost",
+      "category": "Physical",
+      "animation": "PRAS- Spectral thief BG.png",
+      "available": true
+    },
+    {
+      "name": "Spider Web",
+      "type": "Bug",
+      "category": "Status",
+      "animation": "PRAS- Spider Web.png",
+      "available": true
+    },
+    {
+      "name": "Spike Cannon",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Spike Cannon.png",
+      "available": true
+    },
+    {
+      "name": "Spikes",
+      "type": "Ground",
+      "category": "Status",
+      "animation": "PRAS- Spikes.png",
+      "available": true
+    },
+    {
+      "name": "Spiky Shield",
+      "type": "Grass",
+      "category": "Status",
+      "animation": "PRAS- Spiky Shield.png",
+      "available": true
+    },
+    {
+      "name": "Spirit Shackle",
+      "type": "Ghost",
+      "category": "Physical",
+      "animation": "PRAS- Spirit Shackle BG.png",
+      "available": true
+    },
+    {
+      "name": "Spite",
+      "type": "Ghost",
+      "category": "Status",
+      "animation": "PRAS- Spite.png",
+      "available": true
+    },
+    {
+      "name": "Spore",
+      "type": "Grass",
+      "category": "Status",
+      "animation": "PRAS- Spore.png",
+      "available": true
+    },
+    {
+      "name": "Spotlight",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Spotlight BG.png",
+      "available": true
+    },
+    {
+      "name": "Springtide Storm",
+      "type": "Fairy",
+      "category": "Special",
+      "animation": "Custom_Springtide Storm.png",
+      "available": true
+    },
+    {
+      "name": "Stealth Rock",
+      "type": "Rock",
+      "category": "Status",
+      "animation": "PRAS- Stealth Rock.png",
+      "available": true
+    },
+    {
+      "name": "Steam Eruption",
+      "type": "Water",
+      "category": "Special",
+      "animation": "PRAS- Steam Eruption FG.png",
+      "available": true
+    },
+    {
+      "name": "Steamroller",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": "PRAS- Steamroller.png",
+      "available": true
+    },
+    {
+      "name": "Steel Roller",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": "GEN8- Steel Roller.png",
+      "available": true
+    },
+    {
+      "name": "Sticky Web",
+      "type": "Bug",
+      "category": "Status",
+      "animation": "PRAS- Sticky Web.png",
+      "available": true
+    },
+    {
+      "name": "Stomping Tantrum",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": "PRAS- Stomping Tantrum.png",
+      "available": true
+    },
+    {
+      "name": "Stone Axe",
+      "type": "Rock",
+      "category": "Physical",
+      "animation": "GEN8- Stone Axe.png",
+      "available": true
+    },
+    {
+      "name": "String Shot",
+      "type": "Bug",
+      "category": "Status",
+      "animation": "PRAS- String Shot.png",
+      "available": true
+    },
+    {
+      "name": "Struggle",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "Struggle.png",
+      "available": true
+    },
+    {
+      "name": "Struggle Bug",
+      "type": "Bug",
+      "category": "Special",
+      "animation": "PRAS- Struggle Bug.png",
+      "available": true
+    },
+    {
+      "name": "Struggle+",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "Struggle.png",
+      "available": true
+    },
+    {
+      "name": "Substitute",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Substitute.png",
+      "available": true
+    },
+    {
+      "name": "Sunny Day",
+      "type": "Fire",
+      "category": "Status",
+      "animation": "PRAS- Sunny Day BG.png",
+      "available": true
+    },
+    {
+      "name": "Sunsteel Strike",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": "GEN8- Sunsteel Strike.png",
+      "available": true
+    },
+    {
+      "name": "Supersonic",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Supersonic.png",
+      "available": true
+    },
+    {
+      "name": "Surf",
+      "type": "Water",
+      "category": "Special",
+      "animation": "PRAS- Surf FG Opp.png",
+      "available": true
+    },
+    {
+      "name": "Surging Strikes",
+      "type": "Water",
+      "category": "Physical",
+      "animation": "GEN8- Surging Strikes.png",
+      "available": true
+    },
+    {
+      "name": "Swagger",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Swagger.png",
+      "available": true
+    },
+    {
+      "name": "Sweet Scent",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Sweet Scent BG.png",
+      "available": true
+    },
+    {
+      "name": "Swift",
+      "type": "Normal",
+      "category": "Special",
+      "animation": "PRAS- Swift.png",
+      "available": true
+    },
+    {
+      "name": "Tail Glow",
+      "type": "Bug",
+      "category": "Status",
+      "animation": "PRAS- Tail Glow.png",
+      "available": true
+    },
+    {
+      "name": "Tail Slap",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Tail slap.png",
+      "available": true
+    },
+    {
+      "name": "Tailwind",
+      "type": "Flying",
+      "category": "Status",
+      "animation": "PRAS- Tailwind.png",
+      "available": true
+    },
+    {
+      "name": "Tar Shot",
+      "type": "Rock",
+      "category": "Status",
+      "animation": "GEN8- Tar Shot.png",
+      "available": true
+    },
+    {
+      "name": "Taunt",
+      "type": "Dark",
+      "category": "Status",
+      "animation": "PRAS- Taunt.png",
+      "available": true
+    },
+    {
+      "name": "Teatime",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "GEN8- Tea Time.png",
+      "available": true
+    },
+    {
+      "name": "Techno Blast",
+      "type": "Normal",
+      "category": "Special",
+      "animation": "PRAS- Techno Blast.png",
+      "available": true
+    },
+    {
+      "name": "Teleport",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Teleport.png",
+      "available": true
+    },
+    {
+      "name": "Thunder",
+      "type": "Electric",
+      "category": "Special",
+      "animation": "PRAS- Thunder BG.png",
+      "available": true
+    },
+    {
+      "name": "Thunder Cage",
+      "type": "Electric",
+      "category": "Special",
+      "animation": "GEN8- Thundercage.png",
+      "available": true
+    },
+    {
+      "name": "Thunderous Kick",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": "GEN8- Thunderous kick.png",
+      "available": true
+    },
+    {
+      "name": "Torment",
+      "type": "Dark",
+      "category": "Status",
+      "animation": "PRAS- Torment.png",
+      "available": true
+    },
+    {
+      "name": "Tri Attack",
+      "type": "Normal",
+      "category": "Special",
+      "animation": "PRAS- Tri Attack.png",
+      "available": true
+    },
+    {
+      "name": "Trick",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Trick.png",
+      "available": true
+    },
+    {
+      "name": "Trick Room",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Trick Room BG.png",
+      "available": true
+    },
+    {
+      "name": "Trop Kick",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": "PRAS- Trop Kick.png",
+      "available": true
+    },
+    {
+      "name": "Trump Card",
+      "type": "Normal",
+      "category": "Special",
+      "animation": "PRAS- Trump card.png",
+      "available": true
+    },
+    {
+      "name": "Twister",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": "PRAS- Twister.png",
+      "available": true
+    },
+    {
+      "name": "U-Turn",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": "PRAS- U-Turn.png",
+      "available": true
+    },
+    {
+      "name": "Uproar",
+      "type": "Normal",
+      "category": "Special",
+      "animation": "PRAS- Uproar.png",
+      "available": true
+    },
+    {
+      "name": "Venom Drench",
+      "type": "Poison",
+      "category": "Status",
+      "animation": "PRAS- Venom Drench.png",
+      "available": true
+    },
+    {
+      "name": "Venoshock",
+      "type": "Poison",
+      "category": "Special",
+      "animation": "PRAS- Venoshock.png",
+      "available": true
+    },
+    {
+      "name": "Vicegrip",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": "PRAS- Vice Grip.png",
+      "available": true
+    },
+    {
+      "name": "Water Pulse",
+      "type": "Water",
+      "category": "Special",
+      "animation": "PRAS- Water Pulse.png",
+      "available": true
+    },
+    {
+      "name": "Water Shuriken",
+      "type": "Water",
+      "category": "Physical",
+      "animation": "PRAS- Water Shuriken.png",
+      "available": true
+    },
+    {
+      "name": "Weather Ball",
+      "type": "Normal",
+      "category": "Special",
+      "animation": "PRAS- Weatherball.png",
+      "available": true
+    },
+    {
+      "name": "Whirlpool",
+      "type": "Water",
+      "category": "Special",
+      "animation": "PRAS- Whirlpool.png",
+      "available": true
+    },
+    {
+      "name": "Wildbolt Storm",
+      "type": "Electric",
+      "category": "Special",
+      "animation": "Custom_Wildbolt Storm.png",
+      "available": true
+    },
+    {
+      "name": "Will-O-Wisp",
+      "type": "Fire",
+      "category": "Status",
+      "animation": "PRAS- Will O Wisp.png",
+      "available": true
+    },
+    {
+      "name": "Wish",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Wish.png",
+      "available": true
+    },
+    {
+      "name": "Withdraw",
+      "type": "Water",
+      "category": "Status",
+      "animation": "PRAS- Withdraw.png",
+      "available": true
+    },
+    {
+      "name": "Wonder Room",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": "PRAS- Wonder Room BG.png",
+      "available": true
+    },
+    {
+      "name": "Wood Hammer",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": "PRAS- Wood Hammer.png",
+      "available": true
+    },
+    {
+      "name": "Worry Seed",
+      "type": "Grass",
+      "category": "Status",
+      "animation": "PRAS- Worry Seed.png",
+      "available": true
+    },
+    {
+      "name": "X-Scissor",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": "PRAS- X Scissor.png",
+      "available": true
+    },
+    {
+      "name": "Yawn",
+      "type": "Normal",
+      "category": "Status",
+      "animation": "PRAS- Yawn.png",
+      "available": true
+    }
+  ],
+  "missing": [
+    {
+      "name": "Absorb",
+      "type": "Grass",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Accelerock",
+      "type": "Rock",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Acid",
+      "type": "Poison",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Acid Armor",
+      "type": "Poison",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Acid Spray",
+      "type": "Poison",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Acrobatics",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Acupressure",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "After You",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Agility",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Ally Switch",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Ancient Power",
+      "type": "Rock",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Aqua Ring",
+      "type": "Water",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Aqua Tail",
+      "type": "Water",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Arcane Fury",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Arcane Storm",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Arm Thrust",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Aromatic Mist",
+      "type": "Fairy",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Assist",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Assurance",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Astonish",
+      "type": "Ghost",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Attack of Opportunity",
+      "type": "",
+      "category": "--",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Attack Order",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Aurora Beam",
+      "type": "Ice",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Avalanche",
+      "type": "Ice",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Backswing",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bane",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Baneful Bunker",
+      "type": "Poison",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Barb Barrage",
+      "type": "Poison",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Barrage",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bash!",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Beak Blast",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Beat Up",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Behemoth Bash",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Behemoth Blade",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Belch",
+      "type": "Poison",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Belly Drum",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bestow",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bind",
+      "type": "Normal",
+      "category": "Static",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bitter Malice",
+      "type": "Ghost",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Blast Burn",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bleakwind Storm",
+      "type": "Flying",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bleed!",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Blind",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Block",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Blue Flare",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Body Press",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Body Slam",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bolt Beak",
+      "type": "Electric",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bolt Strike",
+      "type": "Electric",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bon Mot",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bone Club",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bone Rush",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Boomburst",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bounce",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Branch Poke",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Breaking Swipe",
+      "type": "Dragon",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Brick Break",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bubble",
+      "type": "Water",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bubblebeam",
+      "type": "Water",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bulldoze",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bullet Punch",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bullet Seed",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Bullseye",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Burn Up",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Burning Jealousy",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Calm Mind",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Camouflage",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Captivate",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Ceaseless Edge",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Charge",
+      "type": "Electric",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Charm",
+      "type": "Fairy",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Cheap Shot",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Chip Away",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Circle Throw",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Clamp",
+      "type": "Water",
+      "category": "Static",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Clangorous Soul",
+      "type": "Dragon",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Close Combat",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Coaching",
+      "type": "Fighting",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Comet Punch",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Cone of Force",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Confide",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Conversion2",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Copycat",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Corrosive Gas",
+      "type": "Poison",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Cosmic Power",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Counter",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Court Change",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Cross Chop",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Crush Claw",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Cut",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Dark Void [SM]",
+      "type": "Dark",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Darkest Lariat",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Deadly Strike",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Defend Order",
+      "type": "Bug",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Defense Curl",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Destiny Bond",
+      "type": "Ghost",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Diamond Storm",
+      "type": "Rock",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Dire Claw",
+      "type": "Poison",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Dirty Trick",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Disarm",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Disarming Voice",
+      "type": "Fairy",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Disengage",
+      "type": "",
+      "category": "--",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Dizzy Punch",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Double Hit",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Double Kick",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Double Slap",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Double Swipe",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Double Team",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Double-Edge",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Draco Meteor",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Dragon Hammer",
+      "type": "Dragon",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Dragon Rage",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Dragon Rush",
+      "type": "Dragon",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Drill Peck",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Drill Run",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Dual Chop",
+      "type": "Dragon",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Dual Wingbeat",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Dynamax Cannon",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Dynamic Punch",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Echoed Voice",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Eerie Impulse",
+      "type": "Electric",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Electrify",
+      "type": "Electric",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Embargo",
+      "type": "Dark",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Ember",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Endeavor",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Endure",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Energy Blast",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Energy Sphere",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Energy Vortex",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Entrainment",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Esper Wing",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Eternabeam",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "EW Adept",
+      "type": "--",
+      "category": "--",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "EW Expert",
+      "type": "--",
+      "category": "--",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Expanding Force",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Explosion",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Extrasensory",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Extreme Speed",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Facade",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fa\u00e7ade",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Feather Dance",
+      "type": "Flying",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Feint",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Feint Attack",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fell Stinger [SM]",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fiery Dance",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fiery Wrath",
+      "type": "Dark",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Final Gambit",
+      "type": "Fighting",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fire Fang",
+      "type": "Fire",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fire Lash",
+      "type": "Fire",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fire Pledge",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fire Punch",
+      "type": "Fire",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fishious Rend",
+      "type": "Water",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Flail",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Flame Burst",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Flame Charge",
+      "type": "Fire",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Flame Wheel",
+      "type": "Fire",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Flamethrower",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Flare Blitz",
+      "type": "Fire",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fling",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Flip Turn",
+      "type": "Water",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Flirt",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Flower Shield",
+      "type": "Fairy",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Flying Press",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Flying Press [SM]",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Focus Blast",
+      "type": "Fighting",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Forest's Curse",
+      "type": "Grass",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Foul Play",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Frustration",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Furious Strikes",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fury Attack",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fury Cutter",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Fury Swipes",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Future Sight",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Gear Grind",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Gear Up",
+      "type": "Steel",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Gear Up [SS]",
+      "type": "Steel",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Gouge",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Grapple",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Grass Pledge",
+      "type": "Grass",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Grass Whistle",
+      "type": "Grass",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Grassy Glide",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Grassy Terrain",
+      "type": "Grass",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Growth",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Guard Split",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Guard Swap",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hail",
+      "type": "Ice",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hammer Arm",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Harden",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Head Charge",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Head Smash",
+      "type": "Rock",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Headbutt",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Headlong Rush",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Heal Block",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Heal Order",
+      "type": "Bug",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Heal Pulse",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Heart Stamp",
+      "type": "Psychic",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Heart Swap",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Heat Crash",
+      "type": "Fire",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Heavy Slam",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Helping Hand",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hex",
+      "type": "Ghost",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Bug",
+      "type": "Bug",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Dark",
+      "type": "Dark",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Dragon",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Electric",
+      "type": "Electric",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Fairy",
+      "type": "Fairy",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Fighting",
+      "type": "Fighting",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Fire",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Flying",
+      "type": "Flying",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Ghost",
+      "type": "Ghost",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Grass",
+      "type": "Grass",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Ground",
+      "type": "Ground",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Ice",
+      "type": "Ice",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Poison",
+      "type": "Poison",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Psychic",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Rock",
+      "type": "Rock",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Steel",
+      "type": "Steel",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hidden Power Water",
+      "type": "Water",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "High Jump Kick",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hinder",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Horn Attack",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Howl [SS]",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hyper Voice",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Hypnosis",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Ice Ball",
+      "type": "Ice",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Ice Beam",
+      "type": "Ice",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Ice Fang",
+      "type": "Ice",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Ice Punch",
+      "type": "Ice",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Ice Shard",
+      "type": "Ice",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Icicle Crash",
+      "type": "Ice",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Imprison",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Incinerate",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Infernal Parade",
+      "type": "Ghost",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Inferno",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Infestation",
+      "type": "Bug",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Instruct",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Intercept Melee",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Intercept Ranged",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Iron Defense",
+      "type": "Steel",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Jaw Lock",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Jump Kick",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Jungle Healing",
+      "type": "Grass",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Karate Chop",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Kinesis",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Knock Off",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Laser Focus",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Lash Out",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Lava Plume",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Leaf Blade",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Leaf Storm",
+      "type": "Grass",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Leafage",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Leech Life [SM]",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Lick",
+      "type": "Ghost",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Life Dew",
+      "type": "Water",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Light of Ruin",
+      "type": "Fairy",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Liquidation",
+      "type": "Water",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Lovely Kiss",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Low Blow",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Low Kick",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Low Sweep",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Lunar Blessing",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Lunar Dance",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Lunge",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Mach Punch",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Magic Burst",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Magic Powder",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Magnet Rise",
+      "type": "Electric",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Magnetic Flux",
+      "type": "Electric",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Magnetic Flux [SM]",
+      "type": "Electric",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Magnetic Flux [SS]",
+      "type": "Electric",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Maneuver",
+      "type": "",
+      "category": "Category",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Manipulate",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Maul",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Meditate",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Mega Drain",
+      "type": "Grass",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Mega Punch",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Memento",
+      "type": "Dark",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Metal Claw",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Metronome",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "MH Adept",
+      "type": "--",
+      "category": "--",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "MH Expert",
+      "type": "--",
+      "category": "--",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Mimic",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Mind Reader",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Minimize",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Mirror Move",
+      "type": "Flying",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Mist Ball",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Morning Sun",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Mountain Gale",
+      "type": "Ice",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Multi-Attack [SS]",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Mystical Power",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Name",
+      "type": "Type",
+      "category": "Category",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Natural Gift",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Nature Power",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Night Shade",
+      "type": "Ghost",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Night Slash",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Nightmare",
+      "type": "Ghost",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Noble Roar",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Nuzzle",
+      "type": "Electric",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Oblivion Wing",
+      "type": "Flying",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Octazooka",
+      "type": "Water",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Octolock",
+      "type": "Fighting",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "OH Adept",
+      "type": "--",
+      "category": "--",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Overdrive",
+      "type": "Electric",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Overheat",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Pain Split",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Parabolic Charge",
+      "type": "Electric",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Parabolic Charge [SM]",
+      "type": "Electric",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Parting Shot",
+      "type": "Dark",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Payback",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Peck",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Perish Song",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Phantom Force",
+      "type": "Ghost",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Photon Geyser",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Pierce!",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Pin Missile",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Plasma Fists",
+      "type": "Electric",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Play Nice",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Play Rough",
+      "type": "Fairy",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Pluck",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Poison Fang",
+      "type": "Poison",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Poison Gas",
+      "type": "Poison",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Poison Powder",
+      "type": "Poison",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Pollen Puff",
+      "type": "Bug",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Poltergeist",
+      "type": "Ghost",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Pound",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Power Gem",
+      "type": "Rock",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Power Shift",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Power Split",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Power Swap",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Power Trick",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Power Trip",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Power Whip",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Power-Up Punch",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Psych Up",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Psychic Fangs",
+      "type": "Psychic",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Psyshield Bash",
+      "type": "Psychic",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Psyshock",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Psywave",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Punishment",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Purify",
+      "type": "Poison",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Pursuit",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Push",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Quash",
+      "type": "Dark",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Quick Attack",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Quick Guard",
+      "type": "Fighting",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rage",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Raging Fury",
+      "type": "Fire",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rain Dance",
+      "type": "Water",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rapid Spin",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rapid Spin [SS]",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Razor Leaf",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Razor Wind",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Recover",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Reflect Type",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Refresh",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rending Spell",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Resonance Beam",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rest",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Return",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Revelation Dance",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Reversal",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Riposte",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rising Voltage",
+      "type": "Electric",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Roar of Time",
+      "type": "Dragon",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rock Blast",
+      "type": "Rock",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rock Climb",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rock Slide",
+      "type": "Rock",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rock Throw",
+      "type": "Rock",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rock Wrecker",
+      "type": "Rock",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Role Play",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Rolling Kick",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Round",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sacred Fire",
+      "type": "Fire",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Salvo",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sandstorm Sear",
+      "type": "Ground",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Scorching Sands",
+      "type": "Ground",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Scratch",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Secret Force",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Secret Power",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Secret Sword",
+      "type": "Fighting",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Seed Flare",
+      "type": "Grass",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Self-Destruct",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Shadow Force",
+      "type": "Ghost",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Shell Side Arm",
+      "type": "Poison",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Shelter",
+      "type": "Steel",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Shift Gear",
+      "type": "Steel",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Shock Wave",
+      "type": "Electric",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Signal Beam",
+      "type": "Bug",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Simple Beam",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sing",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sketch",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Skill Swap",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Skull Bash",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sky Attack",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sky Drop",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Slam",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sleep Powder",
+      "type": "Grass",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Slice",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sludge",
+      "type": "Poison",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Smack Down",
+      "type": "Rock",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Smart Strike",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Smelling Salts",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Snap Trap",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Snarl",
+      "type": "Dark",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Snatch",
+      "type": "Dark",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Snipe Shot",
+      "type": "Water",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Snore",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Soak",
+      "type": "Water",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Soft-Boiled",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Solar Beam",
+      "type": "Grass",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sonic Boom",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Spark",
+      "type": "Electric",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Speed Swap",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Spirit Break",
+      "type": "Fairy",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Spirit Lance",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Spit Up",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Splash",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sprint",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Steel Beam",
+      "type": "Steel",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Steel Wing",
+      "type": "Steel",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Stockpile",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Stomp",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Stone Edge",
+      "type": "Rock",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Stored Power",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Storm Throw",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Strange Steam",
+      "type": "Fairy",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Strength",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Strength Sap",
+      "type": "Grass",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Stuff Cheeks",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Stun Spore",
+      "type": "Grass",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Submission",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sucker Punch",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sucker Punch [SM]",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Super Fang",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Superpower",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Swagger [SM]",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Swallow",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sweeping Strike",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Sweet Kiss",
+      "type": "Fairy",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Switcheroo",
+      "type": "Dark",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Swords Dance",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Synchronoise",
+      "type": "Psychic",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Synthesis",
+      "type": "Grass",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Tackle",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Tackle [SM]",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Tail Whip",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Take Aim",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Take Down",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Take Heart",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Tearful Look",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Teeter Dance",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Telekinesis",
+      "type": "Psychic",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Terrain Pulse",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Terrorize",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Thief",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Thousand Arrows",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Thousand Waves",
+      "type": "Ground",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Thrash",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Throat Chop",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Thunder Fang",
+      "type": "Electric",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Thunder Punch",
+      "type": "Electric",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Thunder Shock",
+      "type": "Electric",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Thunder Wave",
+      "type": "Electric",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Thunder Wave [SM]",
+      "type": "Electric",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Thunderbolt",
+      "type": "Electric",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Tickle",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Titanic Slam",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Topsy-Turvy",
+      "type": "Dark",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Toxic",
+      "type": "Poison",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Toxic Spikes",
+      "type": "Poison",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Toxic Threads",
+      "type": "Poison",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Transform",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Trick-or-Treat",
+      "type": "Ghost",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Trip",
+      "type": "",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Triple Arrows",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Triple Axel",
+      "type": "Ice",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Triple Kick",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Triple Kick [LA]",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Triple Threat",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Twineedle",
+      "type": "Bug",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "V-Create",
+      "type": "Fire",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Vacuum Wave",
+      "type": "Fighting",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Victory Dance",
+      "type": "Fighting",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Vine Whip",
+      "type": "Grass",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Vital Throw",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Volt Switch",
+      "type": "Electric",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Volt Tackle",
+      "type": "Electric",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Wake-Up Slap",
+      "type": "Fighting",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Water Gun",
+      "type": "Water",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Water Pledge",
+      "type": "Water",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Water Shuriken [SM]",
+      "type": "Water",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Water Sport",
+      "type": "Water",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Water Spout",
+      "type": "Water",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Waterfall",
+      "type": "Water",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Wave Crash",
+      "type": "Water",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Wear Down",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Whirlwind",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Wicked Blow",
+      "type": "Dark",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Wide Guard",
+      "type": "Rock",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Wild Charge",
+      "type": "Electric",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Wing Attack",
+      "type": "Flying",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Work Up",
+      "type": "Normal",
+      "category": "Status",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Wounding Strike",
+      "type": "Normal",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Wrap",
+      "type": "Normal",
+      "category": "Static",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Wring Out",
+      "type": "Normal",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Zap Cannon",
+      "type": "Electric",
+      "category": "Special",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Zen Headbutt",
+      "type": "Psychic",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    },
+    {
+      "name": "Zing Zap",
+      "type": "Electric",
+      "category": "Physical",
+      "animation": null,
+      "available": false
+    }
+  ]
+}

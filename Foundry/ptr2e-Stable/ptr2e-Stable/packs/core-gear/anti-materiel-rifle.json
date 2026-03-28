@@ -1,0 +1,220 @@
+{
+  "name": "Anti-Materiel Rifle",
+  "img": "systems/ptr2e/img/icons/weapon_icon.webp",
+  "type": "weapon",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "held",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "steel",
+      "power": 80,
+      "accuracy": 90,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "traits": [
+      "weapon",
+      "fling",
+      "firearm",
+      "autoload",
+      "steel",
+      "charge-pool-4",
+      "reload-4",
+      "conventional",
+      "modern",
+      "sci-fi"
+    ],
+    "actions": [
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "status",
+        "free": true,
+        "traits": [
+          "set-up",
+          "defensive",
+          "priority-20"
+        ],
+        "name": "Anti-Materiel Rifle (Set Up)",
+        "slug": "anti-materiel-rifle-set-up",
+        "description": "<p>Effect: The user spends 2 PP, and gains @Affliction[braced 2].</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "priority": 2
+        },
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 200,
+        "accuracy": 95,
+        "free": true,
+        "traits": [
+          "missile",
+          "pierce",
+          "flinch-40",
+          "firearm",
+          "crit-1"
+        ],
+        "name": "Anti-Materiel Rifle (Resolution)",
+        "slug": "anti-materiel-rifle-resolution",
+        "description": "<p>Trigger: The user used Anti-Materiel Rifle (Set Up) as their last Action.</p><p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 45,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1,
+          "trigger": "<p>The user used Anti-Materiel Rifle (Set Up) as their last Action.</p>"
+        },
+        "predicate": []
+      },
+      {
+        "types": [
+          "untyped"
+        ],
+        "category": "special",
+        "power": 200,
+        "accuracy": 45,
+        "free": true,
+        "traits": [
+          "missile",
+          "pierce",
+          "firearm"
+        ],
+        "name": "Anti-Materiel Rifle (Hip Fire)",
+        "slug": "anti-materiel-rifle-hip-fire",
+        "description": "<p>Effect: This attack calculates damage against the target's DEF, rather than SPDEF.</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "attack",
+        "range": {
+          "target": "creature",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "predicate": []
+      }
+    ],
+    "description": "<p>An anti-materiel rifle (AMR) is a rifle designed for use against military equipment, structures, and other hardware (materiel) targets. Anti-materiel rifles are chambered in significantly larger calibers than conventional rifles and are employed to eliminate equipment such as engines and unarmored or lightly armored targets.</p>",
+    "weaponType": "untyped",
+    "weaponPp": 4,
+    "slug": "anti-materiel-rifle",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "sRQl1TkcK26ztomy",
+  "effects": [
+    {
+      "name": "Anti-Materiel Rifle",
+      "type": "passive",
+      "_id": "MnXIJHliCRigGfv2",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "{item|id}-attack-damage-flat",
+            "value": 68,
+            "predicate": [],
+            "label": "Anti-Materiel Rifle",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-gear.Item.Ba3EyqpUePgGrfQk.ActiveEffect.uOxpw5kHcRtpv4pa",
+        "duplicateSource": null,
+        "coreVersion": "13.347",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1743971623486,
+        "modifiedTime": 1757632056546,
+        "lastModifiedBy": "UTlFSVhgfIUeTsoW",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "Tn65RZTafVbxqEXT"
+}

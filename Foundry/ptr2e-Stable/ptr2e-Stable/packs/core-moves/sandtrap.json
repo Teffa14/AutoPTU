@@ -1,0 +1,82 @@
+{
+  "name": "Sandtrap",
+  "type": "move",
+  "_id": "2rktRS5pOJDKLPtZ",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "sandtrap",
+    "actions": [
+      {
+        "name": "Sandtrap (Resolution)",
+        "slug": "sandtrap-resolution",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/ground_icon.svg",
+        "traits": [
+          "set-up",
+          "defensive",
+          "environ",
+          "friendly",
+          "flinch-10"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 2,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "The user used Sandtrap (Set-Up) as their last Action."
+        },
+        "types": [
+          "ground"
+        ],
+        "category": "physical",
+        "power": 140,
+        "accuracy": 90,
+        "description": "<p>Trigger: The user used Sandtrap (Set-Up) as their last Action.</p><p>Effect: The user freely Moves up to the Movement Score of their choice before attacking with this Attack. If the weather is not Dusty, Windy, or Clear, this attack's Power is reduced by 50%. On hit, valid targets have a 50% chance of losing -1 SPD Stage for 5 Activations.</p>",
+        "predicate": []
+      },
+      {
+        "name": "Sandtrap (Set-Up)",
+        "slug": "sandtrap-set-up",
+        "description": "<p>Effect: The user gains @Affliction[braced] 1 and gains +1 DEF, SPDEF, and EVA Stages for 3 Activations. If Dusty Weather is present, the user may use Sandtrap (Resolution) as a Free Action upon resolving this Attack.</p>",
+        "traits": [
+          "set-up",
+          "defensive",
+          "environ",
+          "flinch-20"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/ground_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "ground"
+        ],
+        "category": "physical",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "effects": []
+}

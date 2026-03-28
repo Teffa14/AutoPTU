@@ -1,0 +1,482 @@
+{
+  "name": "blacephalon",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "ghost",
+      "fire"
+    ],
+    "stats": {
+      "hp": 53,
+      "atk": 127,
+      "def": 53,
+      "spa": 151,
+      "spd": 79,
+      "spe": 107
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "fire-spin",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "astonish",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "light-screen",
+          "level": 5,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "ember",
+          "level": 10,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stored-power",
+          "level": 13,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "night-shade",
+          "level": 15,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flame-burst",
+          "level": 17,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confuse-ray",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "magic-coat",
+          "level": 25,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "incinerate",
+          "level": 30,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hypnosis",
+          "level": 35,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mystical-fire",
+          "level": 40,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "shadow-ball",
+          "level": 45,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "calm-mind",
+          "level": 50,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "will-o-wisp",
+          "level": 55,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "trick",
+          "level": 60,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fire-blast",
+          "level": 65,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mind-blown",
+          "level": 70,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "spite",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "pain-split",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "uproar",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "heat-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "recycle",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "knock-off",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "last-resort",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "foul-play",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "after-you",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "expanding-force",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fire-punch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "psychic",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "self-destruct",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "explosion",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thief",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "encore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "torment",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "taunt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "overheat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "shadow-claw",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psyshock",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "smack-down",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "flame-charge",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "quash",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.8,
+      "weight": 13,
+      "category": "medium",
+      "type": "height"
+    },
+    "captureRate": 41,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "blacephalon",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 806,
+    "traits": [
+      "pokemon",
+      "ultra-beast",
+      "bipedal",
+      "glow-5",
+      "volatile-bomb",
+      "fully-evolved",
+      "jump-4"
+    ],
+    "diet": [
+      "auravore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "beast-boost"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "regenerator"
+        },
+        {
+          "slug": "cursed-body"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "dancer"
+        },
+        {
+          "slug": "flame-body"
+        }
+      ],
+      "master": [
+        {
+          "slug": "aftermath"
+        },
+        {
+          "slug": "mold-breaker"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 11
+      },
+      {
+        "type": "swim",
+        "value": 5
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "ultrology",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "science"
+      },
+      {
+        "slug": "psychology",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "sleight-of-hand",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "blacephalon",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "ZMaGfjToCTcpqIHe",
+  "effects": [],
+  "folder": null
+}

@@ -1,0 +1,52 @@
+{
+  "name": "Spirit Punch",
+  "type": "move",
+  "_id": "rICZRhiMnJwV1eYJ",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "spirit-punch",
+    "actions": [
+      {
+        "name": "Spirit Punch",
+        "slug": "spirit-punch",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+        "traits": [
+          "aura",
+          "punch",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "types": [
+          "fighting"
+        ],
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "description": "<p>Effect: This Attack uses the target's SPDEF in calculating damage, rather than their DEF. This attack deals neutral damage against the Ghost Type.</p>",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": []
+}

@@ -1,0 +1,56 @@
+{
+  "name": "Premier Ball",
+  "img": "systems/ptr2e/img/item-icons/premier ball.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling"
+    ],
+    "description": "<p>A sleek, pretty ball given out during promotional events. +10 Critical Capture chance.</p>",
+    "modifier": 1,
+    "quantity": 1,
+    "slug": "premier-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "1DyQ3ufyPpixrxtP",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

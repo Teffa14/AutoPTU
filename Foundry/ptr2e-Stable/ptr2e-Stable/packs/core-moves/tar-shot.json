@@ -1,0 +1,48 @@
+{
+  "name": "Tar Shot",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "tar-shot",
+    "actions": [
+      {
+        "slug": "tar-shot",
+        "name": "Tar Shot",
+        "type": "attack",
+        "traits": [
+          "blast-2"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": 100,
+        "types": [
+          "rock"
+        ],
+        "description": "<p>Effect: On hit, all valid targets lose -1 SPD Stage for 5 Activations. Targets hit by Tar Shot also gain Weakness to Fire-type attacks for 5 Activations. If a creature already has  Fire-type weakness due to its base types, Tar Shot does not apply additional weakness.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "CiTBxDcJFroq1gYA",
+  "effects": []
+}

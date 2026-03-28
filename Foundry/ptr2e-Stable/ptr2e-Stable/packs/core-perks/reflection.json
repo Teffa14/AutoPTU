@@ -1,0 +1,148 @@
+{
+  "folder": "c29hnIAtXgwB7FeY",
+  "name": "Reflection",
+  "type": "perk",
+  "_id": "tPqOzDFsNWYsrMlY",
+  "img": "systems/ptr2e/img/perk-icons/Combat.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Reflection",
+        "slug": "reflection",
+        "description": "<p>Effect: When the user suffers damage that would cause them their Shield to break, the user may spend 2 PP at @Trait[interrupt-2] to inflict @Tick[-1] on the attacker, and give them @Affliction[delay 30].</p>",
+        "traits": [],
+        "type": "generic",
+        "img": "systems/ptr2e/img/perk-icons/Combat.svg",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 2
+        },
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "reflection",
+    "description": "<p>Effect: When the user suffers damage that would cause them their Shield to break, the user may spend 2 PP at @Trait[interrupt-2] to inflict @Tick[-1] on the attacker, and give them @Affliction[delay 30].</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 89,
+        "y": 96,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "guard-up",
+          "punishment-ward"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Combat.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Reflection",
+      "type": "passive",
+      "_id": "PMvJjBGqdQh9vblT",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "reflection-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.4DlXFTVooz07YcDm",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "target",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "reflection-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.delayconditiitem",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": false,
+            "affects": "target",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.amount",
+                "value": -30
+              }
+            ],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1764896883022,
+        "modifiedTime": 1764896934829,
+        "lastModifiedBy": "bDEGyOQfZwkb2ml2"
+      }
+    }
+  ]
+}

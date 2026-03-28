@@ -1,0 +1,43 @@
+{
+  "name": "Copycat",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "copycat",
+    "actions": [
+      {
+        "slug": "copycat",
+        "name": "Copycat",
+        "type": "attack",
+        "traits": [
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "status",
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: The user freely uses the last attack the target used. The user can select a new target for the copied attack as needed.</p>",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg"
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "7W4h4UABFbJIdi6o",
+  "effects": []
+}

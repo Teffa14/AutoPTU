@@ -1,0 +1,73 @@
+{
+  "name": "Leaf Shield",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "leaf-shield",
+    "actions": [
+      {
+        "slug": "growth",
+        "name": "Leaf Shield",
+        "type": "attack",
+        "traits": [
+          "environ"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "status",
+        "types": [
+          "grass"
+        ],
+        "description": "<p>Effect: The user gains +1 DEF and SPDEF Stage for 5 Activations.</p>",
+        "img": "systems/ptr2e/img/svg/grass_icon.svg",
+        "predicate": []
+      },
+      {
+        "slug": "growth-sunny",
+        "name": "Leaf Shield",
+        "type": "attack",
+        "traits": [
+          "environ"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "<p>Sunny Weather is present.</p>"
+        },
+        "category": "status",
+        "types": [
+          "grass"
+        ],
+        "description": "<p>Trigger: Sunny Weather is present.</p><p>Effect: The user gains +2 DEF and SPDEF Stages for 7 Activations.</p>",
+        "variant": "leaf-guard",
+        "free": true,
+        "img": "systems/ptr2e/img/svg/grass_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "o2OxJpAOyNhoad1R",
+  "effects": []
+}

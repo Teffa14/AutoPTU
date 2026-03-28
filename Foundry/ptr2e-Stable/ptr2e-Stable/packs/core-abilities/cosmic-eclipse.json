@@ -1,0 +1,139 @@
+{
+  "name": "Cosmic Eclipse",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "legendary"
+        ],
+        "name": "Cosmic Eclipse",
+        "slug": "cosmic-eclipse-active",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3,
+          "trigger": "<p>The user declares Moongeist Beam.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user declares Moongeist Beam</p><p>Effect: The triggering attack has a 33% chance of inflicting @Affliction[cursed] 3 to valid targets on hit.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [
+          "legendary"
+        ],
+        "name": "Cosmic Eclipse",
+        "slug": "cosmic-eclipse-passive",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "description": "<p>Passive: The user's Ghost-Type attacks can hit Normal-Type creatures.</p>",
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 10
+        }
+      }
+    ],
+    "description": "<p>Trigger: The user declares Moongeist Beam</p><p>Effect: Connection - Moongeist Beam. The triggering attack has a 33% chance of inflicting @Affliction[cursed] 3 to valid targets on hit. Passive: The user's Ghost-Type attacks can hit Normal-Type creatures.</p>",
+    "traits": [
+      "legendary",
+      "partial-automation"
+    ],
+    "slug": "cosmic-eclipse",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "k9KxGgxPGZk9ohQj",
+  "effects": [
+    {
+      "name": "Cosmic Eclipse",
+      "type": "passive",
+      "_id": "a3jgHCGSIQv0OVVM",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.DaHQKPYCD2Qy7e4r",
+            "predicate": [
+              "ability:cosmic-eclipse:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "reevaluateOnUpdate": true,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737395450078,
+        "modifiedTime": 1754317380935,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

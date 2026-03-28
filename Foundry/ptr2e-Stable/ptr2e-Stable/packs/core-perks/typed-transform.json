@@ -1,0 +1,61 @@
+{
+  "name": "Typed Transform",
+  "type": "perk",
+  "system": {
+    "_migration": {
+      "version": 0.109,
+      "previous": null
+    },
+    "actions": [],
+    "description": "<p>Your Heroic Transformation now comes with Type adjustments. You may designate the new Typing your Transformation grants, up to the maximum number of Types that the GM will permit in the campaign.</p>",
+    "traits": [],
+    "prerequisites": [
+      "item:perk:heroic-transformation"
+    ],
+    "cost": 1,
+    "slug": "typed-transform",
+    "nodes": [
+      {
+        "connected": [
+          "heroic-transformation"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 14,
+        "y": 87,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "power",
+      "archetype": "hero"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "img": "icons/magic/control/silhouette-grow-shrink-blue.webp",
+  "effects": [],
+  "_id": "Y6kxAC1fhtm1iCxF",
+  "folder": "OUVEQyuUswQVLxBO"
+}

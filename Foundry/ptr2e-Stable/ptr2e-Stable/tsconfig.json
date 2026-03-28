@@ -1,0 +1,91 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "strict": true,
+    "noFallthroughCasesInSwitch": false,
+    "skipLibCheck": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowImportingTsExtensions": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": "dist",
+    "allowUnusedLabels": false,
+    "removeComments": false,
+    "resolveJsonModule": true,
+    "useDefineForClassFields": true,
+    "noErrorTruncation": true,
+    "strictPropertyInitialization": false,
+    "paths": {
+      "@actor": [
+        "src/module/actor/index.ts"
+      ],
+      "@actor/*": [
+        "src/module/actor/*"
+      ],
+      "@chat": [
+        "src/module/chat/index.ts"
+      ],
+      "@combat": [
+        "src/module/combat/index.ts"
+      ],
+      "@data": [
+        "src/module/data/index.ts"
+      ],
+      "@effects": [
+        "src/module/effects/index.ts"
+      ],
+      "@item": [
+        "src/module/item/index.ts"
+      ],
+      "@item/*": [
+        "src/module/item/*"
+      ],
+      "@scene": [
+        "src/module/scene/index.ts"
+      ],
+      "@scene/*": [
+        "src/module/scene/*"
+      ],
+      "@system/*": [
+        "src/module/system/*"
+      ],
+      "@scripts/*": [
+        "src/scripts/*"
+      ],
+      "@utils": [
+        "src/util/index.ts"
+      ],
+      "@module/*": [
+        "src/module/*"
+      ],
+    },
+    "types": [
+      "node",
+      "jest",
+      "jquery",
+      "@yaireo/tagify"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "types/foundry"
+    ]
+  },
+  "watchOptions": {
+    "excludeDirectories": []
+  },
+}

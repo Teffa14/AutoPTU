@@ -1,0 +1,142 @@
+{
+  "folder": "JZrGRskscJOkkPWA",
+  "name": "Assault Armor Style",
+  "type": "perk",
+  "_id": "HasC6KRu6H2GCIGr",
+  "img": "systems/ptr2e/img/perk-icons/Orders_Training.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Assault Armor!",
+        "slug": "assault-armor",
+        "traits": [
+          "command",
+          "style"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 2
+        },
+        "description": "<p>Effect: The target uses DEF in place of their ATK when using a Physical-Category Attack for 1 Activation.</p>",
+        "type": "generic",
+        "img": "systems/ptr2e/img/perk-icons/Orders_Training.svg"
+      }
+    ],
+    "slug": "assault-armor-style",
+    "description": "<p>Simple Action, 2 PP cost. Target self or allied creature. The affected creature uses DEF in place of their ATK when using a Physical-Category Attack until the end of their next full Activation.</p>",
+    "traits": [
+      "command",
+      "style"
+    ],
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.leadership.mod}",
+          45
+        ]
+      }
+    ],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 101,
+        "y": 124,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "gambit-style",
+          "evasive-style",
+          "stat-iv-booster-1-11",
+          "improved-burrow-3",
+          "improved-overland-13",
+          "improved-overland-5",
+          "minor-buff-8",
+          "minor-buff-16",
+          "minor-buff-29"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Orders_Training.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "resilience",
+      "archetype": "tactician"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Assault Armor Style",
+      "type": "passive",
+      "_id": "znFSIGgTruab5igy",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "assault-armor-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.v94DtQcoeLWVMpyv",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "target",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e"
+      }
+    }
+  ]
+}

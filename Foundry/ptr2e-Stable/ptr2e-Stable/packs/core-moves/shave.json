@@ -1,0 +1,52 @@
+{
+  "name": "Shave",
+  "type": "move",
+  "_id": "XJ1JgSBoH0OiiZIJ",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Shave",
+        "slug": "shave",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/steel_icon.svg",
+        "traits": [
+          "basic",
+          "pass-2",
+          "sharp"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "variant": null,
+        "types": [
+          "steel"
+        ],
+        "category": "physical",
+        "power": 30,
+        "accuracy": 100,
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null,
+        "description": ""
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": []
+}

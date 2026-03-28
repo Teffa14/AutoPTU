@@ -1,0 +1,49 @@
+{
+  "name": "Iron Spike",
+  "img": "systems/ptr2e/img/icons/weapon_icon.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "D",
+    "fling": {
+      "type": "steel",
+      "power": 40,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "common",
+    "traits": [
+      "weapon",
+      "pierce",
+      "stack-10",
+      "steel",
+      "fling"
+    ],
+    "slug": "iron-spike",
+    "stack": 10,
+    "quantity": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "consumableType": "other",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "EHvcqzVY3IHURS4w",
+  "effects": [],
+  "folder": "GPebepuiQbZSuf35"
+}

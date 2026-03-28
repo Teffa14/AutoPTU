@@ -1,0 +1,61 @@
+{
+  "folder": "c29hnIAtXgwB7FeY",
+  "name": "Cleansing Shield",
+  "type": "perk",
+  "_id": "8Q2UYrV7BPZ535Mz",
+  "img": "systems/ptr2e/img/perk-icons/Aura.svg",
+  "system": {
+    "actions": [],
+    "slug": "cleansing-shield",
+    "description": "<p>Effect: When the user gains any amount of Shields, they have a 20% chance to be cured of one Affliction they possess – @Trait[major-affliction]s are cured first, and @Trait[minor-affliction]s are cured if the user has no @Trait[major-affliction]s.</p>",
+    "traits": [],
+    "prerequisites": [
+      "item:perk:improved-shielding"
+    ],
+    "cost": 3,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 88,
+        "y": 104,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "improved-shielding"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Aura.svg",
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "tint": null,
+          "scale": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "resilience",
+      "archetype": "tank"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "effects": []
+}

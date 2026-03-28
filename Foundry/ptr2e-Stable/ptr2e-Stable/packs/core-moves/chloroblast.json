@@ -1,0 +1,49 @@
+{
+  "name": "Chloroblast",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "chloroblast",
+    "actions": [
+      {
+        "slug": "chloroblast",
+        "name": "Chloroblast",
+        "type": "attack",
+        "traits": [
+          "recoil-1-2",
+          "ray"
+        ],
+        "range": {
+          "target": "line",
+          "distance": 7,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "special",
+        "power": 150,
+        "accuracy": 95,
+        "types": [
+          "grass"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "h8HLgtOaqroD2ddq",
+  "effects": []
+}

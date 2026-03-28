@@ -1,0 +1,7588 @@
+{
+  "generated_from": "PokeAPI Legends Arceus version group for non-HisuiDex species/forms",
+  "species_count": 231,
+  "entries": {
+    "Abomasnow": [
+      {
+        "move": "Powder Snow",
+        "level": 1
+      },
+      {
+        "move": "Leafage",
+        "level": 6
+      },
+      {
+        "move": "Ice Shard",
+        "level": 11
+      },
+      {
+        "move": "Icicle Crash",
+        "level": 18
+      },
+      {
+        "move": "Energy Ball",
+        "level": 25
+      },
+      {
+        "move": "Blizzard",
+        "level": 34
+      },
+      {
+        "move": "Wood Hammer",
+        "level": 43
+      }
+    ],
+    "Abomasnow Mega Evolution": [
+      {
+        "move": "Powder Snow",
+        "level": 1
+      },
+      {
+        "move": "Leafage",
+        "level": 6
+      },
+      {
+        "move": "Ice Shard",
+        "level": 11
+      },
+      {
+        "move": "Icicle Crash",
+        "level": 18
+      },
+      {
+        "move": "Energy Ball",
+        "level": 25
+      },
+      {
+        "move": "Blizzard",
+        "level": 34
+      },
+      {
+        "move": "Wood Hammer",
+        "level": 43
+      }
+    ],
+    "Abra": [
+      {
+        "move": "Teleport",
+        "level": 1
+      }
+    ],
+    "Aipom": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Mud Bomb",
+        "level": 18
+      },
+      {
+        "move": "Double Hit",
+        "level": 25
+      },
+      {
+        "move": "Iron Tail",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Alakazam": [
+      {
+        "move": "Teleport",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Hypnosis",
+        "level": 6
+      },
+      {
+        "move": "Calm Mind",
+        "level": 11
+      },
+      {
+        "move": "Psycho Cut",
+        "level": 18
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 25
+      },
+      {
+        "move": "Recover",
+        "level": 34
+      },
+      {
+        "move": "Psychic",
+        "level": 43
+      }
+    ],
+    "Alakazam Mega Evolution": [
+      {
+        "move": "Teleport",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Hypnosis",
+        "level": 6
+      },
+      {
+        "move": "Calm Mind",
+        "level": 11
+      },
+      {
+        "move": "Psycho Cut",
+        "level": 18
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 25
+      },
+      {
+        "move": "Recover",
+        "level": 34
+      },
+      {
+        "move": "Psychic",
+        "level": 43
+      }
+    ],
+    "Ambipom": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Mud Bomb",
+        "level": 18
+      },
+      {
+        "move": "Double Hit",
+        "level": 25
+      },
+      {
+        "move": "Iron Tail",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Arceus": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Ancient Power",
+        "level": 12
+      },
+      {
+        "move": "Calm Mind",
+        "level": 19
+      },
+      {
+        "move": "Recover",
+        "level": 27
+      },
+      {
+        "move": "Extrasensory",
+        "level": 36
+      },
+      {
+        "move": "Judgment",
+        "level": 46
+      },
+      {
+        "move": "Hyper Beam",
+        "level": 57
+      }
+    ],
+    "Azelf": [
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Swift",
+        "level": 6
+      },
+      {
+        "move": "Double Hit",
+        "level": 12
+      },
+      {
+        "move": "Rest",
+        "level": 19
+      },
+      {
+        "move": "Extrasensory",
+        "level": 27
+      },
+      {
+        "move": "Tri Attack",
+        "level": 32
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 36
+      },
+      {
+        "move": "Mystical Power",
+        "level": 46
+      },
+      {
+        "move": "Self Destruct",
+        "level": 57
+      }
+    ],
+    "Barboach": [
+      {
+        "move": "Mud Slap",
+        "level": 1
+      },
+      {
+        "move": "Water Pulse",
+        "level": 6
+      },
+      {
+        "move": "Mud Bomb",
+        "level": 11
+      },
+      {
+        "move": "Rest",
+        "level": 18
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 25
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 34
+      },
+      {
+        "move": "Earth Power",
+        "level": 43
+      }
+    ],
+    "Bastiodon": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Ancient Power",
+        "level": 5
+      },
+      {
+        "move": "Iron Defense",
+        "level": 9
+      },
+      {
+        "move": "Rock Slide",
+        "level": 15
+      },
+      {
+        "move": "Iron Head",
+        "level": 21
+      },
+      {
+        "move": "Earth Power",
+        "level": 29
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 37
+      },
+      {
+        "move": "Double-Edge",
+        "level": 47
+      }
+    ],
+    "Beautifly": [
+      {
+        "move": "Air Cutter",
+        "level": 0
+      },
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Iron Defense",
+        "level": 6
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      },
+      {
+        "move": "Stun Spore",
+        "level": 11
+      },
+      {
+        "move": "Silver Wind",
+        "level": 18
+      },
+      {
+        "move": "Venoshock",
+        "level": 25
+      },
+      {
+        "move": "Air Slash",
+        "level": 34
+      },
+      {
+        "move": "Bug Buzz",
+        "level": 43
+      }
+    ],
+    "Bergmite": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Powder Snow",
+        "level": 5
+      },
+      {
+        "move": "Ice Shard",
+        "level": 9
+      },
+      {
+        "move": "Bite",
+        "level": 15
+      },
+      {
+        "move": "Iron Defense",
+        "level": 21
+      },
+      {
+        "move": "Crunch",
+        "level": 29
+      },
+      {
+        "move": "Blizzard",
+        "level": 37
+      },
+      {
+        "move": "Double-Edge",
+        "level": 47
+      }
+    ],
+    "Bibarel": [
+      {
+        "move": "Water Pulse",
+        "level": 0
+      },
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 10
+      },
+      {
+        "move": "Rest",
+        "level": 16
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 23
+      },
+      {
+        "move": "Crunch",
+        "level": 23
+      },
+      {
+        "move": "Swords Dance",
+        "level": 31
+      },
+      {
+        "move": "Double-Edge",
+        "level": 40
+      }
+    ],
+    "Bidoof": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 10
+      },
+      {
+        "move": "Rest",
+        "level": 16
+      },
+      {
+        "move": "Crunch",
+        "level": 23
+      },
+      {
+        "move": "Swords Dance",
+        "level": 31
+      },
+      {
+        "move": "Double-Edge",
+        "level": 40
+      }
+    ],
+    "Blissey": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Fairy Wind",
+        "level": 6
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 11
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 18
+      },
+      {
+        "move": "Calm Mind",
+        "level": 25
+      },
+      {
+        "move": "Soft Boiled",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Bonsly": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 9
+      },
+      {
+        "move": "Rock Slide",
+        "level": 15
+      },
+      {
+        "move": "Iron Defense",
+        "level": 21
+      },
+      {
+        "move": "Mimic",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Head Smash",
+        "level": 47
+      }
+    ],
+    "Bronzong": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Iron Defense",
+        "level": 11
+      },
+      {
+        "move": "Hex",
+        "level": 18
+      },
+      {
+        "move": "Hypnosis",
+        "level": 25
+      },
+      {
+        "move": "Flash Cannon",
+        "level": 34
+      },
+      {
+        "move": "Extrasensory",
+        "level": 43
+      }
+    ],
+    "Bronzor": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Iron Defense",
+        "level": 11
+      },
+      {
+        "move": "Hex",
+        "level": 18
+      },
+      {
+        "move": "Hypnosis",
+        "level": 25
+      },
+      {
+        "move": "Flash Cannon",
+        "level": 34
+      },
+      {
+        "move": "Extrasensory",
+        "level": 43
+      }
+    ],
+    "Budew": [
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Absorb",
+        "level": 6
+      },
+      {
+        "move": "Poison Powder",
+        "level": 11
+      },
+      {
+        "move": "Stun Spore",
+        "level": 18
+      },
+      {
+        "move": "Venoshock",
+        "level": 25
+      },
+      {
+        "move": "Poison Jab",
+        "level": 34
+      },
+      {
+        "move": "Energy Ball",
+        "level": 43
+      },
+      {
+        "move": "Petal Dance",
+        "level": 52
+      }
+    ],
+    "Buizel": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Aqua Jet",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Water Pulse",
+        "level": 18
+      },
+      {
+        "move": "Double Hit",
+        "level": 25
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 34
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 43
+      }
+    ],
+    "Buneary": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 5
+      },
+      {
+        "move": "Swift",
+        "level": 10
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 16
+      },
+      {
+        "move": "Double Hit",
+        "level": 23
+      },
+      {
+        "move": "Play Rough",
+        "level": 31
+      },
+      {
+        "move": "Double-Edge",
+        "level": 40
+      }
+    ],
+    "Burmy": [
+      {
+        "move": "Struggle Bug",
+        "level": 1
+      }
+    ],
+    "Carnivine": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Acid Spray",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Stun Spore",
+        "level": 18
+      },
+      {
+        "move": "Crunch",
+        "level": 25
+      },
+      {
+        "move": "Sleep Powder",
+        "level": 34
+      },
+      {
+        "move": "Energy Ball",
+        "level": 43
+      }
+    ],
+    "Cascoon": [
+      {
+        "move": "Iron Defense",
+        "level": 0
+      },
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      }
+    ],
+    "Chansey": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Fairy Wind",
+        "level": 6
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 11
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 18
+      },
+      {
+        "move": "Calm Mind",
+        "level": 25
+      },
+      {
+        "move": "Soft Boiled",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Chatot": [
+      {
+        "move": "Gust",
+        "level": 1
+      },
+      {
+        "move": "Swift",
+        "level": 6
+      },
+      {
+        "move": "Air Cutter",
+        "level": 11
+      },
+      {
+        "move": "Roost",
+        "level": 18
+      },
+      {
+        "move": "Air Slash",
+        "level": 25
+      },
+      {
+        "move": "Mimic",
+        "level": 30
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 34
+      },
+      {
+        "move": "Play Rough",
+        "level": 43
+      },
+      {
+        "move": "Hurricane",
+        "level": 52
+      }
+    ],
+    "Cherrim": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Stun Spore",
+        "level": 9
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 15
+      },
+      {
+        "move": "Energy Ball",
+        "level": 21
+      },
+      {
+        "move": "Sleep Powder",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Petal Dance",
+        "level": 47
+      }
+    ],
+    "Cherubi": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Stun Spore",
+        "level": 9
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 15
+      },
+      {
+        "move": "Energy Ball",
+        "level": 21
+      },
+      {
+        "move": "Sleep Powder",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Petal Dance",
+        "level": 47
+      }
+    ],
+    "Chimchar": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Ember",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Flame Wheel",
+        "level": 18
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 25
+      },
+      {
+        "move": "Flamethrower",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Chimecho": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Ominous Wind",
+        "level": 11
+      },
+      {
+        "move": "Hypnosis",
+        "level": 18
+      },
+      {
+        "move": "Extrasensory",
+        "level": 25
+      },
+      {
+        "move": "Recover",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Chingling": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Ominous Wind",
+        "level": 11
+      },
+      {
+        "move": "Hypnosis",
+        "level": 18
+      },
+      {
+        "move": "Extrasensory",
+        "level": 25
+      },
+      {
+        "move": "Recover",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Clefable": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Fairy Wind",
+        "level": 5
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 9
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 15
+      },
+      {
+        "move": "Calm Mind",
+        "level": 21
+      },
+      {
+        "move": "Psychic",
+        "level": 29
+      },
+      {
+        "move": "Moonblast",
+        "level": 37
+      },
+      {
+        "move": "Double-Edge",
+        "level": 47
+      }
+    ],
+    "Clefairy": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Fairy Wind",
+        "level": 5
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 9
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 15
+      },
+      {
+        "move": "Calm Mind",
+        "level": 21
+      },
+      {
+        "move": "Psychic",
+        "level": 29
+      },
+      {
+        "move": "Moonblast",
+        "level": 37
+      },
+      {
+        "move": "Double-Edge",
+        "level": 47
+      }
+    ],
+    "Cleffa": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Fairy Wind",
+        "level": 5
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 9
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 15
+      },
+      {
+        "move": "Calm Mind",
+        "level": 21
+      },
+      {
+        "move": "Psychic",
+        "level": 29
+      },
+      {
+        "move": "Moonblast",
+        "level": 37
+      },
+      {
+        "move": "Double-Edge",
+        "level": 47
+      }
+    ],
+    "Combee": [
+      {
+        "move": "Gust",
+        "level": 1
+      },
+      {
+        "move": "Struggle Bug",
+        "level": 6
+      }
+    ],
+    "Cranidos": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Ancient Power",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 9
+      },
+      {
+        "move": "Rock Slide",
+        "level": 15
+      },
+      {
+        "move": "Iron Head",
+        "level": 21
+      },
+      {
+        "move": "Crunch",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Head Smash",
+        "level": 47
+      }
+    ],
+    "Cresselia": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Slash",
+        "level": 12
+      },
+      {
+        "move": "Psycho Cut",
+        "level": 19
+      },
+      {
+        "move": "Recover",
+        "level": 27
+      },
+      {
+        "move": "Psychic",
+        "level": 36
+      },
+      {
+        "move": "Moonblast",
+        "level": 46
+      },
+      {
+        "move": "Lunar Blessing",
+        "level": 57
+      }
+    ],
+    "Croagunk": [
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Rock Smash",
+        "level": 5
+      },
+      {
+        "move": "Mud Bomb",
+        "level": 9
+      },
+      {
+        "move": "Venoshock",
+        "level": 15
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 21
+      },
+      {
+        "move": "Poison Jab",
+        "level": 29
+      },
+      {
+        "move": "Earth Power",
+        "level": 37
+      },
+      {
+        "move": "Close Combat",
+        "level": 47
+      }
+    ],
+    "Crobat": [
+      {
+        "move": "Gust",
+        "level": 1
+      },
+      {
+        "move": "Hypnosis",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Air Cutter",
+        "level": 18
+      },
+      {
+        "move": "Cross Poison",
+        "level": 25
+      },
+      {
+        "move": "Air Slash",
+        "level": 34
+      },
+      {
+        "move": "Leech Life",
+        "level": 43
+      }
+    ],
+    "Cyndaquil": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Ember",
+        "level": 6
+      },
+      {
+        "move": "Rollout",
+        "level": 11
+      },
+      {
+        "move": "Flame Wheel",
+        "level": 18
+      },
+      {
+        "move": "Swift",
+        "level": 25
+      },
+      {
+        "move": "Flamethrower",
+        "level": 34
+      },
+      {
+        "move": "Overheat",
+        "level": 43
+      }
+    ],
+    "Darkrai": [
+      {
+        "move": "Shadow Sneak",
+        "level": 1
+      },
+      {
+        "move": "Hypnosis",
+        "level": 6
+      },
+      {
+        "move": "Hex",
+        "level": 12
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 19
+      },
+      {
+        "move": "Dark Pulse",
+        "level": 27
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 36
+      },
+      {
+        "move": "Psychic",
+        "level": 46
+      },
+      {
+        "move": "Dark Void",
+        "level": 57
+      }
+    ],
+    "Dewott": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Aqua Jet",
+        "level": 6
+      },
+      {
+        "move": "Swords Dance",
+        "level": 11
+      },
+      {
+        "move": "Water Pulse",
+        "level": 18
+      },
+      {
+        "move": "Slash",
+        "level": 25
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 34
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 43
+      }
+    ],
+    "Dialga": [
+      {
+        "move": "Twister",
+        "level": 1
+      },
+      {
+        "move": "Ancient Power",
+        "level": 6
+      },
+      {
+        "move": "Slash",
+        "level": 12
+      },
+      {
+        "move": "Dragon Claw",
+        "level": 19
+      },
+      {
+        "move": "Power Gem",
+        "level": 27
+      },
+      {
+        "move": "Dragon Pulse",
+        "level": 36
+      },
+      {
+        "move": "Earth Power",
+        "level": 42
+      },
+      {
+        "move": "Iron Tail",
+        "level": 47
+      },
+      {
+        "move": "Flash Cannon",
+        "level": 55
+      },
+      {
+        "move": "Roar Of Time",
+        "level": 60
+      }
+    ],
+    "Drapion": [
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Bite",
+        "level": 6
+      },
+      {
+        "move": "Venoshock",
+        "level": 11
+      },
+      {
+        "move": "Cross Poison",
+        "level": 18
+      },
+      {
+        "move": "Swords Dance",
+        "level": 25
+      },
+      {
+        "move": "X-Scissor",
+        "level": 34
+      },
+      {
+        "move": "Crunch",
+        "level": 43
+      }
+    ],
+    "Drifblim": [
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Hypnosis",
+        "level": 5
+      },
+      {
+        "move": "Astonish",
+        "level": 9
+      },
+      {
+        "move": "Calm Mind",
+        "level": 15
+      },
+      {
+        "move": "Hex",
+        "level": 21
+      },
+      {
+        "move": "Mystical Fire",
+        "level": 25
+      },
+      {
+        "move": "Extrasensory",
+        "level": 29
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 37
+      },
+      {
+        "move": "Self Destruct",
+        "level": 47
+      }
+    ],
+    "Drifloon": [
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Hypnosis",
+        "level": 5
+      },
+      {
+        "move": "Astonish",
+        "level": 9
+      },
+      {
+        "move": "Calm Mind",
+        "level": 15
+      },
+      {
+        "move": "Hex",
+        "level": 21
+      },
+      {
+        "move": "Mystical Fire",
+        "level": 25
+      },
+      {
+        "move": "Extrasensory",
+        "level": 29
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 37
+      },
+      {
+        "move": "Self Destruct",
+        "level": 47
+      }
+    ],
+    "Dusclops": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Shadow Sneak",
+        "level": 6
+      },
+      {
+        "move": "Hex",
+        "level": 11
+      },
+      {
+        "move": "Leech Life",
+        "level": 18
+      },
+      {
+        "move": "Dark Pulse",
+        "level": 25
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 34
+      },
+      {
+        "move": "Psychic",
+        "level": 43
+      }
+    ],
+    "Dusknoir": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Shadow Sneak",
+        "level": 6
+      },
+      {
+        "move": "Hex",
+        "level": 11
+      },
+      {
+        "move": "Leech Life",
+        "level": 18
+      },
+      {
+        "move": "Dark Pulse",
+        "level": 25
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 34
+      },
+      {
+        "move": "Psychic",
+        "level": 43
+      }
+    ],
+    "Duskull": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Shadow Sneak",
+        "level": 6
+      },
+      {
+        "move": "Hex",
+        "level": 11
+      },
+      {
+        "move": "Leech Life",
+        "level": 18
+      },
+      {
+        "move": "Dark Pulse",
+        "level": 25
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 34
+      },
+      {
+        "move": "Psychic",
+        "level": 43
+      }
+    ],
+    "Dustox": [
+      {
+        "move": "Confusion",
+        "level": 0
+      },
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Iron Defense",
+        "level": 6
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      },
+      {
+        "move": "Poison Powder",
+        "level": 11
+      },
+      {
+        "move": "Silver Wind",
+        "level": 18
+      },
+      {
+        "move": "Venoshock",
+        "level": 25
+      },
+      {
+        "move": "Extrasensory",
+        "level": 34
+      },
+      {
+        "move": "Bug Buzz",
+        "level": 43
+      }
+    ],
+    "Eevee": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 18
+      },
+      {
+        "move": "Mimic",
+        "level": 25
+      },
+      {
+        "move": "Calm Mind",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Electabuzz": [
+      {
+        "move": "Thunder Shock",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Spark",
+        "level": 11
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 18
+      },
+      {
+        "move": "Thunder Punch",
+        "level": 25
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 34
+      },
+      {
+        "move": "Thunder",
+        "level": 43
+      }
+    ],
+    "Electivire": [
+      {
+        "move": "Thunder Shock",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Spark",
+        "level": 11
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 18
+      },
+      {
+        "move": "Thunder Punch",
+        "level": 25
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 34
+      },
+      {
+        "move": "Thunder",
+        "level": 43
+      }
+    ],
+    "Elekid": [
+      {
+        "move": "Thunder Shock",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Spark",
+        "level": 11
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 18
+      },
+      {
+        "move": "Thunder Punch",
+        "level": 25
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 34
+      },
+      {
+        "move": "Thunder",
+        "level": 43
+      }
+    ],
+    "Empoleon": [
+      {
+        "move": "Flash Cannon",
+        "level": 0
+      },
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Bubble",
+        "level": 6
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 11
+      },
+      {
+        "move": "Water Pulse",
+        "level": 18
+      },
+      {
+        "move": "Roost",
+        "level": 25
+      },
+      {
+        "move": "Liquidation",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 52
+      },
+      {
+        "move": "Wave Crash",
+        "level": 57
+      }
+    ],
+    "Espeon": [
+      {
+        "move": "Confusion",
+        "level": 0
+      },
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 18
+      },
+      {
+        "move": "Mimic",
+        "level": 25
+      },
+      {
+        "move": "Psychic",
+        "level": 25
+      },
+      {
+        "move": "Calm Mind",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Finneon": [
+      {
+        "move": "Bubble",
+        "level": 1
+      },
+      {
+        "move": "Gust",
+        "level": 6
+      },
+      {
+        "move": "Water Pulse",
+        "level": 11
+      },
+      {
+        "move": "Silver Wind",
+        "level": 18
+      },
+      {
+        "move": "Air Slash",
+        "level": 25
+      },
+      {
+        "move": "Roost",
+        "level": 34
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 43
+      }
+    ],
+    "Flareon": [
+      {
+        "move": "Ember",
+        "level": 0
+      },
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 18
+      },
+      {
+        "move": "Flamethrower",
+        "level": 25
+      },
+      {
+        "move": "Mimic",
+        "level": 25
+      },
+      {
+        "move": "Calm Mind",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Floatzel": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Aqua Jet",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Water Pulse",
+        "level": 18
+      },
+      {
+        "move": "Double Hit",
+        "level": 25
+      },
+      {
+        "move": "Crunch",
+        "level": 30
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 34
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 43
+      }
+    ],
+    "Froslass": [
+      {
+        "move": "Powder Snow",
+        "level": 1
+      },
+      {
+        "move": "Ice Shard",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Hex",
+        "level": 18
+      },
+      {
+        "move": "Ice Fang",
+        "level": 18
+      },
+      {
+        "move": "Crunch",
+        "level": 25
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 25
+      },
+      {
+        "move": "Icicle Crash",
+        "level": 34
+      },
+      {
+        "move": "Blizzard",
+        "level": 43
+      }
+    ],
+    "Gabite": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Twister",
+        "level": 5
+      },
+      {
+        "move": "Bulldoze",
+        "level": 9
+      },
+      {
+        "move": "Slash",
+        "level": 15
+      },
+      {
+        "move": "Dragon Claw",
+        "level": 21
+      },
+      {
+        "move": "Earth Power",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Outrage",
+        "level": 47
+      }
+    ],
+    "Gallade": [
+      {
+        "move": "Slash",
+        "level": 0
+      },
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Teleport",
+        "level": 6
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 11
+      },
+      {
+        "move": "Hypnosis",
+        "level": 18
+      },
+      {
+        "move": "Psycho Cut",
+        "level": 18
+      },
+      {
+        "move": "Calm Mind",
+        "level": 25
+      },
+      {
+        "move": "Swords Dance",
+        "level": 30
+      },
+      {
+        "move": "Psychic",
+        "level": 34
+      },
+      {
+        "move": "Leaf Blade",
+        "level": 43
+      },
+      {
+        "move": "Close Combat",
+        "level": 52
+      }
+    ],
+    "Gallade Mega Evolution": [
+      {
+        "move": "Slash",
+        "level": 0
+      },
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Teleport",
+        "level": 6
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 11
+      },
+      {
+        "move": "Hypnosis",
+        "level": 18
+      },
+      {
+        "move": "Psycho Cut",
+        "level": 18
+      },
+      {
+        "move": "Calm Mind",
+        "level": 25
+      },
+      {
+        "move": "Swords Dance",
+        "level": 30
+      },
+      {
+        "move": "Psychic",
+        "level": 34
+      },
+      {
+        "move": "Leaf Blade",
+        "level": 43
+      },
+      {
+        "move": "Close Combat",
+        "level": 52
+      }
+    ],
+    "Garchomp": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Twister",
+        "level": 5
+      },
+      {
+        "move": "Bulldoze",
+        "level": 9
+      },
+      {
+        "move": "Slash",
+        "level": 15
+      },
+      {
+        "move": "Dragon Claw",
+        "level": 21
+      },
+      {
+        "move": "Earth Power",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Outrage",
+        "level": 47
+      }
+    ],
+    "Garchomp Mega Evolution": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Twister",
+        "level": 5
+      },
+      {
+        "move": "Bulldoze",
+        "level": 9
+      },
+      {
+        "move": "Slash",
+        "level": 15
+      },
+      {
+        "move": "Dragon Claw",
+        "level": 21
+      },
+      {
+        "move": "Earth Power",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Outrage",
+        "level": 47
+      }
+    ],
+    "Gardevoir": [
+      {
+        "move": "Dazzling Gleam",
+        "level": 0
+      },
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Teleport",
+        "level": 6
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 11
+      },
+      {
+        "move": "Hypnosis",
+        "level": 18
+      },
+      {
+        "move": "Calm Mind",
+        "level": 25
+      },
+      {
+        "move": "Psychic",
+        "level": 34
+      },
+      {
+        "move": "Aura Sphere",
+        "level": 40
+      },
+      {
+        "move": "Moonblast",
+        "level": 43
+      },
+      {
+        "move": "Recover",
+        "level": 52
+      }
+    ],
+    "Gardevoir Mega Evolution": [
+      {
+        "move": "Dazzling Gleam",
+        "level": 0
+      },
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Teleport",
+        "level": 6
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 11
+      },
+      {
+        "move": "Hypnosis",
+        "level": 18
+      },
+      {
+        "move": "Calm Mind",
+        "level": 25
+      },
+      {
+        "move": "Psychic",
+        "level": 34
+      },
+      {
+        "move": "Aura Sphere",
+        "level": 40
+      },
+      {
+        "move": "Moonblast",
+        "level": 43
+      },
+      {
+        "move": "Recover",
+        "level": 52
+      }
+    ],
+    "Gastly": [
+      {
+        "move": "Astonish",
+        "level": 1
+      },
+      {
+        "move": "Poison Gas",
+        "level": 6
+      },
+      {
+        "move": "Hex",
+        "level": 11
+      },
+      {
+        "move": "Venoshock",
+        "level": 18
+      },
+      {
+        "move": "Hypnosis",
+        "level": 25
+      },
+      {
+        "move": "Dark Pulse",
+        "level": 34
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 43
+      }
+    ],
+    "Gastrodon": [
+      {
+        "move": "Mud Slap",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Water Pulse",
+        "level": 9
+      },
+      {
+        "move": "Ancient Power",
+        "level": 15
+      },
+      {
+        "move": "Mud Bomb",
+        "level": 21
+      },
+      {
+        "move": "Earth Power",
+        "level": 29
+      },
+      {
+        "move": "Recover",
+        "level": 37
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 47
+      }
+    ],
+    "Gengar": [
+      {
+        "move": "Astonish",
+        "level": 1
+      },
+      {
+        "move": "Poison Gas",
+        "level": 6
+      },
+      {
+        "move": "Hex",
+        "level": 11
+      },
+      {
+        "move": "Venoshock",
+        "level": 18
+      },
+      {
+        "move": "Hypnosis",
+        "level": 25
+      },
+      {
+        "move": "Dark Pulse",
+        "level": 34
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 43
+      }
+    ],
+    "Gengar Mega Evolution": [
+      {
+        "move": "Astonish",
+        "level": 1
+      },
+      {
+        "move": "Poison Gas",
+        "level": 6
+      },
+      {
+        "move": "Hex",
+        "level": 11
+      },
+      {
+        "move": "Venoshock",
+        "level": 18
+      },
+      {
+        "move": "Hypnosis",
+        "level": 25
+      },
+      {
+        "move": "Dark Pulse",
+        "level": 34
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 43
+      }
+    ],
+    "Geodude": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Mud Slap",
+        "level": 9
+      },
+      {
+        "move": "Iron Defense",
+        "level": 15
+      },
+      {
+        "move": "Rock Slide",
+        "level": 21
+      },
+      {
+        "move": "Bulldoze",
+        "level": 26
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Self Destruct",
+        "level": 47
+      }
+    ],
+    "Gible": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Twister",
+        "level": 5
+      },
+      {
+        "move": "Bulldoze",
+        "level": 9
+      },
+      {
+        "move": "Slash",
+        "level": 15
+      },
+      {
+        "move": "Dragon Claw",
+        "level": 21
+      },
+      {
+        "move": "Earth Power",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Outrage",
+        "level": 47
+      }
+    ],
+    "Giratina Origin": [
+      {
+        "move": "Shadow Sneak",
+        "level": 1
+      },
+      {
+        "move": "Ancient Power",
+        "level": 6
+      },
+      {
+        "move": "Hex",
+        "level": 12
+      },
+      {
+        "move": "Shadow Claw",
+        "level": 19
+      },
+      {
+        "move": "Aura Sphere",
+        "level": 27
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 30
+      },
+      {
+        "move": "Dragon Claw",
+        "level": 36
+      },
+      {
+        "move": "Dragon Pulse",
+        "level": 42
+      },
+      {
+        "move": "Earth Power",
+        "level": 55
+      },
+      {
+        "move": "Shadow Force",
+        "level": 60
+      }
+    ],
+    "Glaceon": [
+      {
+        "move": "Powder Snow",
+        "level": 0
+      },
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 18
+      },
+      {
+        "move": "Ice Beam",
+        "level": 25
+      },
+      {
+        "move": "Mimic",
+        "level": 25
+      },
+      {
+        "move": "Calm Mind",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Glalie": [
+      {
+        "move": "Ice Ball",
+        "level": 1
+      },
+      {
+        "move": "Powder Snow",
+        "level": 1
+      },
+      {
+        "move": "Ice Shard",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Ice Fang",
+        "level": 18
+      },
+      {
+        "move": "Crunch",
+        "level": 25
+      },
+      {
+        "move": "Icicle Crash",
+        "level": 34
+      },
+      {
+        "move": "Blizzard",
+        "level": 43
+      }
+    ],
+    "Glalie Mega Evolution": [
+      {
+        "move": "Ice Ball",
+        "level": 1
+      },
+      {
+        "move": "Powder Snow",
+        "level": 1
+      },
+      {
+        "move": "Ice Shard",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Ice Fang",
+        "level": 18
+      },
+      {
+        "move": "Crunch",
+        "level": 25
+      },
+      {
+        "move": "Icicle Crash",
+        "level": 34
+      },
+      {
+        "move": "Blizzard",
+        "level": 43
+      }
+    ],
+    "Glameow": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Hypnosis",
+        "level": 5
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 10
+      },
+      {
+        "move": "Slash",
+        "level": 16
+      },
+      {
+        "move": "Night Slash",
+        "level": 23
+      },
+      {
+        "move": "Play Rough",
+        "level": 31
+      },
+      {
+        "move": "Double-Edge",
+        "level": 40
+      }
+    ],
+    "Gligar": [
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 11
+      },
+      {
+        "move": "Mud Bomb",
+        "level": 18
+      },
+      {
+        "move": "Slash",
+        "level": 25
+      },
+      {
+        "move": "Poison Jab",
+        "level": 34
+      },
+      {
+        "move": "X-Scissor",
+        "level": 43
+      }
+    ],
+    "Gliscor": [
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 11
+      },
+      {
+        "move": "Mud Bomb",
+        "level": 18
+      },
+      {
+        "move": "Pin Missile",
+        "level": 20
+      },
+      {
+        "move": "Slash",
+        "level": 25
+      },
+      {
+        "move": "Swords Dance",
+        "level": 30
+      },
+      {
+        "move": "Poison Jab",
+        "level": 34
+      },
+      {
+        "move": "X-Scissor",
+        "level": 43
+      },
+      {
+        "move": "Earth Power",
+        "level": 52
+      }
+    ],
+    "Golbat": [
+      {
+        "move": "Gust",
+        "level": 1
+      },
+      {
+        "move": "Hypnosis",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Air Cutter",
+        "level": 18
+      },
+      {
+        "move": "Cross Poison",
+        "level": 25
+      },
+      {
+        "move": "Air Slash",
+        "level": 34
+      },
+      {
+        "move": "Leech Life",
+        "level": 43
+      }
+    ],
+    "Golduck": [
+      {
+        "move": "Bubble",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Water Pulse",
+        "level": 11
+      },
+      {
+        "move": "Hypnosis",
+        "level": 18
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 25
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 34
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 43
+      }
+    ],
+    "Golem": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Mud Slap",
+        "level": 9
+      },
+      {
+        "move": "Iron Defense",
+        "level": 15
+      },
+      {
+        "move": "Rock Slide",
+        "level": 21
+      },
+      {
+        "move": "Bulldoze",
+        "level": 26
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Self Destruct",
+        "level": 47
+      },
+      {
+        "move": "Stone Edge",
+        "level": 57
+      }
+    ],
+    "Goomy": [
+      {
+        "move": "Bubble",
+        "level": 1
+      },
+      {
+        "move": "Acid Spray",
+        "level": 6
+      },
+      {
+        "move": "Acid Armor",
+        "level": 11
+      },
+      {
+        "move": "Water Pulse",
+        "level": 18
+      },
+      {
+        "move": "Dragon Pulse",
+        "level": 25
+      },
+      {
+        "move": "Shelter",
+        "level": 34
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 43
+      }
+    ],
+    "Graveler": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Mud Slap",
+        "level": 9
+      },
+      {
+        "move": "Iron Defense",
+        "level": 15
+      },
+      {
+        "move": "Rock Slide",
+        "level": 21
+      },
+      {
+        "move": "Bulldoze",
+        "level": 26
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Self Destruct",
+        "level": 47
+      }
+    ],
+    "Grotle": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Leafage",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Bulldoze",
+        "level": 18
+      },
+      {
+        "move": "Sleep Powder",
+        "level": 25
+      },
+      {
+        "move": "Leaf Blade",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Gyarados": [
+      {
+        "move": "Water Pulse",
+        "level": 0
+      },
+      {
+        "move": "Splash",
+        "level": 1
+      },
+      {
+        "move": "Twister",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 9
+      },
+      {
+        "move": "Focus Energy",
+        "level": 15
+      },
+      {
+        "move": "Crunch",
+        "level": 21
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 29
+      },
+      {
+        "move": "Hurricane",
+        "level": 37
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 47
+      },
+      {
+        "move": "Hyper Beam",
+        "level": 57
+      }
+    ],
+    "Gyarados Mega Evolution": [
+      {
+        "move": "Water Pulse",
+        "level": 0
+      },
+      {
+        "move": "Splash",
+        "level": 1
+      },
+      {
+        "move": "Twister",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 9
+      },
+      {
+        "move": "Focus Energy",
+        "level": 15
+      },
+      {
+        "move": "Crunch",
+        "level": 21
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 29
+      },
+      {
+        "move": "Hurricane",
+        "level": 37
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 47
+      },
+      {
+        "move": "Hyper Beam",
+        "level": 57
+      }
+    ],
+    "Happiny": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Fairy Wind",
+        "level": 6
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 11
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 18
+      },
+      {
+        "move": "Calm Mind",
+        "level": 25
+      },
+      {
+        "move": "Soft Boiled",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Haunter": [
+      {
+        "move": "Astonish",
+        "level": 1
+      },
+      {
+        "move": "Poison Gas",
+        "level": 6
+      },
+      {
+        "move": "Hex",
+        "level": 11
+      },
+      {
+        "move": "Venoshock",
+        "level": 18
+      },
+      {
+        "move": "Hypnosis",
+        "level": 25
+      },
+      {
+        "move": "Dark Pulse",
+        "level": 34
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 43
+      }
+    ],
+    "Heatran": [
+      {
+        "move": "Ember",
+        "level": 1
+      },
+      {
+        "move": "Iron Defense",
+        "level": 6
+      },
+      {
+        "move": "Ancient Power",
+        "level": 12
+      },
+      {
+        "move": "Fire Fang",
+        "level": 19
+      },
+      {
+        "move": "Iron Head",
+        "level": 27
+      },
+      {
+        "move": "Crunch",
+        "level": 36
+      },
+      {
+        "move": "Earth Power",
+        "level": 46
+      },
+      {
+        "move": "Magma Storm",
+        "level": 57
+      }
+    ],
+    "Heracross": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Rock Smash",
+        "level": 5
+      },
+      {
+        "move": "Pin Missile",
+        "level": 9
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 15
+      },
+      {
+        "move": "Slash",
+        "level": 21
+      },
+      {
+        "move": "Swords Dance",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Close Combat",
+        "level": 47
+      },
+      {
+        "move": "Megahorn",
+        "level": 57
+      }
+    ],
+    "Heracross Mega Evolution": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Rock Smash",
+        "level": 5
+      },
+      {
+        "move": "Pin Missile",
+        "level": 9
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 15
+      },
+      {
+        "move": "Slash",
+        "level": 21
+      },
+      {
+        "move": "Swords Dance",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Close Combat",
+        "level": 47
+      },
+      {
+        "move": "Megahorn",
+        "level": 57
+      }
+    ],
+    "Hippopotas": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Rest",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Mud Bomb",
+        "level": 18
+      },
+      {
+        "move": "Crunch",
+        "level": 25
+      },
+      {
+        "move": "High Horsepower",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Hippowdon": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Rest",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Mud Bomb",
+        "level": 18
+      },
+      {
+        "move": "Crunch",
+        "level": 25
+      },
+      {
+        "move": "High Horsepower",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Honchkrow": [
+      {
+        "move": "Gust",
+        "level": 1
+      },
+      {
+        "move": "Snarl",
+        "level": 6
+      },
+      {
+        "move": "Roost",
+        "level": 11
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 18
+      },
+      {
+        "move": "Night Slash",
+        "level": 25
+      },
+      {
+        "move": "Air Slash",
+        "level": 30
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 34
+      },
+      {
+        "move": "Dark Pulse",
+        "level": 43
+      },
+      {
+        "move": "Brave Bird",
+        "level": 52
+      }
+    ],
+    "Infernape": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Ember",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Mach Punch",
+        "level": 16
+      },
+      {
+        "move": "Flame Wheel",
+        "level": 18
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 25
+      },
+      {
+        "move": "Flamethrower",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      },
+      {
+        "move": "Raging Fury",
+        "level": 46
+      },
+      {
+        "move": "Flare Blitz",
+        "level": 52
+      },
+      {
+        "move": "Close Combat",
+        "level": 57
+      }
+    ],
+    "Jolteon": [
+      {
+        "move": "Thunder Shock",
+        "level": 0
+      },
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 18
+      },
+      {
+        "move": "Mimic",
+        "level": 25
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 25
+      },
+      {
+        "move": "Calm Mind",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Kadabra": [
+      {
+        "move": "Confusion",
+        "level": 0
+      },
+      {
+        "move": "Teleport",
+        "level": 1
+      },
+      {
+        "move": "Hypnosis",
+        "level": 6
+      },
+      {
+        "move": "Calm Mind",
+        "level": 11
+      },
+      {
+        "move": "Psycho Cut",
+        "level": 18
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 25
+      },
+      {
+        "move": "Recover",
+        "level": 34
+      },
+      {
+        "move": "Psychic",
+        "level": 43
+      }
+    ],
+    "Kirlia": [
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Teleport",
+        "level": 6
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 11
+      },
+      {
+        "move": "Hypnosis",
+        "level": 18
+      },
+      {
+        "move": "Calm Mind",
+        "level": 25
+      },
+      {
+        "move": "Psychic",
+        "level": 34
+      }
+    ],
+    "Kricketot": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      }
+    ],
+    "Kricketune": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 9
+      },
+      {
+        "move": "Slash",
+        "level": 15
+      },
+      {
+        "move": "Night Slash",
+        "level": 21
+      },
+      {
+        "move": "X-Scissor",
+        "level": 29
+      },
+      {
+        "move": "Swords Dance",
+        "level": 37
+      },
+      {
+        "move": "Bug Buzz",
+        "level": 47
+      }
+    ],
+    "Landorus Incarnate": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Bite",
+        "level": 7
+      },
+      {
+        "move": "Twister",
+        "level": 11
+      },
+      {
+        "move": "Bulldoze",
+        "level": 14
+      },
+      {
+        "move": "Bulk Up",
+        "level": 22
+      },
+      {
+        "move": "Extrasensory",
+        "level": 31
+      },
+      {
+        "move": "Crunch",
+        "level": 41
+      },
+      {
+        "move": "Earth Power",
+        "level": 47
+      },
+      {
+        "move": "Sandsear Storm",
+        "level": 52
+      }
+    ],
+    "Leafeon": [
+      {
+        "move": "Leafage",
+        "level": 0
+      },
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 18
+      },
+      {
+        "move": "Leaf Blade",
+        "level": 25
+      },
+      {
+        "move": "Mimic",
+        "level": 25
+      },
+      {
+        "move": "Calm Mind",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Lickilicky": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Rest",
+        "level": 6
+      },
+      {
+        "move": "Bulldoze",
+        "level": 11
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 18
+      },
+      {
+        "move": "Double-Edge",
+        "level": 25
+      },
+      {
+        "move": "Rollout",
+        "level": 34
+      },
+      {
+        "move": "Giga Impact",
+        "level": 43
+      }
+    ],
+    "Lickitung": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Rest",
+        "level": 6
+      },
+      {
+        "move": "Bulldoze",
+        "level": 11
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 18
+      },
+      {
+        "move": "Double-Edge",
+        "level": 25
+      },
+      {
+        "move": "Rollout",
+        "level": 34
+      },
+      {
+        "move": "Giga Impact",
+        "level": 43
+      }
+    ],
+    "Lopunny": [
+      {
+        "move": "Mach Punch",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 5
+      },
+      {
+        "move": "Swift",
+        "level": 10
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 16
+      },
+      {
+        "move": "Double Hit",
+        "level": 23
+      },
+      {
+        "move": "Play Rough",
+        "level": 31
+      },
+      {
+        "move": "Close Combat",
+        "level": 40
+      },
+      {
+        "move": "Double-Edge",
+        "level": 40
+      }
+    ],
+    "Lopunny Mega Evolution": [
+      {
+        "move": "Mach Punch",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 5
+      },
+      {
+        "move": "Swift",
+        "level": 10
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 16
+      },
+      {
+        "move": "Double Hit",
+        "level": 23
+      },
+      {
+        "move": "Play Rough",
+        "level": 31
+      },
+      {
+        "move": "Close Combat",
+        "level": 40
+      },
+      {
+        "move": "Double-Edge",
+        "level": 40
+      }
+    ],
+    "Lucario": [
+      {
+        "move": "Rock Smash",
+        "level": 1
+      },
+      {
+        "move": "Bullet Punch",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 9
+      },
+      {
+        "move": "Iron Defense",
+        "level": 15
+      },
+      {
+        "move": "Mach Punch",
+        "level": 19
+      },
+      {
+        "move": "Aura Sphere",
+        "level": 21
+      },
+      {
+        "move": "Crunch",
+        "level": 29
+      },
+      {
+        "move": "Bulk Up",
+        "level": 37
+      },
+      {
+        "move": "Dragon Pulse",
+        "level": 40
+      },
+      {
+        "move": "Close Combat",
+        "level": 47
+      }
+    ],
+    "Lucario Mega Evolution": [
+      {
+        "move": "Rock Smash",
+        "level": 1
+      },
+      {
+        "move": "Bullet Punch",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 9
+      },
+      {
+        "move": "Iron Defense",
+        "level": 15
+      },
+      {
+        "move": "Mach Punch",
+        "level": 19
+      },
+      {
+        "move": "Aura Sphere",
+        "level": 21
+      },
+      {
+        "move": "Crunch",
+        "level": 29
+      },
+      {
+        "move": "Bulk Up",
+        "level": 37
+      },
+      {
+        "move": "Dragon Pulse",
+        "level": 40
+      },
+      {
+        "move": "Close Combat",
+        "level": 47
+      }
+    ],
+    "Lumineon": [
+      {
+        "move": "Bubble",
+        "level": 1
+      },
+      {
+        "move": "Gust",
+        "level": 6
+      },
+      {
+        "move": "Water Pulse",
+        "level": 11
+      },
+      {
+        "move": "Silver Wind",
+        "level": 18
+      },
+      {
+        "move": "Air Slash",
+        "level": 25
+      },
+      {
+        "move": "Roost",
+        "level": 34
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 43
+      }
+    ],
+    "Luxio": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Thunder Shock",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 9
+      },
+      {
+        "move": "Thunder Fang",
+        "level": 15
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 21
+      },
+      {
+        "move": "Crunch",
+        "level": 29
+      },
+      {
+        "move": "Wild Charge",
+        "level": 37
+      },
+      {
+        "move": "Thunder",
+        "level": 47
+      }
+    ],
+    "Luxray": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Thunder Shock",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 9
+      },
+      {
+        "move": "Thunder Fang",
+        "level": 15
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 21
+      },
+      {
+        "move": "Crunch",
+        "level": 29
+      },
+      {
+        "move": "Wild Charge",
+        "level": 37
+      },
+      {
+        "move": "Thunder",
+        "level": 47
+      }
+    ],
+    "Machamp": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Rock Smash",
+        "level": 6
+      },
+      {
+        "move": "Bullet Punch",
+        "level": 11
+      },
+      {
+        "move": "Double Hit",
+        "level": 18
+      },
+      {
+        "move": "Mach Punch",
+        "level": 22
+      },
+      {
+        "move": "Bulk Up",
+        "level": 25
+      },
+      {
+        "move": "Drain Punch",
+        "level": 30
+      },
+      {
+        "move": "Double-Edge",
+        "level": 34
+      },
+      {
+        "move": "Close Combat",
+        "level": 43
+      }
+    ],
+    "Machoke": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Rock Smash",
+        "level": 6
+      },
+      {
+        "move": "Bullet Punch",
+        "level": 11
+      },
+      {
+        "move": "Double Hit",
+        "level": 18
+      },
+      {
+        "move": "Mach Punch",
+        "level": 22
+      },
+      {
+        "move": "Bulk Up",
+        "level": 25
+      },
+      {
+        "move": "Double-Edge",
+        "level": 34
+      },
+      {
+        "move": "Close Combat",
+        "level": 43
+      }
+    ],
+    "Machop": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Rock Smash",
+        "level": 6
+      },
+      {
+        "move": "Bullet Punch",
+        "level": 11
+      },
+      {
+        "move": "Double Hit",
+        "level": 18
+      },
+      {
+        "move": "Mach Punch",
+        "level": 22
+      },
+      {
+        "move": "Bulk Up",
+        "level": 25
+      },
+      {
+        "move": "Double-Edge",
+        "level": 34
+      },
+      {
+        "move": "Close Combat",
+        "level": 43
+      }
+    ],
+    "Magby": [
+      {
+        "move": "Ember",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      },
+      {
+        "move": "Flame Wheel",
+        "level": 11
+      },
+      {
+        "move": "Poison Gas",
+        "level": 18
+      },
+      {
+        "move": "Fire Punch",
+        "level": 25
+      },
+      {
+        "move": "Flamethrower",
+        "level": 34
+      },
+      {
+        "move": "Fire Blast",
+        "level": 43
+      }
+    ],
+    "Magikarp": [
+      {
+        "move": "Splash",
+        "level": 1
+      }
+    ],
+    "Magmar": [
+      {
+        "move": "Ember",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      },
+      {
+        "move": "Flame Wheel",
+        "level": 11
+      },
+      {
+        "move": "Poison Gas",
+        "level": 18
+      },
+      {
+        "move": "Fire Punch",
+        "level": 25
+      },
+      {
+        "move": "Flamethrower",
+        "level": 34
+      },
+      {
+        "move": "Fire Blast",
+        "level": 43
+      }
+    ],
+    "Magmortar": [
+      {
+        "move": "Ember",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      },
+      {
+        "move": "Flame Wheel",
+        "level": 11
+      },
+      {
+        "move": "Poison Gas",
+        "level": 18
+      },
+      {
+        "move": "Fire Punch",
+        "level": 25
+      },
+      {
+        "move": "Flamethrower",
+        "level": 34
+      },
+      {
+        "move": "Fire Blast",
+        "level": 43
+      }
+    ],
+    "Magnemite": [
+      {
+        "move": "Thunder Shock",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 11
+      },
+      {
+        "move": "Spark",
+        "level": 18
+      },
+      {
+        "move": "Flash Cannon",
+        "level": 25
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 34
+      },
+      {
+        "move": "Thunder",
+        "level": 43
+      }
+    ],
+    "Magneton": [
+      {
+        "move": "Thunder Shock",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 11
+      },
+      {
+        "move": "Spark",
+        "level": 18
+      },
+      {
+        "move": "Flash Cannon",
+        "level": 25
+      },
+      {
+        "move": "Tri Attack",
+        "level": 25
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 34
+      },
+      {
+        "move": "Thunder",
+        "level": 43
+      }
+    ],
+    "Magnezone": [
+      {
+        "move": "Thunder Shock",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 11
+      },
+      {
+        "move": "Spark",
+        "level": 18
+      },
+      {
+        "move": "Flash Cannon",
+        "level": 25
+      },
+      {
+        "move": "Tri Attack",
+        "level": 25
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 34
+      },
+      {
+        "move": "Thunder",
+        "level": 43
+      }
+    ],
+    "Mamoswine": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Ice Shard",
+        "level": 6
+      },
+      {
+        "move": "Bulldoze",
+        "level": 11
+      },
+      {
+        "move": "Icicle Crash",
+        "level": 18
+      },
+      {
+        "move": "High Horsepower",
+        "level": 25
+      },
+      {
+        "move": "Ancient Power",
+        "level": 34
+      },
+      {
+        "move": "Blizzard",
+        "level": 43
+      },
+      {
+        "move": "Double-Edge",
+        "level": 52
+      }
+    ],
+    "Manaphy": [
+      {
+        "move": "Bubble",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Water Pulse",
+        "level": 12
+      },
+      {
+        "move": "Acid Armor",
+        "level": 19
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 27
+      },
+      {
+        "move": "Moonblast",
+        "level": 36
+      },
+      {
+        "move": "Take Heart",
+        "level": 46
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 57
+      }
+    ],
+    "Mantine": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Bubble",
+        "level": 5
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 9
+      },
+      {
+        "move": "Water Pulse",
+        "level": 15
+      },
+      {
+        "move": "Air Slash",
+        "level": 21
+      },
+      {
+        "move": "Roost",
+        "level": 29
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 37
+      },
+      {
+        "move": "Double-Edge",
+        "level": 47
+      }
+    ],
+    "Mantyke": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Bubble",
+        "level": 5
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 9
+      },
+      {
+        "move": "Water Pulse",
+        "level": 15
+      },
+      {
+        "move": "Air Slash",
+        "level": 21
+      },
+      {
+        "move": "Roost",
+        "level": 29
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 37
+      },
+      {
+        "move": "Double-Edge",
+        "level": 47
+      }
+    ],
+    "Mesprit": [
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Swift",
+        "level": 6
+      },
+      {
+        "move": "Double Hit",
+        "level": 12
+      },
+      {
+        "move": "Rest",
+        "level": 19
+      },
+      {
+        "move": "Extrasensory",
+        "level": 27
+      },
+      {
+        "move": "Tri Attack",
+        "level": 32
+      },
+      {
+        "move": "Calm Mind",
+        "level": 36
+      },
+      {
+        "move": "Mystical Power",
+        "level": 46
+      },
+      {
+        "move": "Recover",
+        "level": 57
+      }
+    ],
+    "Mime Jr.": [
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Hypnosis",
+        "level": 6
+      },
+      {
+        "move": "Iron Defense",
+        "level": 11
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 18
+      },
+      {
+        "move": "Mimic",
+        "level": 25
+      },
+      {
+        "move": "Psychic",
+        "level": 34
+      },
+      {
+        "move": "Calm Mind",
+        "level": 43
+      }
+    ],
+    "Misdreavus": [
+      {
+        "move": "Shadow Sneak",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Hypnosis",
+        "level": 11
+      },
+      {
+        "move": "Hex",
+        "level": 18
+      },
+      {
+        "move": "Extrasensory",
+        "level": 25
+      },
+      {
+        "move": "Power Gem",
+        "level": 34
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 43
+      }
+    ],
+    "Mismagius": [
+      {
+        "move": "Shadow Sneak",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Hypnosis",
+        "level": 11
+      },
+      {
+        "move": "Hex",
+        "level": 18
+      },
+      {
+        "move": "Extrasensory",
+        "level": 25
+      },
+      {
+        "move": "Power Gem",
+        "level": 34
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 43
+      }
+    ],
+    "Monferno": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Ember",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Mach Punch",
+        "level": 16
+      },
+      {
+        "move": "Flame Wheel",
+        "level": 18
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 25
+      },
+      {
+        "move": "Flamethrower",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Mothim": [
+      {
+        "move": "Struggle Bug",
+        "level": 1
+      },
+      {
+        "move": "Gust",
+        "level": 6
+      },
+      {
+        "move": "Confusion",
+        "level": 11
+      },
+      {
+        "move": "Silver Wind",
+        "level": 18
+      },
+      {
+        "move": "Air Slash",
+        "level": 25
+      },
+      {
+        "move": "Psychic",
+        "level": 34
+      },
+      {
+        "move": "Bug Buzz",
+        "level": 43
+      }
+    ],
+    "Mr. Mime": [
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Hypnosis",
+        "level": 6
+      },
+      {
+        "move": "Iron Defense",
+        "level": 11
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 18
+      },
+      {
+        "move": "Mimic",
+        "level": 25
+      },
+      {
+        "move": "Psychic",
+        "level": 34
+      },
+      {
+        "move": "Calm Mind",
+        "level": 43
+      },
+      {
+        "move": "Dazzling Gleam",
+        "level": 46
+      }
+    ],
+    "Munchlax": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Rest",
+        "level": 9
+      },
+      {
+        "move": "Bulldoze",
+        "level": 15
+      },
+      {
+        "move": "Bite",
+        "level": 21
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 29
+      },
+      {
+        "move": "High Horsepower",
+        "level": 37
+      },
+      {
+        "move": "Double-Edge",
+        "level": 46
+      },
+      {
+        "move": "Giga Impact",
+        "level": 57
+      }
+    ],
+    "Murkrow": [
+      {
+        "move": "Gust",
+        "level": 1
+      },
+      {
+        "move": "Snarl",
+        "level": 6
+      },
+      {
+        "move": "Roost",
+        "level": 11
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 18
+      },
+      {
+        "move": "Night Slash",
+        "level": 25
+      },
+      {
+        "move": "Air Slash",
+        "level": 30
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 34
+      },
+      {
+        "move": "Dark Pulse",
+        "level": 43
+      }
+    ],
+    "Ninetales": [
+      {
+        "move": "Ember",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 5
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 9
+      },
+      {
+        "move": "Flame Wheel",
+        "level": 15
+      },
+      {
+        "move": "Hex",
+        "level": 21
+      },
+      {
+        "move": "Extrasensory",
+        "level": 29
+      },
+      {
+        "move": "Flamethrower",
+        "level": 37
+      },
+      {
+        "move": "Fire Blast",
+        "level": 47
+      }
+    ],
+    "Nosepass": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 6
+      },
+      {
+        "move": "Spark",
+        "level": 11
+      },
+      {
+        "move": "Iron Defense",
+        "level": 18
+      },
+      {
+        "move": "Rock Slide",
+        "level": 25
+      },
+      {
+        "move": "Power Gem",
+        "level": 34
+      },
+      {
+        "move": "Earth Power",
+        "level": 43
+      }
+    ],
+    "Octillery": [
+      {
+        "move": "Octazooka",
+        "level": 0
+      },
+      {
+        "move": "Bubble",
+        "level": 1
+      },
+      {
+        "move": "Acid Spray",
+        "level": 6
+      },
+      {
+        "move": "Charge Beam",
+        "level": 11
+      },
+      {
+        "move": "Water Pulse",
+        "level": 18
+      },
+      {
+        "move": "Ice Beam",
+        "level": 25
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 34
+      },
+      {
+        "move": "Hyper Beam",
+        "level": 43
+      }
+    ],
+    "Onix": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      },
+      {
+        "move": "Bulldoze",
+        "level": 11
+      },
+      {
+        "move": "Rock Slide",
+        "level": 18
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 25
+      },
+      {
+        "move": "High Horsepower",
+        "level": 34
+      },
+      {
+        "move": "Iron Tail",
+        "level": 43
+      }
+    ],
+    "Oshawott": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Aqua Jet",
+        "level": 6
+      },
+      {
+        "move": "Swords Dance",
+        "level": 11
+      },
+      {
+        "move": "Water Pulse",
+        "level": 18
+      },
+      {
+        "move": "Slash",
+        "level": 25
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 34
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 43
+      }
+    ],
+    "Pachirisu": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Thunder Shock",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 9
+      },
+      {
+        "move": "Spark",
+        "level": 15
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 21
+      },
+      {
+        "move": "Crunch",
+        "level": 29
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 37
+      },
+      {
+        "move": "Thunder",
+        "level": 47
+      }
+    ],
+    "Palkia": [
+      {
+        "move": "Twister",
+        "level": 1
+      },
+      {
+        "move": "Ancient Power",
+        "level": 6
+      },
+      {
+        "move": "Slash",
+        "level": 12
+      },
+      {
+        "move": "Dragon Claw",
+        "level": 19
+      },
+      {
+        "move": "Power Gem",
+        "level": 27
+      },
+      {
+        "move": "Dragon Pulse",
+        "level": 36
+      },
+      {
+        "move": "Earth Power",
+        "level": 42
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 47
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 55
+      },
+      {
+        "move": "Spacial Rend",
+        "level": 60
+      }
+    ],
+    "Paras": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Stun Spore",
+        "level": 5
+      },
+      {
+        "move": "Poison Powder",
+        "level": 9
+      },
+      {
+        "move": "Venoshock",
+        "level": 15
+      },
+      {
+        "move": "Slash",
+        "level": 21
+      },
+      {
+        "move": "Spore",
+        "level": 29
+      },
+      {
+        "move": "X-Scissor",
+        "level": 37
+      },
+      {
+        "move": "Energy Ball",
+        "level": 47
+      }
+    ],
+    "Parasect": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Stun Spore",
+        "level": 5
+      },
+      {
+        "move": "Poison Powder",
+        "level": 9
+      },
+      {
+        "move": "Venoshock",
+        "level": 15
+      },
+      {
+        "move": "Slash",
+        "level": 21
+      },
+      {
+        "move": "Spore",
+        "level": 29
+      },
+      {
+        "move": "X-Scissor",
+        "level": 37
+      },
+      {
+        "move": "Energy Ball",
+        "level": 47
+      }
+    ],
+    "Petilil": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Leafage",
+        "level": 5
+      },
+      {
+        "move": "Stun Spore",
+        "level": 9
+      },
+      {
+        "move": "Poison Powder",
+        "level": 15
+      },
+      {
+        "move": "Energy Ball",
+        "level": 21
+      },
+      {
+        "move": "Sleep Powder",
+        "level": 29
+      },
+      {
+        "move": "Recover",
+        "level": 37
+      },
+      {
+        "move": "Leaf Storm",
+        "level": 47
+      }
+    ],
+    "Phione": [
+      {
+        "move": "Bubble",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Water Pulse",
+        "level": 12
+      },
+      {
+        "move": "Acid Armor",
+        "level": 19
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 27
+      },
+      {
+        "move": "Moonblast",
+        "level": 36
+      },
+      {
+        "move": "Take Heart",
+        "level": 46
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 57
+      }
+    ],
+    "Pichu": [
+      {
+        "move": "Thunder Shock",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 5
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 9
+      },
+      {
+        "move": "Swift",
+        "level": 15
+      },
+      {
+        "move": "Spark",
+        "level": 21
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 29
+      },
+      {
+        "move": "Iron Tail",
+        "level": 37
+      },
+      {
+        "move": "Thunder",
+        "level": 47
+      }
+    ],
+    "Pikachu": [
+      {
+        "move": "Thunder Shock",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 5
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 9
+      },
+      {
+        "move": "Swift",
+        "level": 15
+      },
+      {
+        "move": "Spark",
+        "level": 21
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 29
+      },
+      {
+        "move": "Iron Tail",
+        "level": 37
+      },
+      {
+        "move": "Thunder",
+        "level": 47
+      }
+    ],
+    "Piloswine": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Ice Shard",
+        "level": 6
+      },
+      {
+        "move": "Bulldoze",
+        "level": 11
+      },
+      {
+        "move": "Icicle Crash",
+        "level": 18
+      },
+      {
+        "move": "High Horsepower",
+        "level": 25
+      },
+      {
+        "move": "Ancient Power",
+        "level": 34
+      },
+      {
+        "move": "Blizzard",
+        "level": 43
+      },
+      {
+        "move": "Double-Edge",
+        "level": 52
+      }
+    ],
+    "Piplup": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Bubble",
+        "level": 6
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 11
+      },
+      {
+        "move": "Water Pulse",
+        "level": 18
+      },
+      {
+        "move": "Roost",
+        "level": 25
+      },
+      {
+        "move": "Liquidation",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Ponyta": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Ember",
+        "level": 5
+      },
+      {
+        "move": "Double Hit",
+        "level": 9
+      },
+      {
+        "move": "Flame Wheel",
+        "level": 15
+      },
+      {
+        "move": "Hypnosis",
+        "level": 21
+      },
+      {
+        "move": "Fire Blast",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Flare Blitz",
+        "level": 47
+      }
+    ],
+    "Porygon": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Thunder Shock",
+        "level": 5
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 9
+      },
+      {
+        "move": "Spark",
+        "level": 15
+      },
+      {
+        "move": "Tri Attack",
+        "level": 21
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 29
+      },
+      {
+        "move": "Recover",
+        "level": 37
+      },
+      {
+        "move": "Hyper Beam",
+        "level": 47
+      }
+    ],
+    "Porygon-Z": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Thunder Shock",
+        "level": 5
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 9
+      },
+      {
+        "move": "Spark",
+        "level": 15
+      },
+      {
+        "move": "Tri Attack",
+        "level": 21
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 29
+      },
+      {
+        "move": "Recover",
+        "level": 37
+      },
+      {
+        "move": "Hyper Beam",
+        "level": 47
+      }
+    ],
+    "Prinplup": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Bubble",
+        "level": 6
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 11
+      },
+      {
+        "move": "Water Pulse",
+        "level": 18
+      },
+      {
+        "move": "Roost",
+        "level": 25
+      },
+      {
+        "move": "Liquidation",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Probopass": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 6
+      },
+      {
+        "move": "Spark",
+        "level": 11
+      },
+      {
+        "move": "Iron Defense",
+        "level": 18
+      },
+      {
+        "move": "Rock Slide",
+        "level": 25
+      },
+      {
+        "move": "Power Gem",
+        "level": 34
+      },
+      {
+        "move": "Tri Attack",
+        "level": 34
+      },
+      {
+        "move": "Flash Cannon",
+        "level": 38
+      },
+      {
+        "move": "Earth Power",
+        "level": 43
+      }
+    ],
+    "Psyduck": [
+      {
+        "move": "Bubble",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 6
+      },
+      {
+        "move": "Water Pulse",
+        "level": 11
+      },
+      {
+        "move": "Hypnosis",
+        "level": 18
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 25
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 34
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 43
+      }
+    ],
+    "Purugly": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Hypnosis",
+        "level": 5
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 10
+      },
+      {
+        "move": "Slash",
+        "level": 16
+      },
+      {
+        "move": "Night Slash",
+        "level": 23
+      },
+      {
+        "move": "Play Rough",
+        "level": 31
+      },
+      {
+        "move": "Double-Edge",
+        "level": 40
+      }
+    ],
+    "Quilava": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Ember",
+        "level": 6
+      },
+      {
+        "move": "Rollout",
+        "level": 11
+      },
+      {
+        "move": "Flame Wheel",
+        "level": 18
+      },
+      {
+        "move": "Swift",
+        "level": 25
+      },
+      {
+        "move": "Flamethrower",
+        "level": 34
+      },
+      {
+        "move": "Overheat",
+        "level": 43
+      }
+    ],
+    "Raichu": [
+      {
+        "move": "Thunder Shock",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 5
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 9
+      },
+      {
+        "move": "Swift",
+        "level": 15
+      },
+      {
+        "move": "Spark",
+        "level": 21
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 29
+      },
+      {
+        "move": "Iron Tail",
+        "level": 37
+      },
+      {
+        "move": "Thunder",
+        "level": 47
+      }
+    ],
+    "Ralts": [
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Teleport",
+        "level": 6
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 11
+      },
+      {
+        "move": "Hypnosis",
+        "level": 18
+      },
+      {
+        "move": "Calm Mind",
+        "level": 25
+      },
+      {
+        "move": "Psychic",
+        "level": 34
+      }
+    ],
+    "Rampardos": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Ancient Power",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 9
+      },
+      {
+        "move": "Rock Slide",
+        "level": 15
+      },
+      {
+        "move": "Iron Head",
+        "level": 21
+      },
+      {
+        "move": "Crunch",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Head Smash",
+        "level": 47
+      }
+    ],
+    "Rapidash": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Ember",
+        "level": 5
+      },
+      {
+        "move": "Double Hit",
+        "level": 9
+      },
+      {
+        "move": "Flame Wheel",
+        "level": 15
+      },
+      {
+        "move": "Hypnosis",
+        "level": 21
+      },
+      {
+        "move": "Fire Blast",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Flare Blitz",
+        "level": 47
+      }
+    ],
+    "Regigigas": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Rock Smash",
+        "level": 6
+      },
+      {
+        "move": "Bulldoze",
+        "level": 12
+      },
+      {
+        "move": "Ancient Power",
+        "level": 19
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 27
+      },
+      {
+        "move": "Iron Head",
+        "level": 36
+      },
+      {
+        "move": "Crush Grip",
+        "level": 46
+      },
+      {
+        "move": "Giga Impact",
+        "level": 57
+      }
+    ],
+    "Remoraid": [
+      {
+        "move": "Bubble",
+        "level": 1
+      },
+      {
+        "move": "Acid Spray",
+        "level": 6
+      },
+      {
+        "move": "Charge Beam",
+        "level": 11
+      },
+      {
+        "move": "Water Pulse",
+        "level": 18
+      },
+      {
+        "move": "Ice Beam",
+        "level": 25
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 34
+      },
+      {
+        "move": "Hyper Beam",
+        "level": 43
+      }
+    ],
+    "Rhydon": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Bulldoze",
+        "level": 6
+      },
+      {
+        "move": "Rock Smash",
+        "level": 11
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 18
+      },
+      {
+        "move": "Rock Slide",
+        "level": 25
+      },
+      {
+        "move": "High Horsepower",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      },
+      {
+        "move": "Giga Impact",
+        "level": 52
+      }
+    ],
+    "Rhyhorn": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Bulldoze",
+        "level": 6
+      },
+      {
+        "move": "Rock Smash",
+        "level": 11
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 18
+      },
+      {
+        "move": "Rock Slide",
+        "level": 25
+      },
+      {
+        "move": "High Horsepower",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      },
+      {
+        "move": "Giga Impact",
+        "level": 52
+      }
+    ],
+    "Rhyperior": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Bulldoze",
+        "level": 6
+      },
+      {
+        "move": "Rock Smash",
+        "level": 11
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 18
+      },
+      {
+        "move": "Rock Slide",
+        "level": 25
+      },
+      {
+        "move": "High Horsepower",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      },
+      {
+        "move": "Giga Impact",
+        "level": 52
+      }
+    ],
+    "Riolu": [
+      {
+        "move": "Rock Smash",
+        "level": 1
+      },
+      {
+        "move": "Bullet Punch",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 9
+      },
+      {
+        "move": "Iron Defense",
+        "level": 15
+      },
+      {
+        "move": "Aura Sphere",
+        "level": 21
+      },
+      {
+        "move": "Crunch",
+        "level": 29
+      },
+      {
+        "move": "Bulk Up",
+        "level": 37
+      },
+      {
+        "move": "Close Combat",
+        "level": 47
+      }
+    ],
+    "Roselia": [
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Absorb",
+        "level": 6
+      },
+      {
+        "move": "Poison Powder",
+        "level": 11
+      },
+      {
+        "move": "Stun Spore",
+        "level": 18
+      },
+      {
+        "move": "Venoshock",
+        "level": 25
+      },
+      {
+        "move": "Poison Jab",
+        "level": 34
+      },
+      {
+        "move": "Energy Ball",
+        "level": 43
+      },
+      {
+        "move": "Petal Dance",
+        "level": 52
+      }
+    ],
+    "Roserade": [
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Absorb",
+        "level": 6
+      },
+      {
+        "move": "Poison Powder",
+        "level": 11
+      },
+      {
+        "move": "Stun Spore",
+        "level": 18
+      },
+      {
+        "move": "Venoshock",
+        "level": 25
+      },
+      {
+        "move": "Poison Jab",
+        "level": 34
+      },
+      {
+        "move": "Energy Ball",
+        "level": 43
+      },
+      {
+        "move": "Petal Dance",
+        "level": 52
+      }
+    ],
+    "Rotom": [
+      {
+        "move": "Thunder Shock",
+        "level": 1
+      },
+      {
+        "move": "Charge Beam",
+        "level": 6
+      },
+      {
+        "move": "Hex",
+        "level": 11
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 18
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 25
+      },
+      {
+        "move": "Thunderbolt",
+        "level": 34
+      },
+      {
+        "move": "Thunder",
+        "level": 43
+      }
+    ],
+    "Rufflet": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 6
+      },
+      {
+        "move": "Twister",
+        "level": 11
+      },
+      {
+        "move": "Slash",
+        "level": 18
+      },
+      {
+        "move": "Air Slash",
+        "level": 20
+      },
+      {
+        "move": "Roost",
+        "level": 25
+      },
+      {
+        "move": "Double-Edge",
+        "level": 34
+      },
+      {
+        "move": "Brave Bird",
+        "level": 43
+      }
+    ],
+    "Scizor": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Silver Wind",
+        "level": 6
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 11
+      },
+      {
+        "move": "Double Hit",
+        "level": 14
+      },
+      {
+        "move": "Air Slash",
+        "level": 18
+      },
+      {
+        "move": "Swords Dance",
+        "level": 25
+      },
+      {
+        "move": "Bullet Punch",
+        "level": 29
+      },
+      {
+        "move": "Iron Head",
+        "level": 34
+      },
+      {
+        "move": "X-Scissor",
+        "level": 34
+      },
+      {
+        "move": "Close Combat",
+        "level": 43
+      }
+    ],
+    "Scizor Mega Evolution": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Silver Wind",
+        "level": 6
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 11
+      },
+      {
+        "move": "Double Hit",
+        "level": 14
+      },
+      {
+        "move": "Air Slash",
+        "level": 18
+      },
+      {
+        "move": "Swords Dance",
+        "level": 25
+      },
+      {
+        "move": "Bullet Punch",
+        "level": 29
+      },
+      {
+        "move": "Iron Head",
+        "level": 34
+      },
+      {
+        "move": "X-Scissor",
+        "level": 34
+      },
+      {
+        "move": "Close Combat",
+        "level": 43
+      }
+    ],
+    "Scyther": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Silver Wind",
+        "level": 6
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 11
+      },
+      {
+        "move": "Double Hit",
+        "level": 14
+      },
+      {
+        "move": "Air Slash",
+        "level": 18
+      },
+      {
+        "move": "Swords Dance",
+        "level": 25
+      },
+      {
+        "move": "X-Scissor",
+        "level": 34
+      },
+      {
+        "move": "Close Combat",
+        "level": 43
+      }
+    ],
+    "Sealeo": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Powder Snow",
+        "level": 6
+      },
+      {
+        "move": "Water Pulse",
+        "level": 11
+      },
+      {
+        "move": "Rest",
+        "level": 18
+      },
+      {
+        "move": "Liquidation",
+        "level": 25
+      },
+      {
+        "move": "Ice Beam",
+        "level": 34
+      },
+      {
+        "move": "Blizzard",
+        "level": 43
+      }
+    ],
+    "Shaymin Land": [
+      {
+        "move": "Leafage",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Sleep Powder",
+        "level": 12
+      },
+      {
+        "move": "Air Slash",
+        "level": 19
+      },
+      {
+        "move": "Recover",
+        "level": 27
+      },
+      {
+        "move": "Energy Ball",
+        "level": 36
+      },
+      {
+        "move": "Earth Power",
+        "level": 46
+      },
+      {
+        "move": "Seed Flare",
+        "level": 57
+      }
+    ],
+    "Shellos": [
+      {
+        "move": "Mud Slap",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Water Pulse",
+        "level": 9
+      },
+      {
+        "move": "Ancient Power",
+        "level": 15
+      },
+      {
+        "move": "Mud Bomb",
+        "level": 21
+      },
+      {
+        "move": "Earth Power",
+        "level": 29
+      },
+      {
+        "move": "Recover",
+        "level": 37
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 47
+      }
+    ],
+    "Shieldon": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Ancient Power",
+        "level": 5
+      },
+      {
+        "move": "Iron Defense",
+        "level": 9
+      },
+      {
+        "move": "Rock Slide",
+        "level": 15
+      },
+      {
+        "move": "Iron Head",
+        "level": 21
+      },
+      {
+        "move": "Earth Power",
+        "level": 29
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 37
+      },
+      {
+        "move": "Double-Edge",
+        "level": 47
+      }
+    ],
+    "Shinx": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Thunder Shock",
+        "level": 5
+      },
+      {
+        "move": "Bite",
+        "level": 9
+      },
+      {
+        "move": "Thunder Fang",
+        "level": 15
+      },
+      {
+        "move": "Thunder Wave",
+        "level": 21
+      },
+      {
+        "move": "Crunch",
+        "level": 29
+      },
+      {
+        "move": "Wild Charge",
+        "level": 37
+      },
+      {
+        "move": "Thunder",
+        "level": 47
+      }
+    ],
+    "Silcoon": [
+      {
+        "move": "Iron Defense",
+        "level": 0
+      },
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      }
+    ],
+    "Skorupi": [
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Bite",
+        "level": 6
+      },
+      {
+        "move": "Venoshock",
+        "level": 11
+      },
+      {
+        "move": "Cross Poison",
+        "level": 18
+      },
+      {
+        "move": "Swords Dance",
+        "level": 25
+      },
+      {
+        "move": "X-Scissor",
+        "level": 34
+      },
+      {
+        "move": "Crunch",
+        "level": 43
+      }
+    ],
+    "Skuntank": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Acid Spray",
+        "level": 6
+      },
+      {
+        "move": "Poison Gas",
+        "level": 11
+      },
+      {
+        "move": "Venoshock",
+        "level": 18
+      },
+      {
+        "move": "Night Slash",
+        "level": 25
+      },
+      {
+        "move": "Flamethrower",
+        "level": 34
+      },
+      {
+        "move": "Poison Jab",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Sneasel": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Ice Shard",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Slash",
+        "level": 18
+      },
+      {
+        "move": "Poison Jab",
+        "level": 25
+      },
+      {
+        "move": "Swords Dance",
+        "level": 34
+      },
+      {
+        "move": "Blizzard",
+        "level": 43
+      }
+    ],
+    "Snorlax": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Rest",
+        "level": 9
+      },
+      {
+        "move": "Bulldoze",
+        "level": 15
+      },
+      {
+        "move": "Bite",
+        "level": 21
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 29
+      },
+      {
+        "move": "Crunch",
+        "level": 35
+      },
+      {
+        "move": "High Horsepower",
+        "level": 37
+      },
+      {
+        "move": "Double-Edge",
+        "level": 46
+      },
+      {
+        "move": "Giga Impact",
+        "level": 57
+      }
+    ],
+    "Snorunt": [
+      {
+        "move": "Powder Snow",
+        "level": 1
+      },
+      {
+        "move": "Ice Shard",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Ice Fang",
+        "level": 18
+      },
+      {
+        "move": "Crunch",
+        "level": 25
+      },
+      {
+        "move": "Icicle Crash",
+        "level": 34
+      },
+      {
+        "move": "Blizzard",
+        "level": 43
+      }
+    ],
+    "Snover": [
+      {
+        "move": "Powder Snow",
+        "level": 1
+      },
+      {
+        "move": "Leafage",
+        "level": 6
+      },
+      {
+        "move": "Ice Shard",
+        "level": 11
+      },
+      {
+        "move": "Icicle Crash",
+        "level": 18
+      },
+      {
+        "move": "Energy Ball",
+        "level": 25
+      },
+      {
+        "move": "Blizzard",
+        "level": 34
+      },
+      {
+        "move": "Wood Hammer",
+        "level": 43
+      }
+    ],
+    "Spheal": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Powder Snow",
+        "level": 6
+      },
+      {
+        "move": "Water Pulse",
+        "level": 11
+      },
+      {
+        "move": "Rest",
+        "level": 18
+      },
+      {
+        "move": "Liquidation",
+        "level": 25
+      },
+      {
+        "move": "Ice Beam",
+        "level": 34
+      },
+      {
+        "move": "Blizzard",
+        "level": 43
+      }
+    ],
+    "Spiritomb": [
+      {
+        "move": "Shadow Sneak",
+        "level": 1
+      },
+      {
+        "move": "Hypnosis",
+        "level": 6
+      },
+      {
+        "move": "Hex",
+        "level": 11
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 18
+      },
+      {
+        "move": "Extrasensory",
+        "level": 25
+      },
+      {
+        "move": "Dark Pulse",
+        "level": 34
+      },
+      {
+        "move": "Shadow Ball",
+        "level": 43
+      }
+    ],
+    "Stantler": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Confusion",
+        "level": 5
+      },
+      {
+        "move": "Hypnosis",
+        "level": 9
+      },
+      {
+        "move": "Calm Mind",
+        "level": 15
+      },
+      {
+        "move": "Psyshield Bash",
+        "level": 21
+      },
+      {
+        "move": "Extrasensory",
+        "level": 29
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 37
+      },
+      {
+        "move": "Double-Edge",
+        "level": 47
+      }
+    ],
+    "Staraptor": [
+      {
+        "move": "Close Combat",
+        "level": 0
+      },
+      {
+        "move": "Gust",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 5
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 9
+      },
+      {
+        "move": "Air Slash",
+        "level": 15
+      },
+      {
+        "move": "Roost",
+        "level": 21
+      },
+      {
+        "move": "Double-Edge",
+        "level": 29
+      },
+      {
+        "move": "Brave Bird",
+        "level": 37
+      },
+      {
+        "move": "Giga Impact",
+        "level": 47
+      }
+    ],
+    "Staravia": [
+      {
+        "move": "Gust",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 5
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 9
+      },
+      {
+        "move": "Air Slash",
+        "level": 15
+      },
+      {
+        "move": "Roost",
+        "level": 21
+      },
+      {
+        "move": "Double-Edge",
+        "level": 29
+      },
+      {
+        "move": "Brave Bird",
+        "level": 37
+      },
+      {
+        "move": "Giga Impact",
+        "level": 47
+      }
+    ],
+    "Starly": [
+      {
+        "move": "Gust",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 5
+      },
+      {
+        "move": "Aerial Ace",
+        "level": 9
+      },
+      {
+        "move": "Air Slash",
+        "level": 15
+      },
+      {
+        "move": "Roost",
+        "level": 21
+      },
+      {
+        "move": "Double-Edge",
+        "level": 29
+      },
+      {
+        "move": "Brave Bird",
+        "level": 37
+      },
+      {
+        "move": "Giga Impact",
+        "level": 47
+      }
+    ],
+    "Steelix": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      },
+      {
+        "move": "Bulldoze",
+        "level": 11
+      },
+      {
+        "move": "Rock Slide",
+        "level": 18
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 25
+      },
+      {
+        "move": "High Horsepower",
+        "level": 34
+      },
+      {
+        "move": "Iron Tail",
+        "level": 43
+      }
+    ],
+    "Steelix Mega Evolution": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      },
+      {
+        "move": "Bulldoze",
+        "level": 11
+      },
+      {
+        "move": "Rock Slide",
+        "level": 18
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 25
+      },
+      {
+        "move": "High Horsepower",
+        "level": 34
+      },
+      {
+        "move": "Iron Tail",
+        "level": 43
+      }
+    ],
+    "Stunky": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Acid Spray",
+        "level": 6
+      },
+      {
+        "move": "Poison Gas",
+        "level": 11
+      },
+      {
+        "move": "Venoshock",
+        "level": 18
+      },
+      {
+        "move": "Night Slash",
+        "level": 25
+      },
+      {
+        "move": "Poison Jab",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Sudowoodo": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 5
+      },
+      {
+        "move": "Stealth Rock",
+        "level": 9
+      },
+      {
+        "move": "Rock Slide",
+        "level": 15
+      },
+      {
+        "move": "Iron Defense",
+        "level": 21
+      },
+      {
+        "move": "Mimic",
+        "level": 29
+      },
+      {
+        "move": "Double-Edge",
+        "level": 37
+      },
+      {
+        "move": "Head Smash",
+        "level": 47
+      },
+      {
+        "move": "Wood Hammer",
+        "level": 57
+      }
+    ],
+    "Swinub": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Ice Shard",
+        "level": 6
+      },
+      {
+        "move": "Bulldoze",
+        "level": 11
+      },
+      {
+        "move": "Icicle Crash",
+        "level": 18
+      },
+      {
+        "move": "High Horsepower",
+        "level": 25
+      },
+      {
+        "move": "Ancient Power",
+        "level": 34
+      },
+      {
+        "move": "Blizzard",
+        "level": 43
+      },
+      {
+        "move": "Double-Edge",
+        "level": 52
+      }
+    ],
+    "Sylveon": [
+      {
+        "move": "Fairy Wind",
+        "level": 0
+      },
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 18
+      },
+      {
+        "move": "Mimic",
+        "level": 25
+      },
+      {
+        "move": "Play Rough",
+        "level": 25
+      },
+      {
+        "move": "Calm Mind",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Tangela": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Stun Spore",
+        "level": 6
+      },
+      {
+        "move": "Poison Powder",
+        "level": 11
+      },
+      {
+        "move": "Acid Spray",
+        "level": 15
+      },
+      {
+        "move": "Double Hit",
+        "level": 18
+      },
+      {
+        "move": "Energy Ball",
+        "level": 25
+      },
+      {
+        "move": "Ancient Power",
+        "level": 34
+      },
+      {
+        "move": "Sleep Powder",
+        "level": 43
+      }
+    ],
+    "Tangrowth": [
+      {
+        "move": "Absorb",
+        "level": 1
+      },
+      {
+        "move": "Stun Spore",
+        "level": 6
+      },
+      {
+        "move": "Poison Powder",
+        "level": 11
+      },
+      {
+        "move": "Acid Spray",
+        "level": 15
+      },
+      {
+        "move": "Double Hit",
+        "level": 18
+      },
+      {
+        "move": "Energy Ball",
+        "level": 25
+      },
+      {
+        "move": "Ancient Power",
+        "level": 34
+      },
+      {
+        "move": "Sleep Powder",
+        "level": 43
+      },
+      {
+        "move": "Sludge Bomb",
+        "level": 52
+      }
+    ],
+    "Teddiursa": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 6
+      },
+      {
+        "move": "Bulldoze",
+        "level": 11
+      },
+      {
+        "move": "Slash",
+        "level": 18
+      },
+      {
+        "move": "Play Rough",
+        "level": 25
+      },
+      {
+        "move": "High Horsepower",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Tentacool": [
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Bubble",
+        "level": 6
+      },
+      {
+        "move": "Water Pulse",
+        "level": 11
+      },
+      {
+        "move": "Hex",
+        "level": 18
+      },
+      {
+        "move": "Poison Jab",
+        "level": 25
+      },
+      {
+        "move": "Acid Armor",
+        "level": 34
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 43
+      }
+    ],
+    "Tentacruel": [
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Bubble",
+        "level": 6
+      },
+      {
+        "move": "Water Pulse",
+        "level": 11
+      },
+      {
+        "move": "Hex",
+        "level": 18
+      },
+      {
+        "move": "Poison Jab",
+        "level": 25
+      },
+      {
+        "move": "Acid Armor",
+        "level": 34
+      },
+      {
+        "move": "Hydro Pump",
+        "level": 43
+      }
+    ],
+    "Thundurus Incarnate": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Bite",
+        "level": 7
+      },
+      {
+        "move": "Twister",
+        "level": 11
+      },
+      {
+        "move": "Spark",
+        "level": 14
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 22
+      },
+      {
+        "move": "Extrasensory",
+        "level": 31
+      },
+      {
+        "move": "Crunch",
+        "level": 41
+      },
+      {
+        "move": "Thunder",
+        "level": 47
+      },
+      {
+        "move": "Wildbolt Storm",
+        "level": 52
+      }
+    ],
+    "Togekiss": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Fairy Wind",
+        "level": 6
+      },
+      {
+        "move": "Air Cutter",
+        "level": 11
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 11
+      },
+      {
+        "move": "Calm Mind",
+        "level": 18
+      },
+      {
+        "move": "Air Slash",
+        "level": 25
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 25
+      },
+      {
+        "move": "Extrasensory",
+        "level": 34
+      },
+      {
+        "move": "Moonblast",
+        "level": 43
+      }
+    ],
+    "Togepi": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Fairy Wind",
+        "level": 6
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 11
+      },
+      {
+        "move": "Calm Mind",
+        "level": 18
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 25
+      },
+      {
+        "move": "Extrasensory",
+        "level": 34
+      },
+      {
+        "move": "Moonblast",
+        "level": 43
+      }
+    ],
+    "Togetic": [
+      {
+        "move": "Air Cutter",
+        "level": 0
+      },
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Fairy Wind",
+        "level": 6
+      },
+      {
+        "move": "Draining Kiss",
+        "level": 11
+      },
+      {
+        "move": "Calm Mind",
+        "level": 18
+      },
+      {
+        "move": "Air Slash",
+        "level": 25
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 25
+      },
+      {
+        "move": "Extrasensory",
+        "level": 34
+      },
+      {
+        "move": "Moonblast",
+        "level": 43
+      }
+    ],
+    "Tornadus Incarnate": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Bite",
+        "level": 7
+      },
+      {
+        "move": "Twister",
+        "level": 11
+      },
+      {
+        "move": "Air Cutter",
+        "level": 14
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 22
+      },
+      {
+        "move": "Extrasensory",
+        "level": 31
+      },
+      {
+        "move": "Crunch",
+        "level": 41
+      },
+      {
+        "move": "Hurricane",
+        "level": 47
+      },
+      {
+        "move": "Bleakwind Storm",
+        "level": 52
+      }
+    ],
+    "Torterra": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Leafage",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Bulldoze",
+        "level": 18
+      },
+      {
+        "move": "Sleep Powder",
+        "level": 25
+      },
+      {
+        "move": "Leaf Blade",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      },
+      {
+        "move": "Wood Hammer",
+        "level": 52
+      },
+      {
+        "move": "Headlong Rush",
+        "level": 57
+      }
+    ],
+    "Toxicroak": [
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Rock Smash",
+        "level": 5
+      },
+      {
+        "move": "Mud Bomb",
+        "level": 9
+      },
+      {
+        "move": "Venoshock",
+        "level": 15
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 21
+      },
+      {
+        "move": "Poison Jab",
+        "level": 29
+      },
+      {
+        "move": "Earth Power",
+        "level": 37
+      },
+      {
+        "move": "Close Combat",
+        "level": 47
+      }
+    ],
+    "Turtwig": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Leafage",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Bulldoze",
+        "level": 18
+      },
+      {
+        "move": "Sleep Powder",
+        "level": 25
+      },
+      {
+        "move": "Leaf Blade",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Umbreon": [
+      {
+        "move": "Snarl",
+        "level": 0
+      },
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 18
+      },
+      {
+        "move": "Dark Pulse",
+        "level": 25
+      },
+      {
+        "move": "Mimic",
+        "level": 25
+      },
+      {
+        "move": "Calm Mind",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Unown": [
+      {
+        "move": "Hidden Power",
+        "level": 1
+      }
+    ],
+    "Ursaring": [
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 6
+      },
+      {
+        "move": "Bulldoze",
+        "level": 11
+      },
+      {
+        "move": "Slash",
+        "level": 18
+      },
+      {
+        "move": "Play Rough",
+        "level": 25
+      },
+      {
+        "move": "High Horsepower",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Uxie": [
+      {
+        "move": "Confusion",
+        "level": 1
+      },
+      {
+        "move": "Swift",
+        "level": 6
+      },
+      {
+        "move": "Double Hit",
+        "level": 12
+      },
+      {
+        "move": "Rest",
+        "level": 19
+      },
+      {
+        "move": "Extrasensory",
+        "level": 27
+      },
+      {
+        "move": "Tri Attack",
+        "level": 32
+      },
+      {
+        "move": "Calm Mind",
+        "level": 36
+      },
+      {
+        "move": "Mystical Power",
+        "level": 46
+      },
+      {
+        "move": "Hypnosis",
+        "level": 57
+      }
+    ],
+    "Vaporeon": [
+      {
+        "move": "Bubble",
+        "level": 0
+      },
+      {
+        "move": "Tackle",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Baby-Doll Eyes",
+        "level": 18
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 25
+      },
+      {
+        "move": "Mimic",
+        "level": 25
+      },
+      {
+        "move": "Calm Mind",
+        "level": 34
+      },
+      {
+        "move": "Double-Edge",
+        "level": 43
+      }
+    ],
+    "Vespiquen": [
+      {
+        "move": "Gust",
+        "level": 1
+      },
+      {
+        "move": "Struggle Bug",
+        "level": 6
+      },
+      {
+        "move": "Pin Missile",
+        "level": 11
+      },
+      {
+        "move": "Silver Wind",
+        "level": 18
+      },
+      {
+        "move": "Slash",
+        "level": 25
+      },
+      {
+        "move": "Air Slash",
+        "level": 29
+      },
+      {
+        "move": "Power Gem",
+        "level": 34
+      },
+      {
+        "move": "Bug Buzz",
+        "level": 43
+      },
+      {
+        "move": "Recover",
+        "level": 52
+      }
+    ],
+    "Vulpix": [
+      {
+        "move": "Ember",
+        "level": 1
+      },
+      {
+        "move": "Quick Attack",
+        "level": 5
+      },
+      {
+        "move": "Nasty Plot",
+        "level": 9
+      },
+      {
+        "move": "Flame Wheel",
+        "level": 15
+      },
+      {
+        "move": "Hex",
+        "level": 21
+      },
+      {
+        "move": "Extrasensory",
+        "level": 29
+      },
+      {
+        "move": "Flamethrower",
+        "level": 37
+      },
+      {
+        "move": "Fire Blast",
+        "level": 47
+      }
+    ],
+    "Walrein": [
+      {
+        "move": "Rollout",
+        "level": 1
+      },
+      {
+        "move": "Powder Snow",
+        "level": 6
+      },
+      {
+        "move": "Water Pulse",
+        "level": 11
+      },
+      {
+        "move": "Rest",
+        "level": 18
+      },
+      {
+        "move": "Liquidation",
+        "level": 25
+      },
+      {
+        "move": "Ice Beam",
+        "level": 34
+      },
+      {
+        "move": "Blizzard",
+        "level": 43
+      }
+    ],
+    "Weavile": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Ice Shard",
+        "level": 6
+      },
+      {
+        "move": "Swift",
+        "level": 11
+      },
+      {
+        "move": "Slash",
+        "level": 18
+      },
+      {
+        "move": "Poison Jab",
+        "level": 25
+      },
+      {
+        "move": "Swords Dance",
+        "level": 34
+      },
+      {
+        "move": "Night Slash",
+        "level": 38
+      },
+      {
+        "move": "Blizzard",
+        "level": 43
+      }
+    ],
+    "Whiscash": [
+      {
+        "move": "Mud Slap",
+        "level": 1
+      },
+      {
+        "move": "Water Pulse",
+        "level": 6
+      },
+      {
+        "move": "Mud Bomb",
+        "level": 11
+      },
+      {
+        "move": "Rest",
+        "level": 18
+      },
+      {
+        "move": "Zen Headbutt",
+        "level": 25
+      },
+      {
+        "move": "Aqua Tail",
+        "level": 34
+      },
+      {
+        "move": "Earth Power",
+        "level": 43
+      }
+    ],
+    "Wormadam Plant": [
+      {
+        "move": "Struggle Bug",
+        "level": 1
+      },
+      {
+        "move": "Gust",
+        "level": 6
+      },
+      {
+        "move": "Confusion",
+        "level": 11
+      },
+      {
+        "move": "Silver Wind",
+        "level": 18
+      },
+      {
+        "move": "Energy Ball",
+        "level": 25
+      },
+      {
+        "move": "Psychic",
+        "level": 34
+      },
+      {
+        "move": "Bug Buzz",
+        "level": 43
+      }
+    ],
+    "Wormadam Sand": [
+      {
+        "move": "Struggle Bug",
+        "level": 1
+      },
+      {
+        "move": "Gust",
+        "level": 6
+      },
+      {
+        "move": "Confusion",
+        "level": 11
+      },
+      {
+        "move": "Silver Wind",
+        "level": 18
+      },
+      {
+        "move": "Energy Ball",
+        "level": 25
+      },
+      {
+        "move": "Psychic",
+        "level": 34
+      },
+      {
+        "move": "Bug Buzz",
+        "level": 43
+      }
+    ],
+    "Wormadam Trash": [
+      {
+        "move": "Struggle Bug",
+        "level": 1
+      },
+      {
+        "move": "Gust",
+        "level": 6
+      },
+      {
+        "move": "Confusion",
+        "level": 11
+      },
+      {
+        "move": "Silver Wind",
+        "level": 18
+      },
+      {
+        "move": "Iron Head",
+        "level": 25
+      },
+      {
+        "move": "Psychic",
+        "level": 34
+      },
+      {
+        "move": "Bug Buzz",
+        "level": 43
+      }
+    ],
+    "Wurmple": [
+      {
+        "move": "Poison Sting",
+        "level": 1
+      },
+      {
+        "move": "Tackle",
+        "level": 6
+      }
+    ],
+    "Yanma": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Gust",
+        "level": 6
+      },
+      {
+        "move": "Silver Wind",
+        "level": 11
+      },
+      {
+        "move": "Hypnosis",
+        "level": 18
+      },
+      {
+        "move": "Air Slash",
+        "level": 25
+      },
+      {
+        "move": "Ancient Power",
+        "level": 34
+      },
+      {
+        "move": "Bug Buzz",
+        "level": 43
+      }
+    ],
+    "Yanmega": [
+      {
+        "move": "Quick Attack",
+        "level": 1
+      },
+      {
+        "move": "Gust",
+        "level": 6
+      },
+      {
+        "move": "Silver Wind",
+        "level": 11
+      },
+      {
+        "move": "Hypnosis",
+        "level": 18
+      },
+      {
+        "move": "Air Slash",
+        "level": 25
+      },
+      {
+        "move": "Ancient Power",
+        "level": 34
+      },
+      {
+        "move": "Bug Buzz",
+        "level": 43
+      },
+      {
+        "move": "Crunch",
+        "level": 43
+      }
+    ],
+    "Zubat": [
+      {
+        "move": "Gust",
+        "level": 1
+      },
+      {
+        "move": "Hypnosis",
+        "level": 6
+      },
+      {
+        "move": "Bite",
+        "level": 11
+      },
+      {
+        "move": "Air Cutter",
+        "level": 18
+      },
+      {
+        "move": "Cross Poison",
+        "level": 25
+      },
+      {
+        "move": "Air Slash",
+        "level": 34
+      },
+      {
+        "move": "Leech Life",
+        "level": 43
+      }
+    ]
+  }
+}

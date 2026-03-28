@@ -1,0 +1,50 @@
+{
+  "name": "Guillotine",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "guillotine",
+    "actions": [
+      {
+        "slug": "guillotine",
+        "name": "Guillotine",
+        "type": "attack",
+        "traits": [
+          "execute",
+          "unreliable",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": -5
+        },
+        "category": "physical",
+        "power": null,
+        "accuracy": 30,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "IqZQB3hi2blz6MIs",
+  "effects": []
+}

@@ -1,0 +1,48 @@
+{
+  "name": "Burn Up",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "burn-up",
+    "actions": [
+      {
+        "slug": "burn-up",
+        "name": "Burn Up",
+        "type": "attack",
+        "traits": [
+          "defrost"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "category": "special",
+        "power": 130,
+        "accuracy": 100,
+        "types": [
+          "fire"
+        ],
+        "description": "<p>Effect: After using this Move, the user loses their Fire-typing until their next Rest. Only Fire Type creatures can use this Move.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "JVIcdcHAEZUIaEPh",
+  "effects": []
+}

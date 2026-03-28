@@ -1,0 +1,143 @@
+{
+  "name": "Hivemark",
+  "type": "perk",
+  "system": {
+    "_migration": {
+      "version": 0.108,
+      "previous": null
+    },
+    "actions": [
+      {
+        "name": "Hivemark Action (#1)",
+        "slug": "hivemark-action-1",
+        "description": "<p>Passive: Your Bug-Type Moves gain a +20% chance to inflict Infested 5.</p>",
+        "traits": [],
+        "type": "passive",
+        "img": "systems/ptr2e/img/svg/bug_icon.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free"
+        },
+        "hidden": true
+      }
+    ],
+    "slug": "hivemark",
+    "description": "<p>Passive: Your Bug-Type Moves gain a +20% chance to inflict @Affliction[infested] 5.</p>",
+    "traits": [],
+    "prerequisites": [
+      "trait:bug"
+    ],
+    "cost": 2,
+    "nodes": [
+      {
+        "connected": [
+          "adhesive-digits",
+          "silk-swing",
+          "improved-threaded"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": null,
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 84,
+        "y": 25,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "o8JKgkDzgMMay8Co",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "effects": [
+    {
+      "name": "Hivemark",
+      "type": "passive",
+      "_id": "xt11UeCVjAoBmK4z",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "bug-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.infestedconditem",
+            "predicate": [
+              "origin:enemy"
+            ],
+            "chance": 20,
+            "affects": "target",
+            "priority": null,
+            "alterations": [],
+            "dontMerge": false,
+            "isFixedChance": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.348",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1731105131277,
+        "modifiedTime": 1757797803090,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "o5iIUG4Bj40M86yi"
+}

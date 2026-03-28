@@ -1,0 +1,124 @@
+{
+  "name": "White Smoke",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive",
+          "hazard",
+          "interrupt-2"
+        ],
+        "name": "White Smoke",
+        "slug": "white-smoke",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 5,
+          "trigger": "<p>A negative [Stage Change] effect is applied to the user.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: A negative [Stage Change] effect is applied to the user.</p><p>Effect: The user freely uses Smokescreen centered on itself. Then, the triggering effect is cured.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: A negative [Stage Change] effect is applied to the user</p><p>Effect: Connection - Smokescreen. The user freely uses Smokescreen centered on itself. Then, the triggering effect is cured.</p><p>Passive: Smokescreen Hazards created by the user do not affect the user or their allies.</p>",
+    "traits": [
+      "defensive",
+      "hazard",
+      "connection"
+    ],
+    "slug": "white-smoke",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "1Tiu4yez4jm3cqu7",
+  "effects": [
+    {
+      "name": "White Smoke",
+      "type": "passive",
+      "_id": "bIPC4PLGYvMM5zmr",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.pYNVsTCmUw7oWhRg",
+            "predicate": [
+              "ability:white-smoke:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "reevaluateOnUpdate": true,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737421949545,
+        "modifiedTime": 1754322230271,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

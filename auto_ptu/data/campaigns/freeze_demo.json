@@ -1,0 +1,55 @@
+{
+  "name": "Freeze Lab",
+  "description": "Froslass starts the encounter frozen while Articuno bombs the field with Ice Shards. The demo highlights the new Freeze mechanic: skipped turns, thaw rolls, and how damage breaks the icy prison. Run `freeze_demo` to make sure the skip/wake messages look right after any tweak.",
+  "default_weather": "Snowstorm",
+  "grid": {
+    "width": 12,
+    "height": 6,
+    "blockers": [[3, 2], [3, 3], [8, 1], [8, 4]],
+    "tiles": {
+      "4,1": "difficult",
+      "9,4": "water"
+    }
+  },
+  "players": [
+    {
+      "name": "Froslass",
+      "species": "Froslass",
+      "level": 24,
+      "types": ["Ice", "Ghost"],
+      "hp_stat": 12,
+      "atk": 10,
+      "def": 9,
+      "spatk": 13,
+      "spdef": 12,
+      "spd": 15,
+      "statuses": [{"name": "Frozen"}],
+      "moves": [
+        {"name": "Ice Beam", "type": "Ice", "category": "Special", "db": 8, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "EOT"},
+        {"name": "Shadow Ball", "type": "Ghost", "category": "Special", "db": 7, "ac": 3, "range_kind": "Ranged", "range_value": 6, "freq": "Scene"},
+        {"name": "Ice Shard", "type": "Ice", "category": "Special", "db": 6, "ac": 2, "range_kind": "Ranged", "range_value": 5, "freq": "At-Will"}
+      ],
+      "movement": {"overland": 5, "swim": 2, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 2, "l_jump": 2, "power": 2}
+    }
+  ],
+  "foes": [
+    {
+      "name": "Articuno",
+      "species": "Articuno",
+      "level": 26,
+      "types": ["Ice", "Flying"],
+      "hp_stat": 15,
+      "atk": 10,
+      "def": 13,
+      "spatk": 14,
+      "spdef": 14,
+      "spd": 12,
+      "moves": [
+        {"name": "Ice Shard", "type": "Ice", "category": "Special", "db": 7, "ac": 2, "range_kind": "Ranged", "range_value": 5, "freq": "At-Will"},
+        {"name": "Freeze-Dry", "type": "Ice", "category": "Special", "db": 8, "ac": 3, "range_kind": "Ranged", "range_value": 6, "freq": "Scene"},
+        {"name": "Aurora Beam", "type": "Ice", "category": "Special", "db": 6, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "At-Will"}
+      ],
+      "movement": {"overland": 6, "swim": 3, "sky": 6, "levitate": 0, "burrow": 0, "h_jump": 2, "l_jump": 2, "power": 3}
+    }
+  ]
+}

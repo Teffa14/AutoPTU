@@ -1,0 +1,488 @@
+{
+  "name": "ferroseed",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 597,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.6,
+      "weight": 18.8
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "threaded",
+        "value": 3
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "darkvision-15",
+      "volatile-bomb",
+      "jump-6"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "iron-barbs"
+        },
+        {
+          "slug": "anticipation"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "bulletproof"
+        },
+        {
+          "slug": "battle-armor"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "juggernaut"
+        },
+        {
+          "slug": "lets-roll"
+        }
+      ],
+      "master": [
+        {
+          "slug": "fort-knox"
+        },
+        {
+          "slug": "aftermath"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "disguise",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "stats": {
+      "hp": 44,
+      "atk": 50,
+      "def": 91,
+      "spa": 24,
+      "spd": 86,
+      "spe": 10
+    },
+    "types": [
+      "steel",
+      "grass"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "harden",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "tackle",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "metal-claw",
+          "gen": "sword-shield",
+          "level": 5
+        },
+        {
+          "name": "rollout",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 6
+        },
+        {
+          "name": "pin-missile",
+          "gen": "sword-shield",
+          "level": 10
+        },
+        {
+          "name": "ingrain",
+          "gen": "sword-shield",
+          "level": 15
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "sword-shield",
+          "level": 20
+        },
+        {
+          "name": "iron-head",
+          "gen": "sword-shield",
+          "level": 25
+        },
+        {
+          "name": "mirror-shot",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 30
+        },
+        {
+          "name": "self-destruct",
+          "gen": "sword-shield",
+          "level": 30
+        },
+        {
+          "name": "iron-defense",
+          "gen": "sword-shield",
+          "level": 35
+        },
+        {
+          "name": "curse",
+          "gen": "sword-shield",
+          "level": 41
+        },
+        {
+          "name": "spiky-shield",
+          "gen": "dev",
+          "level": 41
+        },
+        {
+          "name": "gyro-ball",
+          "gen": "sword-shield",
+          "level": 45
+        },
+        {
+          "name": "payback",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 47
+        },
+        {
+          "name": "explosion",
+          "gen": "sword-shield",
+          "level": 50
+        }
+      ],
+      "tutor": [
+        {
+          "name": "acid-spray",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bullet-seed",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endeavor",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "gravity",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hone-claws",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "knock-off",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "leech-seed",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "magnet-rise",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "revenge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-climb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-polish",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "seed-bomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spikes",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "stealth-rock",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "steel-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "steel-roller",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "vine-whip",
+          "gen": "dev"
+        },
+        {
+          "name": "worry-seed",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ]
+    },
+    "captureRate": 215,
+    "eggGroups": [
+      "plant",
+      "mineral"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "cave"
+    ],
+    "evolutions": {
+      "name": "ferroseed",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "ferrothorn",
+          "uuid": "Compendium.ptr2e.core-species.Item.niiybV9W1nC4kszq",
+          "methods": [
+            {
+              "type": "level",
+              "level": 34,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.tKbgThnzHZV3gwYZ",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "slug": "ferroseed",
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": "undefined"
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "tKbgThnzHZV3gwYZ",
+  "effects": []
+}

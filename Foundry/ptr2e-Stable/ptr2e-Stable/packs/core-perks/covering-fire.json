@@ -1,0 +1,78 @@
+{
+  "folder": "VCEaYPpKcCqDx7yx",
+  "name": "Covering Fire",
+  "type": "perk",
+  "_id": "ZFWJ0Nf1xNYr2LxT",
+  "img": "systems/ptr2e/img/perk-icons/Tactician.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Covering Fire",
+        "slug": "covering-fire",
+        "description": "<p>Using a Ranged Weapon, the user may provide Covering Fire and delay their next Activation by 20%. Set up a Covering Fire Clock with 3 Spans. The user and their allies may tick a Span on this Clock to claim Light Cover (or Heavy Cover if already in Light Cover) from incoming non-[Contact] attacks. The Covering Fire effect ends when either the clock is filled, or the user's next Activation begins.</p>",
+        "traits": [],
+        "type": "generic",
+        "range": {
+          "target": "object",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "img": "systems/ptr2e/img/perk-icons/Tactician.svg"
+      }
+    ],
+    "slug": "covering-fire",
+    "description": "<p>As a Complex Action costing 2PP, the user uses a Ranged Weapon to provide Covering Fire, delayling their next Activation by 20%. Set up a Covering Fire Clock with 3 Spans. The user and their allies may tick a Span on this Clock to claim Light Cover (or Heavy Cover if already in Light Cover) from incoming non-@Trait[contact] attacks. The Covering Fire effect ends when either the clock is filled, or the user's next Activation begins.</p>",
+    "traits": [],
+    "prerequisites": [
+      "trait:wielder"
+    ],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 177,
+        "y": 70,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "hobby-gardener",
+          "tainted-blades",
+          "harry",
+          "trained-wielder",
+          "down-the-sights",
+          "arms-race",
+          "mudrunner"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Tactician.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "finesse",
+      "archetype": "gunslinger"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": []
+}

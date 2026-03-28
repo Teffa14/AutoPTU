@@ -1,0 +1,33 @@
+<figure class="effect-traits">
+    {{#if traits}}
+    <header>
+        {{#each traits as |trait|}}
+        {{> trait-partial trait=trait direction="LEFT"}}
+        {{/each}}
+    </header>
+    {{/if}}
+    <main>
+        {{#if (or attack.category attack.types)}}
+        <aside>
+            {{{getIcon attack.category}}}
+            {{#each attack.types as |type|}}
+            {{{getIcon type}}}
+            {{/each}}
+        </aside>
+        {{/if}}
+        {{#if attack.description}}
+        <article>
+          {{{attack.description}}}
+          {{#if attack.summon}}
+            <section class="attack-summon mt-2">
+              <button class="create-summon" data-attack-uuid="{{attack.uuid}}" data-tooltip="Add Summon to Combat (GM Only)" {{#unless (isGm)}}disabled{{/unless}}>Create Summon</button>
+            </section>
+          {{/if}}
+        </article>
+        {{else}}
+        <article class="center">
+            <small><i>No Effect Description Provided</i></small>
+        </article>
+        {{/if}}
+    </main>
+</figure>

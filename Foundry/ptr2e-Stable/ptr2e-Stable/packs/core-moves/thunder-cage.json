@@ -1,0 +1,49 @@
+{
+  "name": "Thunder Cage",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "thunder-cage",
+    "actions": [
+      {
+        "slug": "thunder-cage",
+        "name": "Thunder Cage",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "trap"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "special",
+        "power": 15,
+        "accuracy": 90,
+        "types": [
+          "electric"
+        ],
+        "description": "<p>Effect: On hit, the target becomes @Affliction[bound 7]. While @Affliction[bound], the target and any creatures within 3m of the @Affliction[bound] creature take a Tick of HP damage at the end of their Activations. This @Affliction[bound] effect can be removed with a Difficult Medicine, Psychology, or Survival Skill Check taken as a Simple Action.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "WtsWkk7bobMJktAg",
+  "effects": []
+}

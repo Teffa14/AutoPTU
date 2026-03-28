@@ -1,0 +1,569 @@
+{
+  "name": "scolipede",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 545,
+    "size": {
+      "category": "large",
+      "type": "length",
+      "height": 2.5,
+      "weight": 200.5
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 17
+      },
+      {
+        "type": "swim",
+        "value": 5
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "many-legged",
+      "blindsense-15",
+      "wallclimber",
+      "venomous",
+      "horned",
+      "jump-5"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "poison-point"
+        },
+        {
+          "slug": "lets-roll"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "swarm"
+        },
+        {
+          "slug": "speed-boost"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "exploit-weakness"
+        },
+        {
+          "slug": "tuck-and-roll"
+        }
+      ],
+      "master": [
+        {
+          "slug": "supervenom"
+        },
+        {
+          "slug": "infuriate"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "scolipede",
+    "stats": {
+      "hp": 60,
+      "atk": 100,
+      "def": 89,
+      "spa": 55,
+      "spd": 69,
+      "spe": 112
+    },
+    "types": [
+      "poison",
+      "bug"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "baton-pass",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "defense-curl",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "iron-defense",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "poison-sting",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "rollout",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "poison-tail",
+          "gen": "sword-shield",
+          "level": 12
+        },
+        {
+          "name": "pursuit",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 12
+        },
+        {
+          "name": "screech",
+          "gen": "sword-shield",
+          "level": 16
+        },
+        {
+          "name": "bug-bite",
+          "gen": "sword-shield",
+          "level": 20
+        },
+        {
+          "name": "venoshock",
+          "gen": "sword-shield",
+          "level": 26
+        },
+        {
+          "name": "take-down",
+          "gen": "sword-shield",
+          "level": 34
+        },
+        {
+          "name": "steamroller",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 39
+        },
+        {
+          "name": "agility",
+          "gen": "sword-shield",
+          "level": 42
+        },
+        {
+          "name": "rock-climb",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 50
+        },
+        {
+          "name": "toxic",
+          "gen": "sword-shield",
+          "level": 50
+        },
+        {
+          "name": "venom-drench",
+          "gen": "sword-shield",
+          "level": 58
+        },
+        {
+          "name": "double-edge",
+          "gen": "sword-shield",
+          "level": 66
+        },
+        {
+          "name": "megahorn",
+          "gen": "sword-shield",
+          "level": 74
+        }
+      ],
+      "tutor": [
+        {
+          "name": "aqua-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "assurance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "cross-poison",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "cut",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "dig",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "earthquake",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endeavor",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "gyro-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hex",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "infestation",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "pin-missile",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "sludge-bomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "smart-strike",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snatch",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "spikes",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "steel-roller",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "strength",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "struggle-bug",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "superpower",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "throat-chop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "toxic-spikes",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "x-scissor",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "captureRate": 60,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "forest",
+      "woodland"
+    ],
+    "evolutions": {
+      "name": "venipede",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "whirlipede",
+          "uuid": "Compendium.ptr2e.core-species.Item.SlHjp3QF6Z4Mgau4",
+          "methods": [
+            {
+              "type": "level",
+              "level": 22,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "scolipede",
+              "uuid": "Compendium.ptr2e.core-species.Item.wwExCkoJXLvdO33x",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 30,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "perk": {
+                "x": 26,
+                "y": 26
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.dNt6z45d0K3reNSu",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "wwExCkoJXLvdO33x",
+  "effects": []
+}

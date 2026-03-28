@@ -1,0 +1,90 @@
+{
+  "name": "Static Strike",
+  "type": "move",
+  "_id": "ekwdakVALv3cLVfG",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": null,
+    "actions": [
+      {
+        "name": "Static Strike (Resolution)",
+        "slug": "static-strike-resolution",
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/electric_icon.svg",
+        "traits": [
+          "set-up",
+          "crit-1",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1,
+          "trigger": "The user used Static Strike (Set-Up) as their last Action."
+        },
+        "types": [
+          "electric"
+        ],
+        "category": "physical",
+        "power": 90,
+        "accuracy": 95,
+        "description": "<p>Trigger: The user used Static Strike (Set Up) as their last Action.</p><p>Effect: On hit, the target gains @Affliction[paralysis 5].</p>",
+        "predicate": []
+      },
+      {
+        "name": "Static Strike (Set-Up)",
+        "slug": "static-strike-set-up",
+        "description": "<p>Effect: The user gains @Affliction[braced 2], If the user is affected by Electric Terrain or Rainy Weather, the user may use Static Strike (Resolution] as a Free Action upon resolving this Attack.</p>",
+        "traits": [
+          "set-up",
+          "environ",
+          "priority-20"
+        ],
+        "type": "attack",
+        "img": "systems/ptr2e/img/svg/electric_icon.svg",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "types": [
+          "electric"
+        ],
+        "category": "status",
+        "predicate": []
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [],
+  "sort": 10100000,
+  "ownership": {
+    "default": 0,
+    "CYLdyr5mPSDmNpTp": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.327",
+    "systemId": "ptr2e",
+    "systemVersion": "0.10.0-alpha.1.0.4",
+    "createdTime": 1718743519730,
+    "modifiedTime": 1719978166126,
+    "lastModifiedBy": "CYLdyr5mPSDmNpTp"
+  }
+}

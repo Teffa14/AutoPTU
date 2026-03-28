@@ -1,0 +1,40 @@
+{
+  "name": "Perfectionist",
+  "type": "ability",
+  "img": "systems/ptr2e/img/icons/ability_icon.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [],
+        "name": "Perfectionist",
+        "slug": "perfectionist",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "description": "<p>Effect: The user's Attacks with &lt;60 base Power gain @Trait[crit-1], and those with &lt;40 default Power also gain @Trait[priority-20]. This effect applies to @Trait[x-strike] Attacks. When the user would miss an Attack, they gain @Affliction[delay 30].</p>",
+        "img": "systems/ptr2e/img/icons/ability_icon.webp"
+      }
+    ],
+    "description": "<p>Effect: The user's Attacks with <60 base Power gain @Trait[crit-1], and those with <40 default Power also gain @Trait[priority-20]. This effect applies to @Trait[x-strike] Attacks. When the user would miss an Attack, they gain @Affliction[delay 30].</p>",
+    "traits": [],
+    "slug": "perfectionist",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "UOESqHqU7JsWxllJ",
+  "effects": []
+}

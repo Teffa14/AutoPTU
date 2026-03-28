@@ -1,0 +1,45 @@
+{
+  "name": "Kowtow Cleave",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "kowtow-cleave",
+    "actions": [
+      {
+        "slug": "kowtow-cleave",
+        "name": "Kowtow Cleave",
+        "type": "attack",
+        "traits": [
+          "sharp",
+          "contact",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 85,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "img": "systems/ptr2e/img/svg/dark_icon.svg"
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "ZEfROnpUJBwEEWAt",
+  "effects": []
+}

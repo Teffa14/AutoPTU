@@ -1,0 +1,48 @@
+{
+  "name": "Gastro Acid",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "slug": "gastro-acid",
+    "actions": [
+      {
+        "slug": "gastro-acid",
+        "name": "Gastro Acid",
+        "type": "attack",
+        "traits": [
+          "blast-1"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": 100,
+        "types": [
+          "poison"
+        ],
+        "description": "<p>Effect: On hit, all valid targets have up to two of their Abilities @Affliction[nullified] 5.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "GmBPq27QxJ90SvUG",
+  "effects": []
+}

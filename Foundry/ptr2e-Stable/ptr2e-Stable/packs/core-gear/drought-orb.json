@@ -1,0 +1,50 @@
+{
+  "name": "Drought Orb",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 9,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "A",
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "uncommon",
+    "consumableType": "other",
+    "traits": [
+      "consumable",
+      "wonder-orb",
+      "held",
+      "fling"
+    ],
+    "description": "Creates Scorched Terrain for 5 rounds. All liquids evaporate and leave behind solid ground on the current Floor.",
+    "quantity": 1,
+    "slug": "drought-orb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "GO2rRGzytkunuHPq",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

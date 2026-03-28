@@ -1,0 +1,18 @@
+<li class="item flexrow{{#if entry.rarity}} rarity-{{entry.rarity}}{{/if}}" data-entry-uuid="{{entry.uuid}}" data-type="Item" data-tooltip="{{entry.name}}">
+    <div class="image">
+      <img src="{{entry.img}}" alt="{{entry.name}}" loading="lazy" />
+    </div>
+    <div class="name">
+      <a class="item-link">{{entry.name}}</a>
+    </div>
+    {{#if entry.cost}}
+    <div class="cost">
+      IP Cost: <b>{{entry.cost}}</b>
+    </div>
+    <div class="purchase">
+      <a data-tooltip="Purchase for {{entry.cost}} IP?" data-tooltip-direction="UP" data-action="purchase" draggable="false">
+        <i class="fa-regular fa-fw fa-bag-shopping"></i>
+      </a>
+    </div>
+    {{/if}}
+</li>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AutoPTU Move Converter</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Standalone Dist Tool</p>
+        <h1>AutoPTU Move Converter</h1>
+        <p class="lede">
+          Turn move, ability, and item inputs into PTU-ready move payloads for players, builders, and AI tools.
+        </p>
+      </section>
+
+      <section class="panel form-panel">
+        <div class="row">
+          <label>
+            <span>Kind</span>
+            <select id="kind">
+              <option value="move">Move</option>
+              <option value="ability">Ability</option>
+              <option value="item">Item</option>
+            </select>
+          </label>
+          <label>
+            <span>Name</span>
+            <input id="name" type="text" placeholder="Thunder Punch, Static, Bright Powder">
+          </label>
+        </div>
+
+        <label class="wide">
+          <span>Source Text</span>
+          <textarea id="text" rows="6" placeholder="Melee, 1 Target. DB 6. The target is Burned on 19+."></textarea>
+        </label>
+
+        <details class="override-panel">
+          <summary>Optional Manual Overrides</summary>
+          <p class="override-help">
+            Leave these blank in normal use. The converter should infer the PTU-ready result on its own; use overrides only when you want to force a specific outcome.
+          </p>
+          <div class="row">
+            <label>
+              <span>Range Override</span>
+              <input id="range-override" type="text" placeholder="Melee, 1 Target">
+            </label>
+            <label>
+              <span>Keywords Override</span>
+              <input id="keywords-override" type="text" placeholder="Priority, Dash, Smite">
+            </label>
+            <label>
+              <span>Type Override</span>
+              <input id="type-override" type="text" placeholder="Normal">
+            </label>
+            <label>
+              <span>Category Override</span>
+              <input id="category-override" type="text" placeholder="Status">
+            </label>
+            <label>
+              <span>Frequency Override</span>
+              <input id="frequency-override" type="text" placeholder="Scene x2">
+            </label>
+            <label>
+              <span>DB Override</span>
+              <input id="db-override" type="number" min="0" placeholder="0">
+            </label>
+          </div>
+        </details>
+
+        <details class="ai-panel">
+          <summary>Optional Local Model Refinement</summary>
+          <p id="ai-help" class="ai-help">
+            Local Ollama usually needs no API key. Set a model name, leave the key blank, and use the default local URL.
+          </p>
+          <div class="row">
+            <label class="checkbox">
+              <input id="use-ai" type="checkbox">
+              <span>Enable local AI refinement</span>
+            </label>
+            <label>
+              <span>Provider</span>
+              <select id="ai-provider">
+                <option value="ollama">ollama</option>
+                <option value="openai-compatible">openai-compatible</option>
+              </select>
+            </label>
+            <label>
+              <span>Model</span>
+              <input id="ai-model" type="text" placeholder="llama3.1:8b">
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <span>Base URL</span>
+              <input id="ai-base-url" type="text" placeholder="http://127.0.0.1:11434">
+            </label>
+            <label id="ai-api-key-wrap">
+              <span id="ai-api-key-label">API Key</span>
+              <input id="ai-api-key" type="password" placeholder="Optional">
+            </label>
+            <label>
+              <span>Temperature</span>
+              <input id="ai-temperature" type="number" min="0" max="2" step="0.1" value="0.2">
+            </label>
+          </div>
+          <div class="ai-actions">
+            <button id="test-connection-button" type="button" class="secondary">Test Connection</button>
+            <div id="ai-connection-result" class="ai-connection-result">No connection test run yet.</div>
+          </div>
+          <article class="ai-preview-card">
+            <h3>AI Status</h3>
+            <pre id="ai-status-detail" class="ai-preview">No AI call yet.</pre>
+          </article>
+          <article class="ai-preview-card">
+            <h3>AI Reasoning</h3>
+            <pre id="ai-reasoning" class="ai-preview">No AI reasoning yet.</pre>
+          </article>
+          <article class="ai-preview-card">
+            <h3>AI Raw Response</h3>
+            <pre id="ai-preview" class="ai-preview">No AI response yet.</pre>
+          </article>
+        </details>
+
+        <div class="actions">
+          <button id="convert-button" type="button">Convert</button>
+          <button id="copy-json-button" type="button" class="secondary">Copy JSON</button>
+          <button id="example-button" type="button" class="secondary">Load Example</button>
+        </div>
+
+        <article class="request-preview-card">
+          <h3>Request Preview</h3>
+          <pre id="request-preview">{"kind":"move"}</pre>
+        </article>
+      </section>
+
+      <section class="panel output-panel">
+        <div class="output-head">
+          <div>
+            <p class="eyebrow">Result</p>
+            <h2 id="move-name">No move generated yet</h2>
+          </div>
+          <span id="status-pill" class="status-pill">Idle</span>
+        </div>
+
+        <div class="stats" id="move-summary"></div>
+
+        <div class="output-grid">
+          <article class="card">
+            <h3>Move Text</h3>
+            <pre id="move-text">Run a conversion to see the normalized move.</pre>
+          </article>
+          <article class="card">
+            <h3>JSON Payload</h3>
+            <pre id="json-output">{}</pre>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

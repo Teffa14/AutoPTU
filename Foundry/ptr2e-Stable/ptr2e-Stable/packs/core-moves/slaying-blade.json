@@ -1,0 +1,49 @@
+{
+  "name": "Slaying Blade",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "slaying-blade",
+    "actions": [
+      {
+        "slug": "slaying-blade",
+        "name": "Slaying Blade",
+        "type": "attack",
+        "traits": [
+          "sharp",
+          "crit-1"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "physical",
+        "power": 120,
+        "accuracy": 80,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Effect: This attack deals double damage to Dragon-, Dark-, and Fairy-typed creatures.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Jf6HwnrpTXXQbGM2",
+  "effects": []
+}

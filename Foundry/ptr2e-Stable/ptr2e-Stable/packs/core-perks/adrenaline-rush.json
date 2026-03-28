@@ -1,0 +1,173 @@
+{
+  "name": "Adrenaline Rush",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|level}",
+          30
+        ]
+      }
+    ],
+    "cost": 3,
+    "description": "<p>Your fight or flight response is finely honed - able to get you out of the stickiest of situations. The user gains the Ability Adrenaline as a Tutored Ability, and once during battle, when the user crosses the [Desperation 1/2] threshold, they freely use either U-Turn or No Retreat, as if it was on their Active List.</p>",
+    "actions": [
+      {
+        "name": "Adrenaline Rush",
+        "slug": "adrenaline-rush",
+        "description": "<p>Your fight or flight response is finely honed - able to get you out of the stickiest of situations. The user gains the Ability Adrenaline as a Tutored Ability, and once during battle, when the user crosses the [Desperation 1/2] threshold, they freely use either U-Turn or No Retreat, as if it was on their Active List.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3
+        },
+        "type": "generic",
+        "traits": [
+          "desperation-1-2",
+          "interrupt-2"
+        ],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "adrenaline-rush",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "hear-no-bell",
+          "plus-ultra",
+          "overbooster"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#008000",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Combat.svg",
+          "tint": "#000000",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 71,
+        "y": 44,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "resilience",
+      "archetype": "berserker"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "_id": "1uzQwRPq1YMLDk8L",
+  "img": "systems/ptr2e/img/perk-icons/Combat.svg",
+  "effects": [
+    {
+      "name": "Adrenaline Rush",
+      "type": "passive",
+      "_id": "vTuNSDechlcqJw8F",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-abilities.Item.kDYV4gKQkqKP04Mf",
+            "predicate": [],
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "allowDuplicate": true,
+            "alterations": [],
+            "track": false,
+            "replaceSelf": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            }
+          },
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.DTnhRJBYhTBapjIK",
+            "predicate": [],
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "allowDuplicate": true,
+            "alterations": [],
+            "track": false,
+            "replaceSelf": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            }
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.2.1",
+        "createdTime": 1737934506228,
+        "modifiedTime": 1737934530202,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "zrVtKATNxzLNxTUa"
+}

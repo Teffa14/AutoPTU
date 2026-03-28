@@ -1,0 +1,52 @@
+{
+  "name": "Proton Beam",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/nuclear_icon.svg",
+  "system": {
+    "slug": "proton-beam",
+    "actions": [
+      {
+        "slug": "proton-beam",
+        "name": "Proton Beam",
+        "type": "attack",
+        "traits": [
+          "ray"
+        ],
+        "range": {
+          "target": "line",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "special",
+        "power": 105,
+        "accuracy": 90,
+        "types": [
+          "nuclear"
+        ],
+        "description": "<p>Effect: The user loses -2 SPATK Stage for 5 Activations.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "4zcl72cUMb6joFth",
+  "folder": "EpCOePz8omfXbp35",
+  "effects": []
+}

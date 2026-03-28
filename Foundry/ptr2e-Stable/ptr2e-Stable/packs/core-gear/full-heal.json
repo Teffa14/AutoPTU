@@ -1,0 +1,55 @@
+{
+  "name": "Full Heal",
+  "img": "systems/ptr2e/img/item-icons/full heal.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 3,
+    "crafting": {
+      "skill": "medicine",
+      "spans": 2,
+      "materials": [
+        "1x-sitrus-berry",
+        "4x-grade-e-berries"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "common",
+    "consumableType": "restorative",
+    "traits": [
+      "stack-3",
+      "combat",
+      "held",
+      "restorative",
+      "consumable",
+      "healing"
+    ],
+    "description": "The target is healed of all [Major Affliction] effects.",
+    "quantity": 1,
+    "slug": "full-heal",
+    "stack": 3,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Vlj3CkqdZunKz1Xe",
+  "effects": [],
+  "folder": "srQci2ThhRKdmC6g"
+}

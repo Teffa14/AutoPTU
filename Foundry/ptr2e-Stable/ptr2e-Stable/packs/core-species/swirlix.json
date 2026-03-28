@@ -1,0 +1,447 @@
+{
+  "name": "swirlix",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 684,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.4,
+      "weight": 3.5
+    },
+    "diet": [
+      "carbovore"
+    ],
+    "movement": [
+      {
+        "type": "flight",
+        "value": 4
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "hover",
+      "honey-gather",
+      "underdog",
+      "jump-2"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "sweet-veil"
+        },
+        {
+          "slug": "unburden"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "tangling-hair"
+        },
+        {
+          "slug": "gluttony"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "rattled"
+        },
+        {
+          "slug": "miracle-mile"
+        }
+      ],
+      "master": [
+        {
+          "slug": "weak-armor"
+        },
+        {
+          "slug": "moonshield"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "swirlix",
+    "stats": {
+      "hp": 62,
+      "atk": 48,
+      "def": 66,
+      "spa": 59,
+      "spd": 57,
+      "spe": 49
+    },
+    "types": [
+      "fairy"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sweet-scent",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "play-nice",
+          "level": 3,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fairy-wind",
+          "level": 6,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "aromatherapy",
+          "level": 9,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "draining-kiss",
+          "level": 12,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fake-tears",
+          "level": 15,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "level": 18,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "string-shot",
+          "level": 21,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "cotton-spore",
+          "level": 24,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "energy-ball",
+          "level": 27,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wish",
+          "level": 30,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "play-rough",
+          "level": 33,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "cotton-guard",
+          "level": 36,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endeavor",
+          "level": 39,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "light-screen",
+          "level": 58,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "safeguard",
+          "level": 67,
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "belly-drum",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "yawn",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "copycat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "after-you",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sticky-web",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "heal-bell",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magic-coat",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "covet",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "gastro-acid",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "misty-explosion",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "surf",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "psychic",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "amnesia",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dream-eater",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "flash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thief",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "charm",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psych-up",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dazzling-gleam",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "captureRate": 200,
+    "eggGroups": [
+      "fairy"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "woodland",
+      "field",
+      "city"
+    ],
+    "evolutions": {
+      "name": "swirlix",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "slurpuff",
+          "uuid": "Compendium.ptr2e.core-species.Item.AdhZNYH88O0j4T0K",
+          "methods": [
+            {
+              "type": "item",
+              "item": "whipped-dream",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.pxuoV77OKgYBv0sQ"
+    },
+    "publication": {
+      "source": "PTR 2e Core - Kalos Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "pxuoV77OKgYBv0sQ",
+  "effects": [],
+  "folder": null
+}

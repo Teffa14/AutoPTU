@@ -1,0 +1,479 @@
+{
+  "name": "armarouge",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "fire",
+      "psychic"
+    ],
+    "stats": {
+      "hp": 85,
+      "atk": 60,
+      "def": 100,
+      "spa": 125,
+      "spd": 80,
+      "spe": 75
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "leer",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ember",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "astonish",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wide-guard",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mystical-fire",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "clear-smog",
+          "level": 8,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-spin",
+          "level": 12,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "will-o-wisp",
+          "level": 16,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "night-shade",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flame-charge",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "incinerate",
+          "level": 28,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lava-plume",
+          "level": 32,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "calm-mind",
+          "level": 37,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flamethrower",
+          "level": 48,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psyshock",
+          "level": 0,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "ally-switch",
+          "level": 42,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "expanding-force",
+          "level": 56,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "armor-cannon",
+          "level": 62,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psybeam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confuse-ray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "reflect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fire-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "spite",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "shadow-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "heat-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "taunt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "weather-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "overheat",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flare-blitz",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aura-sphere",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dark-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dragon-pulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "focus-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "trick-room",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acid-spray",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "stored-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic-terrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "meteor-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "scorching-sands",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.5,
+      "weight": 85,
+      "category": "medium",
+      "type": "height"
+    },
+    "captureRate": 40,
+    "eggGroups": [
+      "humanshape"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "charcadet",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "armarouge",
+          "uuid": "Compendium.ptr2e.core-species.Item.eE3eVsnw34zNbLxo",
+          "methods": [
+            {
+              "type": "item",
+              "item": "auspicious-armor",
+              "operand": "or",
+              "held": false
+            },
+            {
+              "type": "level",
+              "level": 39,
+              "operand": "or"
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.r1xs6gQqlJMm5onZ"
+    },
+    "number": 936,
+    "traits": [
+      "pokemon",
+      "fully-evolved",
+      "firestarter",
+      "heater",
+      "glow-4",
+      "aura-user",
+      "bipedal",
+      "jump-6"
+    ],
+    "diet": [
+      "omnivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "flash-fire"
+        },
+        {
+          "slug": "mind-mold"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "weak-armor"
+        },
+        {
+          "slug": "mega-launcher"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "sniper"
+        },
+        {
+          "slug": "pyro-shells"
+        }
+      ],
+      "master": [
+        {
+          "slug": "flaming-soul"
+        },
+        {
+          "slug": "perforate"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 8
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "aura-sense",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "psychic",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "running",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "volcano",
+      "ruin"
+    ],
+    "slug": "armarouge",
+    "publication": {
+      "source": "PTR 2e Core - Paldea Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "eE3eVsnw34zNbLxo",
+  "effects": [],
+  "folder": null
+}

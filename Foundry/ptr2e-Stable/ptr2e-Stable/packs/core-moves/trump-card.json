@@ -1,0 +1,51 @@
+{
+  "name": "Trump Card",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "trump-card",
+    "actions": [
+      {
+        "slug": "trump-card",
+        "name": "Trump Card",
+        "type": "attack",
+        "traits": [
+          "contact",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 10
+        },
+        "category": "special",
+        "power": 40,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: Trump Card's Power scales based on the % amount of PP remaining in a creature's reservoir *after* Trump Card is used.<br><br>80%+ = 40<br>60%-79% = 50<br>40-59% = 60<br>20-39% = 80<br>0-19% = 200</p>",
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Z8InvSwboNkkZu7d",
+  "effects": []
+}

@@ -1,0 +1,131 @@
+{
+  "name": "Lasting Harm",
+  "type": "perk",
+  "_id": "oJnV1s084hy0b1GU",
+  "img": "systems/ptr2e/img/perk-icons/Arcana.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Lasting Harm",
+        "slug": "lasting-harm",
+        "description": "<p>Whenever you apply a @Trait[major-affliction] or @Trait[minor-affliction], their Duration (or Stack amount) is increased by 2 turns.</p>",
+        "traits": [],
+        "type": "passive",
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "slug": "lasting-harm",
+    "description": "<p>Whenever you apply a @Trait[major-affliction] or @Trait[minor-affliction], their Duration (or Stack amount) is increased by 2 turns.</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 4,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 157,
+        "y": 74,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "hexcraft",
+          "acceptance",
+          "potent-afflictions",
+          "suspicious-minds",
+          "logicians-wisdom",
+          "acute-affliction",
+          "cultivate-weakness"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Arcana.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "power",
+      "archetype": "affliction"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Lasting Harm",
+      "type": "passive",
+      "_id": "uBYUieWkSnIj4LrI",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "effect-alteration",
+            "key": "dot-trait-applied",
+            "alterations": [
+              {
+                "mode": 2,
+                "property": "effects.0.duration.turns",
+                "value": 2
+              }
+            ],
+            "value": 0,
+            "mode": 2,
+            "predicate": [],
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1755162831765,
+        "modifiedTime": 1755162888196,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ],
+  "folder": "a1w2zpzavg6qtJFn"
+}

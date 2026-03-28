@@ -1,0 +1,51 @@
+{
+  "name": "Max Overgrowth",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "max-overgrowth",
+    "actions": [
+      {
+        "slug": "max-overgrowth",
+        "name": "Max Overgrowth",
+        "type": "attack",
+        "traits": [
+          "max",
+          "sky",
+          "blast-5",
+          "weather"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 18,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 50,
+        "accuracy": 100,
+        "types": [
+          "grass"
+        ],
+        "description": "<p>Effect: The Terrain type is set to Grassy Terrain for the next 3 Rounds.</p><p>The user may spend up to 6 additional PP, increasing the Power of this attack by 15 per PP spent.</p><p>Requirement: User is Dynamaxed and has a Water-Type attack on the Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "6gEymRgYSDaRES8L",
+  "effects": []
+}

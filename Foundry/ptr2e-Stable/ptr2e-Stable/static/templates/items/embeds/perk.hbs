@@ -1,0 +1,14 @@
+<figure>
+    <header class="header">
+        <h2>{{document.name}}</h2>
+    </header>
+    {{#if traits}}
+    <header class="traits">
+        <input type="text" class="traits ptr2e-tagify" value="{{json traits}}" data-dType="JSON" readonly/>
+    </header>
+    {{/if}}
+    {{> perk-body}}
+    {{#each actions}}
+      {{> action-embed action=action}}
+    {{/each}}
+</figure>

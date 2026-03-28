@@ -1,0 +1,50 @@
+{
+  "name": "Dracosmack",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "dracosmack",
+    "actions": [
+      {
+        "slug": "dracosmack",
+        "name": "Dracosmack",
+        "type": "attack",
+        "traits": [
+          "push-1",
+          "basic",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "category": "physical",
+        "power": 30,
+        "accuracy": 100,
+        "types": [
+          "dragon"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "7NZERcoH6xC1xi8X",
+  "effects": []
+}

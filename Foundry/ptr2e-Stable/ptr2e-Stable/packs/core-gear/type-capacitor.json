@@ -1,0 +1,87 @@
+{
+  "name": "Type Capacitor",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": 50,
+      "accuracy": 100,
+      "hide": true,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "traits": [
+      "combat",
+      "charge-pool-5",
+      "accessory"
+    ],
+    "actions": [
+      {
+        "name": "Type Capacitor",
+        "slug": "type-capacitor",
+        "type": "generic",
+        "description": "Trigger: The user declares an Attack that shares a %lt;Type&gt; with the item.\nEffect: This item's PP Pool can be expended in place of the user's PP for the triggering Attack. If the item does not have enough PP to spend for the Attack, the remaining cost is taken from the user.",
+        "traits": [
+          "Combat",
+          "Held",
+          "PP Pool 20",
+          "Consumable",
+          "Held",
+          "Type-Fling"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 10
+        },
+        "cost": {
+          "activation": "complex",
+          "trigger": "The user declares an Attack that shares a %lt;Type&gt; with the item."
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user declares an Attack that shares a &lt;Type&gt; with the item.<br><br>Effect: This item's PP Pool can be expended in place of the user's PP for the triggering Attack. If the item does not have enough PP to spend for the Attack, the remaining cost is taken from the user.<br><br>Camp: The Type Capacitor recharges during Camp.</p>",
+    "slug": "type-capacitor",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "sn7BvjOguiDMnBhW",
+  "effects": [],
+  "folder": "PGpYU7mfnRpzOZSm"
+}

@@ -1,0 +1,79 @@
+{
+  "name": "Lash Out",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "lash-out",
+    "actions": [
+      {
+        "slug": "lash-out",
+        "name": "Lash Out",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 75,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "img": "systems/ptr2e/img/svg/dark_icon.svg",
+        "predicate": []
+      },
+      {
+        "slug": "lash-out-empowered",
+        "name": "Lash Out (Empowered)",
+        "type": "attack",
+        "traits": [
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3,
+          "trigger": "<p>The user has received negative Stages this round.</p>"
+        },
+        "category": "physical",
+        "power": 150,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "description": "<p>Trigger: The user has received negative Stages this round.</p>",
+        "variant": "lash-out",
+        "free": true,
+        "img": "systems/ptr2e/img/svg/dark_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "uRdynstcgUIf029T",
+  "effects": []
+}

@@ -1,0 +1,51 @@
+{
+  "name": "Origin Bolt",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "origin-bolt",
+    "actions": [
+      {
+        "slug": "origin-bolt",
+        "name": "Origin Bolt",
+        "type": "attack",
+        "traits": [
+          "legendary"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Effect: On hit, the target has a 30% chance of gaining @Affliction[paralysis] 5. When using this attack while @Affliction[harden], the user gains 2 Ticks of HP.</p>",
+        "img": "systems/ptr2e/img/svg/steel_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "TExeUgZTCNriTVlk",
+  "effects": []
+}

@@ -1,0 +1,52 @@
+{
+  "name": "G-Max Cannonade",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/water_icon.svg",
+  "system": {
+    "slug": "g-max-cannonade",
+    "actions": [
+      {
+        "slug": "g-max-cannonade",
+        "name": "G-Max Cannonade",
+        "type": "attack",
+        "traits": [
+          "max",
+          "move-locked",
+          "sky",
+          "blast-4",
+          "trap"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "water"
+        ],
+        "description": "<p>Effect: On hit, all valid targets are @Affliction[bound 5]. While @Affliction[bound], they take @Tick[-2] in damage at the end of each of their Activations.</p><p>The user may spend up to 6 additional PP, increasing the Power of this attack by 15 per PP spent.</p><p>Requirement: User is a Dynamaxed Blastoise and has a Water-Type attack on their Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "mZjEj37TpExEmiLa",
+  "effects": []
+}

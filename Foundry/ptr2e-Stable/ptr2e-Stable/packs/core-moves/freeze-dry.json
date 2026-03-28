@@ -1,0 +1,116 @@
+{
+  "name": "Freeze-Dry",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "freeze-dry",
+    "actions": [
+      {
+        "slug": "freeze-dry",
+        "name": "Freeze-Dry",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "ice"
+        ],
+        "description": "<p>Effect: On hit, the target has a 20% chance of gaining @Affliction[frostbite] 5. This attack is super effective against the Water Type.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "C",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "y5H4C8WkE4feSmwt",
+  "effects": [
+    {
+      "name": "Freeze Dry",
+      "type": "passive",
+      "_id": "m3JVSUH1fyus1YLX",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "percentile-modifier",
+            "key": "freeze-dry-attack-damage-percentile",
+            "value": 300,
+            "predicate": [
+              "target:trait:water"
+            ],
+            "label": "Super Effective vs Water",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "freeze-dry-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.frostbiteconitem",
+            "predicate": [],
+            "chance": 20,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": []
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "1.0.3.beta",
+        "createdTime": 1729547235568,
+        "modifiedTime": 1739584461375,
+        "lastModifiedBy": "OCI1vTFsIMTEwU21"
+      }
+    }
+  ]
+}

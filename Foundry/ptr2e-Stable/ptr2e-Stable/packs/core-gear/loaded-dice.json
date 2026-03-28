@@ -1,0 +1,72 @@
+{
+  "name": "Loaded Dice",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "held",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": false
+    },
+    "rarity": "rare",
+    "traits": [
+      "combat"
+    ],
+    "actions": [
+      {
+        "name": "Loaded Dice",
+        "slug": "loaded-dice",
+        "type": "passive",
+        "description": "Effect: The user's [X-Strike] attacks have +5 Base Power, and possess [Crit 1] (or have their [Crit X] increase by +1).",
+        "traits": [
+          "Combat"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: The user's [X-Strike] attacks have +5 Base Power, and possess [Crit 1] (or have their [Crit X] increase by +1).",
+    "slug": "loaded-dice",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "A3gTZD6kkpecyKeZ",
+  "effects": [],
+  "folder": "PGpYU7mfnRpzOZSm"
+}

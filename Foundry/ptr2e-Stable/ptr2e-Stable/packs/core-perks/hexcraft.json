@@ -1,0 +1,185 @@
+{
+  "folder": "a1w2zpzavg6qtJFn",
+  "name": "Hexcraft",
+  "type": "perk",
+  "_id": "wUtdBgYxV9PdSrvn",
+  "img": "systems/ptr2e/img/perk-icons/Occultism.svg",
+  "system": {
+    "actions": [],
+    "slug": "hexcraft",
+    "description": "<p>You gain access to the @Trait[hexcraft] trait and Tutor List, and you learn @UUID[Compendium.ptr2e.core-moves.K2lzFMHQ5Ey3bnzZ]{Spite}, @UUID[Compendium.ptr2e.core-moves.fUiCzF9ucUhoJLBq]{Grudge}, and @UUID[Compendium.ptr2e.core-moves.9ajTWumV2CHLWvWK]{Night Shade}.</p>",
+    "traits": [],
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.ghost.mod}",
+          40
+        ]
+      }
+    ],
+    "cost": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 162,
+        "y": 59,
+        "hidden": false,
+        "type": "entry",
+        "connected": [
+          "thug",
+          "acceptance",
+          "potent-afflictions",
+          "lasting-harm",
+          "suspicious-minds",
+          "root-2",
+          "dustoff",
+          "enchanting-smile",
+          "rigorous-fundamentals-6",
+          "minor-buff-42",
+          "contingency-hex",
+          "dimensional-scream"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Occultism.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [
+      "trait:hexcraft"
+    ],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "finesse",
+      "archetype": "affliction"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Hexcraft",
+      "type": "passive",
+      "_id": "UB67uCqqsYfDQocu",
+      "img": "systems/ptr2e/img/perk-icons/Occultism.svg",
+      "system": {
+        "changes": [
+          {
+            "type": "add-trait",
+            "key": "",
+            "value": "hexcraft",
+            "predicate": [],
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.K2lzFMHQ5Ey3bnzZ",
+            "predicate": [],
+            "priority": null,
+            "alterations": [],
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "mode": 2,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          },
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.fUiCzF9ucUhoJLBq",
+            "predicate": [],
+            "priority": null,
+            "alterations": [],
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "mode": 2,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          },
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.9ajTWumV2CHLWvWK",
+            "predicate": [],
+            "priority": null,
+            "alterations": [],
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "mode": 2,
+            "ignored": false,
+            "reevaluateOnUpdate": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "<p>You gain access to the @Trait[hexcraft] trait and Tutor List, and you learn @UUID[Compendium.ptr2e.core-moves.K2lzFMHQ5Ey3bnzZ]{Spite}, @UUID[Compendium.ptr2e.core-moves.fUiCzF9ucUhoJLBq]{Grudge}, and @UUID[Compendium.ptr2e.core-moves.9ajTWumV2CHLWvWK]{Night Shade}.</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1732231964521,
+        "modifiedTime": 1754231321061,
+        "lastModifiedBy": "dCIq77b7AO2frs8Z",
+        "exportSource": null
+      }
+    }
+  ]
+}

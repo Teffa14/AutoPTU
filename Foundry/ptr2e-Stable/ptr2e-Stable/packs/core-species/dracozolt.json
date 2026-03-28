@@ -1,0 +1,402 @@
+{
+  "name": "dracozolt",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "electric",
+      "dragon"
+    ],
+    "stats": {
+      "hp": 90,
+      "atk": 100,
+      "def": 90,
+      "spa": 80,
+      "spd": 70,
+      "spe": 75
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-shock",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "charge",
+          "level": 7,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "aerial-ace",
+          "level": 14,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "ancient-power",
+          "level": 21,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "pluck",
+          "level": 28,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-tail",
+          "level": 35,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stomp",
+          "level": 42,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "slam",
+          "level": 49,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "discharge",
+          "level": 56,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bolt-beak",
+          "level": 63,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-pulse",
+          "level": 70,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-rush",
+          "level": 77,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "draco-meteor",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "meteor-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rising-voltage",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mega-punch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-punch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mega-kick",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-slam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flamethrower",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "low-kick",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fire-spin",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "earthquake",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fire-blast",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-slide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "outrage",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "iron-tail",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sunny-day",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "taunt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "dragon-claw",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-blast",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "earth-power",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-fang",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "fire-fang",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stone-edge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "electro-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wild-charge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "high-horsepower",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "brutal-swing",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stomping-tantrum",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "breaking-swipe",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.8,
+      "weight": 190,
+      "category": "large",
+      "type": "quad"
+    },
+    "captureRate": 50,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": -1,
+    "evolutions": {
+      "name": "dracozolt",
+      "details": null,
+      "evolutions": []
+    },
+    "number": 880,
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "underdog",
+      "fully-evolved",
+      "jump-4"
+    ],
+    "diet": [
+      "herbivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "volt-absorb"
+        },
+        {
+          "slug": "hustle"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "sand-rush"
+        },
+        {
+          "slug": "early-bird"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "sand-veil"
+        },
+        {
+          "slug": "cursed-body"
+        }
+      ],
+      "master": [
+        {
+          "slug": "sand-stream"
+        },
+        {
+          "slug": "protosynthesis"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 8
+      },
+      {
+        "type": "swim",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [],
+    "slug": "dracozolt",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "8nh5E5nVtaBz9HuV",
+  "effects": [],
+  "folder": null
+}

@@ -1,0 +1,79 @@
+{
+  "folder": "a1w2zpzavg6qtJFn",
+  "name": "Stage Vampirism",
+  "type": "perk",
+  "_id": "2eXQ3mabu1Ljq4z6",
+  "img": "systems/ptr2e/img/perk-icons/Occultism.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Stage Vampirism",
+        "slug": "stage-vampirism",
+        "description": "<p>At a cost of 3PP per target, when you inflict a negative @Trait[stage-change] effects on a creature, you may gain those Combat Stages as positive stages. The PP cost is paid in addition to the PP cost of the original move.</p>",
+        "traits": [],
+        "type": "generic",
+        "img": "systems/ptr2e/img/perk-icons/Occultism.svg",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "stage-vampirism",
+    "description": "<p>At a cost of 3PP per target, when you inflict a negative @Trait[stage-change] effects on a creature, you may gain those Combat Stages as positive stages. The PP cost is paid in addition to the PP cost of the original move.</p>",
+    "traits": [],
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.ghost.mod}",
+          55
+        ]
+      }
+    ],
+    "cost": 3,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 144,
+        "y": 72,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "thug",
+          "sadism",
+          "logicians-wisdom",
+          "cultivate-weakness"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Occultism.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "power",
+      "archetype": "affliction"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": []
+}

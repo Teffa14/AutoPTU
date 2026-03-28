@@ -1,0 +1,45 @@
+{
+  "name": "Feint Attack",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "feint-attack",
+    "actions": [
+      {
+        "slug": "feint-attack",
+        "name": "Feint Attack",
+        "type": "attack",
+        "traits": [
+          "dash",
+          "contact",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "img": "systems/ptr2e/img/svg/dark_icon.svg"
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "AtQsvtYLtT919vzU",
+  "effects": []
+}

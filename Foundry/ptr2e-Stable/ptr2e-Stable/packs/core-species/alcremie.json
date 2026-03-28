@@ -1,0 +1,437 @@
+{
+  "name": "alcremie",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "fairy"
+    ],
+    "stats": {
+      "hp": 65,
+      "atk": 60,
+      "def": 75,
+      "spa": 110,
+      "spd": 121,
+      "spe": 64
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sweet-kiss",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sweet-scent",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aromatic-mist",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "draining-kiss",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aromatherapy",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acid-armor",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dazzling-gleam",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "recover",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "misty-terrain",
+          "level": 45,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "entrainment",
+          "level": 50,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "decorate",
+          "level": 0,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "last-resort",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "baby-doll-eyes",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "misty-explosion",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psychic",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "metronome",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tri-attack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "safeguard",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "pain-split",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "encore",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "psych-up",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endeavor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "imprison",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "fake-tears",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magical-leaf",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "calm-mind",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "drain-punch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wonder-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "psyshock",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magic-room",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stored-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "disarming-voice",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "play-rough",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "mystical-fire",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "alluring-voice",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.3,
+      "weight": 0.5,
+      "category": "tiny",
+      "type": "height"
+    },
+    "captureRate": 100,
+    "eggGroups": [
+      "fairy",
+      "indeterminate"
+    ],
+    "genderRatio": 8,
+    "evolutions": {
+      "name": "milcery",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "alcremie",
+          "uuid": "Compendium.ptr2e.core-species.Item.AvfxaTSs2QBqaZZh",
+          "methods": [
+            {
+              "type": "level",
+              "level": 35,
+              "operand": "or"
+            },
+            {
+              "type": "item",
+              "item": "shiny-stone",
+              "operand": "or",
+              "held": false
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.O3Duv8YFWLAx6MhQ"
+    },
+    "number": 869,
+    "traits": [
+      "pokemon",
+      "legless",
+      "bait",
+      "underdog",
+      "fully-evolved",
+      "jump-2"
+    ],
+    "diet": [
+      "sweets"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "sweet-veil"
+        },
+        {
+          "slug": "aroma-veil"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "misty-surge"
+        },
+        {
+          "slug": "run-away"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "ripen"
+        },
+        {
+          "slug": "harvest"
+        }
+      ],
+      "master": [
+        {
+          "slug": "power-of-alchemy"
+        },
+        {
+          "slug": "pastel-veil"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 7
+      }
+    ],
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "husbandry",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fairies",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "running",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "field",
+      "city"
+    ],
+    "slug": "alcremie",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "AvfxaTSs2QBqaZZh",
+  "effects": [],
+  "folder": null
+}

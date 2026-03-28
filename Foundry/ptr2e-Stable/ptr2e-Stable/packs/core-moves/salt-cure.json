@@ -1,0 +1,48 @@
+{
+  "name": "Salt Cure",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "salt-cure",
+    "actions": [
+      {
+        "slug": "salt-cure",
+        "name": "Salt Cure",
+        "type": "attack",
+        "traits": [
+          "blast-1"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 40,
+        "accuracy": 100,
+        "types": [
+          "rock"
+        ],
+        "description": "<p>Effect: On hit, all valid targets are afflicted with @UUID[Compendium.ptr2e.core-effects.Item.SENukczAWLKe8spK]{Salted} for 5 Activations. Salt Cured creatures take a tick of HP damage at the end of each of their Activations. Steel-type and Water-type creatures take 2 ticks of HP damage at the end of each of their Activations instead. Salt Cure's duration cannot be refreshed; and the effect ends when the duration ends, the creature is switched out, gains @Affliction[fainted] or combat ends.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "75gNlQThpP9cULI9",
+  "effects": []
+}

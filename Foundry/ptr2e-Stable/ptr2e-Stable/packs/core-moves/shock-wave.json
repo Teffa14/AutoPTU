@@ -1,0 +1,44 @@
+{
+  "name": "Shock Wave",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "shock-wave",
+    "actions": [
+      {
+        "slug": "shock-wave",
+        "name": "Shock Wave",
+        "type": "attack",
+        "traits": [
+          "ray",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 6,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "img": "systems/ptr2e/img/svg/electric_icon.svg"
+      }
+    ],
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Jh0VT5oAXNgSBhaQ",
+  "effects": []
+}

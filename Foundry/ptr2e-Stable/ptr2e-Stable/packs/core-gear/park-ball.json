@@ -1,0 +1,57 @@
+{
+  "name": "Park Ball",
+  "img": "systems/ptr2e/img/item-icons/park ball.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "rare",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling",
+      "ball"
+    ],
+    "description": "<p>A ball given for use in specific catching contests. 3x Catch Rate modifier.</p>",
+    "modifier": 3,
+    "quantity": 1,
+    "slug": "park-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "xDpeTsEsMN32Lf7S",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

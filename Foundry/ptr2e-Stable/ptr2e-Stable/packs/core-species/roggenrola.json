@@ -1,0 +1,481 @@
+{
+  "name": "roggenrola",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 524,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.4,
+      "weight": 18
+    },
+    "diet": [
+      "terravore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "bipedal",
+      "blindsight-15",
+      "jump-2"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "sand-stream"
+        },
+        {
+          "slug": "sand-force"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "sturdy"
+        },
+        {
+          "slug": "weak-armor"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "content"
+        },
+        {
+          "slug": "loose-rocks"
+        }
+      ],
+      "master": [
+        {
+          "slug": "conditioning"
+        },
+        {
+          "slug": "juggernaut"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 5,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "roggenrola",
+    "stats": {
+      "hp": 55,
+      "atk": 75,
+      "def": 85,
+      "spa": 25,
+      "spd": 25,
+      "spe": 15
+    },
+    "types": [
+      "rock"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "sand-attack",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "harden",
+          "level": 4,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stealth-rock",
+          "level": 8,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mud-slap",
+          "level": 12,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "smack-down",
+          "level": 16,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "iron-defense",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "headbutt",
+          "level": 24,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-slide",
+          "level": 28,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rock-blast",
+          "level": 32,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sandstorm",
+          "level": 36,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stone-edge",
+          "level": 40,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "explosion",
+          "level": 44,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "autotomize",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "block",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "body-press",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "curse",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "earth-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "earthquake",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "gravity",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "heavy-slam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "lock-on",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magnitude",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "meteor-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "nature-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-polish",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rock-smash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rock-tomb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sand-tomb",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "strength",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "take-down",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "wide-guard",
+          "gen": "sword-shield"
+        }
+      ]
+    },
+    "captureRate": 255,
+    "eggGroups": [
+      "mineral"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "volcano",
+      "cave",
+      "mountain"
+    ],
+    "evolutions": {
+      "name": "roggenrola",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "boldore",
+          "uuid": "Compendium.ptr2e.core-species.Item.dafxk8qcNekfOc2f",
+          "methods": [
+            {
+              "type": "level",
+              "level": 25,
+              "operand": "and"
+            }
+          ],
+          "perk": {
+            "x": 26,
+            "y": 26
+          },
+          "evolutions": [
+            {
+              "name": "gigalith",
+              "uuid": "Compendium.ptr2e.core-species.Item.hBXgr1KrkRdP4p6g",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 38,
+                  "operand": "or"
+                },
+                {
+                  "type": "item",
+                  "item": "linking-cord",
+                  "operand": "or",
+                  "held": false
+                }
+              ],
+              "perk": {
+                "x": 26,
+                "y": 26
+              },
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "evolutions": []
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.tzMkIJNy6WZvyoes",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "tzMkIJNy6WZvyoes",
+  "effects": []
+}

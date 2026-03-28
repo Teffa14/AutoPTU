@@ -1,0 +1,49 @@
+{
+  "name": "Moonlight",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+  "system": {
+    "slug": "moonlight",
+    "actions": [
+      {
+        "slug": "moonlight",
+        "name": "Moonlight",
+        "type": "attack",
+        "traits": [
+          "healing",
+          "environ"
+        ],
+        "range": {
+          "target": "self",
+          "distance": 0,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": null,
+        "types": [
+          "fairy"
+        ],
+        "description": "<p>Effect: The user recovers HP equal to 50% of their Max HP. While there is Gloomy Weather, the user recovers HP equal to 2/3rds of their Max HP instead. In any other weather, the user recovers HP equal to 25% of their Max HP instead.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "X3F57CfU9m8vx1ws",
+  "effects": []
+}

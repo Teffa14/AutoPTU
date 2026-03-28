@@ -1,0 +1,48 @@
+{
+  "name": "Brick Break",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "brick-break",
+    "actions": [
+      {
+        "slug": "brick-break",
+        "name": "Brick Break",
+        "type": "attack",
+        "traits": [
+          "contact",
+          "pierce"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 75,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "FYerpWqIabPCHnDM",
+  "effects": []
+}

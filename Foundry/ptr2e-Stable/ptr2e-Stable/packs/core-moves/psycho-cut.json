@@ -1,0 +1,49 @@
+{
+  "name": "Psycho Cut",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+  "system": {
+    "slug": "psycho-cut",
+    "actions": [
+      {
+        "slug": "psycho-cut",
+        "name": "Psycho Cut",
+        "type": "attack",
+        "traits": [
+          "crit-1",
+          "sharp"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "psychic"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "8rEArgebjpBMomnM",
+  "effects": []
+}

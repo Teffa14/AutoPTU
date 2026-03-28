@@ -1,0 +1,504 @@
+May 2015 Playtest1What Am I Looking At Here?
+This is a supplementary playtest document for the fan-
+made Pokémon Tabletop United roleplaying system, 
+written for use with the 1.05 release version of PTU. 
+We’ll occasionally release packets like this one to test 
+experimental content and give us a sandbox to play with 
+ideas that aren’t quite ready for a full release but which 
+we want to get feedback and comments on. Everything 
+you see here is subject to change! Stumbled on this PDF by chance and have no idea what we’re talking about? Check the following links 
+and resources! These are also where you can give us 
+feedback on what you see here and keep up with new playtest packet releases.
+•	PTU	Site/Blog: http://pokemontabletop.com/
+•	IRC	Channel: #PokemonTabletop on Rizon
+•	Forums: http://forums.pokemontabletop.com/
+What’s New In This Packet?
+Much of the PTU 1.05 release focused on combat 
+options, such as revamping Weapon rules. The core of 
+the system is its tactical combat, so this shouldn’t be 
+surprising. Classes with absolutely nothing to contribute to battle or battle prep don’t tend to do well. However, 
+as a result, utility Trainers and options for Travel and 
+Investigation builds were left a bit by the wayside. 
+Writing non-supernatural utility options in PTU is 
+tricky. Mundane utility usually boils down to use of Skills, the Items and Equipment you have access to, 
+and the Pokémon that comprise your team. All of 
+these elements exist and work fairly independently of a Class structure. Additionally, we try to stay away from 
+Features and Edges which directly give in-universe 
+rewards that usually come through roleplaying or which force the GM to introduce particular organizations 
+into their campaign (a title as a Gym Leader or other 
+position of authority, access to a particular in-universe service, allies and resources, etc.). Some systems like 
+Fate or Powered by the Apocalypse do mundane utility 
+by allowing players direct narrative control, but that isn’t a path we want to take with PTU. 
+All of this can make it rather tricky to write utility 
+Classes. That said, we’ve taken a crack at giving utility 
+Trainers more build options that also give primarily 
+non-combat Trainers better actions in combat. Here you’ll find: 
+The Backpacker, a new Survival-based Class. Similar 
+to the Hobbyist, it can be a build-fixing pick, making 
+it easier to use a variety of Items and Edges with just 
+an investment in Survival. Unlike Hobbyist though, 
+which gives a breadth of Skills to accomplish this, the Backpacker lets you develop a couple skills in more 
+depth. It also boosts your use of Items and Equipment.
+The Gadgeteer Researcher Field of Study, revived and 
+overhauled from the cut 1.04 version. In addition to 
+making improvised gadgets, it creates Cap Cannons, a replacement for Glue Cannons and Weighted Nets.
+Book	Items  and Features in the General Research Field 
+of Study to better use them. Book Items can be studied 
+by Draining AP and spending time to give a bonus for 
+the rest of the day, giving Trainers without AP sinks a use for their spare AP .
+Y ou’ll also find a change to Repulsive Medicines and a 
+bit of errata for Chef, Survivalist, and Hobbyist. 
+We hope you enjoy this playtest packet and look forward 
+to your thoughts and comments!
+- the PTU dev team (Doxy, zoofman, castfromhp)
+Pokémon Tabletop United
+May 2015 Playtest Pack
+May 2015 Playtest2
+Backpacker
+Travel is synonymous with the Pokémon Trainer’s lifestyle, and the best way to travel is with a full pack 
+of supplies for any situation. Backpackers know how to make the most of their items, using them with 
+quickness and efficiency, whether they be Potions to heal their friends or Repels to drive away dangerous 
+wild Pokémon. 
+The adventurer’s lifestyle teaches a Backpacker adaptability and endows them with many talents that would 
+normally seem outside their field of expertise. Stealth gear or even fashionable wear can be like armor to them, and their experience trekking through treacherous terrain has taught them to avoid hazards as they 
+walk. 
+Backpacker fits a variety of builds, letting Survival-oriented characters gain combat prowess without 
+needing a large investment in the Combat Skill and providing craffters with more efficient ways to use their 
+creations.Associated Skills: SurvivalTravel and Investigation
+Trainer Combat
+
+May 2015 Playtest3Backpacker
+[Class] [+Speed]
+Prerequisites: Traveler
+Static
+Effect : Y ou gain the Skill Enhancement Edge. Y ou then gain an instance of the Skill Stunt Edge for each of the two 
+Skills you chose with Skill Enhancement. 
+Item	Mastery
+[+Speed]Prerequisites: Backpacker
+Static
+Effect : Y ou learn the Moves Fling and Recycle.
+Equipment	Savant
+[+Speed]Prerequisites: Backpacker, Expert Survival
+2 AP – Swift Action
+Effect : Use or Equip an Item or piece of Equipment 
+which would normally require a Standard Action 
+to use or equip. Y ou may not make an Attack with a 
+Weapon this way - using other Items or Equipment that requires “ Attacks” (such as Cap Cannons or Poké Balls) 
+is acceptable.Hero’s	Journey
+[Ranked 3] [+Speed]
+Rank	1	Prerequisites: Backpacker
+Rank	2	Prerequisites: Backpacker, Adept Survival
+Rank	3	Prerequisites: Backpacker, Expert SurvivalRank	4	Prerequisites: Backpacker, Expert Survival
+Static
+Effect : Each Rank, you may gain two Backpacker Talents 
+for which you qualify.
+Backpacker Talents
+Call	to	Adventure	
+StaticEffect : Y ou gain the Instinctive Aptitude Edge, even if 
+you do not meet its prerequisites. If you already have this Edge, gain another Edge for which you qualify. During Combat or tense situations (never Extended Actions), if 
+you spend AP to add a bonus to a Skill Check, you may 
+add +1d6 instead of +2.
+Frisk
+StaticEffect : Y ou gain the Frisk Ability. 
+Handyman
+StaticEffect : Whenever you use an item or a non-Weapon 
+piece of equipment which calls for a Skill Check or has an effect or prerequisite based on a Skill Rank, you may substitute Survival for the used Skill. This does not affect 
+prerequisites for Books.Hat	Trick
+Static
+Effect : While wearing Head Equipment worth at least 
+$1000, you gain 15 Damage Reduction against Critical 
+Hits. This does not stack with any Damage Reduction 
+granted by any Head Equipment.
+Movement	Mastery
+Static
+Effect : Choose one of Art of Stealth, Athletic Initiative, 
+Mounted Prowess, Nimble Movement, Slippery, Stamina, Swimmer, or Wallrunner. Y ou gain the chosen Edge, even if you do not meet the prerequisites. 
+Additionally, you may take any of these Edges in the 
+future as if you did meet the prerequisites.
+May 2015 Playtest4
+Sole	Power
+Static
+Effect : While wearing Feet Equipment worth at least 
+$1000, you do not trigger Hazards while Shifting. 
+However, you still trigger any Hazards that you are 
+standing on at the start or end of your turn. Reactive 
+Hazards such as Stealth Rock cannot be triggered against you.
+Wayfarer
+StaticEffect : Y ou may use your Survival Skill when making 
+Opposed Rolls when defending against Disarm, Grapple, Push, and Trip Maneuvers. When wielding a Weapon, you may use Survival instead of Combat to 
+determine the Damage Base of your Struggle Attacks 
+and to qualify for a Weapon’s Moves.Wear	it	Better
+Prerequisites: Expert SurvivalStatic
+Effect : While wearing Body Equipment worth at least 
+$1000, you gain +5 Damage Reduction. This does not 
+stack with any Damage Reduction granted by any Body Equipment.
+May 2015 Playtest5
+Gadgeteer Research Field
+Improvised	Gadgets
+Prerequisites: Novice Technology Education
+Bind 2 AP – Extended Action
+Target: A willing Pokémon with the Magnetic, Zapper, 
+or Threaded CapabilityEffect : Choose one of the Capabilities listed in the 
+Target line that the target Pokémon has. Y ou create a Main or Off-Hand Equipment Item usable by Trainers that grants the user the chosen Capability. Whenever a 
+Trainer makes Struggle Attacks using Zapper through 
+this Item, they may choose to use your Technology Education Rank tripled in place of an offensive Stat. 
+When this Feature is Unbound, the Equipment Item 
+breaks and cannot be repaired. Y ou may only have X instances of this Feature Bound at once, where X is 
+equal to half your Technology Education Rank. 
+I	Meant	to	Do	That
+Prerequisites: Improvised Gadgets, Adept Technology 
+Education
+At-Will – Special
+Condition : Y ou must have at least one Equipment Item 
+you created with Improvised Gadgets equipped to use 
+this Feature.
+Effect : Choose one of your equipped items you 
+created with Improved Gadgets. It is destroyed and 
+cannot be repaired, and that instance of Improvised 
+Gadgets is immediately Unbound. Use the effect below corresponding to the Capability granted by the chosen 
+item. 
+	»Magnetic: Y ou may activate this effect as a Standard Action Interrupt whenever a Steel or Electric-Type 
+attack or an attack with a metal Weapon would hit a target within 5 meters. The attack instead misses all 
+targets within 5 meters. 
+	»Threaded: Choose up to 3 targets within 4 meters 
+and perform an AC 4 Status Attack against them as 
+a Standard Acion. All hit targets become Stuck and 
+Trapped for one full round. 
+	»Zapper : Y ou may activate this effect as a Swift  
+Action upon hitting a foe with a Zapper-modified Struggle Attack. The foe is Paralyzed.Capsule	Science
+Prerequisites: Improvised Gadgets, Expert Technology Education
+Static
+Effect : Y ou learn the Cap Cannon, Cap Ammo, and 
+Wonder Launcher recipes, and you gain the following 
+additional effects when using those items. 
+	»Bean	Caps: Y ou gain a +10 Damage Bonus when 
+using Bean Caps.
+	»Glue	Caps: Y our Effect Range when using Glue 
+Caps is increased by +3. 
+	»Nets	Caps: Targets affected by your Net Caps gain 
+a -X penalty to all Damage Rolls, where X is your 
+Technology Education Rank. 
+	»Wonder	 Launcher: Whenever you apply an item 
+to a target using the Wonder Launcher, they gain Temporary Hit Points equal to your Technology 
+Education Rank. 
+Enhanced	Capsules
+Prerequisites: Capsule Science, Master Technology 
+Education
+Daily x3 – Extended Action
+Target: A willing Pokémon with one of the Capabilities listed below
+Effect : Choose one of the Capabilities below which the 
+target Pokémon has. Y ou create a consumable item with 
+the effect below, depending on the chosen Capability. 
+All unused items created with Enhanced Capsules 
+are rendered inert after an Extended Rest (including modifications to other items).
+	»Glow : This item may be attached to a Wonder 
+Launcher as a Standard Action to give the following 
+effect for the rest of the Scene: Whenever you apply 
+an Item to a target using this Wonder Launcher, that target gains the Illuminate Ability for one full round. 
+	»Magnetic: This item may be loaded into a Cap Cannon to provide two Bean Cap Ammo. When fired, these Bean Caps cannot miss.
+	»Threaded: This item may be loaded into a Cap Cannon to provide two Glue Cap Ammo. When fired, they affect a Blast 2 instead of a single target. 
+	»Zapper : This item may be loaded into a Cap Cannon 
+as a single Net Cap Ammo. Targets trapped by this Net Cap are Suppressed while trapped. Targets 
+immune to Electric-Type attacks are immune to this 
+effect.
+May 2015 Playtest6
+Gadgeteer Recipes
+Cap	Cannon
+At-Will – Extended Action
+Effect : Y ou create a Cap Cannon for $2000. 
+Cap	Ammo
+At-Will – Extended ActionEffect : Y ou create a Bean Cap for 
+$25, a Glue Cap for 
+$50, or a Net Cap for $100. Wonder	Launcher
+At-Will – Extended ActionEffect : Y ou create a Wonder Launcher for 
+$5000.
+Additional Changes
+Mechanical	 Scrap is a new Scrap category that encom-
+passes Items made with the Gadgeteer, Engineer, and 
+Upgrader Fields of Study. 
+Glue Cannons and Weighted Nets are replaced with 
+Cap Cannons, which have the following rules text: 
+Cap	Cannon - Capsule Cannons - or Cap Cannons for 
+short - are two-handed pieces of Equipment which can 
+be loaded with different types of Capsules (Caps) and fired. They can be fired as a Standard Action, and the 
+range and effect of the Cannon depends on the Cap 
+used. A Cap Cannon may have up to five Caps loaded in it at once, and they do not have to be fired in any 
+particular order. Y ou may load up to two Caps into a 
+Cannon as a Standard Action. There are three types of Caps: Bean Caps, Glue Caps, and Net Caps. In addi-
+tion to Caps, Capsule Cannons can also be loaded with 
+Smoke Bombs, Pester Balls, and Poke Balls. When fired this way, these items behave normally but have a Range 
+of 10 meters. Capsule Cannons cost 
+$5000. 
+Bean	Cap - Bean Caps shoot as a small cloth projectile 
+filled with beads, which explodes upon contact, dealing 
+some damage.
+Cost	per	Cap: $50
+AC: ( 6 minus Tech Edu Rank, Minimum 2 )
+Range : 10 meters
+Effect : The target takes 20 Physical, Normal-Type Dam-
+age. On 18+, the target is Tripped and loses a Tick of Hit Points.Glue	Cap	 - Glue Caps shoot as a sticky orb that explodes 
+upon contact, covering the target in a sticky adhesive. 
+Cost	per	Cap: 
+$100
+AC: ( 8 minus Tech Edu Rank, Minimum 2 )
+Range : 8 meters
+Effect : Cause the target to become Slowed, and their 
+Initiative is lowered by 5. On 18+, the target is also 
+Stuck and Trapped.
+Net	Cap - Net Caps expand into a strong fibrous net 
+that cling to and entangle their target. 
+Cost	per	Cap: $200 
+AC: ( 10 minus Tech Edu Rank )
+Range : 6 Meters
+Effect : Targets hit by a Net Cap gain all the effects below 
+while the net remains on them. Targets may attempt to 
+remove the Net as a Standard Action; if they do, they 
+make a Save Check with a DC of 15, adding their Power Capability as a bonus to their Roll. Targets may auto-
+matically remove the Net as an Extended Action.
+ »If the target is a Wild Pokémon, Capture Rate is in-
+creased by +20
+ »If the target is Large Size or smaller, they take a -3 penalty to Accuracy Rolls 
+ »If the target is Medium Size or smaller, they are 
+Slowed and Vulnerable 
+ »Sky and Levitate Speeds cannot be used; the target 
+is forced to lower themselves to the ground (without 
+taking fall damage).
+May 2015 Playtest7
+General Research Field
+Breadth	of	Knowledge
+Prerequisites: Novice General Education
+Static
+Effect : Y ou gain three Edges for which you qualify. 
+These Edges must be used to gain a Skill Edge with an 
+Education Skill, or to gain an Edge that has an Education 
+Skill as a Prerequisite that you meet.
+Bookworm
+Prerequisites: Breadth of Knowledge
+Static
+Effect : Y ou gain X Study Points, where X is equal to 2 
+plus one more for every other General Research Feature 
+you have. Y ou may Drain Study Points to benefit from 
+studying Books, instead of Draining your Action Points. 
+Study Points are restored to your maximum after an Extended Rest, just like Action Points.Well	Read
+Prerequisites: Bookworm, Expert General EducationStatic
+Effect : Y ou may use your General Education Rank 
+to qualify for Books, instead of the Book’s usual Skill 
+Prerequisites, provided you have the normal Prerequisite 
+at at least Novice Rank.
+Echoes	of	the	Future
+Prerequisite : Breadth of Knowledge, Master General 
+EducationDaily x2 – Free Action
+Trigger: Y ou or your Pokémon make a roll Effect : Y ou may roll twice and keep the best result.
+Book Item Mechanics
+Books hold knowledge, and knowledge is power! Books are Items associated with Education Skills that can be used during Extended Actions to Drain your AP to receive certain benefits.
+After half an hour of study, you can Drain 1 AP to gain the benefits of one Rank of a Book , if you meet the prereq-
+uisite Skill for that Book’s Rank. Ranks in an individual book must be gained sequentially (e.g. you must have the 
+Novice Rank effect to gain the the Expert Rank effect).
+The benefits from a Book last until an Extended Rest is taken; when an Extended Rest is taken, you may choose to 
+renew any Drain previously held from Books and continue to gain the effects.
+Books generally cost 
+$1000, but we are still looking at how to best price them. Give us feedback!
+General Education Books
+Study	Manual
+Description: A Study Manual is always assigned to a 
+single Skill and covers a specific narrow field that can 
+be taken as a Skill Stunt. A list of examples is provided.
+Rank	1	-	Novice	 General	 Education: Y ou gain a Skill 
+Stunt in the associated Skill of the Study Manual cover -
+ing the narrow field specified by the Study Manual. Rank	2	-	Expert	 General	 Education: Y ou gain a general 
++2 Bonus to the associated Skill. This Bonus does not 
+stack with other bonuses from Books or Equipment to 
+the same Skill.Examples: Gossip Mag - Charm (regional celebrities), Locksmith’s Manual - Stealth (lock-picking), Paleontol-
+ogy Manual - Survival (digging up fossils), How to be 
+1337 - Technology Education (hacking)
+The	Joy	of	Cooking
+Description: A cookbook for novice and experienced chefs alike.
+Rank	1	-	Novice	 General	 Education: Y our material 
+costs for crafting Food Items of any variety are reduced 
+by 10%.
+Rank	2	-	Expert	 General	 Education: Meal and Re-
+freshment Items you create cause whoever eats them to 
+gain a Tick of Hit Points.
+May 2015 Playtest8How	Berries??
+Description: A beginner’s guide to the proper care of 
+berry plants.
+Rank	1	-	Adept	 General	 Education: Once per day 
+when making a Yield Roll, add +1 to the result.
+Rank	2	-	Expert	 General	 Education: Y ou may create 
+Mulch from Food Scrap.
+Medicine Education Books
+First	Aid	Manual
+Description: A training manual given to all EMTs. Rank	1	-	Novice	 Medicine	 Education: Y ou gain a +10 
+Bonus to Medicine Education Checks made to use a First Aid Kit.Rank	2	-	Expert	 Medicine	 Education: Y ou may use the 
+First Aid Expertise Feature once per day. 
+Traditional	Medicine	Reference*
+Description: A volume dedicated to properly preparing herbal medications. 
+Rank	1	-	Adept	Medicine	 Education: Targets you ad-
+minister Herbal Restoratives to do not lose Combat 
+Stages no matter how many Herbal Restoratives they’ve 
+had in the same day.
+Rank	2	-	Expert	 Medicine	 Education: Whenever you 
+administer an Herbal Restorative to a target, they may 
+choose to gain the Food Buff associated with Herbal Re-
+storatives, regardless of how many Herbal Restoratives they’ve used this day.
+*See Herbal Restoratives in Miscellaneous Errata
+Caretaker’s	Manual
+Description: An invaluable guide to patient care with 
+wide appeal and praised by both nurses and rangers.
+Rank	1	-	Adept	Medicine	 Education: Once per Scene, 
+you may assist an adjacent ally in Taking a Breather as 
+a Standard Action, and they do not Shift or become 
+Tripped as part of this action. If the target is Confused 
+or Enraged, you may roll Medicine Education instead of Command to assist them.
+Rank	2	-	Master	 Medicine	 Education: This effect can 
+only be bound while taking an Extended Rest and 
+Drains AP for the next day. During this Extended Rest, 
+Pokémon and Trainers in your care heal twice as many 
+Hit Points while resting, heal Injuries twice as quickly, and may heal an additional Injury per day. This stacks 
+with use of Bandages.Occult Education Books
+Dowsing	For	Dummies
+Description: A favorite of rock collectors everywhere, 
+this book teaches the user how to attune their dowsing 
+rods. 
+Rank	1	-	Novice	 Occult	 Education: Roll +1d6 when 
+searching for Shards.
+Rank	2	-	Adept	Occult	 Education: When you begin 
+searching for Shards, you may choose to expend an ad-
+ditional activation of Dowsing for the day. If you do, 
+choose a Shard Color; all the Shards you find during 
+this search will be of the chosen Color.
+How	to	Avoid	Being	Spooked
+Description A questionable old tome filled with Ghost-related esoterica.
+Rank	1	-	Adept	Occult	 Education: While holding a 
+Cleanse Tag in your Main or Off-Hand Equipment Slot, 
+you can see Pokémon and Trainers using the Invisibility 
+Capability.
+Rank	2	-	Expert	 Occult	 Education: While holding a 
+Cleanse Tag in your Main or Off-Hand Equipment Slot, 
+you are immune to the Cursed Status Affliction.
+Tinfoil	 Gospel:	 Your	Primer	 on	Thwarting	 the	
+Conspiracies	of	the	New	World	Order
+Description: An even more questionable tome, filled 
+with laughable conspiracy theories. Its mental exercises 
+are strangely effective, however. 
+Rank	1	-	Novice	 Occult	 Education: Y ou gain the Iron 
+Mind Edge and the Skill Stunt - Focus (resisting Telep-
+athy). 
+Rank	2	-	Expert	 Occult	Education: Y our Aura becomes 
+muddled and difficult to read. Pokémon and Trainers 
+with the Aura Reader Capability cannot discern the tint 
+of your Aura and must succeed on an opposed Intuition or Focus Check vs your Occult Education or Focus in 
+order to read the hue of your Aura. Upon failure, they 
+may not attempt to read your Aura again for the re-mainder of the Scene.
+May 2015 Playtest9Pokémon Education Books
+Type	Study	Manual
+Description: These Books focus on one particular 
+Pokemon Type.
+Rank	1	-	Novice	 Pokémon	 Education: Y ou gain a -5 
+Bonus on Capture Checks against the studied Type.
+Rank	2	-	Expert	 Pokémon	 Education: When you ap-
+ply Experience Training, you may choose to give one of your Pokémon of the studied Type +10 Bonus Experi-ence. The same Pokémon cannot be chosen two days in 
+a row.
+ 
+Pokémon	Daycare	Licensing	Guide
+Description: This book teaches advanced Pokémon 
+Breeding techniques. 
+Rank	1	-	Adept	Pokémon	 Education: When Breeding 
+Pokémon of this Book’s Egg Group, you may choose 
+which parent’s species the Egg is of.
+Rank	2	-	Master	 Pokémon	 Education: When hatching 
+Eggs of Pokémon of this Book’s Egg Group, the hatched 
+Pokémon learns their first Inheritance Move at Level 10 
+instead of Level 20. 
+*There will also eventually be a Contest-related book, 
+but we don’t want to write one with the current state of 
+Contest rules. 
+Survival Books
+Fishing	101
+Description: A good way to waste an afternoon sitting 
+at the side of a boat. 
+Rank	1	-	Novice	 Survival: Y ou gain the Snare Capture 
+Technique, but it only applies to Pokémon you have 
+fished up. 
+Rank	2	-	Adept	 Survival: Whenever you fish up a 
+Pokémon, choose two Combat Stats. That Pokémon be-
+comes Flinched and loses 1 Combat Stage in each of the 
+chosen Stats. A	Field	Guide	to	Fungi
+Description: This book tells you which mushrooms are 
+good to eat and which ones will give you a bad trip.
+Rank	1	-	Novice	 Survival: Y ou automatically identify 
+all Tiny Mushrooms, Big Mushrooms, and Balm Mush-
+rooms you pick. Whenever you or your Pokémon con-
+sume one of those Mushrooms, they ignore the negative 
+effect of the Mushroom (Hit Point loss, Poison, Combat Stage loss).
+Rank	2	-	Adept	Survival: Y ou can create the Hearty 
+Meal Chef Recipe as an Extended Action but only by 
+using Mushrooms as ingredients. 
+Travel	Guide
+Description: A Travel Guide covers a specific location, such as a mountain or a pair of routes in the wilderness. 
+Travel Guides are usually written for the more popular 
+destinations in a region, but they might not necessarily exist for more obscure and out of the way locations.
+Rank	1	-	Novice	 Survival: Y ou gain the following Skill 
+Stunts while traveling in the studied location: Survival 
+(Foraging) and Survival (Navigation). 
+Rank	2	-	Expert	 Survival: Y ou and your Pokémon do 
+not take damage from naturally occurring Weather ef-
+fects in the studied location. 
+Technology Education Books
+The	Anarchist	Cookbook
+Description: The simple act of owning this book isn’t illegal, but carrying out its suggestions might be.
+Rank	1	-	Novice	 Technology	 Education: Whenever 
+you apply a Repel to a target, they become Blinded until 
+the end of their next turn. This may only affect a target 
+once per Scene. 
+Rank	2	-	Expert	 Technology	 Education: Whenever 
+you hit a target with a Repel or Pester Ball, they lose Hit 
+Points equal to your Technology Education Rank. 
+Poké	Ball	Technical	Manual
+Description: Y our all-in-one guide to balls. 
+Rank	1	-	Novice	 Technology	 Education: Y our material 
+costs for crafting Poke Balls of any variety are reduced by 10%.Rank	2	-	Expert	 Technology	 Education: Poke Balls 
+you craft gain a +2 Bonus to Accuracy Rolls.
+May 2015 Playtest10DIY	Engineering
+Description:
+Rank	1	-	Novice	 Technology	 Education: Y our material 
+costs for crafting items crafted from Mechanical Scrap are reduced by 10%.Rank	2	-	Expert	 Technology	 Education: Whenever 
+you Scrap an Item you created, you gain Scrap worth 75% of its monetary cost instead of only 50%.
+May 2015 Playtest11Miscellaneous Errata
+Food and Chef Errata
+Digestion	Buffs	are now called Food	Buffs. 
+Dumplings cannot be used to make other Dumpling 
+items. No infinite recursion, please. 
+The bonus from Accentuated Taste can only be gained 
+once per item, even if Complex Aftertaste is used to give an additional Food Buff for the item. 
+Gluttony’s effect should read as follows: “The user may 
+have up to three Food Buffs at once, and may eat up to 
+two refreshments per half hour. ”
+Other Class-Related Errata
+Capture	 Specialist: Tools of the Trade now gives an Ac-
+curacy bonus to Cap Cannons.
+Hobbyist : Hobbyist now only allows the user to take 
+Skill Edges that Rank Up a Skill.Hunter : Surprise! now has an AP discount when trig-
+gered by attacks using Cap Cannons.  Survivalist: Natural Fighter now allows a Survivalist 
+to use the Move Spikes instead of Fling when in Urban 
+terrain.
+Herbal Restoratives
+Repulsive	 Medicines are now called Herbal	 Restor-
+atives and no longer cause Pokémon to dislike their Trainer. Instead, they have the following effects: 
+Herbal Restoratives function differently from most nor -
+mal Restorative items. While you can spray as many 
+Potions on a Pokémon or Trainer each day as you like, using too many Herbal Restoratives in one day can be 
+detrimental. However, using just one or two a day is fine 
+and can even be better than using normal Restoratives! 
+Keep track of how many Herbal Restoratives a Pokémon 
+or Trainer consumes. This count is reset after each Ex-tended Rest.The first time a Pokémon or Trainer consumes an Herb-
+al Restorative in a given period, they gain a Food Buff  
+that can be traded in to gain a +2 bonus on a Save Check.
+The second time a Pokémon or Trainer consumes an 
+Herbal Restorative in a given period, they become un-able to gain Food Buffs or Temporary Hit Points until 
+they take an Extended Rest.
+The third time and every time thereafter that Pokémon 
+or Trainer consumes an Herbal Restorative in a given 
+period, roll 1d6. 1 corresponds to Attack, 2 to Defense, 3 to Special Attack, 4 to Special Defense, 5 to Speed, and 
+6 is re-rolled. The user’s default Combat Stage for the 
+rolled Stat is reduced by 1 until they take an Extended Rest.

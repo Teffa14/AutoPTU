@@ -1,0 +1,79 @@
+Nickname,,,,,,,Species,,,,,Scene Xp,0,#REF!,,,
+Level,1,,Total EXP,,,To Next Lvl,10,Gender,,,,# Pkmn,1,,,,
+Nature,Hardy,,+2,ATK,,-2,ATK,Shiny?,Normal,,,Modifiers,1,,,,
+Type,--,--,Likes,None,,Dislikes,None,Egg Group,--,,--,New Total,0,,,,
+Stat,Species,Mod,Base,Added,,Total,Stage,Adj.,Max HP,Injuries,Injured HP,Current HP,Tick,,,,
+HP,--,,1,,,1,--,--,14,,14,,1,,,,
+ATK,--,,1,,,1,,1,Evasion Bonuses,,1/2 HP,1/3 HP,1/4 HP,,,,
+DEF,--,,1,,,1,,1,Vs ATK,0,7,4,3,,,,
+SATK,--,,1,,,1,,1,Vs SATK,0,DR:,,,,,,
+SDEF,--,,1,,,1,,1,Vs Any,0,Training Exp:,,0,,,,
+SPD,--,,1,,,1,,1,Status Afflictions:,,Vitamins:,,,Notes:,,,
+Held Item:,,,Pts Left:,11,,Extra Items:,,,,,,,,Inherited Moves,,,
+Item Description:,--,,,,,,,,,,,,,Level 20,,Level 30,
+,,,,,,,Tutor Points,,Skill Background,,,,,Level 40,,Level 50,
+Digestion/Food:,,,--,,,,Earned:,1,[Brief Description],,,,,Level 60,,Level 70,
+Weapon Name:,,,Mods:,,,,Spent:,,Raised:,,,,,Level 80,,Level 90,
+Weapon Desc:,,,,,,,Left:,1,Lowered:,,,,,Learned:,,Remaining:,0
+Movelist,,,,,,,,,,,,,,,,,
+Name,Type,Category,DB,Damage Roll,,,Frequency,AC,Range,,Effect,,,,,Contest Stats,
+Struggle,Normal,Physical,4,1d8+6,+,1,At-Will,4,"Melee, 1 Target",,--,,,,,--,
+,--,--,--,--,--,--,--,--,--,,--,,,,,--,
+,--,--,--,--,--,--,--,--,--,,--,,,,,--,
+,--,--,--,--,--,--,--,--,--,,--,,,,,--,
+,--,--,--,--,--,--,--,--,--,,--,,,,,--,
+,--,--,--,--,--,--,--,--,--,,--,,,,,--,
+,--,--,--,--,--,--,--,--,--,,--,,,,,--,
+--,--,--,--,--,--,--,--,--,--,,--,,,,,--,
+--,--,--,--,--,--,--,--,--,--,,--,,,,,--,
+--,--,--,--,--,--,--,--,--,--,,--,,,,,--,
+--,--,--,--,--,--,--,--,--,--,,--,,,,,--,
+Type Effectiveness,,,,,,,,,,,,Capabilities,,,,,
+Type 1,Type 2,,,,,,,,,,,Overland,--,Levitate,--,Power,--
+--,--,1,1,1,,1,1,1,1,1,1,Sky,--,Burrow,--,Weight,--
+Type 3,Type 4,,,,,,,,,,,Swim,--,Jump (H/L),--,Size,--
+None,None,,,,,,,,,,,Naturewalk:,,--,,,
+Type 5,Type 6,1,1,1,,1,1,1,1,1,1,Other Capabilities,,,,,
+None,None,,,,,,,,,,,--,--,--,--,--,--
+Weather Reference,,,,,,,Stratagem Reference,,,,,--,--,--,,,
+,--,,,,,,,--,,,,,--,,,,
+Abilities,,,,,,,,,,Poké Edges,,,,,,,
+Name,Frequency,,Effect,,,,,,,Name,,Cost,Effect,,,,
+,--,,--,,,,,,,,,--,--,,,,
+,--,,--,,,,,,,,,--,--,,,,
+,--,,--,,,,,,,,,--,--,,,,
+,--,,--,,,,,,,,,--,--,,,,
+,--,,--,,,,,,,,,--,--,,,,
+,--,,--,,,,,,,,,--,--,,,,
+,--,,--,,,,,,,,,--,--,,,,
+,--,,--,,,,,,,,,--,--,,,,
+Augmenation Shock,,Augmentation Capacity,,,,Upgrader Features,,,,,,--,--,,,,
+Shocked At,Penalties,Total,Used,Free,,Efficient Installation?,,Experimental Designs,,,,--,--,,,,
+3,0,10,0,10,,No,,0,2,,,--,--,,,,
+Pokémon Augmentations,,,,,,,,,,,,--,--,,,,
+Name,Slot,Capacity,Effect,,,,,,,,,--,--,,,,
+,--,--,--,,,,,,,,,--,--,,,,
+,--,--,--,,,,,,,,,--,--,,,,
+,--,--,--,,,,,,,,,--,--,,,,
+,--,--,--,,,,,,,Pokémon Skills,,,,,,,
+,--,--,--,,,,,,,Acrobatics,--,General Ed,--,Tech Ed,--,Intuition,--
+,--,--,--,,,,,,,Athletics,--,Medicine Ed,--,Focus,--,Perception,--
+,--,--,--,,,,,,,Charm,--,Occult Ed,--,Guile,--,Stealth,--
+,--,--,--,,,,,,,Combat,--,Poké Ed,--,Intimidate,--,Survival,--
+,--,--,--,,,,,,,Command,--, ,,,,,
+Type 1,1,1,1,1,,1,1,1,1,1,--,,,,,,
+,1,1,1,1,,1,1,1,1,1,,Normal,Fighting,Ghost,,,
+Type 2,1,1,1,1,,1,1,1,1,1,,Flying,Dragon,Poison,Here,Thar,Be
+,1,1,1,1,,1,1,1,1,1,,Bug,Ice,Psychic,,#REF!,
+Type 3,1,1,1,1,,1,1,1,1,1,,Grass,Water,Fairy,,,
+,1,1,1,1,,1,1,1,1,1,,Electric,Steel,Rock,,,
+Type 4,1,1,1,1,,1,1,1,1,1,,Ground,Dark,Fire,,,
+,1,1,1,1,,1,1,1,1,1,,,,,,,
+Type 5,1,1,1,1,,1,1,1,1,1,,,,,,,
+,1,1,1,1,,1,1,1,1,1,,,,,,,
+Type 6,1,1,1,1,,1,1,1,1,1,Desert Weather,,,,Filter/Solid Rock,Tolerance,Wonder Guard
+,1,1,1,1,,1,1,1,1,1,1,,,,x,x,x
+Total,1,1,1,1,,1,1,1,1,1,Cave Crasher,Dry Skin/Storm Drain/Water Absorb,Flash Fire,Flying Fly Trap,Heatproof,Levitate,Lightning Rod/Motor Drive/Volt Absorb
+,1,1,1,1,,1,1,1,1,1,1,1,1,1,1,1,1
+Modified,1,1,1,1,,1,1,1,1,1,Mud Dweller,Sap Sipper,Sun Blanket,Thick Fat,Tochukaso,Windveiled,Winter's Kiss
+,1,1,1,1,,1,1,1,1,1,1,1,1,1,1,1,1

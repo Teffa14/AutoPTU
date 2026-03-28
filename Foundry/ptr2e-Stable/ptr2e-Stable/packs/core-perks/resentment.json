@@ -1,0 +1,135 @@
+{
+  "folder": "c29hnIAtXgwB7FeY",
+  "name": "Resentment",
+  "type": "perk",
+  "_id": "wNdg9i1EF7DIwBoU",
+  "img": "systems/ptr2e/img/perk-icons/Combat.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Resentment",
+        "slug": "resentment",
+        "description": "<p>When your Shields are broken, you may spend 4PP to gain 2 ticks of Shields as a Complex Action at [Interrupt 2].</p>",
+        "traits": [],
+        "type": "generic",
+        "img": "systems/ptr2e/img/perk-icons/Combat.svg",
+        "cost": {
+          "activation": "simple"
+        },
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "resentment",
+    "description": "<p>When your Shields are broken, you may spend 4PP to gain 2 ticks of Shields as a Complex Action at @Trait[interrupt-2].</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 84,
+        "y": 100,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "guard-up",
+          "fortress-doctrine"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Combat.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "resilience",
+      "archetype": "tank"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Resentment",
+      "type": "passive",
+      "_id": "PlhxiDYQMpVrv6pU",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "resentment-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.k1FukpHKnZGqjSNc",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "self",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.changes.0.value",
+                "value": 2
+              }
+            ],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-perks.Item.1hbtcyVMpmrRmtVA.ActiveEffect.EWJRFhW6Yd9V3etk",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1764897004051,
+        "modifiedTime": 1764897017677,
+        "lastModifiedBy": "bDEGyOQfZwkb2ml2"
+      }
+    }
+  ]
+}

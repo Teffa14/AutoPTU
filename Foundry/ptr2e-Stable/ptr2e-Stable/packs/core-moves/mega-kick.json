@@ -1,0 +1,49 @@
+{
+  "name": "Mega Kick",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "mega-kick",
+    "actions": [
+      {
+        "slug": "mega-kick",
+        "name": "Mega Kick",
+        "type": "attack",
+        "traits": [
+          "kick",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 3
+        },
+        "category": "physical",
+        "power": 120,
+        "accuracy": 75,
+        "types": [
+          "normal"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "wHKLGKQ1S9kD8Ldx",
+  "effects": []
+}

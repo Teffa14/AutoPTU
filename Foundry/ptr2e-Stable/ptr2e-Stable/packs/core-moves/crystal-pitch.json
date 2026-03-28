@@ -1,0 +1,49 @@
+{
+  "name": "Crystal Pitch!",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "crystal-pitch",
+    "actions": [
+      {
+        "slug": "crystal-pitch",
+        "name": "Crystal Pitch!",
+        "type": "attack",
+        "traits": [
+          "phenomenon",
+          "fling"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": 100,
+        "types": [
+          "untyped"
+        ],
+        "description": "<p>Effect: The targeted loses 4 PP, and undergoes Terastilization.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "BOSJE1lUpUiGajXp",
+  "effects": []
+}

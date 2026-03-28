@@ -1,0 +1,58 @@
+{
+  "name": "Hondew Berry",
+  "img": "systems/ptr2e/img/item-icons/hondew berry.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 3,
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "D",
+    "fling": {
+      "type": "untyped",
+      "power": 10,
+      "accuracy": 95,
+      "hide": null
+    },
+    "rarity": "common",
+    "consumableType": "food",
+    "traits": [
+      "restorative",
+      "consumable",
+      "natural",
+      "healing",
+      "bait",
+      "berry",
+      "fling",
+      "held",
+      "spicy-1",
+      "dry-1",
+      "bitter-4",
+      "combat"
+    ],
+    "description": "The target gains 1 Tick of HP. If the target does not possess [Human] and is not part of a Team, they also gain 2 Ticks of HP, 3 PP, and their Catch Rate increases by x9/5 / x5/9 for 5 Activations if they like/dislike Bitter flavors.",
+    "quantity": 1,
+    "slug": "hondew-berry",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "zRvjsc7yNwhVahuw",
+  "effects": [],
+  "folder": "yR1GFstYOCdI2jOz"
+}

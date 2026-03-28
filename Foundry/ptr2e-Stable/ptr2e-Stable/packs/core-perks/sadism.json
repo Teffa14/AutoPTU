@@ -1,0 +1,83 @@
+{
+  "folder": "a1w2zpzavg6qtJFn",
+  "name": "Sadism",
+  "type": "perk",
+  "_id": "avNUrWp7q1JxxGgW",
+  "img": "systems/ptr2e/img/perk-icons/Taskmaster.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Sadism",
+        "slug": "sadism",
+        "description": "<p>Trigger: A creature within 5m of you suffers a Tick(s) of HP as effect damage from an Affliction.<br><br>Effect: You heal a number of @Tick[1]s of HP equal to the number of Ticks the triggering creature lost.</p>",
+        "traits": [
+          "healing",
+          "interrupt-2"
+        ],
+        "type": "generic",
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3,
+          "trigger": "A creature within 5m of you suffers loses a Tick(s) of HP as effect damage from an Affliction."
+        },
+        "img": "systems/ptr2e/img/perk-icons/Taskmaster.svg"
+      }
+    ],
+    "slug": "sadism",
+    "description": "<p>Trigger: A creature within 5m of you suffers a Tick(s) of HP as effect damage from an Affliction.<br><br>Effect: You heal a number of @Tick[1]s of HP equal to the number of Ticks the triggering creature lost.</p>",
+    "traits": [],
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.intimidate.mod}",
+          45
+        ]
+      }
+    ],
+    "cost": 4,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 147,
+        "y": 70,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "stage-vampirism",
+          "cultivate-weakness",
+          "insidious-wounds"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Taskmaster.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "power",
+      "archetype": "affliction"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": []
+}

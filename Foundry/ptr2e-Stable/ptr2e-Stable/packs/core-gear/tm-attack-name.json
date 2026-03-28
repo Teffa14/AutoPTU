@@ -1,0 +1,68 @@
+{
+  "name": "TM - <Attack Name>",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "cost": null,
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": [
+        "1x Blank TM",
+        "1x Type Gem matching the Attack's Type",
+        "User Knows the Attack, or possesses instructions of the Attack"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": null,
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100
+    },
+    "rarity": "rare",
+    "traits": [
+      "attack-name",
+      "type",
+      "held",
+      "fling"
+    ],
+    "description": "<p>Upon creation, this item is imbued with the designated Attack, and can be consumed to teach an elligible creature the Attack. The Attack is selected for <Attack Name>, this item's Grade is set Grade above the Attack's Grade, and its Type overrides this item's &lt;Type&gt;, which changes its Fling Type.</p>",
+    "quantity": 1,
+    "container": null,
+    "slug": null,
+    "consumableType": "other",
+    "modifier": null,
+    "stack": 1,
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "M0D5GpmGd9FeCjDG",
+  "effects": [],
+  "folder": "V4skAU6G3OH5fXab",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "tXAZ3QUgjuwX4gdV": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.327",
+    "systemId": "ptr2e",
+    "systemVersion": "0.0.0-alpha.1.0",
+    "createdTime": 1717878484297,
+    "modifiedTime": 1717878484297,
+    "lastModifiedBy": "tXAZ3QUgjuwX4gdV"
+  },
+  "_key": "!items!M0D5GpmGd9FeCjDG"
+}

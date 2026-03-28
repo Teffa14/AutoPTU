@@ -1,0 +1,122 @@
+{
+  "name": "Cold Rebound",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive",
+          "interrupt-4",
+          "delay-2"
+        ],
+        "name": "Cold Rebound",
+        "slug": "cold-rebound",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 2,
+          "trigger": "<p>The user is hit with a [Contact] attack.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user is hit with a [Contact] attack.</p><p>Effect: The user freely targets and attacks the triggering creature with Icy Wind.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user is hit with a [Contact] attack.</p><p>Effect: Connection - Icy Wind. The user freely targets and attacks the triggering creature with Icy Wind.</p>",
+    "traits": [
+      "defensive"
+    ],
+    "slug": "cold-rebound",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "Kon1lC8YU7SMt62P",
+  "effects": [
+    {
+      "name": "Cold Rebound",
+      "type": "passive",
+      "_id": "rKYJmmW5W66NtvkN",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.YoLEpica6f4PLgWO",
+            "predicate": [
+              "ability:cold-rebound:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "reevaluateOnUpdate": true,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "allowDuplicate": false,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737395182970,
+        "modifiedTime": 1754317340889,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,3607 @@
+{
+  "source": "HisuiDex.pdf",
+  "species_count": 27,
+  "entries": {
+    "Decidueye Hisuian": {
+      "name": "Decidueye Hisuian",
+      "page": 4,
+      "base_stats": {
+        "hp": 9,
+        "attack": 11,
+        "defense": 8,
+        "special_attack": 10,
+        "special_defense": 10,
+        "speed": 6
+      },
+      "types": [
+        "Grass",
+        "Fighting"
+      ],
+      "abilities": {
+        "basic": [
+          "Keen Eye",
+          "Overgrow"
+        ],
+        "advanced": [
+          "Long Reach",
+          "Technician"
+        ],
+        "high": [
+          "Thick Fat"
+        ]
+      },
+      "evolution": [
+        "1 - Rowlet",
+        "2 - Dartrix Minimum 15",
+        "3 - Decidueye (H) Minimum 30"
+      ],
+      "size": "Medium",
+      "weight": 81.6,
+      "egg_groups": [
+        "Flying"
+      ],
+      "capabilities": [
+        "Overland 6",
+        "Swim 3",
+        "Sky 8",
+        "Jump 3/3",
+        "Power 5",
+        "Darkvision",
+        "Stealth"
+      ],
+      "skills": [
+        "Athl 4d6",
+        "Acro 4d6",
+        "Combat 4d6",
+        "Stealth 4d6+1",
+        "Percep 4d6+2",
+        "Focus 4d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "Evo",
+            "level": 0,
+            "move": "Rock Smash",
+            "type": "Fighting"
+          },
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Leafage",
+            "type": "Grass"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Roost",
+            "type": "Flying"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Aerial Ace",
+            "type": "Flying"
+          },
+          {
+            "requirement": "21",
+            "level": 21,
+            "move": "Magical Leaf",
+            "type": "Grass"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Air Slash",
+            "type": "Flying"
+          },
+          {
+            "requirement": "30",
+            "level": 30,
+            "move": "Aura Sphere",
+            "type": "Fighting"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Leaf Blade",
+            "type": "Grass"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Triple Arrows",
+            "type": "Fighting"
+          },
+          {
+            "requirement": "40",
+            "level": 40,
+            "move": "Brave Bird",
+            "type": "Flying"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Leaf Storm",
+            "type": "Grass"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aerial Ace",
+          "Bulk Up",
+          "Energy Ball",
+          "False Swipe",
+          "Focus Energy",
+          "Giga Impact",
+          "Gust (N)",
+          "Hyper Beam",
+          "Magical Leaf",
+          "Psycho Cut",
+          "Rest",
+          "Rock Smash",
+          "Shadow Claw",
+          "Spikes",
+          "Swift"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Typhlosion Hisuian": {
+      "name": "Typhlosion Hisuian",
+      "page": 5,
+      "base_stats": {
+        "hp": 7,
+        "attack": 8,
+        "defense": 8,
+        "special_attack": 12,
+        "special_defense": 9,
+        "speed": 10
+      },
+      "types": [
+        "Fire",
+        "Ghost"
+      ],
+      "abilities": {
+        "basic": [
+          "Blaze",
+          "Healer"
+        ],
+        "advanced": [
+          "Heat Mirage",
+          "Blessed Touch"
+        ],
+        "high": [
+          "Flash Fire"
+        ]
+      },
+      "evolution": [
+        "1 - Cyndaquil",
+        "2 - Quilava Minimum 15",
+        "3 - Typhlosion (H) Minimum 30"
+      ],
+      "size": "Medium",
+      "weight": 153.9,
+      "egg_groups": [
+        "Field"
+      ],
+      "capabilities": [
+        "Overland 9",
+        "Swim 5",
+        "Jump 2/2",
+        "Power 6",
+        "Darkvision",
+        "Dead Silent",
+        "Firestarter",
+        "Glow",
+        "Naturewalk (Wetland)"
+      ],
+      "skills": [
+        "Athl 4d6+2",
+        "Acro 3d6",
+        "Combat 4d6+1",
+        "Stealth 5d6+3",
+        "Percep 4d6+3",
+        "Focus 4d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "Evo",
+            "level": 0,
+            "move": "Hex",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Ember",
+            "type": "Fire"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Rollout",
+            "type": "Rock"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Flame Wheel",
+            "type": "Fire"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Swift",
+            "type": "Normal"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Flamethrower",
+            "type": "Fire"
+          },
+          {
+            "requirement": "40",
+            "level": 40,
+            "move": "Infernal Parade",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Shadow Ball",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Overheat",
+            "type": "Fire"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aerial Ace",
+          "Bulldoze",
+          "Calm Mind",
+          "Drain Punch",
+          "Fire Punch",
+          "Flamethrower",
+          "Giga Impact",
+          "Hyper Beam",
+          "Iron Tail",
+          "Mystical Fire",
+          "Ominous Wind",
+          "Quick Attack (N)",
+          "Rest",
+          "Rock Slide",
+          "Rock Smash",
+          "Shadow Ball",
+          "Shadow Claw",
+          "Swift",
+          "Thunder Punch",
+          "Wild Charge"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Samurott Hisuian": {
+      "name": "Samurott Hisuian",
+      "page": 6,
+      "base_stats": {
+        "hp": 10,
+        "attack": 10,
+        "defense": 9,
+        "special_attack": 11,
+        "special_defense": 7,
+        "speed": 7
+      },
+      "types": [
+        "Water",
+        "Dark"
+      ],
+      "abilities": {
+        "basic": [
+          "Intimidate",
+          "Torrent"
+        ],
+        "advanced": [
+          "Shell Armor",
+          "Bully"
+        ],
+        "high": [
+          "Parry"
+        ]
+      },
+      "evolution": [
+        "1 - Oshawott",
+        "2 - Dewott Minimum 15",
+        "3 - Samurott (H) Minimum 30"
+      ],
+      "size": "Medium",
+      "weight": 128.3,
+      "egg_groups": [
+        "Field"
+      ],
+      "capabilities": [
+        "Overland 5",
+        "Swim 8",
+        "Jump 2/3",
+        "Power 7",
+        "Darkvision",
+        "Fountain",
+        "Naturewalk (Ocean)",
+        "Stealth",
+        "Wielder"
+      ],
+      "skills": [
+        "Athl 5d6",
+        "Acro 4d6+3",
+        "Combat 5d6",
+        "Stealth 3d6",
+        "Percep 3d6",
+        "Focus 3d6+2"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "Evo",
+            "level": 0,
+            "move": "Night Slash",
+            "type": "Dark"
+          },
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Aqua Jet",
+            "type": "Water"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Swords Dance",
+            "type": "Normal"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Water Pulse",
+            "type": "Water"
+          },
+          {
+            "requirement": "21",
+            "level": 21,
+            "move": "Ceaseless Edge",
+            "type": "Dark"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Slash",
+            "type": "Normal"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Aqua Tail",
+            "type": "Water"
+          },
+          {
+            "requirement": "40",
+            "level": 40,
+            "move": "Dark Pulse",
+            "type": "Dark"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Hydro Pump",
+            "type": "Water"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aerial Ace",
+          "Aqua Tail",
+          "Dark Pulse",
+          "False Swipe",
+          "Focus Energy",
+          "Giga Impact",
+          "Hyper Beam",
+          "Ice Beam",
+          "Icy Wind",
+          "Iron Tail",
+          "Megahorn",
+          "Rest",
+          "Rock Smash",
+          "Poison Jab",
+          "Psycho Cut",
+          "Tackle (N)",
+          "Water Pulse",
+          "X-Scissor"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Growlithe Hisuian": {
+      "name": "Growlithe Hisuian",
+      "page": 7,
+      "base_stats": {
+        "hp": 6,
+        "attack": 8,
+        "defense": 5,
+        "special_attack": 7,
+        "special_defense": 5,
+        "speed": 6
+      },
+      "types": [
+        "Fire",
+        "Rock"
+      ],
+      "abilities": {
+        "basic": [
+          "Intimidate",
+          "Flash Fire"
+        ],
+        "advanced": [
+          "Justified",
+          "Teamwork"
+        ],
+        "high": [
+          "Rock Head"
+        ]
+      },
+      "evolution": [
+        "1 - Growlithe (H)",
+        "2 - Arcanine (H) Minimum 25"
+      ],
+      "size": "Small",
+      "weight": 50.0,
+      "egg_groups": [
+        "Field"
+      ],
+      "capabilities": [
+        "Overland 5",
+        "Swim 2",
+        "Jump 1/2",
+        "Power 3",
+        "Naturewalk (Grassland",
+        "Mountain)",
+        "Tracker",
+        "Underdog"
+      ],
+      "skills": [
+        "Athl 3d6+2",
+        "Acro 2d6",
+        "Combat 2d6",
+        "Stealth 3d6+1",
+        "Percep 3d6+1",
+        "Focus 2d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "1",
+            "level": 1,
+            "move": "Tackle",
+            "type": "Normal"
+          },
+          {
+            "requirement": "5",
+            "level": 5,
+            "move": "Ember",
+            "type": "Fire"
+          },
+          {
+            "requirement": "9",
+            "level": 9,
+            "move": "Bite",
+            "type": "Dark"
+          },
+          {
+            "requirement": "15",
+            "level": 15,
+            "move": "Fire Fang",
+            "type": "Fire"
+          },
+          {
+            "requirement": "21",
+            "level": 21,
+            "move": "Rock Slide",
+            "type": "Rock"
+          },
+          {
+            "requirement": "29",
+            "level": 29,
+            "move": "Crunch",
+            "type": "Dark"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Double-Edge",
+            "type": "Normal"
+          },
+          {
+            "requirement": "47",
+            "level": 47,
+            "move": "Flare Blitz",
+            "type": "Fire"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aerial Ace",
+          "Fire Fang",
+          "Flamethrower",
+          "Iron Tail",
+          "Outrage",
+          "Play Rough",
+          "Rest",
+          "Rock Slide",
+          "Rock Smash",
+          "Snarl",
+          "Swift",
+          "Wild Charge"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Arcanine Hisuian": {
+      "name": "Arcanine Hisuian",
+      "page": 8,
+      "base_stats": {
+        "hp": 10,
+        "attack": 12,
+        "defense": 8,
+        "special_attack": 10,
+        "special_defense": 8,
+        "speed": 9
+      },
+      "types": [
+        "Fire",
+        "Rock"
+      ],
+      "abilities": {
+        "basic": [
+          "Intimidate",
+          "Flash Fire"
+        ],
+        "advanced": [
+          "Justified",
+          "Teamwork"
+        ],
+        "high": [
+          "Rock Head"
+        ]
+      },
+      "evolution": [
+        "1 - Growlithe (H)",
+        "2 - Arcanine (H) Minimum 25"
+      ],
+      "size": "Large",
+      "weight": 370.4,
+      "egg_groups": [
+        "Field"
+      ],
+      "capabilities": [
+        "Overland 8",
+        "Swim 4",
+        "Jump 2/3",
+        "Power 8",
+        "Firestarter",
+        "Mountable 1",
+        "Naturewalk (Grassland",
+        "Mountain)",
+        "Tracker"
+      ],
+      "skills": [
+        "Athl 6d6+3",
+        "Acro 4d6+1",
+        "Combat 4d6",
+        "Stealth 2d6+2",
+        "Percep 4d6+2",
+        "Focus 3d6+1"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "5",
+            "level": 5,
+            "move": "Ember",
+            "type": "Fire"
+          },
+          {
+            "requirement": "9",
+            "level": 9,
+            "move": "Bite",
+            "type": "Dark"
+          },
+          {
+            "requirement": "15",
+            "level": 15,
+            "move": "Fire Fang",
+            "type": "Fire"
+          },
+          {
+            "requirement": "21",
+            "level": 21,
+            "move": "Rock Slide",
+            "type": "Rock"
+          },
+          {
+            "requirement": "29",
+            "level": 29,
+            "move": "Raging Fury",
+            "type": "Fire"
+          },
+          {
+            "requirement": "29",
+            "level": 29,
+            "move": "Crunch",
+            "type": "Dark"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Double-Edge",
+            "type": "Normal"
+          },
+          {
+            "requirement": "47",
+            "level": 47,
+            "move": "Flare Blitz",
+            "type": "Fire"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aerial Ace",
+          "Bulldoze",
+          "Fire Fang",
+          "Flamethrower",
+          "Giga Impact",
+          "Hyper Beam",
+          "Iron Head",
+          "Iron Tail",
+          "Outrage",
+          "Play Rough",
+          "Rest",
+          "Rock Slide",
+          "Rock Smash",
+          "Snarl",
+          "Stone Edge",
+          "Swift",
+          "Thunder Fang",
+          "Wild Charge"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Voltorb Hisuian": {
+      "name": "Voltorb Hisuian",
+      "page": 9,
+      "base_stats": {
+        "hp": 4,
+        "attack": 3,
+        "defense": 5,
+        "special_attack": 6,
+        "special_defense": 6,
+        "speed": 10
+      },
+      "types": [
+        "Electric",
+        "Grass"
+      ],
+      "abilities": {
+        "basic": [
+          "Static",
+          "Soundproof"
+        ],
+        "advanced": [
+          "Celebrate",
+          "Confidence"
+        ],
+        "high": [
+          "Aftermath"
+        ]
+      },
+      "evolution": [
+        "1 - Voltorb (H)",
+        "2 - Electrode (H) Minimum 30"
+      ],
+      "size": "Small",
+      "weight": 28.7,
+      "egg_groups": [
+        "Mineral"
+      ],
+      "capabilities": [
+        "Overland 6",
+        "Swim 3",
+        "Jump 1/1",
+        "Power 2",
+        "Shrinkable",
+        "Underdog",
+        "Volatile Bomb",
+        "Zapper"
+      ],
+      "skills": [
+        "Athl 3d6+1",
+        "Acro 2d6+1",
+        "Combat 1d6",
+        "Stealth 3d6+2",
+        "Percep 2d6",
+        "Focus 2d6+1"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "1",
+            "level": 1,
+            "move": "Thunder Shock",
+            "type": "Electric"
+          },
+          {
+            "requirement": "5",
+            "level": 5,
+            "move": "Tackle",
+            "type": "Normal"
+          },
+          {
+            "requirement": "9",
+            "level": 9,
+            "move": "Thunder Wave",
+            "type": "Electric"
+          },
+          {
+            "requirement": "15",
+            "level": 15,
+            "move": "Spark",
+            "type": "Electric"
+          },
+          {
+            "requirement": "21",
+            "level": 21,
+            "move": "Energy Ball",
+            "type": "Grass"
+          },
+          {
+            "requirement": "29",
+            "level": 29,
+            "move": "Thunderbolt",
+            "type": "Electric"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Thunder",
+            "type": "Electric"
+          },
+          {
+            "requirement": "47",
+            "level": 47,
+            "move": "Self-Destruct",
+            "type": "Normal"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Charge Beam",
+          "Energy Ball",
+          "Ice Ball",
+          "Magical Leaf",
+          "Rest",
+          "Swift",
+          "Thunderbolt",
+          "Wild Charge"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Electrode Hisuian": {
+      "name": "Electrode Hisuian",
+      "page": 10,
+      "base_stats": {
+        "hp": 6,
+        "attack": 5,
+        "defense": 7,
+        "special_attack": 8,
+        "special_defense": 8,
+        "speed": 15
+      },
+      "types": [
+        "Electric"
+      ],
+      "abilities": {
+        "basic": [
+          "Static",
+          "Soundproof"
+        ],
+        "advanced": [
+          "Celebrate",
+          "Confidence"
+        ],
+        "high": [
+          "Aftermath"
+        ]
+      },
+      "evolution": [
+        "1 - Voltorb",
+        "2 - Electrode Minimum 30"
+      ],
+      "size": "Medium",
+      "weight": 156.5,
+      "egg_groups": [
+        "Mineral"
+      ],
+      "capabilities": [
+        "Overland 8",
+        "Swim 3",
+        "Jump 1/1",
+        "Power 4",
+        "Shrinkable",
+        "Volatile Bomb",
+        "Zapper"
+      ],
+      "skills": [
+        "Athl 4d6+1",
+        "Acro 3d6+1",
+        "Combat 1d6",
+        "Stealth 4d6+2",
+        "Percep 3d6",
+        "Focus 3d6+1"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "5",
+            "level": 5,
+            "move": "Tackle",
+            "type": "Normal"
+          },
+          {
+            "requirement": "9",
+            "level": 9,
+            "move": "Thunder Wave",
+            "type": "Electric"
+          },
+          {
+            "requirement": "15",
+            "level": 15,
+            "move": "Spark",
+            "type": "Electric"
+          },
+          {
+            "requirement": "21",
+            "level": 21,
+            "move": "Energy Ball",
+            "type": "Grass"
+          },
+          {
+            "requirement": "29",
+            "level": 29,
+            "move": "Thunderbolt",
+            "type": "Electric"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Thunder",
+            "type": "Electric"
+          },
+          {
+            "requirement": "47",
+            "level": 47,
+            "move": "Chloroblast",
+            "type": "Grass"
+          },
+          {
+            "requirement": "47",
+            "level": 47,
+            "move": "Self-Destruct",
+            "type": "Normal"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Charge Beam",
+          "Energy Ball",
+          "Giga Impact",
+          "Hyper Beam",
+          "Ice Ball",
+          "Magical Leaf",
+          "Rest",
+          "Swift",
+          "Thunderbolt",
+          "Wild Charge"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Qwilfish Hisuian": {
+      "name": "Qwilfish Hisuian",
+      "page": 11,
+      "base_stats": {
+        "hp": 7,
+        "attack": 10,
+        "defense": 9,
+        "special_attack": 6,
+        "special_defense": 6,
+        "speed": 9
+      },
+      "types": [
+        "Dark",
+        "Poison"
+      ],
+      "abilities": {
+        "basic": [
+          "Swift Swim",
+          "Poison Point"
+        ],
+        "advanced": [
+          "Bully",
+          "Intimidate"
+        ],
+        "high": [
+          "Spray Down"
+        ]
+      },
+      "evolution": [
+        "1 - Qwilfish (H)",
+        "2 - Overqwil Minimum 25"
+      ],
+      "size": "Small",
+      "weight": 8.6,
+      "egg_groups": [
+        "Water 2"
+      ],
+      "capabilities": [
+        "Overland 2",
+        "Swim 7",
+        "Jump 1/1",
+        "Power 2",
+        "Darkvision",
+        "Gilled",
+        "Inflatable",
+        "Naturewalk (Ocean)"
+      ],
+      "skills": [
+        "Athl 3d6+2",
+        "Acro 2d6+2",
+        "Combat 3d6",
+        "Stealth 3d6",
+        "Percep 2d6",
+        "Focus 2d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "1",
+            "level": 1,
+            "move": "Poison Sting",
+            "type": "Poison"
+          },
+          {
+            "requirement": "5",
+            "level": 5,
+            "move": "Spikes",
+            "type": "Ground"
+          },
+          {
+            "requirement": "9",
+            "level": 9,
+            "move": "Pin Missile",
+            "type": "Bug"
+          },
+          {
+            "requirement": "15",
+            "level": 15,
+            "move": "Barb Barrage",
+            "type": "Poison"
+          },
+          {
+            "requirement": "21",
+            "level": 21,
+            "move": "Water Pulse",
+            "type": "Water"
+          },
+          {
+            "requirement": "26",
+            "level": 26,
+            "move": "Dark Pulse",
+            "type": "Dark"
+          },
+          {
+            "requirement": "29",
+            "level": 29,
+            "move": "Poison Jab",
+            "type": "Poison"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Aqua Tail",
+            "type": "Water"
+          },
+          {
+            "requirement": "47",
+            "level": 47,
+            "move": "Double-Edge",
+            "type": "Normal"
+          },
+          {
+            "requirement": "57",
+            "level": 57,
+            "move": "Self-Destruct",
+            "type": "Normal"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aqua Tail",
+          "Dark Pulse",
+          "Ice Ball",
+          "Ice Beam",
+          "Icy Wind",
+          "Poison Jab",
+          "Rest",
+          "Shadow Ball",
+          "Sludge Bomb",
+          "Spikes",
+          "Swift",
+          "Water Pulse"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Overqwil": {
+      "name": "Overqwil",
+      "page": 12,
+      "base_stats": {
+        "hp": 9,
+        "attack": 12,
+        "defense": 10,
+        "special_attack": 7,
+        "special_defense": 7,
+        "speed": 9
+      },
+      "types": [
+        "Dark",
+        "Poison"
+      ],
+      "abilities": {
+        "basic": [
+          "Swift Swim",
+          "Poison Point"
+        ],
+        "advanced": [
+          "Bully",
+          "Intimidate"
+        ],
+        "high": [
+          "Toxic Nourishment"
+        ]
+      },
+      "evolution": [
+        "1 - Qwilfish (H)",
+        "2 - Overqwil Minimum 25"
+      ],
+      "size": "Large",
+      "weight": 133.4,
+      "egg_groups": [
+        "Water 2"
+      ],
+      "capabilities": [
+        "Overland 2",
+        "Swim 8",
+        "Jump 2/2",
+        "Power 4",
+        "Darkvision",
+        "Gilled",
+        "Inflatable",
+        "Mountable 1",
+        "Naturewalk (Ocean)"
+      ],
+      "skills": [
+        "Athl 3d6+2",
+        "Acro 2d6+2",
+        "Combat 3d6",
+        "Stealth 3d6",
+        "Percep 2d6",
+        "Focus 2d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "5",
+            "level": 5,
+            "move": "Spikes",
+            "type": "Ground"
+          },
+          {
+            "requirement": "9",
+            "level": 9,
+            "move": "Pin Missile",
+            "type": "Bug"
+          },
+          {
+            "requirement": "15",
+            "level": 15,
+            "move": "Barb Barrage",
+            "type": "Poison"
+          },
+          {
+            "requirement": "21",
+            "level": 21,
+            "move": "Water Pulse",
+            "type": "Water"
+          },
+          {
+            "requirement": "26",
+            "level": 26,
+            "move": "Dark Pulse",
+            "type": "Dark"
+          },
+          {
+            "requirement": "29",
+            "level": 29,
+            "move": "Poison Jab",
+            "type": "Poison"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Aqua Tail",
+            "type": "Water"
+          },
+          {
+            "requirement": "47",
+            "level": 47,
+            "move": "Double-Edge",
+            "type": "Normal"
+          },
+          {
+            "requirement": "57",
+            "level": 57,
+            "move": "Self-Destruct",
+            "type": "Normal"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aqua Tail",
+          "Dark Pulse",
+          "Giga Impact",
+          "Hyper Beam",
+          "Ice Ball",
+          "Ice Beam",
+          "Icy Wind",
+          "Poison Jab",
+          "Rest",
+          "Shadow Ball",
+          "Sludge Bomb",
+          "Spikes",
+          "Swift",
+          "Water Pulse"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Sneasel Hisuian": {
+      "name": "Sneasel Hisuian",
+      "page": 13,
+      "base_stats": {
+        "hp": 6,
+        "attack": 10,
+        "defense": 6,
+        "special_attack": 4,
+        "special_defense": 8,
+        "speed": 12
+      },
+      "types": [
+        "Fighting",
+        "Poison"
+      ],
+      "abilities": {
+        "basic": [
+          "Inner Focus",
+          "Keen Eye"
+        ],
+        "advanced": [
+          "Ambush",
+          "Poison Touch"
+        ],
+        "high": [
+          "Tough Claws"
+        ]
+      },
+      "evolution": [
+        "1 - Sneasel (H)",
+        "2 - Sneasler Minimum 30"
+      ],
+      "size": "Small",
+      "weight": 59.5,
+      "egg_groups": [
+        "Field"
+      ],
+      "capabilities": [
+        "Overland 7",
+        "Swim 3",
+        "Jump 3/3",
+        "Power 2",
+        "Naturewalk (Mountain",
+        "Tundra)",
+        "Wallclimber"
+      ],
+      "skills": [
+        "Athl 4d6+2",
+        "Acro 3d6+2",
+        "Combat 3d6+2",
+        "Stealth 2d6+1",
+        "Percep 2d6",
+        "Focus 2d6+1"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "1",
+            "level": 1,
+            "move": "Quick Attack",
+            "type": "Normal"
+          },
+          {
+            "requirement": "5",
+            "level": 5,
+            "move": "Rock Smash",
+            "type": "Fighting"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Swift",
+            "type": "Normal"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Slash",
+            "type": "Normal"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Poison Jab",
+            "type": "Poison"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Swords Dance",
+            "type": "Normal"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Close Combat",
+            "type": "Fighting"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aerial Ace",
+          "Bulk Up",
+          "Calm Mind",
+          "Drain Punch",
+          "False Swipe",
+          "Focus Energy",
+          "Iron Tail",
+          "Poison Jab",
+          "Rest",
+          "Rock Smash",
+          "Shadow Ball",
+          "Shadow Claw",
+          "Snarl",
+          "Swift",
+          "X- Scissor"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Sneasler": {
+      "name": "Sneasler",
+      "page": 14,
+      "base_stats": {
+        "hp": 8,
+        "attack": 13,
+        "defense": 6,
+        "special_attack": 4,
+        "special_defense": 8,
+        "speed": 12
+      },
+      "types": [
+        "Fighting",
+        "Poison"
+      ],
+      "abilities": {
+        "basic": [
+          "Pressure",
+          "Prime Fury"
+        ],
+        "advanced": [
+          "Ambush",
+          "Poison Touch"
+        ],
+        "high": [
+          "Tough Claws"
+        ]
+      },
+      "evolution": [
+        "1 - Sneasel (H)",
+        "2 - Sneasler Minimum 30"
+      ],
+      "size": "Medium",
+      "weight": 94.8,
+      "egg_groups": [
+        "Field"
+      ],
+      "capabilities": [
+        "Overland 8",
+        "Swim 4",
+        "Jump 3/3",
+        "Power 3",
+        "Naturewalk (Mountain",
+        "Tundra)",
+        "Wallclimber"
+      ],
+      "skills": [
+        "Athl 5d6+2",
+        "Acro 5d6+1",
+        "Combat 4d6+2",
+        "Stealth 3d6+1",
+        "Percep 3d6",
+        "Focus 3d6+2"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "5",
+            "level": 5,
+            "move": "Rock Smash",
+            "type": "Fighting"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Swift",
+            "type": "Normal"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Dire Claw",
+            "type": "Poison"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Slash",
+            "type": "Normal"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Poison Jab",
+            "type": "Poison"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Swords Dance",
+            "type": "Normal"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Close Combat",
+            "type": "Fighting"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aerial Ace",
+          "Bulk Up",
+          "Calm Mind",
+          "Drain Punch",
+          "False Swipe",
+          "Focus Energy",
+          "Giga Impact",
+          "Hyper Beam",
+          "Iron Tail",
+          "Poison Jab",
+          "Power Shift",
+          "Rest",
+          "Rock Smash",
+          "Shadow Ball",
+          "Shadow Claw",
+          "Snarl",
+          "Swift",
+          "X-Scissor"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Lilligant Hisuian": {
+      "name": "Lilligant Hisuian",
+      "page": 15,
+      "base_stats": {
+        "hp": 7,
+        "attack": 11,
+        "defense": 8,
+        "special_attack": 5,
+        "special_defense": 8,
+        "speed": 11
+      },
+      "types": [
+        "Grass",
+        "Fighting"
+      ],
+      "abilities": {
+        "basic": [
+          "Hustle",
+          "Chlorophyll"
+        ],
+        "advanced": [
+          "Leaf Guard",
+          "Flower Veil"
+        ],
+        "high": [
+          "Confidence"
+        ]
+      },
+      "evolution": [
+        "1 - Petilil",
+        "2 - Lilligant (H) Minimum 25"
+      ],
+      "size": "Medium",
+      "weight": 42.3,
+      "egg_groups": [
+        "Plant"
+      ],
+      "capabilities": [
+        "Overland 5",
+        "Swim 2",
+        "Jump 2/2",
+        "Power 6",
+        "Herb Growth",
+        "Naturewalk (Mountain",
+        "Tundra)"
+      ],
+      "skills": [
+        "Athl 4d6+2",
+        "Acro 4d6+2",
+        "Combat 4d6",
+        "Stealth 3d6+2",
+        "Percep 3d6+2",
+        "Focus 4d6+2"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "Evo",
+            "level": 0,
+            "move": "Rock Smash",
+            "type": "Normal"
+          },
+          {
+            "requirement": "5",
+            "level": 5,
+            "move": "Leafage",
+            "type": "Grass"
+          },
+          {
+            "requirement": "9",
+            "level": 9,
+            "move": "Stun Spore",
+            "type": "Grass"
+          },
+          {
+            "requirement": "15",
+            "level": 15,
+            "move": "Poison Powder",
+            "type": "Poison"
+          },
+          {
+            "requirement": "21",
+            "level": 21,
+            "move": "Energy Ball",
+            "type": "Grass"
+          },
+          {
+            "requirement": "29",
+            "level": 29,
+            "move": "Sleep Powder",
+            "type": "Grass"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Drain Punch",
+            "type": "Fighting"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Recover",
+            "type": "Normal"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Leaf Blade",
+            "type": "Grass"
+          },
+          {
+            "requirement": "42",
+            "level": 42,
+            "move": "Victory Dance",
+            "type": "Fighting"
+          },
+          {
+            "requirement": "47",
+            "level": 47,
+            "move": "Leaf Storm",
+            "type": "Grass"
+          },
+          {
+            "requirement": "53",
+            "level": 53,
+            "move": "Petal Dance",
+            "type": "Grass"
+          },
+          {
+            "requirement": "57",
+            "level": 57,
+            "move": "Close Combat",
+            "type": "Fighting"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Absorb (N)",
+          "Aerial Ace",
+          "Baby-Doll Eyes",
+          "Drain Punch",
+          "Energy Ball",
+          "Focus Energy",
+          "Giga Impact",
+          "Hyper Beam",
+          "Magical Leaf",
+          "Poison Jab",
+          "Rest",
+          "Rock Smash"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Zorua Hisuian": {
+      "name": "Zorua Hisuian",
+      "page": 16,
+      "base_stats": {
+        "hp": 4,
+        "attack": 6,
+        "defense": 4,
+        "special_attack": 9,
+        "special_defense": 4,
+        "speed": 7
+      },
+      "types": [
+        "Normal",
+        "Ghost"
+      ],
+      "abilities": {
+        "basic": [
+          "Illusion",
+          "Snow Cloak"
+        ],
+        "advanced": [
+          "Weird Power",
+          "Omen"
+        ],
+        "high": [
+          "Refrigerate"
+        ]
+      },
+      "evolution": [
+        "1 - Zorua (H)",
+        "2 - Zoroark (H) Minimum 30"
+      ],
+      "size": "Small",
+      "weight": 27.6,
+      "egg_groups": [
+        "Field"
+      ],
+      "capabilities": [
+        "Overland 5",
+        "Swim 2",
+        "Jump 1/1",
+        "Power 1",
+        "Chilled",
+        "Darkvision",
+        "Dead Silent",
+        "Freezer",
+        "Naturewalk (Tundra)",
+        "Stealth",
+        "Underdog"
+      ],
+      "skills": [
+        "Athl 2d6",
+        "Acro 3d6+1",
+        "Combat 2d6",
+        "Stealth 4d6+1",
+        "Percep 2d6",
+        "Focus 2d6+1"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "1",
+            "level": 1,
+            "move": "Shadow Sneak",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Snarl",
+            "type": "Dark"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Swift",
+            "type": "Normal"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Bitter Malice",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Slash",
+            "type": "Normal"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Shadow Claw",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Nasty Plot",
+            "type": "Dark"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aerial Ace",
+          "Calm Mind",
+          "Dark Pulse",
+          "Rest",
+          "Shadow Ball",
+          "Sludge Bomb",
+          "Snarl",
+          "Swift"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Zoroark Hisuian": {
+      "name": "Zoroark Hisuian",
+      "page": 17,
+      "base_stats": {
+        "hp": 6,
+        "attack": 10,
+        "defense": 6,
+        "special_attack": 13,
+        "special_defense": 6,
+        "speed": 11
+      },
+      "types": [
+        "Normal",
+        "Ghost"
+      ],
+      "abilities": {
+        "basic": [
+          "Illusion",
+          "Snow Cloak"
+        ],
+        "advanced": [
+          "Weird Power",
+          "Omen"
+        ],
+        "high": [
+          "Refrigerate"
+        ]
+      },
+      "evolution": [
+        "1 - Zorua (H)",
+        "2 - Zoroark (H) Minimum 30"
+      ],
+      "size": "Medium",
+      "weight": 178.8,
+      "egg_groups": [
+        "Field"
+      ],
+      "capabilities": [
+        "Overland 7",
+        "Swim 4",
+        "Jump 2/2",
+        "Power 4",
+        "Chilled",
+        "Darkvision",
+        "Dead Silent",
+        "Freezer",
+        "Naturewalk (Tundra)",
+        "Stealth"
+      ],
+      "skills": [
+        "Athl 3d6+1",
+        "Acro 4d6+2",
+        "Combat 4d6",
+        "Stealth 5d6+4",
+        "Percep 3d6",
+        "Focus 3d6+2"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Snarl",
+            "type": "Dark"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Swift",
+            "type": "Normal"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Bitter Malice",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Slash",
+            "type": "Normal"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Shadow Claw",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "40",
+            "level": 40,
+            "move": "Shadow Ball",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Nasty Plot",
+            "type": "Dark"
+          },
+          {
+            "requirement": "52",
+            "level": 52,
+            "move": "Extrasensory",
+            "type": "Psychic"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aerial Ace",
+          "Calm Mind",
+          "Dark Pulse",
+          "Flamethrower",
+          "Giga Impact",
+          "Hyper Beam",
+          "Ominous Wind",
+          "Rest",
+          "Shadow Ball",
+          "Sludge Bomb",
+          "Snarl",
+          "Swift"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Braviary Hisuian": {
+      "name": "Braviary Hisuian",
+      "page": 18,
+      "base_stats": {
+        "hp": 11,
+        "attack": 8,
+        "defense": 7,
+        "special_attack": 11,
+        "special_defense": 7,
+        "speed": 7
+      },
+      "types": [
+        "Psychic",
+        "Flying"
+      ],
+      "abilities": {
+        "basic": [
+          "Keen Eye",
+          "Sheer Force"
+        ],
+        "advanced": [
+          "Defiant",
+          "Psionic Screech"
+        ],
+        "high": [
+          "Psychic Surge"
+        ]
+      },
+      "evolution": [
+        "1 - Rufflet",
+        "2 - Braviary (H) Minimum 30"
+      ],
+      "size": "Medium",
+      "weight": 95.7,
+      "egg_groups": [
+        "Flying"
+      ],
+      "capabilities": [
+        "Overland 4",
+        "Swim 2",
+        "Sky 8",
+        "Jump 3/3",
+        "Power 6",
+        "Telekinetic"
+      ],
+      "skills": [
+        "Athl 4d6",
+        "Acro 4d6",
+        "Combat 4d6",
+        "Stealth 2d6",
+        "Percep 3d6",
+        "Focus 5d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Aerial Ace",
+            "type": "Flying"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Twister",
+            "type": "Dragon"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Slash",
+            "type": "Normal"
+          },
+          {
+            "requirement": "20",
+            "level": 20,
+            "move": "Air Slash",
+            "type": "Flying"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Esper Wing",
+            "type": "Psychic"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Roost",
+            "type": "Flying"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Double-Edge",
+            "type": "Normal"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Brave Bird",
+            "type": "Flying"
+          },
+          {
+            "requirement": "52",
+            "level": 52,
+            "move": "Hurricane",
+            "type": "Flying"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aerial Ace",
+          "Bulk Up",
+          "Dazzling Gleam",
+          "Giga Impact",
+          "Hyper Beam",
+          "Mystical Fire",
+          "Ominous Wind",
+          "Power Shift",
+          "Psychic",
+          "Quick Attack (N)",
+          "Rest",
+          "Rock Slide",
+          "Rock Smash",
+          "Shadow Ball",
+          "Swift",
+          "Zen Headbutt"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Sliggoo Hisuian": {
+      "name": "Sliggoo Hisuian",
+      "page": 19,
+      "base_stats": {
+        "hp": 6,
+        "attack": 8,
+        "defense": 8,
+        "special_attack": 8,
+        "special_defense": 11,
+        "speed": 4
+      },
+      "types": [
+        "Steel",
+        "Dragon"
+      ],
+      "abilities": {
+        "basic": [
+          "Sap Sipper",
+          "Battle Armor"
+        ],
+        "advanced": [
+          "Overcoat",
+          "Gooey"
+        ],
+        "high": [
+          "Absorb Force"
+        ]
+      },
+      "evolution": [
+        "1 - Goomy",
+        "2 - Sliggoo (H) Minimum 15",
+        "3 - Goodra (H) Minimum 30"
+      ],
+      "size": "Small",
+      "weight": 151.0,
+      "egg_groups": [
+        "Dragon"
+      ],
+      "capabilities": [
+        "Overland 5",
+        "Swim 3",
+        "Jump 0/1",
+        "Power 2",
+        "Amorphous",
+        "Blindsense",
+        "Sticky Hold",
+        "Underdog",
+        "Wallclimber"
+      ],
+      "skills": [
+        "Athl 3d6",
+        "Acro 1d6",
+        "Combat 3d6",
+        "Stealth 4d6+2",
+        "Percep 3d6",
+        "Focus 3d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Acid Spray",
+            "type": "Poison"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Acid Armor",
+            "type": "Poison"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Water Pulse",
+            "type": "Water"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Iron Head",
+            "type": "Steel"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Dragon Pulse",
+            "type": "Dragon"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Shelter",
+            "type": "Normal"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Hydro Pump",
+            "type": "Water"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Bubble (N)",
+          "Draco Meteor",
+          "Ice Beam",
+          "Iron Head",
+          "Iron Tail",
+          "Outrage",
+          "Rest",
+          "Rock Slide",
+          "Sludge Bomb",
+          "Steel Beam",
+          "Thunderbolt",
+          "Water Pulse"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Goodra Hisuian": {
+      "name": "Goodra Hisuian",
+      "page": 20,
+      "base_stats": {
+        "hp": 8,
+        "attack": 10,
+        "defense": 10,
+        "special_attack": 11,
+        "special_defense": 15,
+        "speed": 6
+      },
+      "types": [
+        "Steel",
+        "Dragon"
+      ],
+      "abilities": {
+        "basic": [
+          "Sap Sipper",
+          "Battle Armor"
+        ],
+        "advanced": [
+          "Overcoat",
+          "Gooey"
+        ],
+        "high": [
+          "Absorb Force"
+        ]
+      },
+      "evolution": [
+        "1 - Goomy",
+        "2 - Sliggoo (H) Minimum 15",
+        "3 - Goodra (H) Minimum 30"
+      ],
+      "size": "Medium",
+      "weight": 736.6,
+      "egg_groups": [
+        "Dragon"
+      ],
+      "capabilities": [
+        "Overland 7",
+        "Swim 4",
+        "Jump 2/2",
+        "Power 8",
+        "Amorphous",
+        "Sticky Hold"
+      ],
+      "skills": [
+        "Athl 5d6+2",
+        "Acro 3d6",
+        "Combat 4d6",
+        "Stealth 2d6",
+        "Percep 4d6",
+        "Focus 4d6+2"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Acid Spray",
+            "type": "Poison"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Acid Armor",
+            "type": "Poison"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Water Pulse",
+            "type": "Water"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Iron Head",
+            "type": "Steel"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Dragon Pulse",
+            "type": "Dragon"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Shelter",
+            "type": "Normal"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Hydro Pump",
+            "type": "Water"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Bubble (N)",
+          "Bulldoze",
+          "Draco Meteor",
+          "Fire Punch",
+          "Flamethrower",
+          "Giga Impact",
+          "Hyper Beam",
+          "Ice Beam",
+          "Iron Head",
+          "Iron Tail",
+          "Outrage",
+          "Rest",
+          "Rock Slide",
+          "Rock Smash",
+          "Sludge Bomb",
+          "Steel Beam",
+          "Thunderbolt",
+          "Thunder Punch",
+          "Water Pulse"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Avalugg Hisuian": {
+      "name": "Avalugg Hisuian",
+      "page": 21,
+      "base_stats": {
+        "hp": 10,
+        "attack": 13,
+        "defense": 18,
+        "special_attack": 3,
+        "special_defense": 4,
+        "speed": 4
+      },
+      "types": [
+        "Ice",
+        "Rock"
+      ],
+      "abilities": {
+        "basic": [
+          "Strong Jaw",
+          "Permafrost"
+        ],
+        "advanced": [
+          "Ice Body",
+          "Sturdy"
+        ],
+        "high": [
+          "Rock Head"
+        ]
+      },
+      "evolution": [
+        "1 - Bergmite",
+        "2 - Avalugg (H) Minimum 30"
+      ],
+      "size": "Large",
+      "weight": 578.5,
+      "egg_groups": [
+        "Monster"
+      ],
+      "capabilities": [
+        "Overland 7",
+        "Swim 3",
+        "Jump 0/1",
+        "Power 8",
+        "Chilled",
+        "Freezer",
+        "Mountable 2",
+        "Naturewalk (Tundra)"
+      ],
+      "skills": [
+        "Athl 6d6+2",
+        "Acro 1d6",
+        "Combat 4d6",
+        "Stealth 3d6+1",
+        "Percep 3d6",
+        "Focus 4d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "Evo",
+            "level": 0,
+            "move": "Rock Slide",
+            "type": "Rock"
+          },
+          {
+            "requirement": "5",
+            "level": 5,
+            "move": "Powder Snow",
+            "type": "Ice"
+          },
+          {
+            "requirement": "9",
+            "level": 9,
+            "move": "Ice Shard",
+            "type": "Ice"
+          },
+          {
+            "requirement": "15",
+            "level": 15,
+            "move": "Bite",
+            "type": "Dark"
+          },
+          {
+            "requirement": "21",
+            "level": 21,
+            "move": "Iron Defense",
+            "type": "Steel"
+          },
+          {
+            "requirement": "29",
+            "level": 29,
+            "move": "Crunch",
+            "type": "Dark"
+          },
+          {
+            "requirement": "29",
+            "level": 29,
+            "move": "Earth Power",
+            "type": "Ground"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Mountain Gale",
+            "type": "Ice"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Blizzard",
+            "type": "Ice"
+          },
+          {
+            "requirement": "47",
+            "level": 47,
+            "move": "Double-Edge",
+            "type": "Normal"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Bulldoze",
+          "Earth Power",
+          "Flash Cannon",
+          "Giga Impact",
+          "High Horsepower",
+          "Hyper Beam",
+          "Ice Ball",
+          "Ice Beam",
+          "Ice Fang",
+          "Icy Wind",
+          "Iron Head",
+          "Power Shift",
+          "Rest",
+          "Rock Slide",
+          "Rock Smash",
+          "Stealth Rock",
+          "Stone Edge",
+          "Tackle (N)",
+          "Water Pulse"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Wyrdeer": {
+      "name": "Wyrdeer",
+      "page": 22,
+      "base_stats": {
+        "hp": 10,
+        "attack": 10,
+        "defense": 7,
+        "special_attack": 10,
+        "special_defense": 8,
+        "speed": 7
+      },
+      "types": [
+        "Normal",
+        "Psychic"
+      ],
+      "abilities": {
+        "basic": [
+          "Hypnotic",
+          "Probability Control"
+        ],
+        "advanced": [
+          "Frisk",
+          "Intimidate"
+        ],
+        "high": [
+          "Sap Sipper"
+        ]
+      },
+      "evolution": [
+        "1 - Stantler",
+        "2 - Wyrdeer Minimum 25"
+      ],
+      "size": "Medium",
+      "weight": 209.7,
+      "egg_groups": [
+        "Field"
+      ],
+      "capabilities": [
+        "Overland 8",
+        "Swim 3",
+        "Jump 2/2",
+        "Power 5",
+        "Mountable 1",
+        "Telekinetic",
+        "Tracker"
+      ],
+      "skills": [
+        "Athl 4d6+2",
+        "Acro 2d6+1",
+        "Combat 2d6+2",
+        "Stealth 3d6+2",
+        "Percep 5d6+2",
+        "Focus 5d6+2"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "5",
+            "level": 5,
+            "move": "Confusion",
+            "type": "Psychic"
+          },
+          {
+            "requirement": "9",
+            "level": 9,
+            "move": "Hypnosis",
+            "type": "Psychic"
+          },
+          {
+            "requirement": "15",
+            "level": 15,
+            "move": "Calm Mind",
+            "type": "Psychic"
+          },
+          {
+            "requirement": "21",
+            "level": 21,
+            "move": "Psyshield Bash",
+            "type": "Psychic"
+          },
+          {
+            "requirement": "29",
+            "level": 29,
+            "move": "Extrasensory",
+            "type": "Psychic"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Zen Headbutt",
+            "type": "Psychic"
+          },
+          {
+            "requirement": "47",
+            "level": 47,
+            "move": "Double-Edge",
+            "type": "Normal"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Bulldoze",
+          "Calm Mind",
+          "Charge Beam",
+          "Energy Ball",
+          "Giga Impact",
+          "High Horsepower",
+          "Hyper Beam",
+          "Iron Tail",
+          "Megahorn",
+          "Psychic",
+          "Rest",
+          "Shadow Ball",
+          "Swift",
+          "Thunderbolt",
+          "Wild Charge",
+          "Zen Headbutt"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Kleavor": {
+      "name": "Kleavor",
+      "page": 23,
+      "base_stats": {
+        "hp": 7,
+        "attack": 14,
+        "defense": 10,
+        "special_attack": 5,
+        "special_defense": 7,
+        "speed": 9
+      },
+      "types": [
+        "Bug",
+        "Rock"
+      ],
+      "abilities": {
+        "basic": [
+          "Sheer Force",
+          "Sturdy"
+        ],
+        "advanced": [
+          "Mold Breaker",
+          "Steadfast"
+        ],
+        "high": [
+          "Anger Point"
+        ]
+      },
+      "evolution": [
+        "1 - Scyther",
+        "2 - Kleavor Minimum 30"
+      ],
+      "size": "Medium",
+      "weight": 196.2,
+      "egg_groups": [
+        "Bug"
+      ],
+      "capabilities": [
+        "Overland 7",
+        "Swim 4",
+        "Sky 6",
+        "Jump 2/3",
+        "Power 8",
+        "Naturewalk (Forest",
+        "Grassland)"
+      ],
+      "skills": [
+        "Athl 5d6+2",
+        "Acro 4d6",
+        "Combat 4d6+2",
+        "Stealth 3d6+2",
+        "Percep 3d6",
+        "Focus 3d6-2"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Silver Wind",
+            "type": "Bug"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Aerial Ace",
+            "type": "Flying"
+          },
+          {
+            "requirement": "14",
+            "level": 14,
+            "move": "Double Hit",
+            "type": "Normal"
+          },
+          {
+            "requirement": "14",
+            "level": 14,
+            "move": "Stealth Rock",
+            "type": "Rock"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Air Slash",
+            "type": "Flying"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Swords Dance",
+            "type": "Normal"
+          },
+          {
+            "requirement": "29",
+            "level": 29,
+            "move": "Stone Axe",
+            "type": "Rock"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "X-Scissor",
+            "type": "Bug"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Close Combat",
+            "type": "Fighting"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aerial Ace",
+          "Calm Mind",
+          "False Swipe",
+          "Focus Energy",
+          "Giga Impact",
+          "Hyper Beam",
+          "Ominous Wind",
+          "Psycho Cut",
+          "Rest",
+          "Rock Slide",
+          "Rock Smash",
+          "Stealth Rock",
+          "Stone Edge",
+          "Swift",
+          "X-Scissor"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Ursaluna": {
+      "name": "Ursaluna",
+      "page": 24,
+      "base_stats": {
+        "hp": 13,
+        "attack": 14,
+        "defense": 11,
+        "special_attack": 5,
+        "special_defense": 8,
+        "speed": 5
+      },
+      "types": [
+        "Ground",
+        "Normal"
+      ],
+      "abilities": {
+        "basic": [
+          "Guts",
+          "Bulletproof"
+        ],
+        "advanced": [
+          "Unnerve",
+          "Frighten"
+        ],
+        "high": [
+          "Arena Trap"
+        ]
+      },
+      "evolution": [
+        "1 - Teddiursa",
+        "2 - Ursaring Minimum 30",
+        "3 - Ursaluna Minimum 35"
+      ],
+      "size": "Large",
+      "weight": 639.3,
+      "egg_groups": [
+        "Field"
+      ],
+      "capabilities": [
+        "Overland 7",
+        "Swim 4",
+        "Jump 2/2",
+        "Power 8",
+        "Groundshaper",
+        "Mountable 1",
+        "Naturewalk (Wetland)",
+        "Tracker"
+      ],
+      "skills": [
+        "Athl 4d6+2",
+        "Acro 2d6",
+        "Combat 5d6",
+        "Stealth 2d6",
+        "Percep 4d6",
+        "Focus 1d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Baby-Doll Eyes",
+            "type": "Fairy"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Bulldoze",
+            "type": "Ground"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Slash",
+            "type": "Normal"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Play Rough",
+            "type": "Fairy"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "High Horsepower",
+            "type": "Ground"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Double-Edge",
+            "type": "Normal"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Headlong Rush",
+            "type": "Ground"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aerial Ace",
+          "Baby-Doll Eyes",
+          "Bulk Up",
+          "Bulldoze",
+          "Earth Power",
+          "Fire Punch",
+          "Focus Energy",
+          "Giga Impact",
+          "High Horsepower",
+          "Hyper Beam",
+          "Ice Punch",
+          "Play Rough",
+          "Rest",
+          "Rock Slide",
+          "Rock Smash",
+          "Shadow Claw",
+          "Stone Edge",
+          "Swift",
+          "Tackle (N)",
+          "Thunder Punch"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Basculegion Male": {
+      "name": "Basculegion Male",
+      "page": 25,
+      "base_stats": {
+        "hp": 12,
+        "attack": 11,
+        "defense": 7,
+        "special_attack": 8,
+        "special_defense": 8,
+        "speed": 8
+      },
+      "types": [
+        "Water",
+        "Ghost"
+      ],
+      "abilities": {
+        "basic": [
+          "Aqua Bullet"
+        ],
+        "advanced": [
+          "Shackle",
+          "Adaptability"
+        ],
+        "high": [
+          "Mold Breaker"
+        ]
+      },
+      "evolution": [
+        "1 - Basculin",
+        "2 - Basculegion (Male) Minimum 25"
+      ],
+      "size": "Huge",
+      "weight": 242.5,
+      "egg_groups": [
+        "Water 2"
+      ],
+      "capabilities": [
+        "Overland 1",
+        "Swim 8",
+        "Jump 3/3",
+        "Power 5",
+        "Darkvision",
+        "Dead Silent",
+        "Fountain",
+        "Gilled",
+        "Mountable 2",
+        "Naturewalk (Ocean)"
+      ],
+      "skills": [
+        "Athl 4d6+1",
+        "Acro 4d6+1",
+        "Combat 3d6+2",
+        "Stealth 4d6+2",
+        "Percep 2d6",
+        "Focus 2d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Aqua Jet",
+            "type": "Water"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Bite",
+            "type": "Dark"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Hex",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Zen Headbutt",
+            "type": "Psychic"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Crunch",
+            "type": "Dark"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Shadow Ball",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Wave Crash",
+            "type": "Water"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Double-Edge",
+            "type": "Normal"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aqua Tail",
+          "Calm Mind",
+          "Giga Impact",
+          "Hyper Beam",
+          "Ice Beam",
+          "Ice Fang",
+          "Icy Wind",
+          "Ominous Wind",
+          "Psychic",
+          "Rest",
+          "Shadow Ball",
+          "Swift",
+          "Water Pulse",
+          "Zen Headbutt Note: Basculegion’s 2nd Advanced Ability depends on the colour of the Basculin it evolves from. In addition",
+          "Basculin now has a White colouration that grants it Rattled as its 2nd Advanced Ability",
+          "in addition to the existing Red and Blue options."
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Basculegion Female": {
+      "name": "Basculegion Female",
+      "page": 26,
+      "base_stats": {
+        "hp": 12,
+        "attack": 9,
+        "defense": 7,
+        "special_attack": 10,
+        "special_defense": 8,
+        "speed": 8
+      },
+      "types": [
+        "Water",
+        "Ghost"
+      ],
+      "abilities": {
+        "basic": [
+          "Aqua Bullet"
+        ],
+        "advanced": [
+          "Shackle",
+          "Adaptability"
+        ],
+        "high": [
+          "Mold Breaker"
+        ]
+      },
+      "evolution": [
+        "1 - Basculin",
+        "2 - Basculegion (Female) Minimum 25"
+      ],
+      "size": "Huge",
+      "weight": 242.5,
+      "egg_groups": [
+        "Water 2"
+      ],
+      "capabilities": [
+        "Overland 1",
+        "Swim 8",
+        "Jump 3/3",
+        "Power 5",
+        "Darkvision",
+        "Dead Silent",
+        "Fountain",
+        "Gilled",
+        "Mountable 2",
+        "Naturewalk (Ocean)"
+      ],
+      "skills": [
+        "Athl 4d6+1",
+        "Acro 4d6+1",
+        "Combat 3d6+2",
+        "Stealth 4d6+2",
+        "Percep 2d6",
+        "Focus 2d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Aqua Jet",
+            "type": "Water"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Bite",
+            "type": "Dark"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Hex",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "18",
+            "level": 18,
+            "move": "Zen Headbutt",
+            "type": "Psychic"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Crunch",
+            "type": "Dark"
+          },
+          {
+            "requirement": "25",
+            "level": 25,
+            "move": "Shadow Ball",
+            "type": "Ghost"
+          },
+          {
+            "requirement": "34",
+            "level": 34,
+            "move": "Wave Crash",
+            "type": "Water"
+          },
+          {
+            "requirement": "43",
+            "level": 43,
+            "move": "Double-Edge",
+            "type": "Normal"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Aqua Tail",
+          "Calm Mind",
+          "Giga Impact",
+          "Hyper Beam",
+          "Ice Beam",
+          "Ice Fang",
+          "Icy Wind",
+          "Ominous Wind",
+          "Psychic",
+          "Rest",
+          "Shadow Ball",
+          "Swift",
+          "Water Pulse",
+          "Zen Headbutt Note: Basculegion’s 2nd Advanced Ability depends on the colour of the Basculin it evolves from. In addition",
+          "Basculin now has a White colouration that grants it Rattled as its 2nd Advanced Ability",
+          "in addition to the existing Red and Blue options."
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Dialga Origin Forme": {
+      "name": "Dialga Origin Forme",
+      "page": 27,
+      "base_stats": {
+        "hp": 10,
+        "attack": 10,
+        "defense": 12,
+        "special_attack": 15,
+        "special_defense": 12,
+        "speed": 9
+      },
+      "types": [
+        "Steel",
+        "Dragon"
+      ],
+      "abilities": {
+        "basic": [
+          "Probability Control"
+        ],
+        "advanced": [
+          "Magic Guard",
+          "Telepathy",
+          "Pressure"
+        ],
+        "high": [
+          "Adaptability"
+        ]
+      },
+      "evolution": [
+        "1 - Dialga"
+      ],
+      "size": "Gigantic",
+      "weight": 1871.0,
+      "egg_groups": [
+        "None"
+      ],
+      "capabilities": [
+        "Overland 8",
+        "Swim 8",
+        "Sky 9",
+        "Jump 3/3",
+        "Power 10",
+        "Aura Reader",
+        "Mountable 2",
+        "Origin Forme*",
+        "Telekinetic",
+        "Telepath"
+      ],
+      "skills": [
+        "Athl 3d6",
+        "Acro 3d6",
+        "Combat 4d6+3",
+        "Stealth 3d6",
+        "Percep 5d6+4",
+        "Focus 5d6+2"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "1",
+            "level": 1,
+            "move": "Dragon Breath",
+            "type": "Dragon"
+          },
+          {
+            "requirement": "1",
+            "level": 1,
+            "move": "Scary Face",
+            "type": "Normal"
+          },
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Metal Claw",
+            "type": "Steel"
+          },
+          {
+            "requirement": "10",
+            "level": 10,
+            "move": "Ancient Power",
+            "type": "Rock"
+          },
+          {
+            "requirement": "15",
+            "level": 15,
+            "move": "Slash",
+            "type": "Normal"
+          },
+          {
+            "requirement": "19",
+            "level": 19,
+            "move": "Power Gem",
+            "type": "Rock"
+          },
+          {
+            "requirement": "24",
+            "level": 24,
+            "move": "Metal Burst",
+            "type": "Steel"
+          },
+          {
+            "requirement": "28",
+            "level": 28,
+            "move": "Dragon Claw",
+            "type": "Dragon"
+          },
+          {
+            "requirement": "33",
+            "level": 33,
+            "move": "Earth Power",
+            "type": "Ground"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Aura Sphere",
+            "type": "Fighting"
+          },
+          {
+            "requirement": "42",
+            "level": 42,
+            "move": "Iron Tail",
+            "type": "Steel"
+          },
+          {
+            "requirement": "46",
+            "level": 46,
+            "move": "Roar of Time",
+            "type": "Dragon"
+          },
+          {
+            "requirement": "50",
+            "level": 50,
+            "move": "Flash Cannon",
+            "type": "Steel"
+          },
+          {
+            "requirement": "55",
+            "level": 55,
+            "move": "Heal Block",
+            "type": "Psychic"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Ancient Power",
+          "Draco Meteor",
+          "Dragon Pulse",
+          "Earth Power",
+          "Fury Cutter",
+          "Gravity",
+          "Hyper Voice",
+          "Iron Defense",
+          "Iron Head",
+          "Iron Tail",
+          "Magnet Rise",
+          "Mud-Slap",
+          "Outrage",
+          "Sleep Talk",
+          "Snore",
+          "Stealth Rock",
+          "Swift",
+          "Twister *Origin Forme: Dialga is in its Origin Forme when exposed to an Adamant Crystal as an Extended Action. Exposing it in Origin Forme reverts it to its Altered Forme (found in the Main PokéDex)."
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Palkia Origin Forme": {
+      "name": "Palkia Origin Forme",
+      "page": 28,
+      "base_stats": {
+        "hp": 9,
+        "attack": 10,
+        "defense": 10,
+        "special_attack": 15,
+        "special_defense": 12,
+        "speed": 12
+      },
+      "types": [
+        "Water",
+        "Dragon"
+      ],
+      "abilities": {
+        "basic": [
+          "Transporter"
+        ],
+        "advanced": [
+          "Magic Guard",
+          "Telepathy",
+          "Pressure"
+        ],
+        "high": [
+          "Adaptability"
+        ]
+      },
+      "evolution": [
+        "1 - Palkia"
+      ],
+      "size": "Gigantic",
+      "weight": 1452.8,
+      "egg_groups": [
+        "None"
+      ],
+      "capabilities": [
+        "Overland 7",
+        "Swim 7",
+        "Sky 7",
+        "Teleporter 4",
+        "Jump 4/4",
+        "Power 10",
+        "Aura Reader",
+        "Mountable 2",
+        "Origin Forme*",
+        "Telekinetic",
+        "Telepath"
+      ],
+      "skills": [
+        "Athl 5d6",
+        "Acro 3d6",
+        "Combat 5d6+3",
+        "Stealth 3d6",
+        "Percep 4d6+4",
+        "Focus 5d6+2"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "1",
+            "level": 1,
+            "move": "Dragon Breath",
+            "type": "Dragon"
+          },
+          {
+            "requirement": "1",
+            "level": 1,
+            "move": "Scary Face",
+            "type": "Normal"
+          },
+          {
+            "requirement": "6",
+            "level": 6,
+            "move": "Water Pulse",
+            "type": "Water"
+          },
+          {
+            "requirement": "10",
+            "level": 10,
+            "move": "Ancient Power",
+            "type": "Rock"
+          },
+          {
+            "requirement": "15",
+            "level": 15,
+            "move": "Slash",
+            "type": "Normal"
+          },
+          {
+            "requirement": "19",
+            "level": 19,
+            "move": "Power Gem",
+            "type": "Rock"
+          },
+          {
+            "requirement": "24",
+            "level": 24,
+            "move": "Aqua Ring",
+            "type": "Water"
+          },
+          {
+            "requirement": "28",
+            "level": 28,
+            "move": "Dragon Claw",
+            "type": "Dragon"
+          },
+          {
+            "requirement": "33",
+            "level": 33,
+            "move": "Earth Power",
+            "type": "Ground"
+          },
+          {
+            "requirement": "37",
+            "level": 37,
+            "move": "Aura Sphere",
+            "type": "Fighting"
+          },
+          {
+            "requirement": "42",
+            "level": 42,
+            "move": "Aqua Tail",
+            "type": "Water"
+          },
+          {
+            "requirement": "46",
+            "level": 46,
+            "move": "Spatial Rend",
+            "type": "Dragon"
+          },
+          {
+            "requirement": "50",
+            "level": 50,
+            "move": "Hydro Pump",
+            "type": "Water"
+          },
+          {
+            "requirement": "55",
+            "level": 55,
+            "move": "Heal Block",
+            "type": "Psychic"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Ancient Power",
+          "Aqua Tail",
+          "Dive",
+          "Draco Meteor",
+          "Dragon Pulse",
+          "Earth Power",
+          "Fury Cutter",
+          "Gravity",
+          "Hyper Voice",
+          "Mud-Slap",
+          "Outrage",
+          "Sleep Talk",
+          "Snore",
+          "Swift",
+          "Twister *Origin Forme: Palkia is in its Origin Forme when exposed to a Lustrous Globe as an Extended Action. Exposing it in Origin Forme reverts it to its Altered Forme (found in the Main PokéDex)."
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Enamorus Incarnate Forme": {
+      "name": "Enamorus Incarnate Forme",
+      "page": 29,
+      "base_stats": {
+        "hp": 7,
+        "attack": 12,
+        "defense": 7,
+        "special_attack": 14,
+        "special_defense": 8,
+        "speed": 11
+      },
+      "types": [
+        "Fairy",
+        "Flying"
+      ],
+      "abilities": {
+        "basic": [
+          "Healer"
+        ],
+        "advanced": [
+          "Frisk",
+          "Pride",
+          "Confidence"
+        ],
+        "high": [
+          "Misty Surge"
+        ]
+      },
+      "evolution": [
+        "1 - Enamorus"
+      ],
+      "size": "Medium",
+      "weight": 105.8,
+      "egg_groups": [
+        "None"
+      ],
+      "capabilities": [
+        "Overland 5",
+        "Swim 5",
+        "Sky 8",
+        "Jump 2/2",
+        "Power 6",
+        "Forme Change",
+        "Guster",
+        "Sprouter",
+        "Therian Forme"
+      ],
+      "skills": [
+        "Athl 4d6",
+        "Acro 5d6+3",
+        "Combat 4d6",
+        "Stealth 6d6+3",
+        "Percep 4d6",
+        "Focus 3d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "1",
+            "level": 1,
+            "move": "Tackle",
+            "type": "Normal"
+          },
+          {
+            "requirement": "7",
+            "level": 7,
+            "move": "Bite",
+            "type": "Dark"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Twister",
+            "type": "Dragon"
+          },
+          {
+            "requirement": "14",
+            "level": 14,
+            "move": "Draining Kiss",
+            "type": "Fairy"
+          },
+          {
+            "requirement": "22",
+            "level": 22,
+            "move": "Iron Defense",
+            "type": "Steel"
+          },
+          {
+            "requirement": "31",
+            "level": 31,
+            "move": "Extrasensory",
+            "type": "Psychic"
+          },
+          {
+            "requirement": "41",
+            "level": 41,
+            "move": "Crunch",
+            "type": "Dark"
+          },
+          {
+            "requirement": "47",
+            "level": 47,
+            "move": "Moonblast",
+            "type": "Fairy"
+          },
+          {
+            "requirement": "52",
+            "level": 52,
+            "move": "Springtide Storm",
+            "type": "Fairy"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Calm Mind",
+          "Dazzling Gleam",
+          "Earth Power",
+          "Giga Impact",
+          "Hyper Beam",
+          "Mystical Fire",
+          "Power Shift",
+          "Rest",
+          "Rock Smash",
+          "Sludge Bomb",
+          "Zen Headbutt *Therian Forme: The User changes to its Therian Forme if holding a Reveal Glass",
+          "and uses its Incarnate Form otherwise."
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    },
+    "Enamorus Therian Forme": {
+      "name": "Enamorus Therian Forme",
+      "page": 30,
+      "base_stats": {
+        "hp": 7,
+        "attack": 12,
+        "defense": 11,
+        "special_attack": 14,
+        "special_defense": 10,
+        "speed": 5
+      },
+      "types": [
+        "Fairy",
+        "Flying"
+      ],
+      "abilities": {
+        "basic": [
+          "Overcoat"
+        ],
+        "advanced": [
+          "Frisk",
+          "Pride",
+          "Contrary"
+        ],
+        "high": [
+          "Misty Surge"
+        ]
+      },
+      "evolution": [
+        "1 - Enamorus"
+      ],
+      "size": "Medium",
+      "weight": 105.8,
+      "egg_groups": [
+        "None"
+      ],
+      "capabilities": [
+        "Overland 4",
+        "Swim 6",
+        "Sky 6",
+        "Jump 0/0",
+        "Power 8",
+        "Forme Change",
+        "Mountable 1",
+        "Sprouter",
+        "Therian Forme"
+      ],
+      "skills": [
+        "Athl 6d6+3",
+        "Acro 3d6",
+        "Combat 5d6+3",
+        "Stealth 4d6+3",
+        "Percep 5d6",
+        "Focus 3d6"
+      ],
+      "moves": {
+        "level_up": [
+          {
+            "requirement": "1",
+            "level": 1,
+            "move": "Tackle",
+            "type": "Normal"
+          },
+          {
+            "requirement": "7",
+            "level": 7,
+            "move": "Bite",
+            "type": "Dark"
+          },
+          {
+            "requirement": "11",
+            "level": 11,
+            "move": "Twister",
+            "type": "Dragon"
+          },
+          {
+            "requirement": "14",
+            "level": 14,
+            "move": "Draining Kiss",
+            "type": "Fairy"
+          },
+          {
+            "requirement": "22",
+            "level": 22,
+            "move": "Iron Defense",
+            "type": "Steel"
+          },
+          {
+            "requirement": "31",
+            "level": 31,
+            "move": "Extrasensory",
+            "type": "Psychic"
+          },
+          {
+            "requirement": "41",
+            "level": 41,
+            "move": "Crunch",
+            "type": "Dark"
+          },
+          {
+            "requirement": "47",
+            "level": 47,
+            "move": "Moonblast",
+            "type": "Fairy"
+          },
+          {
+            "requirement": "52",
+            "level": 52,
+            "move": "Springtide Storm",
+            "type": "Fairy"
+          }
+        ],
+        "tm": [],
+        "egg": [],
+        "tutor": [
+          "Calm Mind",
+          "Dazzling Gleam",
+          "Earth Power",
+          "Giga Impact",
+          "Hyper Beam",
+          "Mystical Fire",
+          "Power Shift",
+          "Rest",
+          "Rock Smash",
+          "Sludge Bomb",
+          "Zen Headbutt"
+        ]
+      },
+      "source": "HisuiDex.pdf"
+    }
+  }
+}

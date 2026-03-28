@@ -1,0 +1,111 @@
+{
+  "name": "Earthbreaker",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "earthbreaker",
+    "actions": [
+      {
+        "slug": "earthbreaker",
+        "name": "Earthbreaker",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "contact"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 2,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Effect: This attack is super effective against the Ground Type.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      },
+      {
+        "slug": "earthbreaker-surface",
+        "name": "Earthbreaker (Surface)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "earthbound"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 2,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "User is touching a surface."
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Trigger: User is touching a surface.</p><p>Effect: This Attack is super effective against the Ground Type.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "earthbreaker",
+        "free": true,
+        "slot": null
+      },
+      {
+        "slug": "earthbreaker-surface-burrow",
+        "name": "Earthbreaker (Surface+Burrow)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "earthbound"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 2,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "User is touching a surface and a valid target is Burrowed into that surface."
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Trigger: User is touching a surface and a valid target is Burrowed into that surface.</p><p>Effect: This Attack ignores valid targets' EVA Stage increases and is super effective against the Ground Type.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "variant": "earthbreaker",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "kytCZLpRQLB0X9X9",
+  "effects": []
+}

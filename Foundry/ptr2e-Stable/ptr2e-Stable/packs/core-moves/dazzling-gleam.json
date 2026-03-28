@@ -1,0 +1,48 @@
+{
+  "name": "Dazzling Gleam",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fairy_icon.svg",
+  "system": {
+    "slug": "dazzling-gleam",
+    "actions": [
+      {
+        "slug": "dazzling-gleam",
+        "name": "Dazzling Gleam",
+        "type": "attack",
+        "traits": [
+          "friendly"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "category": "special",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "fairy"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "SYzWwrA5gyf2CA6e",
+  "effects": []
+}

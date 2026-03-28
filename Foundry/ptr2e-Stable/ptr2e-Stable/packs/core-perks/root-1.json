@@ -1,0 +1,64 @@
+{
+  "type": "perk",
+  "name": "Root 1",
+  "folder": "zrVtKATNxzLNxTUc",
+  "img": "icons/svg/door-exit.svg",
+  "system": {
+    "actions": [],
+    "description": "<p>This is an entry perk to the Web, it has no effect on its own.</p><p>Some of the clusters near Root 1 include:</p><ul><li>Desperation/Berserker</li><li>Support</li><li>Healer</li><li>Tanking</li><li>Riding</li><li>Bug-Type</li></ul>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 5,
+    "slug": "root-1",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "berserker",
+          "tactician",
+          "mobilize",
+          "silk-swing",
+          "minor-buff-37",
+          "arthroarmor"
+        ],
+        "config": {
+          "alpha": 1,
+          "backgroundColor": "#5eaf3c",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "icons/svg/door-exit.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "root",
+        "x": 35,
+        "y": 35,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "originSlug": null,
+    "variant": null,
+    "mode": null
+  },
+  "effects": [],
+  "_id": "NsKHoXYwX4yjHPwb"
+}

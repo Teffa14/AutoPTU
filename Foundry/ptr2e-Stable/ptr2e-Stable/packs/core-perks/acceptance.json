@@ -1,0 +1,144 @@
+{
+  "folder": "a1w2zpzavg6qtJFn",
+  "name": "Acceptance",
+  "type": "perk",
+  "_id": "DfkrSep5vYRf2xl8",
+  "img": "systems/ptr2e/img/perk-icons/Socialite.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Acceptance",
+        "slug": "acceptance",
+        "description": "<p>Your Attacks with a % effect chance have that chance increased by +10%.</p>",
+        "traits": [],
+        "type": "passive",
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free"
+        },
+        "img": "systems/ptr2e/img/perk-icons/Socialite.svg"
+      }
+    ],
+    "slug": "acceptance",
+    "description": "<p>The Base Chance of Attacks their secondary effect chances is increased by +10%.</p>",
+    "traits": [],
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.fast-talk.mod}",
+          35
+        ]
+      }
+    ],
+    "cost": 2,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 162,
+        "y": 83,
+        "hidden": false,
+        "type": "entry",
+        "connected": [
+          "potent-venom",
+          "intense-heat",
+          "thug",
+          "hexcraft",
+          "potent-afflictions",
+          "lasting-harm",
+          "acute-affliction",
+          "fighting-momentum",
+          "plain-irritating",
+          "subsidence",
+          "draconic-presence",
+          "elemental-study",
+          "grendelian-tribute",
+          "down-to-earth"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Socialite.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "finesse",
+      "archetype": "affliction"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Acceptance",
+      "type": "passive",
+      "_id": "amseAW4sGgf0mMeq",
+      "img": "systems/ptr2e/img/perk-icons/Socialite.svg",
+      "system": {
+        "changes": [
+          {
+            "type": "basic",
+            "key": "system.modifiers.effectChance",
+            "value": 10,
+            "predicate": [],
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "<p>The Base Chance of Attacks their secondary effect chances is increased by +10%.</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1729887002738,
+        "modifiedTime": 1754229312892,
+        "lastModifiedBy": "dCIq77b7AO2frs8Z",
+        "exportSource": null
+      }
+    }
+  ]
+}

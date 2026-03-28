@@ -1,0 +1,134 @@
+{
+  "name": "Venomous",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      "trait:poison"
+    ],
+    "cost": 1,
+    "description": "<p>You gain the @Trait[venomous] Trait.</p>",
+    "actions": [
+      {
+        "name": "Venomous",
+        "slug": "venomous",
+        "description": "<p>You gain the [Venomous] Trait.</p>",
+        "cost": {
+          "activation": "free"
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "venomous",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "potent-venom",
+          "root-3",
+          "tainted-blades",
+          "clodsire-flesh"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/svg/poison_icon.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 173,
+        "y": 89,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [
+      "trait:venomous"
+    ],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "finesse",
+      "archetype": "poison"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "hvuakkloMFHGmBMe",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "effects": [
+    {
+      "name": "Venomous",
+      "type": "passive",
+      "_id": "IrKbdTOohqeeUv7w",
+      "img": "systems/ptr2e/img/svg/poison_icon.svg",
+      "system": {
+        "changes": [
+          {
+            "type": "add-trait",
+            "key": "",
+            "value": "venomous",
+            "predicate": [],
+            "priority": null,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "<p>You gain the @Trait[venomous] Trait.</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1732563827501,
+        "modifiedTime": 1754225348008,
+        "lastModifiedBy": "dCIq77b7AO2frs8Z",
+        "exportSource": null
+      }
+    }
+  ],
+  "folder": "8nTJNodaluw5G4Y6"
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Court Change Lab",
+  "description": "Showcases Court Change swapping hazards/blessings plus Conversion2, Core Enforcer, Corrosive Gas, Cosmic Power, Cotton Guard, and Cotton Spore.",
+  "default_weather": "Clear",
+  "grid": {
+    "width": 10,
+    "height": 6,
+    "blockers": [],
+    "tiles": {
+      "1,2": {"hazards": {"spikes": 2}},
+      "2,2": {"hazards": {"toxic_spikes": 1}},
+      "7,2": {"hazards": {"stealth_rock": 1}},
+      "8,2": {"hazards": {"sticky_web": 1}}
+    }
+  },
+  "players": [
+    {
+      "name": "Field Captain",
+      "species": "Meowstic",
+      "level": 28,
+      "types": ["Psychic"],
+      "hp_stat": 12,
+      "atk": 8,
+      "def": 10,
+      "spatk": 12,
+      "spdef": 10,
+      "spd": 10,
+      "moves": [
+        {"name": "Court Change", "type": "Normal", "category": "Status", "db": 0, "ac": null, "range_kind": "Field", "freq": "Daily"},
+        {"name": "Conversion2", "type": "Normal", "category": "Status", "db": 0, "ac": null, "range_kind": "Self", "freq": "At-Will"},
+        {"name": "Core Enforcer", "type": "Dragon", "category": "Special", "db": 10, "ac": 2, "range_kind": "Ranged", "range_value": 6, "area_kind": "Blast", "area_value": 3, "freq": "Daily x2"},
+        {"name": "Corrosive Gas", "type": "Poison", "category": "Status", "db": 0, "ac": 2, "range_kind": "Burst", "range_value": 1, "freq": "EOT"},
+        {"name": "Cosmic Power", "type": "Psychic", "category": "Status", "db": 0, "ac": null, "range_kind": "Self", "freq": "EOT"},
+        {"name": "Cotton Guard", "type": "Grass", "category": "Status", "db": 0, "ac": null, "range_kind": "Self", "freq": "Scene"},
+        {"name": "Cotton Spore", "type": "Grass", "category": "Status", "db": 0, "ac": 2, "range_kind": "Burst", "range_value": 1, "freq": "EOT"}
+      ],
+      "statuses": [{"name": "Reflect"}],
+      "movement": {"overland": 6, "swim": 2, "sky": 0, "levitate": 0, "burrow": 0, "h_jump": 2, "l_jump": 2, "power": 2},
+      "items": [{"name": "Oran Berry"}]
+    }
+  ],
+  "foes": [
+    {
+      "name": "Hazard Keeper",
+      "species": "Skarmory",
+      "level": 28,
+      "types": ["Steel", "Flying"],
+      "hp_stat": 13,
+      "atk": 10,
+      "def": 14,
+      "spatk": 6,
+      "spdef": 10,
+      "spd": 9,
+      "moves": [
+        {"name": "Air Slash", "type": "Flying", "category": "Special", "db": 7, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "At-Will"},
+        {"name": "Water Pulse", "type": "Water", "category": "Special", "db": 7, "ac": 2, "range_kind": "Ranged", "range_value": 6, "freq": "At-Will"}
+      ],
+      "abilities": [{"name": "Keen Eye"}],
+      "statuses": [{"name": "Light Screen"}],
+      "movement": {"overland": 4, "swim": 2, "sky": 6, "levitate": 0, "burrow": 0, "h_jump": 1, "l_jump": 1, "power": 3},
+      "items": [{"name": "Leftovers"}]
+    }
+  ]
+}

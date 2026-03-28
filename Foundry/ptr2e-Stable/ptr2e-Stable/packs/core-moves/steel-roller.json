@@ -1,0 +1,55 @@
+{
+  "name": "Steel Roller",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/steel_icon.svg",
+  "system": {
+    "slug": "steel-roller",
+    "actions": [
+      {
+        "slug": "steel-roller",
+        "name": "Steel Roller",
+        "type": "attack",
+        "traits": [
+          "environ",
+          "crushing",
+          "contact",
+          "field",
+          "curl"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8,
+          "trigger": "A [Terrain] is present."
+        },
+        "category": "physical",
+        "power": 130,
+        "accuracy": 100,
+        "types": [
+          "steel"
+        ],
+        "description": "<p>Effect: This attack ends all [Terrain] effects on use. If there is no active [Terrain] effect, this attack fails. The user may freely move to any open space in this attacks range.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "f1owTUALsuAOxqFj",
+  "effects": []
+}

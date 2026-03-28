@@ -1,0 +1,149 @@
+{
+  "name": "Martyr's Gift",
+  "type": "perk",
+  "system": {
+    "_migration": {
+      "version": 0.109,
+      "previous": null
+    },
+    "actions": [
+      {
+        "name": "Martyr's Gift",
+        "slug": "martyrs-gift",
+        "description": "<p>Trigger: User is fainted.<br><br>Effect: When the User is fainted, they give all allied entities within 5m Shields equal to 4 ticks of the User's Max HP. Activating this perk prevents the use of Tubthumping or Keep Fighting on the User.</p>",
+        "traits": [
+          "interrupt-5"
+        ],
+        "type": "generic",
+        "img": "systems/ptr2e/img/perk-icons/Elamentalist.svg",
+        "range": {
+          "target": "emanation",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free",
+          "powerPoints": 5,
+          "trigger": "Fainted"
+        }
+      }
+    ],
+    "description": "<p>Trigger: User is fainted.<br><br>Effect: When the User is fainted, they give all allied entities within 5m Shields equal to 4 ticks of the User's Max HP. Activating this perk prevents the use of Tubthumping or Keep Fighting on the User.</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 4,
+    "slug": "martyrs-gift",
+    "nodes": [
+      {
+        "connected": [
+          "mutual-aid",
+          "last-aid",
+          "look-out",
+          "fearsome-defense"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": null,
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Elamentalist.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 59,
+        "y": 84,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "resilience",
+      "archetype": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "img": "systems/ptr2e/img/perk-icons/Elamentalist.svg",
+  "effects": [
+    {
+      "name": "Martyr's Gift",
+      "type": "passive",
+      "_id": "vSmYnDqwlQLg649U",
+      "img": "systems/ptr2e/img/perk-icons/Elamentalist.svg",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "martyrs-gift-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.k1FukpHKnZGqjSNc",
+            "predicate": [],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.changes.0.value",
+                "value": "floor(@origin.system.health.max / 4)"
+              },
+              {
+                "mode": 5,
+                "property": "system.changes.0.isFlat",
+                "value": "true"
+              }
+            ],
+            "chance": 100,
+            "isFixedChance": false,
+            "affects": "target",
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "<p>You may provide an ally with Shields based on your own HP Max. The target ally receives Shields equal to 4 Ticks of the user's HP. If the user has Improved Shielding, this Perk benefits from the effect of that (rather than if the recipient has that perk).</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": "Compendium.ptr2e.core-perks.Item.OeB204Ho5OCVR4xB.ActiveEffect.NDv2ChcRTyYGFpan",
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1764896112534,
+        "modifiedTime": 1764896147046,
+        "lastModifiedBy": "bDEGyOQfZwkb2ml2"
+      }
+    }
+  ],
+  "_id": "l3JLwtDNpK6jFb2k",
+  "folder": "c29hnIAtXgwB7FeY"
+}

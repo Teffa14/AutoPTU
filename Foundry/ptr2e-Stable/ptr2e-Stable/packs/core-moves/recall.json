@@ -1,0 +1,58 @@
+{
+  "name": "Recall",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "type": "move",
+  "system": {
+    "actions": [
+      {
+        "free": true,
+        "traits": [
+          "manipulate",
+          "basic"
+        ],
+        "name": "Recall (Fainted)",
+        "slug": "recall-fainted",
+        "description": "<p>Trigger: The target is @Affliction[fainted].</p><p>Effect: Using the method of their choosing, the user takes a creature from their Team out of combat.<br>Most commonly, this is used with recalling creatures normally stored in Balls, who may recalled so long as the target is within line-of-sight of the user (and the Ball's recall emitter).</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "generic",
+        "range": {
+          "target": "ally",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>The target is @Affliction[fainted].</p>"
+        }
+      },
+      {
+        "free": true,
+        "traits": [
+          "manipulate",
+          "basic"
+        ],
+        "name": "Recall",
+        "slug": "recall",
+        "description": "<p>Effect: Using the method of their choosing, the user takes a creature from their Team out of combat.<br>Most commonly, this is used with recalling creatures normally stored in Balls, who may recalled so long as the target is within line-of-sight of the user (and the Ball's recall emitter).</p>",
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+        "type": "generic",
+        "range": {
+          "target": "ally",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple"
+        }
+      }
+    ],
+    "slug": "recall",
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "MXPyYtoPDsZ4ByPh",
+  "effects": []
+}

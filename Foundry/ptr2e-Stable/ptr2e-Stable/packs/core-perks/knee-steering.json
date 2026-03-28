@@ -1,0 +1,92 @@
+{
+  "name": "Knee Steering",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.ride.mod}",
+          35
+        ]
+      }
+    ],
+    "cost": 2,
+    "description": "<p>You may steer a mount without using one of your hands, freeing that hand up to use for other activities.</p>",
+    "actions": [
+      {
+        "name": "Knee Steering",
+        "slug": "knee-steering",
+        "description": "<p>You may steer a mount without using one of your hands, freeing that hand up to use for other activities.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0,
+          "delay": null,
+          "priority": null
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "hidden": false,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "knee-steering",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "lean-in",
+          "trained-rider",
+          "urge-mount",
+          "iaido"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#800000",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Cavalier.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 91,
+        "y": 63,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "design": {
+      "arena": "social",
+      "approach": "finesse",
+      "archetype": "cavalier"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "3RFfXmRoL4xcwHWr",
+  "img": "systems/ptr2e/img/perk-icons/Cavalier.svg",
+  "effects": [],
+  "folder": "ZTA2RsL9wA15o2ic"
+}

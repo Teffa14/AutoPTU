@@ -1,0 +1,106 @@
+{
+  "name": "Dragon Energy",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "dragon-energy",
+    "actions": [
+      {
+        "slug": "dragon-energy",
+        "name": "Dragon Energy",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "pulse"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 4,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "special",
+        "power": 200,
+        "accuracy": 100,
+        "types": [
+          "dragon"
+        ],
+        "description": "<p>Effect: This attack's Power ranges based on how healthy the user is, ranging from 10 to 200.</p>",
+        "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "xf2NuI372VOQGVIL",
+  "effects": [
+    {
+      "name": "Dragon Energy",
+      "type": "passive",
+      "_id": "YKMJMRUWhZfZFacZ",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "flat-modifier",
+            "key": "dragon-energy-attack-power",
+            "value": "((@actor.system.health.percent)-100)*1.9",
+            "predicate": [],
+            "label": "Dragon Energy",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": false,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "1.0.6.beta",
+        "createdTime": 1740184044159,
+        "modifiedTime": 1740184979949,
+        "lastModifiedBy": "UTlFSVhgfIUeTsoW"
+      }
+    }
+  ]
+}

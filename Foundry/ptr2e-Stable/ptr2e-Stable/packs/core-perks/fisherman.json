@@ -1,0 +1,86 @@
+{
+  "name": "Fisherman",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.track.mod}",
+          20
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>Effect: The user gain +10 on Skill Checks used as part of a fishing activity., and the user gains +1 Capture Power when catching mons hooked with a Grade C or D fishing rod and +2 Capture Power with those hooked by a Grade B, A, or S fishing rod.</p>",
+    "actions": [
+      {
+        "name": "Fisherman",
+        "slug": "fisherman",
+        "description": "<p>You gain +10 on Skill Checks used as part of a fishing activity.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0,
+          "delay": null,
+          "priority": null
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "hidden": false,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "fisherman",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 68,
+        "y": 106,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "snare"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Hunting.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "resilience",
+      "archetype": "capture"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "T4Odoci05syU7G8r",
+  "img": "systems/ptr2e/img/perk-icons/Hunting.svg",
+  "effects": [],
+  "folder": "ADL1Oc2oQaQK45IU"
+}

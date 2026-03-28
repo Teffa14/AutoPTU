@@ -1,0 +1,60 @@
+{
+  "name": "Gigaton Ball",
+  "img": "systems/ptr2e/img/item-icons/gigaton ball.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 3,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": 2,
+      "materials": [
+        "9x-tumblestone",
+        "1x-ultra-apricorn"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": 90,
+      "accuracy": 90,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 5,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "pokeball",
+    "traits": [
+      "belt",
+      "fling",
+      "ball"
+    ],
+    "description": "<p>2.75x Catch Rate modifier.</p>",
+    "modifier": 2.75,
+    "quantity": 1,
+    "slug": "gigaton-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "HC12vQhqD7gZ5hGc",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

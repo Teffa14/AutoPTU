@@ -1,0 +1,51 @@
+{
+  "name": "G-Max Wind Rage",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "system": {
+    "slug": "g-max-wind-rage",
+    "actions": [
+      {
+        "slug": "g-max-wind-rage",
+        "name": "G-Max Wind Rage",
+        "type": "attack",
+        "traits": [
+          "max",
+          "move-locked",
+          "sky",
+          "environ"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 12,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "flying"
+        ],
+        "description": "<p>Effect: All valid targets lose -2 EVA Stages for 5 Activations. All [Hazard] and [Shield] attack effects in the attack's range are cleared. Active Foggy or Heavy Foggy Weather is removed.</p><p>The user may spend up to 6 additional PP, increasing the Power of this attack by 15 per PP spent.</p><p>Requirement: User is a Dynamaxed Corviknight and has a Flying-Type attack on their Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "b6PsQ7MQ1dhgkgki",
+  "effects": []
+}

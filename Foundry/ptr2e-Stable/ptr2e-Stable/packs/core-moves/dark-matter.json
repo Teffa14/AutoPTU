@@ -1,0 +1,50 @@
+{
+  "name": "Dark Matter",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "dark-matter",
+    "actions": [
+      {
+        "slug": "dark-matter",
+        "name": "Dark Matter",
+        "type": "attack",
+        "traits": [
+          "flinch-50",
+          "blast-3",
+          "pulse"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 15,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "special",
+        "power": 150,
+        "accuracy": 90,
+        "types": [
+          "dark"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "A",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "vyUsk4V6mXZCpSP4",
+  "effects": []
+}

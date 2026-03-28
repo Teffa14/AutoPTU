@@ -1,0 +1,50 @@
+{
+  "name": "Darkest Lariat",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "darkest-lariat",
+    "actions": [
+      {
+        "slug": "darkest-lariat",
+        "name": "Darkest Lariat",
+        "type": "attack",
+        "traits": [
+          "punch",
+          "dash",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "physical",
+        "power": 85,
+        "accuracy": 100,
+        "types": [
+          "dark"
+        ],
+        "description": "<p>Effect: The user ignores any [Defensive] Effects and ignores any [Stage Change] effects the target has for this Attack's use.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "aotpKsMdfp5e1KI6",
+  "effects": []
+}

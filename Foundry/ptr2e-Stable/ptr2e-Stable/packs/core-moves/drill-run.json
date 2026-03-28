@@ -1,0 +1,51 @@
+{
+  "name": "Drill Run",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ground_icon.svg",
+  "system": {
+    "slug": "drill-run",
+    "actions": [
+      {
+        "slug": "drill-run",
+        "name": "Drill Run",
+        "type": "attack",
+        "traits": [
+          "crit-1",
+          "pass-3",
+          "contact",
+          "horn"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": 95,
+        "types": [
+          "ground"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "C",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "Wu4mig6V5ActJyNW",
+  "effects": []
+}

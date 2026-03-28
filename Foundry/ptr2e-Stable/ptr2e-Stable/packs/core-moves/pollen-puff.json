@@ -1,0 +1,81 @@
+{
+  "name": "Pollen Puff",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/bug_icon.svg",
+  "system": {
+    "slug": "pollen-puff",
+    "actions": [
+      {
+        "slug": "pollen-puff",
+        "name": "Pollen Puff",
+        "type": "attack",
+        "traits": [
+          "healing",
+          "blast-2",
+          "powder",
+          "missile"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "special",
+        "power": 90,
+        "accuracy": 100,
+        "types": [
+          "bug"
+        ],
+        "img": "systems/ptr2e/img/svg/bug_icon.svg",
+        "predicate": []
+      },
+      {
+        "slug": "pollen-puff-ally",
+        "name": "Pollen Puff (Ally)",
+        "type": "attack",
+        "traits": [
+          "healing",
+          "blast-2",
+          "powder",
+          "missile"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 5,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "status",
+        "accuracy": 100,
+        "types": [
+          "bug"
+        ],
+        "description": "<p>Effect: On hit, all valid, allied targets recover 8 Ticks of HP.</p>",
+        "img": "systems/ptr2e/img/svg/bug_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "OLWOhRduozudOSkX",
+  "effects": []
+}

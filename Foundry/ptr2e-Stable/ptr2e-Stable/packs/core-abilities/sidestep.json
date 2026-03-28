@@ -1,0 +1,43 @@
+{
+  "name": "Sidestep",
+  "type": "ability",
+  "img": "systems/ptr2e/img/perk-icons/Ninja.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive"
+        ],
+        "name": "Sidestep",
+        "slug": "sidestep",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "description": "<p>Effect: The user ignores Substitute when attacking. The user is also Immune to the damage and effects of Hazards.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user bypasses Shield HP when attacking (This does not extend to effects such as Protect or Light Screen). The user is also Immune to the damage and effects of Hazards.</p>",
+    "traits": [
+      "defensive"
+    ],
+    "slug": "sidestep",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "nd13aGOF1kCz8BdM",
+  "effects": []
+}

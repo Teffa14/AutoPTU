@@ -1,0 +1,67 @@
+{
+  "name": "Advanced Training Balls",
+  "type": "perk",
+  "folder": "CpqiTFuJPCaphgZU",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.electronics.mod}",
+          60
+        ]
+      },
+      "item:perk:training-ball-specs"
+    ],
+    "cost": 2,
+    "description": "<p>You learn five [Training Ball] recipies.</p>",
+    "actions": [],
+    "slug": "advanced-training-balls",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "training-ball-specs"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#004000",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Crafting.svg",
+          "tint": "#1b1b1b",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": null,
+        "y": null,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "resilience",
+      "archetype": "crafting"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "5DGV0ckzaiojM0FU",
+  "img": "systems/ptr2e/img/perk-icons/Crafting.svg",
+  "effects": []
+}

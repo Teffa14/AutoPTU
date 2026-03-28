@@ -1,0 +1,75 @@
+{
+  "name": "Focus Band",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": false
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "combat",
+      "defensive"
+    ],
+    "actions": [
+      {
+        "name": "Focus Band",
+        "slug": "focus-band",
+        "type": "generic",
+        "description": "Trigger: The user would gain @Affliction[fainted].\nEffect: The user has a 20% chance to instead have its HP be set to 1.",
+        "traits": [
+          "Combat",
+          "Defensive"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "trigger": "The user would gain @Affliction[fainted]."
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Trigger: The user would gain @Affliction[fainted].\nEffect: The user has a 20% chance to instead have its HP be set to 1.",
+    "slug": "focus-band",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "c1XmT3BthxaQfcc4",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

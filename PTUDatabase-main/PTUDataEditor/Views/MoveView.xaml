@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="PTUDataEditor.Views.MoveView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PTUDataEditor.Views"
+             xmlns:tk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:ptu="clr-namespace:PTUDatabase;assembly=PTUDatabase"
+             xmlns:tc="clr-namespace:PTUDataEditor.TypeConverters"
+             mc:Ignorable="d" d:Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <tc:TypeToImageSourceConverter x:Key="TypeToImageSource" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Label Content="Name:" />
+        <TextBox Text="{Binding Name, Mode=TwoWay}" Grid.Column="1" Margin="3" />
+
+        <Label Content="Type:" Grid.Row="1" />
+        <ComboBox SelectedValue="{Binding Type, Mode=TwoWay}" ItemsSource="{tc:Enum {x:Type ptu:PokemonType}}" SelectedValuePath="Value" Grid.Row="1" Grid.Column="1" Margin="3" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding Value, Converter={StaticResource TypeToImageSource}}" MaxHeight="16" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Label Content="Class:" Grid.Row="2" />
+        <ComboBox SelectedValue="{Binding Class, Mode=TwoWay}" ItemsSource="{tc:Enum {x:Type ptu:MoveClass}}" SelectedValuePath="Value" DisplayMemberPath="Description" Grid.Row="2" Grid.Column="1" Margin="3" />
+
+        <Label Content="Contest Type:" Grid.Row="3" />
+        <ComboBox SelectedValue="{Binding ContestType, Mode=TwoWay}" ItemsSource="{tc:Enum {x:Type ptu:ContestType}}" SelectedValuePath="Value" DisplayMemberPath="Description" Grid.Row="3" Grid.Column="1" Margin="3" />
+
+        <Label Content="Contest Effect:" Grid.Row="4" />
+        <DockPanel Grid.Row="4" Grid.Column="1">
+            <CheckBox IsChecked="{Binding HasContestEffect, Mode=TwoWay}" VerticalAlignment="Center" Margin="3" DockPanel.Dock="Left" />
+            <Grid Visibility="{Binding HasContestEffect, Converter={StaticResource BoolToVis}}">
+                <ComboBox SelectedItem="{Binding MoveContestEffect, Mode=TwoWay}" ItemsSource="{Binding RootDB.ContestEffects}" DisplayMemberPath="Name" Margin="3" />
+            </Grid>
+        </DockPanel>
+        
+       <Label Content="Accuracy Check:" Grid.Column="2"  />
+        <StackPanel Orientation="Horizontal" Grid.Column="3">
+            <CheckBox IsChecked="{Binding HasAccuracyCheck, Mode=TwoWay}" VerticalAlignment="Center" Margin="3" />
+            <StackPanel Orientation="Horizontal" Visibility="{Binding HasAccuracyCheck, Converter={StaticResource BoolToVis}}">
+                <tk:IntegerUpDown Value="{Binding AccuracyCheck, Mode=TwoWay}" MinWidth="55" Margin="3" />
+            </StackPanel>
+        </StackPanel>
+
+        <Label Content="Damage Base:" Grid.Row="1" Grid.Column="2" />
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3">
+            <CheckBox IsChecked="{Binding HasDamageBase, Mode=TwoWay}" VerticalAlignment="Center" Margin="3" />
+            <StackPanel Orientation="Horizontal" Visibility="{Binding HasDamageBase, Converter={StaticResource BoolToVis}}">
+                <tk:IntegerUpDown Value="{Binding DamageBase, Mode=TwoWay}" Minimum="1" Maximum="28" MinWidth="55" Margin="3" />
+                <TextBlock Text="{Binding DamageRoll}" VerticalAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
+
+        <Label Content="Frequency:" Grid.Row="2" Grid.Column="2" />
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3">
+            <ComboBox SelectedValue="{Binding FrequencyType, Mode=TwoWay}" ItemsSource="{tc:Enum {x:Type ptu:FrequencyType}}" SelectedValuePath="Value" DisplayMemberPath="Description" MinWidth="70" Margin="3" />
+            <StackPanel Orientation="Horizontal" Visibility="{Binding FrequencyCountVisible, Converter={StaticResource BoolToVis}}">
+                <TextBlock Text="x" VerticalAlignment="Center" />
+                <tk:IntegerUpDown Value="{Binding FrequencyCount, Mode=TwoWay}" Minimum="1" MinWidth="55" Margin="3" />
+            </StackPanel>
+        </StackPanel>
+
+        <Label Content="Range:" Grid.Row="3" Grid.Column="2" />
+        <TextBox Text="{Binding Range, Mode=TwoWay}" Grid.Row="3" Grid.Column="3" Margin="3" />
+
+        <Label Content="Unofficial Alternative:" Grid.Row="4" Grid.Column="2" />
+        <CheckBox IsChecked="{Binding UnofficialAlternative, Mode=TwoWay}" VerticalAlignment="Center" Grid.Row="4" Grid.Column="3" Margin="3" />
+
+        <Label Content="Effect:" Grid.Row="5" Grid.Column="0" />
+        <TextBox Text="{Binding Effects, Mode=TwoWay}" Grid.Row="6" Grid.ColumnSpan="4" Margin="3" TextWrapping="Wrap" />
+    </Grid>
+</UserControl>

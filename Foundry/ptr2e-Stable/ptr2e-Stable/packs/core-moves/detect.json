@@ -1,0 +1,49 @@
+{
+  "name": "Detect",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "detect",
+    "actions": [
+      {
+        "slug": "detect",
+        "name": "Detect",
+        "type": "attack",
+        "traits": [
+          "interrupt-6"
+        ],
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6,
+          "trigger": "<p>The user is hit by an attack.</p>"
+        },
+        "category": "status",
+        "types": [
+          "fighting"
+        ],
+        "description": "<p>Trigger: The user is hit by an attack.</p><p>Effect: The triggering attack fails, and additional attacks that target the user also fail until the end of the user's next Activation. Attacks failing to hit do not deal damage, activate secondary effects, or activate on-miss effects.</p><p>On resolution, the user gains @Affliction[disabled] 6 on this Attack.</p>",
+        "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "DXiHMvQg1n9LOIAM",
+  "effects": []
+}

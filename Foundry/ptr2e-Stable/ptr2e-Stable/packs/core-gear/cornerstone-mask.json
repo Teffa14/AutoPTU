@@ -1,0 +1,82 @@
+{
+  "name": "Cornerstone Mask",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "worn",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "rock",
+      "power": 85,
+      "accuracy": 90,
+      "hide": false
+    },
+    "rarity": "rare",
+    "traits": [
+      "phenomenon",
+      "ogerpon",
+      "rock",
+      "charge-pool-1",
+      "oni-mask",
+      "fling"
+    ],
+    "actions": [
+      {
+        "name": "Cornerstone Mask",
+        "slug": "cornerstone-mask",
+        "type": "generic",
+        "description": "Effect: When equipped as a Worn Item by an [Ogerpon] the user may undergo Terastallization by consuming 1 charge from this item's PP Pool or 10 PP from the user itself. Passive: the user [Ogerpon]'s DEF stat is increased 20%.",
+        "traits": [
+          "phenomenon",
+          "ogerpon",
+          "rock",
+          "charge-pool-1",
+          "oni-mask",
+          "fling"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: When equipped as a Worn Item by an [Ogerpon] the user may undergo Terastallization by consuming 1 charge from this item's PP Pool or 10 PP from the user itself. Passive: the user [Ogerpon]'s DEF stat is increased 20%.",
+    "slug": "cornerstone-mask",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "pzYbsNtYyG9CFien",
+  "effects": [],
+  "folder": "UUWElZA9w1KEqZS7"
+}

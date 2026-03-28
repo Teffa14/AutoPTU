@@ -1,0 +1,51 @@
+{
+  "name": "Ceaseless Edge",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "ceaseless-edge",
+    "actions": [
+      {
+        "slug": "ceaseless-edge",
+        "name": "Ceaseless Edge",
+        "type": "attack",
+        "traits": [
+          "crit-1",
+          "hazard",
+          "sharp",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 65,
+        "accuracy": 90,
+        "types": [
+          "dark"
+        ],
+        "description": "<p>Effect: On resolution, the user freely uses Spikes.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "PvkaO9hTGHuoeOAU",
+  "effects": []
+}

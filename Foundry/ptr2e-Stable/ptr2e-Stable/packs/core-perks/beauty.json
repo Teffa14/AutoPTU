@@ -1,0 +1,84 @@
+{
+  "name": "Beauty",
+  "type": "perk",
+  "system": {
+    "prerequisites": [],
+    "cost": 1,
+    "description": "<p>You are considered to be an attractive or aesthetically pleasing example of your species. Gain a +10 to social skill checks where the GM agrees your appearance would be advantageous, and gain a +20 to Perform (Beauty) skill checks.</p>",
+    "actions": [
+      {
+        "name": "Beauty",
+        "slug": "beauty",
+        "description": "You are considered to be an attractive or aesthetically pleasing example of your species. Gain a +10 to social skill checks where the GM agrees your appearance would be advantageous, and gain a +20 to Perform (Beauty) skill checks.",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 0,
+          "delay": null,
+          "priority": null
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "hidden": false,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "beauty",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "groomer",
+          "root-4",
+          "not-the-face"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#ff8000",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Socialite.svg",
+          "tint": "#ff0080",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 163,
+        "y": 148,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "power",
+      "archetype": "socialite"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "3GjHvIJhWSJJMKnK",
+  "img": "systems/ptr2e/img/perk-icons/Socialite.svg",
+  "effects": [],
+  "folder": "jLhPGZvYVjjs7D54"
+}

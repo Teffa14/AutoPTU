@@ -1,0 +1,52 @@
+{
+  "name": "Relic Song",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "relic-song",
+    "actions": [
+      {
+        "slug": "relic-song",
+        "name": "Relic Song",
+        "type": "attack",
+        "traits": [
+          "sonic",
+          "friendly",
+          "legendary"
+        ],
+        "range": {
+          "target": "emanation",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "special",
+        "power": 75,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: On hit, all valid targets have a 30% chance of gaining @Affliction[drowsy] 7.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "n4rGUelHpp7rVQoz",
+  "effects": []
+}

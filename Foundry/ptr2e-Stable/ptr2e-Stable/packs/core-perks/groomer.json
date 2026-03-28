@@ -1,0 +1,90 @@
+{
+  "name": "Groomer",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.husbandry.mod}",
+          30
+        ]
+      }
+    ],
+    "cost": 1,
+    "description": "<p>You are a capable Pokemon Groomer. Maybe even good enough to go professional. You may take the Groom camp action, awarding the party +10 to Perform, Conversation and Negotiation skill checks for the next 5 Daytime Spans.</p>",
+    "actions": [
+      {
+        "name": "Groomer",
+        "slug": "groomer",
+        "description": "You are a capable Pokemon Groomer. Maybe even good enough to go professional. You may take the Groom camp action, awarding the party +10 to Perform, Conversation and Negotiation skill checks for the next next 5 Daytime Spans.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0,
+          "delay": null,
+          "priority": null
+        },
+        "type": "camping",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 0
+        },
+        "variant": null,
+        "ephemeralVariant": false
+      }
+    ],
+    "slug": "groomer",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "beauty",
+          "condemn",
+          "planar-tactician"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#e0c2ff",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Coordinator.svg",
+          "tint": "#7114bd",
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 159,
+        "y": 145,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "power",
+      "archetype": "coordinator"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "p3pjnE4oCajU1TZQ",
+  "img": "systems/ptr2e/img/perk-icons/Coordinator.svg",
+  "effects": [],
+  "folder": "jLhPGZvYVjjs7D54"
+}

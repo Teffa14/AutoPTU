@@ -1,0 +1,52 @@
+{
+  "name": "G-Max Volt Crash",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "g-max-volt-crash",
+    "actions": [
+      {
+        "slug": "g-max-volt-crash",
+        "name": "G-Max Volt Crash",
+        "type": "attack",
+        "traits": [
+          "max",
+          "move-locked",
+          "sky",
+          "blast-4",
+          "weather"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "<p>Effect: The Weather is set to Thunderstorm for the next 5 Rounds.</p><p>The user may spend up to 6 additional PP, increasing the Power of this attack by 15 per PP spent.</p><p>Requirement: User is a Dynamaxed Pikachu and has an Electric-Type attack on their Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "mzdWUpP23siJgJk5",
+  "effects": []
+}

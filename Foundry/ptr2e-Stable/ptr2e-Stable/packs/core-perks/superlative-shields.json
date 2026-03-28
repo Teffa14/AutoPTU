@@ -1,0 +1,62 @@
+{
+  "folder": "c29hnIAtXgwB7FeY",
+  "name": "Superlative Shields",
+  "type": "perk",
+  "_id": "U9oB0r4DmgOFZW5F",
+  "img": "systems/ptr2e/img/perk-icons/Arcana.svg",
+  "system": {
+    "actions": [],
+    "slug": "superlative-shields",
+    "description": "<p>Upon gaining Shields, you may spend 4PP to gain @Affliction[resolved] 5.</p>",
+    "traits": [],
+    "prerequisites": [
+      "item:perk:improved-shielding"
+    ],
+    "cost": 4,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "connected": [
+          "improved-shielding",
+          "fortress-doctrine"
+        ],
+        "config": {
+          "alpha": null,
+          "backgroundColor": "#408080",
+          "borderColor": null,
+          "borderWidth": null,
+          "texture": "systems/ptr2e/img/perk-icons/Arcana.svg",
+          "tint": null,
+          "scale": null
+        },
+        "hidden": false,
+        "type": "normal",
+        "x": 87,
+        "y": 105,
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "originSlug": null,
+    "variant": null,
+    "mode": null,
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "mental",
+      "approach": "resilience",
+      "archetype": "tank"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": []
+}

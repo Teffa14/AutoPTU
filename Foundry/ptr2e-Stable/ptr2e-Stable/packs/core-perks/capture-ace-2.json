@@ -1,0 +1,131 @@
+{
+  "name": "Capture Ace 2",
+  "type": "perk",
+  "folder": "ADL1Oc2oQaQK45IU",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.zoology.mod}",
+          20
+        ]
+      }
+    ],
+    "cost": 3,
+    "description": "<p>Effect: Your Critical Capture rate increases by +1 (equivalent to capturing 75 more Species).</p>",
+    "actions": [
+      {
+        "name": "Capture Ace 2",
+        "slug": "capture-ace-2",
+        "description": "<p>Increases your Critical Capture rate by one stage.</p>",
+        "cost": {
+          "activation": "free"
+        },
+        "type": "passive",
+        "traits": [],
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "capture-ace-2",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": null,
+        "y": null,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "pokeball-repairs",
+          "controlled-curve",
+          "snare"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Capture%20Spec.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "power",
+      "archetype": "capture"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "IkC5bSNIjIlYRs08",
+  "img": "systems/ptr2e/img/perk-icons/Capture%20Spec.svg",
+  "effects": [
+    {
+      "name": "Capture Ace 2",
+      "type": "passive",
+      "_id": "MIzjEhEzFjw8QUHO",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "basic",
+            "key": "system.details.caught",
+            "value": 75,
+            "predicate": [],
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.8.beta",
+        "createdTime": 1766436469082,
+        "modifiedTime": 1766436488006,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

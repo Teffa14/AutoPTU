@@ -1,0 +1,4004 @@
+{
+  "generated_at_utc": "2026-03-04T02:28:07.311662+00:00",
+  "sources": [
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Arceus References.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Blessed and the Damned.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content (1).pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Do Porygon Dream of Mareep.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\GalarDex + Armor_Crown.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Game of Throhs.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\HisuiDex.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Indices and Reference.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Making_Fixing PTU Pokemon.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Pokedex 1.05.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Pokemon Tabletop United 1.05 Core.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU 1.05 Pokemon Sheet.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU 1.05 Trainer Sheet.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU May 2015 Playtest Packet.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU September 2015 Playtest Packet.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\SuMo References.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\SwSh + Armor_Crown References.pdf",
+    "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Useful Charts.pdf"
+  ],
+  "feature_count": 51,
+  "edge_count": 197,
+  "skill_count": 0,
+  "features": [
+    {
+      "name": "Major Gift",
+      "tags": [
+        "PATRON STAT"
+      ],
+      "prerequisites": "",
+      "frequency": "",
+      "effects": "Major Gift may be of your GM’s choosing. This feat is able to be taken multiple times based on your GM’s dis-cretion.",
+      "source_pdf": "Blessed and the Damned.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Blessed and the Damned.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Pact Gift",
+      "tags": [
+        "PATRON STAT"
+      ],
+      "prerequisites": "All of your Patron’s Major Gifts, GM Per -",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "Blessed and the Damned.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Blessed and the Damned.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Branded",
+      "tags": [
+        "PATRON STAT"
+      ],
+      "prerequisites": "GM PermissionStaticEffect : Y ou have made a contract with a deity or other supernatural being and have been Branded for it. This",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "Blessed and the Damned.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Blessed and the Damned.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Weapon of Choice",
+      "tags": [
+        "Weapon"
+      ],
+      "prerequisites": "",
+      "frequency": "",
+      "effects": "Bonus on Opposed Rolls to prevent being disarmed while wielding weapons of your chosen type. If you would be disarmed anyway, you may pay 1 AP to prevent yourself from being Disarmed.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Commander’s Voice",
+      "tags": [
+        "Orders"
+      ],
+      "prerequisites": "",
+      "frequency": "Standard Action, or you may give one set of [Orders] as",
+      "effects": "Effect : Y ou may give two different [Orders] as a single a Swift Action. Special : If this is used to use Focused Command and another [Order] that has targets, the second Order applies to both Pokémon you are commanding that",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Brutal Training",
+      "tags": [
+        "Training",
+        "Orders"
+      ],
+      "prerequisites": "Novice Intimidate, Untrained Command",
+      "frequency": "At-Will – Special",
+      "effects": "Effect : The target becomes Brutal until the end of the effect duration. Brutal Pokémon increase the Critical- Hit and Effect Range of all attacks by +1. Focused Training [Training] [Orders] Prerequisites: Novice Command At-Will – Special Effect : The target becomes Focused until the end of the effect duration. Focused Pokémon gain a +1 bonus to Accuracy Rolls and +2 to Skill Checks.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Inspired Training",
+      "tags": [
+        "Training",
+        "Orders"
+      ],
+      "prerequisites": "Novice Charm, Untrained Command",
+      "frequency": "At-Will – Special",
+      "effects": "Effect : The target becomes Inspired until the end of the effect duration. Inspired Pokémon gain a +1 bonus to Evasion and +2 to Save Checks.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Strike Again!",
+      "tags": [
+        "Orders"
+      ],
+      "prerequisites": "Expert Perception or Guile",
+      "frequency": "Scene – Standard ActionTarget: Y our Pokémon",
+      "effects": "Effect : The target may immediately take an additional Standard Action to use an At-Will attack.Marksman Orders Static Effect : Y ou gain the Trick Shot and Long Shot Orders. Trick Shot[Orders] [Stratagem] Bind 2 AP – Standard ActionTarget: Y our Pokémon Effect : While this Feature is Bound, decrease the Accu- racy Roll of the target’s damaging ranged attacks by -2.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Blur",
+      "tags": [
+        "+Speed"
+      ],
+      "prerequisites": "Expert Acrobatics, Expert Stealth",
+      "frequency": "Static",
+      "effects": "Effect : Attacks and Moves targeting you that don’t",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Multi-Tasking",
+      "tags": [
+        "+Speed"
+      ],
+      "prerequisites": "Learned four Moves.",
+      "frequency": "Scene x2 – Swift Action",
+      "effects": "Effect : Y ou may take two Standard Actions instead of one this turn, but both actions must have an At-Will Frequency.Signature Move [+Any Stat] Static Effect : Choose a Move you know. Increase the Move’s Frequency one step, as if you had used a PP Up. This",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Psionic Sight",
+      "tags": [
+        "+Special Defense"
+      ],
+      "prerequisites": "Elemental Connection (Psychic)",
+      "frequency": "Static",
+      "effects": "Effect : Y ou are able to visibly see any Psychic Residue left on Humans or Pokémon due to the effects of Psionic abilities. Each Human or Pokémon leaves distinct Psychic Residue on their targets; you are easily able to distinguish which targets have been affected by the",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Commander",
+      "tags": [
+        "Class"
+      ],
+      "prerequisites": "Novice Command",
+      "frequency": "Static",
+      "effects": "Effect : Choose one of Ravager Orders, Marksman Orders, Trickster Orders, Guardian Orders, or Precision Orders. Y ou gain the chosen Feature, even if you do not meet its prerequisites.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Mobilize",
+      "tags": [
+        "Orders"
+      ],
+      "prerequisites": "",
+      "frequency": "At-Will – Free Action",
+      "effects": "Target: Any AllyEffect : The target cannot provoke Attacks of Opportunity on their next turn. Mobilize may target an Ally only once per encounter.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Leadership",
+      "tags": [
+        "Orders"
+      ],
+      "prerequisites": "CommanderStatic",
+      "frequency": "",
+      "effects": "any Ally, even if normally those [Orders] would only let",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Tip the Scales",
+      "tags": [
+        "Orders"
+      ],
+      "prerequisites": "Commander, Expert Command2 AP – Swift Action",
+      "frequency": "Effect : Y our [Orders] with an At-Will Frequency instead",
+      "effects": "target all allies within 10 Meters.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Hobbyist",
+      "tags": [
+        "Class"
+      ],
+      "prerequisites": "Novice General Education, Novice Perception",
+      "frequency": "Static",
+      "effects": "Effect : Y ou gain three Skill Edges for which you qualify. Special: Y ou may count Hobbyist Features as “General Features” for the purposes of any effect that would grant you a General Feature.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Expend Momentum",
+      "tags": [
+        "Orders"
+      ],
+      "prerequisites": "Duelist",
+      "frequency": "At-Will – Standard Action",
+      "effects": "Target: Y our Pokémon under the effects of Focused Training Effect : Apply one of the following effects on the target by spending that much Momentum. »Spend 1 Momentum: Y our Pokémon regains use of a EOT Frequency Move. »Spend 2 Momentum: Y our Pokémon automatically",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Cavalier’s Reprisal",
+      "tags": [
+        "+Speed"
+      ],
+      "prerequisites": "Ride as One, Expert Acrobatics or",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Overrun",
+      "tags": [
+        "+Speed"
+      ],
+      "prerequisites": "Conqueror’s March, Expert Acrobatics",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Strike of the Whip",
+      "tags": [
+        "Order"
+      ],
+      "prerequisites": "Taskmaster, PressAt-Will – Swift Action",
+      "frequency": "as a Free Action.Pain Resistance",
+      "effects": "Trigger: Y ou use Press Effect : Y ou may apply 1 or more of the following effects to the Pokémon hit by Press: »Give the target 1 Injury and a Tick of Temporary Hit Points. »Spend 1 AP and cure the target of Confusion, Infatuation, Rage, and Suppression. Prerequisites: Taskmaster, Adept Intimidate1 AP – Free Action Trigger: Y our Pokémon with 1 or more injuries takes DamageEffect : Y our Pokémon gains X Damage Reduction against the triggering attack, where X is its Tick Value multiplied by the number of Injuries it has. This may be triggered once per Scene per Pokémon.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Stat Embodiment",
+      "tags": [
+        "Branch"
+      ],
+      "prerequisites": "4 Stat Ace Features, Expert Command or",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Style Flourish",
+      "tags": [
+        "Branch"
+      ],
+      "prerequisites": "3 Style Expert Features",
+      "frequency": "1 AP – Free Action",
+      "effects": "Trigger: Y our Pokémon uses a Move of your Chosen Type Contest Effect: Re-Roll all dice that result in 1s. This effect may only be used once per Contest.Battle Effect: The target gains +1 CS in the Stat",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Debilitate",
+      "tags": [
+        "Order",
+        "Stratagem"
+      ],
+      "prerequisites": "Potent Venom, Type-Linked Skill at",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Mindbreak",
+      "tags": [
+        "Order",
+        "Stratagem"
+      ],
+      "prerequisites": "Psionic Sponge, Type-Linked Skill at",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Archival Training",
+      "tags": [
+        "Ranked 2"
+      ],
+      "prerequisites": "",
+      "frequency": "Static",
+      "effects": "All Rank Prerequisites: Chronicler Effect : Each Rank, you gain an Archive.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Archive Tutor",
+      "tags": [
+        "Orders"
+      ],
+      "prerequisites": "Technique Archive, Expert PerceptionDaily – Extended Action",
+      "frequency": "is of a Move that the target can learn by Level Up, TM",
+      "effects": "Target: A Pokémon with 2 Tutor Points. Effect : Select a Record in your Technique Archive that or by Move Tutor. The target learns the Move and loses 2 Tutor Points. Y ou can target someone else’s Pokémon only once with Archive Tutor; you may target your own Pokémon any number of times with Archive Tutor, but they must still abide by any Move Pool Limitations (ie: no more than 3 of the user’s Move Pool can come from TMs or Tutor Moves).Targeted Profiling Prerequisites: Profile Archive, Expert Perception 2 AP – Standard Action Target: Y our PokémonEffect : On the target’s next turn, they act as if they had the Mold Breaker Ability against all Pokémon and Trainers in your Profile Archive and gains a +2 bonus to Accuracy Rolls against these targets.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Fashionista",
+      "tags": [
+        "Class"
+      ],
+      "prerequisites": "Two of Charm, Command, Guile, Intimidate, or Intuition at Novice",
+      "frequency": "At-Will – Extended Action",
+      "effects": "Effect : Y ou may craft any Fashionista Recipe for which you qualify. Special : When you take Fashionista, choose two of Charm, Command, Guile, Intimidate, or Intuition to become your Fashionista Skills. The Skills you choose must be at Novice Rank or higher.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Researcher",
+      "tags": [
+        "Class",
+        "Branch"
+      ],
+      "prerequisites": "An Education Skill at Novice Rank",
+      "frequency": "Static",
+      "effects": "Effect : Choose two Researcher Fields of Study. Y ou may take Features from those Fields with this instance of Researcher. Gain one Feature from a chosen Researcher Field for which you qualify. Note : Researcher is broken up into multiple Fields of Study. Y ou may not take Features from a Field of Study",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Survivalist",
+      "tags": [
+        "Class",
+        "+HP"
+      ],
+      "prerequisites": "Novice Survival",
+      "frequency": "One Time Use – Extended Action",
+      "effects": "Effect : Choose a Terrain in which you have spent at least three nights. Y ou gain Naturewalk for that terrain and a +2 bonus to Athletics, Acrobatics, Stealth, Perception, and Survival Checks in that terrain. When you have 2 Sur - vivalist Features, you may choose a second Terrain. When you have 4 Survivalist Features, you may choose a third terrain. When you have 6 Survivalist Features, you may choose a fourth terrain. The terrains are: Grassland, Forest, Wetlands, Ocean, Tundra, Mountain, Cave, Urban, Desert",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Natural Fighter",
+      "tags": [
+        "+HP"
+      ],
+      "prerequisites": "Survivalist",
+      "frequency": "",
+      "effects": "1 AP – Special Effect : Y ou and your Pokémon become adept at using",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Wilderness Guide",
+      "tags": [
+        "+HP",
+        "Orders"
+      ],
+      "prerequisites": "Survivalist, Expert Survival",
+      "frequency": "Scene x3 – Standard Action",
+      "effects": "Effect : Wilderness Guide’s effect depends on your current terrain. »Grassland or Forest: All allies gain the Stealth Capability and a +2 bonus to their Overland Speed for one full round. »Ocean or Wetlands: All allies gain 5 Damage Reduction and a +2 bonus to their Swim Speed for one full round. »Desert or Tundra: All allies do not lose Hit Points",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Training Regime",
+      "tags": [
+        "+HP"
+      ],
+      "prerequisites": "Athlete",
+      "frequency": "Static",
+      "effects": "Effect : Y ou gain additional static bonuses based on your Trained Stats. »Attack: Y ou gain a +2 Bonus on Accuracy Checks to hit with Combat Maneuvers. »Defense : Y ou gain 5 Damage Reduction when Intercepting attacks. »Special Attack: Y ou may add half your Special Attack Stat to Damaging Athlete Moves. This does not stack with Twisted Power. »Special Defense: Y ou gain a +2 Bonus to Opposed Checks to resist Combat Maneuvers. »Speed : When you Sprint, you double your Movement Capability instead of increasing by 50%.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Don’t Look Away",
+      "tags": [
+        "+Speed"
+      ],
+      "prerequisites": "Pack Tactics, Adept Stealth, Adept",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Musical Ability",
+      "tags": [
+        "+Special Attack"
+      ],
+      "prerequisites": "Musician",
+      "frequency": "Static",
+      "effects": "Effect : Choose Drown Out or Soundproof. Y ou gain the chosen Ability.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Cutthroat",
+      "tags": [
+        "+Attack",
+        "Weapon"
+      ],
+      "prerequisites": "Rogue",
+      "frequency": "Static",
+      "effects": "Effect : Y ou may use Rogue Moves as Weapon Moves",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Battle Synchronization",
+      "tags": [
+        "Orders"
+      ],
+      "prerequisites": "Channeler",
+      "frequency": "Scene x3 – Standard Action",
+      "effects": "Effect : For one full round, whenever a Channeled Pokémon successfully hits a foe, all Channeled Pokémon gain +1 Accuracy and +1 Evasion against that foe for",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Diffuse Pain",
+      "tags": [
+        "+HP"
+      ],
+      "prerequisites": "Hex Maniac Studies Rank 1",
+      "frequency": "2 AP – Swift Action",
+      "effects": "Trigger: Y ou use a Status-Class Move gained from Hex Maniac Studies Effect : Choose an additional target for the Move.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Malediction",
+      "tags": [
+        "+HP"
+      ],
+      "prerequisites": "Hex Maniac Studies Rank 1, Expert",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Grand Hex",
+      "tags": [
+        "+HP"
+      ],
+      "prerequisites": "Hex Maniac Studies Rank 3, Master",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Illusion Ability.Small Prophecies",
+      "tags": [
+        "+Special Defense"
+      ],
+      "prerequisites": "Divination, Adept Perception",
+      "frequency": "1 AP – Swift Action",
+      "effects": "Effect : Roll 1d20 and note the result. Until the end of",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Two-Second Preview",
+      "tags": [
+        "+Special Defense"
+      ],
+      "prerequisites": "3 Oracle Features, Expert Perception",
+      "frequency": "Static",
+      "effects": "Effect : Y ou gain the Instinct Ability.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Sacred Shield",
+      "tags": [
+        "+HP"
+      ],
+      "prerequisites": "Sage",
+      "frequency": "Static",
+      "effects": "Effect : Y ou learn the Moves Reflect and Lucky Chant.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Psionic Overload",
+      "tags": [
+        "+Special Attack"
+      ],
+      "prerequisites": "PK Omega, Master Focus",
+      "frequency": "2 AP – Swift Action",
+      "effects": "Trigger: Y ou hit with Psychic or use another Telekinetic Move Effect : The effect of this Feature depends on the Triggering Move. »Kinesis: The user of the triggering attack becomes Confused. »Barrier: Place 2 additional segments of Barrier, and",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 1.0,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Telepathic Warning",
+      "tags": [
+        "+Special Defense"
+      ],
+      "prerequisites": "Telepathic Awareness, Expert Focus or",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Capability.Mental Assault",
+      "tags": [
+        "+Special Defense"
+      ],
+      "prerequisites": "Telepath, Expert Focus or Intuition",
+      "frequency": "Static",
+      "effects": "Effect : Y ou learn the Moves Extrasensory and Psyshock.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Warper",
+      "tags": [
+        "Class",
+        "+Speed"
+      ],
+      "prerequisites": "Elemental Connection (Psychic), Novice Guile",
+      "frequency": "Static",
+      "effects": "Effect : Y ou gain the Probability Control Ability.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Frenzy",
+      "tags": [
+        "+HP"
+      ],
+      "prerequisites": "",
+      "frequency": "Effect: Y ou may immediately take your turn with Pri-ority. If you do, you are instantly cured of Slowed and Stuck, and for the rest of this turn gain a +2 Bonus to Critical Hit Range, +2 Bonus to Movement Speed, and +2 Bonus to Acrobatics, Athletics, Combat, and Intim-idate Checks.",
+      "effects": "",
+      "source_pdf": "Game of Throhs.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Game of Throhs.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 1192
+      }
+    },
+    {
+      "name": "Backpacker",
+      "tags": [
+        "Class",
+        "+Speed"
+      ],
+      "prerequisites": "Traveler",
+      "frequency": "Static",
+      "effects": "Effect : Y ou gain the Skill Enhancement Edge. Y ou then gain an instance of the Skill Stunt Edge for each of the two Skills you chose with Skill Enhancement.",
+      "source_pdf": "PTU May 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU May 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Cheers",
+      "tags": [
+        "Orders"
+      ],
+      "prerequisites": "CheerleaderX AP – Swift Action",
+      "frequency": "",
+      "effects": "Effect : The target or targets of the triggering [Orders]",
+      "source_pdf": "PTU September 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU September 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 59
+      }
+    },
+    {
+      "name": "Bring It On!",
+      "tags": [
+        "Orders"
+      ],
+      "prerequisites": "Cheers, Adept Charm1 AP – Free Action",
+      "frequency": "A target may benefit from each “Bring It On!” effect only once per Scene.Go, Fight, Win!",
+      "effects": "Effect : Y ou may trigger Bring It On! whenever... »A Cheered Ally takes Damage, to grant them 5 Damage Reduction agains the triggering Damage. »A Cheered Ally makes a Save Check, to grant them a +2 Bonus on that check. »A Cheered Ally Takes a Breather, to grant them Temporary Hit Points equal to your Charm Rank. Prerequisites: Moment of Action, Expert Charm Scene x3 – Standard Action Effect : Choose and perform one of the cheers below. Y ou may perform each Cheer only once per Scene. »Show Your Best!: Choose Def or Sp.Def, all allies on the Field gain +1 CS in the chosen Stat. »Don’t Stop Now!: All allies on the Field gain Temporary Hit Points equal to your Charm Rank. »I Believe In You!: All allies on the Field gain a +2 Bonus to evasion for 1 full round.",
+      "source_pdf": "PTU September 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU September 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Incandescence",
+      "tags": [
+        "Orders",
+        "Stratagem"
+      ],
+      "prerequisites": "Brightest Flame, Type-Linked Skill at",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "PTU September 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU September 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 285
+      }
+    }
+  ],
+  "edges": [
+    {
+      "name": "Suicune’s Major Gift - Water Absorb",
+      "tags": [],
+      "prerequisites": "Minor Gift - Elemental SoulStaticEffect : Y ou gain the Water Absorb Ability.",
+      "frequency": "",
+      "effects": "The Blessed and Damned–59–",
+      "source_pdf": "Blessed and the Damned.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Blessed and the Damned.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 882
+      }
+    },
+    {
+      "name": "Minor Gift - Catastrophe Sense",
+      "tags": [],
+      "prerequisites": "GM Permission",
+      "frequency": "",
+      "effects": "Effect : Y ou have an intuitive sense of when natural disasters or other catastrophes are likely to occur near you.",
+      "source_pdf": "Blessed and the Damned.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Blessed and the Damned.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 886
+      }
+    },
+    {
+      "name": "Major Gift - Seed Flare",
+      "tags": [],
+      "prerequisites": "Major Gift - Pure Breathing, Major Gift - SprouterStaticEffect : Y ou learn the Move Seed Flare.",
+      "frequency": "",
+      "effects": "The Blessed and Damned–61–",
+      "source_pdf": "Blessed and the Damned.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Blessed and the Damned.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 957
+      }
+    },
+    {
+      "name": "Minor Gift - Spirit of Justice",
+      "tags": [],
+      "prerequisites": "GM Permission",
+      "frequency": "",
+      "effects": "Effect : Y ou may add your Spirit Modifier instead of your Body Modifier when making Combat Skill Checks. Y ou get a +2 bonus to Disarming or resisting Disarming.",
+      "source_pdf": "Blessed and the Damned.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Blessed and the Damned.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 961
+      }
+    },
+    {
+      "name": "Major Gift - Diamond Storm",
+      "tags": [],
+      "prerequisites": "Major Gift - Magic BounceStaticEffect : Y ou learn the Move Diamond Storm.",
+      "frequency": "",
+      "effects": "The Blessed and Damned–62–",
+      "source_pdf": "Blessed and the Damned.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Blessed and the Damned.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 991
+      }
+    },
+    {
+      "name": "Minor Gift - Motherly Compassion",
+      "tags": [],
+      "prerequisites": "GM Permission",
+      "frequency": "",
+      "effects": "Effect : Y ou get a +3 Bonus to all Intuition and Charm checks for the purpose of discerning emotions and comforting someone.",
+      "source_pdf": "Blessed and the Damned.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Blessed and the Damned.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 996
+      }
+    },
+    {
+      "name": "Pact Gift - Origin Tutor",
+      "tags": [],
+      "prerequisites": "All Mew Major GiftsActivate Once/10 - Extended ActionTarget: Y our Pokémon with at least 3 Tutor PointsEffect : Y our Pokémon loses 3 Tutor Points and may",
+      "frequency": "make use of any TM or Tutoring effect to learn a single Move regardless of what it is normally capable of learning. It must still pay any Tutor Point costs for this effect. Y ou may only target a Pokémon once with Origin Tutor.",
+      "effects": "",
+      "source_pdf": "Blessed and the Damned.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Blessed and the Damned.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 1007
+      }
+    },
+    {
+      "name": "Minor Gift - Tower’s Rejuvenation",
+      "tags": [],
+      "prerequisites": "GM Permission",
+      "frequency": "Prerequisites: Minor Gift - Tower’s Rejuvenation1 AP - Free ActionTrigger: Y ou or your Pokémon use a Move with the Blessing KeywordEffect : The Move generates one additional use of the",
+      "effects": "Effect : Resting now allows you to recover 1/10th of your maximum HP per half hour instead of 1/16th.Major Gift - Tower’s Blessing Blessing.",
+      "source_pdf": "Blessed and the Damned.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Blessed and the Damned.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Intimidating Presence",
+      "tags": [],
+      "prerequisites": "Novice Intimidate",
+      "frequency": "Effect : Y ou learn the Move Leer",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10235
+      }
+    },
+    {
+      "name": "Bad Mood",
+      "tags": [],
+      "prerequisites": "Expert IntimidateEffect : Y our Critical Hit Range is increased by +1 if you",
+      "frequency": "",
+      "effects": "are suffering from a Persistent Status Affliction. Y our Critical Hit Range is increased by +1 if you are suffering from a Volatile Status Affliction. These stack with each other, giving a total of +2 to Critical Hit Range if you",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10238
+      }
+    },
+    {
+      "name": "Art of Stealth",
+      "tags": [],
+      "prerequisites": "Expert Stealth",
+      "frequency": "",
+      "effects": "Effect : Y ou gain the Stealth Capability.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10279
+      }
+    },
+    {
+      "name": "Expert Trickster",
+      "tags": [],
+      "prerequisites": "Adept Stealth",
+      "frequency": "Trick Maneuvers. The “Once per Scene per Foe” Limitation of each Dirty Trick Maneuver is expended only upon successfully affecting a foe with that Dirty",
+      "effects": "Effect : Y ou gain a +2 Opposed Checks with all Dirty Trick Maneuver.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Apricorn Balls",
+      "tags": [],
+      "prerequisites": "Novice Survival or Adept Technology",
+      "frequency": "Effect : As an Extended Action, you may craft Apricorns",
+      "effects": "into their corresponding Poké Ball. Use of this Feature requires access to a Poké Ball Tool Box.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Green Thumb",
+      "tags": [],
+      "prerequisites": "Novice General Education or Novice Survival",
+      "frequency": "",
+      "effects": "Effect : Y ou know how to grow Apricorns and Tier 1 Berries using a Portable Grower or Fertilized Soil.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10301
+      }
+    },
+    {
+      "name": "Traveler",
+      "tags": [],
+      "prerequisites": "Novice Survival",
+      "frequency": "Acrobatics to determine your Power Capability, High Jump, and Long Jump values. Determine your Overland Movement by substituting your Survival Rank for the",
+      "effects": "Effect : Y ou may use Survival instead of Athletics and",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10305
+      }
+    },
+    {
+      "name": "lower of your Athletics or Acrobatics Rank.Paleontologist",
+      "tags": [],
+      "prerequisites": "Novice Pokémon Education or Novice",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10309
+      }
+    },
+    {
+      "name": "Scholar",
+      "tags": [],
+      "prerequisites": "Expert General EducationEffect : Y ou gain a +1 Bonus to Skill Checks with General",
+      "frequency": "",
+      "effects": "Education, Medicine Education, Occult Education, Pokémon Education, Technology Education, and Survival.Groomer Prerequisites: Novice Pokémon Education or Novice General Education Effect : Y ou know how to effectively groom your Pokémon",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10358
+      }
+    },
+    {
+      "name": "Breeder",
+      "tags": [],
+      "prerequisites": "Novice Pokémon Education Effect : If you are able to give two Pokémon that are",
+      "frequency": "",
+      "effects": "compatible for breeding at least 4 hours of time alone, you may make a Pokémon Education Check with a DC of 12. If you succeed, the Pokémon are guaranteed to produce an egg if you give them an additional 4 hours.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10520
+      }
+    },
+    {
+      "name": "Paleontologist",
+      "tags": [],
+      "prerequisites": "Novice Pokémon Education or Novice",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10524
+      }
+    },
+    {
+      "name": "Grace",
+      "tags": [],
+      "prerequisites": "Novice Charm, Command, Guile,",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10588
+      }
+    },
+    {
+      "name": "Expert Manipulator",
+      "tags": [],
+      "prerequisites": "Adept GuileEffect : Y ou gain a +2 Opposed Checks with all",
+      "frequency": "Manipulate Maneuvers. The “Once per Scene per Foe” Limitation of each Manipulate Maneuver is expended only upon succesfully affecting a foe with that",
+      "effects": "Manipulate Maneuver.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10603
+      }
+    },
+    {
+      "name": "Confidence Artist",
+      "tags": [],
+      "prerequisites": "Novice Guile",
+      "frequency": "Effect : Y ou learn the Move Confide.",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10607
+      }
+    },
+    {
+      "name": "Basic Cooking",
+      "tags": [],
+      "prerequisites": "Novice Intuition",
+      "frequency": "",
+      "effects": "Effect : Y ou may create “Candy Bars” or “Baby Food” with cooking ingredients costing 50. Y ou may fluff the food in any reasonable manner you like.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10836
+      }
+    },
+    {
+      "name": "Mystic Senses",
+      "tags": [],
+      "prerequisites": "Novice IntuitionEffect : Y ou may use Intuition instead of Charm to",
+      "frequency": "",
+      "effects": "improve the disposition of Wild Pokémon. Y ou may not take Mystic Senses if you have the Elemental Connection Edge, and you may not take Elemental Connection if",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10840
+      }
+    },
+    {
+      "name": "you have Mystic Senses. Grace",
+      "tags": [],
+      "prerequisites": "Novice Charm, Command, Guile,",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10843
+      }
+    },
+    {
+      "name": "Basic Skills",
+      "tags": [],
+      "prerequisites": "None",
+      "frequency": "",
+      "effects": "Effect: Y ou Rank Up a Skill from Pathetic to Untrained,",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10867
+      }
+    },
+    {
+      "name": "Virtuoso",
+      "tags": [],
+      "prerequisites": "A Skill at Master Rank, Level 20Effect : Choose a Skill at Master Rank. Consider that Skill",
+      "frequency": "",
+      "effects": "to be effectively “Rank 8” for any Features or effects that depend on Skill Rank. Virtuoso may be taken multiple times, but you must choose a different Skill each time.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10897
+      }
+    },
+    {
+      "name": "Repel Crafter",
+      "tags": [],
+      "prerequisites": "Novice Medicine or Technology EduEffect : Create a Repel for",
+      "frequency": "",
+      "effects": "$100 or a Super Repel for $150. Requires access to a Chemistry Set.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10931
+      }
+    },
+    {
+      "name": "Tag Scribe",
+      "tags": [],
+      "prerequisites": "Novice Occult EducationSpecial - Extended Action",
+      "frequency": "",
+      "effects": "Effect : Y ou create a Cleanse Tag. This may be used a",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10935
+      }
+    },
+    {
+      "name": "Athletic Initiative",
+      "tags": [],
+      "prerequisites": "Adept Athletics",
+      "frequency": "Effect : Y ou learn the Move Agility.",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10963
+      }
+    },
+    {
+      "name": "Dynamism",
+      "tags": [],
+      "prerequisites": "Novice GuileEffect : Y our initiative is increased by your Guile Rank.",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10983
+      }
+    },
+    {
+      "name": "Manipulate Maneuver.Groomer",
+      "tags": [],
+      "prerequisites": "Novice Pokémon Education",
+      "frequency": "",
+      "effects": "Effect : Y ou know how to effectively groom your Pokémon with access to a Groomer’s Kit. Y ou may groom up to 6 Pokémon in one hour. Grooming Pokémon may count as an hour of Training, and you may apply Experience",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 10988
+      }
+    },
+    {
+      "name": "Trainer of Champions",
+      "tags": [],
+      "prerequisites": "Expert CommandEffect : Whenever you apply Experience Training to a",
+      "frequency": "",
+      "effects": "Pokemon, they gain an additional +5 Experience.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 11008
+      }
+    },
+    {
+      "name": "Flustering Charisma",
+      "tags": [],
+      "prerequisites": "Adept Charm or Guile",
+      "frequency": "Effect : When you hit with a Move with the Social",
+      "effects": "keyword, the target takes a -2 penalty to Save Checks against Volatile Status Afflictions for 1 full round.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Slippery",
+      "tags": [],
+      "prerequisites": "Novice StealthEffect : Y ou may use your Stealth Skill when defending",
+      "frequency": "Effect : Y ou gain +4 Evasion against Moves with the",
+      "effects": "in Opposed Grapple, Push, or Trip checks. When Grappling, if you win an Opposed Check when using Stealth, you must choose to end the Grapple (you cannot choose to gain Dominance).Smooth Prerequisites: Expert Charm or Expert Focus Social keyword, and gain a +2 Bonus on Save Checks against Rage and Infatuation.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Work Up",
+      "tags": [],
+      "prerequisites": "Adept Focus",
+      "frequency": "Effect : Y ou learn the Move Work Up.",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 11051
+      }
+    },
+    {
+      "name": "Acrobat",
+      "tags": [],
+      "prerequisites": "Novice Acrobatics",
+      "frequency": "",
+      "effects": "Effect : Increase your Jump and Long Jump Capabilities by +1 each.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 11055
+      }
+    },
+    {
+      "name": "Elemental Connection",
+      "tags": [],
+      "prerequisites": "NoneEffect : Choose an Elemental Type. Y ou gain a +2 bonus",
+      "frequency": "",
+      "effects": "to Charm, Command, Guile, Intimidate, and Intuition Checks targeting Pokémon of that Type. Y ou may not take Elemental Connection if you have the Mystic",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 11061
+      }
+    },
+    {
+      "name": "Wallrunner",
+      "tags": [],
+      "prerequisites": "Expert Acrobatics",
+      "frequency": "",
+      "effects": "Effect : Y ou may run on vertical surfaces both vertically and horizontally for up to your Acrobatics Rank in meters before jumping off.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 11102
+      }
+    },
+    {
+      "name": "Press",
+      "tags": [],
+      "prerequisites": "Adept IntimidateAt-Will – Standard Action",
+      "frequency": "",
+      "effects": "Target: Y our own Pokémon. Effect : Y ou hit your Pokémon, and they lose 1/6th of",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 11228
+      }
+    },
+    {
+      "name": "Tutoring",
+      "tags": [],
+      "prerequisites": "Novice General Education, Special (See Effect)",
+      "frequency": "One Time Use x 3 – Extended Action",
+      "effects": "Effect : When activating this Feature, select a Move known either by yourself or by 3 Pokémon you own. This Move is Mastered. As an Extended Action, you may have Pokémon spend 2 Tutor Points to learn a Move you have Mastered. Pokémon targeted this way can only learn Moves that they could learn by Level Up, TM, Egg Move, or Move Tutor. Y ou may take Tutoring multiple times, each time gaining 3 uses of the Feature. Note : To be clear, this Feature lets you choose a total of three different Moves you can Tutor. The use limitation isn’t on how often you can Tutor them; once you have Mastered a Move, you can Tutor it At-Will.Pokémon Raising and Battling Features",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Ravager Orders",
+      "tags": [],
+      "prerequisites": "Expert Command or Intimidate",
+      "frequency": "Static",
+      "effects": "Effect : Y ou gain the Reckless Advance and Strike Again! Orders.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Guardian Orders",
+      "tags": [],
+      "prerequisites": "Expert Charm or IntimidateStatic",
+      "frequency": "",
+      "effects": "Effect : Y ou gain the Brace for Impact and Sentinel Stance Orders.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 11395
+      }
+    },
+    {
+      "name": "Skill Monkey",
+      "tags": [],
+      "prerequisites": "Three Skills at Adept Rank or higherDaily x3 – Free Action",
+      "frequency": "",
+      "effects": "Trigger: Y ou make a Skill Check Effect : Y ou may re-roll the triggering Skill Check with a +2 Bonus, taking the new result. This Feature may be used to re-roll a specific roll only once.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 11521
+      }
+    },
+    {
+      "name": "Perseverance",
+      "tags": [],
+      "prerequisites": "Ace Trainer",
+      "frequency": "1 AP – Free Action",
+      "effects": "Trigger: Y our Pokémon gains an Injury Effect : The target instead does not gain an Injury. Perseverance may activate only once per Scene per target.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Elite Trainer",
+      "tags": [],
+      "prerequisites": "Ace Trainer",
+      "frequency": "Static",
+      "effects": "Effect : Choose Agility Training, Brutal Training,",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 11939
+      }
+    },
+    {
+      "name": "False Strike",
+      "tags": [],
+      "prerequisites": "3 of Acrobatics, Athletics, Stealth, Survival, Guile, or Perception at Expert Rank",
+      "frequency": "Scene x2 – Free Action",
+      "effects": "Trigger: Y ou or your Pokémon’s attack faints a Wild Pokémon. Effect : The Wild Pokémon is instead lowered to 1 Hit Point.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Flexible Preparations",
+      "tags": [],
+      "prerequisites": "Adaptable Performance, Adept Charm, Command, Guile, Intimidate, or Intuition",
+      "frequency": "Daily – Extended Action",
+      "effects": "Target: A Pokémon that has Contest Stats from PoffinsEffect : The target may reallocate up to 2d6 of Poffin-",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Reliable Performance",
+      "tags": [],
+      "prerequisites": "Nuanced Performance, Master Charm, Command, Guile, Intimidate, or Intuition",
+      "frequency": "2 AP – Free Action",
+      "effects": "Trigger: Y our Pokémon makes an Appeal Roll, Accuracy Check, or Skill Check Effect : For appeal rolls, instead of making the Appeal",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Look and Learn",
+      "tags": [],
+      "prerequisites": "Hobbyist, Expert General Education or Perception",
+      "frequency": "x2 Uses – Extended Action",
+      "effects": "Effect : When you activate Look and Learn, you may",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 12294
+      }
+    },
+    {
+      "name": "Lessons",
+      "tags": [],
+      "prerequisites": "Mentor",
+      "frequency": "Daily x3 – Extended Action",
+      "effects": "Effect : Y ou may perform any Mentor Lesson for which you qualify.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Expand Horizons",
+      "tags": [],
+      "prerequisites": "Mentor",
+      "frequency": "At-Will – Extended Action",
+      "effects": "Target: Y our Pokémon Effect : Y our Pokémon gains 3 Tutor Points. A Pokémon may be targeted by Expand Horizons only once.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Guidance",
+      "tags": [],
+      "prerequisites": "MentorStatic",
+      "frequency": "Effect : Y our Pokémon’s base Move List Limit is increased",
+      "effects": "by +1 (Reminder: The default Move List Limit is 6).Move Tutor Prerequisites: Mentor, one Mentor Skill at Expert Rank Daily – Extended Action Target: A Pokémon with at least 2 Tutor Points. Effect : The target loses 2 Tutor Points, and learns any move from its Tutor List.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Egg Tutor",
+      "tags": [],
+      "prerequisites": "Move TutorDaily – Extended Action",
+      "frequency": "Move from its Egg Move List. A Pokémon may be",
+      "effects": "Target: A Pokémon with at least 2 Tutor Points. Effect : The target loses 2 Tutor Points, and learns any targeted by Egg Tutor only one time.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Lifelong Learning",
+      "tags": [],
+      "prerequisites": "Move Tutor, one Mentor Skill at Master",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 12361
+      }
+    },
+    {
+      "name": "Changing Viewpoints",
+      "tags": [],
+      "prerequisites": "Mentor, Intuition as a Mentor Skill",
+      "frequency": "",
+      "effects": "Target: A Pokémon with at least 1 Tutor Point. Effect : The target loses a Tutor Point, and you may",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 12368
+      }
+    },
+    {
+      "name": "Empowered Development",
+      "tags": [],
+      "prerequisites": "Mentor, Charm as a Mentor Skill",
+      "frequency": "improve a Movement Capability once, for example.",
+      "effects": "Target: A Pokémon with at least 1 Tutor Point Effect : The target loses 1 Tutor Point, and gains any three of the following Poké Edges: Skill Improvement, Advanced Mobility, or Capability Training. A Pokémon may be targeted only once by Empowered Development. The target may gain Poké Edges this way even if they do not meet the prerequisites, however, they must still follow other limitations; Advanced Mobility can only",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Corrective Learning",
+      "tags": [],
+      "prerequisites": "Mentor, Intimidate as a Mentor SkillTarget: A Pokémon that has spent Tutor Points on a",
+      "frequency": "",
+      "effects": "Poké Edge or a Feature’s effect Effect : The target loses one effect gained from a Poké Edge or Feature and refunds all Tutor Points spent on it.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 12384
+      }
+    },
+    {
+      "name": "Versatile Teachings",
+      "tags": [],
+      "prerequisites": "Mentor, Pokémon Education as a Mentor Skill",
+      "frequency": "",
+      "effects": "Target: A Pokémon with at least 1 Tutor Point Effect : The target loses 1 Tutor Point and may exchange",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 12389
+      }
+    },
+    {
+      "name": "Gleeful Interference",
+      "tags": [],
+      "prerequisites": "Cheer Brigade, Adept Charm1 AP – Free Action",
+      "frequency": "",
+      "effects": "Trigger: Y our Pokémon with the Friend Guard Ability hits a foe with a damaging attackEffect : The triggering foe gains a -2 penalty to Accuracy for one full Round.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 12484
+      }
+    },
+    {
+      "name": "Inspirational Support",
+      "tags": [],
+      "prerequisites": "Cheer Brigade, Adept CharmStatic",
+      "frequency": "Effect : Y ou may trigger Cheerleader as a Free Action",
+      "effects": "when your Pokémon with Friend Guard activate an Ability or Status Move that affects only allies. Note : When considering effects that could trigger Cheerleader this way, aside from the obvious Moves like",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Type Methodology",
+      "tags": [],
+      "prerequisites": "Effective Methods, Adept FocusScene x2 – Free Action",
+      "frequency": "",
+      "effects": "Trigger: See Effect Effect : Effects depend on whether your Pokémon has the Tolerance or Exploit ability. »Whenever your Pokémon with Tolerance takes Super-Effective damage from a Tagged foe, your Pokémon may lose 2 Momentum to Resist that attack one step. »Whenever your Pokémon with Exploit deals Resisted damage to a Tagged foe, your Pokémon",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 12567
+      }
+    },
+    {
+      "name": "Staying Power",
+      "tags": [],
+      "prerequisites": "Enduring SoulScene – Free Action",
+      "frequency": "",
+      "effects": "Trigger: Y our Pokémon Takes a Breather Effect : Y our Pokémon may “Take a Breather” even if",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 12628
+      }
+    },
+    {
+      "name": "Shrug Off",
+      "tags": [],
+      "prerequisites": "Staying PowerStatic",
+      "frequency": "a Shift Action to remove 1 Injury from themselves; this",
+      "effects": "Effect : Once per day, each of your Pokémon may spend may also be activated as a Free Action whenever your Pokémon Take a Breather.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Awareness",
+      "tags": [],
+      "prerequisites": "Enduring Soul, 3 Pokémon with a",
+      "frequency": "Static",
+      "effects": "Defensive Ability* Effect : Y our Pokémon add +2 to all Save Checks.Resilience Prerequisites: Awareness, Expert Athletics or Focus2 AP – Free Action Trigger: Y our Pokémon is hit by a Critical Hit or gains a Status Affliction (or both)Effect : Y our Pokémon does not gain a Status Affliction, and the triggering attack does damage as if it was not a Critical Hit. Resilience may only be used once per target per Scene.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Vim and Vigor",
+      "tags": [],
+      "prerequisites": "Shrug Off, Master Athletics or FocusAt-Will – Extended Action",
+      "frequency": "",
+      "effects": "Target: Y our Pokémon with at least 2 Tutor Points Effect : The target loses 2 Tutor Points, and gains the Vigor Ability.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 12657
+      }
+    },
+    {
+      "name": "Quick Healing",
+      "tags": [],
+      "prerequisites": "Taskmaster",
+      "frequency": "At-Will – Extended Action",
+      "effects": "Effect : Y our Hardened Pokémon may use Quick Healing to remove up to three injuries, and gains two Ticks of Hit Points for each Injury removed this way. Note : The Injury Removal from this Feature counts",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Savage Strike",
+      "tags": [],
+      "prerequisites": "Taskmaster",
+      "frequency": "At-Will – Extended Action",
+      "effects": "Target: Y our Pokémon with at least 2 Tutor Points Effect : The target loses 2 Tutor Points, and gains the Cruelty Ability.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Press On!",
+      "tags": [],
+      "prerequisites": "Taskmaster, Expert IntimidateStatic",
+      "frequency": "",
+      "effects": "Effect : Y our Hardened Pokemon gain the following",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 12828
+      }
+    },
+    {
+      "name": "Stacked Deck",
+      "tags": [],
+      "prerequisites": "Trickster, Adept Guile1 AP – Free Action",
+      "frequency": "",
+      "effects": "Trigger: Y our Pokémon hits a foe suffering from a",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 12882
+      }
+    },
+    {
+      "name": "condition. Flourish",
+      "tags": [],
+      "prerequisites": "Trickster",
+      "frequency": "Static",
+      "effects": "Effect : Y our Pokémon’s Status-Class Moves that affect",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 12907
+      }
+    },
+    {
+      "name": "Sleight",
+      "tags": [],
+      "prerequisites": "4 Trickster Features, Master GuileScene x2 – Free Action",
+      "frequency": "Interrupt to immediately take their turn and use a Status-",
+      "effects": "Effect : Y our Pokémon may activate Sleight as an Class Move as a Standard Action. If this Move targets",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Focus",
+      "tags": [],
+      "prerequisites": "3 Pokémon with the chosen stat at 20 or higher, Novice Command or FocusStatic",
+      "frequency": "",
+      "effects": "Effect : Y our Pokémon have their Chosen Base Stat increased by +1, and by +1 more for every 10 Levels they have (for example, a Level 20 Pokémon would have your Chosen Stat’s base value increased by +3). Additionally, your Pokémon may ignore Base Relations, as long as they are adding to the Stat chosen for Stat Ace, and you do not need to “correct” Stats due to this inflated Stat Value. Note : When you take Stat Ace, choose Attack, Defense, Special Attack, Special Defense, or Speed. This becomes your Pokémon’s Chosen Stat. Y ou may take Stat Ace multiple times, choosing different Stats each time. If using Style Expert to qualify for Stat Ace, your Chosen Stat must be the Stat that correlates to your Chosen Contest Stat. Beauty is Special Attack, Cool is Attack, Cute is Speed, Smart is Special Defense, and Tough is Defense.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13004
+      }
+    },
+    {
+      "name": "Enticing Beauty",
+      "tags": [],
+      "prerequisites": "Beautiful Ballet Rank 1Scene – Free Action",
+      "frequency": "",
+      "effects": "Target: Y our Pokémon Effect : The target acts as a Bait item as if it had the",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13168
+      }
+    },
+    {
+      "name": "Let’s Be Friends!",
+      "tags": [],
+      "prerequisites": "Cute Cuddle Rank 1",
+      "frequency": "Scene – Free Action",
+      "effects": "Target: Y our Pokémon Effect : The target may attempt to improve the disposition of a Wild Pokémon as if making a Charm Check. They",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Learn From Y our Mistakes",
+      "tags": [],
+      "prerequisites": "Smart Scheme Rank 1",
+      "frequency": "Daily x3 – Free Action",
+      "effects": "Trigger: Y our Pokémon fails a Skill Check. Effect : Y our Pokémon may re-roll the Skill Check with",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Insectoid Utility",
+      "tags": [],
+      "prerequisites": "Type Ace, Bug as Chosen Type",
+      "frequency": "Static",
+      "effects": "Effect : Y our Pokémon with the following Capabilities have the upgrades below applied to them. »Threaded: Y our Pokémon may use its Threaded attack to perform the Trip, Grapple, Push and Disarm Combat Maneuvers and ignores Weight and Size restrictions when doing so. »Wallclimber: Immunity to Push and Trip effects. »Naturewalk: Immunity to Slowed or Stuck in its appropriate Terrains. »Sky: Y our Pokémon has a +1 bonus to its Speed Evasion.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Chitin Shield",
+      "tags": [],
+      "prerequisites": "Insectoid Utility, Type Linked Skill at Expert",
+      "frequency": "Daily x3 - Free Action",
+      "effects": "Trigger: Y our Bug-Type Pokémon is hit by a Status-Class Move Effect : The effect misses, and your Pokemon becomes immune to that Move for the rest of the Scene. Chitin Shield may be triggered once per Scene per Pokemon.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Tyrant’s Roar",
+      "tags": [],
+      "prerequisites": "Type Ace, Dragon as Chosen Type",
+      "frequency": "Scene x2 – Free Action",
+      "effects": "Trigger: Y our Pokémon hits with a Dragon-Type Move Effect : Y our Pokémon creates a Burst 2, Slowing all Foes",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Unconquerable",
+      "tags": [],
+      "prerequisites": "Tyrant’s Roar, Type-Linked Skill at",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13459
+      }
+    },
+    {
+      "name": "This Will Not Stand",
+      "tags": [],
+      "prerequisites": "Tyrant’s Roar, Type-Linked Skill at",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13466
+      }
+    },
+    {
+      "name": "Shocking Speed",
+      "tags": [],
+      "prerequisites": "Lockdown, Type-Linked Skill at ExpertScene x2 – Free Action",
+      "frequency": "Move with a Frequency of At-Will as if it had Priority",
+      "effects": "Effect : Y ou may activate this Feature to have your Electric-Type Pokémon may use an Electric-Type (Advanced).",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Fairy Lights",
+      "tags": [],
+      "prerequisites": "Type Ace, Fairy as Chosen Type",
+      "frequency": "At-Will – Special",
+      "effects": "Effect : Y our Fairy-Type Pokemon may activate Fairy Lights as a Standard Action to create 3 Fairy Lights",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Arcane Favor",
+      "tags": [],
+      "prerequisites": "Fairy Lights, Type-Linked Skill at AdeptScene x2 – Free Action",
+      "frequency": "Trigger: Y our Pokémon uses a Fairy-Type Move",
+      "effects": "Effect : Y our Pokémon and all allies on the Field gain a +1 Bonus to all rolls for one full round.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Face Me Whelp",
+      "tags": [],
+      "prerequisites": "Close Quaters Mastery, Type-Linked Skill at Expert",
+      "frequency": "Static",
+      "effects": "Effect : While your Pokémon is adjacent to a foe they",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13551
+      }
+    },
+    {
+      "name": "Smashing Punishment",
+      "tags": [],
+      "prerequisites": "Close Quarters Mastery, Type-Linked Skill at Master",
+      "frequency": "Daily x3 – Free Action",
+      "effects": "Trigger: A Marked Foe provokes an Attack of Opportunity from your Fighting-Type Pokémon Effect : The Attack of Opportunity automatically hits, deals Fighting-Type Damage, and is a Critical Hit.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Brightest Flame",
+      "tags": [],
+      "prerequisites": "Type Ace, Fire as Chosen Type",
+      "frequency": "Static",
+      "effects": "Effect : Y our Pokémon’s damaging Fire-Type Moves Burn their target on a roll of 18+. If a Move already has",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Zephyr Shield",
+      "tags": [],
+      "prerequisites": "Celerity, Type-Linked Skill at ExpertAt-Will – Special",
+      "frequency": "Shield as a Standard Action Interrupt, or as a Shift",
+      "effects": "Effect : Y our Flying-Type Pokémon may activate Zephyr",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13610
+      }
+    },
+    {
+      "name": "Tornado Charge",
+      "tags": [],
+      "prerequisites": "Celerity, Type-Linked Skill at MasterDaily x3 – Special",
+      "frequency": "Effect : Y our Pokémon gains 2 additional Standard",
+      "effects": "Trigger: Y our Pokémon gains Initiative Actions this turn. Y our Pokémon may also Shift between taking each action, so long as their total Movement does not exceed their Movement Capabilities. All three of your Pokémon’s Standard Actions this turn must be used to perform Zephyr Shield, or Flying-Type Moves with a Frequency of At-Will or EOT. Tornado Charge may be used only once per day per Pokémon.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Ghost Step",
+      "tags": [],
+      "prerequisites": "Type Ace, Ghost as Chosen Type",
+      "frequency": "At-Will – Free Action",
+      "effects": "Effect : Y our Ghost-Type Pokémon may activate this Feature by spending a Shift Action to remove themselves",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Boo!",
+      "tags": [],
+      "prerequisites": "Ghost Step, Type-Linked Skill at MasterDaily x3 – Free Action",
+      "frequency": "",
+      "effects": "Trigger: Y our Pokémon reappears after using Ghost",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13657
+      }
+    },
+    {
+      "name": "Foiling Foliage",
+      "tags": [],
+      "prerequisites": "Type Ace, Grass as Chosen TypeAt-Will – Extended Action",
+      "frequency": "Target: Y our Pokémon with a Grass-Type Status Move",
+      "effects": "Effect : Pick a Grass-Type Status-Class Move known by the target. The chosen Move no longer takes up a Move Slot. A Pokémon may have only one Move bypass the Move Limit at a time; if a new Move is chosen for a Pokémon, the previous Move loses this effect.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Enduring Bloom",
+      "tags": [],
+      "prerequisites": "Foiling Foliage, Type-Linked Skill at Expert",
+      "frequency": "Scene x2 – Free Action",
+      "effects": "Trigger: Y our Grass-Type Pokémon is hit by a damaging Bug, Fire, Flying, Ice, or Poison attack that deals Super- Effective Damage Effect : Y our Pokémon gains Temporary Hit Points",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Cross-Pollinate",
+      "tags": [],
+      "prerequisites": "Foiling Foliage, Type-Linked Skill at",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13688
+      }
+    },
+    {
+      "name": "Earthroil",
+      "tags": [],
+      "prerequisites": "Mold the Earth, Type-Linked Skill at Expert",
+      "frequency": "At-Will – Free Action",
+      "effects": "Effect : Y our Ground-Type Pokémon may activate Earthroil as a Shift Action to use a damaging Ground- Type Move as it had a range of Line 4 or Burst 1 instead of its usual range, and as if it had the Groundsource keyword. 1-Target Moves performed this way take a -5 penalty to their Damage Rolls.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Upheaval",
+      "tags": [],
+      "prerequisites": "Mold the Earth, Type-Linked Skill at",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13722
+      }
+    },
+    {
+      "name": "Glacial Ice",
+      "tags": [],
+      "prerequisites": "Type Ace, Ice as Chosen TypeStatic",
+      "frequency": "",
+      "effects": "Effect : Y our Ice-Type Pokémon gain Damage Reduction",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13732
+      }
+    },
+    {
+      "name": "Arctic Zeal",
+      "tags": [],
+      "prerequisites": "Glacial Ice, Type-Linked Skill at Expert.Scene x2 – Free Action",
+      "frequency": "Trigger: Y our Ice-Type Pokémon uses an Ice-Type Move",
+      "effects": "Effect : Y our Pokémon uses the Move Mist as if it were on their Move List. When used this way, in addition to its normal effects, your Ice-Type Pokémon may expend uses of the Mist Blessing to do the following: »As a Swift Action on their turn to cause a foe within",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "New Normal",
+      "tags": [],
+      "prerequisites": "Extra Ordinary, Type-Linked Skill at Expert",
+      "frequency": "Scene x2 – Free Action",
+      "effects": "Trigger: Y our Pokémon hits with a Normal-Type Move with conditional modifiers which increase or decrease",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Miasma",
+      "tags": [],
+      "prerequisites": "Potent Venom, Type-Linked Skill at",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13815
+      }
+    },
+    {
+      "name": "Corrosive Blight",
+      "tags": [],
+      "prerequisites": "Potent Venom, Type-Linked Skill at Master",
+      "frequency": "Daily x3 – Free Action",
+      "effects": "Trigger: Y our Pokémon hits a foe with a Poison-Type Attack Effect : The target gains the Blight Condition for one full",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Psionic Sponge",
+      "tags": [],
+      "prerequisites": "Type Ace, Psychic as Chosen Type",
+      "frequency": "At-Will – Special",
+      "effects": "Effect : Y our Psychic-Type Pokémon may activate Psychic Sponge as a Shift Action to add a Psychic Type Move known by an ally within X meters to their Move",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Psychic Resonance",
+      "tags": [],
+      "prerequisites": "Psionic Sponge, Type-Linked Skill at Expert",
+      "frequency": "Scene x2 – Free Action",
+      "effects": "Trigger: Y our Pokémon hits a foe with a Psychic-Type Status Move Effect : Y our Pokémon may use the Move Encore against the triggering foe, as if it was on their Move List.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Force of Will",
+      "tags": [],
+      "prerequisites": "Psionic Sponge, Type-Linked Skill at",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13861
+      }
+    },
+    {
+      "name": "Gravel Before Me",
+      "tags": [],
+      "prerequisites": "Type Ace, Rock as Chosen TypeAt-Will – Free Action",
+      "frequency": "",
+      "effects": "Trigger: Y our Rock-Type Pokémon misses all targets with a Rock-Type attack, receives an Injury, suffers a Critical Hit, or Faints. Effect : Create a Stealth Rock Hazard adjacent to your Pokémon.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13869
+      }
+    },
+    {
+      "name": "Bigger and Boulder",
+      "tags": [],
+      "prerequisites": "Gravel Before Me, Type-Linked Skill at",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 13875
+      }
+    },
+    {
+      "name": "Gneiss Aim",
+      "tags": [],
+      "prerequisites": "Gravel Before Me, Type-Linked Skill at Master",
+      "frequency": "Daily x3 – Free Action",
+      "effects": "Trigger: Y our Pokémon misses with a Damaging Rock-Type Move Effect : The Move gains the Smite keyword for that use.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Polished Shine",
+      "tags": [],
+      "prerequisites": "Type Ace, Steel as Chosen Type",
+      "frequency": "Static",
+      "effects": "Effect : The Effect Range of your Pokémon’s Steel-Type Moves is increased by +2.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "True Steel",
+      "tags": [],
+      "prerequisites": "Polished Shine, Type-Linked Skill at Master",
+      "frequency": "Daily x3 – Free Action",
+      "effects": "Trigger: Y our Steel-Type Pokémon is hit by a damaging attack Effect : Y our Pokémon gains Damage Reduction against the attack equal to your Type-Linked Skill Rank.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Flood!",
+      "tags": [],
+      "prerequisites": "Type Ace, Water as Chosen Type",
+      "frequency": "At-Will – Free Action",
+      "effects": "Effect : Y our Water-Type Pokemon may activate Flood! as a Shift Action to use a damaging Water-Type Move",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Hits the Spot",
+      "tags": [],
+      "prerequisites": "Chef1 AP – Free Action",
+      "frequency": "",
+      "effects": "Trigger: Y ou or your Pokémon trade in a Digestion Buff Effect : The target gains Temporary Hit Points equal",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14010
+      }
+    },
+    {
+      "name": "Culinary Appreciation",
+      "tags": [],
+      "prerequisites": "ChefAt-Will – Extended Action",
+      "frequency": "",
+      "effects": "Target: Y our Pokémon with at least 2 Tutor Points remainingEffect : The target loses 2 Tutor Points and gains the Gluttony Ability.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14017
+      }
+    },
+    {
+      "name": "Accentuated Taste",
+      "tags": [],
+      "prerequisites": "Chef, Adept IntuitionStatic",
+      "frequency": "",
+      "effects": "Effect : Whenever you create a Snack with a Chef Feature,",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14022
+      }
+    },
+    {
+      "name": "Dietician",
+      "tags": [],
+      "prerequisites": "Chef, Expert IntuitionStatic",
+      "frequency": "",
+      "effects": "Effect : Y our Pokemon can benefit from a maximum of 7 Vitamins.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14045
+      }
+    },
+    {
+      "name": "Dumplings",
+      "tags": [],
+      "prerequisites": "4 Chef Features, Master Intuition",
+      "frequency": "At-Will – Extended Action",
+      "effects": "Ingredient 1 : Leftovers, Preserves, or a Snack made",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14049
+      }
+    },
+    {
+      "name": "Tasty Snacks",
+      "tags": [],
+      "prerequisites": "Chef",
+      "frequency": "",
+      "effects": "Cost : $100 Effect : Y ou create a Salty Surprise, Spicy Wrap, Sour Candy, Dry Wafer, Bitter Treat, or Sweet Confection.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14058
+      }
+    },
+    {
+      "name": "Bait Mixer",
+      "tags": [],
+      "prerequisites": "Culinary AppreciationCost :",
+      "frequency": "",
+      "effects": "$150 or Honey. Effect : Y ou may create Bait. For $50 more, you may",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14111
+      }
+    },
+    {
+      "name": "Preserves",
+      "tags": [],
+      "prerequisites": "Accentuated Taste",
+      "frequency": "",
+      "effects": "Ingredients : $50, any Berry, Herb, or Mushroom Effect : The user creates x2 Units of Preserves from the Berry, Herb, or Mushroom. Preserves have the same effect as the consumable from which they were made.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14119
+      }
+    },
+    {
+      "name": "Leftovers",
+      "tags": [],
+      "prerequisites": "Complex AftertasteCost :",
+      "frequency": "",
+      "effects": "$100 Effect : Y ou create Leftovers.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14124
+      }
+    },
+    {
+      "name": "Observation Party",
+      "tags": [],
+      "prerequisites": "Travel Archive, Adept PerceptionStatic",
+      "frequency": "",
+      "effects": "Effect : While they are in a Location in your Travel Archive, your Pokémon have the Ability you chose when gaining Travel Archive and gain a +2 bonus to Perception Checks to notice the environment.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14179
+      }
+    },
+    {
+      "name": "Dashing Makeover",
+      "tags": [],
+      "prerequisites": "Fashionista Bind 2 AP – Extended Action",
+      "frequency": "",
+      "effects": "Target: A Trainer or Pokémon Effect : When you activate Dashing Makeover, choose",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14226
+      }
+    },
+    {
+      "name": "Style is Eternal",
+      "tags": [],
+      "prerequisites": "Fashionista1 AP – Free Action",
+      "frequency": "their Held Item removed by another effect such as Thief or Covet",
+      "effects": "Trigger: Y our Pokémon is Disarmed or would have Effect : Y our Pokémon instead retains their Held Item. Style is Eternal may only be used once per Scene per Pokémon.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Accessorize",
+      "tags": [],
+      "prerequisites": "Dashing Makeover, one Fashionista Skill at Adept",
+      "frequency": "Static",
+      "effects": "Effect : Y ou may wear and benefit from two Accessory",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14242
+      }
+    },
+    {
+      "name": "Parfumier",
+      "tags": [],
+      "prerequisites": "Fashionista, one Fashionista Skill at",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14250
+      }
+    },
+    {
+      "name": "Contest Trends",
+      "tags": [],
+      "prerequisites": "Fashionista",
+      "frequency": "",
+      "effects": "Effect : Y ou can create Contest Accessories for $750, Contest Fashion Items for $500, and Fancy Clothes for $2500.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14282
+      }
+    },
+    {
+      "name": "Basic Fashion",
+      "tags": [],
+      "prerequisites": "FashionistaCost :",
+      "frequency": "",
+      "effects": "$500 Effect : Y ou create one of the Basic Fashion Items below for which you have the chosen Fashionista Skill. These are Accessory Slot Items and may be used as Held Items by Pokémon.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14287
+      }
+    },
+    {
+      "name": "Breadth of Knowledge",
+      "tags": [],
+      "prerequisites": "Novice General Education",
+      "frequency": "Static",
+      "effects": "Effect : Y ou gain three Skill Edges for which you qualify.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14354
+      }
+    },
+    {
+      "name": "Restorative Science",
+      "tags": [],
+      "prerequisites": "Apothecary",
+      "frequency": "",
+      "effects": "Cost : $100 Effect : Y ou create an Antidote, Paralyze Heal, Awakening, Burn Heal, Ice Heal, or Potion.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14378
+      }
+    },
+    {
+      "name": "Super Cures",
+      "tags": [],
+      "prerequisites": "Patch CureCost :",
+      "frequency": "",
+      "effects": "$200 Effect : Y ou can create Revives and Super Potions.Hyper Cures Prerequisites: Medical TechniquesEffect : Y ou can create Full Heals for $300, Hyper Potions for $400, and Full Restores for $700.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14383
+      }
+    },
+    {
+      "name": "Performance Enhancers",
+      "tags": [],
+      "prerequisites": "Medicinal BlendCost :",
+      "frequency": "",
+      "effects": "$4900 Effect : Y ou create a PP Up or Heart Booster. If you have a Heart Scale, you may destroy the Heart Scale to create a Heart Booster without paying the monetary cost.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14390
+      }
+    },
+    {
+      "name": "Apothecary",
+      "tags": [],
+      "prerequisites": "Novice Medicine EducationAt-Will – Extended Action",
+      "frequency": "",
+      "effects": "Effects : Y ou gain use any Apothecary Recipe for which you qualify.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14396
+      }
+    },
+    {
+      "name": "Patch Cure",
+      "tags": [],
+      "prerequisites": "Apothecary, Adept Medicine Education",
+      "frequency": "At-Will – Extended Action",
+      "effects": "Target: A Restorative Item Effect : Y ou distill the target, gaining 3 Restorative",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Medicinal Blend",
+      "tags": [],
+      "prerequisites": "Apothecary, Master Medicine Education",
+      "frequency": "At-Will – Extended Action",
+      "effects": "Ingredients : Two Restoratives, or a Restorative and an",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14413
+      }
+    },
+    {
+      "name": "Crystal Artificer",
+      "tags": [],
+      "prerequisites": "Gem Lore",
+      "frequency": "At-Will – Extended Action",
+      "effects": "Effects : Y ou may use any Crystal Artificer Recipe for which you qualify.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Crystal Resonance",
+      "tags": [],
+      "prerequisites": "Crystal Artificer, Skill Stunt (Dowsing)",
+      "frequency": "Static",
+      "effects": "Effect : Y ou roll an additional 3d6 when determining how many Shards you find when Dowsing.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Rainbow Light",
+      "tags": [],
+      "prerequisites": "Crystal Artificer, Expert Occult",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14434
+      }
+    },
+    {
+      "name": "Type Booster",
+      "tags": [],
+      "prerequisites": "Crystal ArtificerIngredients : x4 Shards of the same Color",
+      "frequency": "",
+      "effects": "Effects : Y ou create a Type Booster. The Type chosen must be one of the Types associated with the color of the shards used.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14451
+      }
+    },
+    {
+      "name": "Type Brace",
+      "tags": [],
+      "prerequisites": "Crystal ArtificerIngredients : x4 Shards of the same Color",
+      "frequency": "",
+      "effects": "Effects : Y ou create a Type Brace. The Type chosen must be one of the Types associated with the color of the shards used.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14455
+      }
+    },
+    {
+      "name": "Focus Gem",
+      "tags": [],
+      "prerequisites": "Crystal ResonanceIngredients : Any Six Shards.",
+      "frequency": "",
+      "effects": "Effect : Y ou create a Focus that may crafted to be worn",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14459
+      }
+    },
+    {
+      "name": "Rainbow Gem",
+      "tags": [],
+      "prerequisites": "Rainbow Light, Expert Occult EducationIngredients : Two Shards of each Color.",
+      "frequency": "",
+      "effects": "Effect : Y ou create a Rainbow Gem that may crafted to",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14465
+      }
+    },
+    {
+      "name": "Herb Lore",
+      "tags": [],
+      "prerequisites": "Seed Bag Rank 1Static",
+      "frequency": "",
+      "effects": "Effect : Y ou may create Energy Powder, Heal Powder, or Poultices from ingredients, as listed below. Energy Powder: A Sitrus Berry or Tiny Mushroom creates x2 Energy Powders. An Energy Root creates x3 Energy Powders. Heal Powder : A Lum Berry or Big Mushroom creates x2",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14503
+      }
+    },
+    {
+      "name": "Chemist",
+      "tags": [],
+      "prerequisites": "Repel Crafter",
+      "frequency": "At-Will – Extended Action",
+      "effects": "Effect : Y ou may craft any Chemistry Recipe for which you qualify using your Chemistry Set.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Chemical Warfare",
+      "tags": [],
+      "prerequisites": "Chemist, Adept Technology Education",
+      "frequency": "Scene x2 – Free Action",
+      "effects": "Trigger: Y ou throw a Pester Ball Effect : The Pester Ball creates a Blast 2, affecting all targets in the area.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Enhancers",
+      "tags": [],
+      "prerequisites": "ChemistCost :",
+      "frequency": "",
+      "effects": "$100 Effect: Y ou can create any X-Item, Dire Hit, or Guard Spec. Pester Balls: Disorient Prerequisites: Chemist Cost : $50 Effect : Y ou create Pester Balls that can inflict Rage or Confusion.Pester Balls: Pain Prerequisites: Chemical WarfareCost : $50 Effect : Y ou create Pester Balls that can inflict Burn or Poison. Pester Balls: Shut Down Prerequisites: Caustic ChemistryCost : $50 Effect : Y ou create Pester Balls that can inflict Paralysis or Sleep.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14551
+      }
+    },
+    {
+      "name": "Climatology",
+      "tags": [],
+      "prerequisites": "Novice Survival",
+      "frequency": "Static",
+      "effects": "Effect : Y ou gain the Overcoat Ability.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14572
+      }
+    },
+    {
+      "name": "Weather Systems",
+      "tags": [],
+      "prerequisites": "Climatology, Expert SurvivalAt-Will – Extended Action",
+      "frequency": "",
+      "effects": "Target: Y our Pokemon with at least 2 Tutor Point Effect : Y our Pokemon loses 2 Tutor Points, and learns",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14584
+      }
+    },
+    {
+      "name": "Witch Hunter",
+      "tags": [],
+      "prerequisites": "Novice Occult EducationStatic",
+      "frequency": "",
+      "effects": "Effect : Y ou gain the “Psionic Sight” Feature, even if you",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14607
+      }
+    },
+    {
+      "name": "Psionic Analysis",
+      "tags": [],
+      "prerequisites": "Witch Hunter, Master Occult Education",
+      "frequency": "Scene – Extended Action",
+      "effects": "Effect : Y ou are able to analyze Psychic Residue and can",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14613
+      }
+    },
+    {
+      "name": "Immutable Mind",
+      "tags": [],
+      "prerequisites": "Mental Resistance, Expert Occult Education",
+      "frequency": "Scene – Free Action",
+      "effects": "Trigger: Y ou’re hit by a Psychic, Ghost, or Dark-Type Move Effect : If the triggering Move was a Status-Class Move, the Move fails. If the Triggering Move was a Damaging Move with a Secondary Effect that triggers on a certain roll, you are immune to the secondary effect.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Genetic Memory",
+      "tags": [],
+      "prerequisites": "Ancient Heritage, Expert Pokémon Education",
+      "frequency": "Daily x2 – Extended Action",
+      "effects": "Target: Y our Fossil Pokémon with at least 2 Tutor Points remaining Effect : The target loses 2 Tutor Points and learns any Move from its Egg Move or Tutor Move List. Genetic Memory may target a Pokémon only twice: once with a Tutor Move and once with an Egg Move. Egg Moves tutored this way do not count against the limit of 3 for TM and Tutor Moves. Prehistoric Bond Prerequisites: Fossil Restoration, Expert Pokémon Education At-Will – Extended Action Target: The remains of a Fossil you revivedEffect : Y ou also produce a Held Item from the remnants of the Fossil. The effect of this Held Item is based on the highest Base Stat of the individual Pokémon being Revived, counting the effects of Nature but no other effects that alter Base Stats. If there is a tie, the GM decides which Base Stat is used. This Held Item may only be used by Pokémon revived from Fossils. HP – Relic Crown: The holder gains a +2 Bonus to all Save Checks. Attack – Primal Frame: The holder’s damaging attacks have their Critical Hit Range extended by +1.Defense – Prehistoric Razors: When a foe hits the",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Pusher",
+      "tags": [],
+      "prerequisites": "Novice Pokémon Education",
+      "frequency": "Static",
+      "effects": "Effect : Y our Pokémon gain the Basic Ranged Attacks,",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14680
+      }
+    },
+    {
+      "name": "Untrained.Skill Trainer",
+      "tags": [],
+      "prerequisites": "PusherAt-Will – Free Action",
+      "frequency": "",
+      "effects": "Trigger: Y ou Train your Pokémon Effect : For each of your Pokémon that has been Trained during this time, choose a Skill; that Skill becomes Pushed until an Extended Rest is taken. Pokémon rolls +1d6 with Pushed Skills, unless that would cause you to roll more than 6d6; if so, that Pokémon rolls with a +3 Bonus instead. A Pokémon may have only one Pushed Skill at a time.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14694
+      }
+    },
+    {
+      "name": "Re-Balancing",
+      "tags": [],
+      "prerequisites": "Pusher, Master Pokémon EducationAt-Will – Extended Action",
+      "frequency": "",
+      "effects": "Target: A Pokémon with 2 Tutor Points Effect : The target loses 2 Tutor Points, and gains one of the following: +1 to all Base Stats, +2 to two different Base Stats, or +3 to a single Base Stat. The target then redistributes their Stat Points. A Pokémon may be targeted by Re-Balancing only once.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 14703
+      }
+    },
+    {
+      "name": "My Kung-Fu is Stronger",
+      "tags": [],
+      "prerequisites": "Martial Training Rank 1",
+      "frequency": "At-Will – Free Action",
+      "effects": "Trigger: A foe provokes an Attack of Opportunity Effect : Y ou may use Rock Smash instead of an unarmed",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Martial Achievement",
+      "tags": [],
+      "prerequisites": "Martial Artist",
+      "frequency": "Static",
+      "effects": "Effect : Y ou gain a Martial Achievement based on your",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 15176
+      }
+    },
+    {
+      "name": "Wrestlemania",
+      "tags": [],
+      "prerequisites": "Guts Ability1 AP – Swift Action",
+      "frequency": "",
+      "effects": "Trigger: Y ou begin your turn with Dominance in a GrappleEffect : This turn, you may perform two different Grappling Effects as a Full Action instead of just one.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 15186
+      }
+    },
+    {
+      "name": "Heightened Intensity",
+      "tags": [],
+      "prerequisites": "Inner Focus Ability2 AP – Shift Action",
+      "frequency": "Effect : Y ou may use Focus Energy as a Free Action",
+      "effects": "",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 15191
+      }
+    },
+    {
+      "name": "Pummeling Momentum",
+      "tags": [],
+      "prerequisites": "Iron Fist Ability",
+      "frequency": "1 AP – Free Action",
+      "effects": "Trigger: Y ou hit a foe with a Move affected by Iron Fist Effect : Y ou Tag the triggering foe and gain a +1 bonus to your Accuracy Rolls and Evasion against that foe.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Whirlwind Strikes",
+      "tags": [],
+      "prerequisites": "Technician1 AP – Full Action",
+      "frequency": "",
+      "effects": "Effect : Y ou may use Rock Smash, targeting against any",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 15215
+      }
+    },
+    {
+      "name": "Power Chord",
+      "tags": [],
+      "prerequisites": "Noise Complaint, Master Charm or Focus",
+      "frequency": "Scene x2 – Free Action",
+      "effects": "Trigger: Y ou play a SongEffect: Make a Charm or Focus Check, and add your",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Shared Senses",
+      "tags": [],
+      "prerequisites": "Channeler",
+      "frequency": "Bind 1 AP – Swift Action",
+      "effects": "Target: A Channeled Pokémon Effect : Y ou Imprint the target for the duration of this",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "calculations. Soothing Connection",
+      "tags": [],
+      "prerequisites": "Pain Dampening, Master IntuitionDaily x2 – Standard Action",
+      "frequency": "",
+      "effects": "Target: Channeled Pokémon Effect : Distribute 5 points in any way among Pokémon",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 15713
+      }
+    },
+    {
+      "name": "Ninja’s Arsenal",
+      "tags": [],
+      "prerequisites": "NinjaAt-Will – Extended Action",
+      "frequency": "",
+      "effects": "Effect : Y ou may craft an Antidote, Smoke Ball, Caltrops,",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 15794
+      }
+    },
+    {
+      "name": "Skill Improvement",
+      "tags": [],
+      "prerequisites": "None",
+      "frequency": "",
+      "effects": "Cost : 1 Tutor Point Effect : Rank up one Skill that is currently at or below its default level for the species. This Edge may be taken multiple times, each time selecting a different Skill. Note : If Evolution or another permanent effect would cause the Skill Rank to go beyond 6, this Poké Edge is refunded.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16534
+      }
+    },
+    {
+      "name": "Attack Conflict",
+      "tags": [],
+      "prerequisites": "None",
+      "frequency": "",
+      "effects": "Cost : 1 Tutor Points Effect : Select Attack or Special Attack. From now on,",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16542
+      }
+    },
+    {
+      "name": "be clear.Underdog’s Strength",
+      "tags": [],
+      "prerequisites": "Level 15, User is an Underdog PokémonCost : 1 Tutor Point",
+      "frequency": "",
+      "effects": "Effect : The user has each of their Base Stats increased by +1. The user may no longer undergo Evolution.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16560
+      }
+    },
+    {
+      "name": "Realized Potential",
+      "tags": [],
+      "prerequisites": "Level 30, User is an Underdog PokémonCost : 2 Tutor Points",
+      "frequency": "",
+      "effects": "Effect : Subtract the user’s Species Base Stat Total from",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16564
+      }
+    },
+    {
+      "name": "Ability Mastery",
+      "tags": [],
+      "prerequisites": "Level 60",
+      "frequency": "",
+      "effects": "Cost : 3 Tutor Points Effect : The Pokémon gains an additional Ability, picked from any Ability it could naturally qualify for.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16576
+      }
+    },
+    {
+      "name": "Advanced Connection",
+      "tags": [],
+      "prerequisites": "An Ability with the Connection KeywordCost : 1 Tutor Point",
+      "frequency": "that the target has; the Connected Move no longer takes up a Move Slot for the user.",
+      "effects": "Effect : Choose an Ability with the Connection Keyword Pokémon205Accuracy Training Prerequisites: Level 20 Cost : 1 Tutor Point Effect : Pick a Move with an AC of 3 or higher; the AC of the target Move is permanently lowered by 1. This Poké Edge may be taken up to three times, each time selecting a different Move.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Underdog’s Lessons",
+      "tags": [],
+      "prerequisites": "Underdog’s Strength",
+      "frequency": "Effect : Choose a Level-Up Move from one of the user’s",
+      "effects": "Cost : 1 Tutor Point Final Evolutions that it can learn at or below its current Level. The user learns that Move as if it were a Level- Up Move and can now learn Moves from TMs, HMs,",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Capability Training",
+      "tags": [],
+      "prerequisites": "Level 20Cost : 1 Tutor Point",
+      "frequency": "",
+      "effects": "Effect : Increase Power or a Jump Capability by 1. Capability Training may be taken multiple times, each time increasing a different Capability.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16604
+      }
+    },
+    {
+      "name": "Advanced Mobility",
+      "tags": [],
+      "prerequisites": "Level 20Cost : 1 Tutor Point",
+      "frequency": "Effect : Increase one Movement Capability by 2. This",
+      "effects": "Edge may be taken multiple times, but may not be applied more than once to the same Movement Capability.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.8,
+      "verdict": "keep",
+      "verification": {
+        "status": "assumed",
+        "reason": "confidence >= 0.8"
+      }
+    },
+    {
+      "name": "Basic Ranged Attacks",
+      "tags": [],
+      "prerequisites": "Level 20, one of Firestarter, Fountain, Freezer, Guster, Materializer, or Zapper",
+      "frequency": "",
+      "effects": "Cost : 1 Tutor Point Effect : Choose one of the Capabilities listed in the prerequisites for this Poké Edge. Struggle Attacks modified by that Capability may now be made at a range of up to 6 meters. This Poké Edge may be taken multiple times, selecting a different Capability each time.Aura Pulse Prerequisites: Level 30, Aura Reading, owned by a Trainer with Aura Pulse Cost : 2 Tutor Points Effect : The Pokémon gains the Aura Pulse Capability.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16612
+      }
+    },
+    {
+      "name": "Enticing Bait",
+      "tags": [],
+      "prerequisites": "Level 20, Alluring Capability",
+      "frequency": "",
+      "effects": "Cost : 1 Tutor Point Effect : When activating the Alluring Capability, the user adds the higher of its Athletics or Focus Ranks to its d20 roll.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16621
+      }
+    },
+    {
+      "name": "Extended Invisibility",
+      "tags": [],
+      "prerequisites": "Level 20, Invisibility CapabilityCost : 1 Tutor Point",
+      "frequency": "",
+      "effects": "Effect : The user may remain Invisible for up to 8 minutes.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16626
+      }
+    },
+    {
+      "name": "Far Reading",
+      "tags": [],
+      "prerequisites": "Level 20, Telepath CapabilityCost : 1 Tutor Point",
+      "frequency": "",
+      "effects": "Effect : The user treats their Focus Rank as 2 higher for the purposes of determining the range of Telepath.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16630
+      }
+    },
+    {
+      "name": "Precise Threadings",
+      "tags": [],
+      "prerequisites": "Level 20, Threaded CapabilityCost : 1 Tutor Point",
+      "frequency": "",
+      "effects": "Effect : The user may use their Threaded Capability at a range of 6 meters and with an AC of 3 rather than 6.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16634
+      }
+    },
+    {
+      "name": "Seismometer",
+      "tags": [],
+      "prerequisites": "Level 20, Tremorsense CapabilityCost : 1 Tutor Point",
+      "frequency": "",
+      "effects": "Effect : The user’s Tremorsense range is increased by a number of meters equal to their Perception Rank.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16638
+      }
+    },
+    {
+      "name": "TK Mastery",
+      "tags": [],
+      "prerequisites": "Level 20, Telekinetic CapabilityCost : 1 Tutor Point",
+      "frequency": "",
+      "effects": "Effect : The user treats their Focus Rank as 2 higher for the purposes of the Telekinetic Capability.",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16642
+      }
+    },
+    {
+      "name": "Trail Sniffer",
+      "tags": [],
+      "prerequisites": "Level 20, Tracker CapabilityCost : 1 Tutor Point",
+      "frequency": "",
+      "effects": "Effect : The user gets a bonus to all Perception Rolls to use the Tracker Capability equal to their Focus Rank. Pokémon206",
+      "source_pdf": "content.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\content.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 16646
+      }
+    },
+    {
+      "name": "Gravity Training",
+      "tags": [],
+      "prerequisites": "Novice Athletics or FocusEffect : Y ou gain the Gravitic Tolerance capability at",
+      "frequency": "",
+      "effects": "a value of 1-3 or 2-4.",
+      "source_pdf": "Do Porygon Dream of Mareep.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Do Porygon Dream of Mareep.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 577
+      }
+    },
+    {
+      "name": "Psychic Navigator",
+      "tags": [],
+      "prerequisites": "Elemental Connection (Psychic), Adept Perception or FocusEffect : Y ou gain the Psychic Navigator Capability. Gravity TrainingPrerequisites: NoneCost : 1 Tutor Point",
+      "frequency": "",
+      "effects": "Effect : The Pokémon gains two steps to allocate in any direction to expand its Gravitic Tolerance capa-bility. If it has none, it may acquire one by allocating steps starting from its Home Gravity.",
+      "source_pdf": "Do Porygon Dream of Mareep.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Do Porygon Dream of Mareep.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 580
+      }
+    },
+    {
+      "name": "Vehicle Training",
+      "tags": [],
+      "prerequisites": "Appropriate body typeCost : 1 Tutor Point",
+      "frequency": "Effect : The Pokémon may drive vehicles that are appropriately outfitted to the species as a standard action.",
+      "effects": "Note that with the aid of psionic materials, “appropriate body type” here may simply mean a Pokémon of the Psychic Type. Pokémon with the Wired Capability do not require this Pokémon Edge in order to con-trol vehicles so long as they can get direct access to the electronics and control system for the vehicle in question. Wired Pokémon may also natively access and control weapons systems that are built into vehicles. Consider expanding these qualifications to include Pokémon that have received the Datajack Augmentation as well, depending on the tech level of the setting and thus sophistication of the Augmentation.",
+      "source_pdf": "Do Porygon Dream of Mareep.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Do Porygon Dream of Mareep.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 1509
+      }
+    },
+    {
+      "name": "Digital Avatar",
+      "tags": [],
+      "prerequisites": "Datajack AugmentationCost : 1 Tutor Point",
+      "frequency": "",
+      "effects": "Effect : The Pokémon may dive into computer systems and networks and gains a 2d6 in Technology Education.",
+      "source_pdf": "Do Porygon Dream of Mareep.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Do Porygon Dream of Mareep.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 1635
+      }
+    },
+    {
+      "name": "Glitched Existence",
+      "tags": [],
+      "prerequisites": "Exposure to Glitch Phenomena, GM PermissionEffect : Y ou gain +2 to all Skill rolls to deal with",
+      "frequency": "",
+      "effects": "Glitch phenomena.",
+      "source_pdf": "Do Porygon Dream of Mareep.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Do Porygon Dream of Mareep.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 1781
+      }
+    },
+    {
+      "name": "Shock Resistance",
+      "tags": [],
+      "prerequisites": "Novice Technology Education",
+      "frequency": "",
+      "effects": "Effect : Y ou don’t suffer Augmentation Shock from Electric Type damage unless it is Massive Damage. Chapter Three: Trainer Classes",
+      "source_pdf": "Do Porygon Dream of Mareep.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Do Porygon Dream of Mareep.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 1799
+      }
+    },
+    {
+      "name": "Type Sync",
+      "tags": [],
+      "prerequisites": "Elemental Connection; a Type-Linked Class*; Adept Medicine, Occult, or Tech Education. Special – Extended ActionTarget: Y our PokémonEffect : The Target gains the Type of your Elemental",
+      "frequency": "",
+      "effects": "Connection as an additional Type, or has one of their Types replaced by that Type. See the Type Changes section (page 436) for more information and sugges-tions. A Pokémon may be targeted by Type Sync only once. This Feature may be performed One Time for each Rank above Untrained you have of your highest of Medicine, Occult, or Tech Education, up to a max-imum of 4 times at Master Rank. *Type-Linked Classes include Type Ace and all Elementalist Classes, all of which are linked to their respective Types. Additionally, Aura Guardian is linked to Fighting; and Telekinetic, Telepath, and Warper are linked to Psychic. Obviously, your Type Linked Class must match your Elemental Connection to apply for Type Sync!Pokémon Edges Digital AvatarPrerequisites: Datajack AugmentationCost : 1 Tutor Point Effect : The Pokémon may dive into computer sys- tems and networks and gains a 3d6 in Technology Education if it did not previously have a Technology Education Skill.",
+      "source_pdf": "Do Porygon Dream of Mareep.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Do Porygon Dream of Mareep.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 1806
+      }
+    },
+    {
+      "name": "Fusion Cases",
+      "tags": [],
+      "prerequisites": "Jailbreaker, Master Technology Edu-cationAt-Will – Extended ActionIngredients : Two different types of Poké Ball Cases.",
+      "frequency": "single Fusion Case with both effects and types. Fu-sion Cases may not be used as Ingredients for this Feature. Case SpecialistPrerequisites: Jailbreaker, Adept Technology Educa-tion1 AP – Swift ActionTrigger: Y ou hit a target with a Poké Ball with a Spray, Flash, Bounce, or Zap Case applied to it.Effect : The Case has additional effects according to",
+      "effects": "Effect : Y ou combine the two Poké Ball Cases into a its type(s). • Spray Case : After resolving the effects of the Case, the target loses a Tick of Health Points for each Persistent or Volatile Status Affliction they have. This may only affect a target once per Scene. • Flash Case: The Case uses the Move Flash as a Burst 2 instead of a Cone 2 • Bounce Case: The Poké Ball bounces an addi-tional time. This may not cause it to hit a target more than once. • Zap Case: The target can only use At-Will actions until the end of their next turn. This may only affect a target once per Scene. Jailbreaker Research Field Basic CasesPrerequisites: JailbreakerEffect : Y ou may create a Contest Case, Lock Case, or",
+      "source_pdf": "Do Porygon Dream of Mareep.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\Do Porygon Dream of Mareep.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 1938
+      }
+    },
+    {
+      "name": "Handyman",
+      "tags": [],
+      "prerequisites": "prerequisites for Books.Hat Trick",
+      "frequency": "StaticEffect : Whenever you use an item or a non-Weapon",
+      "effects": "piece of equipment which calls for a Skill Check or has an effect or prerequisite based on a Skill Rank, you may substitute Survival for the used Skill. This does not affect Static Effect : While wearing Head Equipment worth at least $1000, you gain 15 Damage Reduction against Critical",
+      "source_pdf": "PTU May 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU May 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 92
+      }
+    },
+    {
+      "name": "I Meant to Do That",
+      "tags": [],
+      "prerequisites": "Improvised Gadgets, Adept Technology",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "PTU May 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU May 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 137
+      }
+    },
+    {
+      "name": "Enhanced Capsules",
+      "tags": [],
+      "prerequisites": "Capsule Science, Master Technology",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "PTU May 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU May 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 173
+      }
+    },
+    {
+      "name": "Bookworm",
+      "tags": [],
+      "prerequisites": "Breadth of Knowledge",
+      "frequency": "Static",
+      "effects": "Effect : Y ou gain X Study Points, where X is equal to 2",
+      "source_pdf": "PTU May 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU May 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 263
+      }
+    },
+    {
+      "name": "Front Line Healer",
+      "tags": [],
+      "prerequisites": "Medic",
+      "frequency": "Static",
+      "effects": "Effect : When you apply a Restorative, you gain +5",
+      "source_pdf": "PTU September 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU September 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 154
+      }
+    },
+    {
+      "name": "Medical Techniques",
+      "tags": [],
+      "prerequisites": "Medic, Adept Medicine Education1 AP – Free Action",
+      "frequency": "",
+      "effects": "Trigger: Y ou apply a Restorative Item Effect : The target of the triggering action gains a Tick",
+      "source_pdf": "PTU September 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU September 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 162
+      }
+    },
+    {
+      "name": "Proper Care",
+      "tags": [],
+      "prerequisites": "I’m a Doctor, Field Clinic, Expert",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "PTU September 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU September 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 176
+      }
+    },
+    {
+      "name": "Nurse",
+      "tags": [],
+      "prerequisites": "Expert Medicine Education",
+      "frequency": "Drain 2 AP – Free Action",
+      "effects": "Trigger: Y ou take an Extended Rest Effect : During this Extended Rest, Pokémon and",
+      "source_pdf": "PTU September 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU September 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 231
+      }
+    },
+    {
+      "name": "Mixed Power",
+      "tags": [],
+      "prerequisites": "Level 10, Invested at least 5 Level-Up Stat",
+      "frequency": "",
+      "effects": "",
+      "source_pdf": "PTU September 2015 Playtest Packet.pdf",
+      "source_pdf_path": "C:\\Users\\tefa1\\AutoPTU\\files\\rulebook\\PTU September 2015 Playtest Packet.pdf",
+      "confidence": 0.9,
+      "verdict": "keep",
+      "verification": {
+        "status": "confirmed",
+        "reason": "name + prerequisites + effect within 12 lines",
+        "line_index": 279
+      }
+    }
+  ],
+  "skills": []
+}

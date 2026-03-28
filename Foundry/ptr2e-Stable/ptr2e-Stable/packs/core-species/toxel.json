@@ -1,0 +1,282 @@
+{
+  "name": "toxel",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "poison",
+      "electric"
+    ],
+    "stats": {
+      "hp": 40,
+      "atk": 38,
+      "def": 35,
+      "spa": 54,
+      "spd": 35,
+      "spe": 40
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "growl",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acid",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flail",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "belch",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "nuzzle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tearful-look",
+          "level": 1,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "endeavor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "metal-sound",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "power-up-punch",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "encore",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.4,
+      "weight": 11,
+      "category": "tiny",
+      "type": "height"
+    },
+    "captureRate": 135,
+    "eggGroups": [
+      "no-eggs"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "toxel",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "toxtricity",
+          "uuid": "Compendium.ptr2e.core-species.Item.snM71ATVvgDT7QMq",
+          "methods": [
+            {
+              "type": "level",
+              "level": 30,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.0G61OYdWnLgfB6NB"
+    },
+    "number": 848,
+    "traits": [
+      "pokemon",
+      "quadrupedal",
+      "lumbering",
+      "underdog",
+      "venomous",
+      "zapper",
+      "jump-1"
+    ],
+    "diet": [
+      "waste"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "toxtricified"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "rattled"
+        },
+        {
+          "slug": "static"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "klutz"
+        },
+        {
+          "slug": "punk-rock"
+        }
+      ],
+      "master": [
+        {
+          "slug": "amplifier"
+        },
+        {
+          "slug": "boom-box"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 4
+      }
+    ],
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "grassland",
+      "badland",
+      "swamp"
+    ],
+    "slug": "toxel",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "0G61OYdWnLgfB6NB",
+  "effects": [],
+  "folder": null
+}

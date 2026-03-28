@@ -1,0 +1,150 @@
+{
+  "name": "Bleakwind Storm",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "system": {
+    "slug": "bleakwind-storm",
+    "actions": [
+      {
+        "slug": "bleakwind-storm",
+        "name": "Bleakwind Storm",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "wind",
+          "blast-4"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 80,
+        "types": [
+          "flying"
+        ],
+        "description": "<p>Effect: On hit, all valid targets have a 60% chance of being Flinched.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "bleakwind-storm-blowing",
+        "name": "Bleakwind Storm (Blowing)",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "wind",
+          "blast-4",
+          "environ",
+          "danger-close"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8,
+          "trigger": "Snowy or Windy Weather is present."
+        },
+        "category": "special",
+        "power": 100,
+        "accuracy": 100,
+        "types": [
+          "flying"
+        ],
+        "description": "<pTrigger: Snowy or Windy Weather is present.</p><p>Effect: On hit, all valid targets have a 60% chance of being Flinched.</p>",
+        "variant": "bleakwind-storm",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "4stUbCaYe9XkacsR",
+  "effects": [
+    {
+      "name": "Bleakwind Storm",
+      "type": "passive",
+      "_id": "iDzoKlg1FxuYIuAu",
+      "img": "icons/skills/movement/feet-winged-boots-brown.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "bleakwind-storm-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.advanceffectitem",
+            "predicate": [],
+            "chance": 60,
+            "affects": "target",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.amount",
+                "value": -50
+              },
+              {
+                "mode": 5,
+                "property": "name",
+                "value": "Flinch 50%"
+              }
+            ],
+            "mode": 2,
+            "priority": null,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.2.1",
+        "createdTime": 1737718713006,
+        "modifiedTime": 1737718909961,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS"
+      }
+    }
+  ]
+}

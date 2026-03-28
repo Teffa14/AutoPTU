@@ -1,0 +1,48 @@
+{
+  "name": "Fling",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "fling",
+    "actions": [
+      {
+        "slug": "fling",
+        "name": "Fling",
+        "type": "attack",
+        "traits": [
+          "adaptable",
+          "basic",
+          "fling"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0
+        },
+        "category": "physical",
+        "power": 25,
+        "accuracy": 100,
+        "types": [
+          "untyped"
+        ],
+        "description": "<p>Effect: The Type, Power, Accuracy, and Range of this attack are modified by the Fling stats of the utilized item. When using Fling utilizing a Held creature, Fling's Power, Accuracy, and Range change based on the user and the Flung creature.</p>",
+        "free": true,
+        "img": "systems/ptr2e/img/svg/untyped_icon.svg"
+      }
+    ],
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "flingattackitem0",
+  "effects": [],
+  "folder": "EpCOePz8omfXbp34"
+}

@@ -1,0 +1,81 @@
+{
+  "name": "Sacred Fire",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "slug": "sacred-fire",
+    "actions": [
+      {
+        "slug": "sacred-fire",
+        "name": "Sacred Fire",
+        "type": "attack",
+        "traits": [
+          "defrost",
+          "legendary"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 95,
+        "types": [
+          "fire"
+        ],
+        "description": "<p>Effect: On hit, all valid targets have a 50% chance of gaining @Affliction[burn] 7.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "sacred-fire-burned",
+        "name": "Sacred Fire (Burned)",
+        "type": "attack",
+        "traits": [
+          "defrost",
+          "legendary"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 7,
+          "trigger": "<p>Valid target(s) have @Affliction[burn].</p>"
+        },
+        "category": "physical",
+        "power": 100,
+        "accuracy": 95,
+        "types": [
+          "fire"
+        ],
+        "description": "<p>Trigger: Valid target(s) have @Affliction[burn].</p><p>Effect: On hit, all valid targets have a 50% chance of gaining @Affliction[burn] 7 and a 50% chance of gaining @Affliction[splinter] 7.",
+        "variant": "sacred-fire",
+        "free": true,
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "hoQZlSqWhAC3WujH",
+  "effects": []
+}

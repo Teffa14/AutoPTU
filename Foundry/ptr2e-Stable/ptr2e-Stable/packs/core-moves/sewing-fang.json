@@ -1,0 +1,51 @@
+{
+  "name": "Sewing Fang",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/grass_icon.svg",
+  "system": {
+    "slug": "sewing-fang",
+    "actions": [
+      {
+        "slug": "sewing-fang",
+        "name": "Sewing Fang",
+        "type": "attack",
+        "traits": [
+          "jaw",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "physical",
+        "power": 65,
+        "accuracy": 95,
+        "types": [
+          "grass"
+        ],
+        "description": "<p>Effect: On hit, the target has a 10% chance of gaining @Affliction[leech] 5, and a 10% chance of being Flinched.</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "E",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "WpolCDpAPNZl7wGz",
+  "effects": []
+}

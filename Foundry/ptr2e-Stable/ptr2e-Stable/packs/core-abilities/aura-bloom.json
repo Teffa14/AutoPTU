@@ -1,0 +1,44 @@
+{
+  "name": "Aura Bloom",
+  "type": "ability",
+  "img": "systems/ptr2e/img/perk-icons/Aura.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "aura"
+        ],
+        "name": "Aura Bloom",
+        "slug": "aura-bloom",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "trigger": "<p>The user ends their Activation.</p>"
+        },
+        "range": {
+          "target": "ally",
+          "distance": 1,
+          "unit": "m"
+        },
+        "description": "<p>Trigger: The user ends their Activation.</p><p>Effect: The target's highest stat gains +1 default Stage. If no ally is adjacent, the user's highest stat is instead increased. This effect may only activate affect a creature twice per encounter.</p>"
+      }
+    ],
+    "description": "<p>Trigger: The user ends their Activation.</p><p>Effect: An adjacent ally's highest stat gains +1 default Stage. If no ally is adjacent, the user's highest stat is instead increased. This effect may only activate affect a creature twice per encounter.</p>",
+    "traits": [
+      "aura"
+    ],
+    "slug": "aura-bloom",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "zmYHQjTzHOR6Y7Hd",
+  "effects": []
+}

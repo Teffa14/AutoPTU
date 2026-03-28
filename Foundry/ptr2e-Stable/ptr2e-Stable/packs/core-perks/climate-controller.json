@@ -1,0 +1,96 @@
+{
+  "name": "Climate Controller",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      "item:perk:climate-change"
+    ],
+    "cost": 3,
+    "description": "<p>Trigger: A @Trait[weather] Effect is created by a creature other than a user using an Attack or Ability (but not Intense Weather).</p><p>Effect: The triggering @Trait[weather] is removed, and the triggering creature is @Affliction[delay 20]{Delayed 20%}. If the Effect and its source lack @Trait[legendary], the source creature gains @Affliction[suppressed 5] and the source Attack/Ability is @Affliction[disabled 5] or @Affliction[nullified 5], and is @Affliction[delay 20]{Delayed 20%} further.</p>",
+    "actions": [
+      {
+        "name": "Climate Controller",
+        "slug": "climate-controller-trigger",
+        "description": "<p>Trigger: A @Trait[weather] Effect is created by a creature other than a user using an Attack or Ability (but not Intense Weather).</p><p>Effect: The triggering @Trait[weather] is removed, and the triggering creature is @Affliction[delay 20]{Delayed 20%}. If the Effect and its source lack @Trait[legendary], the source creature gains @Affliction[suppressed 5] and the source Attack/Ability is @Affliction[disabled 5] or @Affliction[nullified 5], and is @Affliction[delay 20]{Delayed 20%} further.</p>",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5,
+          "trigger": "Trigger: A [Weather] Effect is created by a creature other than a user using an Attack or Ability (but not Intense Weather)."
+        },
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "type": "generic",
+        "traits": [
+          "environ",
+          "weather"
+        ],
+        "img": "systems/ptr2e/img/perk-icons/Trainer.svg"
+      },
+      {
+        "name": "Climate Controller",
+        "slug": "climate-controller-passive",
+        "description": "<p>Passive: The user may slot one @Trait[weather] creating Ability as an Extra Ability.</p>",
+        "traits": [
+          "weather"
+        ],
+        "type": "passive",
+        "img": "systems/ptr2e/img/perk-icons/Trainer.svg",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "climate-controller",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 43,
+        "y": 125,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "climate-change",
+          "weaponized-weather",
+          "perpetual-storm",
+          "climate-controller"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Trainer.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "social",
+      "approach": "finesse",
+      "archetype": "climatology"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "Rv0tHo3enp9gvtur",
+  "img": "systems/ptr2e/img/perk-icons/Trainer.svg",
+  "effects": [],
+  "folder": "JifQ0uTghmQ9VBPk"
+}

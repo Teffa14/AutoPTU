@@ -1,0 +1,62 @@
+{
+  "name": "Love Ball",
+  "img": "systems/ptr2e/img/item-icons/love ball.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 3,
+    "crafting": {
+      "skill": "handiwork",
+      "spans": 2,
+      "materials": [
+        "3x-tumblestone",
+        "1x-pink-apricorn"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling",
+      "hunting-ball",
+      "ball"
+    ],
+    "description": "<p>5x Catch Rate modifer if used on a target that is @Affliction[charmed]. 1x Catch Rate modifer otherwise.</p>",
+    "modifier": 5,
+    "quantity": 1,
+    "slug": "love-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "yadrYEhvWoIn8xPb",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

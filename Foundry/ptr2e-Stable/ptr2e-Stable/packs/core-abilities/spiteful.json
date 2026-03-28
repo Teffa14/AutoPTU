@@ -1,0 +1,101 @@
+{
+  "name": "Spiteful",
+  "type": "ability",
+  "img": "systems/ptr2e/img/icons/physical_icon.png",
+  "system": {
+    "actions": [
+      {
+        "traits": [],
+        "name": "Spiteful",
+        "slug": "spiteful",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3,
+          "trigger": "<p>The user misses with a damaging attack.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user misses with a damaging attack</p><p>Effect: The user's ATK is increased by +2 Stages for 5 Activations</p>",
+        "img": "systems/ptr2e/img/icons/physical_icon.png"
+      }
+    ],
+    "description": "<p>Trigger: The user misses with a damaging attack</p><p>Effect: The user's ATK is increased by +2 Stages for 5 Activations",
+    "traits": [],
+    "slug": "spiteful",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "qpowBzbPoxr45uDx",
+  "effects": [
+    {
+      "name": "Spiteful",
+      "type": "passive",
+      "_id": "9lZLWbtrbI1NqKAq",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "spiteful-generic",
+            "value": "Compendium.ptr2e.core-effects.Item.g1Gt9mJWimAqrqZ0",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "self",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1765291507467,
+        "modifiedTime": 1765291531835,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

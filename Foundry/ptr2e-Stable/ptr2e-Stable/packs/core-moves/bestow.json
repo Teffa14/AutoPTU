@@ -1,0 +1,46 @@
+{
+  "name": "Bestow",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/untyped_icon.svg",
+  "system": {
+    "slug": "bestow",
+    "actions": [
+      {
+        "slug": "bestow",
+        "name": "Bestow",
+        "type": "generic",
+        "traits": [
+          "social",
+          "contact",
+          "basic",
+          "manipulate"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "free"
+        },
+        "description": "<p>Effect: The user gives the target a Held Accessory, or Belt Item within Reach (usually possessed by the user or already held by the user). This Action fails if the target does not have an open slot to accept the item. The user may also use the item on the target (as per the Use Action) instead of giving the item to the target.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "0aOZi9y4u82iGUOf",
+  "effects": [],
+  "folder": "EpCOePz8omfXbp34"
+}

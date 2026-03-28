@@ -1,0 +1,54 @@
+{
+  "name": "Oblivion Wing",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/flying_icon.svg",
+  "system": {
+    "slug": "oblivion-wing",
+    "actions": [
+      {
+        "slug": "oblivion-wing",
+        "name": "Oblivion Wing",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "drain-3-4",
+          "ray",
+          "aura"
+        ],
+        "range": {
+          "target": "line",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 80,
+        "accuracy": 100,
+        "types": [
+          "flying",
+          "dark"
+        ],
+        "description": "<p>Effect: This attack is considered both Flying and Dark Type.</p>",
+        "img": "systems/ptr2e/img/svg/flying_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "dByLKnrdqTOoQg2O",
+  "effects": []
+}

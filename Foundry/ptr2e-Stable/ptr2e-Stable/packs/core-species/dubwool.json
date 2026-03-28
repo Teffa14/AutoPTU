@@ -1,0 +1,400 @@
+{
+  "name": "dubwool",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "normal"
+    ],
+    "stats": {
+      "hp": 72,
+      "atk": 80,
+      "def": 100,
+      "spa": 60,
+      "spd": 90,
+      "spe": 88
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "growl",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "defense-curl",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "copycat",
+          "level": 1,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "guard-split",
+          "level": 12,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-kick",
+          "level": 16,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "headbutt",
+          "level": 21,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "take-down",
+          "level": 27,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "guard-swap",
+          "level": 32,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "reversal",
+          "level": 38,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "cotton-guard",
+          "level": 44,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "double-edge",
+          "level": 50,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "last-resort",
+          "level": 56,
+          "gen": "sword-shield"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "grassy-glide",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "swords-dance",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "mega-kick",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-slam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "agility",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rest",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "substitute",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "endure",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "baton-pass",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "facade",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "bounce",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "payback",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "zen-headbutt",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "electro-ball",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "retaliate",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "wild-charge",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "body-press",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "rollout",
+          "gen": "dev"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.3,
+      "weight": 43,
+      "category": "medium",
+      "type": "quad"
+    },
+    "captureRate": 127,
+    "eggGroups": [
+      "ground"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "wooloo",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "dubwool",
+          "uuid": "Compendium.ptr2e.core-species.Item.kgKsQHUxbINMgY0X",
+          "methods": [
+            {
+              "type": "level",
+              "level": 24,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.xMABltSPihKdvSGh"
+    },
+    "number": 832,
+    "traits": [
+      "pokemon",
+      "lumbering",
+      "underdog",
+      "fully-evolved",
+      "wool-production",
+      "cushioned-fall",
+      "pack-mon",
+      "quadrupedal",
+      "jump-4"
+    ],
+    "diet": [
+      "herbivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "fluffy"
+        },
+        {
+          "slug": "steadfast"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "bulletproof"
+        },
+        {
+          "slug": "friend-guard"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "absorbing-down"
+        },
+        {
+          "slug": "grass-pelt"
+        }
+      ],
+      "master": [
+        {
+          "slug": "battle-armor"
+        },
+        {
+          "slug": "overcoat"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "overland",
+        "value": 9
+      },
+      {
+        "type": "swim",
+        "value": 4
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "leadership",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "swim",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "field",
+      "grassland"
+    ],
+    "slug": "dubwool",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "kgKsQHUxbINMgY0X",
+  "effects": [],
+  "folder": null
+}

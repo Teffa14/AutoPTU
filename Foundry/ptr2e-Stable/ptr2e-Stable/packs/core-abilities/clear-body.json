@@ -1,0 +1,43 @@
+{
+  "name": "Clear Body",
+  "type": "ability",
+  "img": "icons/magic/defensive/shield-barrier-flaming-diamond-blue-yellow.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive"
+        ],
+        "name": "Clear Body",
+        "slug": "clear-body",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m"
+        },
+        "description": "<p>Effect: The user ignores negative [Stage Change] effects.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user ignores negative [Stage Change] effects.</p>",
+    "traits": [
+      "defensive"
+    ],
+    "slug": "clear-body",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "mPXwSVDLwuQlSIoH",
+  "effects": []
+}

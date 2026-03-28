@@ -1,0 +1,161 @@
+{
+  "id": "ptr2e",
+  "title": "Pokemon Tabletop Reunited: Evolved",
+  "description": "PTR 2e is a fan-made tabletop RPG based on the Pokemon video games. It is a complete overhaul of the original PTR 1e system.",
+  "version": "1.4.9.beta",
+  "compatibility": {
+    "minimum": "13.351",
+    "verified": "13.351",
+    "maximum": 13
+  },
+  "authors": [
+    {
+      "name": "Ashe Eon",
+      "email": "ptr2e@soaringnetwork.com",
+      "discord": "asheeon"
+    }
+  ],
+  "scripts": [
+    "greensock/dist/gsap.min.js",
+    "greensock/dist/Flip.min.js",
+    "greensock/dist/Draggable.min.js",
+    "greensock/dist/InertiaPlugin.min.js"
+  ],
+  "esmodules": [
+    "ptr2e.mjs",
+    "vendor.mjs"
+  ],
+  "styles": [
+    "styles/ptr2e.css"
+  ],
+  "packs": [
+    {
+      "name": "core-abilities",
+      "label": "PTR 2e Abilities",
+      "path": "packs/core-abilities",
+      "type": "Item",
+      "system": "ptr2e"
+    },
+    {
+      "name": "core-species",
+      "label": "PTR 2e Species",
+      "path": "packs/core-species",
+      "type": "Item",
+      "system": "ptr2e"
+    },
+    {
+      "name": "core-perks",
+      "label": "PTR 2e Perks",
+      "path": "packs/core-perks",
+      "type": "Item",
+      "system": "ptr2e"
+    },
+    {
+      "name": "core-moves",
+      "label": "PTR 2e Moves",
+      "path": "packs/core-moves",
+      "type": "Item",
+      "system": "ptr2e"
+    },
+    {
+      "name": "core-summons",
+      "label": "PTR 2e Summons",
+      "path": "packs/core-summons",
+      "type": "Item",
+      "system": "ptr2e"
+    },
+    {
+      "name": "core-gear",
+      "label": "PTR 2e Gear",
+      "path": "packs/core-gear",
+      "type": "Item",
+      "system": "ptr2e",
+      "sort": "m"
+    },
+    {
+      "name": "core-effects",
+      "label": "PTR 2e Effects",
+      "path": "packs/core-effects",
+      "type": "Item",
+      "system": "ptr2e"
+    },
+    {
+      "name": "core-rules",
+      "label": "PTR 2e Rules",
+      "path": "packs/core-rules",
+      "type": "JournalEntry",
+      "system": "ptr2e"
+    },
+    {
+      "name": "core-tables",
+      "label": "PTR 2e Tables",
+      "path": "packs/core-tables",
+      "type": "RollTable",
+      "system": "ptr2e"
+    }
+  ],
+  "flags": {
+    "hotReload": {
+      "extensions": ["hbs", "json"]
+    }
+  },
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "documentTypes": {
+    "ActiveEffect": {
+      "affliction": {},
+      "passive": {},
+      "advancement": {},
+      "summon": {},
+      "form": {}
+    },
+    "Actor": {
+      "humanoid": {},
+      "pokemon": {},
+      "ptu-actor": {}
+    },
+    "ChatMessage": {
+      "item": {},
+      "attack": {},
+      "damage-applied": {},
+      "skill": {},
+      "capture": {},
+      "combat": {}
+    },
+    "Combatant": {
+      "character": {},
+      "round": {},
+      "summon": {}
+    },
+    "Item": {
+      "ability": {}, 
+      "blueprint": {},
+      "consumable": {}, 
+      "container": {}, 
+      "effect": {},
+      "equipment": {}, 
+      "gear": {}, 
+      "move": {}, 
+      "perk": {}, 
+      "species": {},
+      "ptu-item": {},
+      "weapon": {},
+      "summon": {}
+    }
+  },
+  "socket": true,
+  "grid": {
+    "distance": 1,
+    "units": "m",
+    "diagonals": 1
+  },
+  "background": "systems/ptr2e/img/splash.webp",
+  "url": "https://github.com/pokemon-tabletop-reunited/ptr2e",
+  "manifest": "https://github.com/pokemon-tabletop-reunited/ptr2e/releases/latest/download/system.json",
+  "download": "https://github.com/pokemon-tabletop-reunited/ptr2e/releases/latest/download/ptr2e.zip"
+}

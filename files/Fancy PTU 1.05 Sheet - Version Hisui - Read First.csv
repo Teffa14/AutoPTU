@@ -1,0 +1,19 @@
+"Hi there, this is the semi-automated Character Sheet for PTU version 1.05. Currently, this is the most up-to-date version, including everything up to the Hisui PokeDex.
+
+Now, keep in mind when using this sheet that it is not infalliable. Always make sure that the numbers you are getting are what you expect. This is not a replacement for knowing the rules, just an aide.
+
+In order to use this sheet, you'll want to make sure that you're signed into a Google Account, and then hit File > Make a Copy, and copy it to your own account. Requesting Access will not be helpful, as this is the master version of the sheet, and I can't just let anyone edit it willy-nilly.
+
+When entering things, check to make sure that you aren't overwriting formulas. If things start to go wrong, one of the best things to do is to just get a blank sheet and compare cell formulas. There are a lot of moving parts, so it's easy to accidentally break things.
+
+In order to create more Pokemon tabs, you will have to right click on existing ones and hit ""Duplicate"".
+
+Make sure also to mouse over cells, as there are often helpful notes. One of the most important things to note is that of variant formes. Regional Formes in particular must be written in the specific form ""[Pokemon] Alolan"", ""[Pokemon] Galarian"", or ""[Pokemon] Hisuian""  (eg. ""Vulpix Alolan""). Others tend to have a bit more leniency, and the species cell mouseover has much more detail about those.
+
+Using Moves, if you have a Move that was updated in the Sun/Moon, Sword/Shield, or Legends: Arceus updates, use [SM], [SS], or [LA] respectively (eg. ""Sucker Punch [SM]"").
+
+[SM] Moves: Fell Stinger, Leech Life, Dark Void, Sucker Punch, Magnetic Flux (later updated in [SS]), Parabolic Charge, Thunder Wave, Flying Press, Swagger, Tackle, Water Shuriken
+[SS] Moves: Magnetic Flux, Howl, Multi-Attack, Rapid Spin, Gear Up
+[LA] Moves: Triple Kick
+
+When you're done with this page, you can just delete it. Hope this all helps!"

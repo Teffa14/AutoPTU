@@ -1,0 +1,46 @@
+{
+  "name": "Corrosive Gas",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/poison_icon.svg",
+  "system": {
+    "slug": "corrosive-gas",
+    "actions": [
+      {
+        "slug": "corrosive-gas",
+        "name": "Corrosive Gas",
+        "type": "attack",
+        "traits": [],
+        "range": {
+          "target": "emanation",
+          "distance": 3,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": 100,
+        "types": [
+          "poison"
+        ],
+        "description": "<p>Effect: On hit, all valid targets cannot use their equipped Accessory and Belt items for the remainder of the battle.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "DAE6bjWxoLgECFVU",
+  "effects": []
+}

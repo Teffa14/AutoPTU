@@ -1,0 +1,151 @@
+{
+  "folder": "W85LoOCz3WlwbyhZ",
+  "name": "Quick And The Dead",
+  "type": "perk",
+  "_id": "J8Ax5qukE2NfjKgq",
+  "img": "systems/ptr2e/img/perk-icons/Juggler.svg",
+  "system": {
+    "actions": [
+      {
+        "name": "Quick And The Dead",
+        "slug": "quick-and-the-dead",
+        "description": "<p>All of your Combat Actions gain @Affliction[advance 10], stacking with any existing advances.</p>",
+        "traits": [],
+        "type": "passive",
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "cost": {
+          "activation": "free"
+        },
+        "img": "systems/ptr2e/img/perk-icons/Juggler.svg"
+      }
+    ],
+    "slug": "quick-and-the-dead",
+    "description": "<p>All of your Combat Actions gain @Affliction[advance 10], stacking with any existing advances.</p>",
+    "traits": [],
+    "prerequisites": [],
+    "cost": 3,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 70,
+        "y": 182,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "skirmish",
+          "run-down",
+          "mightyena-tactic",
+          "up-the-beat",
+          "lucky-duck"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Juggler.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "finesse",
+      "archetype": "hunter"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Quick And The Dead",
+      "type": "passive",
+      "_id": "z7y1zzA2z4Rf7Nwm",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "attack",
+            "value": "Compendium.ptr2e.core-effects.Item.advanceffectitem",
+            "predicate": [],
+            "chance": 100,
+            "dontMerge": true,
+            "affects": "self",
+            "priority": null,
+            "alterations": [],
+            "isFixedChance": true,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "generic",
+            "value": "Compendium.ptr2e.core-effects.Item.advanceffectitem",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "self",
+            "alterations": [],
+            "dontMerge": true,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1737661825098,
+        "modifiedTime": 1764893212423,
+        "lastModifiedBy": "bDEGyOQfZwkb2ml2",
+        "exportSource": null
+      }
+    }
+  ]
+}

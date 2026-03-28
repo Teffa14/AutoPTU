@@ -1,0 +1,267 @@
+{
+  "name": "silcoon",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 266,
+    "size": {
+      "category": "tiny",
+      "type": "height",
+      "height": 0.6,
+      "weight": 10
+    },
+    "diet": [
+      "nullivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 3
+      },
+      {
+        "type": "threaded",
+        "value": 3
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "darkvision-15",
+      "wallclimber",
+      "venomous",
+      "underdog",
+      "jump-3"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "shed-skin"
+        },
+        {
+          "slug": "battle-armor"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "regenerator"
+        },
+        {
+          "slug": "sturdy"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "pollen-field"
+        },
+        {
+          "slug": "angry-buzz"
+        }
+      ],
+      "master": [
+        {
+          "slug": "overcoat"
+        },
+        {
+          "slug": "clear-body"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "climb",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "navigate",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "silcoon",
+    "stats": {
+      "hp": 50,
+      "atk": 35,
+      "def": 55,
+      "spa": 25,
+      "spd": 25,
+      "spe": 15
+    },
+    "types": [
+      "bug"
+    ],
+    "moves": {
+      "tutor": [
+        {
+          "name": "string-shot",
+          "gen": "heartgold-soulsilver"
+        },
+        {
+          "name": "iron-defense",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "bug-bite",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "electroweb",
+          "gen": "ultra-sun-ultra-moon"
+        }
+      ],
+      "levelUp": [
+        {
+          "name": "harden",
+          "level": 1,
+          "gen": "brilliant-diamond-and-shining-pearl"
+        }
+      ]
+    },
+    "captureRate": 120,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "wurmple",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "silcoon",
+          "uuid": "Compendium.ptr2e.core-species.Item.W8SR9b5EwvxtzIKk",
+          "methods": [
+            {
+              "type": "level",
+              "level": 7,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "beautifly",
+              "uuid": "Compendium.ptr2e.core-species.Item.g9LFPZPUUaDCJ2mt",
+              "methods": [
+                {
+                  "type": "level",
+                  "level": 10,
+                  "operand": "and"
+                }
+              ],
+              "evolutions": [],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.hmph3LYhawO70pes"
+    },
+    "habitats": [
+      "forest"
+    ],
+    "publication": {
+      "source": "PTR 2e Core - Hoenn Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "W8SR9b5EwvxtzIKk",
+  "effects": [],
+  "folder": null
+}

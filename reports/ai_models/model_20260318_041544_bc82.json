@@ -1,0 +1,86 @@
+{
+  "foe:Squirtle": {
+    "action_type": {
+      "defend": 9.999999999999995
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "side3:Walrein": {
+    "action_type": {
+      "defend": 3.439
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "player:Pansage": {
+    "action_type": {
+      "defend": 5.6953279000000006
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "side2:Goodra Hisuian": {
+    "action_type": {
+      "defend": 9.999885661887275
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "foe:Staraptor": {
+    "action_type": {
+      "defend": 2.71
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "player:Dreepy": {
+    "action_type": {
+      "defend": 9.999907386128692
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "foe:Sawk": {
+    "action_type": {
+      "defend": 4.0951
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "side2:Arcanine Hisuian": {
+    "action_type": {
+      "defend": 4.0951
+    },
+    "target_pref": {},
+    "risk_tolerance": {},
+    "move_usage": {}
+  },
+  "gary:Machop": {
+    "action_type": {
+      "defend": 2.71
+    },
+    "target_pref": {},
+    "risk_tolerance": {
+      "retreats": 0.9
+    },
+    "move_usage": {}
+  },
+  "gary:Pikachu": {
+    "action_type": {
+      "defend": 3.439
+    },
+    "target_pref": {},
+    "risk_tolerance": {
+      "retreats": 0.9
+    },
+    "move_usage": {}
+  }
+}

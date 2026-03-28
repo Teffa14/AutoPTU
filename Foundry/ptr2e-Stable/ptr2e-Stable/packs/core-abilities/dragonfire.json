@@ -1,0 +1,137 @@
+{
+  "name": "Dragonfire",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "innate"
+        ],
+        "name": "Dragonfire",
+        "slug": "dragonfire",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: The user's Fire-Type attacks deal 50% more damage to Dragon-Type Pokemon.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [
+          "innate"
+        ],
+        "name": "Dragonfire",
+        "slug": "dragonfire",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "description": "<p>Passive: Increases the Damage of the user's Dragon-Type attacks by 50%.</p>",
+        "img": "icons/svg/explosion.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m",
+          "distance": 10
+        }
+      }
+    ],
+    "description": "<p>Effect: The user's Fire-Type attacks deal 50% more damage to Dragon-Type Pokemon. Passive: Increases the Power of the user's Dragon-Type attacks by 30%.</p>",
+    "traits": [
+      "innate"
+    ],
+    "slug": "dragonfire",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "jBMvn0QG8kX6yOuq",
+  "effects": [
+    {
+      "name": "Dragonfire",
+      "type": "passive",
+      "_id": "uYdjLy7fVpBEnNE4",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "percentile-modifier",
+            "key": "dragon-attack-power",
+            "value": 30,
+            "predicate": [],
+            "label": "Dragonfire (Dragon)",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "percentile-modifier",
+            "key": "fire-attack-damage",
+            "value": 50,
+            "predicate": [
+              "target:trait:dragon"
+            ],
+            "label": "Dragonfire (Fire)",
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1729416006006,
+        "modifiedTime": 1761089154516,
+        "lastModifiedBy": "6zxE5EIsM9axXjpP",
+        "exportSource": null
+      }
+    }
+  ]
+}

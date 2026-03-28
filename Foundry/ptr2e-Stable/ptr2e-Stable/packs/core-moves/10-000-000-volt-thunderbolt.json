@@ -1,0 +1,51 @@
+{
+  "name": "10,000,000 Volt Thunderbolt",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/electric_icon.svg",
+  "system": {
+    "slug": "10-000-000-volt-thunderbolt",
+    "actions": [
+      {
+        "slug": "10-000-000-volt-thunderbolt",
+        "name": "10,000,000 Volt Thunderbolt",
+        "type": "attack",
+        "traits": [
+          "zenith",
+          "blast-3",
+          "crit-2"
+        ],
+        "range": {
+          "target": "blast",
+          "distance": 25,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 0,
+          "trigger": "<p>User's partner uses Z-Pose! and triggers the appropriate Z-Power-Crystal.</p>"
+        },
+        "category": "special",
+        "power": 195,
+        "accuracy": 100,
+        "types": [
+          "electric"
+        ],
+        "description": "<p>Trigger: User's partner uses Z-Pose! and triggers the appropriate Z-Power-Crystal.</p><p>Requirement: [Pikachu] Z-Power-Crystal as an Accessory Item and Thunderbolt on the user's Active List.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": true,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "S",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "B7VMNV4TBnipzq6W",
+  "effects": []
+}

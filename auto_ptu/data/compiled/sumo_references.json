@@ -1,0 +1,1187 @@
+{
+  "source": "SuMo References.pdf",
+  "capability_count": 2,
+  "ability_count": 53,
+  "move_count": 65,
+  "capabilities": {
+    "Viral Fusion": {
+      "name": "Viral Fusion",
+      "text": "Necrozma can assimilate other\ncreatures, and bonding into a single Pokémon.\nAs an Extended Action, Necrozma may bond with a\nwilling or helpless Pokémon, removing them from\nplay until they are released as another Extended\nAction. Necrozma’s Movement and Jumping\ncapabilities become the bonded Pokémon’s, as does\nPower if the bond’s is higher. Necrozma’s Athletics,\nAcrobatics, Combat, Stealth, and Perception become\nthe bonded Pokémon’s, though they are increased\nby one rank, to a maximum of 6d6. Necrozma takes\nthe bond’s Primary Type (or Secondary Type if its\nPrimary Type is Psychic) as its Secondary Type.\nWhile bonded, the GM will designate one move as\nthe bonded species’ Level-Up Movelist as its\n‘signature move’. Necrozma may add this move to its\nlearned movelist as long as it is bonded, following\nnormal movelist restrictions, as long as it is of a level\nto learn it normally.\nFor Solgaleo, this move is always Sunsteel Strike; for\nLunala, this move is always Moongeist Beam. These\nPokémon have specific forms used while bonded.",
+      "source": "SuMo References.pdf"
+    },
+    "Zygarde Cells": {
+      "name": "Zygarde Cells",
+      "text": "Zygarde is composed of many cells,\nits strength determined by how many are gathered.\nUsing a Zygarde Cube, as an Extended Action, 10\nCells may be formed into a 10% Zygarde, and 50\nCells may be formed into a 50% Zygarde. These may\nbe disassembled into the number of Cells that they\nwere created from as an Extended Action. 100 Cells\nmay form either a 10% or 50% Zygarde with the\nPower Construct Ability instead of Aura Break. The\nresulting Zygarde may not be disassembled, but may\nbe changed between 10% and 50% Formes as an\nExtended Action using the Cube. The GM determines\nthe Nature and Level of any Zygarde formed. As an\nExtended Action, a Cube may Tutor Zygarde\navailable Cube moves for 1 TP each.",
+      "source": "SuMo References.pdf"
+    }
+  },
+  "abilities": {
+    "Anchored": {
+      "name": "Anchored",
+      "frequency": "Static",
+      "effect": "Dhelmise has an Anchor token on the field, which occupies one square as if it is Medium sized but is otherwise ignored for cover and targeting. Dhelmise cannot move or be moved more than 3 meters away from its Anchor, willingly or otherwise. The Anchor token itself cannot be pushed, pulled, or moved against Dhelmise's will in any way. Dhelmise may shift their Anchor Token as a Swift Action, moving it to any open space within 3 meters of itself.",
+      "bonus": "When the user Shifts the Anchor, it may immediately afterwards originate a damaging attack from its Anchor if it has the appropriate action available, giving that attack the following properties: the attack's range changes to \"Melee, 1 Target\", the attack deals +2d6 damage, and the attack's Class changes to Physical if it wasn't already.",
+      "source": "SuMo References.pdf"
+    },
+    "Battery": {
+      "name": "Battery",
+      "frequency": "Scene x2 - Swift Action",
+      "effect": "The target's next Special Attack deals +2d6+4 damage. If that attack is Electric-Typed, it deals +3d6+6 more damage instead.",
+      "source": "SuMo References.pdf"
+    },
+    "Beast Boost": {
+      "name": "Beast Boost",
+      "frequency": "At-Will - Free Action",
+      "trigger": "The user’s Damaging Attack causes an opponent to Faint",
+      "effect": "The user receives +1 Combat Stage in their highest non-HP stat.",
+      "source": "SuMo References.pdf"
+    },
+    "Berserk": {
+      "name": "Berserk",
+      "frequency": "At-Will - Free Action",
+      "trigger": "The user’s drops to half HP or below for the first time in an encounter, or becomes Enraged",
+      "effect": "The user receives +1 Special Attack Combat Stage.",
+      "source": "SuMo References.pdf"
+    },
+    "Chemical Romance": {
+      "name": "Chemical Romance",
+      "frequency": "Static",
+      "effect": "Connection - Sweet Scent. Whenever the user hits a male target with Poison Gas, Smog, Sweet Scent, Toxic, or Venom Drench, that target becomes Infatuated with the user.",
+      "source": "SuMo References.pdf"
+    },
+    "Comatose": {
+      "name": "Comatose",
+      "frequency": "At-Will - Move Action",
+      "effect": "The user falls Asleep, and regains a Tick of Hit Points.",
+      "bonus": "The user may act normally while Asleep and ignores all other penalties from being Asleep. While Asleep, the user does not make Save Checks to wake up, and wakes up from being hit only if they want to.",
+      "source": "SuMo References.pdf"
+    },
+    "Corrosion": {
+      "name": "Corrosion",
+      "frequency": "Static",
+      "effect": "The user's Poison-Type attacks are resisted one step less, and deal damage to Immune targets as if they were doubly resisted. The user may Poison and Badly Poison Steel and Poison-Type Pokémon.",
+      "source": "SuMo References.pdf"
+    },
+    "Dancer": {
+      "name": "Dancer",
+      "frequency": "Scene x2 - Free Action",
+      "trigger": "Someone within 10 meters uses a Status- Class Dance Move",
+      "effect": "The user may immediately use the triggering Move as a Free Action.",
+      "source": "SuMo References.pdf"
+    },
+    "Dazzling": {
+      "name": "Dazzling",
+      "frequency": "Scene x2 - Swift Action",
+      "effect": "For the rest of the Scene, the target's Initiative is lowered by 10 and cannot use Priority Moves.",
+      "bonus": "Interrupt Moves may not be declared in response to the user's actions.",
+      "source": "SuMo References.pdf"
+    },
+    "Disguise": {
+      "name": "Disguise",
+      "frequency": "Daily - Free Action",
+      "trigger": "The user is hit by a Damaging Move.",
+      "effect": "The triggering attack instead misses and has no effect. The user then gains +1 CS in a Stat of their choice. Defensive.",
+      "source": "SuMo References.pdf"
+    },
+    "Electric Surge": {
+      "name": "Electric Surge",
+      "frequency": "Scene x3 - Swift Action",
+      "effect": "The Field becomes Electrified, as if affected by the Move Electric Terrain, for one full round.",
+      "source": "SuMo References.pdf"
+    },
+    "Emergency Exit": {
+      "name": "Emergency Exit",
+      "frequency": "Scene - Free Action",
+      "effect": "When the user’s Hit Points drop below half their maximum, their trainer may immediately recall the user and send out another Pokémon as a Free Action. If the user hasn’t taken their turn yet, their replacement may act this round. Defensive.",
+      "bonus": "The user is immune to being Trapped.",
+      "source": "SuMo References.pdf"
+    },
+    "Fluffy": {
+      "name": "Fluffy",
+      "frequency": "Static",
+      "effect": "The user resists damaging Melee attacks one step further, but resists Fire-Type attacks one step less. Defensive.",
+      "source": "SuMo References.pdf"
+    },
+    "Full Metal Body": {
+      "name": "Full Metal Body",
+      "frequency": "Static",
+      "effect": "The user’s Combat Stages may not be lowered by the effect of foes’ Features, Abilities, or Moves. Status Afflictions may still alter their Combat Stages. Defensive.",
+      "source": "SuMo References.pdf"
+    },
+    "Galvanize": {
+      "name": "Galvanize",
+      "frequency": "At-Will - Free Action",
+      "trigger": "The user uses a Normal-Type damaging Move",
+      "effect": "The Move is changed to be Electric-Type.",
+      "source": "SuMo References.pdf"
+    },
+    "Glisten": {
+      "name": "Glisten",
+      "frequency": "Static",
+      "effect": "The user is immune to Fairy-Type attacks. Defensive.",
+      "bonus": "If the user is hit by a damaging Fairy-Type attack, they receive +1 Defense or Special Defense Combat Stages.",
+      "source": "SuMo References.pdf"
+    },
+    "Grassy Surge": {
+      "name": "Grassy Surge",
+      "frequency": "Scene x3 - Swift Action",
+      "effect": "The Field becomes Grassy, as if affected by the Move Grassy Terrain, for one full round.",
+      "source": "SuMo References.pdf"
+    },
+    "Handyman": {
+      "name": "Handyman",
+      "frequency": "Static",
+      "effect": "The user may hold two Held Items at once. Whenever an Ability or Move affects the user’s Held Items, you may choose which one is affected.",
+      "source": "SuMo References.pdf"
+    },
+    "Horde Break": {
+      "name": "Horde Break",
+      "frequency": "At-Will - Free Action",
+      "trigger": "The user changes from School Form to Solo Form",
+      "effect": "The user is cured of all Status Conditions.",
+      "source": "SuMo References.pdf"
+    },
+    "Innards Out": {
+      "name": "Innards Out",
+      "frequency": "Scene x2 - Free Action",
+      "trigger": "The user is hit by a Damaging Attack",
+      "effect": "The user resists the triggering attack one step further. After the attack is resolved, a foe within 2 meters loses Hit Points equal to twice the amount of Hit Points lost by the user from the triggering attack, even if the triggering attack caused the user to Faint.",
+      "source": "SuMo References.pdf"
+    },
+    "Liquid Voice": {
+      "name": "Liquid Voice",
+      "frequency": "At-Will - Free Action",
+      "trigger": "The user uses a Move with the Sonic keyword",
+      "effect": "The triggering move loses the Sonic keyword, but gains the Friendly keyword and becomes Water Typed. If the Move was a Status Class Move, you may treat it as a Special Move with DB1.",
+      "source": "SuMo References.pdf"
+    },
+    "Long Reach": {
+      "name": "Long Reach",
+      "frequency": "Static",
+      "effect": "The user may use damaging attacks as if they had a range of \"8, 1 Target\" instead of their usual range.",
+      "source": "SuMo References.pdf"
+    },
+    "Merciless": {
+      "name": "Merciless",
+      "frequency": "Static",
+      "effect": "If the user hits a poisoned target with a damaging attack, it automatically becomes a Critical Hit.",
+      "source": "SuMo References.pdf"
+    },
+    "Misty Surge": {
+      "name": "Misty Surge",
+      "frequency": "Scene x3 - Swift Action",
+      "effect": "The Field becomes Misty, as if affected by the Move Misty Terrain, for one full round.",
+      "source": "SuMo References.pdf"
+    },
+    "Mud Shield": {
+      "name": "Mud Shield",
+      "frequency": "Scene - Swift Action",
+      "effect": "The user gains two ticks worth of Temporary Hit Points.",
+      "bonus": "When standing on any muddy or dirty terrain that is either Slow or Rough Terrain, the user gains +5 Damage Reduction. Defensive.",
+      "source": "SuMo References.pdf"
+    },
+    "Neuroforce": {
+      "name": "Neuroforce",
+      "frequency": "Static",
+      "effect": "Whenever you deal Super-Effective Damage to a target, that target treats your Damage Roll as it were increased by +10.",
+      "source": "SuMo References.pdf"
+    },
+    "Power Construct": {
+      "name": "Power Construct",
+      "frequency": "Daily - Swift Action",
+      "special": "The user still uses the HP total and HP Maximum of the Forme that it was in (10% or 50% Forme) before entering Complete Forme. Both Formes must still follow BSR.",
+      "effect": "The user changes to Complete Forme until the end of the Scene, and gains Temporary Hit Points equal to half of the maximum hit points that Complete Forme would have. The user cannot gain Temporary Hit Points from other sources while in Complete Forme.",
+      "source": "SuMo References.pdf"
+    },
+    "Power of Alchemy": {
+      "name": "Power of Alchemy",
+      "frequency": "Scene - Free Action",
+      "effect": "The Pokémon gains an Ability known by the Target for the remainder of the encounter, or until it is Fainted.",
+      "source": "SuMo References.pdf"
+    },
+    "Prism Armor": {
+      "name": "Prism Armor",
+      "frequency": "Static",
+      "effect": "The user gains +5 Damage Reduction against Super Effective-Damage. Defensive.",
+      "source": "SuMo References.pdf"
+    },
+    "Psychic Surge": {
+      "name": "Psychic Surge",
+      "frequency": "Scene x3 - Swift Action",
+      "effect": "The Field becomes Weird, as if affected by the Move Psychic Terrain, for one full round.",
+      "source": "SuMo References.pdf"
+    },
+    "Queenly Majesty": {
+      "name": "Queenly Majesty",
+      "frequency": "Scene x2 - Free Action",
+      "trigger": "An adjacent foe uses a Priority Move or an Interrupt action",
+      "effect": "Connection - Stomp. The user may attack the triggering foe with Stomp as a Free Action Interrupt.",
+      "bonus": "The user cannot be targeted by Interrupt Moves and Interrupts may not be declared in response to the user's actions.",
+      "source": "SuMo References.pdf"
+    },
+    "Radiant Beam": {
+      "name": "Radiant Beam",
+      "frequency": "Static",
+      "effect": "The user may use damaging Grass-Type attacks as if they had a range of \"Line 4\" instead of their usual range.",
+      "source": "SuMo References.pdf"
+    },
+    "Receiver": {
+      "name": "Receiver",
+      "frequency": "Special - Free Action",
+      "effect": "Each effect below may be used once per scene when triggered: • When an ally faints, the user selects one of their Abilities. The user gains that Ability until the end of the encounter. • When the user faints, they may grant use of one of their Basic Abilities to an ally on the field for the rest of the encounter.",
+      "source": "SuMo References.pdf"
+    },
+    "Revelation": {
+      "name": "Revelation",
+      "frequency": "Scene x2 - Free Action",
+      "trigger": "Someone within 10 meters uses a Damaging Dance Move",
+      "effect": "The user may immediately use the triggering Move as a Standard Action interrupt.",
+      "bonus": "Whenever the user uses a Dance Move, they gain +2 to Accuracy Rolls until the end of their next turn.",
+      "source": "SuMo References.pdf"
+    },
+    "RKS System": {
+      "name": "RKS System",
+      "frequency": "Scene - Free Action",
+      "effect": "If the user is hit by a damaging attack, they may calculate damage as if they were Normal-Type instead. If they were already Normal-Type, they instead resist the damage one step further.",
+      "bonus": "The user’s Type changes to match the Type of their held Memory Disc.",
+      "source": "SuMo References.pdf"
+    },
+    "Schooling": {
+      "name": "Schooling",
+      "frequency": "Daily - Free Action",
+      "effect": "The user changes to Schooling Forme, and gains Temporary Hit Points equal to half of its own maximum Hit Points. The user cannot gain Temporary Hit Points from other sources while in Schooling Forme. When the user is below half Maximum HP and has no Temporary Hit Points left, they change back into Solo Forme.",
+      "bonus": "The user has two sets of base stats; Solo and Schooling. The HP of both forms must be the same.",
+      "source": "SuMo References.pdf"
+    },
+    "Shadow Shield": {
+      "name": "Shadow Shield",
+      "frequency": "Static",
+      "effect": "While at full Hit Points, the user resists all damage one step further. Defensive.",
+      "source": "SuMo References.pdf"
+    },
+    "Shields Down": {
+      "name": "Shields Down",
+      "frequency": "Static",
+      "effect": "The user has two sets of base stats; Meteor and Core. The HP of both forms must be the same. When the user is in Meteor Forme and are reduced to half Maximum HP or lower, they change to Core Forme. The user returns to Meteor Forme while outside of combat if above half Maximum HP.",
+      "source": "SuMo References.pdf"
+    },
+    "Slush Rush": {
+      "name": "Slush Rush",
+      "frequency": "Static",
+      "effect": "While in Hailing Weather or under half maximum Hit Points, the user’s Initiative is doubled.",
+      "source": "SuMo References.pdf"
+    },
+    "Soul Heart": {
+      "name": "Soul Heart",
+      "frequency": "Scene x2 - Free Action",
+      "trigger": "A combatant in the encounter Faints",
+      "effect": "The user receives +2 Special Attack Combat Stages and gains a tick of Temporary Hit Points.",
+      "source": "SuMo References.pdf"
+    },
+    "Stakeout": {
+      "name": "Stakeout",
+      "frequency": "Static",
+      "effect": "The user gains a +2d6+4 bonus on damage rolls against foes that were released from a Pokéball or entered the encounter since the user's last turn.",
+      "source": "SuMo References.pdf"
+    },
+    "Stamina": {
+      "name": "Stamina",
+      "frequency": "At-Will - Free Action",
+      "trigger": "The user is hit by a Damaging Attack",
+      "effect": "The user receives +1 Defense Combat Stage. Defensive.",
+      "source": "SuMo References.pdf"
+    },
+    "Steelworker": {
+      "name": "Steelworker",
+      "frequency": "Scene - Free Action",
+      "trigger": "The user takes damage while adjacent to its Anchor",
+      "effect": "The user calculates damage as if it was only Steel-Typed.",
+      "bonus": "The user gains STAB on Steel-Type Moves that originate from its Anchor.",
+      "source": "SuMo References.pdf"
+    },
+    "Surge Surfer": {
+      "name": "Surge Surfer",
+      "frequency": "Static",
+      "effect": "On Electric Terrain or while under half maximum Hit Points, the user’s Initiative is doubled.",
+      "source": "SuMo References.pdf"
+    },
+    "Tangling Hair": {
+      "name": "Tangling Hair",
+      "frequency": "At-Will - Free Action",
+      "trigger": "The user is hit by a Melee Attack",
+      "effect": "The attacker receives -1 Speed Combat Stage and is Slowed until the end of its next turn.",
+      "source": "SuMo References.pdf"
+    },
+    "Triage": {
+      "name": "Triage",
+      "frequency": "Static",
+      "effect": "The user’s moves with the Healing keyword may be used as Priority moves.",
+      "source": "SuMo References.pdf"
+    },
+    "Water Bubble": {
+      "name": "Water Bubble",
+      "frequency": "Static",
+      "effect": "The user resists Fire-Type attacks one step further, is immune to being Burned, and may always act as though in Rainy Weather. Defensive.",
+      "bonus": "The user may attack with Water-Type Moves as if they had a range of “Melee, 1 target”. If they do, that Move's Class is changed to Physical and it deals +1d6+2 damage.",
+      "source": "SuMo References.pdf"
+    },
+    "Water Compaction": {
+      "name": "Water Compaction",
+      "frequency": "At-Will - Free Action",
+      "trigger": "The user is hit by a Water Type Move",
+      "effect": "The user receives +2 Defense Combat Stages. Defensive.",
+      "source": "SuMo References.pdf"
+    },
+    "Wily": {
+      "name": "Wily",
+      "frequency": "Static",
+      "effect": "The user's X-target Status Class Moves may target an additional target within range. Adjusted Abilities:",
+      "source": "SuMo References.pdf"
+    },
+    "Accelerate": {
+      "name": "Accelerate",
+      "frequency": "Scene x2 - Free Action",
+      "effect": "The user may use a damaging Move to which they add STAB as a Priority Move. If the Move hits, the user adds half their Speed Stat to the Damage Roll. If the Move already had Priority, the attack gains a +4 Bonus to Accuracy. Replaces: Maelstrom Pulse, Leaf Rush, & Gale Wings",
+      "source": "SuMo References.pdf"
+    },
+    "Frisk": {
+      "name": "Frisk",
+      "frequency": "Static",
+      "effect": "The user gains a +2 Bonus to all Accuracy Rolls against adjacent targets.",
+      "source": "SuMo References.pdf"
+    },
+    "Gale Wings": {
+      "name": "Gale Wings",
+      "frequency": "Static",
+      "effect": "Connection - Quick Attack. The user may use Quick Attack as a Flying-Type Move.",
+      "source": "SuMo References.pdf"
+    },
+    "Unaware": {
+      "name": "Unaware",
+      "frequency": "Static",
+      "effect": "Once per Scene, Pollen Puff may instead be used on an ally; when used this way, the target recovers 50% of their maximum Hit Point s and the Move has the Healing keyword. Contest Type: Beauty Contest Effect: Reflective Appeal",
+      "source": "SuMo References.pdf"
+    }
+  },
+  "moves": {
+    "Brutal Swing": {
+      "name": "Brutal Swing",
+      "type": "Dark",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "6: 2d6+8 / 15",
+      "class": "Physical",
+      "range": "Burst 1",
+      "contest_type": "Tough",
+      "contest_effect": "Steady Performance",
+      "source": "SuMo References.pdf"
+    },
+    "Dark Void": {
+      "name": "Dark Void",
+      "type": "Dark",
+      "frequency": "EOT",
+      "ac": "10",
+      "class": "Status",
+      "range": "Melee 1",
+      "effect": "The target falls Asleep. Once per Scene, Dark Void may be used as if its range were “Burst 5, Friendly” instead.",
+      "contest_type": "Smart",
+      "contest_effect": "Excitement",
+      "source": "SuMo References.pdf"
+    },
+    "Darkest Lariat": {
+      "name": "Darkest Lariat",
+      "type": "Dark",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "9: 2d10+10 / 21",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "This Move ignores the target’s positive Defense Combat Stages and all Damage Reduction.",
+      "contest_type": "Tough",
+      "contest_effect": "Inversed Appeal",
+      "source": "SuMo References.pdf"
+    },
+    "Hyperspace Fury": {
+      "name": "Hyperspace Fury",
+      "type": "Dark",
+      "frequency": "Daily",
+      "ac": "2",
+      "damage_base": "10: 3d8+10 / 24",
+      "class": "Physical",
+      "range": "Burst 2",
+      "effect": "Interrupts may not be triggered against Hyperspace Fury. The user’s Defense is lowered by -1 Combat Stage.",
+      "contest_type": "Tough",
+      "contest_effect": "Double Time",
+      "source": "SuMo References.pdf"
+    },
+    "Power Trip": {
+      "name": "Power Trip",
+      "type": "Dark",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "2: 1d6+3 / 7",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "This Move gains +2 to its Damage Base for every positive Combat Stage held by the user, to a maximum of DB 20.",
+      "contest_type": "Tough",
+      "contest_effect": "Incentives",
+      "source": "SuMo References.pdf"
+    },
+    "Sucker Punch": {
+      "name": "Sucker Punch",
+      "type": "Dark",
+      "frequency": "At-Will",
+      "ac": "2",
+      "damage_base": "7: 2d6+10 / 17",
+      "class": "Physical",
+      "range": "Melee, 1 Target, Interrupt, Trigger",
+      "effect": "If an adjacent foe targets the user with a Damaging Attack, Sucker Punch may be used as an Interrupt Move against the triggering foe.",
+      "contest_type": "Smart",
+      "contest_effect": "Saving Grace",
+      "source": "SuMo References.pdf"
+    },
+    "Throat Chop": {
+      "name": "Throat Chop",
+      "type": "Dark",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "8: 2d8+10 / 19",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "The target cannot use Moves with the Sonic keyword for the next two turns.",
+      "contest_type": "Tough",
+      "contest_effect": "Unsettling .",
+      "source": "SuMo References.pdf"
+    },
+    "Clanging Scales": {
+      "name": "Clanging Scales",
+      "type": "Dragon",
+      "frequency": "Scene x2",
+      "ac": "2",
+      "damage_base": "11: 3d10+10 / 27",
+      "class": "Special",
+      "range": "6, 1 Target or Burst 1",
+      "effect": "The user adds half their Defense Stat to Clanging Scale's Damage Roll. After the Move is resolved, the user's Defense is lowered by 1 CS.",
+      "contest_type": "Cool",
+      "contest_effect": "Good Show",
+      "source": "SuMo References.pdf"
+    },
+    "Core Enforcer": {
+      "name": "Core Enforcer",
+      "type": "Dragon",
+      "frequency": "Daily x2",
+      "ac": "2",
+      "damage_base": "10: 3d8+10 / 24",
+      "class": "Special",
+      "range": "6, Ranged Blast 3, Spirit Surge",
+      "effect": "Each target has its Ability disabled until the end of the encounter. If a target has more than one Ability, you choose one of them to disable.",
+      "contest_type": "Cool",
+      "contest_effect": "Unsettling",
+      "source": "SuMo References.pdf"
+    },
+    "Dragon Hammer": {
+      "name": "Dragon Hammer",
+      "type": "Dragon",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "9: 2d10+10 / 21",
+      "class": "Physical",
+      "range": "Melee, 1 Target or Line 3",
+      "contest_type": "Cool",
+      "contest_effect": "Big Show",
+      "source": "SuMo References.pdf"
+    },
+    "Magnetic Flux": {
+      "name": "Magnetic Flux",
+      "type": "Electric",
+      "frequency": "Scene x2",
+      "ac": "None",
+      "class": "Status",
+      "range": "Burst 4",
+      "effect": "All targets with the Plus or Minus Abilities receive +1 Defense and Special Defense Combat Stages.",
+      "contest_type": "Smart",
+      "contest_effect": "Incentives",
+      "source": "SuMo References.pdf"
+    },
+    "Parabolic Charge": {
+      "name": "Parabolic Charge",
+      "type": "Electric",
+      "frequency": "Scene",
+      "ac": "2",
+      "damage_base": "7: 2d6+10 / 17",
+      "class": "Special",
+      "range": "Cone 2",
+      "effect": "After the targets take damage, the user gains Hit Points equal to half of the total damage they dealt to all targets.",
+      "contest_type": "Cool",
+      "contest_effect": "Desperation",
+      "source": "SuMo References.pdf"
+    },
+    "Plasma Fists": {
+      "name": "Plasma Fists",
+      "type": "Electric",
+      "frequency": "Scene",
+      "ac": "2",
+      "damage_base": "10: 3d8+10 / 24",
+      "class": "Physical",
+      "range": "Melee, 1 Target, Smite",
+      "effect": "The target’s next damaging Normal Type Move instead becomes Electric Type.",
+      "contest_type": "Cool",
+      "contest_effect": "Special Attention",
+      "source": "SuMo References.pdf"
+    },
+    "Thunder Wave": {
+      "name": "Thunder Wave",
+      "type": "Electric",
+      "frequency": "Scene x2",
+      "ac": "4",
+      "class": "Status",
+      "range": "6, 1 Target",
+      "effect": "Thunder Wave Paralyzes the target. Targets immune to Electric Attacks are immune to Thunder Wave’s effects.",
+      "contest_type": "Cool",
+      "contest_effect": "Excitement",
+      "source": "SuMo References.pdf"
+    },
+    "Zing Zap": {
+      "name": "Zing Zap",
+      "type": "Electric",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "8: 2d8+10 / 19",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "Zing Zap Flinches the target on 15+.",
+      "contest_type": "Cool",
+      "contest_effect": "Tease",
+      "source": "SuMo References.pdf"
+    },
+    "Fleur Cannon": {
+      "name": "Fleur Cannon",
+      "type": "Fairy",
+      "frequency": "Scene",
+      "ac": "4",
+      "damage_base": "13: 4d10+10 / 35",
+      "class": "Special",
+      "range": "Line 9, Smite",
+      "effect": "Lower the user’s Special Attack 2 Combat Stages after damage.",
+      "contest_type": "Beauty",
+      "contest_effect": "Seen Nothing Yet",
+      "source": "SuMo References.pdf"
+    },
+    "Floral Healing": {
+      "name": "Floral Healing",
+      "type": "Fairy",
+      "frequency": "Daily x2",
+      "ac": "None",
+      "class": "Status",
+      "range": "Melee, 1 Target, Healing",
+      "effect": "The target regains Hit Points equal to half of its full Hit Point value. If the field is Grassy Terrain , the target gains 2/3 of its full Hit Point value instead.",
+      "contest_type": "Beauty",
+      "contest_effect": "Reflective Appeal",
+      "source": "SuMo References.pdf"
+    },
+    "Nature’s Madness": {
+      "name": "Nature’s Madness",
+      "type": "Fairy",
+      "frequency": "Scene",
+      "ac": "4",
+      "class": "Special",
+      "range": "4, 1 Target",
+      "effect": "The target loses 1/2 of their current Hit Points.",
+      "contest_type": "Tough",
+      "contest_effect": "Steady Performance",
+      "source": "SuMo References.pdf"
+    },
+    "Flying Press": {
+      "name": "Flying Press",
+      "type": "Fighting",
+      "frequency": "EOT",
+      "ac": "3",
+      "damage_base": "10: 3d8+10 / 24",
+      "class": "Physical",
+      "range": "Melee, 1 Target, Dash",
+      "effect": "Flying Press may deal Flying Type damage if the user wishes.",
+      "contest_type": "Tough",
+      "contest_effect": "Big Show Note: If Flying Press is Move Sync’d, it only changes the Fighting Type portion of the Move. You can still only choose between that Type and Flying Type; you cannot shift Flying Press to change the Flying part to another Type.",
+      "source": "SuMo References.pdf"
+    },
+    "Burn Up": {
+      "name": "Burn Up",
+      "type": "Fire",
+      "frequency": "Daily x2",
+      "ac": "2",
+      "damage_base": "13: 4d10+10 / 35",
+      "class": "Special",
+      "range": "Burst 1, Smite",
+      "effect": "Until the end of the encounter, the user loses its Fire -Type. P ure Fire -Types instead become Normal-Type.",
+      "contest_type": "Beauty",
+      "contest_effect": "Attention Grabber",
+      "source": "SuMo References.pdf"
+    },
+    "Fire Lash": {
+      "name": "Fire Lash",
+      "type": "Fire",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "8: 2d8+10 / 19",
+      "class": "Physical",
+      "range": "2, 1 Target",
+      "effect": "The target’s Defense is lowered by 1 Combat Stage.",
+      "contest_type": "Cool",
+      "contest_effect": "Safe Option",
+      "source": "SuMo References.pdf"
+    },
+    "Mind Blown": {
+      "name": "Mind Blown",
+      "type": "Fire",
+      "frequency": "Daily",
+      "ac": "2",
+      "damage_base": "15: 4d10+10 / 45",
+      "class": "Special",
+      "range": "6, Ranged Blast 3, Smite",
+      "effect": "The user’s Hit Points are reduced by 50% of their full Hit Point value. This Hit Point loss cannot be prevented or reduced in any way.",
+      "contest_type": "Beauty",
+      "contest_effect": "Big Show",
+      "source": "SuMo References.pdf"
+    },
+    "Shell Trap": {
+      "name": "Shell Trap",
+      "type": "Fire",
+      "frequency": "Scene",
+      "ac": "2",
+      "damage_base": "15: 4d10+20 / 45",
+      "class": "Special",
+      "range": "Melee, 1 Target, Interrupt, Trigger",
+      "effect": "If the user is hit by a Melee attack, they may use Shell Trap as an Interrupt.",
+      "contest_type": "Tough",
+      "contest_effect": "Desperation",
+      "source": "SuMo References.pdf"
+    },
+    "Beak Blast": {
+      "name": "Beak Blast",
+      "type": "Flying",
+      "frequency": "Scene x2",
+      "ac": "2",
+      "damage_base": "10: 3d8+10 / 24",
+      "class": "Physical",
+      "range": "6, 1 Target, Priority",
+      "effect": "Beak Blast must be declared at the start of the round. If the user is hit by a Melee attack this round, their attacker is Burned. At the end of the round, the user may shift and attack with Beak Blast.",
+      "contest_type": "Cool",
+      "contest_effect": "Special Attention",
+      "source": "SuMo References.pdf"
+    },
+    "Moongeist Beam": {
+      "name": "Moongeist Beam",
+      "type": "Ghost",
+      "frequency": "Scene x2",
+      "ac": "2",
+      "damage_base": "10: 3d8+10 / 24",
+      "class": "Special",
+      "range": "Line 6",
+      "effect": "This Move ignores any Abilities that would cause it to fail or miss , such as Dodge or Wonder Guard; those Abilities cannot be activated in response to Moongeist Beam.",
+      "contest_type": "Smart",
+      "contest_effect": "Good Show",
+      "source": "SuMo References.pdf"
+    },
+    "Shadow Bone": {
+      "name": "Shadow Bone",
+      "type": "Ghost",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "9: 2d10+10 / 21",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "The target’s Defense is lowered by 1 Combat Stage on a 17+.",
+      "contest_type": "Tough",
+      "contest_effect": "Steady Performance",
+      "source": "SuMo References.pdf"
+    },
+    "Spectral Thief": {
+      "name": "Spectral Thief",
+      "type": "Ghost",
+      "frequency": "Scene",
+      "ac": "2",
+      "damage_base": "9: 2d10+10 / 21",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "Before rolling damage, transfer all Combat Stages on the target to the user.",
+      "contest_type": "Smart",
+      "contest_effect": "Attention Grabber",
+      "source": "SuMo References.pdf"
+    },
+    "Spirit Shackle": {
+      "name": "Spirit Shackle",
+      "type": "Ghost",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "8: 2d8+10 / 19",
+      "class": "Physical",
+      "range": "8, 1 Target",
+      "effect": "The Target is Trapped for 2 rounds.",
+      "contest_type": "Smart",
+      "contest_effect": "Sabotage",
+      "source": "SuMo References.pdf"
+    },
+    "Leafage": {
+      "name": "Leafage",
+      "type": "Grass",
+      "frequency": "At-Will",
+      "ac": "2",
+      "damage_base": "4: 1d8+6 / 11",
+      "class": "Physical",
+      "range": "6, 1 Target",
+      "contest_type": "Beauty",
+      "contest_effect": "Steady Performance",
+      "source": "SuMo References.pdf"
+    },
+    "Solar Blade": {
+      "name": "Solar Blade",
+      "type": "Grass",
+      "frequency": "Scene x2",
+      "ac": "2",
+      "damage_base": "13: 4d10+10 / 35",
+      "class": "Physical",
+      "range": "Melee, 1 Target, Set Up Set-Up Effect: If the weather is not Sunny, the user gains +1 Combat Stage in Attack and Special Defense, and the user’s turn ends. If the weather is Sunny, immediately proceed to the Resolution Effect instead and this Move loses the Set-Up keyword.",
+      "effect": "The user attacks with Solar Blade. If the weather is Rainy, Sandstorming, or Hailing, Solar Blade’s Damage Base is lowered to 6 (2d6+8 / 15).",
+      "contest_type": "Cool",
+      "contest_effect": "Special Attention",
+      "source": "SuMo References.pdf"
+    },
+    "Strength Sap": {
+      "name": "Strength Sap",
+      "type": "Grass",
+      "frequency": "Daily x2",
+      "ac": "2",
+      "class": "Status",
+      "range": "Melee, 1 Target",
+      "effect": "The user gains Hit Points equal to the higher of the target's Attack or Special Attack; the target then loses 1 Combat Stage in that Stat.",
+      "contest_type": "Smart",
+      "contest_effect": "Incentives",
+      "source": "SuMo References.pdf"
+    },
+    "Trop Kick": {
+      "name": "Trop Kick",
+      "type": "Grass",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "7: 2d6+10 / 17",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "The target receives a -5 penalty to damage rolls for 1 round.",
+      "contest_type": "Tough",
+      "contest_effect": "Double Time",
+      "source": "SuMo References.pdf"
+    },
+    "High Horsepower": {
+      "name": "High Horsepower",
+      "type": "Ground",
+      "frequency": "Scene x2",
+      "ac": "3",
+      "damage_base": "10: 3d8+10 / 24",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "High Horsepower may be used as a Free Action at the end of a Sprint Maneuver taken as a Standard Action, as long as the user Shifted at least 3 meters in a straight line towards the target. When used this way, High Horsepower gains Smite.",
+      "contest_type": "Tough",
+      "contest_effect": "Big Show",
+      "source": "SuMo References.pdf"
+    },
+    "Shore Up": {
+      "name": "Shore Up",
+      "type": "Ground",
+      "frequency": "Daily x2",
+      "class": "Status",
+      "range": "Self",
+      "effect": "The user regains Hit Points equal to half of its full Hit Point value. If it is Sand Storming , the user gains 2/3 of its full Hit Point value instead. If it is Sunny, Rainy or Hailing the user gains 1/4 of their full Hit Point value instead.",
+      "contest_type": "Tough",
+      "contest_effect": "Reflective Appeal",
+      "source": "SuMo References.pdf"
+    },
+    "Stomping Tantrum": {
+      "name": "Stomping Tantrum",
+      "type": "Ground",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "8: 2d8+10 / 19",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "If the user’s last attack failed or missed, Stomping Tantrum is DB 15 (4d10+10 / 45) instead.",
+      "contest_type": "Tough",
+      "contest_effect": "Unsettling",
+      "source": "SuMo References.pdf"
+    },
+    "Thousand Arrows": {
+      "name": "Thousand Arrows",
+      "type": "Ground",
+      "frequency": "Scene",
+      "ac": "2",
+      "damage_base": "9: 2d10+10 / 21",
+      "class": "Physical",
+      "range": "6, 1 Target",
+      "effect": "When calculating Weakness and Resistance for Thousand Arrows , Flying-Typed targ ets calculate damage as if Flying was neutral to Ground . Thousand Arrows ignores the Levitate ability. The target is knocked down to ground level, and loses all Sky or Levitate Speeds for 3 turns. During this time, they may be hit by Ground -Type Moves even if normally immune.",
+      "contest_type": "Tough",
+      "contest_effect": "Steady Performance",
+      "source": "SuMo References.pdf"
+    },
+    "Thousand Waves": {
+      "name": "Thousand Waves",
+      "type": "Ground",
+      "frequency": "Scene",
+      "ac": "2",
+      "damage_base": "9: 2d10+10 / 21",
+      "class": "Physical",
+      "range": "Burst 1, Groundsource",
+      "effect": "Legal Targets are Trapped for 2 rounds.",
+      "contest_type": "Tough",
+      "contest_effect": "Tease",
+      "source": "SuMo References.pdf"
+    },
+    "Aurora Veil": {
+      "name": "Aurora Veil",
+      "type": "Ice",
+      "frequency": "Scene",
+      "ac": "None",
+      "class": "Status",
+      "range": "Blessing",
+      "effect": "Blessing - Any user affected by Aurora Veil may activate it when receiving Damage to resist the Damage one step. Aurora Veil may be activated 2 times, and then disappears.",
+      "special": "Aurora Veil can only be used when the user is in Hailing Weather. The Blessings persist even after Hailing Weather has ended, however.",
+      "contest_type": "Beauty",
+      "contest_effect": "Excitement",
+      "source": "SuMo References.pdf"
+    },
+    "Ice Hammer": {
+      "name": "Ice Hammer",
+      "type": "Ice",
+      "frequency": "EOT",
+      "ac": "4",
+      "damage_base": "10: 3d8+10 / 24",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "The user’s Speed is lowered by 1 Combat Stage.",
+      "contest_type": "Cool",
+      "contest_effect": "Good Show",
+      "source": "SuMo References.pdf"
+    },
+    "Laser Focus": {
+      "name": "Laser Focus",
+      "type": "Normal",
+      "frequency": "Scene x2",
+      "ac": "None",
+      "class": "Status",
+      "range": "Self",
+      "effect": "The next successful damaging attack made by the user is automatically a Critical Hit.",
+      "contest_type": "Smart",
+      "contest_effect": "Get Ready",
+      "source": "SuMo References.pdf"
+    },
+    "Multi-Attack": {
+      "name": "Multi-Attack",
+      "type": "Normal",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "9: 2d10+10 / 21",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "Multi-Attack is the same Type as the Memory Disc, Plate, or Drive Item held.",
+      "contest_type": "Cool",
+      "contest_effect": "Reflective Appeal",
+      "source": "SuMo References.pdf"
+    },
+    "Revelation Dance": {
+      "name": "Revelation Dance",
+      "type": "Normal",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "9: 2d10+10 / 21",
+      "class": "Special",
+      "range": "6, 1 Target",
+      "effect": "Revelation Dance is the same Type as the user’s primary Type (the first one listed in the Pokédex). Revelation Dance deals +5 Bonus Damage for every other Da nce Move used by the user this round, to a maximum of +15.",
+      "contest_type": "Beauty",
+      "contest_effect": "Reliable",
+      "source": "SuMo References.pdf"
+    },
+    "Spotlight": {
+      "name": "Spotlight",
+      "type": "Normal",
+      "frequency": "Daily",
+      "ac": "None",
+      "class": "Status",
+      "range": "6, 1 Target, Priority",
+      "effect": "Until the end of the user’s next turn, the target is Blinded and Vulnerable.",
+      "contest_type": "Smart",
+      "contest_effect": "Attention Grabber",
+      "source": "SuMo References.pdf"
+    },
+    "Swagger": {
+      "name": "Swagger",
+      "type": "Normal",
+      "frequency": "EOT",
+      "ac": "5",
+      "class": "Status",
+      "range": "6, 1 Target, Social",
+      "effect": "The target’s Attack is raised 2 Combat Stages. Swagger Confuses the target.",
+      "contest_type": "Cute",
+      "contest_effect": "Excitement",
+      "source": "SuMo References.pdf"
+    },
+    "Tackle": {
+      "name": "Tackle",
+      "type": "Normal",
+      "frequency": "At-Will",
+      "ac": "2",
+      "damage_base": "4: 1d8+6 / 11",
+      "class": "Physical",
+      "range": "Melee, 1 Target, Dash, Push",
+      "effect": "The target is pushed 2 Meters.",
+      "contest_type": "Tough",
+      "contest_effect": "Steady Performance",
+      "source": "SuMo References.pdf"
+    },
+    "Tearful Look": {
+      "name": "Tearful Look",
+      "type": "Normal",
+      "frequency": "EOT",
+      "ac": "2",
+      "class": "Status",
+      "range": "Burst 1, Social, Friendly",
+      "effect": "Tearful Look lowers all Legal Targets ’ Attack and Special Attack 1 Combat Stage.",
+      "contest_type": "Cute",
+      "contest_effect": "Sabotage",
+      "source": "SuMo References.pdf"
+    },
+    "Baneful Bunker": {
+      "name": "Baneful Bunker",
+      "type": "Poison",
+      "frequency": "Scene",
+      "ac": "None",
+      "class": "Status",
+      "range": "Self, Interrupt, Shield, Trigger",
+      "effect": "If the user is hit by an attack, the user may use Baneful Bunker. The user is instead not hit by the Move. You do not take any damage nor are you affected by any of the Move’s effects. In addition, if the triggering attack was Melee ranged, the attacker is Poisoned.",
+      "contest_type": "Smart",
+      "contest_effect": "Inversed Appeal",
+      "source": "SuMo References.pdf"
+    },
+    "Purify": {
+      "name": "Purify",
+      "type": "Poison",
+      "frequency": "Scene",
+      "ac": "None",
+      "class": "Status",
+      "range": "Melee, 1 Target",
+      "effect": "The target is cured of all Permanent and Volatile Statuses. For every status removed, the user recovers a Tick of Hit Points.",
+      "contest_type": "Smart",
+      "contest_effect": "Reflective Appeal",
+      "source": "SuMo References.pdf"
+    },
+    "Toxic Thread": {
+      "name": "Toxic Thread",
+      "type": "Poison",
+      "frequency": "Scene x2",
+      "ac": "2",
+      "class": "Status",
+      "range": "6, 1 Target",
+      "effect": "The target is Poisoned and has their Speed lowered by 1 Combat Stage . If the target is already Poisoned, they instead lose a Tick of Hit Points and has their Speed lowered by 2 Combat Stages.",
+      "contest_type": "Smart",
+      "contest_effect": "Excitement",
+      "source": "SuMo References.pdf"
+    },
+    "Instruct": {
+      "name": "Instruct",
+      "type": "Psychic",
+      "frequency": "Scene x2",
+      "ac": "None",
+      "class": "Status",
+      "range": "Melee, 1 Target",
+      "effect": "The target immediately reuses the attack it performed last, ignoring frequency, as a Free Action. They may cho ose new targets for the copied attack. Instruct may not be used if the Target’s last Move was a Set-Up Move, a Trigger Move, or Instruct, or if the Target is currently affected by Exhaust.",
+      "contest_type": "Smart",
+      "contest_effect": "Catching Up",
+      "source": "SuMo References.pdf"
+    },
+    "Hyperspace Hole": {
+      "name": "Hyperspace Hole",
+      "type": "Psychic",
+      "frequency": "Daily",
+      "ac": "2",
+      "damage_base": "8: 2d8+10 / 19",
+      "class": "Special",
+      "range": "Melee, 3 Targets",
+      "effect": "Make and resolve of Hyperspace Hole’s attacks separately. In between each attack, the user may Shift using their Teleporter capability, ending the Shift next to a legal target. Interrupts may not be triggered against Hyperspace Hole.",
+      "contest_type": "Smart",
+      "contest_effect": "Gamble",
+      "source": "SuMo References.pdf"
+    },
+    "Photon Geyser": {
+      "name": "Photon Geyser",
+      "type": "Psychic",
+      "frequency": "Scene",
+      "ac": "2",
+      "damage_base": "10: 3d8+10 / 24",
+      "class": "Special",
+      "range": "Burst 2",
+      "effect": "This attack uses the highest of the user’s Attack or Special Attack Stat, though it remains a Special Move. This Move ignores any Abilities that would cause it to fail or miss , such as Dodge or Wonder Guard; those Abilities cannot be activate d in response to Photon Geyser.",
+      "contest_type": "Smart",
+      "contest_effect": "Seen Nothing Yet",
+      "source": "SuMo References.pdf"
+    },
+    "Prismatic Laser": {
+      "name": "Prismatic Laser",
+      "type": "Psychic",
+      "frequency": "Daily x2",
+      "ac": "4",
+      "damage_base": "16: 5d10+20 / 50",
+      "class": "Special",
+      "range": "Line 8, Smite, Exhaust",
+      "contest_type": "Cool",
+      "contest_effect": "Exhausting Act",
+      "source": "SuMo References.pdf"
+    },
+    "Psychic Fangs": {
+      "name": "Psychic Fangs",
+      "type": "Psychic",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "9: 2d10+10 / 21",
+      "class": "Physical",
+      "range": "4, 1 Target",
+      "effect": "Light Screen, Reflect and Aurora Veil cannot be declared in response to Psychic Fangs.",
+      "contest_type": "Smart",
+      "contest_effect": "Steady Performance",
+      "source": "SuMo References.pdf"
+    },
+    "Psychic Terrain": {
+      "name": "Psychic Terrain",
+      "type": "Psychic",
+      "frequency": "Daily x2",
+      "ac": "None",
+      "class": "Status",
+      "range": "Field",
+      "effect": "The Field becomes Weird for five rounds. While the Field is Weird, non -Flying and non - Levitating Pokémon cannot declare Priority or Interrupt Moves outside their own Initiatives. Damaging Psychic-Type attacks deal an additional 10 damage",
+      "contest_type": "Smart",
+      "contest_effect": "Sabotage",
+      "source": "SuMo References.pdf"
+    },
+    "Speed Swap": {
+      "name": "Speed Swap",
+      "type": "Psychic",
+      "frequency": "Scene",
+      "ac": "2",
+      "class": "Status",
+      "range": "Melee, 1 Target",
+      "effect": "The user and the target trade Initiative values.",
+      "contest_type": "Cute",
+      "contest_effect": "Inversed Appeal",
+      "source": "SuMo References.pdf"
+    },
+    "Accelerock": {
+      "name": "Accelerock",
+      "type": "Rock",
+      "frequency": "At-Will",
+      "ac": "2",
+      "damage_base": "4: 1d8+6 / 1",
+      "class": "Physical",
+      "range": "Melee, 1 Target, Priority",
+      "contest_type": "Tough",
+      "contest_effect": "Saving Grace",
+      "source": "SuMo References.pdf"
+    },
+    "Anchor Shot": {
+      "name": "Anchor Shot",
+      "type": "Steel",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "8: 2d8+10 / 19",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "The Target is Trapped for 2 rounds. Anchor Shot may only be used from the user's Anchor Token.",
+      "contest_type": "Tough",
+      "contest_effect": "Catching Up",
+      "source": "SuMo References.pdf"
+    },
+    "Gear Up": {
+      "name": "Gear Up",
+      "type": "Steel",
+      "frequency": "Scene x2",
+      "class": "Status",
+      "range": "Burst 4",
+      "effect": "All targets with the Plus or Minus Abilities receive +1 Attack and Special Attack Combat Stages",
+      "contest_type": "Smart",
+      "contest_effect": "Get Ready",
+      "source": "SuMo References.pdf"
+    },
+    "Smart Strike": {
+      "name": "Smart Strike",
+      "type": "Steel",
+      "frequency": "EOT",
+      "ac": "None",
+      "damage_base": "7: 2d6+10 / 17",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "Smart Strike cannot miss.",
+      "contest_type": "Smart",
+      "contest_effect": "Safe Option",
+      "source": "SuMo References.pdf"
+    },
+    "Sunsteel Strike": {
+      "name": "Sunsteel Strike",
+      "type": "Steel",
+      "frequency": "Scene x2",
+      "ac": "2",
+      "damage_base": "10: 3d8+10 / 24",
+      "class": "Physical",
+      "range": "Close Blast 2",
+      "effect": "This Move ignores any Abilities that would cause it to fail or miss , such as Dodge or Wonder Guard; those Abilities cannot be activated in response to Sunsteel Strike.",
+      "contest_type": "Cool",
+      "contest_effect": "Big Show",
+      "source": "SuMo References.pdf"
+    },
+    "Liquidation": {
+      "name": "Liquidation",
+      "type": "Water",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "9: 2d10+10 / 21",
+      "class": "Physical",
+      "range": "Melee, 1 Target",
+      "effect": "The target’s Defense is lowered by 1 Combat Stage on a 17+.",
+      "contest_type": "Beauty",
+      "contest_effect": "Steady Performance",
+      "source": "SuMo References.pdf"
+    },
+    "Sparkling Aria": {
+      "name": "Sparkling Aria",
+      "type": "Water",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "9: 2d10+10 / 21",
+      "class": "Special",
+      "range": "Melee, 2 Targets",
+      "effect": "When you hit a target with Sparkling Aria, the user may choose to deal no damage and instead cure that target of Burn, Confusion, Infatuation, or Rage.",
+      "contest_type": "Beauty",
+      "contest_effect": "Attention Grabber",
+      "source": "SuMo References.pdf"
+    },
+    "Steam Eruption": {
+      "name": "Steam Eruption",
+      "type": "Water",
+      "frequency": "Scene",
+      "ac": "3",
+      "damage_base": "11: 3d10+10 / 27",
+      "class": "Special",
+      "range": "Close Blast 3, Smite",
+      "effect": "Steam Eruption burns all legal targets on a 15+.",
+      "contest_type": "Cool",
+      "contest_effect": "Seen Nothing Yet",
+      "source": "SuMo References.pdf"
+    },
+    "Water Shuriken": {
+      "name": "Water Shuriken",
+      "type": "Water",
+      "frequency": "EOT",
+      "ac": "2",
+      "damage_base": "2: 1d6+3 / 7",
+      "class": "Special",
+      "range": "6, 1 Target, Five Strike, Priority",
+      "contest_type": "Cool",
+      "contest_effect": "Reliable",
+      "source": "SuMo References.pdf"
+    }
+  }
+}

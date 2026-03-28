@@ -1,0 +1,80 @@
+{
+  "name": "Zoom Lens",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "combat"
+    ],
+    "actions": [
+      {
+        "name": "Zoom Lens",
+        "slug": "zoom-lens",
+        "type": "generic",
+        "description": "Trigger: The user declares an attack on a creature that acted before the user's first activation this Round.\nEffect: The triggering attack's Accuracy is increased by +20.",
+        "traits": [
+          "Combat"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m",
+          "distance": 10
+        },
+        "cost": {
+          "activation": "complex",
+          "trigger": "The user declares an attack on a creature that acted before the user's first activation this Round."
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Passive: The user gains +20 Accuracy on Attacks targeting creatures with a lower AV than the user.</p>",
+    "slug": "zoom-lens",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "JsNiU25tyqQ4rtgc",
+  "effects": [],
+  "folder": "PGpYU7mfnRpzOZSm"
+}

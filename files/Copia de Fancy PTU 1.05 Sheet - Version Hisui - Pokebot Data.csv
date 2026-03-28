@@ -1,0 +1,93 @@
+Pokebot Size,Total Base Stats,Complexity,Size,Weight Class,Overland,Sky,Swim,Levitate,Burrow,Power,HJ,LJ,Athletics/Combat,Acrobatics/Stealth,Base Cost,Material,,Cost Mult
+Small,32,6,Small,1,6,0,0,0,0,1,0,0,4,6,1000,Pokébot Default,,1
+Small Pokebot,32,6,Small,1,6,0,0,0,0,1,0,0,4,6,1000,Chromic Jelly,,1.5
+Small Pokébot,32,6,Small,1,6,0,0,0,0,1,0,0,4,6,1000,Conductive Crystal,,1.2
+Medium,40,8,Medium,3,5,0,0,0,0,3,1,1,5,5,2000,Psionic Alloy,,2
+Medium Pokebot,40,8,Medium,3,5,0,0,0,0,3,1,1,5,5,2000,Reinforced Steel,,2
+Medium Pokébot,40,8,Medium,3,5,0,0,0,0,3,1,1,5,5,2000,,,
+Large,48,10,Large,5,4,0,0,0,0,5,1,1,6,4,3000,,,
+Large Pokebot,48,10,Large,5,4,0,0,0,0,5,1,1,6,4,3000,,,
+Large Pokébot,48,10,Large,5,4,0,0,0,0,5,1,1,6,4,3000,,,
+Defend v / Attack >,Normal,Fighting,Flying,Poison,Ground,Rock,Bug,Ghost,Steel,Fire,Water,Grass,Electric,Psychic,Ice,Dragon,Dark,Fairy
+Normal,1,2,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1
+Fighting,1,1,2,1,1,0.5,0.5,1,1,1,1,1,1,2,1,1,0.5,2
+Flying,1,0.5,1,1,0,2,0.5,1,1,1,1,0.5,2,1,2,1,1,1
+Poison,1,0.5,1,0.5,2,1,0.5,1,1,1,1,0.5,1,2,1,1,1,0.5
+Ground,1,1,1,0.5,1,0.5,1,1,1,1,2,2,0,1,2,1,1,1
+Rock,0.5,2,0.5,0.5,2,1,1,1,2,0.5,2,2,1,1,1,1,1,1
+Bug,1,0.5,2,1,0.5,2,1,1,1,2,1,0.5,1,1,1,1,1,1
+Ghost,0,0,1,0.5,1,1,0.5,2,1,1,1,1,1,1,1,1,2,1
+Steel,0.5,2,0.5,0,2,0.5,0.5,1,0.5,2,1,0.5,1,0.5,0.5,0.5,1,0.5
+Fire,1,1,1,1,2,2,0.5,1,0.5,0.5,2,0.5,1,1,0.5,1,1,0.5
+Water,1,1,1,1,1,1,1,1,0.5,0.5,0.5,2,2,1,0.5,1,1,1
+Grass,1,1,2,2,0.5,1,2,1,1,2,0.5,0.5,0.5,1,2,1,1,1
+Electric,1,1,0.5,1,2,1,1,1,0.5,1,1,1,0.5,1,1,1,1,1
+Psychic,1,0.5,1,1,1,1,2,2,1,1,1,1,1,0.5,1,1,2,1
+Ice,1,2,1,1,1,2,1,1,2,2,1,1,1,1,0.5,1,1,1
+Dragon,1,1,1,1,1,1,1,1,1,0.5,0.5,0.5,0.5,1,2,2,1,2
+Dark,1,2,1,1,1,1,2,0.5,1,1,1,1,1,0,1,1,0.5,2
+Fairy,1,0.5,1,2,1,1,0.5,1,2,1,1,1,1,1,1,0,0.5,1
+None,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+Pokébot Default,1,1,1,1,2,1,1,1,1,2,1,1,2,1,1,1,1,1
+Chromic Jelly,1,0.5,1,2,1,1,1,1,2,0.5,1,1,0.5,1,2,1,1,1
+Conductive Crystal,1,2,1,1,1,2,1,1,2,1,1,1,1,1,1,1,1,1
+Psionic Alloy,1,0.5,1,1,1,1,1,1,1,1,1,1,1,0.5,1,1,2,1
+Reinforced Steel,0.5,2,0.5,0,2,0.5,0.5,1,0.5,2,1,0.5,1,0.5,0.5,0.5,1,0.5
+Pokébot Upgrades,,,,,,,,,,,,,,,,,,
+Name,,Complexity,Cost,Effect,,,,,,,,,,,,,,
+Basic Combat Parts,,1,300,"The Pokébot learns any two of the following Moves - Scratch, Tackle, Take Down, and Defense Curl. A Pokébot may have this Part installed multiple times, choosing different Moves each time.",,,,,,,,,,,,,,
+Basic Utility Parts,,1,300,"Choose one of the following effects. A Pokébot may have this Part installed multiple times, choosing a different effect each time.
+»» The Pokébot gains +4 to all Movement Speeds
+»» The Pokébot gains the Levitate Ability and a Sky Speed of 2
+»» The Pokébot gains a Swim speed equal to half its Overland speed
+»» The Pokébot gains the Stealth and Dead Silent capabilities.",,,,,,,,,,,,,,
+Basic Utility Parts (Movement),,1,300,The Pokébot gains +4 to all Movement Speeds.,,,,,,,,,,,,,,
+Basic Utility Parts (Levitate),,1,300,The Pokébot gains the Levitate Ability and a Sky Speed of 2.,,,,,,,,,,,,,,
+Basic Utility Parts (Swim),,1,300,The Pokébot gains a Swim speed equal to half its Overland speed.,,,,,,,,,,,,,,
+Basic Utility Parts (Stealth),,1,300,The Pokébot gains the Stealth and Dead Silent capabilities.,,,,,,,,,,,,,,
+Advanced Combat Parts,,2,500,"The Pokébot learns any two of the following Moves - Body Slam, Slash, Lock-On, and Screech. A Pokébot may have this Part installed multiple times, choosing different Moves each time.",,,,,,,,,,,,,,
+Advanced Utility Parts,,2,500,"Choose one of the following effects. A Pokébot may have this part installed multiple times, choosing a different effect each time.
+»» The Pokébot gains 3 Skill Ranks to distribute as you choose. You may select this option twice.
+»» The Pokébot gains a +4 bonus to its Power Capability
+»» The Pokébot gains the Magnetic Capability and is immune to Scramble and EMP.",,,,,,,,,,,,,,
+Advanced Utility Parts (Skills),,2,500,The Pokébot gains 3 Skill Ranks to distribute as you choose. You may select this option twice.,,,,,,,,,,,,,,
+Advanced Utility Parts (Power),,2,500,The Pokébot gains a +4 bonus to its Power Capability,,,,,,,,,,,,,,
+Advanced Utility Parts (Magnets),,2,500,The Pokébot gains the Magnetic Capability and is immune to Scramble and EMP.,,,,,,,,,,,,,,
+Sympathetic Drives,,2,0,"When creating a Sympathetic Drive, you must use a Magmarizer, Electrizer, Metal Coat, Up-Grade, or Dubious Disc. A Pokébot may have multiple Sympathetic Drives installed, but no two that bestow the same effect. When installed, the Sympathetic Drive has an effect based on the item used to make it:
+»» Magmarizer - the Pokébot learns Fire Punch, Flamethrower, and Fire Spin OR the Pokébot gains Heatproof and is immune to being Frozen.
+»» Electrizer - the Pokébot learns Thunder Punch, Discharge, and Magnet Rise OR the Pokébot gains Motor Drive and is immune to Paralysis.
+»» Metal Coat - the Pokébot learns Iron Head, Flash Cannon, and Iron Defense OR the Pokébot is now Steel Type and ignores its base Pokébot type relations.
+»» Up-Grade - the Pokébot learns Tri-Attack, Conversion and Thunder Wave OR the Pokébot gains Download and Analytic.
+»» Dubious Disc - the Pokébot learns Metronome, Acupressure, and Disable OR the Pokébot gains Moody and may be healed by Restoratives, Refreshments, and Moves.",,,,,,,,,,,,,,
+Sympathetic Drives (Magmarizer),,2,0,"The Pokébot learns Fire Punch, Flamethrower, and Fire Spin OR the Pokébot gains Heatproof and is immune to being Frozen.",,,,,,,,,,,,,,
+Sympathetic Drives (Electrizer),,2,0,"The Pokébot learns Thunder Punch, Discharge, and Magnet Rise OR the Pokébot gains Motor Drive and is immune to Paralysis.",,,,,,,,,,,,,,
+Sympathetic Drives (Metal Coat),,2,0,"The Pokébot learns Iron Head, Flash Cannon, and Iron Defense OR the Pokébot is now Steel Type and ignores its base Pokébot type relations.",,,,,,,,,,,,,,
+Sympathetic Drives (Up-Grade),,2,0,"The Pokébot learns Tri-Attack, Conversion and Thunder Wave OR the Pokébot gains Download and Analytic.",,,,,,,,,,,,,,
+Sympathetic Drives (Dubious Disc),,2,0,"The Pokébot learns Metronome, Acupressure, and Disable OR the Pokébot gains Moody and may be healed by Restoratives, Refreshments, and Moves.",,,,,,,,,,,,,,
+Repair Nanites,,2,1000,"The Pokébot gains the Regenerator Ability. Additionally, once per day, as an Extended Action it may gain a Digestion/Food Buff as if using Leftovers.",,,,,,,,,,,,,,
+Wired Compatibility Core,,3,2000,"When installed, choose up to two of the Pokébot’s Moves and one of its Abilities. Whenever a Pokemon with Wired is controlling this Pokébot, it adds the chosen Moves to its Movelist and gains the chosen Ability. While being controlled, a Pokébot loses access to its other Moves. Rotom inhabiting this Pokébot are treated as if in Appliance Form.",,,,,,,,,,,,,,
+Experimental AI,,0,0,Increase the maximum complexity of the Pokébot by 2.,,,,,,,,,,,,,,
+Datajack,,0,250,"The Pokébot may directly interface with computers, accessing the data through an Eye Slot Augmentation, external visor, Pokédex, or internal computer. The Pokébot can communicate wirelessly with others over networks using the Datajack.",,,,,,,,,,,,,,
+Enhanced Sight,,1,1000,(Eyes) The Pokébot can see in the IR spectrum and gains the Darkvision Capability.,,,,,,,,,,,,,,
+Upgraded Enhanced Sight,,1,1000,(Eyes) The Pokébot can see in the IR spectrum and gains the Darkvision and X-Ray Vision Capabilities.,,,,,,,,,,,,,,
+Smart Vision,,2,1500,"(Eyes) The Pokébot cannot have their Accuracy lowered, and their attacks cannot have Accuracy Penalties.",,,,,,,,,,,,,,
+Upgraded Smart Vision,,2,1500,"(Eyes) The Pokébot cannot have their Accuracy lowered, and their attacks cannot have Accuracy Penalties.  The Pokébot learns the Move Feint without taking a Move Slot.",,,,,,,,,,,,,,
+Synthetic Muscle,,2,1000,(Limbs) The Pokébot gains a +2 bonus to their Power Capability and +1 to both High and Long Jump Capabilities.,,,,,,,,,,,,,,
+Upgraded Synthetic Muscle,,2,1000,(Limbs) The Pokébot gains a +2 bonus to their Power Capability and +1 to both High and Long Jump Capabilities.  The Pokébot recovers from Injuries twice as fast and heals one more Injury per day.,,,,,,,,,,,,,,
+Embedded Weaponry,,3,2000,"(Limbs) Choose Small Melee or Short Range. The Pokébot is always treated as equipped with the chosen type of Weapon at a Simple Quality, without consuming an equipment slot, and it may not be disarmed. When installed, choose Bash!, Cheap Shot, or Pierce! for this Weapon’s Adept Move. The Pokébot may use Technology Education to qualify for Moves from this Weapon.",,,,,,,,,,,,,,
+Upgraded Embedded Weaponry,,3,2000,"(Limbs) Choose Small Melee or Short Range. The Pokébot is always treated as equipped with the chosen type of Weapon at a Fine Quality, without consuming an equipment slot, and it may not be disarmed. When installed, choose Bash!, Cheap Shot, or Pierce! for this Weapon’s Adept Move, with Deadly Strike as this weapon's Master Move. The Pokébot may use Technology Education to qualify for Moves from this Weapon.",,,,,,,,,,,,,,
+Medical Nanobots,,2,1000,"(Body) Three times a day as an Extended Action, the Pokébot may gain a Digestion Buff as if they had consumed Leftovers. This does not take up one of the Pokébot’s normal Digestion Buff slots, but they may only have one Digestion/Food Buff gained this way at a time.",,,,,,,,,,,,,,
+Upgraded Medical Nanobots,,2,1000,"(Body) Three times a day as an Extended Action, the Pokébot may gain a Digestion/Food Buff as if they had consumed Leftovers. This does not take up one of the Pokébot’s normal Digestion Buff slots, but they may only have one Digestion Buff gained this way at a time.  Once a Scene, the user may cure themselves of all Persistent Status Afflictions as a Standard Action.",,,,,,,,,,,,,,
+Wired Reflexes,,3,1500,(Body) The Pokébot begins each Scene with two Reflex Points. These may be spent as a Swift Action on their turn to give them a +2 bonus to their Accuracy (before rolling) or their Evasion for one full round.,,,,,,,,,,,,,,
+Upgraded Wired Reflexes,,3,1500,(Body) The Pokébot begins each Scene with two Reflex Points. These may be spent as a Swift Action on their turn to give them a +2 bonus to their Accuracy (before rolling) or their Evasion for one full round.,,,,,,,,,,,,,,
+Dermal Plating,,3,2000,"(Dermal) Once a Scene, the Pokébot may take Physical Damage as if they resisted it one step further.",,,,,,,,,,,,,,
+Upgraded Dermal Plating,,3,2000,"(Dermal) Once a Scene, the Pokébot may take Physical or Special Damage as if they resisted it one step further.",,,,,,,,,,,,,,
+Thermal-Optical Camouflage,,4,4000,"(Dermal) The Pokébot may activate the Invisibility Capability once per Scene. While Invisible, the Pokébot can’t be seen by thermal imagining equipment.",,,,,,,,,,,,,,
+Upgraded Thermal-Optical Camouflage,,4,4000,"(Dermal) The Pokébot may activate the Invisibility Capability once per Scene. While Invisible, the Pokébot can’t be seen by thermal imagining equipment, and is invisible to Aura Reading and Thought Detection.",,,,,,,,,,,,,,
+Efficient Installation,,0,0,The Pokébot gains a +2 boost to their maximum Complexity and counts their used Augmentations as 2 lower for the purposes of Augmentation Shock. The Pokébot can have multiple Augmentations in the same Slot.,,,,,,,,,,,,,,
+Pokébot Material Reference,,,,,,,,,,,,,,,,,,
+Pokébot Default,,"Default material for Pokébots.  Weak to Fire, Electric, and Ground.",,,,,,,,,,,,,,,,
+Chromic Jelly,,"Multiply construction costs by 1.5. Resists Fire, Electric, and Fighting. Weak to Steel, Ice, and Poison.",,,,,,,,,,,,,,,,
+Conductive Crystal,,"Multiply construction costs by 1.2. Weak to Steel, Fighting, and Rock.",,,,,,,,,,,,,,,,
+Psionic Alloy,,Multiply construction costs by 2. Resists Psychic and Fighting. Weak to Dark. Pokébot can be controlled through Telepathic communication. Loses the Mindlock Capability. May have Psionic Blades installed via Combat Basics Suite.,,,,,,,,,,,,,,,,
+Reinforced Steel,,Multiply construction costs by 2. Gains Steel Type’s weaknesses and resistances.,,,,,,,,,,,,,,,,

@@ -1,0 +1,48 @@
+{
+  "name": "Sandstorm",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/rock_icon.svg",
+  "system": {
+    "slug": "sandstorm",
+    "actions": [
+      {
+        "slug": "sandstorm",
+        "name": "Sandstorm",
+        "type": "attack",
+        "traits": [
+          "weather"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "types": [
+          "rock"
+        ],
+        "description": "<p>Effect: The weather becomes Sandy for 3 rounds.</p>",
+        "img": "systems/ptr2e/img/svg/rock_icon.svg",
+        "summon": "Compendium.ptr2e.core-summons.Item.2pDL6hkh4fjFIEAe",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "CUj5LvNodz0DfdaJ",
+  "effects": []
+}

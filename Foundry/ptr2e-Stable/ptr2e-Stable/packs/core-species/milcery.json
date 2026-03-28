@@ -1,0 +1,323 @@
+{
+  "name": "milcery",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "fairy"
+    ],
+    "stats": {
+      "hp": 45,
+      "atk": 40,
+      "def": 40,
+      "spa": 50,
+      "spd": 61,
+      "spe": 34
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "tackle",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aromatic-mist",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sweet-kiss",
+          "level": 5,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sweet-scent",
+          "level": 10,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "draining-kiss",
+          "level": 15,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charm",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "aromatherapy",
+          "level": 20,
+          "gen": "sword-shield"
+        },
+        {
+          "name": "attract",
+          "level": 25,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "acid-armor",
+          "level": 30,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "dazzling-gleam",
+          "level": 35,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "recover",
+          "level": 40,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "misty-terrain",
+          "level": 45,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "entrainment",
+          "level": 50,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "last-resort",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "baby-doll-eyes",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "stored-power",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 0.2,
+      "weight": 0.3,
+      "category": "tiny",
+      "type": "quad"
+    },
+    "captureRate": 220,
+    "eggGroups": [
+      "fairy",
+      "indeterminate"
+    ],
+    "genderRatio": 8,
+    "evolutions": {
+      "name": "milcery",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "alcremie",
+          "uuid": "Compendium.ptr2e.core-species.Item.AvfxaTSs2QBqaZZh",
+          "methods": [
+            {
+              "type": "level",
+              "level": 35,
+              "operand": "or"
+            },
+            {
+              "type": "item",
+              "item": "shiny-stone",
+              "operand": "or",
+              "held": false
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "evolutions": []
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.O3Duv8YFWLAx6MhQ"
+    },
+    "number": 868,
+    "traits": [
+      "pokemon",
+      "hover",
+      "bait",
+      "underdog",
+      "jump-3"
+    ],
+    "diet": [
+      "sweets"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "sweet-veil"
+        },
+        {
+          "slug": "aroma-veil"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "misty-surge"
+        },
+        {
+          "slug": "run-away"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "ripen"
+        },
+        {
+          "slug": "harvest"
+        }
+      ],
+      "master": [
+        {
+          "slug": "power-of-alchemy"
+        },
+        {
+          "slug": "pastel-veil"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 5
+      }
+    ],
+    "skills": [
+      {
+        "slug": "conversation",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "husbandry",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 15,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "natural-world",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "negotiation",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fairies",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": "occult"
+      },
+      {
+        "slug": "running",
+        "value": 20,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "field",
+      "city"
+    ],
+    "slug": "milcery",
+    "publication": {
+      "source": "PTR 2e Core - Galar Dex",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "O3Duv8YFWLAx6MhQ",
+  "effects": [],
+  "folder": null
+}

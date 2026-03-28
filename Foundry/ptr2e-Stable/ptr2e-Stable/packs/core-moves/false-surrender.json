@@ -1,0 +1,49 @@
+{
+  "name": "False Surrender",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dark_icon.svg",
+  "system": {
+    "slug": "false-surrender",
+    "actions": [
+      {
+        "slug": "false-surrender",
+        "name": "False Surrender",
+        "type": "attack",
+        "traits": [
+          "contact",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "physical",
+        "power": 80,
+        "accuracy": null,
+        "types": [
+          "dark"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "sZu5bzxSnD6KmHpd",
+  "effects": []
+}

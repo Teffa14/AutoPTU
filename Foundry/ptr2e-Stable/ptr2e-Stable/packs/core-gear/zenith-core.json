@@ -1,0 +1,104 @@
+{
+  "name": "Zenith Core",
+  "img": "systems/ptr2e/img/item-icons/zenith core.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": "",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "slotless",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "S",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": true,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "unique",
+    "traits": [
+      "phenomenon",
+      "charge-pool-1"
+    ],
+    "actions": [
+      {
+        "slug": "z-pose",
+        "name": "Z-Pose!",
+        "type": "generic",
+        "traits": [
+          "phenomenon",
+          "command",
+          "dash"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "description": "<p>Effect: The user triggers the Z-Crystal or the Z-Power-Crystal possessed by the target, allowing them to use a [Zenith] Action during their next Activation.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "slug": "z-pose-zenith-core-charge",
+        "name": "Z-Pose! (Zenith Core Charge)",
+        "type": "generic",
+        "traits": [
+          "phenomenon",
+          "command",
+          "dash"
+        ],
+        "range": {
+          "target": "ally",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex"
+        },
+        "description": "<p>Effect: The user triggers the Z-Crystal or the Z-Power-Crystal possessed by the target, allowing them to use a [Zenith] Action using 0 PP during their next Activation.</p>",
+        "variant": "z-pose",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: The user may utilize a charge from this Item to pay the PP Cost of the user's Z-Pose! and the @Trait[zenith] Move triggered by it.</p>",
+    "slug": "zenith-core",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "TABUqtAKU3zTmqkn",
+  "effects": [],
+  "folder": "V4skAU6G3OH5fXae"
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Eternabeam",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "eternabeam",
+    "actions": [
+      {
+        "slug": "eternabeam",
+        "name": "Eternabeam",
+        "type": "attack",
+        "traits": [
+          "legendary",
+          "flinch-50",
+          "ray"
+        ],
+        "range": {
+          "target": "line",
+          "distance": 20,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 5
+        },
+        "category": "special",
+        "power": 160,
+        "accuracy": 90,
+        "types": [
+          "dragon"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "ec0FHGpYMC4FYKWL",
+  "effects": []
+}

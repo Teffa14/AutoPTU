@@ -1,0 +1,49 @@
+{
+  "name": "Aurora Veil",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "aurora-veil",
+    "actions": [
+      {
+        "slug": "aurora-veil",
+        "name": "Aurora Veil",
+        "type": "attack",
+        "traits": [
+          "environ",
+          "shield"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "simple",
+          "powerPoints": 2
+        },
+        "category": "status",
+        "types": [
+          "ice"
+        ],
+        "description": "<p>Effect: For 3 Rounds, the user and its allies take half damage from damaging attacks. Aurora Veil may only be used in Snow Weather.</p>",
+        "img": "systems/ptr2e/img/svg/ice_icon.svg",
+        "summon": "Compendium.ptr2e.core-summons.Item.B1lS6N0k3c8XJ9CR",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "XNNeBcOamkYG9YRY",
+  "effects": []
+}

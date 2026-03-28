@@ -1,0 +1,538 @@
+{
+  "name": "galvantula",
+  "type": "species",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "system": {
+    "number": 596,
+    "size": {
+      "category": "medium",
+      "type": "quad",
+      "height": 0.8,
+      "weight": 14.3
+    },
+    "diet": [
+      "carnivore"
+    ],
+    "movement": [
+      {
+        "type": "overland",
+        "value": 10
+      },
+      {
+        "type": "threaded",
+        "value": 10
+      }
+    ],
+    "traits": [
+      "pokemon",
+      "many-legged",
+      "darkvision-15",
+      "tremorsense-15",
+      "zapper",
+      "wallclimber",
+      "underdog",
+      "jump-7"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "compound-eyes"
+        },
+        {
+          "slug": "unnerve"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "swarm"
+        },
+        {
+          "slug": "overcoat"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "immunity"
+        },
+        {
+          "slug": "game-hunter"
+        }
+      ],
+      "master": [
+        {
+          "slug": "minus"
+        },
+        {
+          "slug": "spider-lair"
+        }
+      ]
+    },
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 65,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "fast-talk",
+        "value": 35,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "intimidate",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "lift",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "listen",
+        "value": 60,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "sleight-of-hand",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "spot",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "track",
+        "value": 40,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "slug": "galvantula",
+    "stats": {
+      "hp": 70,
+      "atk": 77,
+      "def": 60,
+      "spa": 97,
+      "spd": 60,
+      "spe": 108
+    },
+    "types": [
+      "bug",
+      "electric"
+    ],
+    "moves": {
+      "levelUp": [
+        {
+          "name": "absorb",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "leech-life",
+          "level": 1,
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "spider-web",
+          "level": 1,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "fury-cutter",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bug-bite",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "electroweb",
+          "level": 1,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "string-shot",
+          "level": 12,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-wave",
+          "level": 16,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "electro-ball",
+          "level": 20,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "agility",
+          "level": 24,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sucker-punch",
+          "level": 28,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "slash",
+          "level": 32,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "signal-beam",
+          "level": 34,
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "discharge",
+          "level": 39,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "screech",
+          "level": 44,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "gastro-acid",
+          "level": 50,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bug-buzz",
+          "level": 56,
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "sticky-web",
+          "level": 0,
+          "gen": "scarlet-violet"
+        }
+      ],
+      "tutor": [
+        {
+          "name": "poison-sting",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "double-team",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "struggle-bug",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "infestation",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lunge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-drain",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "black-2-white-2"
+        },
+        {
+          "name": "bounce",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "magnet-rise",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "throat-chop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rising-voltage",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "cut",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "pin-missile",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunderbolt",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flash",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thief",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "helping-hand",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "secret-power",
+          "gen": "omega-ruby-alpha-sapphire"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "x-scissor",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "cross-poison",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "charge-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "volt-switch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wild-charge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "speed-swap",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pounce",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "captureRate": 75,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 4,
+    "habitats": [
+      "forest",
+      "cave"
+    ],
+    "evolutions": {
+      "name": "joltik",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "galvantula",
+          "uuid": "Compendium.ptr2e.core-species.Item.YgDAio3eQOtmFTbK",
+          "methods": [
+            {
+              "type": "level",
+              "level": 31,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.k9KsztuZFefZmfkH",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "publication": {
+      "source": "PTR 2e Core - Unova Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "YgDAio3eQOtmFTbK",
+  "effects": []
+}

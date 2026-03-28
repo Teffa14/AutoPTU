@@ -1,0 +1,62 @@
+{
+  "name": "Dive Ball",
+  "img": "systems/ptr2e/img/item-icons/dive ball.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 3,
+    "crafting": {
+      "skill": "electronics",
+      "spans": 2,
+      "materials": [
+        "6x-tumblestone",
+        "1x-great-apricorn"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "C",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling",
+      "training-ball",
+      "ball"
+    ],
+    "description": "<p>3.5x Catch Rate modifer if used on a target that is Swimming. 1x Catch Rate modifer otherwise. Water can't provide Cover against Dive Balls.</p>",
+    "modifier": 3.5,
+    "quantity": 1,
+    "slug": "dive-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "1RAmn9H3LSZCk4X2",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

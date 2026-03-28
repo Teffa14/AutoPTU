@@ -1,0 +1,132 @@
+{
+  "name": "Thermal Exchange",
+  "type": "ability",
+  "img": "systems/ptr2e/img/svg/fire_icon.svg",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive",
+          "interrupt-2"
+        ],
+        "name": "Thermal Exchange",
+        "slug": "thermal-exchange",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 2,
+          "trigger": "<p>The user is hit by a Fire-Type attack.</p>"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Trigger: The user is hit by a Fire-Type attack.</p><p>Effect: The user's ATK Stage increases by +1 for 5 Activations.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [
+          "defensive"
+        ],
+        "name": "Thermal Exchange",
+        "slug": "thermal-exchange",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "description": "<p>Passive: The user is immune to the @Affliction[burn] Affliction.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Trigger: The user is hit by a Fire-Type attack.</p><p>Effect: The user's ATK Stage increases by +1 for 5 Activations. Passive: The user is immune to the @Affliction[burn] Affliction.</p>",
+    "traits": [
+      "defensive"
+    ],
+    "slug": "thermal-exchange",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "lbC5wEjYkH7M3MZz",
+  "effects": [
+    {
+      "name": "Thermal Exchange",
+      "type": "passive",
+      "_id": "en7pefmCzuLvGPun",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "fire-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.ZGwaMlzUwkSuCPyH",
+            "predicate": [],
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "defensive",
+            "alterations": [],
+            "dontMerge": false,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "roll-option",
+            "key": "",
+            "value": "affliction:burned",
+            "predicate": [],
+            "domain": "immunities",
+            "toggleable": false,
+            "count": false,
+            "mode": 2,
+            "ignored": false,
+            "suboptions": [],
+            "state": true
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.6.beta",
+        "createdTime": 1765292431754,
+        "modifiedTime": 1765292493992,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf"
+      }
+    }
+  ]
+}

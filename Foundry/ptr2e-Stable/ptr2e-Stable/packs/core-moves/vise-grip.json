@@ -1,0 +1,83 @@
+{
+  "name": "Vise Grip",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "vise-grip",
+    "actions": [
+      {
+        "slug": "vise-grip",
+        "name": "Vise Grip",
+        "type": "attack",
+        "traits": [
+          "crushing",
+          "contact",
+          "grapple"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 55,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: If the Target is @Affliction[grapple] by the user, Vise Grip gains [Danger Close].</p>",
+        "img": "icons/svg/explosion.svg",
+        "predicate": []
+      },
+      {
+        "slug": "vise-grip-grapple",
+        "name": "Vise Grip (Grapple)",
+        "type": "attack",
+        "traits": [
+          "crushing",
+          "contact",
+          "grapple",
+          "danger-close"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 55,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: If the Target is @Affliction[grapple] by the user, Vise Grip gains [Danger Close].</p>",
+        "variant": "vise-grip",
+        "free": true,
+        "img": "systems/ptr2e/img/svg/normal_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "D",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "BTQ6GTBLswwLcX8t",
+  "effects": []
+}

@@ -1,0 +1,62 @@
+{
+  "name": "Repeat Ball",
+  "img": "systems/ptr2e/img/item-icons/repeat ball.webp",
+  "type": "consumable",
+  "system": {
+    "cost": 2,
+    "crafting": {
+      "skill": "electronics",
+      "spans": 2,
+      "materials": [
+        "6x-tumblestone",
+        "1x-great-apricorn"
+      ]
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "D",
+    "fling": {
+      "type": "untyped",
+      "power": 0,
+      "accuracy": 95,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "uncommon",
+    "consumableType": "pokeball",
+    "traits": [
+      "stack-5",
+      "belt",
+      "fling",
+      "training-ball",
+      "ball"
+    ],
+    "description": "<p>6x Catch Rate modifer if used on a Pokemon whose Species has already been registered by the user. 1x Catch Rate modifer otherwise.</p>",
+    "modifier": 6,
+    "quantity": 1,
+    "slug": "repeat-ball",
+    "stack": 5,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "Cp3thGOpyzYOlDDI",
+  "effects": [],
+  "folder": "bIBkUsgkWMXMOtHm"
+}

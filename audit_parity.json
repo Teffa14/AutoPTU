@@ -1,0 +1,8868 @@
+{
+  "moves": [
+    {
+      "name": "Absorb",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Accelerock",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Acid",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Acid Armor",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Acid Spray",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Acrobatics",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Acupressure",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Aerial Ace",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Aeroblast",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "After You",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Agility",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Air Cutter",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Air Slash",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Ally Switch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Amnesia",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Anchor Shot",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Ancient Power",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Apple Acid",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Aqua Jet",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Aqua Ring",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Aqua Tail",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Arcane Fury",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Arcane Storm",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Arm Thrust",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Aromatherapy",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Aromatic Mist",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Assist",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Assurance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Astonish",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Astral Barrage",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Attack Order",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Attack of Opportunity",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Attract",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Aura Sphere",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Aura Wheel",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Aurora Beam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Aurora Veil",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Autotomize",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Avalanche",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Baby-Doll Eyes",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Backswing",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Bane",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Baneful Bunker",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Barb Barrage",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Barrage",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Barrier",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bash!",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Baton Pass",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Beak Blast",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Beat Up",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Behemoth Bash",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Behemoth Blade",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Belch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Belly Drum",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Bestow",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Bide",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Bind",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bite",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bitter Malice",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Blast Burn",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Blaze Kick",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bleakwind Storm",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Bleed!",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Blind",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Blizzard",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Block",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Blue Flare",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Body Press",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Body Slam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bolt Beak",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Bolt Strike",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bon Mot",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Bone Club",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bone Rush",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bonemerang",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Boomburst",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Bounce",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Branch Poke",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Brave Bird",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Breaking Swipe",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Brick Break",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Brine",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Brutal Swing",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bubble",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bubblebeam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bug Bite",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bug Buzz",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bulk Up",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Bulldoze",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Bullet Punch",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Bullet Seed",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Bullseye",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Burn Up",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Burning Jealousy",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Calm Mind",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Camouflage",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Captivate",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Ceaseless Edge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Charge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Charge Beam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Charm",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Chatter",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Cheap Shot",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Chip Away",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Chloroblast",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Circle Throw",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Clamp",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Clanging Scales",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Clangorous Soul",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Clear Smog",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Close Combat",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Coaching",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Coil",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Comet Punch",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Cone of Force",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Confide",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Confuse Ray",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Confusion",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Constrict",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Conversion",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Conversion2",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Copycat",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Core Enforcer",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Corrosive Gas",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Cosmic Power",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Cotton Guard",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Cotton Spore",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Counter",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Court Change",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Covet",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Crabhammer",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Crafty Shield",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Cross Chop",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Cross Poison",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Crunch",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Crush Claw",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Crush Grip",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Curse",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Cut",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Dark Pulse",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Dark Void",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Dark Void [SM]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Darkest Lariat",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Dazzling Gleam",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Deadly Strike",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Decorate",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Defend Order",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Defense Curl",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Defog",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Destiny Bond",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Detect",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Diamond Storm",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Dig",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Dire Claw",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Dirty Trick",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Disable",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Disarm",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Disarming Voice",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Discharge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Disengage",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Dive",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Dizzy Punch",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Doom Desire",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Double Hit",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Double Iron Bash",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Double Kick",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Double Slap",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Double Swipe",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Double Team",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Double-Edge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Draco Meteor",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Dragon Ascent",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Dragon Breath",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Dragon Claw",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Dragon Dance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Dragon Darts",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Dragon Energy",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Dragon Hammer",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Dragon Pulse",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Dragon Rage",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Dragon Rush",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Dragon Tail",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Drain Punch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Draining Kiss",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Dream Eater",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Drill Peck",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Drill Run",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Drum Beating",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Dual Chop",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Dual Wingbeat",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Dynamax Cannon",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Dynamic Punch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "EW Adept",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "EW Expert",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Earth Power",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Earthquake",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Echoed Voice",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Eerie Impulse",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Eerie Spell",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Egg Bomb",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Electric Terrain",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Electrify",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Electro Ball",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Electroweb",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Embargo",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Ember",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Encore",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Endeavor",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Endure",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Energy Ball",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Energy Blast",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Energy Sphere",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Energy Vortex",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Entrainment",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Eruption",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Esper Wing",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Eternabeam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Expanding Force",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Explosion",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Extrasensory",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Extreme Speed",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Facade",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Fairy Lock",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Fairy Wind",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Fake Out",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Fake Tears",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "False Surrender",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "False Swipe",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Façade",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Feather Dance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Feint",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Feint Attack",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Fell Stinger",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Fell Stinger [SM]",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Fiery Dance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Fiery Wrath",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Final Gambit",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Fire Blast",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Fire Fang",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Fire Lash",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Fire Pledge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Fire Punch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Fire Spin",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "First Impression",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Fishious Rend",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Fissure",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Flail",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Flame Burst",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Flame Charge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Flame Wheel",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Flamethrower",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Flare Blitz",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Flash",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Flash Cannon",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Flatter",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Fleur Cannon",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Fling",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Flip Turn",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Flirt",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Floral Healing",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Flower Shield",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Fly",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Flying Press",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Flying Press [SM]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Focus Blast",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Focus Energy",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Focus Punch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Follow Me",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Force Palm",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Foresight",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Forest's Curse",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Foul Play",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Freeze Shock",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Freeze-Dry",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Freezing Glare",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Frenzy Plant",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Frost Breath",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Frustration",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Furious Strikes",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Fury Attack",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Fury Cutter",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Fury Swipes",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Fusion Bolt",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Fusion Flare",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Future Sight",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Gastro Acid",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Gear Grind",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Gear Up",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Gear Up [SS]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Geomancy",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Giga Drain",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Giga Impact",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Glacial Lance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Glaciate",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Glare",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Gouge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Grapple",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Grass Knot",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Grass Pledge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Grass Whistle",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Grassy Glide",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Grassy Terrain",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Grav Apple",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Gravity",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Growl",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Growth",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Grudge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Guard Split",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Guard Swap",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Guillotine",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Gunk Shot",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Gust",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Gyro Ball",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hail",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Hammer Arm",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Harden",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Haze",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Head Charge",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Head Smash",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Headbutt",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Headlong Rush",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Heal Bell",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Heal Block",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Heal Order",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Heal Pulse",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Healing Wish",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Heart Stamp",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Heart Swap",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Heat Crash",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Heat Wave",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Heavy Slam",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Helping Hand",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Hex",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Bug",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Dark",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Dragon",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Electric",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Fairy",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Fighting",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Fire",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Flying",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Hidden Power Ghost",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Hidden Power Grass",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Ground",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Ice",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Poison",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Psychic",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Rock",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Steel",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hidden Power Water",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "High Horsepower",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "High Jump Kick",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hinder",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Hold Hands",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Hone Claws",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Horn Attack",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Horn Drill",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Horn Leech",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Howl",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Howl [SS]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Hurricane",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Hydro Cannon",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Hydro Pump",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hyper Beam",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hyper Fang",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hyper Voice",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Hyperspace Fury",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Hyperspace Hole",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Hypnosis",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Ice Ball",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Ice Beam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Ice Burn",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Ice Fang",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Ice Hammer",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Ice Punch",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Ice Shard",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Icicle Crash",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Icicle Spear",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Icy Wind",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Imprison",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Incinerate",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Infernal Parade",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Inferno",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Infestation",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Ingrain",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Instruct",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Intercept Melee",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Intercept Ranged",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Ion Deluge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Iron Defense",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Iron Head",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Iron Tail",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Jaw Lock",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Judgement",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Jump Kick",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Jungle Healing",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Karate Chop",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Kinesis",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "King's Shield",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Knock Off",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Land's Wrath",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Laser Focus",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Lash Out",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Last Resort",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Lava Plume",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Leaf Blade",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Leaf Storm",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Leaf Tornado",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Leafage",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Leech Life",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Leech Life [SM]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Leech Seed",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Leer",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Lick",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Life Dew",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Light Screen",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Light of Ruin",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Liquidation",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Lock-On",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Lovely Kiss",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Low Blow",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Low Kick",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Low Sweep",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Lucky Chant",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Lunar Blessing",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Lunar Dance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Lunge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Luster Purge",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "MH Adept",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "MH Expert",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Mach Punch",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Magic Burst",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Magic Coat",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Magic Powder",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Magic Room",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Magical Leaf",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Magma Storm",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Magnet Bomb",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Magnet Rise",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Magnetic Flux",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Magnetic Flux [SM]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Magnetic Flux [SS]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Magnitude",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Maneuver",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Manipulate",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Mat Block",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Maul",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Me First",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Mean Look",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Meditate",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Mega Drain",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Mega Kick",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Mega Punch",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Megahorn",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Memento",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Metal Burst",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Metal Claw",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Metal Sound",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Meteor Assault",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Meteor Beam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Meteor Mash",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Metronome",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Milk Drink",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Mimic",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Mind Blown",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Mind Reader",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Minimize",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Miracle Eye",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Mirror Coat",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Mirror Move",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Mirror Shot",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Mist",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Mist Ball",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Misty Explosion",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Misty Terrain",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Moonblast",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Moongeist Beam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Moonlight",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Morning Sun",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Mountain Gale",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Mud Bomb",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Mud Shot",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Mud Sport",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Mud-Slap",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Muddy Water",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Multi-Attack",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Multi-Attack [SS]",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Mystical Fire",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Mystical Power",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Name",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Nasty Plot",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Natural Gift",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Nature Power",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Nature's Madness",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Nature’s Madness",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Needle Arm",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Night Daze",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Night Shade",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Night Slash",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Nightmare",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "No Retreat",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Noble Roar",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Nuzzle",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "OH Adept",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Oblivion Wing",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Obstruct",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Octazooka",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Octolock",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Odor Sleuth",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Ominous Wind",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Origin Pulse",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Outrage",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Overdrive",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Overheat",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Pain Split",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Parabolic Charge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Parabolic Charge [SM]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Parting Shot",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Pay Day",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Payback",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Peck",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Perish Song",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Petal Blizzard",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Petal Dance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Phantom Force",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Photon Geyser",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Pierce!",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Pin Missile",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Plasma Fists",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Play Nice",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Play Rough",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Pluck",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Poison Fang",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Poison Gas",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Poison Jab",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Poison Powder",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Poison Sting",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Poison Tail",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Pollen Puff",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Poltergeist",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Pound",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Powder",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Powder Snow",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Power Gem",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Power Shift",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Power Split",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Power Swap",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Power Trick",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Power Trip",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Power Whip",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Power-Up Punch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Precipice Blades",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Present",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Prismatic Laser",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Protect",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Psybeam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Psych Up",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Psychic",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Psychic Fangs",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Psychic Terrain",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Psycho Boost",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Psycho Cut",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Psycho Shift",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Psyshield Bash",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Psyshock",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Psystrike",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Psywave",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Punishment",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Purify",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Pursuit",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Push",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Pyro Ball",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Quash",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Quick Attack",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Quick Guard",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Quiver Dance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rage",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rage Powder",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Raging Fury",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rain Dance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rapid Spin",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rapid Spin [SS]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Razor Leaf",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Razor Shell",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Razor Wind",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Recover",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Recycle",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Reflect",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Reflect Type",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Refresh",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Relic Song",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rending Spell",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Resonance Beam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rest",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Retaliate",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Return",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Revelation Dance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Revenge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Reversal",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Riposte",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rising Voltage",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Roar",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Roar of Time",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Rock Blast",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Rock Climb",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rock Polish",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rock Slide",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rock Smash",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rock Throw",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rock Tomb",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rock Wrecker",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Role Play",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Rolling Kick",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rollout",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Roost",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Rototiller",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Round",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Sacred Fire",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sacred Sword",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Safeguard",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Salvo",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sand Attack",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sand Tomb",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sandstorm",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sandstorm Sear",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Scald",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Scale Shot",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Scary Face",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Scorching Sands",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Scratch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Screech",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Searing Shot",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Secret Force",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Secret Power",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Secret Sword",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Seed Bomb",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Seed Flare",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Seismic Toss",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Self-Destruct",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Shadow Ball",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Shadow Bone",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Shadow Claw",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Shadow Force",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Shadow Punch",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Shadow Sneak",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sharpen",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sheer Cold",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Shell Side Arm",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Shell Smash",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Shell Trap",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Shelter",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Shift Gear",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Shock Wave",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Shore Up",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Signal Beam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Silver Wind",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Simple Beam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sing",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sketch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Skill Swap",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Skitter Smack",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Skull Bash",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Sky Attack",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Sky Drop",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Sky Uppercut",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Slack Off",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Slam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Slash",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sleep Powder",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sleep Talk",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Slice",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Sludge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sludge Bomb",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sludge Wave",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Smack Down",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Smart Strike",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Smelling Salts",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Smog",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Smokescreen",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Snap Trap",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Snarl",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Snatch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Snipe Shot",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Snore",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Soak",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Soft-Boiled",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Solar Beam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Solar Blade",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Sonic Boom",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Spacial Rend",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Spark",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sparkling Aria",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Spectral Thief",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Speed Swap",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Spider Web",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Spike Cannon",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Spikes",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Spiky Shield",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Spirit Break",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Spirit Lance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Spirit Shackle",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Spit Up",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Spite",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Splash",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Spore",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Spotlight",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Springtide Storm",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Sprint",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Stealth Rock",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Steam Eruption",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Steamroller",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Steel Beam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Steel Roller",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Steel Wing",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sticky Web",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Stockpile",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Stomp",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Stomping Tantrum",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Stone Axe",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Stone Edge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Stored Power",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Storm Throw",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Strange Steam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Strength",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Strength Sap",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "String Shot",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Struggle",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Struggle Bug",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Struggle+",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Stuff Cheeks",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Stun Spore",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Submission",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Substitute",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sucker Punch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sucker Punch [SM]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sunny Day",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sunsteel Strike",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Super Fang",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Superpower",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Supersonic",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Surf",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Surging Strikes",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Swagger",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Swagger [SM]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Swallow",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sweeping Strike",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Sweet Kiss",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Sweet Scent",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Swift",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Switcheroo",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Swords Dance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Synchronoise",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Synthesis",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Tackle",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Tackle [SM]",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Tail Glow",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Tail Slap",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Tail Whip",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Tailwind",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Take Aim",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Take Down",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Take Heart",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Tar Shot",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Taunt",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Tearful Look",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Teatime",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Techno Blast",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Teeter Dance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Telekinesis",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Teleport",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Terrain Pulse",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Terrorize",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thief",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thousand Arrows",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thousand Waves",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thrash",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Throat Chop",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thunder",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thunder Cage",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thunder Fang",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thunder Punch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thunder Shock",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thunder Wave",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thunder Wave [SM]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thunderbolt",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Thunderous Kick",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Tickle",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Titanic Slam",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Topsy-Turvy",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Torment",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Toxic",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Toxic Spikes",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Toxic Thread",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Toxic Threads",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Transform",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Tri Attack",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Trick",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Trick Room",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Trick-or-Treat",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Trip",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Triple Arrows",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Triple Axel",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Triple Kick",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Triple Kick [LA]",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Triple Threat",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Trop Kick",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Trump Card",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Twineedle",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Twister",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "U-Turn",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Uproar",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "V-Create",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Vacuum Wave",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Venom Drench",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Venoshock",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Vicegrip",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Victory Dance",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Vine Whip",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Vital Throw",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Volt Switch",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Volt Tackle",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Wake-Up Slap",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Water Gun",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Water Pledge",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Water Pulse",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Water Shuriken",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Water Shuriken [SM]",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Water Sport",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Water Spout",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Waterfall",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Wave Crash",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Wear Down",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Weather Ball",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Whirlpool",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Whirlwind",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Wicked Blow",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Wide Guard",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Wild Charge",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Wildbolt Storm",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Will-O-Wisp",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Wing Attack",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Wish",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Withdraw",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Wonder Room",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Wood Hammer",
+      "in_sources": true,
+      "has_special_handler": false,
+      "test_mention": true
+    },
+    {
+      "name": "Work Up",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Worry Seed",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Wounding Strike",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Wrap",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Wring Out",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "X-Scissor",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Yawn",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Zap Cannon",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": false
+    },
+    {
+      "name": "Zen Headbutt",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    },
+    {
+      "name": "Zing Zap",
+      "in_sources": true,
+      "has_special_handler": true,
+      "test_mention": true
+    }
+  ],
+  "abilities": [
+    {
+      "name": "Abominable",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Abominable [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Absorb Force",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Accelerate",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Adaptability",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Adaptability [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Aerilate",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Aftermath",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Aftermath [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Air Lock",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Ambush",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Ambush [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Analytic",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Anchored",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Anger Point",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Anticipation",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Aqua Boost",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Aqua Bullet",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Arena Trap",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Arena Trap [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Aroma Veil",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Aroma Veil [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Aura Break",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Aura Break [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Aura Storm",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Aura Storm [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Bad Dreams",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Bad Dreams [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Ball Fetch",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Battery",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Battle Armor",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Beam Cannon",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Beast Boost",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Beautiful",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Beautiful [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Berry Storage",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Berserk",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Big Pecks",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Big Swallow",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Blaze",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Blessed Touch",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Blow Away",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Blow Away [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Blur",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Bodyguard",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Bodyguard [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Bone Lord",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Bone Lord [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Bone Wielder",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Bone Wielder [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Brimstone",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Brimstone [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Bulletproof",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Bully",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Cave Crasher",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Celebrate",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Celebrate [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Chemical Romance",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Cherry Power",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Chilling Neigh",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Chlorophyll",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Chlorophyll [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Clay Cannons",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Clay Cannons [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Clear Body",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Cloud Nine",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Cluster Mind",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Color Change",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Color Theory",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Comatose",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Combo Striker",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Competitive",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Compound Eyes",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Confidence",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Conqueror",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Contrary",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Copy Master",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Corrosion",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Corrosive Toxins",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Cotton Down",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Courage",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Covert",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Cruelty",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Crush Trap",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Curious Medicine",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Cursed Body",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Cute Charm",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Cute Tears",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "DIsguise",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Damp",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Damp [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dancer",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Danger Syrup",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Danger Syrup [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dark Art",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dark Aura",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dauntless Shield",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Daze",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dazzling",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Deadly Poison",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Decoy",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Deep Sleep",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Defeatist",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Defeatist [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Defiant",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Defy Death",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Defy Death [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Delayed Reaction",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Delivery Bird",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Desert Weather",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Desert Weather [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Designer",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Diamond Defense",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dig Away",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dire Spore",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Discipline",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dodge",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Download",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Download [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dragon's Maw",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dragon’s Maw",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dream Smoke",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dreamspinner",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dreamspinner [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Drizzle",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Drizzle [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Drought",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Drought [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Drown Out",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Drown Out [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dry Skin",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dust Cloud",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Dust Cloud [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Early Bird",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Early Bird [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Effect Spore",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Eggscellence",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Electric Surge",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Electrodash",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Electrodash [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Emergency Exit",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Empower",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Enduring Rage",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Enfeebling Lips",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Exploit",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Fabulous Trim",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Fade Away",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Fairy Aura",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Fashion Designer",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Fiery Crash",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Filter",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Filter [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flame Body",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flame Tongue",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flare Boost",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flare Boost [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flash Fire",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flash Fire [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flavorful Aroma",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flower Gift",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flower Gift [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flower Power",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flower Power [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flower Veil",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flower Veil [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Fluffy",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Fluffy Charge",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flutter",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Flying Fly Trap",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Focus",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Forecast",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Forest Lord",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Forewarn",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Fox Fire",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Fox Fire [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Freezing Point",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Friend Guard",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Frighten",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Frisk",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Frisk [Feb Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Frisk [SuMo Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Frostbite",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Full Guard",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Full Metal Body",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Fur Coat",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gale Wings",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gale Wings [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gale Wings [SuMo Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Galvanize",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gardener",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gentle Vibe",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Giver",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Glisten",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gluttony",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gluttony [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gooey",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gore",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gore [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gorilla Tactics",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Grass Pelt",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Grass Pelt [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Grassy Surge",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Grim Neigh",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gulp",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Gulp Missile",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Guts",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Handyman",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Harvest",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Haunt",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Hay Fever",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Healer",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Heat Mirage",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Heatproof",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Heatproof [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Heavy Metal",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Heavy Metal [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Heliovolt",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Helper",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Honey Paws",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Honey Paws [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Honey Thief",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Horde Break",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Huge Power",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Huge Power / Pure Power [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Hunger Switch",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Hustle",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Hustle [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Hydration",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Hydration [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Hyper Cutter",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Hypnotic",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Ice Body",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Ice Body [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Ice Face",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Ice Scales",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Ice Shield",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Ignition Boost",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Illuminate",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Illusion",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Immunity",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Imposter [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Impostor",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Infiltrator",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Innards Out",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Inner Focus",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Inner Focus [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Insomnia",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Instinct",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Interference",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Interference [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Intimidate",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Intimidate [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Intrepid Sword",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Iron Barbs",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Iron Fist",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Juicy Energy",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Justified",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Justified [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Kampfgeist",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Kampfgeist [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Keen Eye",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Klutz",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Klutz [SwSh]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Lancer",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Landslide",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Last Chance",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Leaf Gift",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Leaf Guard",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Leaf Guard [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Leaf Rush",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Leafy Cloak",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Leek Mastery",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Levitate",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Life Force",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Life Force [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Light Metal",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Light Metal [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Lightning Kicks",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Lightning Kicks [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Lightning Rod",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Lightning Rod [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Limber",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Line Charge",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Liquid Ooze",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Liquid Ooze [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Liquid Voice",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Long Reach",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Lullaby",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Lunchbox",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Lunchbox [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mach Speed",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Maestrom Pulse",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Magic Bounce",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Magic Guard",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Magician",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Magma Armor",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Magma Armor [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Magnet Pull",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Magnet Pull [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Marvel Scale",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mega Launcher",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mega Launcher [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Memory Wipe",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Memory Wipe [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Merciless",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Migraine",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Migraine [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mimicry",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mimitree",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mind Mold",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mini-Noses",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Minus",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Minus [SwSh]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Miracle Mile",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mirror Armor",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Missile Launch",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Misty Surge",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mojo",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mold Breaker",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Moody",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Moody [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Motor Drive",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mountain Peak",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Moxie",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mud Dweller",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mud Shield",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Multiscale",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Multiscale [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Multitype",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mummy",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Mummy [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Natural Cure",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Needles",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Neuroforce",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Neutralizing Gas",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Nimble Strikes",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "No Guard",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "No Guard [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Normalize",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Normalize [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Oblivious",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Odious Spray",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Odious Spray [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Omen",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Overcharge",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Overcoat",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Overgrow",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Own Tempo",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Pack Hunt",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Parental Bond",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Parry",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Pastel Veil",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Perception",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Perception [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Perish Body",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Permafrost",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Permafrost [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Photosynthesis",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Pickpocket",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Pickup",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Pixilate",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Plus",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Plus [SwSh]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Poison Heal",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Poison Point",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Poison Touch",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Poltergeist",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Poltergeist [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Polycephaly",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Power Construct",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Power Spot",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Power of Alchemy",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Prankster",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Pressure",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Pressure [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Pride",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Prime Fury",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Prime Fury [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Prism Armor",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Probability Control",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Propeller Tail",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Protean",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Psionic Screech",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Psychic Surge",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Pumpkingrab",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Pumpkingrab [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Punk Rock",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Pure Blooded",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Pure Power",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Queenly Majesty",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Quick Cloak",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Quick Curl",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Quick Curl [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Quick Draw",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Quick Feet",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Quick Feet [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "RKS System",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Radiant Beam",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Ragelope",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Rain Dish",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Rain Dish [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Rally",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Rally [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Rattled",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Rattled [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Razor Edge",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Receiver",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Reckless",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Reckless [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Refreshing Veil",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Refridgerate",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Regal Challenge",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Regal Challenge [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Regenerator",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Revelation",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Ripen",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Rivalry",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Rock Head",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Rock Head [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Rocket",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Rocket [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Root Down",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Root Down [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Rough Skin",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Run Away",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Run Away [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Run Up",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sacred Bell",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sand Force",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sand Force [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sand Rush",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sand Rush [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sand Spit",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sand Stream",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sand Stream [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sand Veil",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sand Veil [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sap Sipper",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sap Sipper [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Schooling",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Scrappy",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Screen Cleaner",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Seasonal",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sequence",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sequence [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Serene Grace",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Serpent's Mark",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Serpent's Mark [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Shackle",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Shackle [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Shadow Shield",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Shadow Tag",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Shed Skin",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sheer Force",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sheer Force [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Shell Armor",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Shell Cannon",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Shell Shield",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Shell Shield [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Shield Dust",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Shields Down",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Silk Threads",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Silk Threads [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Simple",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Skill Link",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Slow Start",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Slush Rush",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sniper",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sniper [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Snow Cloak",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Snow Cloak [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Snow Warning",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Snuggle",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sol Veil",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Solar Power",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Solar Power [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Solid Rock",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Solid Rock [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sonic Courtship",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sonic Courtship [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Soothing Tone",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Soothing Tone [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sorcery",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Soul Heart",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Soulstealer",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Soulstealer [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sound Lance",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sound Lance [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Soundproof",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Speed Boost",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Spike Shot",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Spinning Dance",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Spiteful Intervention",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Splendorous Rider",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Spray Down",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Spray Down [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sprint",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sprint [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Stakeout",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Stall",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Stalwart",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Stamina",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Stance Change",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Starlight",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Starlight [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Starswirl",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Starswirl [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Static",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Steadfast",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Steadfast [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Steam Engine",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Steelworker",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Stench",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Stench [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sticky Hold",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sticky Smoke",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Storm Drain",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Storm Drain [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Strange Tempo",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Strong Jaw",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sturdy",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sturdy [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Suction Cups",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Suction Cups [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sumo Stance",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sumo Stance [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sun Blanket",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sun Blanket [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sunglow",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sunglow [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Super Luck",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Surge Surfer",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Swarm",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sway",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Sweet Veil",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Swift Swim",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Swift Swim [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Symbiosis",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Symbiosis [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Synchronize",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Tangled Feet",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Tangled Feet [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Tangling Hair",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Targeting System",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Teamwork",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Technician",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Telepathy",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Telepathy [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Teravolt",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Teravolt [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Thermosensitive",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Thick Fat",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Thrust",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Thunder Boost",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Tingle",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Tingly Tongue",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Tinted Lens",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Tochukaso",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Tolerance",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Tonguelash",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Torrent",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Tough Claws",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Toxic Boost",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Toxic Boost [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Toxic Nourishment",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Trace",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Transistor",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Transporter",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Transporter [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Triage",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Trinity",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Truant",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Turboblaze",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Turboblaze [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Twisted Power",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Type Aura",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Type Strategist",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Ugly",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Unaware",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Unbreakable",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Unburden",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Unburden [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Unnerve",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Unnerve [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Unseen Fist",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Vanguard",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Venom",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Vicious",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Victory Star",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Vigor",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Vital Spirit",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Volt Absorb",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Voodoo Doll",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Wallmaster",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Wandering Spirit",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Wash Away",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Water Absorb",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Water Bubble",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Water Compaction",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Water Veil",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Wave Rider",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Weak Armor",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Weaponize",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Weeble",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Weird Power",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Whirlwind Kicks",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Whirlwind Kicks [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "White Flame",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "White Smoke",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Wily",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Windveiled",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Windveiled [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Winter's Kiss",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Wishmaster",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Wistful Melody",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Wobble",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Wonder Guard",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Wonder Skin",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Zen Mode",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Zen Mode [Errata]",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    },
+    {
+      "name": "Zen Snowed",
+      "in_sources": true,
+      "status": "done",
+      "test_mention": true
+    }
+  ]
+}

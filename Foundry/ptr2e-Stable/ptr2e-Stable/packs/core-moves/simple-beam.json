@@ -1,0 +1,48 @@
+{
+  "name": "Simple Beam",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/normal_icon.svg",
+  "system": {
+    "slug": "simple-beam",
+    "actions": [
+      {
+        "slug": "simple-beam",
+        "name": "Simple Beam",
+        "type": "attack",
+        "traits": [
+          "ray"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "power": null,
+        "accuracy": 100,
+        "types": [
+          "normal"
+        ],
+        "description": "<p>Effect: The target's Starting Ability is changed to Simple until combat ends, they switch out, or are @Affliction[fainted]. If the target has more than one Starting Ability, they choose which Ability is replaced. A creature can only be affected by one instance of the effect of Simple Beam at a time.</p>",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "NGvOyOJclnGdaK1g",
+  "effects": []
+}

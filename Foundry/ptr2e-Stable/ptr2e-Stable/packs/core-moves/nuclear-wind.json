@@ -1,0 +1,52 @@
+{
+  "name": "Nuclear Wind",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/nuclear_icon.svg",
+  "system": {
+    "slug": "nuclear-wind",
+    "actions": [
+      {
+        "slug": "nuclear-wind",
+        "name": "Nuclear Wind",
+        "type": "attack",
+        "traits": [
+          "wind"
+        ],
+        "range": {
+          "target": "line",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "special",
+        "power": 65,
+        "accuracy": 90,
+        "types": [
+          "nuclear"
+        ],
+        "description": "<p>Effect: On use of Nuclear Wind, the user has a 5% chance of freely using the attack Fallout.</p>",
+        "img": "systems/ptr2e/img/svg/nuclear_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "uUEpjaPOYOB2ZZv7",
+  "folder": "EpCOePz8omfXbp35",
+  "effects": []
+}

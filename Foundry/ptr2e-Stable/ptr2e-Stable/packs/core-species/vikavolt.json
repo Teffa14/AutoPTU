@@ -1,0 +1,553 @@
+{
+  "name": "vikavolt",
+  "img": "systems/ptr2e/img/icons/species_icon.webp",
+  "type": "species",
+  "system": {
+    "types": [
+      "bug",
+      "electric"
+    ],
+    "stats": {
+      "hp": 77,
+      "atk": 70,
+      "def": 90,
+      "spa": 145,
+      "spd": 75,
+      "spe": 43
+    },
+    "moves": {
+      "levelUp": [
+        {
+          "name": "thunderbolt",
+          "gen": "scarlet-violet",
+          "level": 0
+        },
+        {
+          "name": "air-slash",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 1
+        },
+        {
+          "name": "bug-bite",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "charge",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "crunch",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "dig",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "discharge",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "iron-defense",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "mud-slap",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "string-shot",
+          "gen": "scarlet-violet",
+          "level": 1
+        },
+        {
+          "name": "vise-grip",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "x-scissor",
+          "gen": "sword-shield",
+          "level": 1
+        },
+        {
+          "name": "bite",
+          "gen": "scarlet-violet",
+          "level": 15
+        },
+        {
+          "name": "acrobatics",
+          "gen": "ultra-sun-ultra-moon",
+          "level": 19
+        },
+        {
+          "name": "spark",
+          "gen": "scarlet-violet",
+          "level": 23
+        },
+        {
+          "name": "sticky-web",
+          "gen": "scarlet-violet",
+          "level": 29
+        },
+        {
+          "name": "bug-buzz",
+          "gen": "scarlet-violet",
+          "level": 36
+        },
+        {
+          "name": "guillotine",
+          "gen": "scarlet-violet",
+          "level": 43
+        },
+        {
+          "name": "fly",
+          "gen": "scarlet-violet",
+          "level": 50
+        },
+        {
+          "name": "agility",
+          "gen": "scarlet-violet",
+          "level": 57
+        },
+        {
+          "name": "zap-cannon",
+          "gen": "scarlet-violet",
+          "level": 64
+        }
+      ],
+      "tutor": [
+        {
+          "name": "attract",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "baton-pass",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "bulldoze",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "charge-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "confide",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "double-team",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "dual-wingbeat",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "eerie-impulse",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "electric-terrain",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "electro-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "electroweb",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "endure",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "energy-ball",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "facade",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "flash-cannon",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "frustration",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "giga-impact",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "harden",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "hidden-power",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "hyper-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "laser-focus",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "light-screen",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "lunge",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "magnet-rise",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "mud-shot",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "poison-jab",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "pounce",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "protect",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rain-dance",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "rest",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "return",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "rising-voltage",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "roost",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "round",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "screech",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "shock-wave",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "signal-beam",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "skitter-smack",
+          "gen": "sword-shield"
+        },
+        {
+          "name": "sky-drop",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "sleep-talk",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "snore",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "solar-beam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "struggle-bug",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "substitute",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "supercell-slam",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "swagger",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "swift",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "take-down",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "tera-blast",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "thunder-wave",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "toxic",
+          "gen": "ultra-sun-ultra-moon"
+        },
+        {
+          "name": "volt-switch",
+          "gen": "scarlet-violet"
+        },
+        {
+          "name": "wild-charge",
+          "gen": "scarlet-violet"
+        }
+      ]
+    },
+    "size": {
+      "height": 1.5,
+      "weight": 45,
+      "category": "medium",
+      "type": "height"
+    },
+    "captureRate": 50,
+    "eggGroups": [
+      "bug"
+    ],
+    "genderRatio": 4,
+    "evolutions": {
+      "name": "grubbin",
+      "details": null,
+      "evolutions": [
+        {
+          "name": "charjabug",
+          "uuid": "Compendium.ptr2e.core-species.Item.qpAgx3txkwrZAcpb",
+          "methods": [
+            {
+              "type": "level",
+              "level": 17,
+              "operand": "and"
+            }
+          ],
+          "evolutions": [
+            {
+              "name": "vikavolt",
+              "uuid": "Compendium.ptr2e.core-species.Item.K9gS2PXkyr9m7sL2",
+              "methods": [
+                {
+                  "type": "item",
+                  "item": "thunder-stone",
+                  "operand": "or",
+                  "held": false
+                },
+                {
+                  "type": "level",
+                  "level": 35,
+                  "operand": "or"
+                }
+              ],
+              "details": {
+                "gender": null,
+                "item": null,
+                "level": null,
+                "knownMove": null
+              },
+              "evolutions": [],
+              "perk": {
+                "x": 26,
+                "y": 26
+              }
+            }
+          ],
+          "details": {
+            "gender": null,
+            "item": null,
+            "level": null,
+            "knownMove": null
+          },
+          "perk": {
+            "x": 26,
+            "y": 26
+          }
+        }
+      ],
+      "uuid": "Compendium.ptr2e.core-species.Item.cgbvA2TuStaiyLNL",
+      "methods": [],
+      "perk": {
+        "x": 26,
+        "y": 26
+      }
+    },
+    "number": 738,
+    "traits": [
+      "pokemon",
+      "fully-evolved",
+      "winged",
+      "em-sense-15",
+      "zapper",
+      "living-weapon",
+      "many-legged",
+      "wallclimber",
+      "jump-2"
+    ],
+    "diet": [
+      "herbivore"
+    ],
+    "abilities": {
+      "starting": [
+        {
+          "slug": "ray-blaster"
+        }
+      ],
+      "basic": [
+        {
+          "slug": "static"
+        },
+        {
+          "slug": "volt-absorb"
+        }
+      ],
+      "advanced": [
+        {
+          "slug": "deadeye"
+        },
+        {
+          "slug": "artillery"
+        }
+      ],
+      "master": [
+        {
+          "slug": "overcharge"
+        },
+        {
+          "slug": "speed-boost"
+        }
+      ]
+    },
+    "movement": [
+      {
+        "type": "flight",
+        "value": 6
+      },
+      {
+        "type": "overland",
+        "value": 3
+      }
+    ],
+    "skills": [
+      {
+        "slug": "acrobatics",
+        "value": 50,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "climb",
+        "value": 30,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "electronics",
+        "value": 55,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "flying",
+        "value": 45,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "running",
+        "value": 10,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "stealth",
+        "value": 25,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      },
+      {
+        "slug": "survival",
+        "value": 70,
+        "rvs": 0,
+        "favourite": false,
+        "hidden": false,
+        "group": null
+      }
+    ],
+    "habitats": [
+      "jungle",
+      "woodland",
+      "industrial"
+    ],
+    "slug": "vikavolt",
+    "publication": {
+      "source": "PTR 2e Core - Alola Dex",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "K9gS2PXkyr9m7sL2",
+  "effects": []
+}

@@ -1,0 +1,54 @@
+{
+  "name": "Bank Orb",
+  "img": "systems/ptr2e/img/icons/consumable_icon.webp",
+  "type": "consumable",
+  "system": {
+    "crafting": {
+      "skill": "handiwork",
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "belt",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "D",
+    "fling": {
+      "type": "untyped",
+      "power": 40,
+      "accuracy": 100,
+      "hide": false,
+      "range": {
+        "target": "creature",
+        "distance": 10,
+        "unit": "m"
+      }
+    },
+    "rarity": "common",
+    "consumableType": "other",
+    "traits": [
+      "treasure",
+      "wonder-orb"
+    ],
+    "description": "<p>The user recovers 5 IP. This item cannot be purchased in stores.</p>",
+    "quantity": 1,
+    "slug": "bank-orb",
+    "stack": 1,
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "actions": []
+  },
+  "_id": "SZpkaj0gWKopbTit",
+  "effects": [],
+  "folder": "4MbEHvhwmG5DYTkB"
+}

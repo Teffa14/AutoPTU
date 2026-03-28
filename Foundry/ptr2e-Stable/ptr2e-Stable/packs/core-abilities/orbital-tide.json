@@ -1,0 +1,115 @@
+{
+  "name": "Orbital Tide",
+  "type": "ability",
+  "img": "icons/magic/control/silhouette-fall-slip-prone.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [],
+        "name": "Orbital Tide",
+        "slug": "orbital-tide",
+        "type": "generic",
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "range": {
+          "target": "emanation",
+          "distance": 5,
+          "unit": "m"
+        },
+        "description": "Effect: All creatures within Range gain @Affliction[lifted] 5.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Effect: Connection - Gravity. All creatures within Range gain @Affliction[lifted] 5.</p>",
+    "traits": [],
+    "slug": "orbital-tide",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "fwwRKQnqEjKl2jgl",
+  "effects": [
+    {
+      "name": "Gravity",
+      "type": "passive",
+      "_id": "w9pFVhx7uNqics9o",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.EGfHyGHlkgY53oIO",
+            "predicate": [
+              "ability:orbital-tide:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "allowDuplicate": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737405699245,
+        "modifiedTime": 1754319875942,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

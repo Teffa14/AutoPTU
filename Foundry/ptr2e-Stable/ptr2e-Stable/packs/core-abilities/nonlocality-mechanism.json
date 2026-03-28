@@ -1,0 +1,167 @@
+{
+  "name": "Nonlocality Mechanism",
+  "type": "ability",
+  "img": "icons/magic/symbols/circled-gem-pink.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "paradox"
+        ],
+        "name": "Nonlocality Mechanism",
+        "slug": "nonlocality-mechanism",
+        "type": "generic",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 3
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: The next [Sharp] attack used by the user has its target change to Wide Line, its range to 8, and loses [Contact] and [Pass X] until the attack resolves.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "traits": [
+          "paradox"
+        ],
+        "name": "Nonlocality Mechanism",
+        "slug": "nonlocality-mechanism",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: The user deals 30% more damage to creatures that possess Types that are super effective against any of the user's Types, and the user may use Sacred Sword as a Psychic-Type attack.</p>",
+        "img": "icons/svg/explosion.svg"
+      },
+      {
+        "slug": "sacred-sword-nonlocal",
+        "name": "Sacred Sword (Nonlocal)",
+        "type": "attack",
+        "traits": [
+          "sharp",
+          "danger-close"
+        ],
+        "range": {
+          "target": "wide-line",
+          "distance": 8,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 8
+        },
+        "category": "physical",
+        "power": 90,
+        "accuracy": 100,
+        "types": [
+          "psychic"
+        ],
+        "img": "systems/ptr2e/img/svg/psychic_icon.svg",
+        "variant": "sacred-sword",
+        "free": true,
+        "predicate": []
+      }
+    ],
+    "description": "<p>Effect: Connection - Sacred Sword. For 3 PP as a Free Action, the next [Sharp] attack used by the user has its target change to Wide Line, its range to 8, and loses [Contact] and [Pass X] until the attack resolves.</p><p>Passive: The user deals 30% more damage to creatures that possess Types that are super effective against any of the user's Types, and the user may use Sacred Sword as a Psychic-Type attack.</p>",
+    "traits": [
+      "paradox",
+      "connection",
+      "partial-automation"
+    ],
+    "slug": "nonlocality-mechanism",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "N0fiDUMwMeubxXc5",
+  "effects": [
+    {
+      "name": "Nonlocality Mechanism",
+      "type": "passive",
+      "_id": "xsEZXKuVD1A3GUsy",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "grant-item",
+            "key": "",
+            "value": "Compendium.ptr2e.core-moves.Item.DCo1YEm46bRMBLbB",
+            "predicate": [
+              "ability:nonlocality-mechanism:active"
+            ],
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.actions.0.free",
+                "value": "true"
+              }
+            ],
+            "priority": null,
+            "allowDuplicate": false,
+            "onDeleteActions": {
+              "grantee": "detach",
+              "granter": "cascade"
+            },
+            "reevaluateOnUpdate": true,
+            "mode": 2,
+            "ignored": false,
+            "inMemoryOnly": false,
+            "track": false,
+            "replaceSelf": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.346",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.2.beta",
+        "createdTime": 1737405282274,
+        "modifiedTime": 1754319786665,
+        "lastModifiedBy": "mK35yvCqCgiTUvKf",
+        "exportSource": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "Dual Chop",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/dragon_icon.svg",
+  "system": {
+    "slug": "dual-chop",
+    "actions": [
+      {
+        "slug": "dual-chop",
+        "name": "Dual Chop",
+        "type": "attack",
+        "traits": [
+          "double-strike",
+          "punch",
+          "contact",
+          "sharp"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 1
+        },
+        "category": "physical",
+        "power": 40,
+        "accuracy": 90,
+        "types": [
+          "dragon"
+        ],
+        "description": "",
+        "contestType": "",
+        "contestEffect": "",
+        "free": false,
+        "slot": null
+      }
+    ],
+    "container": null,
+    "grade": "E",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "4Ny8d42dhEq08yFA",
+  "effects": []
+}

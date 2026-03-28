@@ -1,0 +1,49 @@
+{
+  "name": "Golden Glove",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/fighting_icon.svg",
+  "system": {
+    "slug": "golden-glove",
+    "actions": [
+      {
+        "slug": "golden-glove",
+        "name": "Golden Glove",
+        "type": "attack",
+        "traits": [
+          "punch",
+          "contact"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 70,
+        "accuracy": 100,
+        "types": [
+          "fighting"
+        ],
+        "description": "<p>Effect: If this Move is used at least once in combat, the user rolls an Intense Accounting Skill Check. On a success, the user gains +1 to their Resources Skill. Every additional 2 DoS (3, 5, etc.) confers +1 additonal increase to Resources.</p>",
+        "img": "systems/ptr2e/img/svg/fighting_icon.svg"
+      }
+    ],
+    "grade": "D",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "iRdBErMn26fPDLnr",
+  "effects": []
+}

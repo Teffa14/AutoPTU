@@ -1,0 +1,81 @@
+{
+  "name": "Fast Pitch",
+  "type": "perk",
+  "system": {
+    "prerequisites": [
+      {
+        "gte": [
+          "{actor|skills.lift.mod}",
+          25
+        ]
+      }
+    ],
+    "cost": 2,
+    "description": "<p>You may spend 4 PP to Fling a @Trait[ball] or @Trait[concoction] item as a Free Action at @Trait[flinch 30], @Trait[interrupt-2] once before the start of your next Activation.</p>",
+    "actions": [
+      {
+        "name": "Fast Pitch",
+        "slug": "fast-pitch",
+        "description": "<p>You may spend 4 PP to Fling a @Trait[ball] or @Trait[concoction] item as a Free Action at @Trait[flinch 30], @Trait[interrupt-2] once before the start of your next Activation.</p>",
+        "cost": {
+          "activation": "free",
+          "powerPoints": 4
+        },
+        "type": "generic",
+        "traits": [
+          "interrupt-2",
+          "flinch-30"
+        ],
+        "img": "systems/ptr2e/img/perk-icons/Capture%20Spec.svg",
+        "range": {
+          "target": "enemy",
+          "unit": "m"
+        }
+      }
+    ],
+    "slug": "fast-pitch",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "nodes": [
+      {
+        "x": 68,
+        "y": 114,
+        "hidden": false,
+        "type": "normal",
+        "connected": [
+          "capture-ace-1",
+          "curveball-technique"
+        ],
+        "config": {
+          "texture": "systems/ptr2e/img/perk-icons/Capture%20Spec.svg",
+          "backgroundColor": null,
+          "borderColor": null,
+          "tint": null
+        },
+        "tier": null
+      }
+    ],
+    "autoUnlock": [],
+    "global": true,
+    "webs": [],
+    "design": {
+      "arena": "physical",
+      "approach": "power",
+      "archetype": "capture"
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "P49Aro4LHhgEkPC5",
+  "img": "systems/ptr2e/img/perk-icons/Capture%20Spec.svg",
+  "effects": [],
+  "folder": "ADL1Oc2oQaQK45IU"
+}

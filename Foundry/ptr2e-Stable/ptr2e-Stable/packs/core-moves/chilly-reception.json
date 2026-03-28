@@ -1,0 +1,48 @@
+{
+  "name": "Chilly Reception",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "chilly-reception",
+    "actions": [
+      {
+        "slug": "chilly-reception",
+        "name": "Chilly Reception",
+        "type": "attack",
+        "traits": [
+          "weather"
+        ],
+        "range": {
+          "target": "field",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 4
+        },
+        "category": "status",
+        "types": [
+          "ice"
+        ],
+        "description": "<p>Effect: The Weather becomes Snowy for 3 rounds. The user may then freely attack themselves up to half of the Movement Score of their choice away from the target. If the user is an owned Pokémon, they may then immediately be returned their Poké Ball and another Pokémon may immediately be sent out in their place.</p>",
+        "img": "systems/ptr2e/img/svg/ice_icon.svg",
+        "summon": "Compendium.ptr2e.core-summons.8EVtue4CUOjddZIP",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "qVOJkDERjMf3LuDq",
+  "effects": []
+}

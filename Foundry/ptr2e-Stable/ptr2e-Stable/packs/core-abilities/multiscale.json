@@ -1,0 +1,108 @@
+{
+  "name": "Multiscale",
+  "type": "ability",
+  "img": "icons/commodities/leather/scales-white.webp",
+  "system": {
+    "actions": [
+      {
+        "traits": [
+          "defensive",
+          "intrepid-3-4"
+        ],
+        "name": "Multiscale",
+        "slug": "multiscale",
+        "type": "passive",
+        "cost": {
+          "activation": "free"
+        },
+        "range": {
+          "target": "self",
+          "unit": "m",
+          "distance": 10
+        },
+        "description": "<p>Effect: While the user meets the [Intrepid 3/4] Condition, they take 50% less damage from Physical- and Special-Category Attacks.</p>",
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "<p>Effect: While the user meets the [Intrepid 3/4] Condition, they take 50% less damage from Physical- and Special-Category Attacks.</p>",
+    "traits": [
+      "defensive"
+    ],
+    "slug": "multiscale",
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    }
+  },
+  "_id": "KAxw2xAJEVEc3Xy9",
+  "effects": [
+    {
+      "name": "Multiscale",
+      "type": "passive",
+      "_id": "9T4vBaNm3Lyiwya6",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "ephemeral-modifier",
+            "key": "attack-damage-percentile",
+            "value": -50,
+            "predicate": [
+              "target:state:intrepid-3-4"
+            ],
+            "priority": null,
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": true
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.348",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.3.beta",
+        "createdTime": 1737050341433,
+        "modifiedTime": 1757424425640,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS",
+        "exportSource": null
+      }
+    }
+  ]
+}

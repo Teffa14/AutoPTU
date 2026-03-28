@@ -1,0 +1,146 @@
+{
+  "name": "Ice Ball",
+  "type": "move",
+  "img": "systems/ptr2e/img/svg/ice_icon.svg",
+  "system": {
+    "slug": "ice-ball",
+    "actions": [
+      {
+        "slug": "ice-ball",
+        "name": "Ice Ball",
+        "type": "attack",
+        "traits": [
+          "pass-3",
+          "crushing",
+          "curl",
+          "contact",
+          "flinch-15"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 1,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 2
+        },
+        "category": "physical",
+        "power": 30,
+        "accuracy": 90,
+        "types": [
+          "ice"
+        ],
+        "description": "<p>Effect: When declaring this attack, the user may freely move up to half of a total Movement Score of their choice. For each consecutive time this attack is used and hits at least one target, this Attack's Power doubles, with this progress tracked by the Clock named for this Attack.</p><p>This Clock resets if the user fails to hit at least one target with this Attack, leaves combat, gains @Affliction[fainted], or combat ends.</p>",
+        "img": "systems/ptr2e/img/svg/ice_icon.svg",
+        "predicate": []
+      }
+    ],
+    "grade": "B",
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ],
+      "notes": ""
+    },
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    }
+  },
+  "_id": "gUME0ttGEmZbK7WJ",
+  "effects": [
+    {
+      "name": "Ice Ball",
+      "type": "passive",
+      "_id": "k2TUUcOcUBrOz8JZ",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "create-clock",
+            "key": "iceballClockUser",
+            "value": 0,
+            "predicate": [],
+            "label": "Ice Ball",
+            "max": 4,
+            "color": "#73cec0",
+            "private": false,
+            "mode": 2,
+            "ignored": false
+          },
+          {
+            "type": "flat-modifier",
+            "key": "ice-ball-attack-power",
+            "value": "30*pow(2,@actor.clocks.iceballClockUser)-30",
+            "predicate": [],
+            "label": "Iterative Boost",
+            "mode": 2,
+            "ignored": false,
+            "hideIfDisabled": false
+          },
+          {
+            "type": "roll-effect",
+            "key": "ice-ball-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.miMt3zxPrOOJe1wF",
+            "predicate": [
+              {
+                "not": "actor:clocks:iceballClockUser:value:4"
+              }
+            ],
+            "label": "Ice Ball Clock",
+            "chance": 100,
+            "isFixedChance": true,
+            "affects": "self",
+            "alterations": [
+              {
+                "mode": 5,
+                "property": "system.changes.0.key",
+                "value": "iceballClockUser"
+              }
+            ],
+            "dontMerge": true,
+            "mode": 2,
+            "ignored": false
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "removeAfterAttacking": false,
+        "removeAfterAttacked": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "ptr2e": {
+          "displayOnToken": ""
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.350",
+        "systemId": "ptr2e",
+        "systemVersion": "1.4.7.beta",
+        "createdTime": 1766453018264,
+        "modifiedTime": 1766454692440,
+        "lastModifiedBy": "UTlFSVhgfIUeTsoW"
+      }
+    }
+  ]
+}

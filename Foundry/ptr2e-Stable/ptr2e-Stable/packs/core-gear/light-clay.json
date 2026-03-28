@@ -1,0 +1,73 @@
+{
+  "name": "Light Clay",
+  "img": "systems/ptr2e/img/icons/equipment_icon.webp",
+  "type": "equipment",
+  "system": {
+    "crafting": {
+      "skill": null,
+      "spans": null,
+      "materials": []
+    },
+    "equipped": {
+      "slot": "accessory",
+      "carryType": "stowed",
+      "handsHeld": null
+    },
+    "grade": "B",
+    "fling": {
+      "type": "untyped",
+      "power": null,
+      "accuracy": 100,
+      "hide": null
+    },
+    "rarity": "uncommon",
+    "traits": [
+      "combat"
+    ],
+    "actions": [
+      {
+        "name": "Light Clay",
+        "slug": "light-clay",
+        "type": "generic",
+        "description": "Trigger: The user creates a non-[Weather], non-[Environ], non-Status-inflicting, or non-Stage-affecting effect that lasts for X Rounds.\nEffect: The duration of the triggering effect is increased by +2.",
+        "traits": [
+          "Combat"
+        ],
+        "range": {
+          "target": "creature",
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "trigger": "The user creates a non-[Weather], non-[Environ], non-Status-inflicting, or non-Stage-affecting effect that lasts for X Rounds."
+        },
+        "img": "icons/svg/explosion.svg"
+      }
+    ],
+    "description": "Trigger: The user creates a non-[Weather], non-[Environ], non-Status-inflicting, or non-Stage-affecting effect that lasts for X Rounds.\nEffect: The duration of the triggering effect is increased by +2.",
+    "slug": "light-clay",
+    "quantity": 1,
+    "identification": {
+      "misidentified": null,
+      "status": "identified",
+      "unidentified": {
+        "name": "Unidentified Item",
+        "img": "systems/ptu/css/images/icons/item_icon.png",
+        "description": "<p>Unidentified Item</p>"
+      }
+    },
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "_id": "fSO2hs60IvbotdlV",
+  "effects": [],
+  "folder": "6VDJBcrqVDh5bYtA"
+}

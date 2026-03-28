@@ -1,0 +1,106 @@
+{
+  "name": "Soul Storm",
+  "type": "move",
+  "_id": "yvtAuSFDqeuhhp3Z",
+  "img": "systems/ptr2e/img/svg/ghost_icon.svg",
+  "system": {
+    "slug": "soul-storm",
+    "actions": [
+      {
+        "name": "Soul Storm",
+        "slug": "soul-storm",
+        "type": "attack",
+        "img": "icons/svg/explosion.svg",
+        "traits": [
+          "sky",
+          "environ"
+        ],
+        "range": {
+          "target": "creature",
+          "distance": 10,
+          "unit": "m"
+        },
+        "cost": {
+          "activation": "complex",
+          "powerPoints": 6
+        },
+        "types": [
+          "ghost"
+        ],
+        "category": "special",
+        "power": 110,
+        "accuracy": 70,
+        "description": "<p>Effect: On hit, the target has a 10% chance of gaining @Affliction[cursed] 5. If Gloomy Weather is active, this attack gains [Danger Close]. </p>",
+        "predicate": []
+      }
+    ],
+    "grade": "A",
+    "traits": [],
+    "_migration": {
+      "version": null,
+      "previous": null
+    },
+    "publication": {
+      "source": "PTR 2e Core",
+      "authors": [
+        "PTR 2e Team"
+      ]
+    }
+  },
+  "effects": [
+    {
+      "name": "Soul Storm",
+      "type": "passive",
+      "_id": "xfXW8Im81Pdcao9J",
+      "img": "systems/ptr2e/img/icons/effect_icon.webp",
+      "system": {
+        "changes": [
+          {
+            "type": "roll-effect",
+            "key": "soul-storm-attack",
+            "value": "Compendium.ptr2e.core-effects.Item.cursedcondititem",
+            "predicate": [],
+            "chance": 10,
+            "affects": "target",
+            "mode": 2,
+            "priority": null,
+            "ignored": false,
+            "alterations": []
+          }
+        ],
+        "slug": null,
+        "traits": [],
+        "removeAfterCombat": true,
+        "removeOnRecall": false,
+        "stacks": 0
+      },
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "ptr2e",
+        "systemVersion": "0.10.0-alpha.5.2.1",
+        "createdTime": 1737745888259,
+        "modifiedTime": 1737745914756,
+        "lastModifiedBy": "Kc3DOunCh3ClAeHS"
+      }
+    }
+  ]
+}
