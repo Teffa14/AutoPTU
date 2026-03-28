@@ -1,4 +1,38 @@
 (function () {
+  function getElements(root = document) {
+    return {
+      gridEl: root.getElementById("grid"),
+      combatantListEl: root.getElementById("combatant-list"),
+      detailsEl: root.getElementById("combatant-details"),
+      trainerDetailsEl: root.getElementById("trainer-details"),
+      moveListEl: root.getElementById("move-list"),
+      logEl: root.getElementById("log"),
+      partyBarEl: root.getElementById("party-bar"),
+      turnOrderBarEl: root.getElementById("turn-order-bar"),
+      roundInfoEl: root.getElementById("round-info"),
+      terrainInfoEl: root.getElementById("terrain-info"),
+      weatherInfoEl: root.getElementById("weather-info"),
+      mapSeedEl: root.getElementById("map-seed"),
+      sidebarRoundInfoEl: root.getElementById("sidebar-round-info"),
+      sidebarTerrainInfoEl: root.getElementById("sidebar-terrain-info"),
+      sidebarWeatherInfoEl: root.getElementById("sidebar-weather-info"),
+      startButton: root.getElementById("start-battle"),
+      endTurnButton: root.getElementById("end-turn"),
+      aiStepButton: root.getElementById("ai-step"),
+      aiAutoButton: root.getElementById("ai-auto"),
+      undoButton: root.getElementById("undo-action"),
+      zoomInButton: root.getElementById("zoom-in"),
+      zoomOutButton: root.getElementById("zoom-out"),
+      zoomFitButton: root.getElementById("zoom-fit"),
+      zoomResetButton: root.getElementById("zoom-reset"),
+      centerCurrentButton: root.getElementById("center-current"),
+      centerSelectedButton: root.getElementById("center-selected"),
+      moveTooltip: root.getElementById("move-tooltip"),
+      selectedTileInfoEl: root.getElementById("selected-tile-info"),
+      topbarEl: root.querySelector(".topbar"),
+    };
+  }
+
   function computeLifecycle(state, flags) {
     const hasBattle = !!state && state.status === "ok";
     const pendingPrompts = hasBattle ? (state.pending_prompts || []).length : 0;
@@ -43,6 +77,7 @@
   }
 
   window.PTUBattleUI = {
+    getElements,
     computeLifecycle,
     applyLifecycleControls,
   };
