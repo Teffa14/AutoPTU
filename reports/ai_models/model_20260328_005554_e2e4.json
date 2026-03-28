@@ -1,15 +1,15 @@
 {
   "foe:Squirtle": {
     "action_type": {
-      "defend": 4.736842105348125,
-      "attack": 5.2631578946518776
+      "defend": 4.736842105287156,
+      "attack": 5.263157894712847
     },
     "target_pref": {
-      "lowest_hp": 5.2631578946518776
+      "lowest_hp": 5.263157894712847
     },
     "risk_tolerance": {},
     "move_usage": {
-      "Water Pulse": 5.2631578946518776
+      "Water Pulse": 5.263157894712847
     }
   },
   "side3:Walrein": {
@@ -46,7 +46,7 @@
   },
   "player:Dreepy": {
     "action_type": {
-      "defend": 9.99999919166951
+      "defend": 9.999999345252302
     },
     "target_pref": {},
     "risk_tolerance": {},
@@ -169,7 +169,7 @@
   },
   "side2:Darmanitan Galar, Zen Mode": {
     "action_type": {
-      "defend": 8.332281830033345
+      "defend": 8.649148282327008
     },
     "target_pref": {},
     "risk_tolerance": {},
