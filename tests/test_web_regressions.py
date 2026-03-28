@@ -1267,6 +1267,95 @@ def test_engine_facade_snapshot_exposes_legal_jumps_and_builds_jump_action():
     assert getattr(action, "jump_kind", None) == "long"
 
 
+def test_engine_facade_snapshot_exposes_core_action_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("Lead", [_move("Tackle")]),
+                controller_id="player",
+                position=(1, 1),
+                active=True,
+            ),
+            "bench-1": PokemonState(
+                spec=_spec("Bench", [_move("Tackle")]),
+                controller_id="player",
+                position=(4, 4),
+                active=False,
+            ),
+            "foe-1": PokemonState(
+                spec=_spec("Foe", [_move("Scratch")]),
+                controller_id="foe",
+                position=(3, 1),
+                active=True,
+            ),
+        },
+        grid=GridState(width=6, height=6),
+        rng=random.Random(12),
+    )
+    battle.pokemon["player-1"].spec.items = [
+        {"name": "Iron Sword", "kind": "weapon", "slot": "weapon"},
+        {"name": "Potion", "kind": "item", "slot": "belt"},
+    ]
+    battle.advance_turn()
+    facade.battle = battle
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["action_hints"]
+    assert hints["can_take_breather"] is True
+    assert hints["can_trade_standard_shift"] is True
+    assert hints["can_trade_standard_swift"] is True
+    assert any(option["target"] == "bench-1" for option in hints["switch_replacements"])
+    assert any(option["item_index"] == 0 for option in hints["weapon_options"])
+
+
+def test_engine_facade_builds_core_action_types():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("Lead", [_move("Tackle")]),
+                controller_id="player",
+                position=(1, 1),
+                active=True,
+            ),
+            "bench-1": PokemonState(
+                spec=_spec("Bench", [_move("Tackle")]),
+                controller_id="player",
+                position=(4, 4),
+                active=False,
+            ),
+            "foe-1": PokemonState(
+                spec=_spec("Foe", [_move("Scratch")]),
+                controller_id="foe",
+                position=(3, 1),
+                active=True,
+            ),
+        },
+        grid=GridState(width=6, height=6),
+        rng=random.Random(13),
+    )
+    battle.pokemon["player-1"].spec.items = [
+        {"name": "Iron Sword", "kind": "weapon", "slot": "weapon"},
+    ]
+    battle.advance_turn()
+    delay_action = facade._build_action(battle, {"type": "delay", "actor_id": "player-1", "target_total": 10})
+    assert delay_action.__class__.__name__ == "DelayAction"
+    switch_action = facade._build_action(battle, {"type": "switch", "actor_id": "player-1", "replacement_id": "bench-1"})
+    assert switch_action.__class__.__name__ == "SwitchAction"
+    breather_action = facade._build_action(battle, {"type": "take_breather", "actor_id": "player-1"})
+    assert breather_action.__class__.__name__ == "TakeBreatherAction"
+    trade_action = facade._build_action(battle, {"type": "trade_standard", "actor_id": "player-1", "target_action": "swift"})
+    assert trade_action.__class__.__name__ == "TradeStandardForAction"
+    equip_action = facade._build_action(battle, {"type": "equip_weapon", "actor_id": "player-1", "item_index": 0})
+    assert equip_action.__class__.__name__ == "EquipWeaponAction"
+    battle.pokemon["player-1"].equip_weapon(0)
+    unequip_action = facade._build_action(battle, {"type": "unequip_weapon", "actor_id": "player-1"})
+    assert unequip_action.__class__.__name__ == "UnequipWeaponAction"
+
+
 def test_engine_facade_snapshot_exposes_telepath_hint_state():
     facade = EngineFacade()
     battle = BattleState(

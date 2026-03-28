@@ -9592,6 +9592,143 @@ function renderBattleManeuverActions(moveListEl, combatant, canAct) {
   moveListEl.appendChild(section);
 }
 
+function renderCoreBattleActions(moveListEl, combatant, canAct) {
+  const hints = combatant?.action_hints || {};
+  const switchOptions = Array.isArray(hints.switch_replacements) ? hints.switch_replacements : [];
+  const delayOptions = Array.isArray(hints.delay_options) ? hints.delay_options : [];
+  const weaponOptions = Array.isArray(hints.weapon_options) ? hints.weapon_options : [];
+  const equippedWeaponName = String(hints.equipped_weapon_name || "").trim();
+  const hasAnyCoreAction =
+    !!hints.can_take_breather ||
+    !!hints.can_trade_standard_shift ||
+    !!hints.can_trade_standard_swift ||
+    !!hints.can_unequip_weapon ||
+    switchOptions.length > 0 ||
+    delayOptions.length > 0 ||
+    weaponOptions.length > 0;
+  if (!hasAnyCoreAction) return;
+
+  const section = document.createElement("div");
+  section.className = "item-section";
+  const title = document.createElement("div");
+  title.className = "item-title";
+  title.textContent = "Core Actions";
+  section.appendChild(title);
+  const list = document.createElement("div");
+  list.className = "item-list";
+
+  const addActionButton = (label, enabled, onClick, tooltip = "") => {
+    const btn = document.createElement("button");
+    btn.className = "item-button";
+    btn.textContent = label;
+    if (!canAct || !enabled) {
+      btn.classList.add("inactive");
+      btn.setAttribute("aria-disabled", "true");
+    }
+    btn.addEventListener("click", () => {
+      if (!canAct || !enabled) return;
+      onClick();
+    });
+    if (tooltip) {
+      btn.addEventListener("mouseenter", () => {
+        clearTooltipHideTimer();
+        showDetailTooltip(btn, label, tooltip);
+      });
+      btn.addEventListener("mouseleave", () => {
+        scheduleTooltipHide();
+      });
+    }
+    list.appendChild(btn);
+  };
+
+  addActionButton(
+    "Switch",
+    switchOptions.length > 0,
+    () => {
+      pickTrainerFeatureOption(
+        "Switch Replacement",
+        switchOptions.map((entry) => ({
+          value: entry.target,
+          label: entry.target_name || entry.target,
+        })),
+        (replacementId) => {
+          commitAction({ type: "switch", actor_id: combatant.id, replacement_id: replacementId }).catch(alertError);
+        },
+        "Recall the active combatant and send out a benched ally."
+      );
+    },
+    "Switch to a benched allied combatant."
+  );
+  addActionButton(
+    "Delay",
+    delayOptions.length > 0,
+    () => {
+      pickTrainerFeatureOption(
+        "Delay Initiative",
+        delayOptions,
+        (targetTotal) => {
+          commitAction({ type: "delay", actor_id: combatant.id, target_total: targetTotal }).catch(alertError);
+        },
+        "Delay your turn to a lower initiative value before taking any other action."
+      );
+    },
+    "Delay your turn to a lower initiative value."
+  );
+  addActionButton(
+    "Take a Breather",
+    !!hints.can_take_breather,
+    () => {
+      commitAction({ type: "take_breather", actor_id: combatant.id }).catch(alertError);
+    },
+    "Recover, clear volatile effects, and reposition according to the engine's Take a Breather rules."
+  );
+  addActionButton(
+    "Trade Standard -> Shift",
+    !!hints.can_trade_standard_shift,
+    () => {
+      commitAction({ type: "trade_standard", actor_id: combatant.id, target_action: "shift" }).catch(alertError);
+    },
+    "Spend your Standard Action to gain an extra Shift Action."
+  );
+  addActionButton(
+    "Trade Standard -> Swift",
+    !!hints.can_trade_standard_swift,
+    () => {
+      commitAction({ type: "trade_standard", actor_id: combatant.id, target_action: "swift" }).catch(alertError);
+    },
+    "Spend your Standard Action to gain an extra Swift Action."
+  );
+  addActionButton(
+    equippedWeaponName ? `Unequip ${equippedWeaponName}` : "Unequip Weapon",
+    !!hints.can_unequip_weapon,
+    () => {
+      commitAction({ type: "unequip_weapon", actor_id: combatant.id }).catch(alertError);
+    },
+    "Unequip the currently wielded weapon."
+  );
+  addActionButton(
+    weaponOptions.length > 0 ? "Equip Weapon" : "Equip Weapon",
+    weaponOptions.length > 0,
+    () => {
+      pickTrainerFeatureOption(
+        "Equip Weapon",
+        weaponOptions.map((entry) => ({
+          value: entry.item_index,
+          label: entry.name,
+        })),
+        (itemIndex) => {
+          commitAction({ type: "equip_weapon", actor_id: combatant.id, item_index: itemIndex }).catch(alertError);
+        },
+        "Choose a weapon from inventory to equip."
+      );
+    },
+    "Equip a weapon from the current inventory."
+  );
+
+  section.appendChild(list);
+  moveListEl.appendChild(section);
+}
+
 function renderCreativeBattleAction(moveListEl, combatant, canAct) {
   const section = document.createElement("div");
   section.className = "item-section creative-section";
@@ -9836,8 +9973,11 @@ function renderMoves() {
     moveListEl.appendChild(jumpSection);
   }
 
+  renderCoreBattleActions(moveListEl, combatant, canAct);
+
   const items = normalizeCombatantItems(combatant.items || []);
-  if (items.length) {
+  const usableItems = items.filter((item) => classifyCombatItem(item) !== "weapon");
+  if (usableItems.length) {
     const itemSection = document.createElement("div");
     itemSection.className = "item-section";
     const title = document.createElement("div");
@@ -9878,6 +10018,7 @@ function renderMoves() {
     items.forEach((itemEntry, idx) => {
       const name = String(itemEntry?.name || "").trim();
       if (!name) return;
+      if (classifyCombatItem(itemEntry) === "weapon") return;
       const btn = document.createElement("button");
       btn.className = "item-button";
       btn.textContent = `Use ${name}`;

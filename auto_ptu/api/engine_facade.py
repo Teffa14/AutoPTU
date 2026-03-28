@@ -24,7 +24,9 @@ from ..roster_csv import (
 from ..rules import (
     BattleState,
     CreativeAction,
+    DelayAction,
     DisengageAction,
+    EquipWeaponAction,
     GrappleAction,
     GridState,
     InterceptAction,
@@ -34,6 +36,10 @@ from ..rules import (
     PokemonState,
     ShiftAction,
     SprintAction,
+    SwitchAction,
+    TakeBreatherAction,
+    TradeStandardForAction,
+    UnequipWeaponAction,
     JumpAction,
     UseMoveAction,
     UseItemAction,
@@ -43,7 +49,7 @@ from ..rules import (
 )
 from ..rules import movement, targeting
 from ..rules import ai_hybrid
-from ..rules.battle_state import SUPPORTED_TARGET_ORDER_SPECS, _item_entry_for, _load_maneuver_moves
+from ..rules.battle_state import SUPPORTED_TARGET_ORDER_SPECS, _item_entry_for, _load_maneuver_moves, _weapon_tags
 from ..rules.calculations import defensive_stat, offensive_stat, speed_stat
 from ..rules.item_effects import parse_item_effects
 from ..gameplay import BattleRecord, TextBattleSession, ai_learning_status, ai_model_status, ai_record_battle_outcome
@@ -1326,6 +1332,90 @@ def _maneuver_context(battle: BattleState, actor_id: str) -> Dict[str, Any]:
     return context
 
 
+def _core_action_hints(battle: BattleState, actor_id: str, state: PokemonState) -> Dict[str, Any]:
+    hints: Dict[str, Any] = {
+        "can_take_breather": False,
+        "can_trade_standard_shift": False,
+        "can_trade_standard_swift": False,
+        "delay_options": [],
+        "switch_replacements": [],
+        "weapon_options": [],
+        "can_unequip_weapon": False,
+        "equipped_weapon_name": "",
+    }
+    try:
+        TakeBreatherAction(actor_id=actor_id).validate(battle)
+        hints["can_take_breather"] = True
+    except Exception:
+        hints["can_take_breather"] = False
+    for target_action, key in (("shift", "can_trade_standard_shift"), ("swift", "can_trade_standard_swift")):
+        try:
+            TradeStandardForAction(actor_id=actor_id, target_action=target_action).validate(battle)
+            hints[key] = True
+        except Exception:
+            hints[key] = False
+    if battle.current_actor_id == actor_id:
+        entry = battle.current_initiative_entry()
+        current_total = int(getattr(entry, "total", 0) or 0) if entry is not None else None
+        if current_total is not None:
+            delay_totals = sorted(
+                {
+                    int(getattr(slot, "total", 0) or 0)
+                    for slot in (battle.initiative_order or [])
+                    if str(getattr(slot, "actor_id", "") or "").strip() != actor_id
+                    and int(getattr(slot, "total", 0) or 0) < current_total
+                },
+                reverse=True,
+            )
+            for total in delay_totals:
+                try:
+                    DelayAction(actor_id=actor_id, target_total=total).validate(battle)
+                except Exception:
+                    continue
+                hints["delay_options"].append(
+                    {
+                        "value": total,
+                        "label": f"Delay to {total}",
+                    }
+                )
+    for replacement_id, mon in battle.pokemon.items():
+        if mon.controller_id != state.controller_id or replacement_id == actor_id:
+            continue
+        try:
+            SwitchAction(actor_id=actor_id, replacement_id=replacement_id).validate(battle)
+        except Exception:
+            continue
+        hints["switch_replacements"].append(
+            {
+                "target": replacement_id,
+                "target_name": mon.spec.name or mon.spec.species or replacement_id,
+            }
+        )
+    equipped_weapon = state.equipped_weapon()
+    if equipped_weapon is not None:
+        hints["equipped_weapon_name"] = str(equipped_weapon.get("name") or equipped_weapon or "").strip()
+    try:
+        UnequipWeaponAction(actor_id=actor_id).validate(battle)
+        hints["can_unequip_weapon"] = True
+    except Exception:
+        hints["can_unequip_weapon"] = False
+    for idx, item in enumerate(getattr(state.spec, "items", []) or []):
+        if "weapon" not in _weapon_tags(item):
+            continue
+        try:
+            EquipWeaponAction(actor_id=actor_id, item_index=idx).validate(battle)
+        except Exception:
+            continue
+        name = str(item.get("name") if isinstance(item, dict) else item or "").strip()
+        hints["weapon_options"].append(
+            {
+                "item_index": idx,
+                "name": name or f"Weapon {idx + 1}",
+            }
+        )
+    return hints
+
+
 @dataclass
 class EngineFacade:
     plan: Optional[MatchPlan] = None
@@ -2509,6 +2599,7 @@ class EngineFacade:
                     "capabilities": list(state.capability_names()),
                     "skills": dict(getattr(state.spec, "skills", {}) or {}),
                     "trainer_action_hints": _trainer_action_hints(battle, cid, state),
+                    "action_hints": _core_action_hints(battle, cid, state),
                     "items": held_items,
                     "passive_item_effects": list(dict.fromkeys(passive_item_effects)),
                     "sprite_url": sprite_path_for(state.spec.species or state.spec.name),
@@ -2839,9 +2930,14 @@ class EngineFacade:
             return self._end_turn_and_advance()
         promptless_actions = {
             "creative_action",
+            "delay",
             "disengage",
+            "equip_weapon",
             "sprint",
             "intercept",
+            "take_breather",
+            "trade_standard",
+            "unequip_weapon",
             "wake_ally",
             "pickup_item",
             "grapple",
@@ -3128,6 +3224,11 @@ class EngineFacade:
                 destination=destination,
                 jump_kind=str(payload.get("jump_kind") or "long").strip().lower(),
             )
+        if action_type == "delay":
+            target_total = payload.get("target_total")
+            if target_total in (None, ""):
+                raise ValueError("Delay requires a lower initiative target.")
+            return DelayAction(actor_id=actor_id, target_total=int(target_total))
         if action_type == "disengage":
             dest = payload.get("destination") or payload.get("dest")
             if dest and isinstance(dest, (list, tuple)) and len(dest) >= 2:
@@ -3135,8 +3236,20 @@ class EngineFacade:
             else:
                 destination = (int(payload.get("x")), int(payload.get("y")))
             return DisengageAction(actor_id=actor_id, destination=destination)
+        if action_type == "switch":
+            replacement_id = payload.get("replacement_id") or payload.get("target_id")
+            if not replacement_id:
+                raise ValueError("Switch requires a replacement.")
+            return SwitchAction(actor_id=actor_id, replacement_id=str(replacement_id))
         if action_type == "sprint":
             return SprintAction(actor_id=actor_id)
+        if action_type == "take_breather":
+            return TakeBreatherAction(actor_id=actor_id)
+        if action_type == "trade_standard":
+            target_action = payload.get("target_action") or payload.get("action") or payload.get("to_action")
+            if not target_action:
+                raise ValueError("Trade Standard requires a target action.")
+            return TradeStandardForAction(actor_id=actor_id, target_action=str(target_action))
         if action_type == "intercept":
             ally_id = payload.get("ally_id") or payload.get("target_id")
             kind = str(payload.get("kind") or payload.get("intercept_kind") or "melee").strip().lower()
@@ -3224,6 +3337,13 @@ class EngineFacade:
                 raise ValueError("Item selection is required.")
             target_id = payload.get("target_id")
             return UseItemAction(actor_id=actor_id, item_index=int(item_index), target_id=target_id)
+        if action_type == "equip_weapon":
+            item_index = payload.get("item_index")
+            if item_index in (None, ""):
+                raise ValueError("Equip Weapon requires an item selection.")
+            return EquipWeaponAction(actor_id=actor_id, item_index=int(item_index))
+        if action_type == "unequip_weapon":
+            return UnequipWeaponAction(actor_id=actor_id)
         if action_type == "trainer_feature":
             action_key = str(payload.get("action_key") or payload.get("feature_action") or "").strip().lower()
             if not action_key:
