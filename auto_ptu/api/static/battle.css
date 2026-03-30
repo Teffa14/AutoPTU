@@ -38,7 +38,7 @@ body.battle-ui .brand {
 
 body.battle-ui .battle-utility-row {
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-columns: minmax(420px, 1.45fr) minmax(220px, 0.7fr) minmax(360px, 1fr) minmax(360px, 1fr);
   gap: 8px;
   padding: 8px 10px;
   border-radius: 12px;
@@ -47,7 +47,7 @@ body.battle-ui .battle-utility-row {
 }
 
 body.battle-ui .battle-utility-row-secondary {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(500px, 1.35fr) minmax(360px, 0.9fr) minmax(520px, 1.45fr);
   margin-top: 0;
   gap: 8px;
   padding: 8px 10px;
@@ -56,15 +56,17 @@ body.battle-ui .battle-utility-row-secondary {
 
 body.battle-ui .utility-group {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  align-content: center;
   gap: 6px;
   min-width: 0;
   padding: 6px 8px;
   border-radius: 10px;
   border: 1px solid rgba(167, 177, 186, 0.12);
   background: rgba(12, 16, 21, 0.54);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
 }
 
 body.battle-ui .utility-group + .utility-group {
@@ -72,23 +74,25 @@ body.battle-ui .utility-group + .utility-group {
 }
 
 body.battle-ui .utility-group-primary {
-  grid-column: span 4;
+  min-width: 0;
 }
 
 body.battle-ui .utility-group-brand {
   justify-content: flex-start;
 }
 
-body.battle-ui .battle-utility-row > .utility-group:nth-child(2) {
-  grid-column: span 2;
-}
-
-body.battle-ui .battle-utility-row > .utility-group:nth-child(3) {
-  grid-column: span 3;
-}
-
 body.battle-ui .utility-group-state {
-  grid-column: span 3;
+  justify-content: flex-end;
+}
+
+body.battle-ui .speed-presets {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+}
+
+body.battle-ui .speed-btn {
+  flex: 0 0 auto;
 }
 
 body.battle-ui .toolbar .field,
@@ -127,6 +131,7 @@ body.battle-ui .battle-utility-row-secondary .utility-group:nth-child(2) .field 
 body.battle-ui .battle-utility-row .field,
 body.battle-ui .battle-utility-row-secondary .field {
   flex-wrap: nowrap;
+  flex: 0 0 auto;
 }
 
 body.battle-ui .toolbar button,
@@ -149,6 +154,10 @@ body.battle-ui .battle-range-field {
 
 body.battle-ui .battle-range-field input[type="number"] {
   width: 74px;
+}
+
+body.battle-ui .battle-utility-row-secondary .utility-group:last-child button {
+  font-size: 10px;
 }
 
 body.battle-ui .main-shell {
