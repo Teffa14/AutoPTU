@@ -7,33 +7,29 @@
     <link rel="stylesheet" href="design-system/tokens.css" />
     <link rel="stylesheet" href="design-system/components.css" />
     <link rel="stylesheet" href="design-system/layout.css" />
-    <link rel="stylesheet" href="styles.css?v=20260331a" />
-    <link rel="stylesheet" href="battle.css?v=20260331a" />
+    <link rel="stylesheet" href="styles.css?v=20260331b" />
+    <link rel="stylesheet" href="battle.css?v=20260331b" />
   </head>
   <body>
     <div id="move-tooltip" class="move-tooltip hidden"></div>
     <header class="topbar ds-topbar">
       <div class="topbar-shell">
-        <div class="topbar-head">
-          <div class="brand ds-brand">AutoPTU Tactical Board</div>
-        </div>
         <div class="toolbar ds-toolbar battle-utility-row">
-          <div class="utility-group utility-group-primary">
-            <div class="utility-group-title">Battle</div>
+          <div class="utility-group utility-group-primary utility-group-brand">
+            <div class="brand ds-brand">AutoPTU Tactical Board</div>
             <button id="start-battle">Start Battle</button>
             <label class="field">
               <input id="step-by-step-start" type="checkbox" />
-              Step-by-step
+              Step
             </label>
             <button id="ai-step">Step AI</button>
             <button id="ai-auto">Auto Off</button>
-            <button id="undo-action">Undo Turn</button>
+            <button id="undo-action">Undo</button>
             <button id="end-turn">End Turn</button>
           </div>
           <div class="utility-group">
-            <div class="utility-group-title">Speed</div>
             <label class="field">
-              Auto Speed
+              Speed
               <input id="auto-interval" type="number" min="250" value="1000" />
             </label>
             <div class="speed-presets">
@@ -44,10 +40,9 @@
             </div>
           </div>
           <div class="utility-group">
-            <div class="utility-group-title">Replay</div>
             <label class="field">
               <input id="cinematic-auto" type="checkbox" />
-              Cinematic Auto
+              Cine
             </label>
             <label class="field">
               Profile
@@ -69,10 +64,9 @@
             <span id="cinematic-perf" class="field-pill ds-pill light">Cine: idle</span>
           </div>
           <div class="utility-group utility-group-state">
-            <div class="utility-group-title">State</div>
             <label class="field">
               <input id="auto-cries" type="checkbox" />
-              Auto Cries
+              Cries
             </label>
             <span id="round-info">Round -</span>
             <span id="terrain-info" class="field-pill ds-pill light">Terrain: -</span>
@@ -82,75 +76,66 @@
             <span id="js-status" class="status-pill ds-pill">JS: pending</span>
           </div>
         </div>
-        <details class="battle-setup-drawer">
-          <summary class="battle-setup-summary">
-            <span class="battle-setup-summary-title">Setup</span>
-            <span class="battle-setup-summary-meta">Mode, team, AI, assets, roster, trainer</span>
-          </summary>
-          <div class="toolbar ds-toolbar battle-utility-row battle-utility-row-secondary">
-            <div class="utility-group">
-              <div class="utility-group-title">Match Setup</div>
-              <label class="field">
-                Mode
-                <select id="mode-select">
-                  <option value="campaign">Campaign (Player vs AI)</option>
-                  <option value="random">Random Battle (Player vs AI)</option>
-                  <option value="ai">AI vs AI (Step)</option>
-                  <option value="ai-random">AI vs AI (Random Battle)</option>
-                  <option value="ai-royale">AI vs AI (Battle Royale)</option>
-                </select>
-              </label>
-              <label class="field">
-                Team
-                <input id="team-size" type="number" min="1" value="2" />
-              </label>
-              <label class="field">
-                Active
-                <input id="active-slots" type="number" min="1" value="1" />
-              </label>
-              <label class="field">
-                Min Lvl
-                <input id="min-level" type="number" min="1" value="20" />
-              </label>
-              <label class="field">
-                Max Lvl
-                <input id="max-level" type="number" min="1" value="40" />
-              </label>
-              <label class="field">
-                Sides
-                <input id="side-count" type="number" min="2" value="2" title="Used by AI vs AI (Random Battle) to pick number of teams." />
-              </label>
-              <label class="field">
-                Circle
-                <input id="circle-interval" type="number" min="1" value="3" title="Battle Royale: circle closes every X rounds." />
-              </label>
-            </div>
-            <div class="utility-group">
-              <div class="utility-group-title">AI and Assets</div>
-              <label class="field">
-                AI Brain
-                <select id="ai-model-select"></select>
-              </label>
-              <button id="ai-model-refresh" type="button">Refresh AI</button>
-              <span id="ai-model-math" class="field-pill ds-pill light">Model score: -</span>
-              <button id="download-sprites">Refresh Sprites</button>
-              <button id="open-useful-charts" type="button">Charts</button>
-            </div>
-            <div class="utility-group">
-              <div class="utility-group-title">Roster and Trainer</div>
-              <label class="field">
-                <input id="use-trainer" type="checkbox" />
-                Use Trainer
-              </label>
-              <button id="load-trainer" type="button">Load Trainer</button>
-              <button id="import-trainer" type="button" title="Load a saved trainer JSON profile from disk.">Import Trainer JSON</button>
-              <button id="import-roster-csv" type="button" title="Load explicit player/foe teams from CSV. This is the canonical battle format.">Import Roster CSV</button>
-              <button id="export-roster-csv" type="button" title="Export current battle or creator teams as roster CSV.">Export Roster CSV</button>
-              <button id="clear-roster-csv" type="button" title="Unload the currently imported roster CSV.">Clear Roster CSV</button>
-              <button id="clear-trainer" type="button">Clear Trainer</button>
-            </div>
+        <div class="toolbar ds-toolbar battle-utility-row battle-utility-row-secondary">
+          <div class="utility-group">
+            <label class="field">
+              Mode
+              <select id="mode-select">
+                <option value="campaign">Campaign (Player vs AI)</option>
+                <option value="random">Random Battle (Player vs AI)</option>
+                <option value="ai">AI vs AI (Step)</option>
+                <option value="ai-random">AI vs AI (Random Battle)</option>
+                <option value="ai-royale">AI vs AI (Battle Royale)</option>
+              </select>
+            </label>
+            <label class="field">
+              Team
+              <input id="team-size" type="number" min="1" value="2" />
+            </label>
+            <label class="field">
+              Active
+              <input id="active-slots" type="number" min="1" value="1" />
+            </label>
+            <label class="field">
+              Lvl
+              <input id="min-level" type="number" min="1" value="20" />
+            </label>
+            <label class="field battle-range-field">
+              to
+              <input id="max-level" type="number" min="1" value="40" />
+            </label>
+            <label class="field">
+              Sides
+              <input id="side-count" type="number" min="2" value="2" title="Used by AI vs AI (Random Battle) to pick number of teams." />
+            </label>
+            <label class="field">
+              Circle
+              <input id="circle-interval" type="number" min="1" value="3" title="Battle Royale: circle closes every X rounds." />
+            </label>
           </div>
-        </details>
+          <div class="utility-group">
+            <label class="field">
+              AI
+              <select id="ai-model-select"></select>
+            </label>
+            <button id="ai-model-refresh" type="button">Refresh AI</button>
+            <span id="ai-model-math" class="field-pill ds-pill light">Model score: -</span>
+            <button id="download-sprites">Refresh Sprites</button>
+            <button id="open-useful-charts" type="button">Charts</button>
+          </div>
+          <div class="utility-group">
+            <label class="field">
+              <input id="use-trainer" type="checkbox" />
+              Trainer
+            </label>
+            <button id="load-trainer" type="button">Load Trainer</button>
+            <button id="import-trainer" type="button" title="Load a saved trainer JSON profile from disk.">Import Trainer JSON</button>
+            <button id="import-roster-csv" type="button" title="Load explicit player/foe teams from CSV. This is the canonical battle format.">Import Roster CSV</button>
+            <button id="export-roster-csv" type="button" title="Export current battle or creator teams as roster CSV.">Export Roster CSV</button>
+            <button id="clear-roster-csv" type="button" title="Unload the currently imported roster CSV.">Clear Roster CSV</button>
+            <button id="clear-trainer" type="button">Clear Trainer</button>
+          </div>
+        </div>
       </div>
     </header>
     <main class="main-shell ds-main-shell">
