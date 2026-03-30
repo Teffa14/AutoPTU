@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="design-system/tokens.css" />
     <link rel="stylesheet" href="design-system/components.css" />
     <link rel="stylesheet" href="design-system/layout.css" />
-    <link rel="stylesheet" href="styles.css?v=20260331c" />
-    <link rel="stylesheet" href="battle.css?v=20260331c" />
+    <link rel="stylesheet" href="styles.css?v=20260331d" />
+    <link rel="stylesheet" href="battle.css?v=20260331d" />
   </head>
   <body>
     <div id="move-tooltip" class="move-tooltip hidden"></div>
@@ -118,22 +118,13 @@
               AI
               <select id="ai-model-select"></select>
             </label>
-            <button id="ai-model-refresh" type="button">Refresh AI</button>
             <span id="ai-model-math" class="field-pill ds-pill light">Model score: -</span>
-            <button id="download-sprites">Refresh Sprites</button>
-            <button id="open-useful-charts" type="button">Charts</button>
           </div>
           <div class="utility-group">
             <label class="field">
               <input id="use-trainer" type="checkbox" />
               Trainer
             </label>
-            <button id="load-trainer" type="button">Load Trainer</button>
-            <button id="import-trainer" type="button" title="Load a saved trainer JSON profile from disk.">Import Trainer JSON</button>
-            <button id="import-roster-csv" type="button" title="Load explicit player/foe teams from CSV. This is the canonical battle format.">Import Roster CSV</button>
-            <button id="export-roster-csv" type="button" title="Export current battle or creator teams as roster CSV.">Export Roster CSV</button>
-            <button id="clear-roster-csv" type="button" title="Unload the currently imported roster CSV.">Clear Roster CSV</button>
-            <button id="clear-trainer" type="button">Clear Trainer</button>
           </div>
         </div>
       </div>
@@ -215,6 +206,14 @@
                 <div class="info-column">
                   <div class="panel-title ds-panel-title">Trainer</div>
                   <div id="trainer-details" class="combatant-details">No trainer loaded.</div>
+                  <div class="trainer-actions battle-parameter-grid">
+                    <button id="load-trainer" type="button">Load Trainer</button>
+                    <button id="import-trainer" type="button" title="Load a saved trainer JSON profile from disk.">Import Trainer JSON</button>
+                    <button id="clear-trainer" type="button">Clear Trainer</button>
+                    <button id="import-roster-csv" type="button" title="Load explicit player/foe teams from CSV. This is the canonical battle format.">Import Roster CSV</button>
+                    <button id="export-roster-csv" type="button" title="Export current battle or creator teams as roster CSV.">Export Roster CSV</button>
+                    <button id="clear-roster-csv" type="button" title="Unload the currently imported roster CSV.">Clear Roster CSV</button>
+                  </div>
                   <label class="toggle-row" title="When ON, exported CSV includes foe rows for immediate AI vs AI starts.">
                     <input id="export-roster-mirror" type="checkbox" checked />
                     Mirror to foe on export (AI vs AI ready)
@@ -235,6 +234,9 @@
                 <div class="info-column">
                   <div class="panel-title ds-panel-title">Tools</div>
                   <div class="trainer-actions battle-parameter-grid">
+                    <button id="ai-model-refresh" type="button">Refresh AI</button>
+                    <button id="download-sprites">Refresh Sprites</button>
+                    <button id="open-useful-charts" type="button">Charts</button>
                     <a class="field-pill ds-pill light" href="/create">Character Builder</a>
                     <a class="field-pill ds-pill light" href="ui-gallery.html">UI Gallery</a>
                   </div>

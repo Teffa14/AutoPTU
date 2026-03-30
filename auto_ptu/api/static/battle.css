@@ -47,7 +47,7 @@ body.battle-ui .battle-utility-row {
 }
 
 body.battle-ui .battle-utility-row-secondary {
-  grid-template-columns: minmax(500px, 1.35fr) minmax(360px, 0.9fr) minmax(520px, 1.45fr);
+  grid-template-columns: minmax(520px, 1.6fr) minmax(340px, 0.9fr) minmax(120px, 0.35fr);
   margin-top: 0;
   gap: 8px;
   padding: 8px 10px;
@@ -156,8 +156,8 @@ body.battle-ui .battle-range-field input[type="number"] {
   width: 74px;
 }
 
-body.battle-ui .battle-utility-row-secondary .utility-group:last-child button {
-  font-size: 10px;
+body.battle-ui .battle-utility-row-secondary .utility-group:last-child {
+  justify-content: flex-start;
 }
 
 body.battle-ui .main-shell {
