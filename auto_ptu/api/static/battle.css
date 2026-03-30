@@ -58,6 +58,56 @@ body.battle-ui .battle-utility-row-secondary {
   background: rgba(24, 27, 31, 0.82);
 }
 
+body.battle-ui .battle-setup-drawer {
+  border-radius: 14px;
+  border: 1px solid var(--battle-edge);
+  background: rgba(22, 25, 29, 0.82);
+}
+
+body.battle-ui .battle-setup-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--battle-text);
+}
+
+body.battle-ui .battle-setup-summary::-webkit-details-marker {
+  display: none;
+}
+
+body.battle-ui .battle-setup-summary-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #d9cdb9;
+}
+
+body.battle-ui .battle-setup-summary-meta {
+  min-width: 0;
+  flex: 1;
+  color: var(--battle-muted);
+  font-size: 12px;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.battle-ui .battle-setup-drawer[open] .battle-setup-summary {
+  border-bottom: 1px solid rgba(167, 177, 186, 0.12);
+}
+
+body.battle-ui .battle-setup-drawer .battle-utility-row-secondary {
+  border: 0;
+  border-radius: 0 0 14px 14px;
+  background: transparent;
+}
+
 body.battle-ui .utility-group {
   display: flex;
   flex-wrap: wrap;
