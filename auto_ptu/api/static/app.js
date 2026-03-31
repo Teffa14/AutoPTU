@@ -53,6 +53,7 @@ const logExportButton = document.getElementById("log-export");
 const logClearButton = document.getElementById("log-clear");
 const selectedTileInfoEl = battleElements.selectedTileInfoEl || document.getElementById("selected-tile-info");
 const topbarEl = battleElements.topbarEl || document.querySelector(".topbar");
+const topbarCollapseToggle = document.getElementById("topbar-collapse-toggle");
 const speedButtons = Array.from(document.querySelectorAll(".speed-btn"));
 const promptOverlay = document.getElementById("prompt-overlay");
 const promptListEl = document.getElementById("prompt-list");
@@ -184,26 +185,6 @@ const TYPE_ANIM_STYLE = {
   fairy: "gleam",
 };
 
-const NOISY_NAMED_MOVE_SHEETS = new Set([
-  "tackle",
-  "dragon pulse",
-  "confusion",
-  "confuse ray",
-  "take down",
-  "pound",
-]);
-
-const SAFE_NAMED_MOVE_SHEETS = new Set([
-  "flamethrower",
-  "fire blast",
-  "hydro pump",
-  "surf",
-  "thunderbolt",
-  "ice beam",
-  "shadow ball",
-  "solar beam",
-]);
-
 const EXACT_MOVE_STYLE_OVERRIDES = {
   tackle: "impact",
   "quick attack": "impact",
@@ -331,21 +312,21 @@ const STATUS_LOG_KEYWORDS = [
 ];
 
 const HAZARD_GLYPHS = {
-  spikes: "S",
-  toxic_spikes: "T",
-  sticky_web: "W",
-  stealth_rock: "R",
-  stealth_rock_fairy: "F",
-  fire_hazards: "F",
-  dreepy_token: "D",
+  spikes: "▲",
+  toxic_spikes: "☣",
+  sticky_web: "🕸",
+  stealth_rock: "◆",
+  stealth_rock_fairy: "✦",
+  fire_hazards: "🔥",
+  dreepy_token: "◈",
 };
 
 const TRAP_GLYPHS = {
-  trap: "!",
-  dust_trap: "D",
-  tangle_trap: "T",
-  slick_trap: "S",
-  abrasion_trap: "A",
+  trap: "✖",
+  dust_trap: "◌",
+  tangle_trap: "✳",
+  slick_trap: "≈",
+  abrasion_trap: "✸",
 };
 
 const GRID_CELL_SIZE = 74;
@@ -632,6 +613,7 @@ const pokeApiAbilityMetaCache = new Map();
 const pokeApiItemMetaCache = new Map();
 const pokeApiTypeIconCache = new Map();
 const pokeApiCryCache = new Map();
+const pokeApiMoveAnimCache = new Map();
 const pokeApiPending = new Map();
 const cryAudio = new Audio();
 let itemFxAudioCtx = null;
@@ -3122,27 +3104,27 @@ async function ensureCryUrl(speciesName) {
 async function ensureMoveAnimAsset(moveName) {
   const normalized = normalizePokeKey(moveName);
   if (!normalized) return null;
+  const cached = pokeApiCacheGet(pokeApiMoveAnimCache, normalized);
+  if (cached !== null) return cached;
   return api(`/api/move_anim/${encodeURIComponent(moveName)}`)
     .then((payload) => {
-      return payload && payload.available ? payload.url || null : null;
+      const url = payload && payload.available ? payload.url || null : null;
+      pokeApiMoveAnimCache.set(normalized, url);
+      return url;
     })
     .catch(() => {
+      pokeApiMoveAnimCache.set(normalized, null);
       return null;
     });
 }
 
 function moveAnimUrlFromCache(moveName) {
-  return null;
+  return pokeApiCacheGet(pokeApiMoveAnimCache, moveName);
 }
 
 function shouldUseNamedMoveAnim(moveMeta, moveAnim) {
   const name = String(moveMeta?.name || "").trim().toLowerCase();
-  if (!name) return false;
-  if (!SAFE_NAMED_MOVE_SHEETS.has(name)) return false;
-  if (NOISY_NAMED_MOVE_SHEETS.has(name)) return false;
-  if (moveAnim?.channel === "melee") return false;
-  if (name === "confusion" || name === "confuse ray") return false;
-  return true;
+  return !!name;
 }
 
 function typeIconFromCache(typeName) {
@@ -4799,14 +4781,14 @@ function renderGrid() {
       barrierEntries.slice(0, Math.max(0, 4 - hazardEntries.length)).forEach((entry) => {
         const badge = document.createElement("div");
         badge.className = "hazard-badge blocker";
-        badge.textContent = "B";
+        badge.textContent = "⛶";
         badge.title = barrierBadgeTitle(entry);
         hazardWrap.appendChild(badge);
       });
       if (frozenEntries.length && hazardWrap.childElementCount < 4) {
         const badge = document.createElement("div");
         badge.className = "hazard-badge frozen";
-        badge.textContent = "FD";
+        badge.textContent = "❄";
         badge.title = frozenDomainBadgeTitle(frozenEntries);
         hazardWrap.appendChild(badge);
       }
@@ -4819,52 +4801,6 @@ function renderGrid() {
         hazardWrap.appendChild(badge);
       }
       cell.appendChild(hazardWrap);
-      const noteWrap = document.createElement("div");
-      noteWrap.className = "hazard-notes";
-      const noteSpecs = [];
-      hazardEntries.slice(0, 2).forEach((entry) => {
-        noteSpecs.push({
-          className: `hazard-note ${entry.kind === "trap" ? "trap" : "hazard"}`.trim(),
-          text: `${entry.kind === "trap" ? "T" : "H"}:${String(entry.source_name || entry.name || entry.kind || "Hazard").trim().slice(0, 10)}`,
-          title: trapBadgeTitle(entry, meta),
-        });
-      });
-      barrierEntries.slice(0, 1).forEach((entry) => {
-        noteSpecs.push({
-          className: "hazard-note barrier",
-          text: `B:${String(entry.source_name || entry.move || "Barrier").trim().slice(0, 10)}`,
-          title: barrierBadgeTitle(entry),
-        });
-      });
-      frozenEntries.slice(0, 1).forEach((entry) => {
-        noteSpecs.push({
-          className: "hazard-note frozen",
-          text: `FD:${String(entry.source_name || "Frozen").trim().slice(0, 9)}`,
-          title: frozenDomainBadgeTitle([entry]),
-        });
-      });
-      barrierEntries.slice(1, 2).forEach((entry) => {
-        noteSpecs.push({
-          className: "hazard-note barrier",
-          text: `B:${String(entry.source_name || entry.move || "Barrier").trim().slice(0, 10)}`,
-          title: barrierBadgeTitle(entry),
-        });
-      });
-      noteSpecs.slice(0, 3).forEach((spec) => {
-        const note = document.createElement("div");
-        note.className = spec.className;
-        note.textContent = spec.text;
-        note.title = spec.title;
-        noteWrap.appendChild(note);
-      });
-      if (totalObjects > noteWrap.childElementCount) {
-        const note = document.createElement("div");
-        note.className = "hazard-note effect";
-        note.textContent = `+${totalObjects - noteWrap.childElementCount}`;
-        note.title = `Tile has ${totalObjects} battlefield objects with additional sources or effects.`;
-        noteWrap.appendChild(note);
-      }
-      if (noteWrap.childElementCount) cell.appendChild(noteWrap);
     }
       const occupantId = occupantMap[key];
       const combatant = occupantId ? combatantsById.get(occupantId) : null;
@@ -4901,6 +4837,11 @@ function renderGrid() {
           fill.style.background = healthGradient(teamVisual, ratio);
           bar.appendChild(fill);
           cell.appendChild(bar);
+          const hpValue = document.createElement("div");
+          hpValue.className = "hp-value";
+          hpValue.textContent = `${combatant.hp}/${combatant.max_hp}`;
+          hpValue.title = `${combatant.name}: ${combatant.hp}/${combatant.max_hp} HP`;
+          cell.appendChild(hpValue);
           attachSprite(cell, combatant.sprite_url, combatant.name);
           appendTokenItemIcons(cell, combatant);
           appendTokenGimmickBadges(cell, combatant);
@@ -6009,11 +5950,6 @@ function spawnImpact(
   moveAnimUrl = null,
   intensity = 1
 ) {
-  const impact = document.createElement("div");
-  impact.className = "fx-impact";
-  impact.style.left = `${toX}px`;
-  impact.style.top = `${toY}px`;
-  document.body.appendChild(impact);
   let moveAnimSprite = null;
   let moveAnimPlayback = null;
   if (moveAnimUrl) {
@@ -6047,39 +5983,11 @@ function spawnImpact(
     }
     document.body.appendChild(moveAnimSprite);
   }
-  const impactLifetime = moveAnimPlayback ? Math.max(1100, moveAnimPlayback.totalMs + 260) : moveAnimSprite ? 1400 : 900;
+  const impactLifetime = moveAnimPlayback ? Math.max(1100, moveAnimPlayback.totalMs + 260) : moveAnimSprite ? 1400 : 360;
   setTimeout(() => {
-    impact.remove();
     moveAnimPlayback?.stop?.();
     moveAnimSprite?.remove();
   }, impactLifetime);
-}
-
-function spawnTrail(fromX, fromY, dx, dy, duration, palette, moveAnim = null) {
-  if (cinematicFxScale() < 0.52) return;
-  const trail = document.createElement("div");
-  trail.className = "fx-trail";
-  if (moveAnim?.style) {
-    trail.classList.add(`trail-${moveAnim.style}`);
-  }
-  if (moveAnim?.channel) {
-    trail.classList.add(`channel-${moveAnim.channel}`);
-  }
-  if (moveAnim?.typeKey) {
-    trail.classList.add(`type-${moveAnim.typeKey}`);
-  }
-  trail.style.left = `${fromX}px`;
-  trail.style.top = `${fromY}px`;
-  trail.style.width = `${Math.max(14, Math.hypot(dx, dy) * 1.15)}px`;
-  trail.style.background = `linear-gradient(90deg, ${palette.secondary}, ${palette.primary}, transparent)`;
-  const angle = Math.atan2(dy, dx);
-  trail.style.transform = `rotate(${angle}rad)`;
-  trail.style.transition = `opacity ${Math.max(340, duration * 1.2)}ms ease-out`;
-  document.body.appendChild(trail);
-  requestAnimationFrame(() => {
-    trail.style.opacity = "0.05";
-  });
-  setTimeout(() => trail.remove(), Math.max(620, Math.round(duration * 1.8)));
 }
 
 function animateMoveEvent(event) {
@@ -6182,12 +6090,40 @@ function animateMoveEvent(event) {
       .catch(() => null)
       .then((resolvedMoveAnimUrl) => {
         const isMelee = moveAnim.channel === "melee";
-        const hitDelayMs = isMelee
-          ? Math.max(70, Math.min(180, Math.round(duration * 0.45)))
-          : Math.max(110, Math.min(520, Math.round(duration * 0.72)));
-        const projectile = isMelee ? null : spawnProjectileTravel(fromX, fromY, toX, toY, hitDelayMs, palette, moveAnim, typeIconUrl);
-        if (!isMelee) {
-          spawnTrail(fromX, fromY, dx, dy, hitDelayMs, palette, moveAnim);
+        const isStatus = moveAnim.channel === "status";
+        const hasNamedMoveAnim = !!resolvedMoveAnimUrl;
+        let hitDelayMs = isMelee
+          ? Math.max(150, Math.min(340, Math.round(duration * 0.52)))
+          : isStatus
+            ? Math.max(180, Math.min(420, Math.round(duration * 0.66)))
+            : Math.max(200, Math.min(620, Math.round(duration * 0.74)));
+        let projectile = null;
+        if (isMelee) {
+          if (actor && target && coordKey(actor.position) !== coordKey(target.position)) {
+            drawMovementArrow(actor.position, target.position, Math.max(520, hitDelayMs + 220));
+            spawnMovementEchoes(actor, actor.position, target.position);
+            const contactGhostMs = spawnPokemonMovementGhost(actor, actor.position, target.position);
+            hitDelayMs = Math.max(hitDelayMs, Math.round(contactGhostMs * 0.78));
+          }
+        } else if (hasNamedMoveAnim) {
+          if (actor?.position && target?.position && coordKey(actor.position) !== coordKey(target.position)) {
+            drawMovementArrow(actor.position, target.position, Math.max(640, hitDelayMs + 260));
+          }
+          projectile = spawnMoveAnimTravel(
+            resolvedMoveAnimUrl,
+            sourceRect,
+            targetRect,
+            fromX,
+            fromY,
+            toX,
+            toY,
+            intensity,
+            hitDelayMs + 320
+          );
+        } else {
+          if (actor?.position && target?.position && coordKey(actor.position) !== coordKey(target.position)) {
+            drawMovementArrow(actor.position, target.position, Math.max(640, hitDelayMs + 260));
+          }
         }
         playMoveImpactCue(palette, moveAnim, intensity, "launch", moveMeta);
         setTimeout(() => {
@@ -6418,31 +6354,6 @@ function playMoveImpactCue(palette, moveAnim, intensity = 1, phase = "launch", m
   gain.connect(ctx.destination);
   osc.start(now);
   osc.stop(now + (launch ? 0.13 : 0.24));
-}
-
-function spawnProjectileTravel(fromX, fromY, toX, toY, duration, palette, moveAnim, typeIconUrl = null) {
-  const projectile = document.createElement("div");
-  projectile.className = `fx-projectile channel-${moveAnim?.channel || "ranged"} ${moveAnim?.category || ""}`.trim();
-  if (moveAnim?.style) projectile.classList.add(`anim-${moveAnim.style}`);
-  projectile.style.left = `${fromX}px`;
-  projectile.style.top = `${fromY}px`;
-  projectile.style.background = `radial-gradient(circle at 35% 35%, ${palette.primary}, ${palette.secondary})`;
-  projectile.style.setProperty("--dur", `${Math.max(140, Math.round(duration))}ms`);
-  projectile.style.setProperty("--dx", `${Math.round(toX - fromX)}px`);
-  projectile.style.setProperty("--dy", `${Math.round(toY - fromY)}px`);
-  const iconFriendlyStyles = new Set(["spark", "wave", "frost", "flame"]);
-  if (typeIconUrl && iconFriendlyStyles.has(String(moveAnim?.style || "").toLowerCase())) {
-    const icon = document.createElement("img");
-    icon.className = "fx-projectile-icon";
-    icon.src = typeIconUrl;
-    icon.alt = "";
-    projectile.appendChild(icon);
-  }
-  document.body.appendChild(projectile);
-  requestAnimationFrame(() => {
-    projectile.classList.add("run");
-  });
-  return projectile;
 }
 
 function spawnFxBurst(centerX, centerY, className, durationMs) {
@@ -10192,6 +10103,16 @@ function renderLog() {
   const wasNearBottom = maxScrollTop - logEl.scrollTop <= 24;
   logEl.classList.toggle("compact", !!logCompactToggle?.checked);
   logEl.innerHTML = "";
+  if (!merged.length) {
+    const empty = document.createElement("div");
+    empty.className = "log-empty-state";
+    empty.innerHTML = `
+      <div class="log-empty-title">Spectator feed is waiting for events.</div>
+      <div class="log-empty-copy">Start or advance the battle to populate actions, damage, status changes, and round summaries here.</div>
+    `;
+    logEl.appendChild(empty);
+    return;
+  }
   merged.forEach((line) => {
     if (line.isDivider) {
       const divider = document.createElement("div");
@@ -18025,6 +17946,52 @@ function _allPokedexAbilityPools() {
   };
 }
 
+function spawnMoveAnimTravel(
+  imageUrl,
+  sourceRect,
+  targetRect,
+  startX,
+  startY,
+  endX,
+  endY,
+  intensity = 1,
+  minimumLifetimeMs = 520
+) {
+  if (!imageUrl) return null;
+  const sprite = document.createElement("div");
+  sprite.className = "fx-impact-moveanim";
+  sprite.style.left = `${startX}px`;
+  sprite.style.top = `${startY}px`;
+  sprite.style.opacity = "0";
+  document.body.appendChild(sprite);
+  const test = new Image();
+  let playback = null;
+  let lifetime = Math.max(320, minimumLifetimeMs);
+  const cleanup = () => {
+    playback?.stop?.();
+    sprite.remove();
+  };
+  test.addEventListener(
+    "load",
+    () => {
+      playback = startMoveAnimSpritePlayback(
+        sprite,
+        imageUrl,
+        Number(test.naturalWidth || 0),
+        Number(test.naturalHeight || 0),
+        intensity,
+        { startX, startY, endX, endY, sourceRect, targetRect }
+      );
+      lifetime = Math.max(lifetime, Number(playback?.totalMs || 0));
+      window.setTimeout(cleanup, lifetime + 80);
+    },
+    { once: true }
+  );
+  test.addEventListener("error", cleanup, { once: true });
+  test.src = imageUrl;
+  return { remove: cleanup };
+}
+
 function _pokemonSpeciesCatalog() {
   const masterSpecies = masterData?.pokemon?.species || [];
   const characterSpecies = characterData?.pokemon?.species || [];
@@ -23692,8 +23659,8 @@ function fitGridToViewport(force = false) {
   const centeredX = (wrap.clientWidth - scaledWidth) / 2;
   const centeredY = (wrap.clientHeight - scaledHeight) / 2;
   gridOffset = {
-    x: force ? Math.max(0, centeredX) : Math.max(8, centeredX),
-    y: force ? Math.max(0, centeredY) : Math.max(8, centeredY),
+    x: Math.max(0, centeredX),
+    y: Math.max(0, centeredY),
   };
 }
 
@@ -23732,12 +23699,23 @@ function saveSettings() {
     exportRosterMirror: exportRosterMirrorInput?.checked ?? true,
     autoUseCreatorRoster: autoUseCreatorRosterInput?.checked ?? true,
     csvStrictMode: csvStrictModeInput?.checked ?? false,
+    topbarCollapsed: document.body.classList.contains("topbar-collapsed"),
     sideNameOverrides: _normalizedSideNameOverrides(sideNameOverrides),
     deploymentOverrides: _normalizeDeploymentPayload(),
     itemChoiceOverrides: _normalizeItemChoicePayload(),
     abilityChoiceOverrides: _normalizeAbilityChoicePayload(),
   };
   localStorage.setItem("autoptu_settings", JSON.stringify(settings));
+}
+
+function applyTopbarCollapsed(collapsed) {
+  const isCollapsed = !!collapsed;
+  document.body.classList.toggle("topbar-collapsed", isCollapsed);
+  if (topbarCollapseToggle) {
+    topbarCollapseToggle.textContent = isCollapsed ? "Expand Bar" : "Collapse Bar";
+    topbarCollapseToggle.setAttribute("aria-expanded", isCollapsed ? "false" : "true");
+    topbarCollapseToggle.setAttribute("title", isCollapsed ? "Expand the battle control bar" : "Collapse the battle control bar");
+  }
 }
 
 function _normalizeSearchText(value) {
@@ -23842,6 +23820,7 @@ function loadSettings() {
       csvStrictModeInput.checked = settings.csvStrictMode;
     }
     document.body.classList.remove("topbar-collapsed", "left-drawer-collapsed", "right-drawer-collapsed");
+    applyTopbarCollapsed(!!settings.topbarCollapsed);
     _applyCsvModeControls();
     renderSideNameEditor();
     renderDeploymentEditor();
@@ -23909,6 +23888,10 @@ logExportButton?.addEventListener("click", () => exportBattleLog().catch(alertEr
 logClearButton?.addEventListener("click", () => {
   logClearOffset = (state?.log || []).length;
   renderLog();
+});
+topbarCollapseToggle?.addEventListener("click", () => {
+  applyTopbarCollapsed(!document.body.classList.contains("topbar-collapsed"));
+  saveSettings();
 });
 window.addEventListener("scroll", () => {
   if (!topbarEl) return;

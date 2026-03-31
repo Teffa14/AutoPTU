@@ -20,6 +20,10 @@ __pycache__/
 /build_new/
 /dist_new/
 /test-results/
+/build_logs/
+/check here for issues/
+/reports/battle_logs/
+/tmp_autoptu_*.png
 /tmpcx1zo4kv/
 /.coverage
 .coverage*

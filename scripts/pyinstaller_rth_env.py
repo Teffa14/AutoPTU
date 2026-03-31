@@ -36,6 +36,8 @@ portable_root = runtime_root / "portable_data"
 
 for folder in (
     portable_root,
+    portable_root / "reports",
+    portable_root / "reports" / "ai_models",
     portable_root / "sprites",
     portable_root / "pokeapi",
     portable_root / "pokeapi" / "type-icons",
@@ -53,10 +55,13 @@ if getattr(sys, "frozen", False):
 
 os.environ.setdefault("AUTO_PTU_RUNTIME_ROOT", str(runtime_root))
 os.environ.setdefault("AUTO_PTU_BUNDLE_ROOT", str(bundle_root))
+os.environ.setdefault("AUTO_PTU_REPORTS_DIR", str(portable_root / "reports"))
 os.environ.setdefault("AUTO_PTU_SPRITE_DIR", str(portable_root / "sprites"))
 os.environ.setdefault("AUTO_PTU_POKEAPI_CACHE", str(portable_root / "pokeapi"))
 
 sprite_dirs = [
+    runtime_root / "Animated Pokemon Sprites" / "Graphics" / "Pokemon" / "Front",
+    bundle_root / "Animated Pokemon Sprites" / "Graphics" / "Pokemon" / "Front",
     runtime_root / "IMPLEMENTATION FILES" / "Generation 9 Pack v3.3.4" / "Graphics" / "Pokemon" / "Front",
     bundle_root / "IMPLEMENTATION FILES" / "Generation 9 Pack v3.3.4" / "Graphics" / "Pokemon" / "Front",
 ]

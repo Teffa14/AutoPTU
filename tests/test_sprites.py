@@ -1,3 +1,5 @@
+import os
+
 from auto_ptu.sprites import SpriteCache, _fallback_slugs, _slugify, _strip_trainer_prefix_slug
 
 
@@ -54,3 +56,23 @@ def test_sprite_url_uses_local_pack_fallback(monkeypatch, tmp_path) -> None:
 
     assert url == "/sprites/aegislash.png"
     assert (cache_dir / "aegislash.png").exists()
+
+
+def test_sprite_url_prefers_first_local_sprite_dir(monkeypatch, tmp_path) -> None:
+    animated_dir = tmp_path / "animated-front"
+    static_dir = tmp_path / "static-front"
+    animated_dir.mkdir(parents=True, exist_ok=True)
+    static_dir.mkdir(parents=True, exist_ok=True)
+    (animated_dir / "ABRA.png").write_bytes(b"animated-sheet")
+    (static_dir / "ABRA.png").write_bytes(b"static")
+    cache_dir = tmp_path / "cache"
+    cache = SpriteCache(cache_dir=cache_dir)
+    monkeypatch.setenv("AUTO_PTU_LOCAL_SPRITE_DIRS", os.pathsep.join([str(animated_dir), str(static_dir)]))
+    from auto_ptu import sprites as sprites_mod
+    monkeypatch.setattr(sprites_mod, "_LOCAL_SPRITE_INDEX", {})
+    monkeypatch.setattr(sprites_mod, "_LOCAL_SPRITE_INDEX_KEY", ())
+
+    url = cache.sprite_url_for("Abra", allow_download=False)
+
+    assert url == "/sprites/abra.png"
+    assert (cache_dir / "abra.png").read_bytes() == b"animated-sheet"

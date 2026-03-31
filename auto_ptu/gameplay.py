@@ -5,6 +5,7 @@ import copy
 import json
 import os
 import random
+import shutil
 import string
 import math
 from datetime import datetime, timezone
@@ -33,7 +34,7 @@ from rich.text import Text
 from . import ptu_engine
 from .battle_state import format_move_event
 from .data_models import MatchPlan, MatchupSpec, MoveSpec, TrainerSideSpec
-from .config import PROJECT_ROOT
+from .config import PROJECT_ROOT, REPORTS_DIR, RUNTIME_ROOT
 from .engine import MatchEngine
 from .rules import (
     BattleState as RulesBattleState,
@@ -75,12 +76,52 @@ MoveSelector = Callable[
     ptu_engine.Move,
 ]
 
-_AI_PROFILE_PATH = Path.cwd() / "reports" / "ai_profiles.json"
-try:
-    _AI_PROFILE_PATH.parent.mkdir(parents=True, exist_ok=True)
-except Exception:
-    _AI_PROFILE_PATH = PROJECT_ROOT / "reports" / "ai_profiles.json"
-    _AI_PROFILE_PATH.parent.mkdir(parents=True, exist_ok=True)
+def _seed_runtime_ai_reports() -> None:
+    target_reports = REPORTS_DIR
+    target_models = target_reports / "ai_models"
+    try:
+        target_reports.mkdir(parents=True, exist_ok=True)
+        target_models.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        return
+
+    existing_models = list(target_models.glob("model_*.json"))
+    if existing_models:
+        return
+
+    candidate_reports: list[Path] = []
+    legacy_runtime_reports = RUNTIME_ROOT / "reports"
+    bundled_reports = PROJECT_ROOT / "reports"
+    for candidate in (legacy_runtime_reports, bundled_reports):
+        try:
+            if candidate.resolve() == target_reports.resolve():
+                continue
+        except Exception:
+            if str(candidate) == str(target_reports):
+                continue
+        candidate_reports.append(candidate)
+
+    for source_reports in candidate_reports:
+        source_models = source_reports / "ai_models"
+        model_files = sorted(source_models.glob("model_*.json")) if source_models.exists() else []
+        if not model_files:
+            continue
+        for model_path in model_files:
+            target_path = target_models / model_path.name
+            if not target_path.exists():
+                shutil.copy2(model_path, target_path)
+        ratings_path = source_models / "ratings.json"
+        if ratings_path.exists() and not (target_models / "ratings.json").exists():
+            shutil.copy2(ratings_path, target_models / "ratings.json")
+        profile_path = source_reports / "ai_profiles.json"
+        if profile_path.exists() and not (target_reports / "ai_profiles.json").exists():
+            shutil.copy2(profile_path, target_reports / "ai_profiles.json")
+        break
+
+
+_seed_runtime_ai_reports()
+_AI_PROFILE_PATH = REPORTS_DIR / "ai_profiles.json"
+_AI_PROFILE_PATH.parent.mkdir(parents=True, exist_ok=True)
 _AI_PROFILE_STORE = ai_hybrid.get_profile_store(path=_AI_PROFILE_PATH)
 _AI_MODEL_DIR = _AI_PROFILE_PATH.parent / "ai_models"
 _AI_MODEL_REGISTRY_PATH = _AI_MODEL_DIR / "registry.json"

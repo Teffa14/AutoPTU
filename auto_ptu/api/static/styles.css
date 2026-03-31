@@ -444,6 +444,28 @@
   pointer-events: none;
 }
 
+.cell .hp-value {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  text-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.95),
+    0 0 4px rgba(0, 0, 0, 0.9),
+    0 0 8px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  z-index: 3;
+}
+
 .cell .hp-fill {
   height: 100%;
   transition: width 0.2s ease;
@@ -451,61 +473,14 @@
 
 .cell .hazard-stack {
   position: absolute;
-  top: 16px;
+  top: 18px;
   right: 4px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
   align-items: flex-end;
   pointer-events: none;
   z-index: 2;
-}
-
-.cell .hazard-notes {
-  position: absolute;
-  right: 4px;
-  bottom: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  align-items: flex-end;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.cell .hazard-note {
-  max-width: 42px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding: 0 4px;
-  border-radius: 999px;
-  font-size: 8px;
-  line-height: 12px;
-  font-weight: 700;
-  color: #f8fbff;
-  background: rgba(20, 31, 49, 0.82);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.cell .hazard-note.barrier {
-  background: rgba(33, 87, 140, 0.82);
-}
-
-.cell .hazard-note.hazard {
-  background: rgba(111, 72, 22, 0.86);
-}
-
-.cell .hazard-note.trap {
-  background: rgba(133, 42, 42, 0.88);
-}
-
-.cell .hazard-note.frozen {
-  background: rgba(44, 107, 138, 0.86);
-}
-
-.cell .hazard-note.effect {
-  background: rgba(66, 41, 105, 0.84);
 }
 
 .cell.has-hazard::before {
@@ -522,13 +497,13 @@
 }
 
 .cell .hazard-badge {
-  min-width: 16px;
-  height: 16px;
-  padding: 0 3px;
-  border-radius: 4px;
-  font-size: 9px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: 6px;
+  font-size: 12px;
   font-weight: 700;
-  line-height: 16px;
+  line-height: 20px;
   text-align: center;
   color: #111827;
   background: rgba(255, 205, 117, 0.92);
@@ -796,223 +771,6 @@
   box-shadow: inset 0 0 0 2px rgba(255, 132, 88, 0.24);
 }
 
-.fx-projectile {
-  position: fixed;
-  z-index: 80;
-  width: 26px;
-  height: 26px;
-  margin-left: -13px;
-  margin-top: -13px;
-  border-radius: 999px;
-  border: 1px solid rgba(7, 13, 22, 0.72);
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.55);
-  pointer-events: none;
-  transform: translate(0, 0) scale(1);
-  opacity: 1;
-}
-
-.fx-projectile.physical {
-  border-radius: 4px;
-}
-
-.fx-projectile.status {
-  border-style: dashed;
-  background: rgba(211, 236, 255, 0.45) !important;
-}
-
-.fx-projectile.channel-melee {
-  width: 32px;
-  height: 18px;
-  margin-left: -16px;
-  margin-top: -9px;
-  border-radius: 4px;
-  clip-path: polygon(0 50%, 20% 16%, 100% 0, 80% 84%, 0 100%);
-}
-
-.fx-projectile.channel-ranged {
-  width: 26px;
-  height: 26px;
-  border-radius: 999px;
-}
-
-.fx-projectile.channel-status {
-  width: 30px;
-  height: 30px;
-  margin-left: -15px;
-  margin-top: -15px;
-  border-radius: 3px;
-  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-}
-
-.fx-projectile.anim-flame {
-  animation: projectileFlame 220ms ease-in-out infinite alternate;
-}
-
-.fx-projectile.anim-wave {
-  animation: projectileWave 280ms ease-in-out infinite;
-}
-
-.fx-projectile.anim-spark {
-  animation: projectileSpark 170ms steps(2) infinite;
-}
-
-.fx-projectile.anim-vine {
-  animation: projectileVine 280ms ease-in-out infinite;
-}
-
-.fx-projectile.anim-shadow {
-  animation: projectileShadow 280ms ease-in-out infinite;
-}
-
-.fx-projectile.anim-frost {
-  animation: projectileFrost 320ms ease-in-out infinite;
-}
-
-.fx-projectile.anim-psy {
-  animation: projectilePsy 240ms ease-in-out infinite;
-}
-
-.fx-projectile.anim-draco {
-  animation: projectileDraco 280ms ease-in-out infinite;
-}
-
-.fx-projectile.anim-toxic {
-  animation: projectileToxic 240ms ease-in-out infinite;
-}
-
-.fx-projectile.anim-gleam {
-  animation: projectileGleam 280ms ease-in-out infinite;
-}
-
-.fx-projectile.anim-shard {
-  animation: projectileShard 280ms ease-in-out infinite;
-}
-
-.fx-projectile.anim-quake {
-  animation: projectileQuake 240ms ease-in-out infinite;
-}
-
-.fx-projectile.anim-wind {
-  animation: projectileWind 230ms ease-in-out infinite;
-}
-
-.fx-projectile.anim-slash {
-  animation: projectileSlash 170ms ease-in-out infinite;
-}
-
-.fx-projectile.anim-pulse {
-  animation: projectilePulse 300ms ease-in-out infinite;
-}
-
-.fx-projectile-icon {
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.5));
-  pointer-events: none;
-}
-
-.fx-trail {
-  position: fixed;
-  z-index: 79;
-  height: 7px;
-  border-radius: 999px;
-  opacity: 0.82;
-  transform-origin: 0 50%;
-  pointer-events: none;
-}
-
-.fx-trail.channel-melee {
-  height: 5px;
-  opacity: 0.92;
-}
-
-.fx-trail.channel-status {
-  height: 4px;
-  border-top: 1px dashed rgba(229, 238, 255, 0.82);
-}
-
-.fx-trail.trail-spark {
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(255, 249, 186, 0.95) 0 8px,
-    rgba(255, 216, 83, 0.9) 8px 12px,
-    transparent 12px 16px
-  ) !important;
-}
-
-.fx-trail.trail-wave {
-  height: 8px;
-  border-radius: 2px;
-}
-
-.fx-trail.trail-flame {
-  height: 8px;
-}
-
-.fx-trail.trail-vine {
-  height: 7px;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(132, 214, 133, 0.95) 0 6px,
-    rgba(88, 168, 104, 0.95) 6px 10px,
-    transparent 10px 14px
-  ) !important;
-}
-
-.fx-trail.trail-shadow {
-  height: 5px;
-  opacity: 0.72;
-}
-
-.fx-trail.trail-frost {
-  height: 7px;
-  background: linear-gradient(90deg, rgba(201, 246, 255, 0.96), rgba(125, 205, 255, 0.88), transparent) !important;
-}
-
-.fx-projectile.run {
-  transition: transform var(--dur, 420ms) linear, opacity var(--dur, 420ms) linear;
-  transform: translate(var(--dx, 0), var(--dy, 0)) scale(0.9);
-  opacity: 0.1;
-}
-
-.fx-impact {
-  position: fixed;
-  z-index: 81;
-  width: 20px;
-  height: 20px;
-  margin-left: -10px;
-  margin-top: -10px;
-  border-radius: 999px;
-  border: 2px solid #a8cdff;
-  pointer-events: none;
-  animation: impactBurst 0.68s ease-out forwards;
-}
-
-.fx-impact.channel-status {
-  border-style: dashed;
-}
-
-.fx-impact.impact-flame {
-  filter: saturate(1.2) brightness(1.08);
-}
-
-.fx-impact.impact-wave {
-  border-style: double;
-}
-
-.fx-impact.impact-spark {
-  border-style: dotted;
-}
-
-.fx-impact.impact-shadow {
-  opacity: 0.86;
-}
-
-.fx-impact.impact-frost {
-  box-shadow: 0 0 10px rgba(186, 239, 255, 0.66);
-}
-
 .fx-impact-label {
   position: fixed;
   z-index: 82;
@@ -1181,17 +939,6 @@
   }
 }
 
-@keyframes impactBurst {
-  0% {
-    transform: scale(0.35);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1.65);
-    opacity: 0;
-  }
-}
-
 @keyframes impactLabelRise {
   0% {
     opacity: 0;
@@ -1255,141 +1002,6 @@
   100% {
     opacity: 0;
     transform: scaleX(1);
-  }
-}
-
-@keyframes projectilePulse {
-  0% {
-    box-shadow: 0 0 0 rgba(255, 255, 255, 0.16);
-  }
-  100% {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.55);
-  }
-}
-
-@keyframes projectileSlash {
-  0% {
-    filter: brightness(1);
-  }
-  100% {
-    filter: brightness(1.4);
-  }
-}
-
-@keyframes projectileFlame {
-  0% {
-    filter: saturate(1) brightness(1);
-  }
-  100% {
-    filter: saturate(1.35) brightness(1.22);
-  }
-}
-
-@keyframes projectileWave {
-  0% {
-    box-shadow: 0 0 0 rgba(146, 206, 255, 0.35);
-  }
-  100% {
-    box-shadow: 0 0 8px rgba(146, 206, 255, 0.8);
-  }
-}
-
-@keyframes projectileSpark {
-  0% {
-    filter: brightness(1);
-  }
-  100% {
-    filter: brightness(1.55);
-  }
-}
-
-@keyframes projectileVine {
-  0% {
-    filter: saturate(1);
-  }
-  100% {
-    filter: saturate(1.3);
-  }
-}
-
-@keyframes projectileShadow {
-  0% {
-    opacity: 0.72;
-  }
-  100% {
-    opacity: 0.98;
-  }
-}
-
-@keyframes projectileFrost {
-  0% {
-    filter: brightness(1);
-  }
-  100% {
-    filter: brightness(1.35);
-  }
-}
-
-@keyframes projectilePsy {
-  0% {
-    box-shadow: 0 0 0 rgba(255, 164, 213, 0.22);
-  }
-  100% {
-    box-shadow: 0 0 10px rgba(255, 164, 213, 0.75);
-  }
-}
-
-@keyframes projectileDraco {
-  0% {
-    filter: hue-rotate(0deg) brightness(1);
-  }
-  100% {
-    filter: hue-rotate(16deg) brightness(1.26);
-  }
-}
-
-@keyframes projectileToxic {
-  0% {
-    filter: saturate(1);
-  }
-  100% {
-    filter: saturate(1.45) brightness(1.15);
-  }
-}
-
-@keyframes projectileGleam {
-  0% {
-    filter: brightness(1);
-  }
-  100% {
-    filter: brightness(1.35);
-  }
-}
-
-@keyframes projectileShard {
-  0% {
-    filter: contrast(1);
-  }
-  100% {
-    filter: contrast(1.35);
-  }
-}
-
-@keyframes projectileQuake {
-  0% {
-    filter: brightness(1);
-  }
-  100% {
-    filter: brightness(1.2);
-  }
-}
-
-@keyframes projectileWind {
-  0% {
-    opacity: 0.78;
-  }
-  100% {
-    opacity: 1;
   }
 }
 
@@ -3818,6 +3430,7 @@
   background: linear-gradient(180deg, rgba(30, 46, 72, 0.85), rgba(16, 24, 39, 0.9));
   cursor: pointer;
   position: relative;
+  overflow: hidden;
   box-shadow: inset 0 0 0 1px rgba(10, 16, 26, 0.7);
 }
 

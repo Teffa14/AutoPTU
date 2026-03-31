@@ -7,16 +7,20 @@
     <link rel="stylesheet" href="design-system/tokens.css" />
     <link rel="stylesheet" href="design-system/components.css" />
     <link rel="stylesheet" href="design-system/layout.css" />
-    <link rel="stylesheet" href="styles.css?v=20260331d" />
-    <link rel="stylesheet" href="battle.css?v=20260331d" />
+    <link rel="stylesheet" href="styles.css?v=20260401e" />
+    <link rel="stylesheet" href="battle.css?v=20260401e" />
   </head>
   <body class="battle-ui">
     <div id="move-tooltip" class="move-tooltip hidden"></div>
     <header class="topbar ds-topbar">
-      <div class="topbar-shell">
+      <div id="topbar-shell" class="topbar-shell">
         <div class="toolbar ds-toolbar battle-utility-row">
-          <div class="utility-group utility-group-primary utility-group-brand">
+          <div class="utility-group utility-group-brand utility-group-brand-only">
+            <span class="utility-group-title">AutoPTU</span>
             <div class="brand ds-brand">AutoPTU Tactical Board</div>
+          </div>
+          <div class="utility-group utility-group-primary">
+            <span class="utility-group-title">Battle</span>
             <button id="start-battle">Start Battle</button>
             <label class="field">
               <input id="step-by-step-start" type="checkbox" />
@@ -28,6 +32,7 @@
             <button id="end-turn">End Turn</button>
           </div>
           <div class="utility-group">
+            <span class="utility-group-title">Speed</span>
             <label class="field">
               Speed
               <input id="auto-interval" type="number" min="250" value="1000" />
@@ -40,6 +45,7 @@
             </div>
           </div>
           <div class="utility-group">
+            <span class="utility-group-title">Camera</span>
             <label class="field">
               <input id="cinematic-auto" type="checkbox" />
               Cine
@@ -61,23 +67,33 @@
               </select>
             </label>
             <button id="cinematic-export" type="button">Export Replay</button>
-            <span id="cinematic-perf" class="field-pill ds-pill light">Cine: idle</span>
+          </div>
+          <div class="utility-group utility-group-collapse">
+            <button id="topbar-collapse-toggle" type="button" aria-expanded="true" aria-controls="topbar-shell">Collapse Bar</button>
           </div>
           <div class="utility-group utility-group-state">
-            <label class="field">
-              <input id="auto-cries" type="checkbox" />
-              Cries
-            </label>
+            <span class="utility-group-title">Live</span>
             <span id="round-info">Round -</span>
             <span id="terrain-info" class="field-pill ds-pill light">Terrain: -</span>
             <span id="weather-info" class="field-pill ds-pill light">Weather: -</span>
             <span id="map-seed" class="field-pill ds-pill light">Seed: -</span>
-            <span id="sprite-status" class="status-pill ds-pill">Sprites: idle</span>
-            <span id="js-status" class="status-pill ds-pill">JS: pending</span>
+            <label class="field">
+              <input id="auto-cries" type="checkbox" />
+              Cries
+            </label>
+            <details class="diagnostics-drawer">
+              <summary>Diagnostics</summary>
+              <div class="diagnostics-drawer-body">
+                <span id="cinematic-perf" class="field-pill ds-pill light">Cine: idle</span>
+                <span id="sprite-status" class="status-pill ds-pill">Sprites: idle</span>
+                <span id="js-status" class="status-pill ds-pill">JS: pending</span>
+              </div>
+            </details>
           </div>
         </div>
         <div class="toolbar ds-toolbar battle-utility-row battle-utility-row-secondary">
           <div class="utility-group">
+            <span class="utility-group-title">Scenario</span>
             <label class="field">
               Battle
               <select id="mode-select">
@@ -114,6 +130,7 @@
             </label>
           </div>
           <div class="utility-group">
+            <span class="utility-group-title">AI</span>
             <label class="field">
               AI
               <select id="ai-model-select"></select>
@@ -121,6 +138,7 @@
             <span id="ai-model-math" class="field-pill ds-pill light">Model score: -</span>
           </div>
           <div class="utility-group">
+            <span class="utility-group-title">Roster</span>
             <label class="field">
               <input id="use-trainer" type="checkbox" />
               Trainer
@@ -291,6 +309,6 @@
     <script src="logic/character_state.js"></script>
     <script src="ui/battle_ui.js"></script>
     <script src="ui/builder_ui.js"></script>
-    <script src="app.js?v=20260328h"></script>
+    <script src="app.js?v=20260401e"></script>
   </body>
 </html>

@@ -56,6 +56,23 @@ Checklist rendering lives in `auto_ptu/api/static/app.js` (`renderPrereqChecklis
 
 Open `auto_ptu/api/static/ui-gallery.html` to see all components/states for quick regression checks.
 
+## Packaged Web Build
+
+`AutoPTUWeb.exe` does not live-edit from the source tree. If you change files under `auto_ptu/api/static/` and then open the packaged app from `dist/AutoPTUWeb`, you must rebuild the packaged app or you will be looking at stale bundled assets.
+
+Use:
+
+- `rebuild_auto_ptu_web.bat`
+
+That script is the canonical packaged-web path. It:
+
+1. syncs frontend assets into dist targets
+2. runs the web verification slice
+3. rebuilds `AutoPTUWeb` with PyInstaller
+4. writes `dist/AutoPTUWeb/BUILD_INFO.txt`
+
+If a UI change is not visible in `AutoPTUWeb.exe`, check `dist/AutoPTUWeb/BUILD_INFO.txt` first.
+
 ## Cinematic Auto (Battle UI)
 
 Battle topbar now includes cinematic controls for AI-vs-AI auto battles:

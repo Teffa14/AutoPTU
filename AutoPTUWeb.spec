@@ -6,7 +6,9 @@ a = Analysis(
     pathex=[],
     binaries=[],
     datas=[
-        ('auto_ptu', 'auto_ptu'),
+        ('auto_ptu\\api\\static', 'auto_ptu\\api\\static'),
+        ('auto_ptu\\data', 'auto_ptu\\data'),
+        ('Animated Pokemon Sprites', 'Animated Pokemon Sprites'),
         ('files', 'files'),
         ('Foundry', 'Foundry'),
         ('reports', 'reports'),
