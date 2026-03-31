@@ -1664,12 +1664,12 @@ class TextBattleSession:
 
     def _collect_ai_candidates(self, battle: RulesBattleState, actor_id: str, *, limit: int = 8) -> Dict[str, Any]:
         try:
-            candidates = ai_hybrid.generate_candidates(battle, actor_id)
+            ranked = ai_hybrid.rank_candidates(battle, actor_id)
         except Exception:
             return {"total": 0, "top": []}
         rows: List[Dict[str, Any]] = []
         seen: Set[str] = set()
-        for action in candidates:
+        for score, action in ranked:
             key = self._ai_action_key(action)
             if key in seen:
                 continue
@@ -1678,7 +1678,7 @@ class TextBattleSession:
                 {
                     "key": key,
                     "label": self._ai_action_label(action),
-                    "score": self._score_ai_action(battle, actor_id, action),
+                    "score": round(score, 3) if math.isfinite(score) else float("-inf"),
                 }
             )
         rows.sort(key=lambda entry: entry.get("score", float("-inf")), reverse=True)

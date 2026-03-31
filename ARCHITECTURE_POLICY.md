@@ -48,6 +48,18 @@ BattleState remains the orchestrator, but new responsibilities must be routed to
 - `item_effects.py` and `move_traits.py` stay declarative and callback-driven.
 - The core engine executes effects but does not interpret or duplicate their logic.
 
+## AI Policy Boundary
+- The default live policy remains the rules-safe heuristic engine in `auto_ptu/rules/ai_hybrid.py`.
+- Alternate AI implementations must integrate through `auto_ptu/ai/policy_adapter.py`.
+- Policy adapters may inspect battle state, legal actions, and ranked candidates, then return a chosen action plus diagnostics.
+- External AI repos must not patch themselves directly into battle resolution or bypass PTU legality gates.
+- `gameplay.py` remains the orchestration layer that can call search, heuristic, and adapter-backed policy paths while preserving diagnostics and rule safety.
+
+## Packaged Runtime Discipline
+- `auto_ptu/api/static/` is the maintained web source tree.
+- `dist/AutoPTUWeb` is generated output and must be rebuilt through `rebuild_auto_ptu_web.bat`.
+- If packaged behavior differs from source behavior, fix the rebuild/runtime sync path rather than maintaining duplicate frontend trees.
+
 ## Testing Requirements
 - Every new hook must ship with at least one test.
 - Interaction changes require a scenario test or golden log.

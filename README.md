@@ -6,6 +6,14 @@ PTUDatabase and the CSV sheets in `files/` are the source of truth for item desc
 
 Docs index: `DOCS_INDEX.md` lists the authoritative project documents and archives.
 
+## Runtime Architecture
+
+- PTU rules legality and combat resolution remain authoritative in the rules engine.
+- The live AI decision core currently runs through `auto_ptu/rules/ai_hybrid.py`.
+- `auto_ptu/ai/policy_adapter.py` is the supported integration seam for alternate AI policies. External AI repos should plug into that adapter boundary instead of wiring directly into the rules engine.
+- `auto_ptu/gameplay.py` orchestrates battle flow, AI diagnostics capture, and packaged runtime coordination.
+- `dist/AutoPTUWeb` is generated output, not a live source tree.
+
 ## Quickstart
 
 ```powershell
@@ -34,6 +42,16 @@ python -m pytest
 ```powershell
 pyinstaller --clean AutoPTU.spec
 ```
+
+## Packaged Web Build
+
+Use the packaged web rebuild script when changing files under `auto_ptu/api/static/` or other packaged runtime assets:
+
+```powershell
+cmd /c rebuild_auto_ptu_web.bat
+```
+
+That script is the canonical path for `AutoPTUWeb.exe`. It closes the running packaged app, rebuilds `dist/AutoPTUWeb` in place, syncs packaged runtime assets, runs the packaged-web verification slice, and writes `dist/AutoPTUWeb/BUILD_INFO.txt`.
 
 ## Contributing
 

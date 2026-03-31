@@ -1,7 +1,9 @@
 /* Battle UI clarity rework */
 body.battle-ui {
-  --battle-gap: 16px;
-  --battle-sidebar-width: minmax(340px, 410px);
+  --battle-gap: calc(16px * var(--battle-scale, 1));
+  --battle-sidebar-min: calc(340px * var(--battle-scale, 1));
+  --battle-sidebar-max: calc(410px * var(--battle-scale, 1));
+  --battle-sidebar-width: minmax(var(--battle-sidebar-min), var(--battle-sidebar-max));
   --battle-panel: linear-gradient(180deg, rgba(28, 31, 35, 0.98), rgba(19, 22, 26, 0.96));
   --battle-panel-soft: linear-gradient(180deg, rgba(35, 39, 45, 0.92), rgba(24, 27, 31, 0.92));
   --battle-edge: rgba(167, 177, 186, 0.22);
@@ -24,12 +26,12 @@ body.battle-ui .topbar {
 body.battle-ui .topbar-shell {
   display: grid;
   gap: 10px;
-  padding: 12px 14px 14px;
+  padding: calc(12px * var(--battle-scale, 1)) calc(14px * var(--battle-scale, 1)) calc(14px * var(--battle-scale, 1));
 }
 
 body.battle-ui .brand {
   flex: 0 0 auto;
-  font-size: 14px;
+  font-size: calc(14px * var(--battle-scale, 1));
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -41,8 +43,8 @@ body.battle-ui .battle-utility-row {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: 10px;
-  padding: 10px;
+  gap: calc(10px * var(--battle-scale, 1));
+  padding: calc(10px * var(--battle-scale, 1));
   border-radius: 16px;
   border: 1px solid var(--battle-edge);
   background:
@@ -53,8 +55,8 @@ body.battle-ui .battle-utility-row {
 
 body.battle-ui .battle-utility-row-secondary {
   margin-top: 0;
-  gap: 10px;
-  padding: 10px;
+  gap: calc(10px * var(--battle-scale, 1));
+  padding: calc(10px * var(--battle-scale, 1));
   background: rgba(18, 21, 26, 0.88);
 }
 
@@ -63,10 +65,10 @@ body.battle-ui .utility-group {
   flex: 0 1 auto;
   flex-wrap: wrap;
   align-items: center;
-  gap: 7px;
+  gap: calc(7px * var(--battle-scale, 1));
   min-width: 0;
   min-height: 0;
-  padding: 8px 10px;
+  padding: calc(8px * var(--battle-scale, 1)) calc(10px * var(--battle-scale, 1));
   border-radius: 12px;
   border: 1px solid rgba(167, 177, 186, 0.12);
   background: rgba(8, 11, 16, 0.56);
@@ -101,7 +103,7 @@ body.battle-ui .utility-group-collapse {
 }
 
 body.battle-ui #topbar-collapse-toggle {
-  min-width: 112px;
+  min-width: calc(112px * var(--battle-scale, 1));
 }
 
 body.battle-ui .battle-utility-row-secondary > .utility-group:first-child {
@@ -112,6 +114,13 @@ body.battle-ui .battle-utility-row-secondary > .utility-group:nth-child(2) {
   flex: 1 1 340px;
 }
 
+body.battle-ui #ai-model-insight {
+  max-width: min(100%, calc(360px * var(--battle-scale, 1)));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 body.battle-ui .battle-utility-row-secondary > .utility-group:last-child {
   flex: 0 1 140px;
 }
@@ -119,12 +128,12 @@ body.battle-ui .battle-utility-row-secondary > .utility-group:last-child {
 body.battle-ui .utility-group-title {
   display: inline-flex;
   align-items: center;
-  height: 24px;
-  padding: 0 8px;
+  height: calc(24px * var(--battle-scale, 1));
+  padding: 0 calc(8px * var(--battle-scale, 1));
   border-radius: 999px;
   background: rgba(210, 178, 116, 0.14);
   color: #e8d3aa;
-  font-size: 10px;
+  font-size: calc(10px * var(--battle-scale, 1));
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -144,22 +153,22 @@ body.battle-ui .toolbar .field,
 body.battle-ui .battle-admin-panel .field {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: calc(6px * var(--battle-scale, 1));
   flex-wrap: nowrap;
   white-space: nowrap;
-  min-height: 34px;
-  padding: 5px 9px;
+  min-height: calc(34px * var(--battle-scale, 1));
+  padding: calc(5px * var(--battle-scale, 1)) calc(9px * var(--battle-scale, 1));
   border-radius: 8px;
   border: 1px solid rgba(167, 177, 186, 0.18);
   background: rgba(17, 20, 24, 0.82);
   color: var(--battle-text);
-  font-size: 12px;
+  font-size: calc(12px * var(--battle-scale, 1));
 }
 
 body.battle-ui .battle-utility-row-secondary .field {
-  min-height: 34px;
-  padding: 5px 9px;
-  font-size: 12px;
+  min-height: calc(34px * var(--battle-scale, 1));
+  padding: calc(5px * var(--battle-scale, 1)) calc(9px * var(--battle-scale, 1));
+  font-size: calc(12px * var(--battle-scale, 1));
 }
 
 body.battle-ui .battle-utility-row-secondary .field select,
@@ -182,10 +191,10 @@ body.battle-ui .battle-utility-row-secondary .field {
 
 body.battle-ui .toolbar select,
 body.battle-ui .toolbar input {
-  height: 30px;
-  min-height: 30px;
-  padding: 3px 8px;
-  font-size: 12px;
+  height: calc(30px * var(--battle-scale, 1));
+  min-height: calc(30px * var(--battle-scale, 1));
+  padding: calc(3px * var(--battle-scale, 1)) calc(8px * var(--battle-scale, 1));
+  font-size: calc(12px * var(--battle-scale, 1));
 }
 
 body.battle-ui #auto-interval {
@@ -205,15 +214,15 @@ body.battle-ui #cinematic-speed {
 
 body.battle-ui .toolbar button,
 body.battle-ui .battle-admin-panel button {
-  min-height: 34px;
-  padding: 5px 11px;
+  min-height: calc(34px * var(--battle-scale, 1));
+  padding: calc(5px * var(--battle-scale, 1)) calc(11px * var(--battle-scale, 1));
   border-radius: 8px;
-  font-size: 12px;
+  font-size: calc(12px * var(--battle-scale, 1));
 }
 
 body.battle-ui .battle-utility-row-secondary button {
-  min-height: 34px;
-  padding: 5px 11px;
+  min-height: calc(34px * var(--battle-scale, 1));
+  padding: calc(5px * var(--battle-scale, 1)) calc(11px * var(--battle-scale, 1));
 }
 
 body.battle-ui .battle-range-field {
@@ -233,8 +242,8 @@ body.battle-ui .field-pill,
 body.battle-ui .status-pill,
 body.battle-ui #round-info {
   flex: 0 0 auto;
-  padding: 6px 10px;
-  font-size: 12px;
+  padding: calc(6px * var(--battle-scale, 1)) calc(10px * var(--battle-scale, 1));
+  font-size: calc(12px * var(--battle-scale, 1));
   line-height: 1.1;
   white-space: nowrap;
 }
@@ -249,10 +258,10 @@ body.battle-ui .diagnostics-drawer {
 body.battle-ui .diagnostics-drawer summary {
   list-style: none;
   cursor: pointer;
-  min-height: 34px;
-  padding: 7px 12px;
+  min-height: calc(34px * var(--battle-scale, 1));
+  padding: calc(7px * var(--battle-scale, 1)) calc(12px * var(--battle-scale, 1));
   color: var(--battle-muted);
-  font-size: 11px;
+  font-size: calc(11px * var(--battle-scale, 1));
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -271,8 +280,8 @@ body.battle-ui .diagnostics-drawer-body {
 
 body.battle-ui .main-shell {
   display: grid;
-  gap: 16px;
-  padding: 14px;
+  gap: calc(16px * var(--battle-scale, 1));
+  padding: calc(14px * var(--battle-scale, 1));
 }
 
 body.battle-ui.topbar-collapsed .topbar-shell {
@@ -298,7 +307,7 @@ body.battle-ui.topbar-collapsed .utility-group-collapse {
 
 body.battle-ui .battle-live-surface {
   display: grid;
-  gap: 14px;
+  gap: calc(14px * var(--battle-scale, 1));
 }
 
 body.battle-ui .battle-main-row {
@@ -327,7 +336,7 @@ body.battle-ui .panel-head {
 }
 
 body.battle-ui .panel-title {
-  font-size: 11px;
+  font-size: calc(11px * var(--battle-scale, 1));
   letter-spacing: 0.12em;
   color: #ddd4c6;
 }
@@ -335,9 +344,9 @@ body.battle-ui .panel-title {
 body.battle-ui .grid-panel {
   display: grid;
   grid-template-rows: auto 1fr;
-  gap: 12px;
-  min-height: min(72vh, 940px);
-  padding: 14px;
+  gap: calc(12px * var(--battle-scale, 1));
+  min-height: clamp(560px, 78vh, 1120px);
+  padding: calc(14px * var(--battle-scale, 1));
   background:
     radial-gradient(circle at top, rgba(122, 109, 88, 0.12), transparent 30%),
     linear-gradient(180deg, rgba(31, 35, 40, 0.99), rgba(19, 22, 26, 0.97));
@@ -357,7 +366,7 @@ body.battle-ui .grid-controls {
 
 body.battle-ui .grid-controls button,
 body.battle-ui .grid-controls .field-pill {
-  font-size: 11px;
+  font-size: calc(11px * var(--battle-scale, 1));
 }
 
 body.battle-ui .grid-legend {
@@ -379,7 +388,7 @@ body.battle-ui .grid-wrap {
 }
 
 body.battle-ui .grid-wrap {
-  height: clamp(560px, 72vh, 920px);
+  height: clamp(560px, 78vh, 1100px);
   border-radius: 20px;
   border-color: rgba(177, 186, 194, 0.2);
   background:
@@ -388,8 +397,8 @@ body.battle-ui .grid-wrap {
 }
 
 body.battle-ui .grid {
-  gap: 9px;
-  padding: 14px;
+  gap: var(--grid-gap);
+  padding: calc(14px * var(--battle-scale, 1));
   background: rgba(13, 15, 18, 0.52);
   box-shadow: inset 0 0 0 1px rgba(189, 199, 209, 0.12), 0 12px 26px rgba(0, 0, 0, 0.28);
   transform-origin: top left;
@@ -403,8 +412,8 @@ body.battle-ui .cell {
 body.battle-ui .battle-zone-right {
   display: grid;
   grid-template-rows: auto auto auto 1fr;
-  gap: 12px;
-  padding: 0 14px 14px;
+  gap: calc(12px * var(--battle-scale, 1));
+  padding: 0 calc(14px * var(--battle-scale, 1)) calc(14px * var(--battle-scale, 1));
   background:
     linear-gradient(180deg, rgba(27, 32, 39, 0.98), rgba(19, 23, 29, 0.96)),
     radial-gradient(circle at bottom, rgba(72, 111, 185, 0.16), transparent 48%);
@@ -413,8 +422,8 @@ body.battle-ui .battle-zone-right {
 body.battle-ui .battle-state-strip {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  padding-top: 14px;
+  gap: calc(8px * var(--battle-scale, 1));
+  padding-top: calc(14px * var(--battle-scale, 1));
 }
 
 body.battle-ui .turn-order-shell {

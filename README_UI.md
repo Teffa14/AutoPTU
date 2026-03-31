@@ -66,10 +66,11 @@ Use:
 
 That script is the canonical packaged-web path. It:
 
-1. syncs frontend assets into dist targets
-2. runs the web verification slice
-3. rebuilds `AutoPTUWeb` with PyInstaller
-4. writes `dist/AutoPTUWeb/BUILD_INFO.txt`
+1. closes `AutoPTUWeb.exe` if it is running
+2. syncs frontend assets into the packaged runtime
+3. runs the web verification slice
+4. rebuilds `dist/AutoPTUWeb` with PyInstaller
+5. writes `dist/AutoPTUWeb/BUILD_INFO.txt`
 
 If a UI change is not visible in `AutoPTUWeb.exe`, check `dist/AutoPTUWeb/BUILD_INFO.txt` first.
 
@@ -97,6 +98,9 @@ Perf handling:
 
 - `GET /api/ai/models`: lists available AI model versions and metadata.
 - `POST /api/ai/models/select`: switches active model for auto battles.
+- The battle UI persists the last explicitly selected AI model and restores it on startup when it still exists.
+- `Refresh AI` in the battle UI actively reloads model metadata so runtime changes can be applied without restarting the app.
+- The main AI strip exposes a short insight summary derived from the selected model analysis payload.
 - Auto-versioning: when drift/error metrics cross configured thresholds, a new model version is cut automatically instead of mutating the active baseline in place.
 - Rule safety stays authoritative: action legality still flows through the existing PTU engine gates.
 
@@ -148,5 +152,13 @@ Perf handling:
 - Source root:
   - `IMPLEMENTATION FILES/Gen 9 Move Animation Project/Graphics/Animations`
 - Current usage:
-  - move impacts now attempt to overlay the local move animation sprite sheet (by move name) on hit.
-  - unresolved names safely fall back to existing procedural VFX only.
+  - ranged moves use named move sheets when available and animate from source to target.
+  - melee moves use contact motion plus hit VFX, preferring named move sheets when available.
+  - generic projectile/trail fallback VFX were removed from the active packaged runtime path.
+  - unresolved names fall back to trajectory/contact/impact behavior instead of the removed generic attack animation family.
+
+## Responsive Battle Layout
+
+- The battlefield now sizes from the actual viewport instead of a fixed tile model.
+- Grid tiles, tokens, HP overlays, hazard markers, badges, and panel chrome scale with the available stage area.
+- Topbar collapse/expand triggers a layout refresh so the battlefield can reclaim vertical space on smaller windows.

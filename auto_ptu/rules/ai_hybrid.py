@@ -25,6 +25,7 @@ from .calculations import expected_damage
 from . import movement, targeting
 from ..data_models import MoveSpec
 from ..ai import aai_port
+from ..ai import policy_adapter
 from . import frequency
 from .. import ptu_engine
 
@@ -118,6 +119,28 @@ class ProfileStore:
 
 _GLOBAL_STORE: Optional[ProfileStore] = None
 _DEFAULT_CONFIG = HybridAIConfig()
+
+
+def rank_candidates(
+    battle: BattleState,
+    actor_id: str,
+    *,
+    ai_level: str = "standard",
+    profile_store: Optional[ProfileStore] = None,
+    candidates: Optional[Sequence[object]] = None,
+) -> List[Tuple[float, object]]:
+    store = profile_store or get_profile_store()
+    items = list(candidates) if candidates is not None else generate_candidates(battle, actor_id)
+    scored = [(score_action(battle, actor_id, action), action) for action in items]
+    scored = _apply_aai_port_adjustments(
+        battle,
+        actor_id,
+        scored,
+        store,
+        ai_level=ai_level,
+    )
+    scored.sort(key=lambda item: item[0], reverse=True)
+    return scored
 
 
 def get_profile_store(path: Optional[Path] = None) -> ProfileStore:
@@ -372,18 +395,19 @@ def score_state(battle: BattleState, actor_id: str) -> float:
     return score
 
 
-def choose_action(
+def _choose_action_internal(
     battle: BattleState,
     actor_id: str,
     *,
     ai_level: str = "standard",
     config: Optional[HybridAIConfig] = None,
     profile_store: Optional[ProfileStore] = None,
+    candidates: Optional[Sequence[object]] = None,
 ) -> Tuple[Optional[object], dict]:
     cfg = config or _DEFAULT_CONFIG
     store = profile_store or get_profile_store()
 
-    candidates = generate_candidates(battle, actor_id)
+    candidates = list(candidates) if candidates is not None else generate_candidates(battle, actor_id)
     if not candidates:
         struggle = _struggle_action(battle, actor_id)
         if struggle is not None:
@@ -449,15 +473,13 @@ def choose_action(
         if forced is not None:
             return forced, {"reason": "stale_no_damage"}
 
-    scored = [(score_action(battle, actor_id, action), action) for action in candidates]
-    scored = _apply_aai_port_adjustments(
+    scored = rank_candidates(
         battle,
         actor_id,
-        scored,
-        store,
         ai_level=ai_level,
+        profile_store=store,
+        candidates=candidates,
     )
-    scored.sort(key=lambda item: item[0], reverse=True)
 
     lethal = _lethal_action(battle, actor_id, scored, cfg.lethal_threshold)
     if lethal:
@@ -557,6 +579,74 @@ def choose_action(
         )
 
     return best_action, {"reason": "lookahead", "value": best_value}
+
+
+def _hybrid_rules_policy_adapter(
+    context: policy_adapter.PolicyAdapterContext,
+) -> Optional[policy_adapter.PolicyDecision]:
+    action, info = _choose_action_internal(
+        context.battle,
+        context.actor_id,
+        ai_level=context.ai_level,
+        config=context.config,
+        profile_store=context.profile_store,
+        candidates=context.candidates,
+    )
+    if action is None:
+        return None
+    payload = dict(info or {})
+    reason = str(payload.pop("reason", "") or "hybrid_rules")
+    source = str(payload.pop("source", "") or "hybrid_rules")
+    return policy_adapter.PolicyDecision(
+        action=action,
+        reason=reason,
+        source=source,
+        info=payload,
+    )
+
+
+def choose_action(
+    battle: BattleState,
+    actor_id: str,
+    *,
+    ai_level: str = "standard",
+    config: Optional[HybridAIConfig] = None,
+    profile_store: Optional[ProfileStore] = None,
+    policy_adapter_name: Optional[str] = None,
+) -> Tuple[Optional[object], dict]:
+    cfg = config or _DEFAULT_CONFIG
+    store = profile_store or get_profile_store()
+    candidates = generate_candidates(battle, actor_id)
+    adapter_name = str(policy_adapter_name or policy_adapter.get_active_policy_adapter() or "hybrid_rules").strip().lower()
+    adapter = policy_adapter.get_policy_adapter(adapter_name)
+    if adapter is None:
+        raise ValueError(f"Unknown policy adapter: {adapter_name}")
+    context = policy_adapter.PolicyAdapterContext(
+        battle=battle,
+        actor_id=actor_id,
+        ai_level=ai_level,
+        config=cfg,
+        profile_store=store,
+        candidates=list(candidates),
+        helper={
+            "generate_candidates": generate_candidates,
+            "score_action": score_action,
+            "score_state": score_state,
+            "rank_candidates": rank_candidates,
+            "fallback_choose_action": _choose_action_internal,
+        },
+        metadata={"adapter_name": adapter_name},
+    )
+    decision = adapter(context)
+    if decision is None or decision.action is None:
+        return None, {"reason": "no_adapter_decision", "source": adapter_name, "policy_adapter": adapter_name}
+    info = dict(decision.info or {})
+    info.setdefault("source", decision.source)
+    info.setdefault("policy_adapter", adapter_name)
+    return decision.action, {
+        "reason": decision.reason,
+        **info,
+    }
 
 
 def choose_best_move(
@@ -1943,6 +2033,9 @@ def _actor_signature(battle: BattleState, actor_id: str) -> str:
     return f"{trainer_id}:{actor.spec.species}"
 
 
+policy_adapter.register_policy_adapter("hybrid_rules", _hybrid_rules_policy_adapter)
+
+
 __all__ = [
     "HybridAIConfig",
     "ProfileStore",
@@ -1954,6 +2047,7 @@ __all__ = [
     "choose_best_move",
     "score_state",
     "score_action",
+    "rank_candidates",
     "generate_candidates",
     "observe_action",
 ]

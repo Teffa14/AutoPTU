@@ -76,13 +76,9 @@ def _is_generic_move_anim_filename(filename: str) -> bool:
         "stats",
         "strike",
         "slash",
-        "sound",
-        "fire",
-        "electric",
-        "orbs",
         "emotion",
-        "block",
-        "confused",
+        "firefangs",
+        "elementalfangs",
     }
     return canonical in generic_terms
 

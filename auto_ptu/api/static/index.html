@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="design-system/tokens.css" />
     <link rel="stylesheet" href="design-system/components.css" />
     <link rel="stylesheet" href="design-system/layout.css" />
-    <link rel="stylesheet" href="styles.css?v=20260401e" />
-    <link rel="stylesheet" href="battle.css?v=20260401e" />
+    <link rel="stylesheet" href="styles.css?v=20260401j" />
+    <link rel="stylesheet" href="battle.css?v=20260401j" />
   </head>
   <body class="battle-ui">
     <div id="move-tooltip" class="move-tooltip hidden"></div>
@@ -135,7 +135,9 @@
               AI
               <select id="ai-model-select"></select>
             </label>
+            <button id="ai-model-refresh-top" type="button">Refresh AI</button>
             <span id="ai-model-math" class="field-pill ds-pill light">Model score: -</span>
+            <span id="ai-model-insight" class="field-pill ds-pill light">Model insight: -</span>
           </div>
           <div class="utility-group">
             <span class="utility-group-title">Roster</span>
@@ -309,6 +311,6 @@
     <script src="logic/character_state.js"></script>
     <script src="ui/battle_ui.js"></script>
     <script src="ui/builder_ui.js"></script>
-    <script src="app.js?v=20260401e"></script>
+    <script src="app.js?v=20260401j"></script>
   </body>
 </html>

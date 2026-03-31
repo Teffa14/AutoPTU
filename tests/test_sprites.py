@@ -16,6 +16,9 @@ def test_slugify_known_variant_forms() -> None:
     assert _slugify("Minior-Core") == "minior-red-core"
     assert _slugify("Obsideon") == "obsideon"
     assert _slugify("Inteleon") == "inteleon"
+    assert _slugify("Indeedee Female") == "indeedee-female"
+    assert _slugify("Rotom Wash") == "rotom-wash"
+    assert _slugify("Eiscue Noice Face") == "eiscue-noice-face"
 
 
 def test_slugify_strips_trainer_prefix_labels() -> None:
@@ -33,6 +36,13 @@ def test_fallback_slugs_do_not_route_generic_eon_names_to_eevee() -> None:
     assert "eevee" not in _fallback_slugs("draconeon")
     assert "eevee" not in _fallback_slugs("inteleon")
     assert "eevee" not in _fallback_slugs("obsideon")
+
+
+def test_fallback_slugs_reduce_common_forms_to_base_species() -> None:
+    assert "indeedee" in _fallback_slugs("indeedee-female")
+    assert "eiscue" in _fallback_slugs("eiscue-noice-face")
+    assert "wormadam" in _fallback_slugs("wormadam-trash")
+    assert "rotom" in _fallback_slugs("rotom-wash")
 
 
 def test_sprite_path_prefers_existing_form_fallback(tmp_path) -> None:

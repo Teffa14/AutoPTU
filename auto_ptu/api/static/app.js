@@ -36,7 +36,9 @@ const cinematicExportButton = document.getElementById("cinematic-export");
 const cinematicPerfEl = document.getElementById("cinematic-perf");
 const aiModelSelect = document.getElementById("ai-model-select");
 const aiModelRefreshButton = document.getElementById("ai-model-refresh");
+const aiModelRefreshTopButton = document.getElementById("ai-model-refresh-top");
 const aiModelMathEl = document.getElementById("ai-model-math");
+const aiModelInsightEl = document.getElementById("ai-model-insight");
 const autoIntervalInput = document.getElementById("auto-interval");
 const undoButton = battleElements.undoButton || document.getElementById("undo-action");
 const zoomInButton = battleElements.zoomInButton || document.getElementById("zoom-in");
@@ -330,7 +332,7 @@ const TRAP_GLYPHS = {
 };
 
 const GRID_CELL_SIZE = 74;
-const GRID_GAP = 4;
+const GRID_GAP = 9;
 const MIN_GRID_SCALE = 0.2;
 const MAX_GRID_SCALE = 2.0;
 const SPRITE_RETRY_MS = 30000;
@@ -339,6 +341,7 @@ const TOOLTIP_HIDE_DELAY_MS = 140;
 
 let state = null;
 let aiModelsCache = null;
+let preferredAiModelId = "";
 let selectedId = null;
 let _speciesCatalogCache = null;
 let _learnsetMoveNameSetCache = null;
@@ -393,6 +396,7 @@ let selectedTileKey = null;
 let promptAnswers = {};
 let autoTimer = null;
 let resizeFitTimer = null;
+let responsiveMetricsTimer = null;
 let autoSpriteStarted = false;
 let lastBattlePayload = null;
 let battleResultModal = null;
@@ -4088,7 +4092,34 @@ function shouldRequestSprite(url) {
   return false;
 }
 
-function configureSpriteSheet(wrap, img) {
+function stopSpriteSheetPlayback(wrap) {
+  if (!wrap) return;
+  const timer = wrap.__sheetTimer;
+  if (timer) {
+    window.clearInterval(timer);
+    wrap.__sheetTimer = null;
+  }
+}
+
+function startStableSpriteSheetPlayback(wrap, img, frameCount, durationMs) {
+  if (!wrap || !img || frameCount <= 1) return;
+  stopSpriteSheetPlayback(wrap);
+  wrap.style.backgroundImage = `url("${img.src}")`;
+  wrap.style.backgroundRepeat = "no-repeat";
+  wrap.style.backgroundSize = `${frameCount * 100}% 100%`;
+  wrap.style.backgroundPosition = "0% 50%";
+  const frameMs = Math.max(46, Math.round(durationMs / frameCount));
+  let frameIndex = 0;
+  const applyFrame = () => {
+    const progress = frameCount <= 1 ? 0 : (frameIndex / Math.max(1, frameCount - 1)) * 100;
+    wrap.style.backgroundPosition = `${progress}% 50%`;
+    frameIndex = (frameIndex + 1) % frameCount;
+  };
+  applyFrame();
+  wrap.__sheetTimer = window.setInterval(applyFrame, frameMs);
+}
+
+function configureSpriteSheet(wrap, img, options = {}) {
   const width = Number(img.naturalWidth || 0);
   const height = Number(img.naturalHeight || 0);
   if (!width || !height || width <= height * 1.25) {
@@ -4098,12 +4129,28 @@ function configureSpriteSheet(wrap, img) {
   if (frameCount <= 1) {
     return;
   }
+  const animate = options.animate !== false;
   const durationMs = Math.max(900, Math.min(7000, frameCount * 90));
   wrap.classList.add("sprite-sheet");
   img.classList.add("sprite-sheet-image");
   wrap.style.setProperty("--sheet-frames", String(frameCount));
   wrap.style.setProperty("--sheet-travel", `${((frameCount - 1) / frameCount) * 100}%`);
-  img.style.animation = `spriteSheetAdvance ${durationMs}ms steps(${frameCount}) infinite`;
+  if (animate && options.stable === true) {
+    img.style.animation = "none";
+    img.style.opacity = "0";
+    startStableSpriteSheetPlayback(wrap, img, frameCount, durationMs);
+  } else if (animate) {
+    stopSpriteSheetPlayback(wrap);
+    wrap.style.backgroundImage = "";
+    img.style.animation = `spriteSheetAdvance ${durationMs}ms steps(${frameCount}) infinite`;
+    img.style.opacity = "1";
+  } else {
+    stopSpriteSheetPlayback(wrap);
+    wrap.style.backgroundImage = "";
+    img.style.animation = "none";
+    img.style.transform = "translateX(0)";
+    img.style.opacity = "1";
+  }
 }
 
 function attachSprite(container, url, alt) {
@@ -4119,7 +4166,7 @@ function attachSprite(container, url, alt) {
   img.addEventListener(
     "load",
     () => {
-      configureSpriteSheet(wrap, img);
+      configureSpriteSheet(wrap, img, { animate: true, stable: true });
       wrap.classList.add("loaded");
     },
     { once: true }
@@ -4160,7 +4207,7 @@ function attachTurnSprite(container, url, alt) {
   img.addEventListener(
     "load",
     () => {
-      configureSpriteSheet(wrap, img);
+      configureSpriteSheet(wrap, img, { animate: true, stable: true });
       wrap.classList.add("loaded");
       container.classList.remove("placeholder");
     },
@@ -4194,7 +4241,7 @@ function spawnPokemonMovementGhost(actor, fromCoord, toCoord) {
   img.addEventListener(
     "load",
     () => {
-      configureSpriteSheet(wrap, img);
+      configureSpriteSheet(wrap, img, { animate: true, stable: true });
     },
     { once: true }
   );
@@ -4387,6 +4434,7 @@ function renderAiModelMath(source) {
   const selectedAnalysis = source?.selected_analysis || source?.ai_model?.selected_analysis || null;
   if (!math) {
     aiModelMathEl.textContent = "Model score: -";
+    if (aiModelInsightEl) aiModelInsightEl.textContent = "Model insight: -";
     return;
   }
   const score = Number.isFinite(Number(math.score)) ? Number(math.score).toFixed(3) : "-";
@@ -4394,6 +4442,13 @@ function renderAiModelMath(source) {
   const updates = Number.isFinite(Number(math.updates_since_snapshot)) ? Number(math.updates_since_snapshot) : 0;
   const style = Array.isArray(selectedAnalysis?.styles) && selectedAnalysis.styles.length ? ` | ${selectedAnalysis.styles[0]}` : "";
   aiModelMathEl.textContent = `Model score: ${score}/${threshold} | updates ${updates}${style}`;
+  if (aiModelInsightEl) {
+    const summary = String(selectedAnalysis?.summary || "").trim();
+    const strengths = Array.isArray(selectedAnalysis?.strengths) ? selectedAnalysis.strengths.filter(Boolean).slice(0, 2) : [];
+    const insight = summary || (strengths.length ? strengths.join(" | ") : "");
+    aiModelInsightEl.textContent = insight ? `Model insight: ${insight}` : "Model insight: -";
+    aiModelInsightEl.title = insight || "No model analysis available.";
+  }
 }
 
 function applyAiModelSelectionFromPayload(payload) {
@@ -4412,7 +4467,7 @@ function applyAiModelSelectionFromPayload(payload) {
     aiModelSelect.appendChild(option);
   });
   if (models.length) {
-    aiModelSelect.value = currentId || String(models[0].id || "");
+    aiModelSelect.value = currentId || preferredAiModelId || String(models[0].id || "");
   } else {
     const option = document.createElement("option");
     option.value = "";
@@ -4425,6 +4480,7 @@ function applyAiModelSelectionFromPayload(payload) {
 
 async function refreshAiModels(preferredModelId = "") {
   if (!aiModelSelect) return;
+  const wantedModelId = String(preferredModelId || preferredAiModelId || aiModelSelect.value || "").trim();
   let payload = null;
   try {
     payload = await api("/api/ai/models");
@@ -4444,9 +4500,21 @@ async function refreshAiModels(preferredModelId = "") {
   }
   aiModelsCache = payload;
   applyAiModelSelectionFromPayload(payload);
-  if (preferredModelId && Array.isArray(payload?.models) && payload.models.some((entry) => entry.id === preferredModelId)) {
-    aiModelSelect.value = preferredModelId;
+  if (wantedModelId && Array.isArray(payload?.models) && payload.models.some((entry) => entry.id === wantedModelId)) {
+    aiModelSelect.value = wantedModelId;
   }
+}
+
+async function restorePreferredAiModel() {
+  const wantedModelId = String(preferredAiModelId || "").trim();
+  if (!wantedModelId) return;
+  if (!Array.isArray(aiModelsCache?.models) || !aiModelsCache.models.some((entry) => entry.id === wantedModelId)) return;
+  const currentId = String(aiModelsCache?.current_model_id || "").trim();
+  if (currentId === wantedModelId) {
+    if (aiModelSelect) aiModelSelect.value = wantedModelId;
+    return;
+  }
+  await selectAiModel(wantedModelId);
 }
 
 async function selectAiModel(modelId) {
@@ -4456,7 +4524,9 @@ async function selectAiModel(modelId) {
     body: JSON.stringify({ model_id: modelId }),
   });
   aiModelsCache = payload;
+  preferredAiModelId = modelId;
   applyAiModelSelectionFromPayload(payload);
+  saveSettings();
   notifyUI("ok", `Selected AI model: ${modelId}`, 1800);
 }
 
@@ -4570,12 +4640,13 @@ function renderGrid() {
     gridCellByKey = new Map();
     return;
   }
+  applyResponsiveBattleMetrics();
   const gridSize = `${grid.width}x${grid.height}`;
   if (gridSize !== lastGridSize) {
     lastGridSize = gridSize;
     viewManuallyAdjusted = false;
   }
-  const cellSize = GRID_CELL_SIZE;
+  const cellSize = currentGridCellSize();
   gridEl.style.gridTemplateColumns = `repeat(${grid.width}, ${cellSize}px)`;
   gridEl.style.gridTemplateRows = `repeat(${grid.height}, ${cellSize}px)`;
   const expectedCells = grid.width * grid.height;
@@ -4860,7 +4931,7 @@ function renderGrid() {
               injury.textContent = "X";
               injury.title = "Injury";
               injury.style.background = injuryColor(i, injuryCount);
-              injury.style.top = `${14 + i * 12}px`;
+              injury.style.top = `${22 + i * 12}px`;
               injury.style.left = "4px";
               injury.addEventListener("mouseenter", () => {
                 showDetailTooltip(
@@ -5098,11 +5169,13 @@ function renderAIDiagnostics() {
 
 function centerGridOnCoord(coord) {
   if (!gridWrapEl || !state?.grid || !coord || coord.length < 2) return false;
-  const width = state.grid.width * GRID_CELL_SIZE + Math.max(0, state.grid.width - 1) * GRID_GAP;
-  const height = state.grid.height * GRID_CELL_SIZE + Math.max(0, state.grid.height - 1) * GRID_GAP;
+  const cellSize = currentGridCellSize();
+  const gap = currentGridGap();
+  const width = state.grid.width * cellSize + Math.max(0, state.grid.width - 1) * gap;
+  const height = state.grid.height * cellSize + Math.max(0, state.grid.height - 1) * gap;
   if (!width || !height) return false;
-  const centerX = Number(coord[0]) * (GRID_CELL_SIZE + GRID_GAP) + GRID_CELL_SIZE / 2;
-  const centerY = Number(coord[1]) * (GRID_CELL_SIZE + GRID_GAP) + GRID_CELL_SIZE / 2;
+  const centerX = Number(coord[0]) * (cellSize + gap) + cellSize / 2;
+  const centerY = Number(coord[1]) * (cellSize + gap) + cellSize / 2;
   gridOffset = {
     x: gridWrapEl.clientWidth / 2 - centerX * gridScale,
     y: gridWrapEl.clientHeight / 2 - centerY * gridScale,
@@ -5258,8 +5331,10 @@ function cinematicZoomTarget() {
 
 function _gridCenteredOffsetForCoord(coord, scale) {
   if (!gridWrapEl || !state?.grid || !coord || coord.length < 2) return null;
-  const centerX = Number(coord[0]) * (GRID_CELL_SIZE + GRID_GAP) + GRID_CELL_SIZE / 2;
-  const centerY = Number(coord[1]) * (GRID_CELL_SIZE + GRID_GAP) + GRID_CELL_SIZE / 2;
+  const cellSize = currentGridCellSize();
+  const gap = currentGridGap();
+  const centerX = Number(coord[0]) * (cellSize + gap) + cellSize / 2;
+  const centerY = Number(coord[1]) * (cellSize + gap) + cellSize / 2;
   return {
     x: gridWrapEl.clientWidth / 2 - centerX * scale,
     y: gridWrapEl.clientHeight / 2 - centerY * scale,
@@ -5655,14 +5730,22 @@ function drawMovementArrow(fromCoord, toCoord, durationMs = 1100) {
   body.style.left = `${fromCenter.x}px`;
   body.style.top = `${fromCenter.y}px`;
   body.style.width = `${Math.max(8, length - 10)}px`;
-  body.style.transform = `rotate(${angle}rad)`;
+  body.style.setProperty("--move-angle", `${angle}rad`);
+  body.style.setProperty("--move-dur", `${Math.max(260, durationMs)}ms`);
+  body.style.transform = `rotate(${angle}rad) scaleX(0.08)`;
   const head = document.createElement("div");
   head.className = "fx-move-arrow-head";
   head.style.left = `${toCenter.x - 6}px`;
   head.style.top = `${toCenter.y - 5}px`;
-  head.style.transform = `rotate(${angle}rad)`;
+  head.style.setProperty("--move-angle", `${angle}rad`);
+  head.style.setProperty("--move-dur", `${Math.max(260, durationMs)}ms`);
+  head.style.transform = `rotate(${angle}rad) scale(0.72)`;
   document.body.appendChild(body);
   document.body.appendChild(head);
+  requestAnimationFrame(() => {
+    body.classList.add("run");
+    head.classList.add("run");
+  });
   window.setTimeout(() => {
     body.remove();
     head.remove();
@@ -5691,7 +5774,7 @@ function spawnMovementEchoes(actor, fromCoord, toCoord) {
     img.className = "token-sprite";
     img.src = actor.sprite_url;
     img.alt = actor.name || actor.species || "sprite";
-    img.addEventListener("load", () => configureSpriteSheet(wrap, img), { once: true });
+    img.addEventListener("load", () => configureSpriteSheet(wrap, img, { animate: true, stable: true }), { once: true });
     wrap.appendChild(img);
     ghost.appendChild(wrap);
     document.body.appendChild(ghost);
@@ -6105,6 +6188,19 @@ function animateMoveEvent(event) {
             const contactGhostMs = spawnPokemonMovementGhost(actor, actor.position, target.position);
             hitDelayMs = Math.max(hitDelayMs, Math.round(contactGhostMs * 0.78));
           }
+          if (hasNamedMoveAnim) {
+            projectile = spawnMoveAnimTravel(
+              resolvedMoveAnimUrl,
+              sourceRect,
+              targetRect,
+              fromX,
+              fromY,
+              toX,
+              toY,
+              intensity,
+              hitDelayMs + 220
+            );
+          }
         } else if (hasNamedMoveAnim) {
           if (actor?.position && target?.position && coordKey(actor.position) !== coordKey(target.position)) {
             drawMovementArrow(actor.position, target.position, Math.max(640, hitDelayMs + 260));
@@ -6128,9 +6224,7 @@ function animateMoveEvent(event) {
         playMoveImpactCue(palette, moveAnim, intensity, "launch", moveMeta);
         setTimeout(() => {
           projectile?.remove();
-          triggerGridShake(intensity);
           playMoveImpactCue(palette, moveAnim, intensity, "impact", moveMeta);
-          spawnHitStreaks(toX, toY, palette, intensity, !!event?.crit, moveAnim);
           spawnImpact(
             fromX,
             fromY,
@@ -23272,9 +23366,12 @@ downloadSpritesButton?.addEventListener("click", () => downloadSprites().catch(a
 aiStepButton?.addEventListener("click", () => aiStep().catch(alertError));
 aiAutoButton?.addEventListener("click", () => toggleAuto());
 aiModelRefreshButton?.addEventListener("click", () => refreshAiModels().catch(alertError));
+aiModelRefreshTopButton?.addEventListener("click", () => refreshAiModels().catch(alertError));
 aiModelSelect?.addEventListener("change", () => {
   const value = String(aiModelSelect.value || "");
   if (!value) return;
+  preferredAiModelId = value;
+  saveSettings();
   selectAiModel(value).catch(alertError);
 });
 undoButton?.addEventListener("click", () => undoStep().catch(alertError));
@@ -23494,13 +23591,7 @@ zoomFitButton?.addEventListener("click", () => {
 });
 
 window.addEventListener("resize", () => {
-  fitGridToViewport();
-  applyGridTransform();
-  if (resizeFitTimer) clearTimeout(resizeFitTimer);
-  resizeFitTimer = setTimeout(() => {
-    fitGridToViewport(true);
-    applyGridTransform();
-  }, 140);
+  scheduleResponsiveBattleMetrics(true);
   if (moveTooltip && !moveTooltip.classList.contains("hidden") && tooltipAnchor) {
     positionTooltip(tooltipAnchor);
   }
@@ -23637,14 +23728,76 @@ function setGridScale(next) {
   applyGridTransform();
 }
 
+function currentGridCellSize() {
+  const raw = Number.parseFloat(getComputedStyle(document.body).getPropertyValue("--cell-size"));
+  return Number.isFinite(raw) && raw > 0 ? raw : GRID_CELL_SIZE;
+}
+
+function currentGridGap() {
+  const raw = Number.parseFloat(getComputedStyle(document.body).getPropertyValue("--grid-gap"));
+  return Number.isFinite(raw) && raw >= 0 ? raw : GRID_GAP;
+}
+
+function battleViewportScale() {
+  const widthFactor = window.innerWidth / 1600;
+  const heightFactor = window.innerHeight / 920;
+  const scale = Math.min(widthFactor, heightFactor) * 1.05;
+  return Math.max(0.92, Math.min(1.5, scale));
+}
+
+function applyResponsiveBattleMetrics() {
+  if (!document.body?.classList.contains("battle-ui")) return;
+  const viewportScale = battleViewportScale();
+  document.body.style.setProperty("--battle-scale", String(viewportScale));
+  const grid = state?.grid || null;
+  const gap = Math.max(6, Math.min(14, Math.round(GRID_GAP * viewportScale)));
+  let cellSize = Math.max(44, Math.min(124, Math.round(GRID_CELL_SIZE * viewportScale)));
+  if (grid && gridWrapEl?.clientWidth > 120 && gridWrapEl?.clientHeight > 120) {
+    const outerPad = 28;
+    const availableWidth = Math.max(120, gridWrapEl.clientWidth - outerPad);
+    const availableHeight = Math.max(120, gridWrapEl.clientHeight - outerPad);
+    const fitByWidth = (availableWidth - Math.max(0, grid.width - 1) * gap) / Math.max(1, grid.width);
+    const fitByHeight = (availableHeight - Math.max(0, grid.height - 1) * gap) / Math.max(1, grid.height);
+    const fitCell = Math.floor(Math.min(fitByWidth, fitByHeight));
+    if (Number.isFinite(fitCell) && fitCell > 0) {
+      cellSize = Math.max(40, Math.min(132, Math.min(cellSize, fitCell)));
+    }
+  }
+  document.body.style.setProperty("--grid-gap", `${gap}px`);
+  document.body.style.setProperty("--cell-size", `${cellSize}px`);
+}
+
+function scheduleResponsiveBattleMetrics(forceFit = false) {
+  applyResponsiveBattleMetrics();
+  if (state?.grid) {
+    renderGrid();
+  } else {
+    fitGridToViewport(forceFit);
+    applyGridTransform();
+  }
+  if (resizeFitTimer) clearTimeout(resizeFitTimer);
+  if (responsiveMetricsTimer) clearTimeout(responsiveMetricsTimer);
+  responsiveMetricsTimer = setTimeout(() => {
+    applyResponsiveBattleMetrics();
+    if (state?.grid) {
+      renderGrid();
+    }
+    fitGridToViewport(true);
+    applyGridTransform();
+  }, 120);
+}
+
 function fitGridToViewport(force = false) {
   if (!gridEl || !state?.grid) return;
   if (!force && viewManuallyAdjusted) return;
+  applyResponsiveBattleMetrics();
   const wrap = gridEl.parentElement;
   if (!wrap) return;
   if (wrap.clientWidth < 140 || wrap.clientHeight < 140) return;
-  const width = state.grid.width * GRID_CELL_SIZE + Math.max(0, state.grid.width - 1) * GRID_GAP;
-  const height = state.grid.height * GRID_CELL_SIZE + Math.max(0, state.grid.height - 1) * GRID_GAP;
+  const cellSize = currentGridCellSize();
+  const gap = currentGridGap();
+  const width = state.grid.width * cellSize + Math.max(0, state.grid.width - 1) * gap;
+  const height = state.grid.height * cellSize + Math.max(0, state.grid.height - 1) * gap;
   if (!width || !height) return;
   const pad = 16;
   const fitX = (wrap.clientWidth - pad) / width;
@@ -23652,7 +23805,7 @@ function fitGridToViewport(force = false) {
   const fitScale = Math.min(fitX, fitY);
   if (!Number.isFinite(fitScale) || fitScale <= 0) return;
   const nextScale = force ? fitScale : Math.min(1.1, fitScale);
-  const adaptiveFloor = window.innerWidth >= 1200 ? 0.45 : MIN_GRID_SCALE;
+  const adaptiveFloor = window.innerWidth >= 1200 ? 0.6 : 0.42;
   gridScale = Math.max(adaptiveFloor, Math.min(MAX_GRID_SCALE, nextScale));
   const scaledWidth = width * gridScale;
   const scaledHeight = height * gridScale;
@@ -23704,6 +23857,7 @@ function saveSettings() {
     deploymentOverrides: _normalizeDeploymentPayload(),
     itemChoiceOverrides: _normalizeItemChoicePayload(),
     abilityChoiceOverrides: _normalizeAbilityChoicePayload(),
+    preferredAiModelId: preferredAiModelId || String(aiModelSelect?.value || "").trim(),
   };
   localStorage.setItem("autoptu_settings", JSON.stringify(settings));
 }
@@ -23801,6 +23955,9 @@ function loadSettings() {
     if (typeof settings.combatantTeamFilter === "string") {
       setCombatantTeamFilter(settings.combatantTeamFilter);
     }
+    if (typeof settings.preferredAiModelId === "string") {
+      preferredAiModelId = settings.preferredAiModelId.trim();
+    }
     sideNameOverrides = _normalizedSideNameOverrides(settings.sideNameOverrides);
     deploymentOverrides = settings.deploymentOverrides && typeof settings.deploymentOverrides === "object" ? settings.deploymentOverrides : {};
     itemChoiceOverrides = settings.itemChoiceOverrides && typeof settings.itemChoiceOverrides === "object" ? settings.itemChoiceOverrides : {};
@@ -23891,6 +24048,7 @@ logClearButton?.addEventListener("click", () => {
 });
 topbarCollapseToggle?.addEventListener("click", () => {
   applyTopbarCollapsed(!document.body.classList.contains("topbar-collapsed"));
+  scheduleResponsiveBattleMetrics(true);
   saveSettings();
 });
 window.addEventListener("scroll", () => {
@@ -23914,6 +24072,7 @@ function startCinematicPerfMonitor() {
 
 if (isBattleUI) {
   startCinematicPerfMonitor();
+  scheduleResponsiveBattleMetrics(true);
   setInterval(() => {
     if (document.hidden) return;
     const battleBusy =
@@ -23934,7 +24093,9 @@ if (isBattleUI) {
   setCombatantTeamFilter(combatantTeamFilter);
   loadTrainerFromStorage();
   refreshState().catch(() => {});
-  refreshAiModels().catch(() => {});
+  refreshAiModels(preferredAiModelId)
+    .then(() => restorePreferredAiModel())
+    .catch(() => {});
   refreshSpriteStatus().catch(() => {});
 } else if (charContentEl) {
   loadSnapshotsFromStorage();

@@ -14,5 +14,6 @@ def test_move_anim_resolution_rejects_generic_mapped_strike_and_slash_assets():
     assert server._resolve_move_anim_file("Quick Attack") is None
 
 
-def test_move_anim_resolution_rejects_generic_elemental_sheet_assets():
-    assert server._resolve_move_anim_file("Ember") is None
+def test_move_anim_resolution_allows_curated_type_themed_assets_when_they_are_the_mapped_move_sheet():
+    assert server._resolve_move_anim_file("Water Gun") == "PRAS- Water.png"
+    assert server._resolve_move_anim_file("Psychic") == "PRAS- Psychic BG.png"
