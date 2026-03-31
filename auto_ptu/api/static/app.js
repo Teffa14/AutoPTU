@@ -42,9 +42,6 @@ const undoButton = battleElements.undoButton || document.getElementById("undo-ac
 const zoomInButton = battleElements.zoomInButton || document.getElementById("zoom-in");
 const zoomOutButton = battleElements.zoomOutButton || document.getElementById("zoom-out");
 const zoomFitButton = battleElements.zoomFitButton || document.getElementById("zoom-fit");
-const zoomResetButton = battleElements.zoomResetButton || document.getElementById("zoom-reset");
-const centerCurrentButton = battleElements.centerCurrentButton || document.getElementById("center-current");
-const centerSelectedButton = battleElements.centerSelectedButton || document.getElementById("center-selected");
 const moveTooltip = battleElements.moveTooltip || document.getElementById("move-tooltip");
 const logFilterActions = document.getElementById("log-actions");
 const logFilterDamage = document.getElementById("log-damage");
@@ -4510,8 +4507,6 @@ function render() {
     }
     syncSpectatorStateChips();
     applyBattleLifecycleControls();
-    if (centerCurrentButton) centerCurrentButton.disabled = true;
-    if (centerSelectedButton) centerSelectedButton.disabled = true;
     lastTurnActorId = null;
     lastCinematicActorId = null;
     cinematicCameraBusy = false;
@@ -4559,14 +4554,6 @@ function render() {
   if (mapSeedEl) {
     const seedValue = Number.isFinite(Number(state.seed)) ? String(state.seed) : "-";
     mapSeedEl.textContent = `Seed: ${seedValue}`;
-  }
-  if (centerCurrentButton) {
-    const current = (state.combatants || []).find((entry) => entry.id === state.current_actor_id);
-    centerCurrentButton.disabled = !current?.position;
-  }
-  if (centerSelectedButton) {
-    const selected = (state.combatants || []).find((entry) => entry.id === selectedId);
-    centerSelectedButton.disabled = !selected?.position;
   }
   roundInfoEl.textContent = `Round ${state.round} | ${state.phase || "-"}`;
   syncSpectatorStateChips();
@@ -23538,13 +23525,6 @@ zoomFitButton?.addEventListener("click", () => {
   viewManuallyAdjusted = false;
   fitGridToViewport(true);
 });
-zoomResetButton?.addEventListener("click", () => {
-  viewManuallyAdjusted = false;
-  fitGridToViewport(false);
-  applyGridTransform();
-});
-centerCurrentButton?.addEventListener("click", () => centerOnCurrentActor());
-centerSelectedButton?.addEventListener("click", () => centerOnSelectedActor());
 
 window.addEventListener("resize", () => {
   fitGridToViewport();

@@ -24,11 +24,12 @@ body.battle-ui .topbar {
 body.battle-ui .topbar-shell {
   display: grid;
   gap: 8px;
-  padding: 10px 14px 12px;
+  padding: 10px 12px 12px;
 }
 
 body.battle-ui .brand {
-  font-size: 15px;
+  flex: 0 0 auto;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -37,36 +38,37 @@ body.battle-ui .brand {
 }
 
 body.battle-ui .battle-utility-row {
-  display: grid;
-  grid-template-columns: minmax(420px, 1.45fr) minmax(220px, 0.7fr) minmax(360px, 1fr) minmax(360px, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 8px;
-  padding: 8px 10px;
+  padding: 8px;
   border-radius: 12px;
   border: 1px solid var(--battle-edge);
   background: rgba(31, 35, 40, 0.86);
+  overflow: visible;
 }
 
 body.battle-ui .battle-utility-row-secondary {
-  grid-template-columns: minmax(520px, 1.6fr) minmax(340px, 0.9fr) minmax(120px, 0.35fr);
   margin-top: 0;
   gap: 8px;
-  padding: 8px 10px;
+  padding: 8px;
   background: rgba(24, 27, 31, 0.82);
 }
 
 body.battle-ui .utility-group {
   display: flex;
-  flex-wrap: nowrap;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
   align-items: center;
   gap: 6px;
   min-width: 0;
+  min-height: 0;
   padding: 6px 8px;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid rgba(167, 177, 186, 0.12);
   background: rgba(12, 16, 21, 0.54);
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: thin;
+  overflow: visible;
 }
 
 body.battle-ui .utility-group + .utility-group {
@@ -74,7 +76,7 @@ body.battle-ui .utility-group + .utility-group {
 }
 
 body.battle-ui .utility-group-primary {
-  min-width: 0;
+  flex: 2 1 520px;
 }
 
 body.battle-ui .utility-group-brand {
@@ -82,13 +84,27 @@ body.battle-ui .utility-group-brand {
 }
 
 body.battle-ui .utility-group-state {
-  justify-content: flex-end;
+  flex: 1 1 360px;
+  justify-content: flex-start;
+  margin-left: auto;
+}
+
+body.battle-ui .battle-utility-row-secondary > .utility-group:first-child {
+  flex: 2 1 540px;
+}
+
+body.battle-ui .battle-utility-row-secondary > .utility-group:nth-child(2) {
+  flex: 1 1 280px;
+}
+
+body.battle-ui .battle-utility-row-secondary > .utility-group:last-child {
+  flex: 0 1 auto;
 }
 
 body.battle-ui .speed-presets {
   display: inline-flex;
   flex-wrap: nowrap;
-  gap: 6px;
+  gap: 3px;
 }
 
 body.battle-ui .speed-btn {
@@ -100,6 +116,8 @@ body.battle-ui .battle-admin-panel .field {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   min-height: 30px;
   padding: 4px 8px;
   border-radius: 8px;
@@ -110,70 +128,102 @@ body.battle-ui .battle-admin-panel .field {
 }
 
 body.battle-ui .battle-utility-row-secondary .field {
-  min-height: 28px;
-  padding: 3px 7px;
+  min-height: 30px;
+  padding: 4px 8px;
   font-size: 11px;
 }
 
 body.battle-ui .battle-utility-row-secondary .field select,
 body.battle-ui .battle-utility-row-secondary .field input[type="number"] {
-  width: 82px;
+  width: 56px;
 }
 
 body.battle-ui .battle-utility-row-secondary .utility-group:first-child .field:first-of-type select {
-  width: 190px;
+  width: 172px;
 }
 
 body.battle-ui .battle-utility-row-secondary .utility-group:nth-child(2) .field select {
-  width: 172px;
+  width: 184px;
 }
 
 body.battle-ui .battle-utility-row .field,
 body.battle-ui .battle-utility-row-secondary .field {
-  flex-wrap: nowrap;
   flex: 0 0 auto;
+}
+
+body.battle-ui .toolbar select,
+body.battle-ui .toolbar input {
+  height: 28px;
+  min-height: 28px;
+  padding: 2px 8px;
+  font-size: 11px;
+}
+
+body.battle-ui #auto-interval {
+  width: 60px;
+}
+
+body.battle-ui #cinematic-profile,
+body.battle-ui #cinematic-speed,
+body.battle-ui #ai-model-select {
+  min-width: 0;
+}
+
+body.battle-ui #cinematic-profile,
+body.battle-ui #cinematic-speed {
+  width: 88px;
 }
 
 body.battle-ui .toolbar button,
 body.battle-ui .battle-admin-panel button {
   min-height: 30px;
-  padding: 4px 9px;
+  padding: 4px 10px;
   border-radius: 8px;
   font-size: 11px;
 }
 
 body.battle-ui .battle-utility-row-secondary button {
-  min-height: 28px;
-  padding: 3px 8px;
+  min-height: 30px;
+  padding: 4px 10px;
 }
 
 body.battle-ui .battle-range-field {
-  padding-left: 6px;
-  padding-right: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 body.battle-ui .battle-range-field input[type="number"] {
-  width: 74px;
+  width: 60px;
 }
 
 body.battle-ui .battle-utility-row-secondary .utility-group:last-child {
   justify-content: flex-start;
 }
 
+body.battle-ui .field-pill,
+body.battle-ui .status-pill,
+body.battle-ui #round-info {
+  flex: 0 0 auto;
+  padding: 5px 9px;
+  font-size: 11px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
 body.battle-ui .main-shell {
   display: grid;
-  gap: 18px;
-  padding: 16px;
+  gap: 14px;
+  padding: 12px;
 }
 
 body.battle-ui .battle-live-surface {
   display: grid;
-  gap: 14px;
+  gap: 12px;
 }
 
 body.battle-ui .battle-main-row {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) var(--battle-sidebar-width);
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 360px);
   gap: var(--battle-gap);
   align-items: stretch;
 }
@@ -206,7 +256,7 @@ body.battle-ui .grid-panel {
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 10px;
-  min-height: min(78vh, 980px);
+  min-height: min(62vh, 820px);
   padding: 12px;
   background:
     radial-gradient(circle at top, rgba(122, 109, 88, 0.12), transparent 30%),
@@ -249,7 +299,7 @@ body.battle-ui .grid-wrap {
 }
 
 body.battle-ui .grid-wrap {
-  height: clamp(620px, 76vh, 980px);
+  height: clamp(420px, 58vh, 760px);
   border-radius: 16px;
   border-color: rgba(177, 186, 194, 0.2);
   background:
@@ -538,15 +588,15 @@ body.battle-ui .battle-admin-body {
 
 body.battle-ui .battle-admin-panel .info-columns {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
 }
 
 body.battle-ui .battle-parameter-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  margin-bottom: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 body.battle-ui .battle-parameter-grid > * {
@@ -555,23 +605,20 @@ body.battle-ui .battle-parameter-grid > * {
 
 @media (max-width: 1180px) {
   body.battle-ui .utility-group-state {
-    grid-column: span 12;
+    flex: 1 1 100%;
+    margin-left: 0;
   }
 
   body.battle-ui .battle-main-row {
     grid-template-columns: 1fr;
   }
 
-  body.battle-ui .battle-utility-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   body.battle-ui .battle-utility-row > .utility-group,
   body.battle-ui .battle-utility-row-secondary {
-    grid-column: auto;
+    flex: 1 1 100%;
   }
 
-  body.battle-ui .battle-utility-row-secondary {
+  body.battle-ui .battle-admin-panel .info-columns {
     grid-template-columns: 1fr;
   }
 }
@@ -580,7 +627,6 @@ body.battle-ui .battle-parameter-grid > * {
   body.battle-ui .battle-utility-row,
   body.battle-ui .battle-utility-row-secondary,
   body.battle-ui .combatant-hud-controls {
-    grid-template-columns: 1fr;
     align-items: stretch;
   }
 
@@ -594,7 +640,7 @@ body.battle-ui .battle-parameter-grid > * {
   }
 
   body.battle-ui .grid-wrap {
-    height: clamp(480px, 62vh, 760px);
+    height: clamp(360px, 52vh, 620px);
   }
 }
 

@@ -22,36 +22,12 @@ def main() -> None:
             root / "auto_ptu" / "api" / "static" / "character_creation.json",
         ),
         (
-            root / "auto_ptu" / "api" / "static" / "AutoPTUCharacter" / "create.html",
-            root / "auto_ptu" / "api" / "static" / "AutoPTUCharacter" / "character_creation.json",
-        ),
-        (
             root / "dist" / "AutoPTUCharacter" / "create.html",
             root / "dist" / "AutoPTUCharacter" / "character_creation.json",
         ),
         (
             root / "dist" / "AutoPTUWeb" / "_internal" / "auto_ptu" / "api" / "static" / "create.html",
             root / "dist" / "AutoPTUWeb" / "_internal" / "auto_ptu" / "api" / "static" / "character_creation.json",
-        ),
-        (
-            root
-            / "dist"
-            / "AutoPTUWeb"
-            / "_internal"
-            / "auto_ptu"
-            / "api"
-            / "static"
-            / "AutoPTUCharacter"
-            / "create.html",
-            root
-            / "dist"
-            / "AutoPTUWeb"
-            / "_internal"
-            / "auto_ptu"
-            / "api"
-            / "static"
-            / "AutoPTUCharacter"
-            / "character_creation.json",
         ),
     ]
     for create_html, json_path in targets:

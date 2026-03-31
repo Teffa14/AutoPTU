@@ -5,7 +5,7 @@ a = Analysis(
     ['auto_ptu_character_builder_launcher.py'],
     pathex=[],
     binaries=[],
-    datas=[('auto_ptu\\api\\static\\AutoPTUCharacter', 'AutoPTUCharacter'), ('Foundry\\ptr2e-Stable\\ptr2e-Stable\\packs\\core-species', 'Foundry\\ptr2e-Stable\\ptr2e-Stable\\packs\\core-species')],
+    datas=[('auto_ptu\\api\\static', 'static'), ('Foundry\\ptr2e-Stable\\ptr2e-Stable\\packs\\core-species', 'Foundry\\ptr2e-Stable\\ptr2e-Stable\\packs\\core-species')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

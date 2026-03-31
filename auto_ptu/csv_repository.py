@@ -143,7 +143,7 @@ def _load_ability_overrides() -> Dict[str, Dict[str, List[str]]]:
 
 
 def _load_builder_item_catalog() -> Dict[str, ItemRecord]:
-    path = DATA_DIR.parent / "api" / "static" / "AutoPTUCharacter" / "character_creation.json"
+    path = DATA_DIR.parent / "api" / "static" / "character_creation.json"
     if not path.exists():
         return {}
     try:

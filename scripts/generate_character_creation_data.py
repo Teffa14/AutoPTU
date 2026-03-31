@@ -878,9 +878,6 @@ out_reports.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encodi
 out_static = STATIC_DIR / 'character_creation.json'
 json_text = json.dumps(payload, indent=2, ensure_ascii=False)
 out_static.write_text(json_text, encoding='utf-8')
-auto_ptu_char_json = STATIC_DIR / 'AutoPTUCharacter' / 'character_creation.json'
-if auto_ptu_char_json.parent.exists():
-    auto_ptu_char_json.write_text(json_text, encoding='utf-8')
 
 create_path = STATIC_DIR / 'create.html'
 if create_path.exists():

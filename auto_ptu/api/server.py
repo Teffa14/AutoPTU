@@ -482,8 +482,8 @@ def index() -> FileResponse:
 
 
 @app.get("/create")
-def create() -> RedirectResponse:
-    return RedirectResponse(url="/AutoPTUCharacter/create.html", status_code=307, headers={"Cache-Control": "no-store"})
+def create() -> FileResponse:
+    return FileResponse(STATIC_DIR / "create.html", headers={"Cache-Control": "no-store"})
 
 
 @app.get("/favicon.ico")

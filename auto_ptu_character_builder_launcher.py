@@ -49,8 +49,8 @@ def _bundle_root() -> Path:
 
 def _builder_root() -> Path:
     candidates = [
-        _bundle_root() / "AutoPTUCharacter",
-        Path(__file__).resolve().parent / "auto_ptu" / "api" / "static" / "AutoPTUCharacter",
+        _bundle_root() / "static",
+        Path(__file__).resolve().parent / "auto_ptu" / "api" / "static",
         Path(__file__).resolve().parent / "dist" / "AutoPTUCharacter",
     ]
     for candidate in candidates:

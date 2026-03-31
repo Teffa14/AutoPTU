@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="styles.css?v=20260331d" />
     <link rel="stylesheet" href="battle.css?v=20260331d" />
   </head>
-  <body>
+  <body class="battle-ui">
     <div id="move-tooltip" class="move-tooltip hidden"></div>
     <header class="topbar ds-topbar">
       <div class="topbar-shell">
@@ -45,7 +45,7 @@
               Cine
             </label>
             <label class="field">
-              Profile
+              Dir
               <select id="cinematic-profile">
                 <option value="broadcast" selected>Broadcast</option>
                 <option value="movie">Movie</option>
@@ -53,7 +53,7 @@
               </select>
             </label>
             <label class="field">
-              Camera
+              Cam
               <select id="cinematic-speed">
                 <option value="fast">Fast</option>
                 <option value="medium" selected>Medium</option>
@@ -79,7 +79,7 @@
         <div class="toolbar ds-toolbar battle-utility-row battle-utility-row-secondary">
           <div class="utility-group">
             <label class="field">
-              Mode
+              Battle
               <select id="mode-select">
                 <option value="campaign">Campaign (Player vs AI)</option>
                 <option value="random">Random Battle (Player vs AI)</option>
@@ -89,15 +89,15 @@
               </select>
             </label>
             <label class="field">
-              Team
+              Tm
               <input id="team-size" type="number" min="1" value="2" />
             </label>
             <label class="field">
-              Active
+              Act
               <input id="active-slots" type="number" min="1" value="1" />
             </label>
             <label class="field">
-              Lvl
+              Lv
               <input id="min-level" type="number" min="1" value="20" />
             </label>
             <label class="field battle-range-field">
@@ -105,11 +105,11 @@
               <input id="max-level" type="number" min="1" value="40" />
             </label>
             <label class="field">
-              Sides
+              Teams
               <input id="side-count" type="number" min="2" value="2" title="Used by AI vs AI (Random Battle) to pick number of teams." />
             </label>
             <label class="field">
-              Circle
+              Ring
               <input id="circle-interval" type="number" min="1" value="3" title="Battle Royale: circle closes every X rounds." />
             </label>
           </div>

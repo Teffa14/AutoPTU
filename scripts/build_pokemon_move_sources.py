@@ -14,8 +14,8 @@ from auto_ptu.sprites import _slugify
 
 ROOT = Path(__file__).resolve().parents[1]
 DATABASE_PATH = ROOT / "PTUDatabase-main" / "Data" / "ptu.1.05.yaml"
-OUT_JSON = ROOT / "auto_ptu" / "api" / "static" / "AutoPTUCharacter" / "pokemon_move_sources.json"
-OUT_EMBED = ROOT / "auto_ptu" / "api" / "static" / "AutoPTUCharacter" / "pokemon_move_sources.embed.js"
+OUT_JSON = ROOT / "auto_ptu" / "api" / "static" / "pokemon_move_sources.json"
+OUT_EMBED = ROOT / "auto_ptu" / "api" / "static" / "pokemon_move_sources.embed.js"
 USER_AGENT = "AutoPTU-MoveSourceBuilder/1.0"
 POKEAPI_POKEMON = "https://pokeapi.co/api/v2/pokemon/"
 POKEAPI_SPECIES = "https://pokeapi.co/api/v2/pokemon-species/"
