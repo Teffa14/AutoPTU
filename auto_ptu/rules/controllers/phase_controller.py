@@ -74,6 +74,8 @@ class PhaseController:
 
     def start_round(self) -> None:
         battle = self.battle
+        if battle.round >= 1:
+            battle._resolve_dimensional_rifts_end_of_round()
         battle.round += 1
         battle.round_uses = 0
         battle.dance_moves_used_this_round = {}

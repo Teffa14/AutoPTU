@@ -1328,6 +1328,7 @@ def _hyperspace_fury_interrupt_block(ctx: MoveSpecialContext) -> None:
 @register_move_special("hyperspace fury")
 def _hyperspace_fury_defense_drop(ctx: MoveSpecialContext) -> None:
     _apply_stage_delta(ctx, target="attacker", stat="def", delta=-1, effect="hyperspace_fury")
+    _create_dimensional_rift(ctx)
 
 
 @register_move_special("payback")
@@ -16485,6 +16486,16 @@ def _hyperspace_hole(ctx: MoveSpecialContext) -> None:
             "description": "Hyperspace Hole resolves each target separately.",
             "target_hp": ctx.defender.hp if ctx.defender else None,
         }
+    )
+    _create_dimensional_rift(ctx)
+
+
+def _create_dimensional_rift(ctx: MoveSpecialContext) -> None:
+    origin = ctx.defender.position if ctx.defender is not None else ctx.attacker.position
+    ctx.battle._create_dimensional_rift(
+        ctx.attacker_id,
+        origin,
+        source_move=ctx.move.name,
     )
 
 

@@ -23,6 +23,14 @@ def test_csv_repository_loads_abomasnow():
     assert spec.moves, "auto-selected type-matching moves should not be empty"
 
 
+def test_csv_repository_preserves_species_size_on_built_specs():
+    repo = PTUCsvRepository()
+    dialga = repo.build_pokemon_spec("Dialga (Origin)", level=50)
+    bewear = repo.build_pokemon_spec("Bewear", level=50)
+    assert dialga.size == "Gigantic"
+    assert bewear.size == "Large"
+
+
 def test_csv_repository_assigns_abilities_for_variant_forms():
     repo = PTUCsvRepository()
     zygarde = repo.build_pokemon_spec("Zygarde 10%", level=30, assign_abilities=True)

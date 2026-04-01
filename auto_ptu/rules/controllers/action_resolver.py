@@ -25,13 +25,7 @@ from ..helpers.parental_bond import parental_bond_child_for_turn
 class ActionResolver:
     battle: BattleState
 
-    def validate(self, action: Action) -> None:
-        action.validate(self.battle)
-
-    def resolve(self, action: Action) -> None:
-        action.resolve(self.battle)
-
-    def queue_action(self, action: Action) -> None:
+    def _validate_for_turn(self, action: Action) -> None:
         battle = self.battle
         if battle.current_actor_id and action.actor_id != battle.current_actor_id:
             trainer_turn_match = False
@@ -60,10 +54,6 @@ class ActionResolver:
             if isinstance(action, TrainerSwitchAction):
                 battle._sync_grapple_status(action.outgoing_id)
             self.validate(action)
-            if battle.is_league_battle() and action.action_type != ActionType.FREE:
-                battle._declare_action(action)
-                return
-            battle._action_queue.append(action)
             return
         actor = battle.pokemon.get(action.actor_id)
         if actor and actor.has_status("Liquefied") and action.action_type == ActionType.STANDARD:
@@ -96,6 +86,33 @@ class ActionResolver:
                     raise ValueError(
                         "Sleeping combatants can only take Free or Swift actions that would cure Sleep."
                     )
+
+    def declare_action(self, action: Action) -> None:
+        self._validate_for_turn(action)
+        self.battle._declare_action(action)
+
+    def validate(self, action: Action) -> None:
+        action.validate(self.battle)
+
+    def resolve(self, action: Action) -> None:
+        action.resolve(self.battle)
+
+    def queue_action(self, action: Action) -> None:
+        battle = self.battle
+        self._validate_for_turn(action)
+        if isinstance(action, TrainerAction):
+            trainer = battle.trainers.get(action.actor_id)
+            if trainer is None:
+                actor_state = battle.pokemon.get(action.actor_id)
+                if actor_state is not None:
+                    trainer = battle.trainers.get(actor_state.controller_id)
+            if trainer is None:
+                raise ValueError("Unknown trainer.")
+            if battle.is_league_battle() and action.action_type != ActionType.FREE:
+                battle._declare_action(action)
+                return
+            battle._action_queue.append(action)
+            return
         battle._action_queue.append(action)
 
     def resolve_next_action(self) -> Optional[Action]:

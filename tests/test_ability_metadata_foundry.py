@@ -18,3 +18,11 @@ def test_ability_metadata_ptu_csv_preferred():
     print(f"Adaptability metadata: {meta}")
     assert meta.get("source") == "ptu_csv"
     assert str(meta.get("effect") or "").strip()
+
+
+def test_dimensional_rift_metadata_uses_plural_foundry_alias():
+    meta = ability_metadata("Dimensional Rift")
+    assert meta is not None
+    assert meta.get("source") == "foundry_core_abilities"
+    effect = str(meta.get("effect") or "").lower()
+    assert "originate" in effect or "rift" in effect

@@ -203,6 +203,108 @@ class HybridAITests(unittest.TestCase):
         action, info = ai_hybrid.choose_action(battle, "a-1")
         self.assertIsInstance(action, UseMoveAction)
 
+    def test_prefers_one_self_setup_before_closing_distance(self) -> None:
+        setup = MoveSpec(
+            name="Agility",
+            type="Psychic",
+            category="Status",
+            db=0,
+            ac=2,
+            range_kind="Self",
+            range_value=0,
+            target_kind="Self",
+            target_range=0,
+            effects_text="Raise the user's Speed Combat Stages by +2.",
+        )
+        ranged = MoveSpec(
+            name="Water Gun",
+            type="Water",
+            category="Special",
+            db=4,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+        )
+        actor = PokemonState(spec=_make_mon("Actor", moves=[setup, ranged], spd=12), controller_id="a", position=(0, 0))
+        foe = PokemonState(spec=_make_mon("Foe", moves=[ranged]), controller_id="b", position=(9, 9))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=12, height=12),
+            rng=random.Random(17),
+        )
+        battle.start_round()
+        action, info = ai_hybrid.choose_action(battle, "a-1")
+        self.assertIsInstance(action, UseMoveAction)
+        assert isinstance(action, UseMoveAction)
+        self.assertEqual(action.move_name, "Agility")
+        self.assertEqual(info.get("reason"), "pre_engage_setup")
+
+    def test_does_not_treat_self_debuff_status_as_setup(self) -> None:
+        bad_setup = MoveSpec(
+            name="Tail Whip",
+            type="Normal",
+            category="Status",
+            db=0,
+            ac=2,
+            range_kind="Burst",
+            range_value=1,
+            target_kind="Self",
+            target_range=0,
+            area_kind="Burst",
+            area_value=1,
+            effects_text="Tail Whip lowers Defense.",
+        )
+        actor = PokemonState(spec=_make_mon("Actor", moves=[bad_setup]), controller_id="a", position=(1, 1))
+        foe = PokemonState(spec=_make_mon("Foe", moves=[]), controller_id="b", position=(5, 5))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=8, height=8),
+            rng=random.Random(18),
+        )
+        battle.start_round()
+        action, info = ai_hybrid.choose_action(battle, "a-1")
+        self.assertFalse(any(isinstance(candidate, UseMoveAction) and candidate.move_name == "Tail Whip" for candidate in ai_hybrid.generate_candidates(battle, "a-1")))
+        if isinstance(action, UseMoveAction):
+            self.assertNotEqual(action.move_name, "Tail Whip")
+
+    def test_generate_candidates_skips_harmful_friendly_fire_move(self) -> None:
+        smog = MoveSpec(
+            name="Smog",
+            type="Poison",
+            category="Special",
+            db=3,
+            ac=2,
+            range_kind="Ranged",
+            range_value=4,
+            target_kind="Ally",
+            target_range=4,
+            effects_text="Inflicts Poisoned on the target on an even roll.",
+        )
+        actor = PokemonState(spec=_make_mon("Actor", atk=10, moves=[smog]), controller_id="a", position=(2, 2))
+        ally = PokemonState(spec=_make_mon("Ally"), controller_id="a", position=(2, 3))
+        foe = PokemonState(spec=_make_mon("Foe"), controller_id="b", position=(4, 4))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "a-2": ally, "b-1": foe},
+            grid=GridState(width=7, height=7),
+            rng=random.Random(17),
+        )
+        battle.start_round()
+
+        candidates = ai_hybrid.generate_candidates(battle, "a-1")
+        self.assertFalse(
+            any(
+                isinstance(action, UseMoveAction)
+                and action.move_name == "Smog"
+                and action.target_id in {"a-1", "a-2"}
+                for action in candidates
+            )
+        )
+
     def test_prefers_non_struggle_damage_when_available(self) -> None:
         struggle = MoveSpec(
             name="Struggle",
@@ -649,6 +751,46 @@ class HybridAITests(unittest.TestCase):
         self.assertEqual(action.move_name, "Conversion2")
         self.assertTrue(action.chosen_type)
 
+    def test_choose_action_uses_conversion_once_even_with_attack_available(self) -> None:
+        conversion = MoveSpec(
+            name="Conversion",
+            type="Normal",
+            category="Status",
+            db=0,
+            ac=None,
+            range_kind="Self",
+            range_value=0,
+            target_kind="Self",
+            target_range=0,
+            effects_text="Change the user's type to one of its moves.",
+        )
+        psybeam = MoveSpec(
+            name="Psybeam",
+            type="Psychic",
+            category="Special",
+            db=7,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+        )
+        actor = PokemonState(spec=_make_mon("Porygon", moves=[conversion, psybeam], atk=16), controller_id="a", position=(2, 2))
+        foe = PokemonState(spec=_make_mon("Machoke", moves=[psybeam]), controller_id="b", position=(2, 4))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=7, height=7),
+            rng=random.Random(46),
+        )
+        battle.start_round()
+
+        action, info = ai_hybrid.choose_action(battle, "a-1")
+        self.assertIsInstance(action, UseMoveAction)
+        assert isinstance(action, UseMoveAction)
+        self.assertEqual(action.move_name, "Conversion")
+        self.assertEqual(info.get("reason"), "conversion_once")
+
     def test_choose_action_prefers_grapple_after_recent_wrap_setup(self) -> None:
         wrap = MoveSpec(
             name="Wrap",
@@ -671,6 +813,7 @@ class HybridAITests(unittest.TestCase):
             rng=random.Random(46),
         )
         battle.start_round()
+        foe.statuses.append({"name": "Trapped", "remaining": 1})
         battle.log.append({"type": "move", "actor": "a-1", "move": "Wrap", "damage": 3})
 
         action, _info = ai_hybrid.choose_action(battle, "a-1")

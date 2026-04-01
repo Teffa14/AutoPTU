@@ -285,7 +285,7 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
         target = battle.pokemon.get(target_id)
         if state.position is None or target is None or target.position is None or target.fainted:
             return None
-        return targeting.chebyshev_distance(state.position, target.position)
+        return battle._combatant_distance(state, target)
 
     def _within(target_id: str, max_distance: int) -> bool:
         distance = _target_distance(target_id)
@@ -310,7 +310,7 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
                 continue
             if state_team and battle._team_for(pid) == state_team:
                 continue
-            if targeting.chebyshev_distance(state.position, other.position) <= max_distance:
+            if battle._combatant_distance(state, other) <= max_distance:
                 targets.append(pid)
         return sorted(targets)
 
@@ -505,7 +505,7 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
         and (
             state.position is None
             or mon.position is None
-            or targeting.chebyshev_distance(state.position, mon.position) <= 5
+            or battle._combatant_distance(state, mon) <= 5
         )
     ]
     psionic_sponge_range = max(
@@ -520,7 +520,7 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
                 continue
             if battle._team_for(pid) != battle._team_for(actor_id):
                 continue
-            if targeting.chebyshev_distance(state.position, mon.position) > psionic_sponge_range:
+            if battle._combatant_distance(state, mon) > psionic_sponge_range:
                 continue
             move_options = []
             seen_moves = set()
@@ -567,7 +567,7 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
         and (
             state.position is None
             or mon.position is None
-            or targeting.chebyshev_distance(state.position, mon.position) <= 5
+            or battle._combatant_distance(state, mon) <= 5
         )
     ]
     arctic_zeal_charges = battle._arctic_zeal_blessing_charges(state) if hasattr(battle, "_arctic_zeal_blessing_charges") else 0
@@ -1063,7 +1063,7 @@ def _ordered_combatants(battle: BattleState) -> List[str]:
         team_key = trainer.team if trainer and trainer.team else (trainer.identifier if trainer else state.controller_id)
         order = team_order.get(team_key, 99)
         trainer_name = trainer.name if trainer else state.controller_id
-        mon_name = state.spec.name or state.spec.species
+        mon_name = _display_combatant_name(state)
         return (order, trainer_name, mon_name, cid)
 
     return [cid for cid, _state in sorted(battle.pokemon.items(), key=sort_key)]
@@ -1075,6 +1075,14 @@ def _combatant_markers(battle: BattleState) -> Dict[str, str]:
     for idx, cid in enumerate(ordered):
         markers[cid] = _MARKER_CHARS[idx % len(_MARKER_CHARS)]
     return markers
+
+
+def _display_combatant_name(state: PokemonState) -> str:
+    raw = str(state.spec.name or state.spec.species or "").strip()
+    species = str(state.spec.species or raw).strip()
+    if raw.count(":") >= 2 and species:
+        return species
+    return raw or species
 
 
 def _status_labels(state: PokemonState) -> List[str]:
@@ -1169,7 +1177,14 @@ def _move_target_ids(battle: BattleState, actor_id: str) -> Dict[str, List[Optio
             target = battle.pokemon.get(target_id)
             if target is None or target.position is None or target.fainted or not target.active:
                 continue
-            if not targeting.is_target_in_range(actor.position, target.position, move):
+            if not targeting.is_target_in_range(
+                actor.position,
+                target.position,
+                move,
+                attacker_size=getattr(actor.spec, "size", ""),
+                target_size=getattr(target.spec, "size", ""),
+                grid=battle.grid,
+            ):
                 continue
             if battle.grid and not battle.has_line_of_sight(actor_id, target.position, target_id):
                 continue
@@ -1276,19 +1291,23 @@ def _maneuver_context(battle: BattleState, actor_id: str) -> Dict[str, Any]:
         ],
     }
     if battle.grid is not None and actor.position is not None:
-        others = {mon.position for pid, mon in battle.pokemon.items() if pid != actor_id}
+        others = battle._occupied_tiles(exclude_id=actor_id)
         context["disengage_tiles"] = [
             list(coord)
             for coord in movement.legal_shift_tiles(battle, actor_id)
-            if targeting.chebyshev_distance(coord, actor.position) <= 1
-            and (coord == actor.position or coord not in others)
+            if battle._combatant_distance_to_coord(actor, coord) <= 1
+            and (coord == actor.position or battle._position_can_fit(actor_id, coord, exclude_id=actor_id))
         ]
     else:
         context["disengage_tiles"] = []
     for pid, mon in battle.pokemon.items():
         if pid == actor_id or mon.fainted or mon.position is None:
             continue
-        distance = targeting.chebyshev_distance(actor.position, mon.position) if actor.position is not None else None
+        distance = (
+            battle._combatant_distance(actor, mon)
+            if actor.position is not None
+            else None
+        )
         if _team_for(battle, pid) == _team_for(battle, actor_id):
             if mon.has_status("Sleep") or mon.has_status("Asleep"):
                 if distance == 1:
@@ -1894,7 +1913,7 @@ class EngineFacade:
                         raise ValueError(f"Deployment tile {coord} is outside the battlefield.")
                     if coord in grid.blockers:
                         raise ValueError(f"Deployment tile {coord} is blocked.")
-                    if targeting.chebyshev_distance(origin, coord) > throw_range:
+                    if targeting.footprint_distance(origin, "Medium", coord, "Medium", grid) > throw_range:
                         raise ValueError(
                             f"Deployment tile {coord} is beyond {side.name}'s throwing range of {throw_range}."
                         )
@@ -2346,8 +2365,8 @@ class EngineFacade:
         for cid, mon in battle.pokemon.items():
             if mon.fainted or not mon.active or mon.position is None:
                 continue
-            x, y = mon.position
-            if max(abs(x - cx), abs(y - cy)) <= next_radius:
+            footprint = mon.footprint_tiles(grid) or {mon.position}
+            if all(max(abs(x - cx), abs(y - cy)) <= next_radius for x, y in footprint):
                 continue
             damage = max(1, int(mon.max_hp() // damage_divisor))
             mon.apply_damage(damage)
@@ -2435,8 +2454,10 @@ class EngineFacade:
             trainer_label = trainer.name if trainer and trainer.name else state.controller_id
             team = (trainer.team or trainer.identifier) if trainer else state.controller_id
             pos = state.position
-            if state.active and pos is not None:
-                occupants[f"{pos[0]},{pos[1]}"] = cid
+            footprint_tiles = sorted(state.footprint_tiles(battle.grid))
+            if state.active and footprint_tiles:
+                for tile in footprint_tiles:
+                    occupants[f"{tile[0]},{tile[1]}"] = cid
             moves = []
             for move in state.spec.moves:
                 name = str(move.name or "").strip()
@@ -2521,7 +2542,7 @@ class EngineFacade:
                 {
                     "id": cid,
                     "marker": markers.get(cid, "?"),
-                    "name": state.spec.name or state.spec.species,
+                    "name": _display_combatant_name(state),
                     "species": state.spec.species,
                     "level": int(getattr(state.spec, "level", 1) or 1),
                     "nature": nature_name,
@@ -2535,6 +2556,9 @@ class EngineFacade:
                     "injuries": state.injuries,
                     "statuses": _status_labels(state),
                     "position": list(pos) if pos else None,
+                    "size": str(getattr(state.spec, "size", "") or ""),
+                    "footprint_side": state.footprint_side(),
+                    "footprint_tiles": [list(tile) for tile in footprint_tiles],
                     "active": bool(state.active),
                     "fainted": bool(state.fainted),
                     "combat_stages": dict(state.combat_stages),
@@ -2714,7 +2738,7 @@ class EngineFacade:
                 for x in range(battle.grid.width):
                     for y in range(battle.grid.height):
                         coord = (x, y)
-                        if targeting.chebyshev_distance(actor.position, coord) > 6:
+                        if battle._combatant_distance_to_coord(actor, coord) > 6:
                             continue
                         tile_meta = battle.grid.tiles.get(coord, {})
                         tile_type = str(tile_meta.get("type", "") if isinstance(tile_meta, dict) else tile_meta).strip().lower()
@@ -2727,7 +2751,7 @@ class EngineFacade:
                 for x in range(battle.grid.width):
                     for y in range(battle.grid.height):
                         coord = (x, y)
-                        if targeting.chebyshev_distance(actor.position, coord) > 6:
+                        if battle._combatant_distance_to_coord(actor, coord) > 6:
                             continue
                         tile_meta = battle.grid.tiles.get(coord, {})
                         tile_type = str(tile_meta.get("type", "") if isinstance(tile_meta, dict) else tile_meta).strip().lower()
@@ -3543,7 +3567,7 @@ class EngineFacade:
             if grid_state is None:
                 auto_positions: List[Tuple[int, int]] = [(0, idx) for idx in range(needed)]
             else:
-                auto_positions = self._allocate_positions(grid_state, base, needed, positions, occupied)
+                auto_positions = self._allocate_positions(grid_state, base, side.pokemon[:needed], positions, occupied)
             actual_active_count = min(active_count, len(auto_positions))
             active_positions[trainer_id] = list(auto_positions)
             for idx, spec in enumerate(side.pokemon):
@@ -3556,8 +3580,8 @@ class EngineFacade:
                     position=pos,
                     active=is_active,
                 )
-                if pos is not None:
-                    occupied.add(pos)
+                if pos is not None and grid_state is not None:
+                    occupied.update(targeting.footprint_tiles(pos, getattr(pokemon_states[mon_id].spec, "size", ""), grid_state))
         battle = BattleState(
             trainers=trainers,
             pokemon=pokemon_states,
@@ -3633,25 +3657,41 @@ class EngineFacade:
         self,
         grid: GridState,
         origin: Tuple[int, int],
-        needed: int,
+        specs: Iterable[PokemonSpec],
         preferred: Iterable[Tuple[int, int]],
         occupied: set[Tuple[int, int]],
     ) -> List[Tuple[int, int]]:
         positions: List[Tuple[int, int]] = []
+        spec_list = list(specs)
+        needed = len(spec_list)
+
+        def can_fit(pos: Tuple[int, int], spec: PokemonSpec) -> bool:
+            footprint = targeting.footprint_tiles(pos, getattr(spec, "size", ""), grid)
+            if not footprint:
+                return False
+            if any(tile in occupied or tile in grid.blockers for tile in footprint):
+                return False
+            return all(grid.in_bounds(tile) for tile in footprint)
+
+        def reserve(pos: Tuple[int, int], spec: PokemonSpec) -> None:
+            positions.append(pos)
+            occupied.update(targeting.footprint_tiles(pos, getattr(spec, "size", ""), grid))
+
         for pos in preferred:
             if pos in positions:
                 continue
-            if pos in occupied:
-                continue
-            if pos in grid.blockers:
-                continue
-            positions.append(pos)
             if len(positions) >= needed:
                 return positions
+            spec = spec_list[len(positions)]
+            if not can_fit(pos, spec):
+                continue
+            reserve(pos, spec)
         ox, oy = origin
         for radius in range(max(grid.width, grid.height)):
             for dx in range(-radius, radius + 1):
                 for dy in range(-radius, radius + 1):
+                    if len(positions) >= needed:
+                        return positions
                     x = ox + dx
                     y = oy + dy
                     if x < 0 or y < 0 or x >= grid.width or y >= grid.height:
@@ -3659,11 +3699,10 @@ class EngineFacade:
                     coord = (x, y)
                     if coord in positions:
                         continue
-                    if coord in occupied or coord in grid.blockers:
+                    spec = spec_list[len(positions)]
+                    if not can_fit(coord, spec):
                         continue
-                    positions.append(coord)
-                    if len(positions) >= needed:
-                        return positions
+                    reserve(coord, spec)
         return positions
 
     def _ability_repo_or_none(self) -> Optional[PTUCsvRepository]:

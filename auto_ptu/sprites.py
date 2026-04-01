@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import struct
 import threading
 import unicodedata
 import urllib.request
@@ -383,7 +384,7 @@ class SpriteCache:
                 return f"/sprites/{filename}"
             except Exception:
                 return f"/sprites/{local.name}"
-        if target.exists():
+        if target.exists() and not _needs_sprite_refresh(slug, target):
             return f"/sprites/{filename}"
         aliased = self._find_existing(slug)
         if aliased is not None:
@@ -415,11 +416,15 @@ class SpriteCache:
                     return f"/sprites/{fallback_local.name}"
         if not allow_download:
             return None
-        if not self._download_sprite(slug, target):
+        if not self._download_sprite(slug, target, force_refresh=_needs_sprite_refresh(slug, target)):
             for fallback in _fallback_slugs(slug):
                 fallback_name = f"{fallback}.png"
                 fallback_target = self.cache_dir / fallback_name
-                if fallback_target.exists() or self._download_sprite(fallback, fallback_target):
+                if (fallback_target.exists() and not _needs_sprite_refresh(fallback, fallback_target)) or self._download_sprite(
+                    fallback,
+                    fallback_target,
+                    force_refresh=_needs_sprite_refresh(fallback, fallback_target),
+                ):
                     return f"/sprites/{fallback_name}"
             self._missing.add(slug)
             return None
@@ -460,7 +465,7 @@ class SpriteCache:
         if not slug:
             return False
         target = self.cache_dir / filename
-        if target.exists():
+        if target.exists() and not _needs_sprite_refresh(slug, target):
             return True
         local = _local_sprite_path_for_slug(slug)
         if local is not None:
@@ -469,7 +474,7 @@ class SpriteCache:
                 return True
             except Exception:
                 return local.exists()
-        if self._download_sprite(slug, target):
+        if self._download_sprite(slug, target, force_refresh=_needs_sprite_refresh(slug, target)):
             return True
         for fallback in _fallback_slugs(slug):
             fallback_name = f"{fallback}.png"
@@ -480,7 +485,11 @@ class SpriteCache:
                     fallback_path.write_bytes(local_fallback.read_bytes())
                 except Exception:
                     pass
-            if fallback_path.exists() or self._download_sprite(fallback, fallback_path):
+            if (fallback_path.exists() and not _needs_sprite_refresh(fallback, fallback_path)) or self._download_sprite(
+                fallback,
+                fallback_path,
+                force_refresh=_needs_sprite_refresh(fallback, fallback_path),
+            ):
                 try:
                     target.write_bytes(fallback_path.read_bytes())
                     return True
@@ -509,12 +518,12 @@ class SpriteCache:
                 self._alias_map.setdefault(slug, candidate)
         self._indexed = True
 
-    def _download_sprite(self, slug: str, target: Path) -> bool:
+    def _download_sprite(self, slug: str, target: Path, *, force_refresh: bool = False) -> bool:
         if os.environ.get("AUTO_PTU_DISABLE_SPRITES"):
             return False
         slug = _strip_trainer_prefix_slug(slug)
         with self._lock:
-            if target.exists():
+            if target.exists() and not force_refresh:
                 return True
             payload = _fetch_pokemon_payload(slug)
             if payload is None:
@@ -525,9 +534,9 @@ class SpriteCache:
                 return False
             sprite_url = (
                 _deep_get(payload, ["sprites", "versions", "generation-vii", "ultra-sun-ultra-moon", "front_default"])
-                or _deep_get(payload, ["sprites", "versions", "generation-viii", "icons", "front_default"])
-                or _deep_get(payload, ["sprites", "other", "official-artwork", "front_default"])
                 or _deep_get(payload, ["sprites", "front_default"])
+                or _deep_get(payload, ["sprites", "other", "official-artwork", "front_default"])
+                or _deep_get(payload, ["sprites", "versions", "generation-viii", "icons", "front_default"])
             )
             if not sprite_url:
                 return False
@@ -703,6 +712,37 @@ _FORM_SUFFIXES = {
     "rainy",
     "snowy",
 }
+
+
+def _read_png_dimensions(path: Path) -> tuple[int, int]:
+    try:
+        with path.open("rb") as handle:
+            header = handle.read(24)
+        if len(header) < 24 or header[:8] != b"\x89PNG\r\n\x1a\n":
+            return (0, 0)
+        return tuple(int(value) for value in struct.unpack(">II", header[16:24]))
+    except Exception:
+        return (0, 0)
+
+
+def _slug_has_form_suffix(slug: str) -> bool:
+    parts = [part for part in _strip_trainer_prefix_slug(slug).split("-") if part]
+    if len(parts) <= 1:
+        return False
+    return any(part in _FORM_SUFFIXES for part in parts[1:])
+
+
+def _needs_sprite_refresh(slug: str, path: Path) -> bool:
+    if not path.exists() or not _slug_has_form_suffix(slug):
+        return False
+    width, height = _read_png_dimensions(path)
+    if width <= 0 or height <= 0:
+        return False
+    if max(width, height) <= 96:
+        return True
+    if path.stat().st_size <= 2048:
+        return True
+    return False
 
 
 def _fallback_slugs(slug: str) -> list[str]:

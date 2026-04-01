@@ -48,11 +48,12 @@ from auto_ptu.rules.calculations import resolve_move_action
 from auto_ptu.rules.hooks.item_hooks import ItemHookContext, apply_item_hooks
 
 
-def _pokemon_spec(name: str = "Pikachu") -> PokemonSpec:
+def _pokemon_spec(name: str = "Pikachu", *, size: str = "Medium") -> PokemonSpec:
     return PokemonSpec(
         species=name,
         level=20,
         types=["Electric"],
+        size=size,
         hp_stat=10,
         atk=10,
         defense=10,
@@ -14788,6 +14789,13 @@ class BattleStateTests(unittest.TestCase):
         battle.queue_action(UseMoveAction(actor_id="ash-1", move_name="Tackle", target_id="gary-1"))
         battle.resolve_next_action()
         self.assertTrue(defender.has_status("Bleed"))
+        bleed_status = next(
+            entry
+            for entry in defender.statuses
+            if str(entry.get("name") if isinstance(entry, dict) else entry).strip().lower() == "bleed"
+        )
+        self.assertEqual(bleed_status.get("source"), "Binding Band")
+        self.assertEqual(bleed_status.get("source_id"), "ash-1")
         event = next(
             evt
             for evt in battle.log
@@ -14798,6 +14806,72 @@ class BattleStateTests(unittest.TestCase):
         self.assertEqual(event.get("target"), "gary-1")
         self.assertEqual(event.get("status"), "Bleed")
         self.assertEqual(event.get("remaining"), 3)
+        self.assertEqual(event.get("source"), "Binding Band")
+        bleed_events = defender.handle_phase_effects(battle, TurnPhase.START, "gary-1")
+        bleed_tick = next(evt for evt in bleed_events if evt.get("effect") == "bleed")
+        self.assertEqual(bleed_tick.get("source"), "Binding Band")
+        self.assertIn("Binding Band", str(bleed_tick.get("description") or ""))
+
+    def test_large_footprint_blocks_shift_destinations(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash")
+        foe = TrainerState(identifier="gary", name="Gary")
+        actor = PokemonState(spec=_pokemon_spec("Pikachu"), controller_id=trainer.identifier, position=(0, 0), active=True)
+        large_foe = PokemonState(spec=_pokemon_spec("Steelix", size="Large"), controller_id=foe.identifier, position=(2, 1), active=True)
+        battle = BattleState(
+            trainers={trainer.identifier: trainer, foe.identifier: foe},
+            pokemon={"ash-1": actor, "gary-1": large_foe},
+            grid=GridState(width=6, height=6),
+        )
+
+        with self.assertRaises(ValueError):
+            ShiftAction(actor_id="ash-1", destination=(2, 2)).validate(battle)
+
+    def test_melee_move_can_target_huge_footprint_when_adjacent_to_edge(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash")
+        foe = TrainerState(identifier="gary", name="Gary")
+        attacker_spec = _pokemon_spec("Pikachu")
+        attacker_spec.moves = [MoveSpec(name="Tackle", type="Normal", category="Physical", db=6, ac=None, range_kind="Melee", target_kind="Melee", target_range=1)]
+        defender_spec = _pokemon_spec("Wailord", size="Huge")
+        attacker = PokemonState(spec=attacker_spec, controller_id=trainer.identifier, position=(0, 2), active=True)
+        defender = PokemonState(spec=defender_spec, controller_id=foe.identifier, position=(2, 2), active=True)
+        battle = BattleState(
+            trainers={trainer.identifier: trainer, foe.identifier: foe},
+            pokemon={"ash-1": attacker, "gary-1": defender},
+            grid=GridState(width=8, height=8),
+        )
+
+        UseMoveAction(actor_id="ash-1", move_name="Tackle", target_id="gary-1").validate(battle)
+
+    def test_burst_area_hits_large_target_when_any_footprint_tile_overlaps(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash")
+        foe = TrainerState(identifier="gary", name="Gary")
+        attacker_spec = _pokemon_spec("Pikachu")
+        attacker_spec.moves = [
+            MoveSpec(
+                name="Shock Burst",
+                type="Electric",
+                category="Special",
+                db=6,
+                ac=None,
+                range_kind="Ranged",
+                range_value=6,
+                target_kind="Ranged",
+                target_range=6,
+                area_kind="Burst",
+                area_value=1,
+            )
+        ]
+        defender_spec = _pokemon_spec("Steelix", size="Large")
+        attacker = PokemonState(spec=attacker_spec, controller_id=trainer.identifier, position=(0, 1), active=True)
+        defender = PokemonState(spec=defender_spec, controller_id=foe.identifier, position=(2, 1), active=True)
+        battle = BattleState(
+            trainers={trainer.identifier: trainer, foe.identifier: foe},
+            pokemon={"ash-1": attacker, "gary-1": defender},
+            grid=GridState(width=8, height=8),
+        )
+
+        battle.resolve_move_targets(attacker_id="ash-1", move=attacker_spec.moves[0], target_id="gary-1", target_position=(1, 1))
+        self.assertTrue(any(evt.get("target") == "gary-1" and evt.get("move") == "Shock Burst" for evt in battle.log))
 
     def test_room_orbs_apply_status_to_all_active_foes(self) -> None:
         player = TrainerState(identifier="ash", name="Ash", team="player")
@@ -15227,6 +15301,83 @@ class BattleStateTests(unittest.TestCase):
         battle.queue_action(UseMoveAction(actor_id="ash-1", move_name="Shock Pulse", target_id="gary-1"))
         battle.resolve_next_action()
         self.assertTrue(any(evt.get("ability") == "Clay Cannons" for evt in battle.log))
+
+    def test_dimensional_rifts_origin_shift(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash")
+        foe = TrainerState(identifier="gary", name="Gary")
+        attacker_spec = _pokemon_spec("Hoopa")
+        attacker_spec.abilities = [{"name": "Dimensional Rift"}]
+        attacker_spec.moves = [
+            MoveSpec(
+                name="Psybeam",
+                type="Psychic",
+                category="Special",
+                db=6,
+                ac=None,
+                range_kind="Ranged",
+                range_value=4,
+            )
+        ]
+        attacker_state = PokemonState(
+            spec=attacker_spec, controller_id=trainer.identifier, position=(0, 0)
+        )
+        defender_state = PokemonState(
+            spec=_pokemon_spec("Oddish"), controller_id=foe.identifier, position=(8, 0)
+        )
+        battle = BattleState(
+            trainers={trainer.identifier: trainer, foe.identifier: foe},
+            pokemon={"ash-1": attacker_state, "gary-1": defender_state},
+            grid=GridState(width=12, height=12),
+        )
+        battle.queue_action(UseMoveAction(actor_id="ash-1", move_name="Psybeam", target_id="gary-1"))
+        battle.resolve_next_action()
+        self.assertTrue(
+            any(
+                evt.get("ability") == "Dimensional Rifts"
+                and evt.get("effect") == "origin_shift"
+                for evt in battle.log
+            )
+        )
+
+    def test_hyperspace_hole_creates_dimensional_rift(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash")
+        foe = TrainerState(identifier="gary", name="Gary")
+        attacker_spec = _pokemon_spec("Hoopa")
+        attacker_spec.abilities = [{"name": "Dimensional Rift"}]
+        attacker_spec.moves = [
+            MoveSpec(
+                name="Hyperspace Hole",
+                type="Psychic",
+                category="Special",
+                db=8,
+                ac=4,
+                range_kind="Ranged",
+                range_value=8,
+            )
+        ]
+        attacker_state = PokemonState(
+            spec=attacker_spec, controller_id=trainer.identifier, position=(0, 0)
+        )
+        defender_state = PokemonState(
+            spec=_pokemon_spec("Oddish"), controller_id=foe.identifier, position=(4, 0)
+        )
+        battle = BattleState(
+            trainers={trainer.identifier: trainer, foe.identifier: foe},
+            pokemon={"ash-1": attacker_state, "gary-1": defender_state},
+            grid=GridState(width=8, height=8),
+        )
+        battle.queue_action(
+            UseMoveAction(
+                actor_id="ash-1",
+                move_name="Hyperspace Hole",
+                target_id="gary-1",
+                allow_reaction_declared=True,
+            )
+        )
+        battle.resolve_next_action()
+        rifts = attacker_state.get_temporary_effects("dimensional_rift")
+        self.assertTrue(rifts)
+        self.assertEqual(tuple(rifts[0].get("origin") or ()), defender_state.position)
 
     def test_clear_body_blocks_stage_drops(self) -> None:
         trainer = TrainerState(identifier="ash", name="Ash")

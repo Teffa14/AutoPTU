@@ -392,10 +392,9 @@ def get_sprite(filename: str) -> FileResponse:
     if not filename.lower().endswith(".png"):
         raise HTTPException(status_code=404, detail="Invalid sprite type")
     path = SPRITE_DIR / filename
-    if not path.exists():
-        ensure_sprite_filename(filename)
+    ensure_sprite_filename(filename)
     if path.exists():
-        return FileResponse(path)
+        return FileResponse(path, headers={"Cache-Control": "no-store"})
     raise HTTPException(status_code=404, detail="Sprite not found")
 
 
@@ -417,7 +416,7 @@ def get_item_icon_file(filename: str) -> FileResponse:
     slug = Path(filename).stem
     path = item_icon_path(slug)
     if path and path.exists():
-        return FileResponse(path)
+        return FileResponse(path, headers={"Cache-Control": "no-store"})
     raise HTTPException(status_code=404, detail="Item icon not found")
 
 

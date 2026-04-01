@@ -33,11 +33,12 @@ def _move(
     )
 
 
-def _spec(name: str, moves: list[MoveSpec], *, atk: int = 12, defense: int = 12) -> PokemonSpec:
+def _spec(name: str, moves: list[MoveSpec], *, atk: int = 12, defense: int = 12, size: str = "Medium") -> PokemonSpec:
     return PokemonSpec(
         species=name,
         level=50,
         types=["Normal"],
+        size=size,
         hp_stat=8,
         atk=atk,
         defense=defense,
@@ -71,6 +72,37 @@ def test_engine_facade_random_6v6_has_unique_active_positions_per_team():
         positions = [tuple(member["position"]) for member in members if member["position"] is not None]
         assert len(positions) == 6
         assert len(set(positions)) == 6
+
+
+def test_engine_facade_snapshot_serializes_large_footprint_tiles():
+    facade = EngineFacade()
+    facade.battle = BattleState(
+        trainers={
+            "player": TrainerState(identifier="player", name="Player"),
+            "foe": TrainerState(identifier="foe", name="Foe"),
+        },
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("Steelix", [_move("Tackle")], size="Large"),
+                controller_id="player",
+                position=(1, 1),
+                active=True,
+            ),
+            "foe-1": PokemonState(
+                spec=_spec("Target", [_move("Tackle")]),
+                controller_id="foe",
+                position=(5, 5),
+                active=True,
+            ),
+        },
+        grid=GridState(width=8, height=8),
+    )
+    payload = facade.snapshot()
+    steelix = next(entry for entry in payload["combatants"] if entry["id"] == "player-1")
+    assert steelix["footprint_side"] == 2
+    assert sorted(tuple(tile) for tile in steelix["footprint_tiles"]) == [(1, 1), (1, 2), (2, 1), (2, 2)]
+    for key in ("1,1", "1,2", "2,1", "2,2"):
+        assert payload["occupants"][key] == "player-1"
 
 
 def test_engine_facade_random_ai_battle_supports_configurable_side_count():

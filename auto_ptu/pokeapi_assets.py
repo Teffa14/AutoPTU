@@ -412,6 +412,16 @@ def _ability_lookup_candidates(name: str) -> list[str]:
     stripped = _strip_ability_suffix(base)
     if stripped and stripped.lower() != base.lower():
         candidates.append(stripped)
+    plural_variants: list[str] = []
+    for candidate in list(candidates):
+        lowered = candidate.lower()
+        if lowered.endswith("s"):
+            singular = candidate[:-1].strip()
+            if singular:
+                plural_variants.append(singular)
+        else:
+            plural_variants.append(f"{candidate}s")
+    candidates.extend(plural_variants)
     seen: set[str] = set()
     unique: list[str] = []
     for entry in candidates:

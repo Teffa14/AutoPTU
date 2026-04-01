@@ -1448,6 +1448,19 @@ class PokemonState:
         threshold = self.press_on_floor() if self.is_pressing_on() else 0
         return bool(self.hp <= threshold)
 
+    def footprint_side(self) -> int:
+        return targeting.footprint_side_for_size(self.spec.size)
+
+    def footprint_tiles(
+        self,
+        grid: Optional["GridState"] = None,
+        position: Optional[Tuple[int, int]] = None,
+    ) -> Set[Tuple[int, int]]:
+        anchor = position if position is not None else self.position
+        if anchor is None:
+            return set()
+        return targeting.footprint_tiles(anchor, self.spec.size, grid)
+
     def gender(self) -> str:
         raw = (self.spec.gender or "").strip().lower()
         if raw in {"m", "male"}:
@@ -3820,15 +3833,26 @@ class PokemonState:
                 remaining_after = max(0, remaining - 1)
                 status_entry["remaining"] = remaining_after
                 damage = self._apply_tick_damage(1)
+                source_name = str(status_entry.get("source") or "").strip()
+                source_id = str(status_entry.get("source_id") or "").strip() or None
+                description = (
+                    f"Bleed from {source_name} deals {damage} damage."
+                    if source_name
+                    else f"Bleed deals {damage} damage."
+                )
                 events.append(
                     {
                         "type": "status",
                         "actor": actor_id,
+                        "target": actor_id,
                         "status": name,
                         "phase": phase.value,
                         "effect": "bleed",
                         "amount": damage,
                         "remaining": remaining_after,
+                        "source": source_name or None,
+                        "source_id": source_id,
+                        "description": description,
                         "target_hp": self.hp,
                     }
                 )
@@ -5277,7 +5301,7 @@ class PokemonState:
                     raise ValueError("Move target position is unavailable.")
                 anchor = self.target_position
                 area_kind = targeting.normalized_area_kind(move)
-                distance = targeting.chebyshev_distance(attacker.position, anchor)
+                distance = self._combatant_distance_to_coord(attacker, anchor)
                 if area_kind in {"cone", "line"}:
                     max_distance = max(1, int(move.area_value or 1))
                     if distance == 0 or distance > max_distance:
@@ -5288,18 +5312,25 @@ class PokemonState:
                     if distance != 1:
                         raise ValueError(f"{move.name} requires an adjacent target tile.")
                 else:
-                    origins = battle._clay_cannons_origins(attacker, move)
+                    origins = battle._move_origin_candidates(attacker, move)
                     if not origins:
                         raise ValueError("Move target position is unavailable.")
                     if not any(
-                        targeting.is_target_in_range(origin, anchor, move) for origin in origins
+                        targeting.is_target_in_range(
+                            origin,
+                            anchor,
+                            move,
+                            attacker_size=getattr(attacker.spec, "size", ""),
+                            grid=battle.grid,
+                        )
+                        for origin in origins
                     ):
                         raise ValueError(
                             f"{move.name} cannot reach the target from "
                             f"{attacker.position} (needs range {targeting.move_range_distance(move)})."
                         )
                 if battle.grid:
-                    origins = battle._clay_cannons_origins(attacker, move)
+                    origins = battle._move_origin_candidates(attacker, move)
                     if not any(
                         battle.has_line_of_sight_from(
                             origin, anchor, exclude_ids={self.actor_id}
@@ -5311,16 +5342,23 @@ class PokemonState:
                         )
                 return
             if attacker.position and defender.position:
-                origins = battle._clay_cannons_origins(attacker, move)
+                origins = battle._move_origin_candidates(attacker, move)
                 in_range = any(
-                    targeting.is_target_in_range(origin, defender.position, move)
+                    targeting.is_target_in_range(
+                        origin,
+                        defender.position,
+                        move,
+                        attacker_size=getattr(attacker.spec, "size", ""),
+                        target_size=getattr(defender.spec, "size", ""),
+                        grid=battle.grid,
+                    )
                     for origin in origins
                 )
                 if not in_range:
                     move_name = (move.name or "").strip().lower()
                     if move_name in {"disarm", "trip", "push"} and attacker.has_capability("Telekinetic"):
                         focus_rank = battle._combatant_skill_rank(attacker, "focus", actor_id=self.actor_id)
-                        distance = targeting.chebyshev_distance(attacker.position, defender.position)
+                        distance = battle._combatant_distance(attacker, defender)
                         if focus_rank > 0 and distance > 1 and distance <= focus_rank:
                             pass
                         else:
@@ -5337,7 +5375,7 @@ class PokemonState:
                     power_limit = attacker.power_capability()
                     if attacker.has_capability("Telekinetic"):
                         focus_rank = battle._combatant_skill_rank(attacker, "focus", actor_id=self.actor_id)
-                        distance = targeting.chebyshev_distance(attacker.position, defender.position)
+                        distance = battle._combatant_distance(attacker, defender)
                         if focus_rank > 0 and distance > 1 and distance <= focus_rank:
                             power_limit = focus_rank
                     if power_limit < defender.weight_class():
@@ -5546,7 +5584,7 @@ class PokemonState:
                     continue
                 min_range = int(entry.get("min_range", 0) or 0)
                 max_range = int(entry.get("max_range", 0) or 0)
-                distance = targeting.chebyshev_distance(self.destination, source.position)
+                distance = battle._combatant_distance_to_coord(source, self.destination)
                 if min_range and distance < min_range:
                     raise ValueError("Magnet Pull prevents moving closer to the source.")
                 if max_range and distance > max_range:
@@ -5564,7 +5602,14 @@ class PokemonState:
                     anchor_pos = None
                 if anchor_pos is None:
                     continue
-                if targeting.chebyshev_distance(self.destination, anchor_pos) > 5:
+                if (
+                    battle._combatant_distance_to_coord(
+                        self.actor_id,
+                        anchor_pos,
+                        position=self.destination,
+                    )
+                    > 5
+                ):
                     raise ValueError("Shadow Tag prevents moving too far from the anchor.")
             from .helpers.parental_bond import parental_bond_leash_violation
 
@@ -5585,15 +5630,7 @@ class PokemonState:
                         )
                         if blocked and not (actor.can_fly() or actor.can_burrow() or actor.can_phase() or actor.has_status("Liquefied")):
                             raise ValueError("Shift destination is blocked.")
-                        occupied = {
-                            mon.position
-                            for pid, mon in battle.pokemon.items()
-                            if pid != self.actor_id
-                            and mon.position is not None
-                            and mon.hp is not None
-                            and mon.hp > 0
-                        }
-                        if self.destination in occupied:
+                        if not battle._position_can_fit(self.actor_id, self.destination, conscious_only=True):
                             raise ValueError("Shift destination is occupied.")
                         return
             for entry in actor.get_temporary_effects("surf_shift"):
@@ -5610,29 +5647,13 @@ class PokemonState:
                         )
                         if blocked and not (actor.can_fly() or actor.can_burrow() or actor.can_phase() or actor.has_status("Liquefied")):
                             raise ValueError("Shift destination is blocked.")
-                        occupied = {
-                            mon.position
-                            for pid, mon in battle.pokemon.items()
-                            if pid != self.actor_id
-                            and mon.position is not None
-                            and mon.hp is not None
-                            and mon.hp > 0
-                        }
-                        if self.destination in occupied:
+                        if not battle._position_can_fit(self.actor_id, self.destination, conscious_only=True):
                             raise ValueError("Shift destination is occupied.")
                         return
             reachable = movement.legal_shift_tiles(battle, self.actor_id)
             if self.destination not in reachable:
                 raise ValueError(f"Destination {self.destination} is not reachable for {actor.spec.name or actor.spec.species}.")
-            occupied = {
-                mon.position
-                for pid, mon in battle.pokemon.items()
-                if pid != self.actor_id
-                and mon.active
-                and not mon.fainted
-                and mon.position is not None
-            }
-            if self.destination in occupied:
+            if not battle._position_can_fit(self.actor_id, self.destination):
                 raise ValueError("Shift destination is occupied.")
 
         def resolve(self, battle: BattleState) -> None:
@@ -5702,7 +5723,11 @@ class PokemonState:
                         }
                     )
             if actor.has_ability("Lancer") and origin is not None and self.destination is not None:
-                distance = targeting.chebyshev_distance(origin, self.destination)
+                distance = battle._combatant_distance_to_coord(
+                    self.actor_id,
+                    self.destination,
+                    position=origin,
+                )
                 if distance > 0:
                     updated = False
                     for entry in list(actor.get_temporary_effects("lancer_shift")):
@@ -5909,19 +5934,17 @@ class PokemonState:
                 max_distance = max(max_distance, 2)
             if actor.has_trainer_feature("Nimble Movement"):
                 max_distance = max(max_distance, 2)
-            if targeting.chebyshev_distance(actor.position, self.destination) > max_distance:
+            if (
+                battle._combatant_distance_to_coord(
+                    self.actor_id,
+                    self.destination,
+                )
+                > max_distance
+            ):
                 raise ValueError(f"Disengage only allows a {max_distance}-meter shift.")
             if self.destination not in reachable:
                 raise ValueError(f"Destination {self.destination} is not reachable for {actor.spec.name or actor.spec.species}.")
-            occupied = {
-                mon.position
-                for pid, mon in battle.pokemon.items()
-                if pid != self.actor_id
-                and mon.active
-                and not mon.fainted
-                and mon.position is not None
-            }
-            if self.destination in occupied:
+            if not battle._position_can_fit(self.actor_id, self.destination):
                 raise ValueError("Disengage destination is occupied.")
 
         def resolve(self, battle: BattleState) -> None:
@@ -5929,7 +5952,11 @@ class PokemonState:
             origin = actor.position
             actor.position = self.destination
             if actor.has_ability("Lancer") and origin is not None and self.destination is not None:
-                distance = targeting.chebyshev_distance(origin, self.destination)
+                distance = battle._combatant_distance_to_coord(
+                    self.actor_id,
+                    self.destination,
+                    position=origin,
+                )
                 if distance > 0:
                     updated = False
                     for entry in list(actor.get_temporary_effects("lancer_shift")):
@@ -5972,7 +5999,7 @@ class PokemonState:
                 raise ValueError("Tripped combatants must stand up before taking actions.")
             if actor.position is None or target.position is None:
                 raise ValueError("Wake requires an adjacent ally.")
-            if targeting.chebyshev_distance(actor.position, target.position) != 1:
+            if battle._combatant_distance(actor, target) != 1:
                 raise ValueError("Wake requires an adjacent ally.")
             if battle._team_for(self.actor_id) != battle._team_for(self.target_id):
                 raise ValueError("Wake can only target an ally.")
@@ -6241,7 +6268,7 @@ class PokemonState:
             if "trainer" not in {tag.lower() for tag in actor.spec.tags}:
                 raise ValueError("Manipulate maneuvers can only be used by Trainers.")
             if actor.position and target.position:
-                if targeting.chebyshev_distance(actor.position, target.position) > 6:
+                if battle._combatant_distance(actor, target) > 6:
                     raise ValueError("Manipulate requires a target within 6 meters.")
 
         def resolve(self, battle: "BattleState") -> None:
@@ -6266,7 +6293,7 @@ class PokemonState:
             target = battle.pokemon.get(self.target_id)
             if target is None:
                 raise ValueError("Invalid manipulation target.")
-            if actor.position and target.position and targeting.chebyshev_distance(actor.position, target.position) > 6:
+            if actor.position and target.position and battle._combatant_distance(actor, target) > 6:
                 raise ValueError("Quick Wit requires a target within 6 meters.")
 
         def resolve(self, battle: "BattleState") -> None:
@@ -6364,7 +6391,7 @@ class PokemonState:
                 area_kind="Cone",
                 area_value=2,
             )
-            if targeting.chebyshev_distance(actor.position, anchor.position) > 2:
+            if battle._combatant_distance(actor, anchor) > 2:
                 raise ValueError("Enchanting Gaze requires an anchor within Cone 2 range.")
             tiles = targeting.affected_tiles(battle.grid, actor.position, anchor.position, cone_stub)
             if anchor.position not in tiles:
@@ -6384,7 +6411,7 @@ class PokemonState:
             tiles = targeting.affected_tiles(battle.grid, actor.position, anchor.position, cone_stub)
             affected: List[str] = []
             for pid, target in battle.pokemon.items():
-                if pid == self.actor_id or target.fainted or target.position not in tiles:
+                if pid == self.actor_id or target.fainted or not battle._footprint_overlaps_tiles(target, tiles):
                     continue
                 if battle._team_for(pid) == battle._team_for(self.actor_id):
                     continue
@@ -6434,7 +6461,7 @@ class PokemonState:
             if actor.position is None or target.position is None:
                 raise ValueError("Trickster follow-up requires grid positions.")
             max_range = 6 if self.maneuver_kind == "manipulate" else 1
-            if targeting.chebyshev_distance(actor.position, target.position) > max_range:
+            if battle._combatant_distance(actor, target) > max_range:
                 raise ValueError("Target is out of range for the chosen Trickster maneuver.")
             if self.maneuver_kind not in {"manipulate", "dirty_trick"}:
                 raise ValueError("Invalid Trickster maneuver type.")
@@ -6488,7 +6515,7 @@ class PokemonState:
                 raise ValueError("Invalid Dirty Fighting target.")
             if actor.position is None or target.position is None:
                 raise ValueError("Dirty Fighting requires grid positions.")
-            if targeting.chebyshev_distance(actor.position, target.position) > 1:
+            if battle._combatant_distance(actor, target) > 1:
                 raise ValueError("Dirty Fighting requires a target within Dirty Trick range.")
             if not any(entry.get("target") == self.target_id for entry in actor.get_temporary_effects("dirty_fighting_ready")):
                 raise ValueError("No Dirty Fighting follow-up is available for that target.")
@@ -6533,7 +6560,7 @@ class PokemonState:
                 raise ValueError("Invalid Weapon Finesse target.")
             if actor.position is None or target.position is None:
                 raise ValueError("Weapon Finesse requires grid positions.")
-            if targeting.chebyshev_distance(actor.position, target.position) > 1:
+            if battle._combatant_distance(actor, target) > 1:
                 raise ValueError("Weapon Finesse requires a target within maneuver range.")
             if self.maneuver.strip().lower() not in {"push", "trip", "disarm"}:
                 raise ValueError("Weapon Finesse only allows Push, Trip, or Disarm.")
@@ -7700,7 +7727,7 @@ class PokemonState:
                 for pid, mon in battle.pokemon.items():
                     if pid == self.actor_id or mon.fainted or not mon.active or mon.position is None:
                         continue
-                    if targeting.chebyshev_distance(actor.position, mon.position) > radius:
+                    if battle._combatant_distance(actor, mon) > radius:
                         continue
                     battle._notify_iron_mind(
                         pid,
@@ -8043,7 +8070,7 @@ class PokemonState:
                 if battle._team_for(target_id) != battle._team_for(self.actor_id):
                     raise ValueError("Ambient Aura barrier targets an ally.")
                 if actor.position is not None and target.position is not None:
-                    if targeting.chebyshev_distance(actor.position, target.position) > 5:
+                    if battle._combatant_distance(actor, target) > 5:
                         raise ValueError("Ambient Aura barrier requires a target within 5 meters.")
             if self.mode == "cure":
                 if not any(actor._normalized_status_name(status) in _VOLATILE_STATUS_NAMES for status in actor.statuses):
@@ -8151,7 +8178,7 @@ class PokemonState:
                     raise ValueError("Arctic Zeal requires a living active target.")
                 if battle._team_for(self.target_id) == battle._team_for(self.actor_id):
                     raise ValueError("Arctic Zeal slow targets a foe.")
-                if actor.position is None or target.position is None or targeting.chebyshev_distance(actor.position, target.position) > 5:
+                if actor.position is None or target.position is None or battle._combatant_distance(actor, target) > 5:
                     raise ValueError("Arctic Zeal slow requires a foe within 5.")
 
         def resolve(self, battle: "BattleState") -> None:
@@ -8321,7 +8348,7 @@ class PokemonState:
             for coord in cluster:
                 if not battle.grid.in_bounds(coord):
                     raise ValueError("Frozen Domain tile is out of bounds.")
-                if targeting.chebyshev_distance(actor.position, coord) > 6:
+                if battle._combatant_distance_to_coord(actor, coord) > 6:
                     raise ValueError("Frozen Domain tiles must be within 6 meters.")
                 tile_meta = battle.grid.tiles.get(coord, {})
                 tile_type = str(tile_meta.get("type", "") if isinstance(tile_meta, dict) else tile_meta).strip().lower()
@@ -8520,7 +8547,7 @@ class PokemonState:
             if len(cluster) != 8:
                 raise ValueError("Trapper requires exactly 8 trap tiles.")
             for coord in cluster:
-                if targeting.chebyshev_distance(actor.position, coord) > 6:
+                if battle._combatant_distance_to_coord(actor, coord) > 6:
                     raise ValueError("All Trapper tiles must be within 6 meters.")
             if not battle._trapper_tiles_are_contiguous(cluster):
                 raise ValueError("Trapper requires space for 8 contiguous trap tiles.")
@@ -8904,7 +8931,7 @@ class PokemonState:
                 raise ValueError("Psionic Sponge requires an active allied source.")
             if battle._team_for(self.actor_id) != battle._team_for(self.ally_id):
                 raise ValueError("Psionic Sponge requires an allied source.")
-            if targeting.chebyshev_distance(actor.position, ally.position) > self._range_limit(battle, actor):
+            if battle._combatant_distance(actor, ally) > self._range_limit(battle, actor):
                 raise ValueError("Psionic Sponge source is out of range.")
             move = battle._find_known_move(ally, self.move_name)
             if move is None or str(move.type or "").strip().lower() != "psychic":
@@ -10195,6 +10222,137 @@ class PokemonState:
                     return pid
             return None
 
+        def _footprint_tiles_for(
+            self,
+            actor_or_id: Optional[object],
+            position: Optional[Tuple[int, int]] = None,
+        ) -> Set[Tuple[int, int]]:
+            actor: Optional[PokemonState]
+            if isinstance(actor_or_id, PokemonState):
+                actor = actor_or_id
+            elif actor_or_id is None:
+                actor = None
+            else:
+                actor = self.pokemon.get(str(actor_or_id))
+            if actor is None:
+                return set()
+            return actor.footprint_tiles(self.grid, position)
+
+        def _occupied_tiles(
+            self,
+            *,
+            exclude_id: Optional[str] = None,
+            active_only: bool = True,
+            conscious_only: bool = True,
+        ) -> Set[Tuple[int, int]]:
+            occupied: Set[Tuple[int, int]] = set()
+            for pid, mon in self.pokemon.items():
+                if exclude_id is not None and pid == exclude_id:
+                    continue
+                if active_only and not mon.active:
+                    continue
+                if conscious_only and not self._is_conscious_combatant(mon):
+                    continue
+                occupied.update(mon.footprint_tiles(self.grid))
+            return occupied
+
+        def _position_can_fit(
+            self,
+            actor_id: str,
+            destination: Tuple[int, int],
+            *,
+            exclude_id: Optional[str] = None,
+            block_on_terrain: bool = True,
+            active_only: bool = True,
+            conscious_only: bool = True,
+        ) -> bool:
+            actor = self.pokemon.get(actor_id)
+            if actor is None:
+                return False
+            candidate_tiles = actor.footprint_tiles(None, destination)
+            if not candidate_tiles:
+                return False
+            if self.grid is not None:
+                for coord in candidate_tiles:
+                    if not self.grid.in_bounds(coord):
+                        return False
+                    if not block_on_terrain:
+                        continue
+                    tile_info = self.grid.tiles.get(coord, {})
+                    tile_type = str(tile_info.get("type", "")).lower() if isinstance(tile_info, dict) else str(tile_info).lower()
+                    if coord in self.grid.blockers or any(token in tile_type for token in ("wall", "blocker", "blocking", "void")):
+                        return False
+            occupied = self._occupied_tiles(
+                exclude_id=exclude_id if exclude_id is not None else actor_id,
+                active_only=active_only,
+                conscious_only=conscious_only,
+            )
+            return candidate_tiles.isdisjoint(occupied)
+
+        def _combatant_distance(
+            self,
+            left: object,
+            right: object,
+            *,
+            position_left: Optional[Tuple[int, int]] = None,
+            position_right: Optional[Tuple[int, int]] = None,
+        ) -> Optional[int]:
+            def resolve(entry: object) -> Optional[PokemonState]:
+                if isinstance(entry, PokemonState):
+                    return entry
+                if entry is None:
+                    return None
+                return self.pokemon.get(str(entry))
+
+            left_state = resolve(left)
+            right_state = resolve(right)
+            if left_state is None or right_state is None:
+                return None
+            left_anchor = position_left if position_left is not None else left_state.position
+            right_anchor = position_right if position_right is not None else right_state.position
+            if left_anchor is None or right_anchor is None:
+                return None
+            return targeting.footprint_distance(
+                left_anchor,
+                getattr(left_state.spec, "size", ""),
+                right_anchor,
+                getattr(right_state.spec, "size", ""),
+                self.grid,
+            )
+
+        def _footprint_overlaps_tiles(
+            self,
+            actor_or_id: object,
+            tiles: Set[Tuple[int, int]],
+            *,
+            position: Optional[Tuple[int, int]] = None,
+        ) -> bool:
+            if not tiles:
+                return False
+            footprint = self._footprint_tiles_for(actor_or_id, position)
+            return bool(footprint and footprint.intersection(tiles))
+
+        def _combatant_distance_to_coord(
+            self,
+            actor_or_id: object,
+            coord: Tuple[int, int],
+            *,
+            position: Optional[Tuple[int, int]] = None,
+        ) -> Optional[int]:
+            actor = actor_or_id if isinstance(actor_or_id, PokemonState) else self.pokemon.get(str(actor_or_id))
+            if actor is None:
+                return None
+            anchor = position if position is not None else actor.position
+            if anchor is None:
+                return None
+            return targeting.footprint_distance(
+                anchor,
+                getattr(actor.spec, "size", ""),
+                coord,
+                "Medium",
+                self.grid,
+            )
+
         def prompt_response(self, actor_id: Optional[str], payload: dict) -> object:
             if not payload.get("optional"):
                 return True
@@ -10853,7 +11011,7 @@ class PokemonState:
                     continue
                 if self._team_for(pid) != self._team_for(attacker_id):
                     continue
-                if targeting.chebyshev_distance(mon.position, defender.position) <= 1:
+                if self._combatant_distance(mon, defender) <= 1:
                     dx = mon.position[0] - defender.position[0]
                     dy = mon.position[1] - defender.position[1]
                     if dx == 0 and dy == 0:
@@ -11188,6 +11346,9 @@ class PokemonState:
 
         def queue_action(self, action: Action) -> None:
             self.action_resolver.queue_action(action)
+
+        def declare_action(self, action: Action) -> None:
+            self.action_resolver.declare_action(action)
 
         def resolve_next_action(self) -> Optional[Action]:
             action = self.action_resolver.resolve_next_action()
@@ -13255,7 +13416,7 @@ class PokemonState:
                 if range_limit is not None:
                     if actor.position is None or target.position is None:
                         continue
-                    if targeting.chebyshev_distance(actor.position, target.position) > int(range_limit):
+                    if self._combatant_distance(actor, target) > int(range_limit):
                         continue
                 candidates.append(target_id)
             return candidates
@@ -14044,7 +14205,7 @@ class PokemonState:
                 coord
                 for coord in reachable
                 if coord != actor.position
-                and targeting.chebyshev_distance(actor.position, coord) <= 1
+                and self._combatant_distance_to_coord(actor, coord) <= 1
                 and coord not in occupied
                 and (unsafe_tiles is None or coord not in unsafe_tiles)
             ]
@@ -14055,7 +14216,7 @@ class PokemonState:
                 if attacker is not None and attacker.position is not None:
                     candidates.sort(
                         key=lambda coord: (
-                            -targeting.chebyshev_distance(coord, attacker.position),
+                            -self._combatant_distance_to_coord(attacker, coord),
                             coord[0],
                             coord[1],
                         )
@@ -14276,7 +14437,7 @@ class PokemonState:
                 return False
             if defender.position is None or attacker.position is None:
                 return False
-            if targeting.chebyshev_distance(defender.position, attacker.position) != 1:
+            if self._combatant_distance(defender, attacker) != 1:
                 return False
             prompt = {
                 "actor_id": defender_id,
@@ -14698,12 +14859,12 @@ class PokemonState:
             candidates = [
                 coord
                 for coord in movement.legal_shift_tiles(self, actor_id)
-                if coord != actor.position and targeting.chebyshev_distance(actor.position, coord) <= 2
+                if coord != actor.position and self._combatant_distance_to_coord(actor, coord) <= 2
             ]
             if not candidates:
                 return None
-            enemy_positions = [
-                mon.position
+            enemies = [
+                mon
                 for pid, mon in self.pokemon.items()
                 if pid != actor_id
                 and not mon.fainted
@@ -14713,7 +14874,19 @@ class PokemonState:
             ]
             candidates.sort(
                 key=lambda coord: (
-                    min((targeting.chebyshev_distance(coord, pos) for pos in enemy_positions), default=99),
+                    min(
+                        (
+                            targeting.footprint_distance(
+                                coord,
+                                getattr(actor.spec, "size", ""),
+                                enemy.position,
+                                getattr(enemy.spec, "size", ""),
+                                self.grid,
+                            )
+                            for enemy in enemies
+                        ),
+                        default=99,
+                    ),
                     coord[0],
                     coord[1],
                 ),
@@ -14921,7 +15094,14 @@ class PokemonState:
                     continue
                 if not targeting.move_requires_target(move):
                     continue
-                if not targeting.is_target_in_range(actor.position, target.position, move):
+                if not targeting.is_target_in_range(
+                    actor.position,
+                    target.position,
+                    move,
+                    attacker_size=getattr(actor.spec, "size", ""),
+                    target_size=getattr(target.spec, "size", ""),
+                    grid=self.grid,
+                ):
                     continue
                 if self.grid is not None and not self.has_line_of_sight_from(
                     actor.position,
@@ -15337,7 +15517,7 @@ class PokemonState:
             for x in range(self.grid.width):
                 for y in range(self.grid.height):
                     coord = (x, y)
-                    if targeting.chebyshev_distance(actor.position, coord) > 6:
+                    if self._combatant_distance_to_coord(actor, coord) > 6:
                         continue
                     if coord in self.grid.blockers or coord in occupied:
                         continue
@@ -15569,7 +15749,7 @@ class PokemonState:
                 if source_pos is None or mon.position is None:
                     holders.append(pid)
                     continue
-                if targeting.chebyshev_distance(source_pos, mon.position) <= radius:
+                if self._combatant_distance_to_coord(mon, source_pos) <= radius:
                     holders.append(pid)
             return holders
 
@@ -15618,7 +15798,7 @@ class PokemonState:
                     continue
                 if mon.position is None or actor_pos is None:
                     return True
-                if targeting.chebyshev_distance(mon.position, actor_pos) <= 1:
+                if self._combatant_distance_to_coord(mon, actor_pos) <= 1:
                     return True
             return False
 
@@ -16750,7 +16930,7 @@ class PokemonState:
                 if mon.position is None or target_pos is None:
                     return pid
                 radius = 1 if mon.has_ability("Aroma Veil [Errata]") else 3
-                if targeting.chebyshev_distance(mon.position, target_pos) <= radius:
+                if self._combatant_distance_to_coord(mon, target_pos) <= radius:
                     return pid
             return None
 
@@ -16766,7 +16946,7 @@ class PokemonState:
                     continue
                 if mon.position is None or target_pos is None:
                     return pid
-                if targeting.chebyshev_distance(mon.position, target_pos) <= 3:
+                if self._combatant_distance_to_coord(mon, target_pos) <= 3:
                     return pid
             return None
 
@@ -16782,7 +16962,7 @@ class PokemonState:
                     continue
                 if mon.position is None or target_pos is None:
                     return pid
-                if targeting.chebyshev_distance(mon.position, target_pos) <= 3:
+                if self._combatant_distance_to_coord(mon, target_pos) <= 3:
                     return pid
             return None
 
@@ -16801,7 +16981,7 @@ class PokemonState:
                 range_limit = 5 if has_ability_exact(mon, "Flower Veil [Errata]") else 10
                 if mon.position is None or target_pos is None:
                     return pid
-                if targeting.chebyshev_distance(mon.position, target_pos) <= range_limit:
+                if self._combatant_distance_to_coord(mon, target_pos) <= range_limit:
                     return pid
             return None
 
@@ -16821,7 +17001,7 @@ class PokemonState:
                     continue
                 if mon.position is None or target_pos is None:
                     return pid
-                if targeting.chebyshev_distance(mon.position, target_pos) <= 1:
+                if self._combatant_distance(mon, target_id, position_left=mon.position, position_right=target_pos) <= 1:
                     return pid
             return None
 
@@ -16839,7 +17019,14 @@ class PokemonState:
                     continue
                 if mon.position is None:
                     continue
-                if targeting.chebyshev_distance(origin, mon.position) != 1:
+                distance = targeting.footprint_distance(
+                    origin,
+                    getattr(actor.spec, "size", ""),
+                    mon.position,
+                    getattr(mon.spec, "size", ""),
+                    self.grid,
+                )
+                if distance != 1:
                     continue
                 if self._team_for(pid) != actor_team:
                     opponents.append(pid)
@@ -16926,7 +17113,7 @@ class PokemonState:
                     continue
                 distance = 999
                 if actor.position is not None and mon.position is not None:
-                    distance = targeting.chebyshev_distance(actor.position, mon.position)
+                    distance = self._combatant_distance(actor, mon)
                 candidates.append((distance, pid))
             if not candidates:
                 return
@@ -16983,17 +17170,17 @@ class PokemonState:
                 reachable = {coord for coord in reachable if coord not in occupied}
                 if not reachable:
                     continue
-                current_distance = targeting.chebyshev_distance(mon.position, released.position)
+                current_distance = self._combatant_distance(mon, released)
                 candidates = [
                     coord
                     for coord in reachable
-                    if targeting.chebyshev_distance(coord, released.position) < current_distance
+                    if self._combatant_distance_to_coord(released, coord) < current_distance
                 ]
                 if not candidates:
                     continue
                 candidates.sort(
                     key=lambda coord: (
-                        targeting.chebyshev_distance(coord, released.position),
+                        self._combatant_distance_to_coord(released, coord),
                         coord[0],
                         coord[1],
                     )
@@ -17074,7 +17261,7 @@ class PokemonState:
                             continue
                         if foe.position is None:
                             continue
-                        if targeting.chebyshev_distance(mon.position, foe.position) > 5:
+                        if self._combatant_distance(mon, foe) > 5:
                             continue
                         targets.append((tid, foe))
                 else:
@@ -17207,7 +17394,7 @@ class PokemonState:
                 return
             if attacker.position is None or defender.position is None:
                 return
-            if targeting.chebyshev_distance(attacker.position, defender.position) != 1:
+            if self._combatant_distance(attacker, defender) != 1:
                 return
             if self._has_used_aoo(attacker_id):
                 return
@@ -17314,7 +17501,7 @@ class PokemonState:
                 if (
                     target
                     and target.position
-                    and targeting.chebyshev_distance(attacker.position, target.position) == 1
+                    and self._combatant_distance(attacker, target) == 1
                 ):
                     return
             for opponent_id in self._adjacent_opponents(attacker_id):
@@ -17445,7 +17632,13 @@ class PokemonState:
                 )
                 return None
             interceptors.sort(
-                key=lambda item: targeting.chebyshev_distance(item[1].position, target_pos)
+                key=lambda item: targeting.footprint_distance(
+                    item[1].position,
+                    getattr(item[1].spec, "size", ""),
+                    target_pos,
+                    "Medium",
+                    self.grid,
+                )
                 if item[1].position is not None
                 else 99
             )
@@ -17464,9 +17657,22 @@ class PokemonState:
                         }
                     )
                     return None
-            distance = targeting.chebyshev_distance(interceptor.position, target_pos)
+            distance = targeting.footprint_distance(
+                interceptor.position,
+                getattr(interceptor.spec, "size", ""),
+                target_pos,
+                "Medium",
+                self.grid,
+            )
             if kind == "melee":
-                if targeting.chebyshev_distance(attacker.position, target_pos) != 1:
+                attacker_distance = targeting.footprint_distance(
+                    attacker.position,
+                    getattr(attacker.spec, "size", ""),
+                    target_pos,
+                    "Medium",
+                    self.grid,
+                )
+                if attacker_distance != 1:
                     self.log_event(
                         {
                             "type": "maneuver",
@@ -17480,7 +17686,14 @@ class PokemonState:
             if distance <= 0:
                 distance = 1
             else:
-                if targeting.chebyshev_distance(attacker.position, target_pos) <= 1:
+                attacker_distance = targeting.footprint_distance(
+                    attacker.position,
+                    getattr(attacker.spec, "size", ""),
+                    target_pos,
+                    "Medium",
+                    self.grid,
+                )
+                if attacker_distance <= 1:
                     self.log_event(
                         {
                             "type": "maneuver",
@@ -17518,10 +17731,22 @@ class PokemonState:
                     )
                     return None
                 line_tiles.sort(
-                    key=lambda coord: targeting.chebyshev_distance(interceptor.position, coord)
+                    key=lambda coord: targeting.footprint_distance(
+                        interceptor.position,
+                        getattr(interceptor.spec, "size", ""),
+                        coord,
+                        "Medium",
+                        self.grid,
+                    )
                 )
                 target_pos = line_tiles[0]
-                distance = targeting.chebyshev_distance(interceptor.position, target_pos)
+                distance = targeting.footprint_distance(
+                    interceptor.position,
+                    getattr(interceptor.spec, "size", ""),
+                    target_pos,
+                    "Medium",
+                    self.grid,
+                )
             skill = max(
                 self._combatant_skill_rank(interceptor, "acrobatics", actor_id=interceptor_id),
                 self._combatant_skill_rank(interceptor, "athletics", actor_id=interceptor_id),
@@ -17576,11 +17801,11 @@ class PokemonState:
             candidates = [
                 coord
                 for coord in reachable
-                if targeting.chebyshev_distance(interceptor.position, coord) <= shift_amount
+                if self._combatant_distance_to_coord(interceptor, coord) <= shift_amount
             ]
             if candidates:
                 candidates.sort(
-                    key=lambda coord: targeting.chebyshev_distance(coord, target_pos)
+                    key=lambda coord: self._combatant_distance_to_coord(target_id, coord)
                 )
                 interceptor.position = candidates[0]
             if success and kind == "melee":
@@ -17697,10 +17922,17 @@ class PokemonState:
                     continue
                 if mon.position is None:
                     continue
-                distance = targeting.chebyshev_distance(attacker.position, mon.position)
+                distance = self._combatant_distance(attacker, mon)
                 if distance > 10:
                     continue
-                if not targeting.is_target_in_range(attacker.position, mon.position, move):
+                if not targeting.is_target_in_range(
+                    attacker.position,
+                    mon.position,
+                    move,
+                    attacker_size=getattr(attacker.spec, "size", ""),
+                    target_size=getattr(mon.spec, "size", ""),
+                    grid=self.grid,
+                ):
                     continue
                 if best_distance is None or distance < best_distance:
                     best_candidate = pid
@@ -17762,10 +17994,17 @@ class PokemonState:
                     continue
                 if mon.position is None:
                     continue
-                distance = targeting.chebyshev_distance(attacker.position, mon.position)
+                distance = self._combatant_distance(attacker, mon)
                 if distance > 10:
                     continue
-                if not targeting.is_target_in_range(attacker.position, mon.position, move):
+                if not targeting.is_target_in_range(
+                    attacker.position,
+                    mon.position,
+                    move,
+                    attacker_size=getattr(attacker.spec, "size", ""),
+                    target_size=getattr(mon.spec, "size", ""),
+                    grid=self.grid,
+                ):
                     continue
                 if best_distance is None or distance < best_distance:
                     best_candidate = pid
@@ -17993,7 +18232,7 @@ class PokemonState:
                 return
             if attacker.position is None or defender.position is None:
                 return
-            if targeting.chebyshev_distance(attacker.position, defender.position) != 1:
+            if self._combatant_distance(attacker, defender) != 1:
                 return
             if self._has_used_aoo(attacker_id):
                 return
@@ -18112,7 +18351,7 @@ class PokemonState:
                 opponent = self.pokemon.get(opponent_id)
                 if opponent is None or opponent.position is None:
                     continue
-                if targeting.chebyshev_distance(destination, opponent.position) == 1:
+                if self._combatant_distance(mover, opponent, position_left=destination) == 1:
                     continue
                 self._perform_attack_of_opportunity(opponent_id, mover_id, "shift")
     
@@ -18162,7 +18401,7 @@ class PokemonState:
                 if (
                     target
                     and target.position
-                    and targeting.chebyshev_distance(attacker.position, target.position) == 1
+                    and self._combatant_distance(attacker, target) == 1
                 ):
                     return
             for opponent_id in self._adjacent_opponents(attacker_id):
@@ -18295,7 +18534,13 @@ class PokemonState:
                 )
                 return None
             interceptors.sort(
-                key=lambda item: targeting.chebyshev_distance(item[1].position, target_pos)
+                key=lambda item: targeting.footprint_distance(
+                    item[1].position,
+                    getattr(item[1].spec, "size", ""),
+                    target_pos,
+                    "Medium",
+                    self.grid,
+                )
                 if item[1].position is not None
                 else 99
             )
@@ -18314,9 +18559,22 @@ class PokemonState:
                         }
                     )
                     return None
-            distance = targeting.chebyshev_distance(interceptor.position, target_pos)
+            distance = targeting.footprint_distance(
+                interceptor.position,
+                getattr(interceptor.spec, "size", ""),
+                target_pos,
+                "Medium",
+                self.grid,
+            )
             if kind == "melee":
-                if targeting.chebyshev_distance(attacker.position, target_pos) != 1:
+                attacker_distance = targeting.footprint_distance(
+                    attacker.position,
+                    getattr(attacker.spec, "size", ""),
+                    target_pos,
+                    "Medium",
+                    self.grid,
+                )
+                if attacker_distance != 1:
                     self.log_event(
                         {
                             "type": "maneuver",
@@ -18330,7 +18588,14 @@ class PokemonState:
             if distance <= 0:
                 distance = 1
             else:
-                if targeting.chebyshev_distance(attacker.position, target_pos) <= 1:
+                attacker_distance = targeting.footprint_distance(
+                    attacker.position,
+                    getattr(attacker.spec, "size", ""),
+                    target_pos,
+                    "Medium",
+                    self.grid,
+                )
+                if attacker_distance <= 1:
                     self.log_event(
                         {
                             "type": "maneuver",
@@ -18368,10 +18633,22 @@ class PokemonState:
                     )
                     return None
                 line_tiles.sort(
-                    key=lambda coord: targeting.chebyshev_distance(interceptor.position, coord)
+                    key=lambda coord: targeting.footprint_distance(
+                        interceptor.position,
+                        getattr(interceptor.spec, "size", ""),
+                        coord,
+                        "Medium",
+                        self.grid,
+                    )
                 )
                 target_pos = line_tiles[0]
-                distance = targeting.chebyshev_distance(interceptor.position, target_pos)
+                distance = targeting.footprint_distance(
+                    interceptor.position,
+                    getattr(interceptor.spec, "size", ""),
+                    target_pos,
+                    "Medium",
+                    self.grid,
+                )
             skill = max(
                 self._combatant_skill_rank(interceptor, "acrobatics", actor_id=interceptor_id),
                 self._combatant_skill_rank(interceptor, "athletics", actor_id=interceptor_id),
@@ -18426,11 +18703,11 @@ class PokemonState:
             candidates = [
                 coord
                 for coord in reachable
-                if targeting.chebyshev_distance(interceptor.position, coord) <= shift_amount
+                if self._combatant_distance_to_coord(interceptor, coord) <= shift_amount
             ]
             if candidates:
                 candidates.sort(
-                    key=lambda coord: targeting.chebyshev_distance(coord, target_pos)
+                    key=lambda coord: self._combatant_distance_to_coord(target_id, coord)
                 )
                 interceptor.position = candidates[0]
             if success and kind == "melee":
@@ -18673,7 +18950,7 @@ class PokemonState:
                     return
                 if other.position is None:
                     return
-                if targeting.chebyshev_distance(actor.position, other.position) > 1:
+                if self._combatant_distance(actor, other) > 1:
                     return
                 origin = actor.position
                 actor.position = destination
@@ -18920,9 +19197,9 @@ class PokemonState:
     
             def score(coord: Tuple[int, int]) -> int:
                 if not enemies:
-                    return targeting.chebyshev_distance(origin, coord)
+                    return self._combatant_distance_to_coord(actor_id, coord, position=origin)
                 distances = [
-                    targeting.chebyshev_distance(coord, enemy.position)
+                    self._combatant_distance_to_coord(enemy, coord)
                     for enemy in enemies
                     if enemy.position is not None
                 ]
@@ -18932,7 +19209,7 @@ class PokemonState:
                 reachable,
                 key=lambda coord: (
                     score(coord),
-                    targeting.chebyshev_distance(origin, coord),
+                    self._combatant_distance_to_coord(actor_id, coord, position=origin),
                 ),
             )
     
@@ -18960,7 +19237,7 @@ class PokemonState:
                 return True
             if actor.position is None or source.position is None:
                 return True
-            return targeting.chebyshev_distance(actor.position, source.position) > 12
+            return self._combatant_distance(actor, source) > 12
     
         def _pokemon_for_action_summary(self, actor_id: str) -> Optional[PokemonState]:
             return self.pokemon.get(actor_id)
@@ -19448,7 +19725,7 @@ class PokemonState:
                         continue
                     if mon.position is None or replacement.position is None:
                         continue
-                    if targeting.chebyshev_distance(mon.position, replacement.position) > 2:
+                    if self._combatant_distance(mon, replacement) > 2:
                         continue
                     if any(value != 0 for value in mon.combat_stages.values()):
                         for stat in mon.combat_stages:
@@ -19503,7 +19780,7 @@ class PokemonState:
                     continue
                 if self._team_for(pid) == target_team:
                     continue
-                if targeting.chebyshev_distance(mon.position, target.position) != 1:
+                if self._combatant_distance(mon, target) != 1:
                     continue
                 pursuit_move = self._find_known_move(mon, "Pursuit")
                 if pursuit_move is None:
@@ -19652,10 +19929,17 @@ class PokemonState:
                     continue
                 if mon.position is None:
                     continue
-                distance = targeting.chebyshev_distance(attacker.position, mon.position)
+                distance = self._combatant_distance(attacker, mon)
                 if distance > 10:
                     continue
-                if not targeting.is_target_in_range(attacker.position, mon.position, move):
+                if not targeting.is_target_in_range(
+                    attacker.position,
+                    mon.position,
+                    move,
+                    attacker_size=getattr(attacker.spec, "size", ""),
+                    target_size=getattr(mon.spec, "size", ""),
+                    grid=self.grid,
+                ):
                     continue
                 if best_distance is None or distance < best_distance:
                     best_candidate = pid
@@ -19856,10 +20140,24 @@ class PokemonState:
             in_range = [
                 coord
                 for coord in reachable
-                if targeting.is_target_in_range(coord, target_pos, move)
+                if targeting.is_target_in_range(
+                    coord,
+                    target_pos,
+                    move,
+                    attacker_size=getattr(actor.spec, "size", ""),
+                    grid=self.grid,
+                )
             ]
             candidates = in_range or reachable
-            candidates.sort(key=lambda coord: targeting.chebyshev_distance(coord, target_pos))
+            candidates.sort(
+                key=lambda coord: targeting.footprint_distance(
+                    coord,
+                    getattr(actor.spec, "size", ""),
+                    target_pos,
+                    getattr(target.spec, "size", "") if target is not None else "Medium",
+                    self.grid,
+                )
+            )
             actor.position = candidates[0]
 
         def _move_missile_launch_tokens(self, actor_id: str) -> None:
@@ -19886,7 +20184,7 @@ class PokemonState:
             def nearest_target(coord: Tuple[int, int]) -> Tuple[int, str, PokemonState]:
                 choices = []
                 for pid, mon in opponents:
-                    distance = targeting.chebyshev_distance(coord, mon.position)
+                    distance = self._combatant_distance_to_coord(mon, coord)
                     choices.append((distance, pid, mon))
                 choices.sort(key=lambda item: (item[0], item[1]))
                 return choices[0]
@@ -19912,7 +20210,7 @@ class PokemonState:
                             token in tile_type for token in ("wall", "blocker", "blocking")
                         ):
                             continue
-                        new_dist = targeting.chebyshev_distance(neighbor, target.position)
+                        new_dist = self._combatant_distance_to_coord(target, neighbor)
                         options.append((new_dist, neighbor))
                     if not options:
                         break
@@ -20375,7 +20673,7 @@ class PokemonState:
                     dx = 0 if tx == ax else (1 if tx > ax else -1)
                     dy = 0 if ty == ay else (1 if ty > ay else -1)
                     if dx == 0 or dy == 0:
-                        steps = min(10, targeting.chebyshev_distance(attacker.position, target_pos))
+                        steps = min(10, self._combatant_distance_to_coord(attacker, target_pos))
                         new_pos = attacker.position
                         for _ in range(steps):
                             candidate = (new_pos[0] + dx, new_pos[1] + dy)
@@ -20542,21 +20840,28 @@ class PokemonState:
             forest_lord_origins: List[Tuple[int, int]] = []
             clay_cannons_origins: List[Tuple[int, int]] = []
             mini_noses_origins: List[Tuple[int, int]] = []
-            if attacker.position is not None and resolved_target_pos is not None:
+            dimensional_rift_origins: List[Tuple[int, int]] = []
+            if attacker.position is not None:
                 clay_cannons_origins = self._clay_cannons_origins(attacker, move)
-            origin_candidates = clay_cannons_origins
+                dimensional_rift_origins = self._dimensional_rifts_origins(attacker, move)
+            origin_candidates = (
+                self._move_origin_candidates(attacker, move)
+                if attacker.position is not None and resolved_target_pos is not None
+                else []
+            )
             if attacker.get_temporary_effects("forest_lord"):
                 forest_lord_origins = self._forest_lord_origins(attacker, move)
-                origin_candidates = forest_lord_origins + [
-                    origin for origin in origin_candidates if origin not in forest_lord_origins
-                ]
             if attacker.get_temporary_effects("mini_noses"):
                 mini_noses_origins = self._mini_noses_origins(attacker, move)
-                origin_candidates = mini_noses_origins + [
-                    origin for origin in origin_candidates if origin not in mini_noses_origins
-                ]
             for origin in origin_candidates:
-                if not targeting.is_target_in_range(origin, resolved_target_pos, move):
+                if not targeting.is_target_in_range(
+                    origin,
+                    resolved_target_pos,
+                    move,
+                    attacker_size=getattr(attacker.spec, "size", ""),
+                    target_size=getattr(defender.spec, "size", "") if defender is not None else "Medium",
+                    grid=self.grid,
+                ):
                     continue
                 if self.grid and not self.has_line_of_sight_from(
                     origin,
@@ -20567,6 +20872,18 @@ class PokemonState:
                 clay_cannons_origin = origin
                 break
             if clay_cannons_origin and clay_cannons_origin != attacker.position:
+                if dimensional_rift_origins and clay_cannons_origin in dimensional_rift_origins:
+                    self.log_event(
+                        {
+                            "type": "ability",
+                            "actor": attacker_id,
+                            "ability": "Dimensional Rifts",
+                            "move": move.name,
+                            "effect": "origin_shift",
+                            "from": attacker.position,
+                            "to": clay_cannons_origin,
+                        }
+                    )
                 if forest_lord_origins and clay_cannons_origin in forest_lord_origins:
                     self.log_event(
                         {
@@ -20663,7 +20980,7 @@ class PokemonState:
                     for cid, mon in self.pokemon.items():
                         if mon.hp is None or mon.hp <= 0:
                             continue
-                        if mon.position in tiles:
+                        if self._footprint_overlaps_tiles(mon, tiles):
                             affected_ids.append(cid)
                 else:
                     affected_ids = [
@@ -20774,7 +21091,7 @@ class PokemonState:
                             continue
                         if mon.position is None:
                             continue
-                        if targeting.chebyshev_distance(attacker.position, mon.position) <= 1:
+                        if self._combatant_distance(attacker, mon) <= 1:
                             targets.append((pid, mon))
                 if not targets:
                     self.log_event(
@@ -20891,7 +21208,7 @@ class PokemonState:
                     state = self.pokemon.get(cid)
                     if not state or state.hp is None or state.hp <= 0:
                         continue
-                    if state.position in tiles:
+                    if self._footprint_overlaps_tiles(state, tiles):
                         affected.append(cid)
             if (
                 area_kind == "burst"
@@ -20902,7 +21219,7 @@ class PokemonState:
                 for cid, state in self.pokemon.items():
                     if state.position is None or state.hp is None or state.hp <= 0:
                         continue
-                    if targeting.chebyshev_distance(attacker.position, state.position) <= radius:
+                    if self._combatant_distance(attacker, state) <= radius:
                         if cid not in affected:
                             affected.append(cid)
             if (
@@ -20915,7 +21232,7 @@ class PokemonState:
                 for cid, state in self.pokemon.items():
                     if state.position is None or state.hp is None or state.hp <= 0:
                         continue
-                    if targeting.chebyshev_distance(attacker.position, state.position) <= radius:
+                    if self._combatant_distance(attacker, state) <= radius:
                         if cid not in affected:
                             affected.append(cid)
             if (
@@ -20930,7 +21247,7 @@ class PokemonState:
                     if state.position is not None
                     and state.hp is not None
                     and state.hp > 0
-                    and targeting.chebyshev_distance(attacker.position, state.position) <= radius
+                    and self._combatant_distance(attacker, state) <= radius
                 ]
             if attacker.has_ability("Trinity") and move_name == "tri attack" and attacker.position is not None:
                 prioritized: List[str] = []
@@ -20939,7 +21256,7 @@ class PokemonState:
                 remaining = [cid for cid in affected if cid not in prioritized and cid != attacker_id]
                 remaining.sort(
                     key=lambda cid: (
-                        targeting.chebyshev_distance(attacker.position, self.pokemon[cid].position)
+                        self._combatant_distance(attacker, self.pokemon[cid])
                         if self.pokemon.get(cid) and self.pokemon[cid].position is not None
                         else 99,
                         cid,
@@ -20980,7 +21297,14 @@ class PokemonState:
                         continue
                     if state.position is None:
                         continue
-                    if not targeting.is_target_in_range(attacker.position, state.position, move):
+                    if not targeting.is_target_in_range(
+                        attacker.position,
+                        state.position,
+                        move,
+                        attacker_size=getattr(attacker.spec, "size", ""),
+                        target_size=getattr(state.spec, "size", ""),
+                        grid=self.grid,
+                    ):
                         continue
                     if self.grid is not None and not self.has_line_of_sight_from(
                         attacker.position, state.position, exclude_ids={attacker_id, cid}
@@ -20990,7 +21314,7 @@ class PokemonState:
                 if candidates:
                     candidates.sort(
                         key=lambda cid: (
-                            targeting.chebyshev_distance(attacker.position, self.pokemon[cid].position),
+                            self._combatant_distance(attacker, self.pokemon[cid]),
                             cid,
                         )
                     )
@@ -21337,8 +21661,8 @@ class PokemonState:
                         origin = attacker.position
                         candidates.sort(
                             key=lambda coord: (
-                                targeting.chebyshev_distance(coord, target_pos),
-                                targeting.chebyshev_distance(origin, coord),
+                                self._combatant_distance_to_coord(target_id, coord),
+                                self._combatant_distance_to_coord(attacker, coord, position=origin),
                             )
                         )
                         destination = candidates[0]
@@ -22160,7 +22484,7 @@ class PokemonState:
                     and (effective_move.type or "").strip().lower() == "water"
                     and attacker.position is not None
                     and defender_state.position is not None
-                    and targeting.chebyshev_distance(attacker.position, defender_state.position) <= 1
+                    and self._combatant_distance(attacker, defender_state) <= 1
                     and (copy_move := copy.deepcopy(effective_move))
                 ):
                     copy_move.range_kind = "Melee"
@@ -22834,7 +23158,7 @@ class PokemonState:
                             continue
                         if mon.position is None or mon.hp is None or mon.hp <= 0:
                             continue
-                        if targeting.chebyshev_distance(defender_state.position, mon.position) <= 2:
+                        if self._combatant_distance(defender_state, mon) <= 2:
                             clear_zone = False
                             break
                     if clear_zone:
@@ -22865,7 +23189,7 @@ class PokemonState:
                             continue
                         if mon.position is None or mon.hp is None or mon.hp <= 0:
                             continue
-                        if targeting.chebyshev_distance(defender_state.position, mon.position) <= 2:
+                        if self._combatant_distance(defender_state, mon) <= 2:
                             clear_zone = False
                             break
                     if clear_zone:
@@ -24236,7 +24560,13 @@ class PokemonState:
                         and targeting.normalized_target_kind(effective_move) == "ranged"
                         and not targeting.normalized_area_kind(effective_move)
                     ):
-                        travel_distance = targeting.chebyshev_distance(attacker.position, defender.position)
+                        travel_distance = targeting.footprint_distance(
+                            attacker.position,
+                            getattr(attacker.spec, "size", ""),
+                            defender.position,
+                            getattr(defender.spec, "size", ""),
+                            self.grid,
+                        )
                         bonus = max(0, int(travel_distance or 0))
                         if result.get("crit"):
                             bonus += max(0, int(result.get("damage_roll", 0) or 0))
@@ -25706,7 +26036,7 @@ class PokemonState:
                     if not mon.has_ability("Dancer"):
                         continue
                     if attacker.position is not None and mon.position is not None:
-                        if targeting.chebyshev_distance(attacker.position, mon.position) > 10:
+                        if self._combatant_distance(attacker, mon) > 10:
                             continue
                     used_entry = next(iter(mon.get_temporary_effects("dancer_used")), None)
                     used_count = int(used_entry.get("count", 0) or 0) if used_entry else 0
@@ -26106,7 +26436,7 @@ class PokemonState:
             target_team = self._team_for(target_id)
             choices: List[dict] = []
             for coord, tile in self.grid.tiles.items():
-                if targeting.chebyshev_distance(target.position, coord) > 4:
+                if self._combatant_distance_to_coord(target, coord) > 4:
                     continue
                 if not isinstance(tile, dict):
                     continue
@@ -26129,7 +26459,14 @@ class PokemonState:
                             "layers": int(hazards.get(hazard, 0) or 0),
                         }
                     )
-            choices.sort(key=lambda entry: (targeting.chebyshev_distance(target.position, entry["coord"]), entry["coord"][0], entry["coord"][1], entry["hazard"]))
+            choices.sort(
+                key=lambda entry: (
+                    self._combatant_distance_to_coord(target, entry["coord"]),
+                    entry["coord"][0],
+                    entry["coord"][1],
+                    entry["hazard"],
+                )
+            )
             return choices
 
         def _maybe_suppress_tough_as_schist_hazard(
@@ -26151,7 +26488,7 @@ class PokemonState:
             for pid, mon in self.pokemon.items():
                 if mon.fainted or mon.position is None or self._team_for(pid) != source_team:
                     continue
-                if targeting.chebyshev_distance(mon.position, coord) > 4:
+                if self._combatant_distance_to_coord(mon, coord) > 4:
                     continue
                 if not any(
                     str(entry.get("source_id") or "").strip() != ""
@@ -26159,7 +26496,7 @@ class PokemonState:
                     for entry in mon.get_temporary_effects("tough_as_schist_bound")
                 ):
                     continue
-                candidates.append((targeting.chebyshev_distance(mon.position, coord), pid, mon))
+                candidates.append((self._combatant_distance_to_coord(mon, coord), pid, mon))
             if not candidates:
                 return False
             candidates.sort(key=lambda entry: (entry[0], entry[1]))
@@ -27287,6 +27624,10 @@ class PokemonState:
                 payload["remaining"] = applied_remaining
             if status_key in _FLINCH_STATUS_NAMES:
                 payload["applied_round"] = self.round
+            if effect == "item_status":
+                payload["source"] = str(move.name or "").strip() or "Item"
+                if attacker_id:
+                    payload["source_id"] = attacker_id
             target.statuses.append(payload)
             event = {
                 "type": "status",
@@ -27298,6 +27639,10 @@ class PokemonState:
                 "description": description,
                 "target_hp": target.hp,
             }
+            if effect == "item_status":
+                event["source"] = str(move.name or "").strip() or "Item"
+                if attacker_id:
+                    event["source_id"] = attacker_id
             if roll is not None:
                 event["roll"] = roll
             if applied_remaining is not None:
@@ -27799,7 +28144,7 @@ class PokemonState:
                         self.grid is not None
                         and mon.position is not None
                         and target.position is not None
-                        and targeting.chebyshev_distance(mon.position, target.position) > 10
+                        and self._combatant_distance(mon, target) > 10
                     ):
                         continue
                     for idx, item, entry in self._iter_held_items(mon):
@@ -28118,7 +28463,14 @@ class PokemonState:
                         and primary.hp is not None
                         and primary.hp > 0
                         and primary.position is not None
-                        and targeting.is_target_in_range(attacker.position, primary.position, move)
+                        and targeting.is_target_in_range(
+                            attacker.position,
+                            primary.position,
+                            move,
+                            attacker_size=getattr(attacker.spec, "size", ""),
+                            target_size=getattr(primary.spec, "size", ""),
+                            grid=self.grid,
+                        )
                     ):
                         candidates = [(0, primary_target_id, primary)]
                 if not candidates:
@@ -28131,9 +28483,16 @@ class PokemonState:
                             continue
                         if self._team_for(pid) == self._team_for(attacker_id):
                             continue
-                        if not targeting.is_target_in_range(attacker.position, mon.position, move):
+                        if not targeting.is_target_in_range(
+                            attacker.position,
+                            mon.position,
+                            move,
+                            attacker_size=getattr(attacker.spec, "size", ""),
+                            target_size=getattr(mon.spec, "size", ""),
+                            grid=self.grid,
+                        ):
                             continue
-                        distance = targeting.chebyshev_distance(attacker.position, mon.position)
+                        distance = self._combatant_distance(attacker, mon)
                         candidates.append((distance, pid, mon))
                 if not candidates:
                     break
@@ -28154,11 +28513,11 @@ class PokemonState:
                         coord
                         for coord in reachable
                         if coord not in occupied
-                        and targeting.chebyshev_distance(origin, coord) <= shift_distance
+                        and self._combatant_distance_to_coord(attacker, coord, position=origin) <= shift_distance
                     ]
                     if shift_options:
                         shift_options.sort(
-                            key=lambda coord: targeting.chebyshev_distance(coord, target_mon.position)
+                            key=lambda coord: self._combatant_distance_to_coord(target_mon, coord)
                         )
                         destination = shift_options[0]
                         if destination != origin:
@@ -28421,7 +28780,10 @@ class PokemonState:
                     break
                 if candidate in self.grid.blockers or candidate in occupied:
                     break
-                if anchor_pos is not None and targeting.chebyshev_distance(candidate, anchor_pos) > 5:
+                if (
+                    anchor_pos is not None
+                    and self._combatant_distance_to_coord(target_id, anchor_pos, position=candidate) > 5
+                ):
                     break
                 current = candidate
             if current == target.position:
@@ -28486,7 +28848,7 @@ class PokemonState:
                         for x in range(self.grid.width):
                             for y in range(self.grid.height):
                                 coord = (x, y)
-                                if targeting.chebyshev_distance(attacker.position, coord) > radius:
+                                if self._combatant_distance_to_coord(attacker, coord) > radius:
                                     continue
                                 origins.append(coord)
                     break
@@ -28518,7 +28880,7 @@ class PokemonState:
                         tile_type = str(metadata.get("type", "")).strip().lower()
                         if tile_type not in {"tree", "forest", "woods"}:
                             continue
-                        if targeting.chebyshev_distance(attacker.position, coord) > 10:
+                        if self._combatant_distance_to_coord(attacker, coord) > 10:
                             continue
                         origins.append(coord)
                 return origins
@@ -28542,6 +28904,194 @@ class PokemonState:
                             continue
                     return origins
             return [attacker.position]
+
+        def _has_dimensional_rifts(
+            self,
+            attacker: PokemonState,
+        ) -> bool:
+            names = {str(name or "").strip().lower() for name in attacker.ability_names()}
+            return "dimensional rift" in names or "dimensional rifts" in names
+
+        def _dimensional_rifts_origins(
+            self, attacker: PokemonState, move: MoveSpec
+        ) -> List[Tuple[int, int]]:
+            if attacker.position is None:
+                return []
+            move_name = str(move.name or "").strip().lower()
+            if move_name in {"hyperspace hole", "hyperspace fury"}:
+                return [attacker.position]
+            explicit_origins: List[Tuple[int, int]] = []
+            for entry in attacker.get_temporary_effects("dimensional_rift_origin_override"):
+                expires_round = entry.get("expires_round")
+                if expires_round is not None and self.round > int(expires_round):
+                    continue
+                for coord in entry.get("origins") or []:
+                    try:
+                        explicit_origins.append((int(coord[0]), int(coord[1])))
+                    except (TypeError, ValueError, IndexError):
+                        continue
+            if explicit_origins:
+                return explicit_origins
+            if not self._has_dimensional_rifts(attacker):
+                return [attacker.position]
+            origins = [attacker.position]
+            if self.grid is None:
+                return origins
+            for x in range(self.grid.width):
+                for y in range(self.grid.height):
+                    coord = (x, y)
+                    if self._combatant_distance_to_coord(attacker, coord) is None:
+                        continue
+                    if self._combatant_distance_to_coord(attacker, coord) > 10:
+                        continue
+                    origins.append(coord)
+            unique: List[Tuple[int, int]] = []
+            seen: Set[Tuple[int, int]] = set()
+            for origin in origins:
+                if origin in seen:
+                    continue
+                seen.add(origin)
+                unique.append(origin)
+            return unique
+
+        def _move_origin_candidates(
+            self, attacker: PokemonState, move: MoveSpec
+        ) -> List[Tuple[int, int]]:
+            origin_candidates = self._clay_cannons_origins(attacker, move)
+            dimensional_rift_origins = self._dimensional_rifts_origins(attacker, move)
+            origin_candidates = dimensional_rift_origins + [
+                origin for origin in origin_candidates if origin not in dimensional_rift_origins
+            ]
+            if attacker.get_temporary_effects("forest_lord"):
+                forest_lord_origins = self._forest_lord_origins(attacker, move)
+                origin_candidates = forest_lord_origins + [
+                    origin for origin in origin_candidates if origin not in forest_lord_origins
+                ]
+            if attacker.get_temporary_effects("mini_noses"):
+                mini_noses_origins = self._mini_noses_origins(attacker, move)
+                origin_candidates = mini_noses_origins + [
+                    origin for origin in origin_candidates if origin not in mini_noses_origins
+                ]
+            return origin_candidates
+
+        def _create_dimensional_rift(
+            self,
+            attacker_id: str,
+            origin: Optional[Tuple[int, int]],
+            *,
+            source_move: str,
+        ) -> None:
+            attacker = self.pokemon.get(attacker_id)
+            if attacker is None or origin is None or not self._has_dimensional_rifts(attacker):
+                return
+            attacker.add_temporary_effect(
+                "dimensional_rift",
+                origin=[int(origin[0]), int(origin[1])],
+                source_move=source_move,
+                created_round=self.round,
+                expires_round=self.round + 3,
+            )
+            self.log_event(
+                {
+                    "type": "ability",
+                    "actor": attacker_id,
+                    "ability": "Dimensional Rifts",
+                    "move": source_move,
+                    "effect": "rift_created",
+                    "origin": origin,
+                    "description": "Dimensional Rifts leaves behind a lingering rift.",
+                    "target_hp": attacker.hp,
+                }
+            )
+
+        def _resolve_dimensional_rifts_end_of_round(self) -> None:
+            if self.round < 1:
+                return
+            for actor_id, actor in self.pokemon.items():
+                if actor.fainted or not actor.active or not self._has_dimensional_rifts(actor):
+                    continue
+                active_rifts = []
+                for entry in actor.get_temporary_effects("dimensional_rift"):
+                    expires_round = entry.get("expires_round")
+                    if expires_round is not None and self.round > int(expires_round):
+                        continue
+                    active_rifts.append(entry)
+                if not active_rifts:
+                    continue
+                enemy_ids = [
+                    pid
+                    for pid, mon in self.pokemon.items()
+                    if mon.active and not mon.fainted and self._team_for(pid) != self._team_for(actor_id)
+                ]
+                for entry in active_rifts:
+                    origin_data = entry.get("origin")
+                    try:
+                        origin = (int(origin_data[0]), int(origin_data[1])) if origin_data else None
+                    except (TypeError, ValueError, IndexError):
+                        origin = None
+                    if origin is None:
+                        continue
+                    nearest_target_id: Optional[str] = None
+                    nearest_distance: Optional[int] = None
+                    for target_id in enemy_ids:
+                        target = self.pokemon.get(target_id)
+                        if target is None or target.position is None:
+                            continue
+                        distance = self._combatant_distance_to_coord(target, origin)
+                        if distance is None or distance > 10:
+                            continue
+                        if nearest_distance is None or distance < nearest_distance:
+                            nearest_distance = distance
+                            nearest_target_id = target_id
+                    if nearest_target_id is None:
+                        continue
+                    temporary_metronome = None
+                    known_metronome = any(
+                        str(move.name or "").strip().lower() == "metronome"
+                        for move in actor.spec.moves
+                    )
+                    if not known_metronome:
+                        temporary_metronome = next(
+                            (
+                                MoveSpec(**move.__dict__)
+                                for move in _load_move_specs()
+                                if str(move.name or "").strip().lower() == "metronome"
+                            ),
+                            None,
+                        )
+                        if temporary_metronome is not None:
+                            actor.spec.moves.append(temporary_metronome)
+                    actor.add_temporary_effect(
+                        "dimensional_rift_origin_override",
+                        origins=[list(origin)],
+                        expires_round=self.round,
+                    )
+                    try:
+                        resolved = self._resolve_out_of_turn_move(
+                            actor_id,
+                            move_name="Metronome",
+                            target_id=nearest_target_id,
+                            target_position=origin,
+                        )
+                    finally:
+                        while actor.remove_temporary_effect("dimensional_rift_origin_override"):
+                            continue
+                        if temporary_metronome is not None and temporary_metronome in actor.spec.moves:
+                            actor.spec.moves.remove(temporary_metronome)
+                    if not resolved:
+                        continue
+                    self.log_event(
+                        {
+                            "type": "ability",
+                            "actor": actor_id,
+                            "target": nearest_target_id,
+                            "ability": "Dimensional Rifts",
+                            "effect": "rift_fire",
+                            "origin": origin,
+                            "description": "A Dimensional Rift unleashes Metronome from the rift.",
+                            "target_hp": actor.hp,
+                        }
+                    )
     
         def _blocking_coords_for_los(self, exclude_ids: Set[str]) -> Set[Tuple[int, int]]:
             blocking: Set[Tuple[int, int]] = set(self.grid.blockers if self.grid else set())

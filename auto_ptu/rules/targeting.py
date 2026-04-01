@@ -11,6 +11,14 @@ if TYPE_CHECKING:
 
 GridCoord = Tuple[int, int]
 
+_FOOTPRINT_BY_SIZE = {
+    "small": 1,
+    "medium": 1,
+    "large": 2,
+    "huge": 3,
+    "gigantic": 4,
+}
+
 
 def _normalize_kind(value: Optional[str], default: str = "ranged") -> str:
     text = (value or default or "").lower()
@@ -66,21 +74,64 @@ def chebyshev_distance(a: GridCoord, b: GridCoord) -> int:
     return max(abs(a[0] - b[0]), abs(a[1] - b[1]))
 
 
-def is_target_in_range(attacker_pos: GridCoord, target_pos: GridCoord, move: MoveSpec) -> bool:
+def footprint_side_for_size(size_label: object) -> int:
+    label = str(size_label or "").strip().lower()
+    return max(1, int(_FOOTPRINT_BY_SIZE.get(label, 1)))
+
+
+def footprint_tiles(
+    anchor: GridCoord,
+    size_label: object,
+    grid: Optional["GridState"] = None,
+) -> Set[GridCoord]:
+    return _square_tiles(anchor, footprint_side_for_size(size_label), grid)
+
+
+def footprint_distance(
+    a_anchor: GridCoord,
+    a_size: object,
+    b_anchor: GridCoord,
+    b_size: object,
+    grid: Optional["GridState"] = None,
+) -> int:
+    a_tiles = footprint_tiles(a_anchor, a_size, grid)
+    b_tiles = footprint_tiles(b_anchor, b_size, grid)
+    if not a_tiles or not b_tiles:
+        return chebyshev_distance(a_anchor, b_anchor)
+    return min(chebyshev_distance(a_tile, b_tile) for a_tile in a_tiles for b_tile in b_tiles)
+
+
+def is_target_in_range(
+    attacker_pos: GridCoord,
+    target_pos: GridCoord,
+    move: MoveSpec,
+    *,
+    attacker_size: object = None,
+    target_size: object = None,
+    grid: Optional["GridState"] = None,
+) -> bool:
     kind = normalized_target_kind(move)
     area = normalized_area_kind(move)
+    if attacker_size is not None or target_size is not None:
+        distance = footprint_distance(
+            attacker_pos,
+            attacker_size or "Medium",
+            target_pos,
+            target_size or "Medium",
+            grid,
+        )
+    else:
+        distance = chebyshev_distance(attacker_pos, target_pos)
     if kind == "self":
         if area in {"line", "cone"}:
             max_distance = max(1, int(move.area_value or move.target_range or move.range_value or 1))
-            distance = chebyshev_distance(attacker_pos, target_pos)
             return 0 < distance <= max_distance
         if area == "closeblast":
-            return chebyshev_distance(attacker_pos, target_pos) == 1
+            return distance == 1
         return attacker_pos == target_pos
     if kind == "field":
         return True
     max_distance = move_range_distance(move)
-    distance = chebyshev_distance(attacker_pos, target_pos)
     if kind == "melee":
         return distance == 1
     return distance <= max_distance
@@ -327,6 +378,9 @@ def _sign(value: int) -> int:
 __all__ = [
     "affected_tiles",
     "chebyshev_distance",
+    "footprint_distance",
+    "footprint_side_for_size",
+    "footprint_tiles",
     "is_target_in_range",
     "move_range_distance",
     "move_requires_target",

@@ -586,6 +586,8 @@ class SpeciesRecord:
             items=[],
             abilities=[],
             tags=[],
+            size=self.size,
+            weight=self.weight,
         )
 
     def to_dict(self) -> Dict[str, Any]:  # type: ignore[name-defined]

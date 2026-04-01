@@ -435,9 +435,12 @@ let cinematicCameraBusy = false;
 let cinematicCameraJob = Promise.resolve();
 let aiStepInFlight = false;
 let cinematicPhaseActive = false;
+let skipNextAutoCinematicLead = false;
 let cinematicShotIndex = 0;
 let cinematicReplayCache = [];
 let cinematicFrameMsAvg = 16.7;
+let deferNonCriticalBattleUi = false;
+let deferredBattlePanelsTimer = null;
 let lastRenderedPositions = new Map();
 let characterData = null;
 let masterData = null;
@@ -3153,6 +3156,7 @@ function statusTypeForIcon(statusName) {
 function statusVisualKey(statusName) {
   const value = normalizePokeKey(statusName);
   if (!value) return "other";
+  if (value.includes("bleed")) return "bleed";
   if (value.includes("burn")) return "burn";
   if (value.includes("freeze") || value.includes("frost")) return "freeze";
   if (value.includes("poison")) return "poison";
@@ -3650,6 +3654,11 @@ async function startBattle() {
   fxQueue = Promise.resolve();
   closeBattleResultModal();
   hideTooltip();
+  deferNonCriticalBattleUi = true;
+  if (deferredBattlePanelsTimer) {
+    clearTimeout(deferredBattlePanelsTimer);
+    deferredBattlePanelsTimer = null;
+  }
   render();
 }
 
@@ -3734,9 +3743,10 @@ async function aiStep(silent = false) {
   }
   aiStepInFlight = true;
   try {
-    if (isCinematicAutoActive()) {
+    if (isCinematicAutoActive() && !skipNextAutoCinematicLead) {
       await ensureCinematicActorFocus();
     }
+    skipNextAutoCinematicLead = false;
     state = await api("/api/ai/step", { method: "POST" });
     if (state?.warning === "Not in AI vs AI mode.") {
       if (autoTimer) {
@@ -3788,6 +3798,7 @@ function toggleAuto() {
     return;
   }
   const interval = Math.max(250, Number(autoIntervalInput.value || 1000));
+  skipNextAutoCinematicLead = true;
   autoTimer = setInterval(() => {
     if (isCinematicAutoActive() && (pendingAnimationJobs > 0 || cinematicCameraBusy || cinematicPhaseActive)) {
       return;
@@ -3796,6 +3807,7 @@ function toggleAuto() {
     aiStep(true).catch(() => {});
   }, interval);
   applyBattleLifecycleControls();
+  aiStep(true).catch(() => {});
 }
 async function resolvePrompts() {
   state = await api("/api/prompts/resolve", {
@@ -4153,7 +4165,7 @@ function configureSpriteSheet(wrap, img, options = {}) {
   }
 }
 
-function attachSprite(container, url, alt) {
+function attachSprite(container, url, alt, options = {}) {
   if (!shouldRequestSprite(url)) {
     return false;
   }
@@ -4166,7 +4178,11 @@ function attachSprite(container, url, alt) {
   img.addEventListener(
     "load",
     () => {
-      configureSpriteSheet(wrap, img, { animate: true, stable: true });
+      const animate = options.animate !== false;
+      configureSpriteSheet(wrap, img, animate ? { animate: true, stable: true } : { animate: false, stable: true });
+      if (!animate) {
+        wrap.classList.add("sprite-static");
+      }
       wrap.classList.add("loaded");
     },
     { once: true }
@@ -4532,6 +4548,11 @@ async function selectAiModel(modelId) {
 
 function render() {
   renderSideNameEditor();
+  if (deferredBattlePanelsTimer && (!state || state.status !== "ok")) {
+    clearTimeout(deferredBattlePanelsTimer);
+    deferredBattlePanelsTimer = null;
+    deferNonCriticalBattleUi = false;
+  }
   if (!state || state.status !== "ok") {
     closeBattleResultModal();
     lastBattleResultToken = "";
@@ -4620,17 +4641,34 @@ function render() {
   applyCinematicTurnCamera();
   renderTurnOrder();
   syncStatusTabs();
-  renderCombatants();
-  renderDetails();
-  renderTrainerDetails();
-  renderAIDiagnostics();
-  renderPartyBar();
   renderMoves();
   renderLog();
   renderPrompts();
   processMoveAnimations();
   maybeShowBattleResultModal();
   lastRenderedPositions = captureCombatantPositions();
+  if (deferNonCriticalBattleUi) {
+    if (deferredBattlePanelsTimer) clearTimeout(deferredBattlePanelsTimer);
+    deferredBattlePanelsTimer = window.setTimeout(() => {
+      deferredBattlePanelsTimer = null;
+      if (!state || state.status !== "ok") {
+        deferNonCriticalBattleUi = false;
+        return;
+      }
+      renderCombatants();
+      renderDetails();
+      renderTrainerDetails();
+      renderAIDiagnostics();
+      renderPartyBar();
+      deferNonCriticalBattleUi = false;
+    }, 50);
+    return;
+  }
+  renderCombatants();
+  renderDetails();
+  renderTrainerDetails();
+  renderAIDiagnostics();
+  renderPartyBar();
 }
 
 function renderGrid() {
@@ -4880,9 +4918,23 @@ function renderGrid() {
           const teamVisual = getTeamVisual(teamKeyForCombatant(combatant));
           const gimmicks = combatant.gimmicks || {};
           const teraType = gimmicks?.terastallized?.tera_type || "";
+          const anchorKey = Array.isArray(combatant.position)
+            ? `${combatant.position[0]},${combatant.position[1]}`
+            : "";
+          const footprintSide = Math.max(1, Number(combatant.footprint_side || 1));
+          const isFootprintAnchor = key === anchorKey || !anchorKey;
           cell.classList.add("occupied");
           cell.style.setProperty("--team-primary", teamVisual.primary);
           cell.style.setProperty("--team-secondary", teamVisual.secondary);
+          cell.style.setProperty("--footprint-side", String(footprintSide));
+          if (footprintSide > 1) {
+            cell.classList.add("footprint-large");
+          }
+          if (isFootprintAnchor) {
+            cell.classList.add("footprint-anchor");
+          } else {
+            cell.classList.add("footprint-tail");
+          }
           if (gimmicks.mega_form) {
             cell.classList.add("state-mega");
           }
@@ -4898,54 +4950,86 @@ function renderGrid() {
             cell.style.setProperty("--tera-primary", teraPalette.primary);
             cell.style.setProperty("--tera-secondary", teraPalette.secondary);
           }
-          const bar = document.createElement("div");
-          bar.className = "hp-bar";
-          bar.style.background = teamVisual.track;
-          const fill = document.createElement("div");
-          fill.className = "hp-fill";
-          const ratio = combatant.max_hp ? combatant.hp / combatant.max_hp : 0;
-          fill.style.width = `${Math.max(0, Math.min(1, ratio)) * 100}%`;
-          fill.style.background = healthGradient(teamVisual, ratio);
-          bar.appendChild(fill);
-          cell.appendChild(bar);
-          const hpValue = document.createElement("div");
-          hpValue.className = "hp-value";
-          hpValue.textContent = `${combatant.hp}/${combatant.max_hp}`;
-          hpValue.title = `${combatant.name}: ${combatant.hp}/${combatant.max_hp} HP`;
-          cell.appendChild(hpValue);
-          attachSprite(cell, combatant.sprite_url, combatant.name);
-          appendTokenItemIcons(cell, combatant);
-          appendTokenGimmickBadges(cell, combatant);
-          const marker = document.createElement("div");
-          marker.className = "marker";
-          marker.textContent = combatant.marker;
-          marker.style.background = `linear-gradient(135deg, ${teamVisual.primary}, ${teamVisual.secondary})`;
-          cell.appendChild(marker);
-          const injuryCount = Number(combatant.injuries || 0);
-          if (injuryCount > 0) {
-            const injuryWrap = document.createElement("div");
-            injuryWrap.className = "injury-stack";
-            for (let i = 0; i < injuryCount; i += 1) {
-              const injury = document.createElement("div");
-              injury.className = "injury-mark";
-              injury.textContent = "X";
-              injury.title = "Injury";
-              injury.style.background = injuryColor(i, injuryCount);
-              injury.style.top = `${22 + i * 12}px`;
-              injury.style.left = "4px";
-              injury.addEventListener("mouseenter", () => {
-                showDetailTooltip(
-                  injury,
-                  `Injuries (${combatant.injuries})`,
-                  buildInjuryTooltip(injuryCount)
-                );
-              });
-              injury.addEventListener("mouseleave", () => {
-                scheduleTooltipHide();
-              });
-              injuryWrap.appendChild(injury);
+          if (isFootprintAnchor) {
+            const bar = document.createElement("div");
+            bar.className = "hp-bar";
+            bar.style.background = teamVisual.track;
+            if (footprintSide > 1) {
+              bar.style.width = `calc(var(--cell-size) * ${footprintSide} + var(--grid-gap) * ${Math.max(0, footprintSide - 1)} - 4px)`;
+              bar.style.right = "auto";
             }
-            cell.appendChild(injuryWrap);
+            const fill = document.createElement("div");
+            fill.className = "hp-fill";
+            const ratio = combatant.max_hp ? combatant.hp / combatant.max_hp : 0;
+            fill.style.width = `${Math.max(0, Math.min(1, ratio)) * 100}%`;
+            fill.style.background = healthGradient(teamVisual, ratio);
+            bar.appendChild(fill);
+            cell.appendChild(bar);
+            const hpValue = document.createElement("div");
+            hpValue.className = "hp-value";
+            hpValue.textContent = `${combatant.hp}/${combatant.max_hp}`;
+            hpValue.title = `${combatant.name}: ${combatant.hp}/${combatant.max_hp} HP`;
+            if (footprintSide > 1) {
+              hpValue.style.width = `calc(var(--cell-size) * ${footprintSide} + var(--grid-gap) * ${Math.max(0, footprintSide - 1)} - 12px)`;
+              hpValue.style.right = "auto";
+            }
+            cell.appendChild(hpValue);
+            attachSprite(cell, combatant.sprite_url, combatant.name);
+            const spriteWrap = cell.querySelector(".token-sprite-wrap");
+            if (spriteWrap) {
+              const footprintBox = `var(--cell-size) * ${footprintSide} + var(--grid-gap) * ${Math.max(0, footprintSide - 1)}`;
+              const footprintVisual =
+                footprintSide >= 4
+                  ? { scale: 0.46, left: 0.22, top: 0.26 }
+                  : footprintSide === 3
+                    ? { scale: 0.56, left: 0.18, top: 0.18 }
+                    : footprintSide === 2
+                      ? { scale: 0.72, left: 0.14, top: 0.1 }
+                      : { scale: 0.86, left: 0, top: 0 };
+              spriteWrap.style.width = `calc((${footprintBox}) * ${footprintVisual.scale})`;
+              spriteWrap.style.height = `calc((${footprintBox}) * ${footprintVisual.scale})`;
+              if (footprintSide > 1) {
+                spriteWrap.style.left = `calc((${footprintBox}) * ${footprintVisual.left})`;
+                spriteWrap.style.top = `calc((${footprintBox}) * ${footprintVisual.top})`;
+              } else {
+                spriteWrap.style.left = "";
+                spriteWrap.style.top = "";
+              }
+            }
+            appendTokenItemIcons(cell, combatant);
+            appendTokenStatusBadges(cell, combatant);
+            appendTokenGimmickBadges(cell, combatant);
+            const marker = document.createElement("div");
+            marker.className = "marker";
+            marker.textContent = combatant.marker;
+            marker.style.background = `linear-gradient(135deg, ${teamVisual.primary}, ${teamVisual.secondary})`;
+            cell.appendChild(marker);
+            const injuryCount = Number(combatant.injuries || 0);
+            if (injuryCount > 0) {
+              const injuryWrap = document.createElement("div");
+              injuryWrap.className = "injury-stack";
+              for (let i = 0; i < injuryCount; i += 1) {
+                const injury = document.createElement("div");
+                injury.className = "injury-mark";
+                injury.textContent = "X";
+                injury.title = "Injury";
+                injury.style.background = injuryColor(i, injuryCount);
+                injury.style.top = `${22 + i * 12}px`;
+                injury.style.left = "4px";
+                injury.addEventListener("mouseenter", () => {
+                  showDetailTooltip(
+                    injury,
+                    `Injuries (${combatant.injuries})`,
+                    buildInjuryTooltip(injuryCount)
+                  );
+                });
+                injury.addEventListener("mouseleave", () => {
+                  scheduleTooltipHide();
+                });
+                injuryWrap.appendChild(injury);
+              }
+              cell.appendChild(injuryWrap);
+            }
           }
         } else {
           const marker = document.createElement("div");
@@ -5752,6 +5836,66 @@ function drawMovementArrow(fromCoord, toCoord, durationMs = 1100) {
   }, durationMs);
 }
 
+function spawnTrajectoryRibbon(fromX, fromY, toX, toY, palette, moveAnim = null, durationMs = 760) {
+  const dx = toX - fromX;
+  const dy = toY - fromY;
+  const length = Math.hypot(dx, dy);
+  if (length < 4) return null;
+  const angle = Math.atan2(dy, dx);
+  const ribbon = document.createElement("div");
+  ribbon.className = "fx-trajectory-ribbon";
+  if (moveAnim?.channel) ribbon.classList.add(`channel-${moveAnim.channel}`);
+  if (moveAnim?.style) ribbon.classList.add(`style-${moveAnim.style}`);
+  ribbon.style.left = `${fromX}px`;
+  ribbon.style.top = `${fromY}px`;
+  ribbon.style.width = `${Math.max(10, length)}px`;
+  ribbon.style.setProperty("--move-angle", `${angle}rad`);
+  ribbon.style.setProperty("--move-dur", `${Math.max(260, durationMs)}ms`);
+  ribbon.style.setProperty("--trail-primary", palette?.primary || "#9ad7ff");
+  ribbon.style.setProperty("--trail-secondary", palette?.secondary || "#ffffff");
+  ribbon.style.transform = `rotate(${angle}rad) scaleX(0.08)`;
+  document.body.appendChild(ribbon);
+  requestAnimationFrame(() => ribbon.classList.add("run"));
+  window.setTimeout(() => ribbon.remove(), Math.max(320, durationMs + 80));
+  return ribbon;
+}
+
+function spawnAuraPulse(x, y, palette, variant = "buff", durationMs = 720) {
+  const aura = document.createElement("div");
+  aura.className = `fx-aura-pulse ${variant}`;
+  aura.style.left = `${x}px`;
+  aura.style.top = `${y}px`;
+  aura.style.setProperty("--aura-primary", palette?.primary || "#9ad7ff");
+  aura.style.setProperty("--aura-secondary", palette?.secondary || "#ffffff");
+  aura.style.setProperty("--aura-dur", `${Math.max(280, durationMs)}ms`);
+  document.body.appendChild(aura);
+  requestAnimationFrame(() => aura.classList.add("run"));
+  window.setTimeout(() => aura.remove(), Math.max(360, durationMs + 120));
+  return aura;
+}
+
+function classifyMoveIntent(moveMeta, event, actor, target) {
+  const category = String(moveMeta?.category || "").trim().toLowerCase();
+  if (category !== "status") return "attack";
+  const rawText = `${moveMeta?.effects || ""} ${moveMeta?.target || ""} ${moveMeta?.range || ""}`.toLowerCase();
+  const actorId = actor?.id || actor?.identifier || actor?.name;
+  const targetId = target?.id || target?.identifier || target?.name;
+  const selfTargeted =
+    !target ||
+    !actor ||
+    targetId === actorId ||
+    rawText.includes("self") ||
+    rawText.includes("user");
+  if (selfTargeted) return "buff";
+  if (/(lower|reduce|decrease|drops|debuff|poison|burn|sleep|paraly|confus|taunt|disable|flinch|trap|hinder|blind|vulnerable)/.test(rawText)) {
+    return "debuff";
+  }
+  if (/(screen|reflect|terrain|weather|safeguard|mist|chant|tailwind|aura)/.test(rawText)) {
+    return "buff";
+  }
+  return "status";
+}
+
 function spawnMovementEchoes(actor, fromCoord, toCoord) {
   if (!actor?.sprite_url || !fromCoord || !toCoord) return;
   const fromCell = gridCellByKey.get(coordKey(fromCoord));
@@ -5892,36 +6036,6 @@ function animateAbilityEvent(event) {
   });
 }
 
-function spawnHitStreaks(x, y, palette, intensity = 1, crit = false, moveAnim = null) {
-  const fxScale = cinematicFxScale();
-  const count = Math.max(2, Math.min(9, Math.round((3 + intensity * 3 + (crit ? 2 : 0)) * fxScale)));
-  for (let i = 0; i < count; i += 1) {
-    const streak = document.createElement("div");
-    streak.className = "fx-hit-streak";
-    if (moveAnim?.style) {
-      streak.classList.add(`streak-${moveAnim.style}`);
-    }
-    if (moveAnim?.channel) {
-      streak.classList.add(`channel-${moveAnim.channel}`);
-    }
-    if (moveAnim?.typeKey) {
-      streak.classList.add(`type-${moveAnim.typeKey}`);
-    }
-    const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.6;
-    const length = 18 + Math.random() * 24 + intensity * 7;
-    const radius = 14 + Math.random() * (14 + intensity * 10);
-    const sx = x + Math.cos(angle) * radius;
-    const sy = y + Math.sin(angle) * radius;
-    streak.style.left = `${sx}px`;
-    streak.style.top = `${sy}px`;
-    streak.style.width = `${length}px`;
-    streak.style.background = `linear-gradient(90deg, ${palette.secondary}, ${palette.primary})`;
-    streak.style.transform = `rotate(${angle}rad)`;
-    document.body.appendChild(streak);
-    window.setTimeout(() => streak.remove(), 620);
-  }
-}
-
 function inferMoveAnimAtlas(imgW, imgH) {
   const width = Math.max(1, Math.trunc(Number(imgW) || 1));
   const height = Math.max(1, Math.trunc(Number(imgH) || 1));
@@ -6031,8 +6145,12 @@ function spawnImpact(
   sourceRect,
   targetRect,
   moveAnimUrl = null,
-  intensity = 1
+  intensity = 1,
+  options = {}
 ) {
+  const palette = options.palette || null;
+  const moveAnim = options.moveAnim || null;
+  const intent = options.intent || "attack";
   let moveAnimSprite = null;
   let moveAnimPlayback = null;
   if (moveAnimUrl) {
@@ -6065,6 +6183,11 @@ function spawnImpact(
       test.src = moveAnimUrl;
     }
     document.body.appendChild(moveAnimSprite);
+  }
+  if (intent === "buff") {
+    spawnAuraPulse(toX, toY, palette || { primary: "#7de3b7", secondary: "#cffff0" }, "buff", 760);
+  } else if (intent !== "attack") {
+    spawnAuraPulse(toX, toY, palette || { primary: "#ff97b1", secondary: "#ffd4dd" }, "debuff", 820);
   }
   const impactLifetime = moveAnimPlayback ? Math.max(1100, moveAnimPlayback.totalMs + 260) : moveAnimSprite ? 1400 : 360;
   setTimeout(() => {
@@ -6120,6 +6243,7 @@ function animateMoveEvent(event) {
     ensureTypeIcon(palette.typeKey).then(() => {});
   }
   const moveName = moveMeta?.name || event?.move || "";
+  const moveIntent = classifyMoveIntent(moveMeta, event, actor, target);
   const cachedNamedMoveAnimUrl = moveAnimUrlFromCache(moveName);
   const moveAnimPromise = shouldUseNamedMoveAnim(moveMeta, moveAnim)
     ? (cachedNamedMoveAnimUrl
@@ -6204,6 +6328,7 @@ function animateMoveEvent(event) {
         } else if (hasNamedMoveAnim) {
           if (actor?.position && target?.position && coordKey(actor.position) !== coordKey(target.position)) {
             drawMovementArrow(actor.position, target.position, Math.max(640, hitDelayMs + 260));
+            spawnTrajectoryRibbon(fromX, fromY, toX, toY, palette, moveAnim, Math.max(520, hitDelayMs + 180));
           }
           projectile = spawnMoveAnimTravel(
             resolvedMoveAnimUrl,
@@ -6219,7 +6344,14 @@ function animateMoveEvent(event) {
         } else {
           if (actor?.position && target?.position && coordKey(actor.position) !== coordKey(target.position)) {
             drawMovementArrow(actor.position, target.position, Math.max(640, hitDelayMs + 260));
+            spawnTrajectoryRibbon(fromX, fromY, toX, toY, palette, moveAnim, Math.max(520, hitDelayMs + 180));
           }
+        }
+        if (isStatus && moveIntent === "buff") {
+          spawnAuraPulse(fromX, fromY, palette, "buff", Math.max(480, hitDelayMs));
+        }
+        if (isStatus && moveIntent === "debuff" && actor?.position && target?.position && coordKey(actor.position) !== coordKey(target.position)) {
+          spawnTrajectoryRibbon(fromX, fromY, toX, toY, palette, moveAnim, Math.max(520, hitDelayMs + 120));
         }
         playMoveImpactCue(palette, moveAnim, intensity, "launch", moveMeta);
         setTimeout(() => {
@@ -6233,7 +6365,13 @@ function animateMoveEvent(event) {
             sourceRect,
             targetRect,
             resolvedMoveAnimUrl || null,
-            intensity
+            intensity,
+            {
+              palette,
+              moveAnim,
+              intent: moveIntent,
+              crit: !!event?.crit,
+            }
           );
           sourceCell.classList.remove("fx-caster");
           sourceCell.classList.remove("fx-caster-cast");
@@ -6253,6 +6391,7 @@ function animateMoveEvent(event) {
 function renderTurnOrder() {
   if (!turnOrderBarEl) return;
   const queue = Array.isArray(state?.turn_order) ? state.turn_order : [];
+  const combatantById = new Map((state?.combatants || []).map((combatant) => [combatant.id, combatant]));
   turnOrderBarEl.innerHTML = "";
   if (!queue.length) {
     const empty = document.createElement("div");
@@ -6263,10 +6402,15 @@ function renderTurnOrder() {
   }
   queue.forEach((entry, index) => {
     const teamVisual = getTeamVisual(entry.team || "neutral");
+    const combatant = combatantById.get(entry.id) || null;
+    const hp = Number(combatant?.hp ?? entry.hp ?? 0);
+    const maxHp = Number(combatant?.max_hp ?? entry.max_hp ?? 0);
+    const hpRatio = maxHp > 0 ? Math.max(0, Math.min(1, hp / maxHp)) : 0;
     const token = document.createElement("button");
     token.type = "button";
-    token.className = "turn-token";
+    token.className = "turn-token turn-token-card";
     if (index === 0) token.classList.add("current");
+    if (combatant?.fainted || hp <= 0) token.classList.add("fainted");
     token.style.setProperty("--team-primary", teamVisual.primary);
     token.style.setProperty("--team-secondary", teamVisual.secondary);
     token.title = `${index === 0 ? "Now" : `Next #${index + 1}`}: ${entry.name} | Priority ${Number(entry.priority || 0)} | Initiative ${Number(entry.initiative_total || 0)}`;
@@ -6284,6 +6428,77 @@ function renderTurnOrder() {
       icon.classList.add("placeholder");
     }
     token.appendChild(icon);
+
+    const meta = document.createElement("div");
+    meta.className = "turn-meta";
+
+    const head = document.createElement("div");
+    head.className = "turn-head";
+
+    const initiative = document.createElement("div");
+    initiative.className = "turn-initiative";
+    initiative.textContent = `${Number(entry.initiative_total || 0)}`;
+    head.appendChild(initiative);
+
+    const name = document.createElement("div");
+    name.className = "turn-name";
+    name.textContent = `${combatant?.marker || ""} ${entry.name}`.trim();
+    head.appendChild(name);
+
+    const hpBadge = document.createElement("div");
+    hpBadge.className = "turn-hp-badge";
+    hpBadge.textContent = maxHp > 0 ? `${hp}/${maxHp}` : `${hp}`;
+    head.appendChild(hpBadge);
+    meta.appendChild(head);
+
+    const hpFrame = document.createElement("div");
+    hpFrame.className = "turn-hp-frame";
+    const hpBar = document.createElement("div");
+    hpBar.className = "turn-hpbar";
+    const hpFill = document.createElement("div");
+    hpFill.className = "turn-hpfill";
+    hpFill.style.width = `${hpRatio * 100}%`;
+    hpFill.style.background = healthGradient(teamVisual, hpRatio);
+    hpBar.appendChild(hpFill);
+    hpFrame.appendChild(hpBar);
+    meta.appendChild(hpFrame);
+
+    const footer = document.createElement("div");
+    footer.className = "turn-footer";
+
+    const sub = document.createElement("div");
+    sub.className = "turn-subline";
+    const subParts = [formatTeamLabel(entry.team || "neutral")];
+    if (Number.isFinite(Number(entry.priority))) subParts.push(`Prio ${Number(entry.priority || 0)}`);
+    footer.appendChild(sub);
+    sub.textContent = subParts.join(" | ");
+
+    const sizePill = document.createElement("span");
+    sizePill.className = "turn-size-pill";
+    sizePill.textContent = footprintSizeLabel(combatant || entry);
+    _setTooltipAttrs(
+      sizePill,
+      `Size: ${footprintSizeLabel(combatant || entry)}`,
+      footprintMeaningText(footprintSizeLabel(combatant || entry))
+    );
+
+    const statuses = Array.isArray(combatant?.statuses) ? combatant.statuses.slice(0, 3) : [];
+    const statusRow = document.createElement("div");
+    statusRow.className = "turn-statuses";
+    statusRow.appendChild(sizePill);
+    statuses.forEach((status) => {
+      const dot = document.createElement("span");
+      const visual = statusVisualKey(status);
+      dot.className = `turn-status-dot status-${visual}`;
+      dot.setAttribute("data-status", visual);
+      dot.textContent = String(status).slice(0, 1).toUpperCase();
+      _setTooltipAttrs(dot, `Status: ${status}`, statusTooltipBody(status));
+      statusRow.appendChild(dot);
+    });
+    footer.appendChild(statusRow);
+    meta.appendChild(footer);
+
+    token.appendChild(meta);
 
     turnOrderBarEl.appendChild(token);
   });
@@ -6786,6 +7001,20 @@ function animateMegaEvolutionEvent(event) {
   });
 }
 
+function footprintMeaningText(sizeLabel) {
+  const label = String(sizeLabel || "").trim();
+  const normalized = label.toLowerCase();
+  if (normalized === "large") return "Large: occupies a 2x2 battlefield footprint.";
+  if (normalized === "huge") return "Huge: occupies a 3x3 battlefield footprint.";
+  if (normalized === "gigantic") return "Gigantic: occupies a 4x4 battlefield footprint.";
+  if (normalized === "small" || normalized === "medium") return `${label || "Medium"}: occupies a 1x1 battlefield footprint.`;
+  return "Medium: occupies a 1x1 battlefield footprint.";
+}
+
+function footprintSizeLabel(combatant) {
+  return String(combatant?.size || "Medium").trim() || "Medium";
+}
+
 function _buildStatusTabButton(filter, label) {
   const button = document.createElement("button");
   button.className = "status-tab ds-tab";
@@ -6827,13 +7056,84 @@ function syncStatusTabs() {
 
 function renderCombatants() {
   combatantListEl.innerHTML = "";
-  const appendMiniChip = (row, text, className = "", title = "") => {
+  const appendMiniChip = (row, text, className = "", tooltipTitle = "", tooltipBody = "") => {
     if (!text) return;
     const chip = document.createElement("span");
     chip.className = `combatant-mini-chip${className ? ` ${className}` : ""}`;
     chip.textContent = text;
-    if (title) chip.title = title;
+    const safeTitle = String(tooltipTitle || "").trim();
+    const safeBody = String(tooltipBody || "").trim();
+    if (safeTitle && safeBody) {
+      chip.title = safeTitle;
+      _setTooltipAttrs(chip, safeTitle, safeBody);
+    }
     row.appendChild(chip);
+  };
+  const moveEntryByName = (combatant, moveName) => {
+    const needle = String(moveName || "").trim().toLowerCase();
+    if (!needle) return null;
+    return (Array.isArray(combatant?.moves) ? combatant.moves : []).find((entry) => {
+      if (typeof entry === "string") return entry.trim().toLowerCase() === needle;
+      return String(entry?.name || "").trim().toLowerCase() === needle;
+    }) || null;
+  };
+  const moveTooltipForCombatant = (combatant, moveName) => {
+    const rawName = String(moveName || "").trim();
+    if (!rawName) return null;
+    const moveEntry = moveEntryByName(combatant, rawName);
+    const moveMeta = pokeApiCacheGet(pokeApiMoveMetaCache, rawName);
+    return {
+      title: `Move: ${rawName}`,
+      body: bestMoveDescription(typeof moveEntry === "object" ? moveEntry : { name: rawName }, moveMeta),
+    };
+  };
+  const abilityTooltip = (abilityName) => {
+    const rawName = String(abilityName || "").trim();
+    if (!rawName) return null;
+    const meta = pokeApiCacheGet(pokeApiAbilityMetaCache, rawName);
+    return {
+      title: `Ability: ${rawName}`,
+      body: bestEffectDescription(meta, rawName, "Ability description unavailable."),
+    };
+  };
+  const itemTooltip = (itemEntry) => {
+    const itemName = String(itemEntry?.name || "").trim();
+    if (!itemName) return null;
+    const meta = pokeApiCacheGet(pokeApiItemMetaCache, itemName);
+    const tooltipParts = [];
+    const summaryLines = Array.isArray(itemEntry?.effect_summary) ? itemEntry.effect_summary.filter(Boolean) : [];
+    if (summaryLines.length) tooltipParts.push(summaryLines.join("\n"));
+    if (itemEntry?.effect_description) tooltipParts.push(String(itemEntry.effect_description).trim());
+    if (meta?.effect) tooltipParts.push(meta.effect);
+    if (itemEntry?.slot) tooltipParts.push(`Slot: ${itemEntry.slot}`);
+    if (itemEntry?.kind) tooltipParts.push(`Kind: ${itemEntry.kind}`);
+    return {
+      title: `Item: ${itemName}`,
+      body: tooltipParts.filter(Boolean).join("\n\n") || "Item description unavailable.",
+    };
+  };
+  const gimmickTooltip = (label, body) => ({
+    title: label,
+    body: body || `${label} state is active on this combatant.`,
+  });
+  const combatantTooltipBody = (combatant) => {
+    if (!combatant) return "";
+    const lines = [];
+    if (combatant.position) lines.push(`Position: ${combatant.position.join(",")}`);
+    lines.push(`Size: ${footprintSizeLabel(combatant)} (${footprintMeaningText(footprintSizeLabel(combatant)).replace(/^.*?: /, "")})`);
+    lines.push(`HP: ${combatant.hp}/${combatant.max_hp}`);
+    if (Number(combatant.temp_hp || 0) > 0) lines.push(`Temp HP: ${Number(combatant.temp_hp || 0)}`);
+    if (Number(combatant.injuries || 0) > 0) lines.push(`Injuries: ${Number(combatant.injuries || 0)}`);
+    if (combatant.nature) lines.push(`Nature: ${combatant.nature}`);
+    if (Array.isArray(combatant.abilities) && combatant.abilities.length) lines.push(`Abilities: ${combatant.abilities.join(", ")}`);
+    const items = normalizeCombatantItems(combatant.items || []);
+    if (items.length) lines.push(`Items: ${items.map((item) => item.name).join(", ")}`);
+    const moveNames = Array.isArray(combatant.moves)
+      ? combatant.moves.map((moveEntry) => (typeof moveEntry === "string" ? moveEntry : String(moveEntry?.name || ""))).filter(Boolean)
+      : [];
+    if (moveNames.length) lines.push(`Moves: ${moveNames.join(", ")}`);
+    if (Array.isArray(combatant.statuses) && combatant.statuses.length) lines.push(`Statuses: ${combatant.statuses.join(", ")}`);
+    return lines.join("\n");
   };
   const buildCardShell = (teamKey, spriteUrl, name) => {
     const teamVisual = getTeamVisual(teamKey);
@@ -6841,7 +7141,7 @@ function renderCombatants() {
     card.className = "combatant-card combatant-card-compact";
     card.style.setProperty("--team-primary", teamVisual.primary);
     card.style.setProperty("--team-secondary", teamVisual.secondary);
-    attachSprite(card, spriteUrl, name);
+    attachSprite(card, spriteUrl, name, { animate: false });
     const text = document.createElement("div");
     text.className = "combatant-meta combatant-meta-compact";
     card.appendChild(text);
@@ -6865,6 +7165,13 @@ function renderCombatants() {
       if (combatantTeamFilter !== "all" && teamKey !== combatantTeamFilter) return;
       const { card, text } = buildCardShell(teamKey, entry.sprite_url, entry.name);
       card.classList.add("staged");
+      _setTooltipAttrs(card, `${formatTeamLabel(teamKey)} ${entry.slot}: ${entry.name}`, [
+        entry.level ? `Level: ${entry.level}` : "",
+        entry.nature ? `Nature: ${entry.nature}` : "",
+        entry.ability ? `Ability: ${entry.ability}` : "",
+        entry.item ? `Item: ${entry.item}` : "",
+        entry.moves?.length ? `Moves: ${entry.moves.join(", ")}` : "",
+      ].filter(Boolean).join("\n"));
       const head = document.createElement("div");
       head.className = "combatant-head";
       const nameWrap = document.createElement("div");
@@ -6897,16 +7204,18 @@ function renderCombatants() {
         entry.stats?.spatk ? `SpA ${entry.stats.spatk}` : "",
         entry.stats?.spdef ? `SpD ${entry.stats.spdef}` : "",
         entry.stats?.spd ? `Spd ${entry.stats.spd}` : "",
-      ].filter(Boolean).forEach((label) => appendMiniChip(quickRow, label));
+        footprintSizeLabel(entry),
+      ].filter(Boolean).forEach((label) => appendMiniChip(quickRow, label, "", label, label));
       if (quickRow.childElementCount) text.appendChild(quickRow);
       if (entry.item || (entry.moves && entry.moves.length)) {
         const itemRow = document.createElement("div");
         itemRow.className = "combatant-item-row";
         if (entry.item) {
-          appendMiniChip(itemRow, entry.item, "item", `Item: ${entry.item}`);
+          appendMiniChip(itemRow, entry.item, "item", `Item: ${entry.item}`, `Staged item for ${entry.name}.`);
         }
         (entry.moves || []).slice(0, 4).forEach((move) => {
-          appendMiniChip(itemRow, move, "move");
+          const moveTip = moveTooltipForCombatant(entry, move);
+          appendMiniChip(itemRow, move, "move", moveTip?.title || `Move: ${move}`, moveTip?.body || `Staged move for ${entry.name}.`);
         });
         text.appendChild(itemRow);
       }
@@ -6928,6 +7237,7 @@ function renderCombatants() {
       return;
     }
     const { card, text, teamVisual } = buildCardShell(teamKey, combatant.sprite_url, combatant.name);
+    _setTooltipAttrs(card, `${combatant.marker} ${combatant.name}`, combatantTooltipBody(combatant));
     if (combatant.id === selectedId) {
       card.classList.add("active");
     }
@@ -6963,19 +7273,49 @@ function renderCombatants() {
     const hpBadge = document.createElement("div");
     hpBadge.className = "combatant-hp-number";
     hpBadge.textContent = `${combatant.hp}/${combatant.max_hp}`;
+    _setTooltipAttrs(hpBadge, `${combatant.name} HP`, combatantTooltipBody(combatant));
     head.appendChild(hpBadge);
     text.appendChild(head);
 
     if (combatant.position || combatant.nature || (Array.isArray(combatant.abilities) && combatant.abilities.length)) {
       const quickRow = document.createElement("div");
       quickRow.className = "combatant-quick-row";
-      [
-        combatant.position ? `Pos ${combatant.position.join(",")}` : "",
-        combatant.nature ? combatant.nature : "",
-        Array.isArray(combatant.abilities) && combatant.abilities.length ? combatant.abilities[0] : "",
-      ]
-        .filter(Boolean)
-        .forEach((label, index) => appendMiniChip(quickRow, label, index === 0 ? "accent" : ""));
+      if (combatant.position) {
+        appendMiniChip(
+          quickRow,
+          `Pos ${combatant.position.join(",")}`,
+          "accent",
+          `${combatant.name} position`,
+          `Current tile: ${combatant.position.join(",")}`
+        );
+      }
+      appendMiniChip(
+        quickRow,
+        footprintSizeLabel(combatant),
+        "accent",
+        `Size: ${footprintSizeLabel(combatant)}`,
+        footprintMeaningText(footprintSizeLabel(combatant))
+      );
+      if (combatant.nature) {
+        appendMiniChip(
+          quickRow,
+          combatant.nature,
+          "",
+          `Nature: ${combatant.nature}`,
+          `Current nature for ${combatant.name}.`
+        );
+      }
+      if (Array.isArray(combatant.abilities) && combatant.abilities.length) {
+        const primaryAbility = combatant.abilities[0];
+        const abilityTip = abilityTooltip(primaryAbility);
+        appendMiniChip(
+          quickRow,
+          primaryAbility,
+          "",
+          abilityTip?.title || `Ability: ${primaryAbility}`,
+          abilityTip?.body || primaryAbility
+        );
+      }
       if (quickRow.childElementCount) text.appendChild(quickRow);
     }
 
@@ -6987,6 +7327,7 @@ function renderCombatants() {
       chip.className = `combatant-status-chip status-${visual}`;
       chip.setAttribute("data-status", visual);
       chip.textContent = String(status);
+      _setTooltipAttrs(chip, `Status: ${status}`, statusTooltipBody(status));
       statusRow.appendChild(chip);
     });
     if (statusRow.childElementCount) {
@@ -6998,11 +7339,13 @@ function renderCombatants() {
       const itemRow = document.createElement("div");
       itemRow.className = "combatant-item-row";
       normalizedItems.slice(0, 4).forEach((item) => {
+        const itemTip = itemTooltip(item);
         appendMiniChip(
           itemRow,
           item.name,
           "item",
-          item.effect_description || item.effect_summary?.join(" | ") || `Item: ${item.name}`
+          itemTip?.title || `Item: ${item.name}`,
+          itemTip?.body || `Item: ${item.name}`
         );
       });
       text.appendChild(itemRow);
@@ -7011,19 +7354,49 @@ function renderCombatants() {
     const effectRow = document.createElement("div");
     effectRow.className = "combatant-move-row";
     if (Number(combatant.injuries || 0) > 0) {
-      appendMiniChip(effectRow, `Injuries ${Number(combatant.injuries || 0)}`, "warning");
+      appendMiniChip(
+        effectRow,
+        `Injuries ${Number(combatant.injuries || 0)}`,
+        "warning",
+        `${combatant.name} injuries`,
+        `Current injuries: ${Number(combatant.injuries || 0)}. Injuries reduce survivability and interact with fainting thresholds.`
+      );
     }
     if (Number(combatant.temp_hp || 0) > 0) {
-      appendMiniChip(effectRow, `Temp HP ${Number(combatant.temp_hp || 0)}`, "ready");
+      appendMiniChip(
+        effectRow,
+        `Temp HP ${Number(combatant.temp_hp || 0)}`,
+        "ready",
+        `${combatant.name} temporary HP`,
+        `Temporary HP: ${Number(combatant.temp_hp || 0)}. This buffer is consumed before regular HP.`
+      );
     }
     (combatant.passive_item_effects || []).slice(0, 2).forEach((effect) => {
-      appendMiniChip(effectRow, effect, "", effect);
+      appendMiniChip(effectRow, effect, "", "Passive Item Effect", effect);
     });
     const gimmicks = combatant.gimmicks || {};
-    if (gimmicks.mega_form) appendMiniChip(effectRow, `Mega ${gimmicks.mega_form}`, "accent");
-    if (gimmicks.primal_reversion_ready) appendMiniChip(effectRow, `Primal ${gimmicks.primal_reversion_ready}`, "accent");
-    if (gimmicks.dynamax_active) appendMiniChip(effectRow, "Dynamax", "accent");
-    if (gimmicks?.terastallized?.tera_type) appendMiniChip(effectRow, `Tera ${gimmicks.terastallized.tera_type}`, "accent");
+    if (gimmicks.mega_form) {
+      const tip = gimmickTooltip(`Mega ${gimmicks.mega_form}`, `${combatant.name} is in Mega form: ${gimmicks.mega_form}.`);
+      appendMiniChip(effectRow, `Mega ${gimmicks.mega_form}`, "accent", tip.title, tip.body);
+    }
+    if (gimmicks.primal_reversion_ready) {
+      const tip = gimmickTooltip(
+        `Primal ${gimmicks.primal_reversion_ready}`,
+        `${combatant.name} can use Primal Reversion: ${gimmicks.primal_reversion_ready}.`
+      );
+      appendMiniChip(effectRow, `Primal ${gimmicks.primal_reversion_ready}`, "accent", tip.title, tip.body);
+    }
+    if (gimmicks.dynamax_active) {
+      const tip = gimmickTooltip("Dynamax", `${combatant.name} is Dynamaxed.`);
+      appendMiniChip(effectRow, "Dynamax", "accent", tip.title, tip.body);
+    }
+    if (gimmicks?.terastallized?.tera_type) {
+      const tip = gimmickTooltip(
+        `Tera ${gimmicks.terastallized.tera_type}`,
+        `${combatant.name} is Terastallized as ${gimmicks.terastallized.tera_type}.`
+      );
+      appendMiniChip(effectRow, `Tera ${gimmicks.terastallized.tera_type}`, "accent", tip.title, tip.body);
+    }
     if (effectRow.childElementCount) {
       text.appendChild(effectRow);
     }
@@ -7037,7 +7410,10 @@ function renderCombatants() {
     if (moveNames.length) {
       const moveRow = document.createElement("div");
       moveRow.className = "combatant-move-row";
-      moveNames.forEach((moveName) => appendMiniChip(moveRow, moveName, "move"));
+      moveNames.forEach((moveName) => {
+        const moveTip = moveTooltipForCombatant(combatant, moveName);
+        appendMiniChip(moveRow, moveName, "move", moveTip?.title || `Move: ${moveName}`, moveTip?.body || moveName);
+      });
       text.appendChild(moveRow);
     }
 
@@ -7049,6 +7425,7 @@ function renderCombatants() {
     });
     combatantListEl.appendChild(card);
   });
+  bindCombatantListTooltips();
 }
 
 function renderPartyBar() {
@@ -7070,6 +7447,12 @@ function renderPartyBar() {
       row.className = "party-row";
       row.style.setProperty("--team-primary", teamVisual.primary);
       row.style.setProperty("--team-secondary", teamVisual.secondary);
+      _setTooltipAttrs(row, `${entry.label} roster`, entry.members.map((member) => {
+        const parts = [member.name];
+        if (member.level) parts.push(`Lv ${member.level}`);
+        if (member.ability) parts.push(`Ability ${member.ability}`);
+        return parts.join(" | ");
+      }).join("\n"));
       const label = document.createElement("div");
       label.className = "party-label";
       label.textContent = entry.label;
@@ -7130,6 +7513,13 @@ function renderPartyBar() {
     row.style.setProperty("--team-primary", teamVisual.primary);
     row.style.setProperty("--team-secondary", teamVisual.secondary);
     row.addEventListener("click", () => cycleTeamSelection(entry.key));
+    _setTooltipAttrs(
+      row,
+      `${entry.label} summary`,
+      entry.members
+        .map((member) => `${member.marker} ${member.name}: ${member.hp}/${member.max_hp}${member.fainted ? " | Fainted" : member.active ? " | Active" : ""}`)
+        .join("\n")
+    );
     const label = document.createElement("div");
     label.className = "party-label";
     label.textContent = entry.label;
@@ -7161,6 +7551,7 @@ function renderPartyBar() {
     row.appendChild(count);
     partyBarEl.appendChild(row);
   });
+  bindPartyBarTooltips();
 }
 
 function cycleTeamSelection(teamKey) {
@@ -7176,6 +7567,20 @@ function cycleTeamSelection(teamKey) {
 
 function bindCombatantListTooltips() {
   const targets = combatantListEl?.querySelectorAll("[data-tooltip-title][data-tooltip-body]") || [];
+  targets.forEach((target) => {
+    target.addEventListener("mouseenter", () => {
+      const title = target.getAttribute("data-tooltip-title") || target.textContent || "Details";
+      const body = target.getAttribute("data-tooltip-body") || "";
+      showDetailTooltip(target, title, body);
+    });
+    target.addEventListener("mouseleave", () => {
+      scheduleTooltipHide();
+    });
+  });
+}
+
+function bindPartyBarTooltips() {
+  const targets = partyBarEl?.querySelectorAll("[data-tooltip-title][data-tooltip-body]") || [];
   targets.forEach((target) => {
     target.addEventListener("mouseenter", () => {
       const title = target.getAttribute("data-tooltip-title") || target.textContent || "Details";
@@ -7588,9 +7993,6 @@ function renderAbilityChips(abilities) {
   if (!Array.isArray(abilities) || !abilities.length) return "-";
   const chips = abilities.map((abilityName) => {
     const meta = pokeApiCacheGet(pokeApiAbilityMetaCache, abilityName);
-    if (!pokeApiCacheHas(pokeApiAbilityMetaCache, abilityName)) {
-      ensureAbilityMeta(abilityName).then(() => scheduleRerender());
-    }
     const badge = meta?.id ? `A${meta.id}` : "A";
     return chipHtml({
       text: abilityName,
@@ -7607,9 +8009,6 @@ function renderItemChips(items) {
   const chips = normalizeCombatantItems(items).map((item) => {
     const itemName = item.name;
     const meta = pokeApiCacheGet(pokeApiItemMetaCache, itemName);
-    if (!pokeApiCacheHas(pokeApiItemMetaCache, itemName)) {
-      ensureItemMeta(itemName).then(() => scheduleRerender());
-    }
     const summaryLines = Array.isArray(item.effect_summary) ? item.effect_summary.filter(Boolean) : [];
     const description = String(item.effect_description || "").trim();
     const tooltipParts = [];
@@ -7683,6 +8082,21 @@ function classifyCombatItem(item) {
   return "gear";
 }
 
+function tokenItemFallbackBadge(item) {
+  switch (item?.tokenClass) {
+    case "held":
+      return "H";
+    case "worn":
+      return "W";
+    case "weapon":
+      return "X";
+    case "belt":
+      return "B";
+    default:
+      return "G";
+  }
+}
+
 function tokenDisplayItems(combatant) {
   const items = normalizeCombatantItems(combatant?.items || []);
   if (!items.length) return [];
@@ -7725,7 +8139,7 @@ function appendTokenItemIcons(cell, combatant) {
       img.loading = "lazy";
       icon.appendChild(img);
     } else {
-      icon.textContent = item.name.charAt(0).toUpperCase();
+      icon.textContent = tokenItemFallbackBadge(item);
     }
     icon.addEventListener("mouseenter", () => {
       showDetailTooltip(icon, `Item: ${item.name}`, meta?.effect || "Item description unavailable.");
@@ -7741,6 +8155,41 @@ function appendTokenItemIcons(cell, combatant) {
     const group = groups.get(key);
     if (group) wrap.appendChild(group);
   });
+  cell.appendChild(wrap);
+}
+
+function appendTokenStatusBadges(cell, combatant) {
+  const statuses = Array.isArray(combatant?.statuses) ? combatant.statuses.filter(Boolean) : [];
+  if (!statuses.length) return;
+  const wrap = document.createElement("div");
+  wrap.className = "token-status-stack";
+  statuses.slice(0, 2).forEach((statusName) => {
+    const badge = document.createElement("span");
+    const visual = statusVisualKey(statusName);
+    badge.className = `combatant-status-chip token-status-chip status-${visual}`;
+    badge.setAttribute("data-status", visual);
+    badge.textContent = String(statusName);
+    badge.addEventListener("mouseenter", () => {
+      showDetailTooltip(badge, `Status: ${statusName}`, statusTooltipBody(statusName));
+    });
+    badge.addEventListener("mouseleave", () => {
+      scheduleTooltipHide();
+    });
+    wrap.appendChild(badge);
+  });
+  if (statuses.length > 2) {
+    const extra = document.createElement("span");
+    extra.className = "combatant-status-chip token-status-chip status-other";
+    extra.setAttribute("data-status", "other");
+    extra.textContent = `+${statuses.length - 2}`;
+    extra.addEventListener("mouseenter", () => {
+      showDetailTooltip(extra, `${combatant.name} statuses`, statuses.join("\n"));
+    });
+    extra.addEventListener("mouseleave", () => {
+      scheduleTooltipHide();
+    });
+    wrap.appendChild(extra);
+  }
   cell.appendChild(wrap);
 }
 
@@ -10222,6 +10671,7 @@ function renderLog() {
       prefix.className = "log-prefix";
       prefix.textContent = line.prefix;
       div.appendChild(prefix);
+      div.appendChild(document.createTextNode(" "));
     }
     const tag = document.createElement("span");
     const normalizedCategory = line.category || "other";
@@ -10231,6 +10681,7 @@ function renderLog() {
     text.className = "log-text";
     text.innerHTML = decorateLogText(line.text, line.event);
     div.appendChild(tag);
+    div.appendChild(document.createTextNode(" "));
     div.appendChild(text);
     if (line.count > 1) {
       const repeat = document.createElement("span");
@@ -10261,9 +10712,11 @@ function _buildBattleFeedLines({ filtered = true, limit = 520, applyClearOffset 
   const lines = [];
   let lastLine = null;
   let lastRound = null;
+  let lastRenderedEvent = null;
   rawEvents.forEach((event) => {
     const { text, category, prefix } = renderEventLine(event);
     if (filtered && !passesLogFilter(category)) return;
+    if (isLikelyDuplicateMoveEcho(event, lastRenderedEvent)) return;
     const round = Number(event?.round);
     if (Number.isFinite(round) && round !== lastRound) {
       if (!filtered || (logFilterPhase?.checked ?? true)) {
@@ -10276,6 +10729,7 @@ function _buildBattleFeedLines({ filtered = true, limit = 520, applyClearOffset 
     if (cleaned === lastLine) return;
     lines.push({ text: cleaned, category, event, prefix });
     lastLine = cleaned;
+    lastRenderedEvent = event;
   });
   const merged = [];
   lines.forEach((line) => {
@@ -22589,6 +23043,9 @@ function hpSuffix(event, ref = null) {
 function formatMoveEventLine(event, actor, target, moveName) {
   const move = moveName || "a move";
   const targetText = target ? ` targeting ${target}` : "";
+  const category = String(event?.category || "").trim().toLowerCase();
+  const description = String(event?.description || "").trim();
+  const statusName = String(event?.status || event?.condition || "").trim();
   const roll = Number(event.roll);
   const needed = Number(event.needed);
   const damageRoll = Number(event.damage_roll);
@@ -22604,6 +23061,27 @@ function formatMoveEventLine(event, actor, target, moveName) {
   const multiplier = Number(event.type_multiplier);
   const rollText =
     Number.isFinite(roll) && Number.isFinite(needed) && needed > 0 ? ` AC ${roll}/${needed}` : "";
+  if (category === "status") {
+    const tags = [];
+    if (description) {
+      tags.push(description);
+    } else if (statusName) {
+      tags.push(statusName);
+    }
+    if (rollText) {
+      tags.push(rollText.trim());
+    } else if (Number.isFinite(roll) && (!Number.isFinite(needed) || needed <= 0)) {
+      tags.push(`roll ${roll}`);
+    }
+    const hpText = hpSuffix(event, event.target ?? event.target_id ?? event.defender);
+    if (hpText) {
+      tags.push(hpText);
+    }
+    if (tags.length) {
+      return `${actor || "A unit"} used ${move}${targetText}. ${tags.join(" | ")}.`;
+    }
+    return `${actor || "A unit"} used ${move}${targetText}.`;
+  }
   if (event.hit === false) {
     const missTags = [];
     if (rollText) missTags.push(rollText.trim());
@@ -22682,6 +23160,48 @@ function formatMoveEventLine(event, actor, target, moveName) {
     return `${actor || "A unit"} used ${move}${targetText}. ${tags.join(" | ")}.`;
   }
   return `${actor || "A unit"} used ${move}${targetText}.`;
+}
+
+function formatMoveUtilityEventLine(event, actor, target, moveName) {
+  const move = String(moveName || event.move || "a move").trim();
+  const effect = String(event?.effect || "").trim().toLowerCase();
+  const description = String(event?.description || "").trim();
+  const hpText = hpSuffix(event, event.target ?? event.target_id ?? event.defender ?? event.actor ?? event.actor_id);
+  const suffix = hpText ? ` (${hpText})` : "";
+  if (effect === "struggle" && !target && event.hit == null && !Number.isFinite(Number(event.damage))) {
+    return "";
+  }
+  if (effect === "reaction_declare") {
+    return description || `${actor || "A unit"} readied ${move}${target ? ` against ${target}` : ""}.${suffix}`;
+  }
+  if (effect === "reaction_resist") {
+    return description || `${actor || "A unit"} braced with ${move}${target ? ` against ${target}` : ""}.${suffix}`;
+  }
+  if (effect === "riposte_ready") {
+    return description || `${actor || "A unit"} readied Riposte${target ? ` against ${target}` : ""}.${suffix}`;
+  }
+  if (description && event.hit == null && !Number.isFinite(Number(event.damage)) && !Number.isFinite(Number(event.roll))) {
+    return `${description}${suffix}`;
+  }
+  return null;
+}
+
+function isLikelyDuplicateMoveEcho(currentEvent, previousEvent) {
+  if (!currentEvent || !previousEvent) return false;
+  const currentType = String(currentEvent.type || "").trim().toLowerCase();
+  const previousType = String(previousEvent.type || "").trim().toLowerCase();
+  if (!["move", "use_move"].includes(currentType) || !["move", "use_move"].includes(previousType)) return false;
+  const currentMove = String(currentEvent.move || "").trim().toLowerCase();
+  const previousMove = String(previousEvent.move || "").trim().toLowerCase();
+  if (!currentMove || currentMove !== previousMove) return false;
+  const currentActor = String(currentEvent.actor || "").trim();
+  const previousActor = String(previousEvent.actor || "").trim();
+  if (!currentActor || currentActor !== previousActor) return false;
+  const currentTarget = currentEvent.target ?? currentEvent.target_id ?? currentEvent.defender ?? null;
+  const previousTarget = previousEvent.target ?? previousEvent.target_id ?? previousEvent.defender ?? null;
+  if (currentTarget || !previousTarget) return false;
+  if (!Number.isFinite(Number(currentEvent.target_hp))) return false;
+  return true;
 }
 
 function formatAbilityEventLine(event, actor, target) {
@@ -22830,6 +23350,17 @@ function renderEventLine(event) {
         return { text: `${actor} declared: ${event.detail}.`, category, prefix };
       }
       return { text: event.detail || "Action declared.", category, prefix };
+    case "maneuver":
+      category = "actions";
+      if (String(event.effect || "").trim().toLowerCase() === "disengage" && (event.from || event.to)) {
+        const fromText = formatCoord(event.from);
+        const toText = formatCoord(event.to ?? event.destination ?? event.end);
+        return { text: `${actor || "A unit"} repositioned from ${fromText} to ${toText}.`, category, prefix };
+      }
+      if (event.description) {
+        return { text: String(event.description), category, prefix };
+      }
+      return { text: actor ? `${actor} performed a maneuver.` : "A maneuver resolved.", category, prefix };
     case "pass":
       category = "actions";
       return { text: actor ? `${actor} passed.` : "Turn passed.", category, prefix };
@@ -22844,8 +23375,38 @@ function renderEventLine(event) {
       };
     case "move":
     case "use_move":
-      category = "actions";
-      return { text: formatMoveEventLine(event, actor, target, move), category, prefix };
+      {
+        const actorCombatant = findCombatantByRef(event.actor ?? event.actor_id ?? event.source);
+        const normalizedMove = normalizeRefKey(move);
+        if (
+          actorCombatant &&
+          normalizedMove &&
+          Array.isArray(actorCombatant.abilities) &&
+          actorCombatant.abilities.some((abilityName) => normalizeRefKey(abilityName) === normalizedMove)
+        ) {
+          category = "status";
+          return {
+            text: formatAbilityEventLine(
+              {
+                ...event,
+                ability: move,
+                move: event.move && normalizeRefKey(event.move) === normalizedMove ? undefined : event.move,
+              },
+              actor,
+              target
+            ),
+            category,
+            prefix,
+          };
+        }
+        const utilityLine = formatMoveUtilityEventLine(event, actor, target, move);
+        if (utilityLine != null) {
+          category = "status";
+          return { text: utilityLine, category, prefix };
+        }
+        category = "actions";
+        return { text: formatMoveEventLine(event, actor, target, move), category, prefix };
+      }
     case "damage":
       category = "damage";
       if (event.description) {
@@ -22927,6 +23488,11 @@ function renderEventLine(event) {
     case "status":
     case "condition":
       category = "status";
+      {
+        const effectName = String(event.effect || "").toLowerCase();
+        const statusTarget = target || actor || "A unit";
+        const hpText = hpSuffix(event, event.target ?? event.target_id ?? event.defender ?? event.actor ?? event.actor_id);
+        const amountText = Number.isFinite(Number(amount)) ? Number(amount) : null;
       if (String(event.effect || "").toLowerCase() === "dynamax" && (target || actor)) {
         return { text: `${target || actor} Dynamaxed.`, category, prefix };
       }
@@ -22934,13 +23500,50 @@ function renderEventLine(event) {
         return { text: `${target || actor} returned to normal size.`, category, prefix };
       }
       if (event.description) {
-        if (status && !String(event.description).toLowerCase().includes(String(status).toLowerCase())) {
-          return { text: `${event.description} (${status})`, category, prefix };
+        const baseText =
+          status && !String(event.description).toLowerCase().includes(String(status).toLowerCase())
+            ? `${event.description} (${status})`
+            : String(event.description);
+        if (hpText && String(event.effect || "").toLowerCase() === "bleed") {
+          return { text: `${baseText} ${hpText}.`.trim(), category, prefix };
         }
-        return { text: event.description, category, prefix };
+        return { text: baseText, category, prefix };
+      }
+      if (effectName === "status_ends" && status) {
+        return { text: `${statusTarget}'s ${status} ended.`, category, prefix };
+      }
+      if (event.outcome === "cured" && status) {
+        return { text: `${statusTarget} is no longer ${status}.`, category, prefix };
+      }
+      if (effectName === "sleep" && statusTarget) {
+        return { text: `${statusTarget} is asleep and cannot act normally.`, category, prefix };
+      }
+      if (effectName === "freeze" && statusTarget) {
+        return { text: `${statusTarget} is frozen and cannot act.`, category, prefix };
+      }
+      if (effectName === "flinch" && statusTarget) {
+        return { text: `${statusTarget} flinched and loses the turn.`, category, prefix };
       }
       if (event.skip_turn === true && actor) {
         return { text: `${actor} is ${status || "affected"} and loses the turn.`, category, prefix };
+      }
+      if (
+        status &&
+        amountText !== null &&
+        ["bleed", "bane", "bind_tick", "cursed_tick", "leech_seed", "salt_cure", "nightmare"].includes(effectName)
+      ) {
+        return {
+          text: `${statusTarget} takes ${amountText} damage from ${status}.${hpText ? ` ${hpText}.` : ""}`.trim(),
+          category,
+          prefix,
+        };
+      }
+      if (status && amountText !== null) {
+        return {
+          text: `${statusTarget} is affected by ${status}.${hpText ? ` ${hpText}.` : ""}`.trim(),
+          category,
+          prefix,
+        };
       }
       if (actor && target && status && move) {
         return { text: `${actor}'s ${move} inflicted ${status} on ${target}.`, category, prefix };
@@ -22961,6 +23564,7 @@ function renderEventLine(event) {
         return { text: `Status event: ${String(event.effect).replace(/_/g, " ")}.`, category, prefix };
       }
       return { text: "Status applied.", category, prefix };
+      }
     case "combat_stage":
       category = "status";
       if (event.description) {

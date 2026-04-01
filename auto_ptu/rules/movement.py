@@ -177,47 +177,17 @@ def legal_shift_tiles(
                 next_wallrun_used += 1
                 if wallrunner_limit <= 0 or next_wallrun_used > wallrunner_limit:
                     continue
+            if not battle._position_can_fit(actor_id, nxt):
+                continue
             state = (nxt, next_wallrun_used)
             if state not in visited or new_cost < visited[state]:
                 visited[state] = new_cost
                 heappush(heap, (new_cost, nxt, next_wallrun_used))
                 reachable.add(nxt)
-    occupied = {
-        mon.position
-        for pid, mon in battle.pokemon.items()
-        if pid != actor_id
-        and mon.active
-        and not mon.fainted
-        and mon.position is not None
-    }
     reachable = {
         coord
         for coord in reachable
-        if (
-            coord == actor.position
-            or coord not in occupied
-        )
-        and (
-            coord == actor.position
-            or not (
-                coord in grid.blockers
-                or "wall" in (
-                    str(grid.tiles.get(coord, {}).get("type", "")).lower()
-                    if isinstance(grid.tiles.get(coord, {}), dict)
-                    else str(grid.tiles.get(coord, "")).lower()
-                )
-                or "blocker" in (
-                    str(grid.tiles.get(coord, {}).get("type", "")).lower()
-                    if isinstance(grid.tiles.get(coord, {}), dict)
-                    else str(grid.tiles.get(coord, "")).lower()
-                )
-                or "blocking" in (
-                    str(grid.tiles.get(coord, {}).get("type", "")).lower()
-                    if isinstance(grid.tiles.get(coord, {}), dict)
-                    else str(grid.tiles.get(coord, "")).lower()
-                )
-            )
-        )
+        if coord == actor.position or battle._position_can_fit(actor_id, coord)
     }
     return reachable
 
@@ -239,14 +209,6 @@ def legal_long_jump_tiles(
     grid = battle.grid
     origin = actor.position
     reachable: Set[Tuple[int, int]] = {origin}
-    occupied = {
-        mon.position
-        for pid, mon in battle.pokemon.items()
-        if pid != actor_id
-        and mon.active
-        and not mon.fainted
-        and mon.position is not None
-    }
     wallrunner_limit = _skill_rank_for_movement(battle, actor_id, "acrobatics") if actor.has_trainer_feature("Wallrunner") else 0
     max_limit = limit + wallrunner_limit
     for dx in range(-max_limit, max_limit + 1):
@@ -273,7 +235,7 @@ def legal_long_jump_tiles(
             is_water = "water" in tile_type
             if is_water and not (actor.can_fly() or actor.can_swim()):
                 continue
-            if destination in occupied:
+            if not battle._position_can_fit(actor_id, destination):
                 continue
             blocked_steps = _jump_path_blocked_steps(battle, actor_id, origin, destination)
             if blocked_steps:
@@ -302,14 +264,6 @@ def legal_high_jump_tiles(
     grid = battle.grid
     origin = actor.position
     reachable: Set[Tuple[int, int]] = {origin}
-    occupied = {
-        mon.position
-        for pid, mon in battle.pokemon.items()
-        if pid != actor_id
-        and mon.active
-        and not mon.fainted
-        and mon.position is not None
-    }
     for dx in range(-limit, limit + 1):
         for dy in range(-limit, limit + 1):
             if dx == 0 and dy == 0:
@@ -331,7 +285,7 @@ def legal_high_jump_tiles(
             )
             if blocked and not (actor.can_fly() or actor.can_burrow() or actor.can_phase() or actor.has_status("Liquefied")):
                 continue
-            if destination in occupied:
+            if not battle._position_can_fit(actor_id, destination):
                 continue
             reachable.add(destination)
     return reachable

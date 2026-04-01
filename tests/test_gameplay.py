@@ -14,7 +14,10 @@ from auto_ptu.rules import (
     BattleState as RulesBattleState,
     GridState as RulesGridState,
     PokemonState as RulesPokemonState,
+    SwitchAction,
     TrainerState as RulesTrainerState,
+    TurnPhase as RulesTurnPhase,
+    UseMoveAction,
 )
 
 
@@ -185,6 +188,56 @@ class GameplayTests(unittest.TestCase):
         self.assertTrue(any(evt.get("type") == "shift" for evt in actor_events))
         self.assertTrue(any(evt.get("type") == "move" and evt.get("move") == "Tackle" for evt in actor_events))
 
+    def test_ai_ranged_attacker_prefers_disengage_then_attack(self) -> None:
+        plan = _dummy_plan()
+        buffer = io.StringIO()
+        console = Console(file=buffer, force_terminal=False)
+        session = TextBattleSession(plan, console=console)
+        trainer_ai = RulesTrainerState(identifier="gary", name="Gary", controller_kind="ai", team="foe")
+        trainer_foe = RulesTrainerState(identifier="ash", name="Ash", controller_kind="player", team="player")
+        ai_spec = _test_pokemon_spec("Pikachu")
+        ai_spec.moves = [
+            MoveSpec(
+                name="Thunder Shock",
+                type="Electric",
+                category="Special",
+                range_kind="Ranged",
+                range_value=6,
+                target_kind="Ranged",
+                target_range=6,
+            )
+        ]
+        foe_spec = _test_pokemon_spec("Machop")
+        battle = RulesBattleState(
+            trainers={"gary": trainer_ai, "ash": trainer_foe},
+            pokemon={
+                "gary-1": RulesPokemonState(spec=ai_spec, controller_id="gary", position=(1, 1), active=True),
+                "ash-1": RulesPokemonState(spec=foe_spec, controller_id="ash", position=(1, 2), active=True),
+            },
+            grid=RulesGridState(width=5, height=5),
+            rng=random.Random(15),
+        )
+        battle.start_round()
+        while battle.current_actor_id != "gary-1":
+            entry = battle.advance_turn()
+            self.assertIsNotNone(entry)
+
+        from auto_ptu.gameplay import BattleRecord
+
+        record = BattleRecord(matchup=plan.matchups[0])
+        session._ai_turn(battle, record, "gary-1")
+
+        actor_events = [evt for evt in battle.log if evt.get("actor") == "gary-1"]
+        disengage_index = next(
+            idx for idx, evt in enumerate(actor_events)
+            if evt.get("type") == "maneuver" and evt.get("effect") == "disengage"
+        )
+        move_index = next(
+            idx for idx, evt in enumerate(actor_events)
+            if evt.get("type") == "move" and evt.get("move") == "Thunder Shock"
+        )
+        self.assertLess(disengage_index, move_index)
+
     def test_ai_uses_healing_item_when_low_hp(self) -> None:
         plan = _dummy_plan()
         buffer = io.StringIO()
@@ -229,3 +282,99 @@ class GameplayTests(unittest.TestCase):
                 for evt in battle.log
             )
         )
+
+    def test_standard_switch_declares_in_command_and_resolves_in_action(self) -> None:
+        plan = _dummy_plan()
+        buffer = io.StringIO()
+        console = Console(file=buffer, force_terminal=False)
+        session = TextBattleSession(plan, console=console)
+        trainer_player = RulesTrainerState(identifier="ash", name="Ash", controller_kind="player", team="players")
+        trainer_foe = RulesTrainerState(identifier="gary", name="Gary", controller_kind="ai", team="foes")
+        active_state = RulesPokemonState(spec=_test_pokemon_spec("Pikachu"), controller_id="ash", position=(0, 0), active=True)
+        bench_state = RulesPokemonState(spec=_test_pokemon_spec("Bulbasaur"), controller_id="ash", active=False)
+        foe_state = RulesPokemonState(spec=_test_pokemon_spec("Eevee"), controller_id="gary", position=(1, 0), active=True)
+        battle = RulesBattleState(
+            trainers={"ash": trainer_player, "gary": trainer_foe},
+            pokemon={"ash-1": active_state, "ash-2": bench_state, "gary-1": foe_state},
+            grid=RulesGridState(width=4, height=4),
+            rng=random.Random(12),
+        )
+        battle.start_round()
+        while battle.current_actor_id != "ash-1":
+            entry = battle.advance_turn()
+            self.assertIsNotNone(entry)
+        self.assertEqual(battle.phase, RulesTurnPhase.START)
+        battle.advance_phase()
+        self.assertEqual(battle.phase, RulesTurnPhase.COMMAND)
+
+        session._resolve_selected_action(
+            battle,
+            SwitchAction(actor_id="ash-1", replacement_id="ash-2"),
+        )
+
+        event_types = [evt.get("type") for evt in battle.log]
+        self.assertIn("action_declared", event_types)
+        declared_index = event_types.index("action_declared")
+        action_phase_index = next(
+            idx for idx, evt in enumerate(battle.log)
+            if evt.get("type") == "phase" and evt.get("phase") == "action"
+        )
+        switch_index = event_types.index("switch")
+        self.assertLess(declared_index, action_phase_index)
+        self.assertLess(action_phase_index, switch_index)
+        self.assertEqual(battle.phase, RulesTurnPhase.ACTION)
+        self.assertTrue(battle.pokemon["ash-2"].active)
+        self.assertFalse(battle.pokemon["ash-1"].active)
+
+    def test_standard_move_declares_in_command_and_resolves_in_action(self) -> None:
+        plan = _dummy_plan()
+        buffer = io.StringIO()
+        console = Console(file=buffer, force_terminal=False)
+        session = TextBattleSession(plan, console=console)
+        trainer_player = RulesTrainerState(identifier="ash", name="Ash", controller_kind="player", team="players")
+        trainer_foe = RulesTrainerState(identifier="gary", name="Gary", controller_kind="ai", team="foes")
+        move = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+        )
+        attacker_spec = _test_pokemon_spec("Pikachu")
+        attacker_spec.moves = [move]
+        attacker_state = RulesPokemonState(spec=attacker_spec, controller_id="ash", position=(0, 0), active=True)
+        defender_state = RulesPokemonState(spec=_test_pokemon_spec("Eevee"), controller_id="gary", position=(0, 1), active=True)
+        battle = RulesBattleState(
+            trainers={"ash": trainer_player, "gary": trainer_foe},
+            pokemon={"ash-1": attacker_state, "gary-1": defender_state},
+            grid=RulesGridState(width=4, height=4),
+            rng=random.Random(13),
+        )
+        battle.start_round()
+        while battle.current_actor_id != "ash-1":
+            entry = battle.advance_turn()
+            self.assertIsNotNone(entry)
+        battle.advance_phase()
+        self.assertEqual(battle.phase, RulesTurnPhase.COMMAND)
+
+        session._resolve_selected_action(
+            battle,
+            UseMoveAction(actor_id="ash-1", move_name="Tackle", target_id="gary-1"),
+        )
+
+        declared_index = next(
+            idx for idx, evt in enumerate(battle.log) if evt.get("type") == "action_declared"
+        )
+        action_phase_index = next(
+            idx for idx, evt in enumerate(battle.log)
+            if evt.get("type") == "phase" and evt.get("phase") == "action"
+        )
+        move_index = next(
+            idx for idx, evt in enumerate(battle.log)
+            if evt.get("type") == "move" and evt.get("actor") == "ash-1"
+        )
+        self.assertLess(declared_index, action_phase_index)
+        self.assertLess(action_phase_index, move_index)
+        self.assertEqual(battle.phase, RulesTurnPhase.ACTION)

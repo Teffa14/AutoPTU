@@ -1,6 +1,6 @@
 import os
 
-from auto_ptu.sprites import SpriteCache, _fallback_slugs, _slugify, _strip_trainer_prefix_slug
+from auto_ptu.sprites import SpriteCache, _fallback_slugs, _needs_sprite_refresh, _slugify, _strip_trainer_prefix_slug
 
 
 def test_slugify_known_variant_forms() -> None:
@@ -86,3 +86,53 @@ def test_sprite_url_prefers_first_local_sprite_dir(monkeypatch, tmp_path) -> Non
 
     assert url == "/sprites/abra.png"
     assert (cache_dir / "abra.png").read_bytes() == b"animated-sheet"
+
+
+def test_low_fidelity_form_sprite_cache_gets_refreshed(monkeypatch, tmp_path) -> None:
+    from auto_ptu import sprites as sprites_mod
+
+    cache = SpriteCache(cache_dir=tmp_path)
+    target = tmp_path / "articuno-galar.png"
+    target.write_bytes(
+        b"\x89PNG\r\n\x1a\n"
+        + b"\x00\x00\x00\rIHDR"
+        + b"\x00\x00\x00D\x00\x00\x008"  # 68x56
+        + b"\x08\x06\x00\x00\x00"
+        + b"\x00\x00\x00\x00"
+    )
+    assert _needs_sprite_refresh("articuno-galar", target)
+
+    payload = {
+        "sprites": {
+            "front_default": "https://example.com/articuno-galar-front.png",
+            "other": {"official-artwork": {"front_default": "https://example.com/articuno-galar-official.png"}},
+            "versions": {"generation-viii": {"icons": {"front_default": "https://example.com/articuno-galar-icon.png"}}},
+        }
+    }
+
+    monkeypatch.setattr(sprites_mod, "_fetch_pokemon_payload", lambda slug: payload if slug == "articuno-galar" else None)
+
+    class _FakeResponse:
+        def __init__(self, data: bytes):
+            self._data = data
+
+        def read(self) -> bytes:
+            return self._data
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+    called_urls = []
+
+    def _fake_urlopen(request, timeout=10):
+        called_urls.append(request.full_url)
+        return _FakeResponse(b"real-form-sprite")
+
+    monkeypatch.setattr(sprites_mod.urllib.request, "urlopen", _fake_urlopen)
+
+    assert cache.ensure_sprite_filename("articuno-galar.png")
+    assert target.read_bytes() == b"real-form-sprite"
+    assert called_urls == ["https://example.com/articuno-galar-front.png"]

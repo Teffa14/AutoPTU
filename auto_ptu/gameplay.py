@@ -36,6 +36,7 @@ from .battle_state import format_move_event
 from .data_models import MatchPlan, MatchupSpec, MoveSpec, TrainerSideSpec
 from .config import PROJECT_ROOT, REPORTS_DIR, RUNTIME_ROOT
 from .engine import MatchEngine
+from .rules.battle_state import Action, ActionType, TrainerAction
 from .rules import (
     BattleState as RulesBattleState,
     GridState as RulesGridState,
@@ -1219,7 +1220,7 @@ class TextBattleSession:
     def _ai_turn(self, battle: RulesBattleState, record: BattleRecord, actor_id: str) -> None:
         log_len = len(battle.log)
         ai_level = "standard"
-        candidate_snapshot = self._collect_ai_candidates(battle, actor_id)
+        candidate_snapshot: Optional[Dict[str, Any]] = None
         fallback_reason: Optional[str] = None
         ai_choice_info: Dict[str, Any] = {}
         try:
@@ -1243,8 +1244,7 @@ class TextBattleSession:
                 if bench:
                     action = SwitchAction(actor_id=actor_id, replacement_id=bench[0])
                     try:
-                        battle.queue_action(action)
-                        battle.resolve_next_action()
+                        self._resolve_selected_action(battle, action)
                         self._record_ai_action_learning(battle, actor_id, action)
                         self._publish_ai_turn_diagnostics(
                             battle,
@@ -1268,10 +1268,9 @@ class TextBattleSession:
                     if self._is_weapon_item(item):
                         action = EquipWeaponAction(actor_id=actor_id, item_index=idx)
                         try:
-                            battle.queue_action(action)
+                            self._resolve_selected_action(battle, action)
                         except ValueError:
                             break
-                        battle.resolve_next_action()
                         self._record_ai_action_learning(battle, actor_id, action)
                         self._publish_ai_turn_diagnostics(
                             battle,
@@ -1335,8 +1334,7 @@ class TextBattleSession:
             if action is not None:
                 action = royale_policy.refine_action(battle, actor_id, action)
                 try:
-                    battle.queue_action(action)
-                    battle.resolve_next_action()
+                    self._resolve_selected_action(battle, action)
                     self._record_ai_action_learning(battle, actor_id, action)
                     self._publish_ai_turn_diagnostics(
                         battle,
@@ -1350,7 +1348,7 @@ class TextBattleSession:
                         info=ai_choice_info,
                     )
                     self._announce_last_event(battle, record)
-                    if isinstance(action, ShiftAction):
+                    if isinstance(action, (ShiftAction, DisengageAction)):
                         if self._ai_try_follow_up_attack(
                             battle,
                             actor_id,
@@ -1380,8 +1378,7 @@ class TextBattleSession:
                     target_id=target_id,
                     destination=destination,
                 )
-                battle.queue_action(action)
-                battle.resolve_next_action()
+                self._resolve_selected_action(battle, action)
                 self._record_ai_action_learning(battle, actor_id, action)
                 self._publish_ai_turn_diagnostics(
                     battle,
@@ -1409,8 +1406,7 @@ class TextBattleSession:
             )
             if switch_id:
                 action = SwitchAction(actor_id=actor_id, replacement_id=switch_id)
-                battle.queue_action(action)
-                battle.resolve_next_action()
+                self._resolve_selected_action(battle, action)
                 self._record_ai_action_learning(battle, actor_id, action)
                 self._publish_ai_turn_diagnostics(
                     battle,
@@ -1425,6 +1421,39 @@ class TextBattleSession:
                 )
                 self._announce_last_event(battle, record)
                 return
+            if move is not None and self._ai_should_disengage_for_attack(battle, actor_id, move, target_id):
+                disengage_action = self._ai_try_disengage_for_attack(
+                    battle,
+                    actor_id,
+                    record,
+                    target_id=target_id,
+                )
+                if disengage_action:
+                    if self._ai_try_follow_up_attack(
+                        battle,
+                        actor_id,
+                        record,
+                        ai_level=ai_level,
+                        candidate_snapshot=candidate_snapshot,
+                        fallback_reason=fallback_reason,
+                        info=ai_choice_info,
+                        source="rules_disengage_followup",
+                        reason="disengage_attack_followup",
+                    ):
+                        return
+                    self._publish_ai_turn_diagnostics(
+                        battle,
+                        actor_id,
+                        action=disengage_action,
+                        reason="disengage_for_ranged_attack",
+                        source="rules_disengage_setup",
+                        ai_level=ai_level,
+                        candidate_snapshot=candidate_snapshot,
+                        fallback_reason=fallback_reason,
+                        info=ai_choice_info,
+                    )
+                    self._advance_to_end_phase(battle)
+                    return
             if move is not None and self._ai_should_shift_for_attack(battle, actor_id, move, target_id):
                 target_id = self._ai_nearest_opponent(battle, actor_id)
                 shift_action = self._ai_try_shift_toward_target(
@@ -1542,8 +1571,6 @@ class TextBattleSession:
                 )
                 self._ai_skip_turn(battle, actor_id, record)
                 return
-            if battle.phase == RulesTurnPhase.COMMAND:
-                battle.advance_phase()
             if battle.current_actor_id is None:
                 self._announce_last_event(battle, record)
                 return
@@ -1554,7 +1581,7 @@ class TextBattleSession:
                 chosen_type=self._ai_move_chosen_type(battle, actor_id, move),
             )
             try:
-                battle.queue_action(action)
+                self._resolve_selected_action(battle, action)
             except ValueError as exc:
                 fallback_reason = f"Move rejected by rules: {exc}"
                 if (move.name or "").strip().lower() != "struggle":
@@ -1564,11 +1591,10 @@ class TextBattleSession:
                         target_id=target_id,
                     )
                     try:
-                        battle.queue_action(struggle_action)
+                        self._resolve_selected_action(battle, struggle_action)
                     except ValueError:
                         pass
                     else:
-                        battle.resolve_next_action()
                         self._record_ai_action_learning(battle, actor_id, struggle_action)
                         self._publish_ai_turn_diagnostics(
                             battle,
@@ -1631,7 +1657,6 @@ class TextBattleSession:
                 )
                 self._ai_skip_turn(battle, actor_id, record)
                 return
-            battle.resolve_next_action()
             self._record_ai_action_learning(battle, actor_id, action)
             self._publish_ai_turn_diagnostics(
                 battle,
@@ -1645,8 +1670,6 @@ class TextBattleSession:
                 info=ai_choice_info,
             )
             self._announce_last_event(battle, record)
-            if battle.phase == RulesTurnPhase.ACTION:
-                battle.advance_phase()
         finally:
             if battle.current_actor_id == actor_id and len(battle.log) == log_len:
                 self._publish_ai_turn_diagnostics(
@@ -1742,7 +1765,7 @@ class TextBattleSession:
         fallback_reason: Optional[str],
         info: Optional[Dict[str, Any]] = None,
     ) -> None:
-        snapshot = candidate_snapshot or self._collect_ai_candidates(battle, actor_id)
+        snapshot = candidate_snapshot if candidate_snapshot is not None else {"total": 0, "top": []}
         selected_score = self._score_ai_action(battle, actor_id, action) if action is not None else float("-inf")
         payload = {
             "actor_id": actor_id,
@@ -1915,7 +1938,14 @@ class TextBattleSession:
                 if (move.category or "").strip().lower() == "status":
                     continue
                 if defender_pos is not None:
-                    if not targeting.is_target_in_range(foe.position, defender_pos, move):
+                    if not targeting.is_target_in_range(
+                        foe.position,
+                        defender_pos,
+                        move,
+                        attacker_size=getattr(foe.spec, "size", ""),
+                        target_size=getattr(defender.spec, "size", ""),
+                        grid=battle.grid,
+                    ):
                         continue
                     if battle.grid and not battle.has_line_of_sight(pid, defender_pos, None):
                         continue
@@ -1934,7 +1964,13 @@ class TextBattleSession:
                     continue
                 if self._ai_team_id(battle, pid) == defender_team:
                     continue
-                dist = targeting.chebyshev_distance(foe.position, defender_pos)
+                dist = targeting.footprint_distance(
+                    foe.position,
+                    getattr(foe.spec, "size", ""),
+                    defender_pos,
+                    getattr(defender.spec, "size", ""),
+                    battle.grid,
+                )
                 if nearest is None or dist < nearest:
                     nearest = dist
             if nearest is not None:
@@ -2047,7 +2083,14 @@ class TextBattleSession:
             for move in actor.spec.moves:
                 if (move.category or "").strip().lower() == "status":
                     continue
-                if not targeting.is_target_in_range(actor_pos, foe.position, move):
+                if not targeting.is_target_in_range(
+                    actor_pos,
+                    foe.position,
+                    move,
+                    attacker_size=getattr(actor.spec, "size", ""),
+                    target_size=getattr(foe.spec, "size", ""),
+                    grid=battle.grid,
+                ):
                     continue
                 if battle.grid and not battle.has_line_of_sight(actor_id, foe.position, None):
                     continue
@@ -2074,6 +2117,33 @@ class TextBattleSession:
         # If no damaging move can currently reach an opponent, try to close distance.
         return not self._ai_has_attack_in_range(battle, actor_id)
 
+    def _ai_should_disengage_for_attack(
+        self,
+        battle: RulesBattleState,
+        actor_id: str,
+        move: MoveSpec,
+        target_id: Optional[str],
+    ) -> bool:
+        actor = battle.pokemon.get(actor_id)
+        target = battle.pokemon.get(target_id) if target_id else None
+        if actor is None or actor.position is None or target is None or target.position is None:
+            return False
+        if (move.category or "").strip().lower() == "status":
+            return False
+        if targeting.normalized_target_kind(move) == "melee":
+            return False
+        if targeting.move_range_distance(move) <= 1:
+            return False
+        if targeting.footprint_distance(
+            actor.position,
+            getattr(actor.spec, "size", ""),
+            target.position,
+            getattr(target.spec, "size", ""),
+            battle.grid,
+        ) > 1:
+            return False
+        return True
+
     def _ai_has_attack_in_range(self, battle: RulesBattleState, actor_id: str) -> bool:
         actor = battle.pokemon.get(actor_id)
         if actor is None or actor.position is None:
@@ -2099,7 +2169,14 @@ class TextBattleSession:
                 target = battle.pokemon.get(target_id)
                 if target is None or target.position is None:
                     continue
-                if not targeting.is_target_in_range(actor.position, target.position, move):
+                if not targeting.is_target_in_range(
+                    actor.position,
+                    target.position,
+                    move,
+                    attacker_size=getattr(actor.spec, "size", ""),
+                    target_size=getattr(target.spec, "size", ""),
+                    grid=battle.grid,
+                ):
                     continue
                 if battle.grid and not battle.has_line_of_sight(actor_id, target.position, target_id):
                     continue
@@ -2117,7 +2194,13 @@ class TextBattleSession:
                 continue
             if target.controller_id == actor.controller_id:
                 continue
-            dist = targeting.chebyshev_distance(actor.position, target.position)
+            dist = targeting.footprint_distance(
+                actor.position,
+                getattr(actor.spec, "size", ""),
+                target.position,
+                getattr(target.spec, "size", ""),
+                battle.grid,
+            )
             if best_dist is None or dist < best_dist:
                 best_dist = dist
                 best_id = pid
@@ -2149,12 +2232,10 @@ class TextBattleSession:
                 actor_id=trainer_id, outgoing_id=outgoing, replacement_id=bench[0]
             )
             try:
-                battle.queue_action(action)
+                self._resolve_selected_action(battle, action)
             except ValueError:
                 outgoing = None
         if outgoing:
-            if not battle.is_league_battle():
-                battle.resolve_next_action()
             self._announce_last_event(battle, record)
             return
         battle.log_event({"type": "pass", "actor": trainer_id})
@@ -2170,8 +2251,7 @@ class TextBattleSession:
         current_pos = battle.pokemon[actor_id].position
         if battle.pokemon[actor_id].has_status("Tripped"):
             action = ShiftAction(actor_id=actor_id, destination=current_pos)
-            battle.queue_action(action)
-            battle.resolve_next_action()
+            self._resolve_selected_action(battle, action)
             self._announce_last_event(battle, record)
             self._render_grid(battle)
             return True
@@ -2196,8 +2276,7 @@ class TextBattleSession:
             self._print("[yellow]That tile isn't reachable this turn.[/yellow]")
             return False
         action = ShiftAction(actor_id=actor_id, destination=dest)
-        battle.queue_action(action)
-        battle.resolve_next_action()
+        self._resolve_selected_action(battle, action)
         self._announce_last_event(battle, record)
         self._render_grid(battle)
         return True
@@ -2236,11 +2315,10 @@ class TextBattleSession:
         replacement_id = bench[choice - 1]
         action = SwitchAction(actor_id=actor_id, replacement_id=replacement_id)
         try:
-            battle.queue_action(action)
+            self._resolve_selected_action(battle, action)
         except ValueError as exc:
             self._print(f"[yellow]{exc}[/yellow]")
             return False
-        battle.resolve_next_action()
         self._announce_last_event(battle, record)
         self._render_grid(battle)
         return True
@@ -2310,16 +2388,12 @@ class TextBattleSession:
             replacement_id=replacement_id,
         )
         try:
-            battle.queue_action(action)
+            self._resolve_selected_action(battle, action)
         except ValueError as exc:
             self._print(f"[yellow]{exc}[/yellow]")
             return False
-        if not battle.is_league_battle():
-            battle.resolve_next_action()
-            self._announce_last_event(battle, record)
-            self._render_grid(battle)
-            return True
         self._announce_last_event(battle, record)
+        self._render_grid(battle)
         return True
 
     def _handle_attack(self, battle: RulesBattleState, actor_id: str, record: BattleRecord) -> bool:
@@ -2393,8 +2467,7 @@ class TextBattleSession:
         else:
             self._print("[yellow]Invalid grapple action choice.[/yellow]")
             return False
-        battle.queue_action(action)
-        battle.resolve_next_action()
+        self._resolve_selected_action(battle, action)
         self._announce_last_event(battle, record)
         return True
 
@@ -2406,12 +2479,11 @@ class TextBattleSession:
         if actor is None:
             return False
         reachable = movement.legal_shift_tiles(battle, actor_id)
-        others = {mon.position for pid, mon in battle.pokemon.items() if pid != actor_id}
         filtered = {
             coord
             for coord in reachable
-            if targeting.chebyshev_distance(coord, actor.position) <= 1
-            and (coord == actor.position or coord not in others)
+            if battle._combatant_distance_to_coord(actor, coord) <= 1
+            and (coord == actor.position or battle._position_can_fit(actor_id, coord, exclude_id=actor_id))
         }
         if len(filtered) <= 1:
             self._print("[yellow]No tiles available to disengage into.[/yellow]")
@@ -2433,16 +2505,14 @@ class TextBattleSession:
             self._print("[yellow]That tile isn't reachable for Disengage.[/yellow]")
             return False
         action = DisengageAction(actor_id=actor_id, destination=dest)
-        battle.queue_action(action)
-        battle.resolve_next_action()
+        self._resolve_selected_action(battle, action)
         self._announce_last_event(battle, record)
         self._render_grid(battle)
         return True
 
     def _handle_sprint(self, battle: RulesBattleState, actor_id: str, record: BattleRecord) -> bool:
         action = SprintAction(actor_id=actor_id)
-        battle.queue_action(action)
-        battle.resolve_next_action()
+        self._resolve_selected_action(battle, action)
         self._announce_last_event(battle, record)
         return True
 
@@ -2488,8 +2558,7 @@ class TextBattleSession:
             return False
         ally_id = allies[choice - 1]
         action = InterceptAction(actor_id=actor_id, kind=kind, ally_id=ally_id)
-        battle.queue_action(action)
-        battle.resolve_next_action()
+        self._resolve_selected_action(battle, action)
         self._announce_last_event(battle, record)
         return True
 
@@ -2516,7 +2585,7 @@ class TextBattleSession:
                 continue
             if not mon.has_status("Sleep") and not mon.has_status("Asleep"):
                 continue
-            if targeting.chebyshev_distance(actor.position, mon.position) != 1:
+            if battle._combatant_distance(actor, mon) != 1:
                 continue
             candidates.append(cid)
         if not candidates:
@@ -2540,8 +2609,7 @@ class TextBattleSession:
             return False
         target_id = candidates[choice - 1]
         action = WakeAllyAction(actor_id=actor_id, target_id=target_id)
-        battle.queue_action(action)
-        battle.resolve_next_action()
+        self._resolve_selected_action(battle, action)
         self._announce_last_event(battle, record)
         return True
 
@@ -2592,15 +2660,13 @@ class TextBattleSession:
             return False
         target_id = opponents[choice - 1]
         action = ManipulateAction(actor_id=actor_id, trick=trick, target_id=target_id)
-        battle.queue_action(action)
-        battle.resolve_next_action()
+        self._resolve_selected_action(battle, action)
         self._announce_last_event(battle, record)
         return True
 
     def _handle_pickup_item(self, battle: RulesBattleState, actor_id: str, record: BattleRecord) -> bool:
         action = PickupItemAction(actor_id=actor_id)
-        battle.queue_action(action)
-        battle.resolve_next_action()
+        self._resolve_selected_action(battle, action)
         self._announce_last_event(battle, record)
         return True
 
@@ -2673,8 +2739,7 @@ class TextBattleSession:
             secondary_skill=secondary_skill or None,
             note=note,
         )
-        battle.queue_action(action)
-        battle.resolve_next_action()
+        self._resolve_selected_action(battle, action)
         self._announce_last_event(battle, record)
         return True
 
@@ -2716,11 +2781,10 @@ class TextBattleSession:
         if choice in {"u", "unequip"}:
             action = UnequipWeaponAction(actor_id=actor_id)
             try:
-                battle.queue_action(action)
+                self._resolve_selected_action(battle, action)
             except ValueError as exc:
                 self._print(f"[yellow]{exc}[/yellow]")
                 return False
-            battle.resolve_next_action()
             self._announce_last_event(battle, record)
             return True
         if choice in {"e", "equip"}:
@@ -2747,11 +2811,10 @@ class TextBattleSession:
                 return False
             action = EquipWeaponAction(actor_id=actor_id, item_index=choice_idx - 1)
             try:
-                battle.queue_action(action)
+                self._resolve_selected_action(battle, action)
             except ValueError as exc:
                 self._print(f"[yellow]{exc}[/yellow]")
                 return False
-            battle.resolve_next_action()
             self._announce_last_event(battle, record)
             return True
         if choice in {"s", "use"}:
@@ -2806,11 +2869,10 @@ class TextBattleSession:
             target_id = allies[target_choice - 1]
             action = UseItemAction(actor_id=actor_id, item_index=choice_idx - 1, target_id=target_id)
             try:
-                battle.queue_action(action)
+                self._resolve_selected_action(battle, action)
             except ValueError as exc:
                 self._print(f"[yellow]{exc}[/yellow]")
                 return False
-            battle.resolve_next_action()
             self._announce_last_event(battle, record)
             return True
         self._print("[yellow]Invalid items action.[/yellow]")
@@ -2948,8 +3010,6 @@ class TextBattleSession:
                 target_id = self._prompt_for_target(battle, candidates, target_overview)
                 if target_id is None:
                     return False
-        if battle.phase == RulesTurnPhase.COMMAND:
-            battle.advance_phase()
         action = UseMoveAction(
             actor_id=actor_id,
             move_name=move.name,
@@ -2957,8 +3017,7 @@ class TextBattleSession:
             target_position=target_pos,
         )
         try:
-            battle.queue_action(action)
-            battle.resolve_next_action()
+            self._resolve_selected_action(battle, action)
         except ValueError as exc:
             self._print(f"[yellow]{exc}[/yellow]")
             return False
@@ -3041,7 +3100,14 @@ class TextBattleSession:
                 reachable = False
                 status_key = "unknown"
             else:
-                in_range = targeting.is_target_in_range(actor_pos, pos, move)
+                in_range = targeting.is_target_in_range(
+                    actor_pos,
+                    pos,
+                    move,
+                    attacker_size=getattr(actor_state.spec, "size", "") if actor_state is not None else "",
+                    target_size=getattr(state.spec, "size", ""),
+                    grid=battle.grid,
+                )
                 los = battle.has_line_of_sight(actor_id, pos, candidate_id)
                 reachable = in_range and los
                 if reachable:
@@ -3140,8 +3206,7 @@ class TextBattleSession:
     def _handle_breather(self, battle: RulesBattleState, actor_id: str, record: BattleRecord) -> bool:
         action = TakeBreatherAction(actor_id=actor_id)
         try:
-            battle.queue_action(action)
-            battle.resolve_next_action()
+            self._resolve_selected_action(battle, action)
             self._announce_last_event(battle, record)
             return True
         except ValueError as exc:
@@ -3161,6 +3226,8 @@ class TextBattleSession:
             return None
         actor = battle.pokemon.get(actor_id)
         if actor is None or actor.position is None:
+            return None
+        if any(actor.has_status(name) for name in ("Trapped", "Grappled", "Stuck", "Immobilized")):
             return None
         target_infos: List[Tuple[Tuple[int, int], int]] = []
         primary_info: Optional[Tuple[Tuple[int, int], int]] = None
@@ -3212,10 +3279,72 @@ class TextBattleSession:
             return None
         action = ShiftAction(actor_id=actor_id, destination=destination)
         try:
-            battle.queue_action(action)
+            self._resolve_selected_action(battle, action)
         except ValueError:
             return None
-        battle.resolve_next_action()
+        self._record_ai_action_learning(battle, actor_id, action)
+        self._announce_last_event(battle, record)
+        return action
+
+    def _ai_try_disengage_for_attack(
+        self,
+        battle: RulesBattleState,
+        actor_id: str,
+        record: BattleRecord,
+        *,
+        target_id: Optional[str] = None,
+    ) -> Optional[DisengageAction]:
+        if battle.grid is None:
+            return None
+        actor = battle.pokemon.get(actor_id)
+        if actor is None or actor.position is None:
+            return None
+        if any(actor.has_status(name) for name in ("Trapped", "Grappled", "Stuck", "Immobilized")):
+            return None
+        reachable = movement.legal_shift_tiles(battle, actor_id)
+        occupied = {
+            state.position
+            for pid, state in battle.pokemon.items()
+            if pid != actor_id and state.position is not None
+        }
+        options = [
+            coord
+            for coord in reachable
+            if coord != actor.position
+            and coord not in occupied
+            and battle._combatant_distance_to_coord(actor, coord) == 1
+        ]
+        if not options:
+            return None
+        target_infos: List[Tuple[Tuple[int, int], int]] = []
+        primary_info: Optional[Tuple[Tuple[int, int], int]] = None
+        for opponent_id in self._opponent_ids(battle, actor_id):
+            opponent = battle.pokemon.get(opponent_id)
+            if opponent is None or opponent.position is None:
+                continue
+            info = (opponent.position, self._estimated_opponent_shift_distance(battle, opponent_id))
+            target_infos.append(info)
+            if target_id and opponent_id == target_id:
+                primary_info = info
+        if not target_infos:
+            return None
+        if primary_info:
+            others = [info for info in target_infos if info != primary_info]
+            target_infos = [primary_info] + others
+        best = (float("inf"), float("inf"))
+        destination: Optional[Tuple[int, int]] = None
+        for coord in options:
+            evaluation = self._evaluate_shift_coord(coord, target_infos, range_needed=2)
+            if evaluation < best:
+                best = evaluation
+                destination = coord
+        if destination is None:
+            return None
+        action = DisengageAction(actor_id=actor_id, destination=destination)
+        try:
+            self._resolve_selected_action(battle, action)
+        except ValueError:
+            return None
         self._record_ai_action_learning(battle, actor_id, action)
         self._announce_last_event(battle, record)
         return action
@@ -3243,8 +3372,6 @@ class TextBattleSession:
         actor = battle.pokemon.get(actor_id)
         if actor is None or actor.fainted:
             return False
-        if battle.phase == RulesTurnPhase.COMMAND:
-            battle.advance_phase()
         if battle.current_actor_id != actor_id:
             return False
         move, target_id, _move_score = rules_ai.choose_best_move(battle, actor_id, ai_level=ai_level)
@@ -3259,10 +3386,9 @@ class TextBattleSession:
             chosen_type=self._ai_move_chosen_type(battle, actor_id, move),
         )
         try:
-            battle.queue_action(action)
+            self._resolve_selected_action(battle, action)
         except ValueError:
             return False
-        battle.resolve_next_action()
         self._record_ai_action_learning(battle, actor_id, action)
         self._publish_ai_turn_diagnostics(
             battle,
@@ -3276,8 +3402,6 @@ class TextBattleSession:
             info=info,
         )
         self._announce_last_event(battle, record)
-        if battle.phase == RulesTurnPhase.ACTION:
-            battle.advance_phase()
         return True
 
     def _ai_move_chosen_type(
@@ -3324,7 +3448,7 @@ class TextBattleSession:
             if opponent_positions:
                 candidates.sort(
                     key=lambda coord: min(
-                        targeting.chebyshev_distance(coord, pos)
+                        targeting.footprint_distance(coord, "Medium", pos, "Medium", battle.grid)
                         for pos in opponent_positions
                     )
                 )
@@ -3333,8 +3457,7 @@ class TextBattleSession:
             if candidates:
                 action = ShiftAction(actor_id=actor_id, destination=candidates[0])
                 try:
-                    battle.queue_action(action)
-                    battle.resolve_next_action()
+                    self._resolve_selected_action(battle, action)
                     self._record_ai_action_learning(battle, actor_id, action)
                     self._announce_last_event(battle, record)
                     self._advance_to_end_phase(battle)
@@ -3344,8 +3467,7 @@ class TextBattleSession:
         if actor.hp is not None and actor.hp < actor.max_hp():
             action = TakeBreatherAction(actor_id=actor_id)
             try:
-                battle.queue_action(action)
-                battle.resolve_next_action()
+                self._resolve_selected_action(battle, action)
                 self._announce_last_event(battle, record)
                 self._advance_to_end_phase(battle)
                 return True
@@ -3353,8 +3475,7 @@ class TextBattleSession:
                 pass
         action = SprintAction(actor_id=actor_id)
         try:
-            battle.queue_action(action)
-            battle.resolve_next_action()
+            self._resolve_selected_action(battle, action)
             self._announce_last_event(battle, record)
             self._advance_to_end_phase(battle)
             return True
@@ -3439,7 +3560,7 @@ class TextBattleSession:
         """Score candidate shift tiles based on how close they bring the actor to threats."""
         best = (float("inf"), float("inf"))
         for pos, shift_distance in target_infos:
-            distance = targeting.chebyshev_distance(coord, pos)
+            distance = targeting.footprint_distance(coord, "Medium", pos, "Medium", None)
             predicted_distance = max(0, distance - shift_distance)
             shortfall = max(0, predicted_distance - range_needed)
             candidate = (shortfall, predicted_distance)
@@ -3457,7 +3578,7 @@ class TextBattleSession:
         if not tiles:
             return 0
         distances = [
-            targeting.chebyshev_distance(opponent.position, coord)
+            battle._combatant_distance_to_coord(opponent, coord)
             for coord in tiles
             if coord is not None
         ]
@@ -3503,6 +3624,25 @@ class TextBattleSession:
     def _advance_to_end_phase(self, battle: RulesBattleState) -> None:
         while battle.phase != RulesTurnPhase.END:
             battle.advance_phase()
+
+    def _resolve_selected_action(
+        self,
+        battle: RulesBattleState,
+        action: Action,
+    ) -> None:
+        defer_to_action_phase = False
+        if battle.phase == RulesTurnPhase.COMMAND:
+            if isinstance(action, TrainerAction):
+                defer_to_action_phase = action.action_type != ActionType.FREE
+            else:
+                defer_to_action_phase = action.action_type == ActionType.STANDARD
+        if defer_to_action_phase and not battle.is_league_battle():
+            battle.declare_action(action)
+            battle.advance_phase()
+            battle.resolve_declared_actions()
+            return
+        battle.queue_action(action)
+        battle.resolve_next_action()
 
     def _alive_teams(self, battle: RulesBattleState) -> Set[str]:
         teams: Set[str] = set()

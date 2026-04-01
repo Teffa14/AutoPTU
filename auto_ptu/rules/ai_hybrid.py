@@ -190,6 +190,8 @@ def generate_candidates(battle: BattleState, actor_id: str) -> List[object]:
             continue
         if _is_reaction_only_move(move):
             continue
+        if _is_harmful_self_status_move(move):
+            continue
         type_choices = _type_choice_options_for_move(battle, actor_id, actor, move)
         target_kind = targeting.normalized_target_kind(move)
         requires_target = targeting.move_requires_target(move)
@@ -230,7 +232,16 @@ def generate_candidates(battle: BattleState, actor_id: str) -> List[object]:
                 continue
             if actor.position is None:
                 continue
-            if not targeting.is_target_in_range(actor.position, target_state.position, move):
+            if _should_skip_target_for_move(battle, actor_id, move, target_id):
+                continue
+            if not targeting.is_target_in_range(
+                actor.position,
+                target_state.position,
+                move,
+                attacker_size=getattr(actor.spec, "size", ""),
+                target_size=getattr(target_state.spec, "size", ""),
+                grid=battle.grid,
+            ):
                 continue
             if battle.grid and not battle.has_line_of_sight(actor_id, target_state.position, target_id):
                 continue
@@ -255,7 +266,14 @@ def generate_candidates(battle: BattleState, actor_id: str) -> List[object]:
                 continue
             if actor.position is None:
                 continue
-            if not targeting.is_target_in_range(actor.position, target_state.position, move):
+            if not targeting.is_target_in_range(
+                actor.position,
+                target_state.position,
+                move,
+                attacker_size=getattr(actor.spec, "size", ""),
+                target_size=getattr(target_state.spec, "size", ""),
+                grid=battle.grid,
+            ):
                 continue
             if battle.grid and not battle.has_line_of_sight(actor_id, target_state.position, target_id):
                 continue
@@ -280,7 +298,7 @@ def generate_candidates(battle: BattleState, actor_id: str) -> List[object]:
                     action = ShiftAction(actor_id=actor_id, destination=dest)
                     if _action_is_legal(battle, action, actor_id):
                         candidates.append(action)
-        if actor.position and opponents and danger >= 0.4:
+        if actor.position and opponents and (danger >= 0.4 or _prefers_ranged_disengage(battle, actor_id)):
             for dest in _top_disengage_targets(battle, actor_id, reachable):
                 if dest == actor.position:
                     continue
@@ -325,6 +343,70 @@ def generate_candidates(battle: BattleState, actor_id: str) -> List[object]:
     return candidates
 
 
+def _is_harmful_self_status_move(move: MoveSpec) -> bool:
+    if (move.category or "").strip().lower() != "status":
+        return False
+    target_kind = targeting.normalized_target_kind(move)
+    if target_kind != "self":
+        return False
+    text = _move_effect_blob(move)
+    self_debuff_tokens = (
+        "lower",
+        "reduce",
+        "decrease",
+        "drops",
+        "-1",
+        "-2",
+        "vulnerable",
+        "tripped",
+        "burn",
+        "poison",
+        "sleep",
+        "paraly",
+        "flinch",
+        "confus",
+    )
+    return any(token in text for token in self_debuff_tokens)
+
+
+def _should_skip_target_for_move(
+    battle: BattleState,
+    actor_id: str,
+    move: MoveSpec,
+    target_id: Optional[str],
+) -> bool:
+    if not target_id:
+        return False
+    target_kind = targeting.normalized_target_kind(move)
+    if target_kind in {"self", "field"}:
+        return False
+    actor_team = _team_for(battle, actor_id)
+    target_team = _team_for(battle, target_id)
+    if not actor_team or actor_team != target_team:
+        return False
+    if (move.category or "").strip().lower() != "status":
+        return True
+    text = _move_effect_blob(move)
+    harmful_tokens = (
+        "lower",
+        "reduce",
+        "decrease",
+        "drops",
+        "-1",
+        "-2",
+        "vulnerable",
+        "tripped",
+        "burn",
+        "poison",
+        "sleep",
+        "paraly",
+        "flinch",
+        "confus",
+        "badly poisoned",
+    )
+    return any(token in text for token in harmful_tokens)
+
+
 def score_action(battle: BattleState, actor_id: str, action: object) -> float:
     actor = battle.pokemon.get(actor_id)
     if actor is None:
@@ -337,8 +419,30 @@ def score_action(battle: BattleState, actor_id: str, action: object) -> float:
         target = battle.pokemon.get(action.target_id) if action.target_id else None
         if move is None:
             return -999.0
+        if _should_skip_target_for_move(battle, actor_id, move, action.target_id):
+            return -8.0
         if _is_maneuver_move(move):
             return _score_maneuver_action(battle, actor_id, move, target)
+        if (move.category or "").lower() == "status":
+            text = _move_effect_blob(move)
+            self_debuff_tokens = (
+                "lower",
+                "reduce",
+                "decrease",
+                "drops",
+                "-1",
+                "-2",
+                "vulnerable",
+                "tripped",
+                "burn",
+                "poison",
+                "sleep",
+                "paraly",
+                "flinch",
+                "confus",
+            )
+            if (action.target_id is None or action.target_id == actor_id) and any(token in text for token in self_debuff_tokens):
+                return -3.5
         if (move.category or "").lower() != "status":
             if not _move_hits_opponent(battle, actor_id, move, action.target_id):
                 return -5.0
@@ -365,6 +469,8 @@ def score_action(battle: BattleState, actor_id: str, action: object) -> float:
         score += _shift_score(battle, actor_id, action.destination)
     elif isinstance(action, DisengageAction):
         score += _shift_score(battle, actor_id, action.destination) + 0.2
+        if _prefers_ranged_disengage(battle, actor_id):
+            score += 0.9
     elif isinstance(action, SwitchAction):
         score += _switch_score(battle, actor_id, action)
     elif isinstance(action, GrappleAction):
@@ -485,12 +591,21 @@ def _choose_action_internal(
     if lethal:
         return lethal, {"reason": "lethal"}
 
+    forced_combo = _forced_combo_maneuver_action(battle, actor_id, candidates)
+    if forced_combo is not None:
+        return forced_combo, {"reason": "combo_maneuver"}
+
+    forced_conversion = _force_one_time_conversion_action(battle, actor_id, candidates)
+    if forced_conversion is not None:
+        return forced_conversion, {"reason": "conversion_once"}
+
     best_damage = _best_damaging_action(
         battle,
         actor_id,
         candidates,
         include_struggle=False,
     )
+    best_disengage = _best_disengage_action(battle, actor_id, candidates)
     best_maneuver = _best_maneuver_action(battle, actor_id, candidates)
     best_status = _best_status_action(battle, actor_id, candidates)
     if best_maneuver is not None and _should_force_combo_maneuver(battle, actor_id, best_maneuver):
@@ -514,6 +629,8 @@ def _choose_action_internal(
             return best_status, {"reason": "opening_setup"}
         if low_pressure and status_score >= damage_score - 0.15 and status_streak < 2:
             return best_status, {"reason": "status_value"}
+    if best_disengage is not None and best_damage is not None and _prefers_ranged_disengage(battle, actor_id):
+        return best_disengage, {"reason": "ranged_disengage"}
     if best_damage is not None:
         return best_damage, {"reason": "attack_in_range"}
     if best_maneuver is not None:
@@ -524,6 +641,11 @@ def _choose_action_internal(
                 return best_maneuver, {"reason": "maneuver"}
         else:
             return best_maneuver, {"reason": "maneuver"}
+    if (
+        best_status is not None
+        and _should_use_setup_before_engage(battle, actor_id, best_status)
+    ):
+        return best_status, {"reason": "pre_engage_setup"}
     if _should_close_distance(battle, actor_id, candidates):
         struggle = _struggle_action(battle, actor_id)
         if struggle is not None:
@@ -953,7 +1075,14 @@ def _danger_score(battle: BattleState, actor_id: str) -> float:
                 continue
             if foe.position is None or actor.position is None:
                 continue
-            if not targeting.is_target_in_range(foe.position, actor.position, move):
+            if not targeting.is_target_in_range(
+                foe.position,
+                actor.position,
+                move,
+                attacker_size=getattr(foe.spec, "size", ""),
+                target_size=getattr(actor.spec, "size", ""),
+                grid=battle.grid,
+            ):
                 continue
             expected = expected_damage(foe, actor, move, weather=battle.weather)
             worst = max(worst, expected)
@@ -993,6 +1122,18 @@ def _best_switch_action(
         return None
     switches.sort(key=lambda action: score_action(battle, actor_id, action), reverse=True)
     return switches[0]
+
+
+def _best_disengage_action(
+    battle: BattleState,
+    actor_id: str,
+    candidates: Sequence[object],
+) -> Optional[DisengageAction]:
+    actions = [action for action in candidates if isinstance(action, DisengageAction)]
+    if not actions:
+        return None
+    actions.sort(key=lambda action: score_action(battle, actor_id, action), reverse=True)
+    return actions[0]
 
 
 def _switch_score(battle: BattleState, actor_id: str, action: SwitchAction) -> float:
@@ -1165,7 +1306,14 @@ def _has_attack_in_range(battle: BattleState, actor_id: str) -> bool:
             target = battle.pokemon.get(target_id)
             if target is None or target.position is None:
                 continue
-            if not targeting.is_target_in_range(actor.position, target.position, move):
+            if not targeting.is_target_in_range(
+                actor.position,
+                target.position,
+                move,
+                attacker_size=getattr(actor.spec, "size", ""),
+                target_size=getattr(target.spec, "size", ""),
+                grid=battle.grid,
+            ):
                 continue
             if battle.grid and not battle.has_line_of_sight(actor_id, target.position, target_id):
                 continue
@@ -1186,6 +1334,44 @@ def _should_close_distance(
     return any(isinstance(action, ShiftAction) for action in candidates)
 
 
+def _should_use_setup_before_engage(
+    battle: BattleState,
+    actor_id: str,
+    action: object,
+) -> bool:
+    if not _is_self_or_setup_status_action(battle, actor_id, action):
+        return False
+    if _has_used_setup_move_before_engage(battle, actor_id):
+        return False
+    status_streak, _used_double = _status_streak_info(battle, actor_id)
+    if status_streak >= 1:
+        return False
+    return not _has_attack_in_range(battle, actor_id)
+
+
+def _has_used_setup_move_before_engage(battle: BattleState, actor_id: str) -> bool:
+    actor = battle.pokemon.get(actor_id)
+    if actor is None:
+        return False
+    for event in battle.log:
+        if event.get("actor") != actor_id or event.get("type") != "move":
+            continue
+        move_name = str(event.get("move") or "").strip()
+        if not move_name:
+            continue
+        move = _resolve_move(actor, move_name)
+        if move is None:
+            continue
+        simulated = UseMoveAction(
+            actor_id=actor_id,
+            move_name=move.name,
+            target_id=event.get("target"),
+        )
+        if _is_self_or_setup_status_action(battle, actor_id, simulated):
+            return True
+    return False
+
+
 def _struggle_action(battle: BattleState, actor_id: str) -> Optional[UseMoveAction]:
     actor = battle.pokemon.get(actor_id)
     if actor is None:
@@ -1202,7 +1388,13 @@ def _struggle_action(battle: BattleState, actor_id: str) -> Optional[UseMoveActi
         foe = battle.pokemon.get(pid)
         if foe is None or foe.position is None:
             continue
-        dist = targeting.chebyshev_distance(actor_pos, foe.position)
+        dist = targeting.footprint_distance(
+            actor_pos,
+            getattr(actor.spec, "size", ""),
+            foe.position,
+            getattr(foe.spec, "size", ""),
+            battle.grid,
+        )
         if dist < best_distance:
             best_distance = dist
             target_id = pid
@@ -1280,6 +1472,62 @@ def _best_status_action(
         return None
     moves.sort(key=lambda action: score_action(battle, actor_id, action), reverse=True)
     return moves[0]
+
+
+def _is_self_or_setup_status_action(
+    battle: BattleState,
+    actor_id: str,
+    action: object,
+) -> bool:
+    if not isinstance(action, UseMoveAction):
+        return False
+    actor = battle.pokemon.get(actor_id)
+    move = _resolve_move(actor, action.move_name) if actor else None
+    if move is None:
+        return False
+    if (move.category or "").strip().lower() != "status":
+        return False
+    text = _move_effect_blob(move)
+    self_debuff_tokens = (
+        "lower",
+        "reduce",
+        "decrease",
+        "drops",
+        "-1",
+        "-2",
+        "vulnerable",
+        "tripped",
+        "burn",
+        "poison",
+        "sleep",
+        "paraly",
+        "flinch",
+        "confus",
+    )
+    target_kind = targeting.normalized_target_kind(move)
+    if (target_kind == "self" or action.target_id is None or action.target_id == actor_id) and any(
+        token in text for token in self_debuff_tokens
+    ):
+        return False
+    if target_kind == "self":
+        return True
+    if action.target_id is None or action.target_id == actor_id:
+        return True
+    setup_tokens = (
+        "raise",
+        "boost",
+        "increases",
+        "+1",
+        "+2",
+        "combat stage",
+        "screen",
+        "reflect",
+        "light screen",
+        "safeguard",
+        "terrain",
+        "weather",
+    )
+    return any(token in text for token in setup_tokens)
 
 
 def _best_maneuver_action(
@@ -1562,6 +1810,31 @@ def _should_force_combo_maneuver(
     return score_action(battle, actor_id, action) >= 2.0
 
 
+def _forced_combo_maneuver_action(
+    battle: BattleState,
+    actor_id: str,
+    candidates: Sequence[object],
+) -> Optional[UseMoveAction]:
+    actor = battle.pokemon.get(actor_id)
+    if actor is None:
+        return None
+    grapple_actions: List[UseMoveAction] = []
+    for action in candidates:
+        if not isinstance(action, UseMoveAction):
+            continue
+        move = _resolve_move(actor, action.move_name)
+        if move is None or (move.name or "").strip().lower() != "grapple":
+            continue
+        grapple_actions.append(action)
+    if not grapple_actions:
+        return None
+    grapple_actions.sort(key=lambda action: score_action(battle, actor_id, action), reverse=True)
+    for action in grapple_actions:
+        if _should_force_combo_maneuver(battle, actor_id, action):
+            return action
+    return None
+
+
 def _should_prioritize_type_conversion(
     battle: BattleState,
     actor_id: str,
@@ -1588,6 +1861,45 @@ def _should_prioritize_type_conversion(
         return (damage >= 8 or damage_ratio >= 0.1) and status_score + 1.5 >= damage_score
     current_round = getattr(battle, "round", 0) or 0
     return current_round <= 3 and status_score + 1.0 >= damage_score
+
+
+def _conversion_move_already_used(
+    battle: BattleState,
+    actor_id: str,
+    move_name: str,
+) -> bool:
+    needle = str(move_name or "").strip().lower()
+    if not needle or not battle.log:
+        return False
+    for event in reversed(battle.log):
+        if not isinstance(event, dict):
+            continue
+        actor = str(event.get("actor") or event.get("actor_id") or event.get("source") or "").strip()
+        move = str(event.get("move") or event.get("move_name") or "").strip().lower()
+        if actor == actor_id and move == needle:
+            return True
+    return False
+
+
+def _force_one_time_conversion_action(
+    battle: BattleState,
+    actor_id: str,
+    candidates: Sequence[object],
+) -> Optional[UseMoveAction]:
+    conversion_actions: List[UseMoveAction] = []
+    for action in candidates:
+        if not isinstance(action, UseMoveAction):
+            continue
+        move_name = str(action.move_name or "").strip().lower()
+        if move_name not in {"conversion", "conversion2"}:
+            continue
+        if _conversion_move_already_used(battle, actor_id, move_name):
+            continue
+        conversion_actions.append(action)
+    if not conversion_actions:
+        return None
+    conversion_actions.sort(key=lambda action: score_action(battle, actor_id, action), reverse=True)
+    return conversion_actions[0]
 
 
 def _recent_combo_setup_used(
@@ -1680,6 +1992,8 @@ def _status_move_setup_score(
         "flinch",
         "confus",
     )
+    if any(token in text for token in debuff_tokens) and targets_self:
+        bonus -= 1.5
     if any(token in text for token in debuff_tokens) and targets_enemy:
         bonus += 0.7
 
@@ -1891,7 +2205,15 @@ def _shift_score(battle: BattleState, actor_id: str, destination: Tuple[int, int
         foe = battle.pokemon.get(pid)
         if foe is None or foe.position is None:
             continue
-        distances.append(targeting.chebyshev_distance(destination, foe.position))
+        distances.append(
+            targeting.footprint_distance(
+                destination,
+                getattr(actor.spec, "size", ""),
+                foe.position,
+                getattr(foe.spec, "size", ""),
+                battle.grid,
+            )
+        )
     if not distances:
         return 0.2
     if danger >= 0.4:
@@ -1904,13 +2226,25 @@ def _top_shift_targets(
     actor_id: str,
     reachable: Sequence[Tuple[int, int]],
 ) -> List[Tuple[int, int]]:
+    actor = battle.pokemon.get(actor_id)
+    if actor is None or actor.position is None:
+        return list(reachable)[:3]
     opponents = _opponent_ids(battle, actor_id)
     if not opponents:
         return list(reachable)[:3]
     foe = battle.pokemon.get(opponents[0])
     if foe is None or foe.position is None:
         return list(reachable)[:3]
-    ordered = sorted(reachable, key=lambda coord: targeting.chebyshev_distance(coord, foe.position))
+    ordered = sorted(
+        reachable,
+        key=lambda coord: targeting.footprint_distance(
+            coord,
+            getattr(actor.spec, "size", ""),
+            foe.position,
+            getattr(foe.spec, "size", ""),
+            battle.grid,
+        ),
+    )
     return ordered[:3]
 
 
@@ -1919,13 +2253,26 @@ def _top_defensive_shifts(
     actor_id: str,
     reachable: Sequence[Tuple[int, int]],
 ) -> List[Tuple[int, int]]:
+    actor = battle.pokemon.get(actor_id)
+    if actor is None or actor.position is None:
+        return []
     opponents = _opponent_ids(battle, actor_id)
     if not opponents:
         return []
     foe = battle.pokemon.get(opponents[0])
     if foe is None or foe.position is None:
         return []
-    ordered = sorted(reachable, key=lambda coord: targeting.chebyshev_distance(coord, foe.position), reverse=True)
+    ordered = sorted(
+        reachable,
+        key=lambda coord: targeting.footprint_distance(
+            coord,
+            getattr(actor.spec, "size", ""),
+            foe.position,
+            getattr(foe.spec, "size", ""),
+            battle.grid,
+        ),
+        reverse=True,
+    )
     return ordered[:2]
 
 
@@ -1937,8 +2284,86 @@ def _top_disengage_targets(
     actor = battle.pokemon.get(actor_id)
     if actor is None or actor.position is None:
         return []
-    options = [coord for coord in reachable if targeting.chebyshev_distance(actor.position, coord) == 1]
-    return options[:1]
+    options = [coord for coord in reachable if battle._combatant_distance_to_coord(actor, coord) == 1]
+    opponents = _opponent_ids(battle, actor_id)
+    if not opponents:
+        return options[:1]
+    foe_positions = [
+        battle.pokemon[pid].position
+        for pid in opponents
+        if battle.pokemon.get(pid) is not None and battle.pokemon[pid].position is not None
+    ]
+    if not foe_positions:
+        return options[:1]
+    ordered = sorted(
+        options,
+        key=lambda coord: (
+            min(
+                targeting.footprint_distance(
+                    coord,
+                    getattr(actor.spec, "size", ""),
+                    pos,
+                    getattr(battle.pokemon[pid].spec, "size", ""),
+                    battle.grid,
+                )
+                for pid, pos in (
+                    (pid, battle.pokemon[pid].position)
+                    for pid in opponents
+                    if battle.pokemon.get(pid) is not None and battle.pokemon[pid].position is not None
+                )
+            ),
+            sum(
+                targeting.footprint_distance(
+                    coord,
+                    getattr(actor.spec, "size", ""),
+                    pos,
+                    getattr(battle.pokemon[pid].spec, "size", ""),
+                    battle.grid,
+                )
+                for pid, pos in (
+                    (pid, battle.pokemon[pid].position)
+                    for pid in opponents
+                    if battle.pokemon.get(pid) is not None and battle.pokemon[pid].position is not None
+                )
+            ),
+        ),
+        reverse=True,
+    )
+    return ordered[:2]
+
+
+def _prefers_ranged_disengage(battle: BattleState, actor_id: str) -> bool:
+    actor = battle.pokemon.get(actor_id)
+    if actor is None or actor.position is None:
+        return False
+    opponents = _opponent_ids(battle, actor_id)
+    if not opponents:
+        return False
+    adjacent_threat = False
+    for pid in opponents:
+        foe = battle.pokemon.get(pid)
+        if foe is None or foe.position is None:
+            continue
+        if targeting.footprint_distance(
+            actor.position,
+            getattr(actor.spec, "size", ""),
+            foe.position,
+            getattr(foe.spec, "size", ""),
+            battle.grid,
+        ) <= 1:
+            adjacent_threat = True
+            break
+    if not adjacent_threat:
+        return False
+    for move in actor.spec.moves:
+        if (move.category or "").strip().lower() == "status":
+            continue
+        if targeting.normalized_target_kind(move) == "melee":
+            continue
+        if targeting.move_range_distance(move) <= 1:
+            continue
+        return True
+    return False
 
 
 def _resolve_move(actor: Optional[PokemonState], move_name: str) -> Optional[MoveSpec]:
