@@ -61,7 +61,7 @@ def test_compiled_swsh_outputs_exist_and_match_expected_samples() -> None:
 
 
 def test_static_builder_learnset_payload_includes_swsh_species() -> None:
-    path = Path(r"C:\Users\tefa1\AutoPTU\auto_ptu\api\static\AutoPTUCharacter\pokedex_learnset.json")
+    path = Path(r"C:\Users\tefa1\AutoPTU\auto_ptu\api\static\pokedex_learnset.json")
     payload = json.loads(path.read_text(encoding="utf-8"))
     assert "grookey" in payload
     assert any(entry["move"] == "Scratch" and int(entry["level"]) == 1 for entry in payload["grookey"])

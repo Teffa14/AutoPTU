@@ -3,8 +3,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CHARACTER_CREATION = ROOT / "auto_ptu" / "api" / "static" / "AutoPTUCharacter" / "character_creation.json"
-MASTER_DATASET = ROOT / "auto_ptu" / "api" / "static" / "AutoPTUCharacter" / "master_dataset.json"
+CHARACTER_CREATION = ROOT / "auto_ptu" / "api" / "static" / "character_creation.json"
+MASTER_DATASET = ROOT / "auto_ptu" / "api" / "static" / "master_dataset.json"
 FILTERED_FAKEMON = {
     "Automateon",
     "Aviateon",

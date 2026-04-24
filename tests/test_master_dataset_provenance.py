@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MASTER_DATASET = ROOT / "auto_ptu" / "api" / "static" / "AutoPTUCharacter" / "master_dataset.json"
+MASTER_DATASET = ROOT / "auto_ptu" / "api" / "static" / "master_dataset.json"
 
 
 def _species_entry(name: str) -> dict:

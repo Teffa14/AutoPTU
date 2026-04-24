@@ -871,8 +871,6 @@ payload['edges'] = unique_edges
 
 REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 STATIC_DIR.mkdir(parents=True, exist_ok=True)
-STATIC_CHARACTER_DIR = STATIC_DIR / 'AutoPTUCharacter'
-STATIC_CHARACTER_DIR.mkdir(parents=True, exist_ok=True)
 
 out_reports = REPORTS_DIR / 'character_creation.json'
 out_reports.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding='utf-8')
@@ -880,8 +878,6 @@ out_reports.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encodi
 out_static = STATIC_DIR / 'character_creation.json'
 json_text = json.dumps(payload, indent=2, ensure_ascii=False)
 out_static.write_text(json_text, encoding='utf-8')
-out_static_character = STATIC_CHARACTER_DIR / 'character_creation.json'
-out_static_character.write_text(json_text, encoding='utf-8')
 
 create_path = STATIC_DIR / 'create.html'
 if create_path.exists():
