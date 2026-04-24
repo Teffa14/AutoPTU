@@ -177,13 +177,15 @@ def legal_shift_tiles(
                 next_wallrun_used += 1
                 if wallrunner_limit <= 0 or next_wallrun_used > wallrunner_limit:
                     continue
-            if not battle._position_can_fit(actor_id, nxt):
+            landing_allowed = not blocked or fly or burrow or phase or liquefied
+            if landing_allowed and not battle._position_can_fit(actor_id, nxt):
                 continue
             state = (nxt, next_wallrun_used)
             if state not in visited or new_cost < visited[state]:
                 visited[state] = new_cost
                 heappush(heap, (new_cost, nxt, next_wallrun_used))
-                reachable.add(nxt)
+                if landing_allowed:
+                    reachable.add(nxt)
     reachable = {
         coord
         for coord in reachable

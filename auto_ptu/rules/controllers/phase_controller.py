@@ -76,6 +76,10 @@ class PhaseController:
         battle = self.battle
         if battle.round >= 1:
             battle._resolve_dimensional_rifts_end_of_round()
+            if hasattr(battle, "_gain_duelist_momentum"):
+                for actor_id, pokemon in list(battle.pokemon.items()):
+                    if pokemon.active and not pokemon.fainted and not pokemon.is_trainer_combatant():
+                        battle._gain_duelist_momentum(actor_id, reason="round_end")
         battle.round += 1
         battle.round_uses = 0
         battle.dance_moves_used_this_round = {}
@@ -91,6 +95,7 @@ class PhaseController:
         battle._clear_expired_follow_me()
         battle._clear_expired_foresight()
         for trainer in battle.trainers.values():
+            trainer.expire_temporary_ap(battle.round)
             trainer.reset_actions()
         for mon in battle.pokemon.values():
             mon.remove_temporary_effect("intercept_ready")

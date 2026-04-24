@@ -31,6 +31,7 @@ from auto_ptu.rules import (
     UseItemAction,
     UseMoveAction,
     movement,
+    targeting,
     ai as rules_ai,
 )
 from auto_ptu.rules import battle_state as battle_state_module
@@ -186,7 +187,7 @@ def _two_pokemon_battle(
 
 class BattleStateTests(unittest.TestCase):
     def test_switch_action_swaps_active_combatant(self) -> None:
-        trainer = TrainerState(identifier="ash", name="Ash")
+        trainer = TrainerState(identifier="ash", name="Ash", position=(1, 1))
         active = _pokemon_spec("Pikachu")
         bench = _pokemon_spec("Bulbasaur")
         battle = BattleState(
@@ -204,6 +205,71 @@ class BattleStateTests(unittest.TestCase):
         self.assertTrue(battle.pokemon["ash-2"].active)
         self.assertIsNone(battle.pokemon["ash-1"].position)
         self.assertEqual(battle.pokemon["ash-2"].position, (1, 1))
+
+    def test_switch_action_places_replacement_within_trainer_throw_range(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash", position=(0, 0))
+        active = _pokemon_spec("Pikachu")
+        bench = _pokemon_spec("Bulbasaur")
+        battle = BattleState(
+            trainers={"ash": trainer},
+            pokemon={
+                "ash-1": PokemonState(spec=active, controller_id="ash", position=(5, 5), active=True),
+                "ash-2": PokemonState(spec=bench, controller_id="ash", position=None, active=False),
+            },
+            grid=GridState(width=8, height=8),
+        )
+        battle.start_round()
+        _advance_to_pokemon_turn(battle)
+        battle.queue_action(SwitchAction(actor_id="ash-1", replacement_id="ash-2"))
+        battle.resolve_next_action()
+        replacement_pos = battle.pokemon["ash-2"].position
+        self.assertIsNotNone(replacement_pos)
+        self.assertNotEqual(replacement_pos, (5, 5))
+        self.assertLessEqual(
+            targeting.footprint_distance((0, 0), "Medium", replacement_pos, "Medium", battle.grid),
+            4,
+        )
+
+    def test_switch_action_rejects_explicit_tile_outside_throw_range(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash", position=(0, 0))
+        active = _pokemon_spec("Pikachu")
+        bench = _pokemon_spec("Bulbasaur")
+        battle = BattleState(
+            trainers={"ash": trainer},
+            pokemon={
+                "ash-1": PokemonState(spec=active, controller_id="ash", position=(1, 1), active=True),
+                "ash-2": PokemonState(spec=bench, controller_id="ash", position=None, active=False),
+            },
+            grid=GridState(width=8, height=8),
+        )
+        battle.start_round()
+        _advance_to_pokemon_turn(battle)
+        with self.assertRaises(ValueError):
+            battle.queue_action(
+                SwitchAction(
+                    actor_id="ash-1",
+                    replacement_id="ash-2",
+                    target_position=(7, 7),
+                )
+            )
+
+    def test_blessing_move_cannot_target_enemy(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash")
+        foe = TrainerState(identifier="gary", name="Gary")
+        caster = _pokemon_spec("MrMime")
+        caster.moves = [MoveSpec(name="Light Screen", type="Psychic", category="Status", range_kind="Blessing", range_value=0)]
+        battle = BattleState(
+            trainers={"ash": trainer, "gary": foe},
+            pokemon={
+                "ash-1": PokemonState(spec=caster, controller_id="ash", position=(0, 0), active=True),
+                "gary-1": PokemonState(spec=_pokemon_spec("Machop"), controller_id="gary", position=(1, 0), active=True),
+            },
+            grid=GridState(width=4, height=4),
+        )
+        battle.start_round()
+        _advance_to_pokemon_turn(battle)
+        with self.assertRaises(ValueError):
+            battle.queue_action(UseMoveAction(actor_id="ash-1", move_name="Light Screen", target_id="gary-1"))
 
     def test_creative_action_rolls_skill_check_and_logs_result(self) -> None:
         battle = _two_pokemon_battle(
@@ -558,6 +624,34 @@ class BattleStateTests(unittest.TestCase):
         self.assertTrue(battle.pokemon["ash-2"].active)
         self.assertFalse(battle.pokemon["ash-1"].active)
 
+    def test_trainer_switch_respects_explicit_throw_tile(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash", position=(0, 0), speed=1)
+        active = _pokemon_spec("Pikachu")
+        bench = _pokemon_spec("Bulbasaur")
+        battle = BattleState(
+            trainers={"ash": trainer},
+            pokemon={
+                "ash-1": PokemonState(spec=active, controller_id="ash", position=(0, 0), active=True),
+                "ash-2": PokemonState(spec=bench, controller_id="ash", position=None, active=False),
+            },
+            grid=GridState(width=8, height=8),
+        )
+        battle.start_round()
+        entry = _advance_to_pokemon_turn(battle)
+        self.assertEqual(entry.actor_id, "ash-1")
+        battle.end_turn()
+        trainer_entry = battle.advance_turn()
+        self.assertEqual(trainer_entry.actor_id, "ash")
+        action = TrainerSwitchAction(
+            actor_id="ash",
+            outgoing_id="ash-1",
+            replacement_id="ash-2",
+            target_position=(2, 2),
+        )
+        battle.queue_action(action)
+        battle.resolve_next_action()
+        self.assertEqual(battle.pokemon["ash-2"].position, (2, 2))
+
     def test_trainer_switch_uses_shift_when_fainted(self) -> None:
         trainer = TrainerState(identifier="ash", name="Ash", speed=1)
         active = _pokemon_spec("Pikachu")
@@ -728,7 +822,7 @@ class BattleStateTests(unittest.TestCase):
         self.assertEqual(event["damage"], event["strike_damage_per_hit"] * event["strike_hits"])
 
     def test_five_strike_roll_uses_rng_for_hit_count(self) -> None:
-        trainer = TrainerState(identifier="ash", name="Ash", speed=1)
+        trainer = TrainerState(identifier="ash", name="Ash", position=(0, 0), speed=1)
         foe = TrainerState(identifier="gary", name="Gary", speed=2)
         five_strike = MoveSpec(
             name="Pin Missile",
@@ -964,7 +1058,7 @@ class BattleStateTests(unittest.TestCase):
         self.assertEqual(recoil_event["amount"], expected)
         self.assertEqual(recoil_event["target_hp"], attacker.hp)
 
-    def test_struggle_damages_user_for_quarter_max_hp(self) -> None:
+    def test_struggle_does_not_apply_recoil(self) -> None:
         trainer = TrainerState(identifier="ash", name="Ash")
         foe = TrainerState(identifier="gary", name="Gary")
         attacker_spec = _pokemon_spec("Tauros")
@@ -997,15 +1091,50 @@ class BattleStateTests(unittest.TestCase):
         battle.queue_action(action)
         battle.resolve_next_action()
 
-        recoil_event = next(
-            evt for evt in reversed(battle.log) if evt.get("type") == "recoil" and evt.get("effect") == "struggle_recoil"
+        recoil_events = [
+            evt for evt in battle.log if evt.get("type") == "recoil" and evt.get("effect") == "struggle_recoil"
+        ]
+        self.assertFalse(recoil_events)
+        self.assertEqual(attacker.hp, start_hp)
+
+    def test_struggle_uses_combat_expert_profile(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash")
+        foe = TrainerState(identifier="gary", name="Gary")
+        attacker_spec = _pokemon_spec("Pikachu")
+        attacker_spec.skills["combat"] = 4
+        attacker = PokemonState(spec=attacker_spec, controller_id=trainer.identifier)
+        defender = PokemonState(spec=_pokemon_spec("Eevee"), controller_id=foe.identifier)
+        battle = BattleState(
+            trainers={trainer.identifier: trainer, foe.identifier: foe},
+            pokemon={"ash-1": attacker, "gary-1": defender},
         )
-        self.assertEqual(recoil_event["type"], "recoil")
-        self.assertEqual(recoil_event["effect"], "struggle_recoil")
-        self.assertEqual(recoil_event["fraction"], "1/4 max HP")
-        expected = int(math.ceil(attacker.max_hp() * 0.25))
-        self.assertEqual(recoil_event["amount"], expected)
-        self.assertEqual(attacker.hp, start_hp - expected)
+
+        move = UseMoveAction(actor_id="ash-1", move_name="Struggle", target_id="gary-1")._resolve_move(battle, attacker)
+
+        self.assertEqual(move.name, "Struggle")
+        self.assertEqual(move.ac, 3)
+        self.assertEqual(move.db, 5)
+
+    def test_struggle_ignores_long_reach_move_tweaks(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash")
+        foe = TrainerState(identifier="gary", name="Gary")
+        attacker_spec = _pokemon_spec("Pikachu")
+        attacker_spec.abilities = [{"name": "Long Reach"}]
+        attacker = PokemonState(spec=attacker_spec, controller_id=trainer.identifier)
+        defender = PokemonState(spec=_pokemon_spec("Eevee"), controller_id=foe.identifier)
+        battle = BattleState(
+            trainers={trainer.identifier: trainer, foe.identifier: foe},
+            pokemon={"ash-1": attacker, "gary-1": defender},
+        )
+
+        action = UseMoveAction(actor_id="ash-1", move_name="Struggle", target_id="gary-1")
+        move = action._resolve_move(battle, attacker)
+        tweaked = action._apply_ability_move_tweaks(battle, attacker, move, consume=False)
+
+        self.assertEqual(tweaked.range_kind, "Melee")
+        self.assertEqual(tweaked.target_kind, "Melee")
+        self.assertEqual(tweaked.range_value, 1)
+        self.assertEqual(tweaked.target_range, 1)
 
     def test_smite_miss_deals_partial_damage(self) -> None:
         trainer = TrainerState(identifier="ash", name="Ash")
@@ -14873,6 +15002,32 @@ class BattleStateTests(unittest.TestCase):
         battle.resolve_move_targets(attacker_id="ash-1", move=attacker_spec.moves[0], target_id="gary-1", target_position=(1, 1))
         self.assertTrue(any(evt.get("target") == "gary-1" and evt.get("move") == "Shock Burst" for evt in battle.log))
 
+    def test_large_footprint_cannot_fit_if_any_tile_would_leave_grid(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash")
+        foe = TrainerState(identifier="gary", name="Gary")
+        actor = PokemonState(
+            spec=_pokemon_spec("Steelix", size="Large"),
+            controller_id=trainer.identifier,
+            position=(0, 0),
+            active=True,
+        )
+        opponent = PokemonState(
+            spec=_pokemon_spec("Pikachu"),
+            controller_id=foe.identifier,
+            position=(4, 4),
+            active=True,
+        )
+        battle = BattleState(
+            trainers={trainer.identifier: trainer, foe.identifier: foe},
+            pokemon={"ash-1": actor, "gary-1": opponent},
+            grid=GridState(width=6, height=6),
+        )
+
+        self.assertFalse(battle._position_can_fit("ash-1", (5, 5)))
+        self.assertFalse(battle._position_can_fit("ash-1", (5, 4)))
+        self.assertFalse(battle._position_can_fit("ash-1", (4, 5)))
+        self.assertTrue(battle._position_can_fit("ash-1", (4, 4), exclude_id="gary-1"))
+
     def test_room_orbs_apply_status_to_all_active_foes(self) -> None:
         player = TrainerState(identifier="ash", name="Ash", team="player")
         foe = TrainerState(identifier="gary", name="Gary", team="foe")
@@ -16361,6 +16516,125 @@ class BattleStateTests(unittest.TestCase):
         )
         self.assertIsNotNone(reflect_entry)
         self.assertEqual(reflect_entry.get("charges"), 1)
+
+    def test_light_screen_reduces_special_damage(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash")
+        foe = TrainerState(identifier="gary", name="Gary")
+        move = MoveSpec(
+            name="Psybeam",
+            type="Psychic",
+            category="Special",
+            db=6,
+            ac=None,
+            range_kind="Ranged",
+            range_value=6,
+            freq="At-Will",
+        )
+        attacker_spec = _pokemon_spec("Abra")
+        attacker_spec.moves = [move]
+        defender_spec = _pokemon_spec("Machop")
+        attacker_1 = PokemonState(spec=attacker_spec, controller_id=trainer.identifier)
+        defender_1 = PokemonState(spec=defender_spec, controller_id=foe.identifier)
+        battle_1 = BattleState(
+            trainers={trainer.identifier: trainer, foe.identifier: foe},
+            pokemon={"ash-1": attacker_1, "gary-1": defender_1},
+            rng=SequenceRNG([10] * 10),
+        )
+        battle_1.resolve_move_targets("ash-1", move, "gary-1", None)
+        damage_plain = defender_1.max_hp() - (defender_1.hp or 0)
+        attacker_2 = PokemonState(spec=attacker_spec, controller_id=trainer.identifier)
+        defender_2 = PokemonState(spec=defender_spec, controller_id=foe.identifier)
+        defender_2.statuses.append({"name": "Light Screen", "charges": 2})
+        battle_2 = BattleState(
+            trainers={trainer.identifier: trainer, foe.identifier: foe},
+            pokemon={"ash-1": attacker_2, "gary-1": defender_2},
+            rng=SequenceRNG([10] * 10),
+        )
+        battle_2.resolve_move_targets("ash-1", move, "gary-1", None)
+        damage_screen = defender_2.max_hp() - (defender_2.hp or 0)
+        self.assertGreater(damage_plain, damage_screen)
+        screen_entry = next(
+            (entry for entry in defender_2.statuses if defender_2._normalized_status_name(entry) == "light screen"),
+            None,
+        )
+        self.assertIsNotNone(screen_entry)
+        self.assertEqual(screen_entry.get("charges"), 1)
+
+    def test_aurora_veil_reduces_damage_and_consumes_charges(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash")
+        foe = TrainerState(identifier="gary", name="Gary")
+        move = MoveSpec(
+            name="Water Gun",
+            type="Water",
+            category="Special",
+            db=5,
+            ac=None,
+            range_kind="Ranged",
+            range_value=6,
+            freq="At-Will",
+        )
+        attacker_spec = _pokemon_spec("Squirtle")
+        attacker_spec.moves = [move]
+        defender_spec = _pokemon_spec("Eevee")
+        attacker_1 = PokemonState(spec=attacker_spec, controller_id=trainer.identifier)
+        defender_1 = PokemonState(spec=defender_spec, controller_id=foe.identifier)
+        battle_1 = BattleState(
+            trainers={trainer.identifier: trainer, foe.identifier: foe},
+            pokemon={"ash-1": attacker_1, "gary-1": defender_1},
+            rng=SequenceRNG([10] * 10),
+        )
+        battle_1.resolve_move_targets("ash-1", move, "gary-1", None)
+        damage_plain = defender_1.max_hp() - (defender_1.hp or 0)
+        attacker_2 = PokemonState(spec=attacker_spec, controller_id=trainer.identifier)
+        defender_2 = PokemonState(spec=defender_spec, controller_id=foe.identifier)
+        defender_2.statuses.append({"name": "Aurora Veil", "charges": 2})
+        battle_2 = BattleState(
+            trainers={trainer.identifier: trainer, foe.identifier: foe},
+            pokemon={"ash-1": attacker_2, "gary-1": defender_2},
+            rng=SequenceRNG([10] * 10),
+        )
+        battle_2.resolve_move_targets("ash-1", move, "gary-1", None)
+        damage_veil = defender_2.max_hp() - (defender_2.hp or 0)
+        self.assertGreater(damage_plain, damage_veil)
+        veil_entry = next(
+            (entry for entry in defender_2.statuses if defender_2._normalized_status_name(entry) == "aurora veil"),
+            None,
+        )
+        self.assertIsNotNone(veil_entry)
+        self.assertEqual(veil_entry.get("charges"), 1)
+
+    def test_aurora_veil_applies_two_charges_in_hail(self) -> None:
+        trainer = TrainerState(identifier="ash", name="Ash")
+        ally_one = PokemonState(spec=_pokemon_spec("Glaceon"), controller_id=trainer.identifier)
+        ally_two = PokemonState(spec=_pokemon_spec("Eevee"), controller_id=trainer.identifier)
+        move = MoveSpec(
+            name="Aurora Veil",
+            type="Ice",
+            category="Status",
+            ac=None,
+            range_kind="Self",
+        )
+        battle = BattleState(
+            trainers={trainer.identifier: trainer},
+            pokemon={"ash-1": ally_one, "ash-2": ally_two},
+            weather="Hail",
+        )
+        battle._handle_move_special_effects(
+            attacker_id="ash-1",
+            attacker=ally_one,
+            defender_id=None,
+            defender=None,
+            move=move,
+            result={"hit": False},
+            damage_dealt=0,
+        )
+        for mon in (ally_one, ally_two):
+            veil_entry = next(
+                (entry for entry in mon.statuses if mon._normalized_status_name(entry) == "aurora veil"),
+                None,
+            )
+            self.assertIsNotNone(veil_entry)
+            self.assertEqual(veil_entry.get("charges"), 2)
 
     def test_reflect_type_changes_primary_type(self) -> None:
         trainer = TrainerState(identifier="ash", name="Ash")

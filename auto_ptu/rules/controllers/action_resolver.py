@@ -120,6 +120,8 @@ class ActionResolver:
         if not battle._action_queue:
             return None
         action = battle._action_queue.popleft()
+        if getattr(action, "action_type", None) is not ActionType.FREE:
+            battle._maybe_trigger_emergency_release_interrupt(getattr(action, "actor_id", None))
 
         def _emit_feature_trigger() -> None:
             dispatcher = getattr(battle, "trainer_feature_dispatcher", None)
@@ -171,6 +173,7 @@ class ActionResolver:
                     }
                 )
                 self.resolve(action)
+                battle._sync_mounted_pairs()
                 _emit_feature_trigger()
                 return action
             if not trainer.has_action_available(action.action_type):
@@ -190,6 +193,7 @@ class ActionResolver:
                 }
             )
             self.resolve(action)
+            battle._sync_mounted_pairs()
             _emit_feature_trigger()
             return action
         mon_state = battle.pokemon.get(action.actor_id)
@@ -233,6 +237,7 @@ class ActionResolver:
                     }
                 )
         self.resolve(action)
+        battle._sync_mounted_pairs()
         battle._last_action_actor_id = action.actor_id
         _emit_feature_trigger()
         return action

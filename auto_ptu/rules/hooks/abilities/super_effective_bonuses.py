@@ -29,8 +29,9 @@ def _pierce_bonus(ctx: AbilityHookContext) -> None:
 def _exploit_bonus(ctx: AbilityHookContext) -> None:
     if ctx.result is None or ctx.defender is None:
         return
-    ctx.result["damage"] = int(ctx.result.get("damage", 0) or 0) + 15
-    ctx.result["exploit_bonus"] = 15
+    bonus = 30 if ctx.attacker is not None and ctx.attacker.get_temporary_effects("duelist_manual_ability") else 15
+    ctx.result["damage"] = int(ctx.result.get("damage", 0) or 0) + bonus
+    ctx.result["exploit_bonus"] = bonus
     ctx.events.append(
         {
             "type": "ability",
@@ -39,7 +40,7 @@ def _exploit_bonus(ctx: AbilityHookContext) -> None:
             "ability": "Exploit",
             "move": ctx.move.name,
             "effect": "damage_bonus",
-            "amount": 15,
+            "amount": bonus,
             "description": "Exploit adds damage on super-effective hits.",
             "target_hp": ctx.defender.hp,
         }

@@ -1,0 +1,68 @@
+[
+  {
+    "id": "abandoned-power-plant",
+    "name": "Abandoned Power Plant",
+    "image": "Abandoned Power Plant.png",
+    "record": "abandoned-power-plant.json",
+    "tags": [
+      "urban",
+      "indoor",
+      "starter"
+    ]
+  },
+  {
+    "id": "auburn-lake",
+    "name": "Auburn Lake",
+    "image": "Auburn Lake.png",
+    "record": "auburn-lake.json",
+    "tags": [
+      "water",
+      "outdoor",
+      "starter"
+    ]
+  },
+  {
+    "id": "blackleaf-forest",
+    "name": "Blackleaf Forest",
+    "image": "Blackleaf Forest.png",
+    "record": "blackleaf-forest.json",
+    "tags": [
+      "forest",
+      "outdoor",
+      "starter"
+    ]
+  },
+  {
+    "id": "campsite",
+    "name": "Campsite",
+    "image": "Campsite.png",
+    "record": "campsite.json",
+    "tags": [
+      "forest",
+      "camp",
+      "starter"
+    ]
+  },
+  {
+    "id": "capture-the-flag-grasslands",
+    "name": "Capture The Flag Grasslands",
+    "image": "Capture The Flag Grasslands.png",
+    "record": "capture-the-flag-grasslands.json",
+    "tags": [
+      "grass",
+      "arena",
+      "starter"
+    ]
+  },
+  {
+    "id": "city-wall-map",
+    "name": "City Wall Map",
+    "image": "City Wall Map.png",
+    "record": "city-wall-map.json",
+    "tags": [
+      "urban",
+      "wall",
+      "starter"
+    ]
+  }
+]

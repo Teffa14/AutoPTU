@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from ..perk_hooks import PerkHookContext, register_perk_hook
+from ...battle_state import _trainer_feature_stat_entries
 
 _LINK_FEATURES = {
     "Attack Link": "atk",
@@ -41,6 +42,38 @@ def _apply_link(ctx: PerkHookContext, feature_name: str, stat: str) -> None:
     )
 
 
+def _apply_defense_mastery(ctx: PerkHookContext, feature_name: str) -> None:
+    actor = ctx.actor
+    if getattr(actor, "fainted", False):
+        return
+    round_no = int(getattr(ctx.battle, "round", 0) or 0)
+    shifted = any(
+        int(entry.get("round", -1) if entry.get("round", -1) not in (None, "") else -1) == round_no
+        for entry in actor.get_temporary_effects("shifted_this_turn")
+    )
+    if shifted:
+        return
+    actor.add_temporary_effect(
+        "damage_reduction",
+        amount=5,
+        expires_round=round_no + 1,
+        consume=False,
+        source=feature_name,
+    )
+    ctx.events.append(
+        {
+            "type": "trainer_feature",
+            "actor": ctx.actor_id,
+            "trainer": actor.controller_id,
+            "feature": feature_name,
+            "effect": "damage_reduction",
+            "amount": 5,
+            "phase": ctx.phase,
+            "description": f"{feature_name} grants 5 damage reduction after holding position.",
+        }
+    )
+
+
 @register_perk_hook("end", "Attack Link")
 def _attack_link(ctx: PerkHookContext) -> None:
     _apply_link(ctx, "Attack Link", "atk")
@@ -64,3 +97,20 @@ def _special_defense_link(ctx: PerkHookContext) -> None:
 @register_perk_hook("end", "Speed Link")
 def _speed_link(ctx: PerkHookContext) -> None:
     _apply_link(ctx, "Speed Link", "spd")
+
+
+@register_perk_hook("end", "Stat Link")
+def _stat_link(ctx: PerkHookContext) -> None:
+    for stat in _trainer_feature_stat_entries(ctx.actor, "Stat Link"):
+        _apply_link(ctx, "Stat Link", stat)
+
+
+@register_perk_hook("end", "Defense Mastery")
+def _defense_mastery(ctx: PerkHookContext) -> None:
+    _apply_defense_mastery(ctx, "Defense Mastery")
+
+
+@register_perk_hook("end", "Stat Mastery")
+def _stat_mastery(ctx: PerkHookContext) -> None:
+    if "def" in _trainer_feature_stat_entries(ctx.actor, "Stat Mastery"):
+        _apply_defense_mastery(ctx, "Stat Mastery")

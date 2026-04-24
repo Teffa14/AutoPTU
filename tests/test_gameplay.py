@@ -6,7 +6,7 @@ from rich.console import Console
 
 from auto_ptu.battle_state import InteractiveBattleState
 from auto_ptu.data_loader import default_campaign
-from auto_ptu.data_models import GridSpec, MatchPlan, MatchupSpec, MoveSpec, PokemonSpec
+from auto_ptu.data_models import GridSpec, MatchPlan, MatchupSpec, MoveSpec, PokemonSpec, TrainerSideSpec
 from auto_ptu.engine import MatchEngine
 from auto_ptu.gameplay import TextBattleSession
 from auto_ptu.matchmaker import AutoMatchPlanner
@@ -18,6 +18,7 @@ from auto_ptu.rules import (
     TrainerState as RulesTrainerState,
     TurnPhase as RulesTurnPhase,
     UseMoveAction,
+    targeting,
 )
 
 
@@ -237,6 +238,140 @@ class GameplayTests(unittest.TestCase):
             if evt.get("type") == "move" and evt.get("move") == "Thunder Shock"
         )
         self.assertLess(disengage_index, move_index)
+
+    def test_text_session_auto_selects_ai_starter(self) -> None:
+        grid = GridSpec(width=4, height=4)
+        weak = _test_pokemon_spec("Magikarp")
+        weak.moves = [MoveSpec(name="Splash", type="Normal", category="Status", range_kind="Self", range_value=0)]
+        strong = _test_pokemon_spec("Pikachu")
+        strong.moves = [
+            MoveSpec(
+                name="Thunder Shock",
+                type="Electric",
+                category="Special",
+                db=4,
+                range_kind="Ranged",
+                range_value=6,
+                target_kind="Ranged",
+                target_range=6,
+            )
+        ]
+        foe = _test_pokemon_spec("Squirtle")
+        matchup = MatchupSpec(
+            you=weak,
+            foe=foe,
+            sides=[
+                TrainerSideSpec(
+                    identifier="player",
+                    name="Player",
+                    controller="ai",
+                    team="player",
+                    pokemon=[weak, strong],
+                ),
+                TrainerSideSpec(
+                    identifier="foe",
+                    name="Foe",
+                    controller="ai",
+                    team="foe",
+                    pokemon=[foe],
+                ),
+            ]
+        )
+        plan = MatchPlan(matchups=[matchup], weather="Clear", grid=grid, active_slots=1)
+        buffer = io.StringIO()
+        console = Console(file=buffer, force_terminal=False)
+        session = TextBattleSession(plan, console=console)
+
+        battle = session._build_battle_state(0, matchup)
+
+        active_species = {
+            mon.spec.species
+            for mon in battle.pokemon.values()
+            if mon.controller_id == "player" and mon.active
+        }
+        self.assertEqual(active_species, {"Pikachu"})
+
+    def test_ai_uses_light_screen_on_self_not_enemy(self) -> None:
+        plan = _dummy_plan()
+        buffer = io.StringIO()
+        console = Console(file=buffer, force_terminal=False)
+        session = TextBattleSession(plan, console=console)
+        trainer_ai = RulesTrainerState(identifier="gary", name="Gary", controller_kind="ai", team="foe")
+        trainer_foe = RulesTrainerState(identifier="ash", name="Ash", controller_kind="player", team="player")
+        ai_spec = _test_pokemon_spec("MrMime")
+        ai_spec.moves = [
+            MoveSpec(
+                name="Light Screen",
+                type="Psychic",
+                category="Status",
+                range_kind="Blessing",
+                range_value=0,
+            )
+        ]
+        foe_spec = _test_pokemon_spec("Machop")
+        battle = RulesBattleState(
+            trainers={"gary": trainer_ai, "ash": trainer_foe},
+            pokemon={
+                "gary-1": RulesPokemonState(spec=ai_spec, controller_id="gary", position=(1, 1), active=True),
+                "ash-1": RulesPokemonState(spec=foe_spec, controller_id="ash", position=(1, 2), active=True),
+            },
+            grid=RulesGridState(width=5, height=5),
+            rng=random.Random(19),
+        )
+        battle.start_round()
+        while battle.current_actor_id != "gary-1":
+            entry = battle.advance_turn()
+            self.assertIsNotNone(entry)
+
+        from auto_ptu.gameplay import BattleRecord
+
+        record = BattleRecord(matchup=plan.matchups[0])
+        session._ai_turn(battle, record, "gary-1")
+
+        actor_events = [
+            evt for evt in battle.log
+            if evt.get("actor") == "gary-1" and evt.get("type") == "move" and evt.get("move") == "Light Screen"
+        ]
+        self.assertTrue(actor_events)
+        self.assertEqual(actor_events[-1].get("target"), "gary-1")
+        self.assertTrue(battle.pokemon["gary-1"].has_status("Light Screen"))
+
+    def test_ai_trainer_switch_chooses_throw_tile_within_range(self) -> None:
+        plan = _dummy_plan()
+        buffer = io.StringIO()
+        console = Console(file=buffer, force_terminal=False)
+        session = TextBattleSession(plan, console=console)
+        trainer_ai = RulesTrainerState(identifier="gary", name="Gary", controller_kind="ai", team="foe", position=(0, 0), speed=1)
+        trainer_foe = RulesTrainerState(identifier="ash", name="Ash", controller_kind="player", team="player", speed=2)
+        active = RulesPokemonState(spec=_test_pokemon_spec("Machop"), controller_id="gary", position=(5, 5), active=True)
+        active.hp = 0
+        bench = RulesPokemonState(spec=_test_pokemon_spec("Pikachu"), controller_id="gary", position=None, active=False)
+        foe = RulesPokemonState(spec=_test_pokemon_spec("Eevee"), controller_id="ash", position=(2, 2), active=True)
+        battle = RulesBattleState(
+            trainers={"gary": trainer_ai, "ash": trainer_foe},
+            pokemon={"gary-1": active, "gary-2": bench, "ash-1": foe},
+            grid=RulesGridState(width=8, height=8),
+            rng=random.Random(23),
+        )
+        battle.start_round()
+        entry = battle.advance_turn()
+        while entry is not None and entry.actor_id != "gary":
+            battle.end_turn()
+            entry = battle.advance_turn()
+        self.assertIsNotNone(entry)
+        self.assertEqual(entry.actor_id, "gary")
+
+        from auto_ptu.gameplay import BattleRecord
+
+        record = BattleRecord(matchup=plan.matchups[0])
+        session._ai_trainer_turn(battle, record, "gary")
+
+        self.assertTrue(battle.pokemon["gary-2"].active)
+        self.assertNotEqual(battle.pokemon["gary-2"].position, (5, 5))
+        self.assertLessEqual(
+            targeting.footprint_distance((0, 0), "Medium", battle.pokemon["gary-2"].position, "Medium", battle.grid),
+            4,
+        )
 
     def test_ai_uses_healing_item_when_low_hp(self) -> None:
         plan = _dummy_plan()

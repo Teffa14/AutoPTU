@@ -140,6 +140,14 @@ def _effect_roll(ctx: MoveSpecialContext) -> int:
                 text = _effects_text_for(ctx.move).lower()
                 if "flinch" in text:
                     bonus += 2
+            if (
+                ctx.attacker.has_trainer_feature("Firebrand")
+                and ctx.move is not None
+                and str(ctx.move.type or "").strip().lower() == "fire"
+            ):
+                text = _effects_text_for(ctx.move).lower()
+                if "burn" in text:
+                    bonus += 2
     if bonus:
         roll += bonus
     if ctx.attacker is not None and getattr(ctx.battle, "_roll_penalty", None):
@@ -172,6 +180,15 @@ def _effect_roll(ctx: MoveSpecialContext) -> int:
                 roll += int(entry.get("amount", 0) or 0)
             except (TypeError, ValueError):
                 continue
+        if (
+            ctx.move is not None
+            and str(ctx.move.category or "").strip().lower() != "status"
+            and targeting.normalized_target_kind(ctx.move) == "ranged"
+        ):
+            for entry in list(ctx.attacker.get_temporary_effects("stat_stratagem")):
+                if str(entry.get("stat") or "").strip().lower() != "spatk":
+                    continue
+                roll += min(3, max(0, int(ctx.attacker.combat_stages.get("spatk", 0) or 0)))
     if ctx.attacker is not None:
         roll += ctx.attacker.hardened_crit_effect_bonus(getattr(ctx.battle, "battle", None) or ctx.battle)
     return roll
@@ -921,7 +938,23 @@ def _flash_accuracy(ctx: MoveSpecialContext) -> None:
 def _reflect_status(ctx: MoveSpecialContext) -> None:
     if ctx.defender is None:
         return
-    ctx.defender.statuses.append({"name": "Reflect", "charges": 2})
+    reflect_entry = next(
+        (
+            entry
+            for entry in ctx.defender.statuses
+            if ctx.defender._normalized_status_name(entry) == "reflect"
+        ),
+        None,
+    )
+    if reflect_entry is None:
+        ctx.defender.statuses.append({"name": "Reflect", "charges": 2})
+    else:
+        reflect_entry = (
+            reflect_entry
+            if isinstance(reflect_entry, dict)
+            else ctx.defender._upgrade_status_entry(reflect_entry, canonical_name="Reflect")
+        )
+        reflect_entry["charges"] = 2
     ctx.events.append(
         {
             "type": "move",
@@ -939,7 +972,23 @@ def _reflect_status(ctx: MoveSpecialContext) -> None:
 def _light_screen_status(ctx: MoveSpecialContext) -> None:
     if ctx.defender is None:
         return
-    ctx.defender.statuses.append({"name": "Light Screen", "charges": 2})
+    screen_entry = next(
+        (
+            entry
+            for entry in ctx.defender.statuses
+            if ctx.defender._normalized_status_name(entry) == "light screen"
+        ),
+        None,
+    )
+    if screen_entry is None:
+        ctx.defender.statuses.append({"name": "Light Screen", "charges": 2})
+    else:
+        screen_entry = (
+            screen_entry
+            if isinstance(screen_entry, dict)
+            else ctx.defender._upgrade_status_entry(screen_entry, canonical_name="Light Screen")
+        )
+        screen_entry["charges"] = 2
     ctx.events.append(
         {
             "type": "move",
@@ -1125,13 +1174,58 @@ def _bestow_transfer_item(ctx: MoveSpecialContext) -> None:
 def _covet_steal_item(ctx: MoveSpecialContext) -> None:
     if not ctx.hit or ctx.defender is None or ctx.defender_id is None:
         return
-    attacker_items = list(ctx.attacker.spec.items or [])
-    defender_items = list(ctx.defender.spec.items or [])
+    attacker_items = ctx.attacker.spec.items if isinstance(ctx.attacker.spec.items, list) else []
+    defender_items = ctx.defender.spec.items if isinstance(ctx.defender.spec.items, list) else []
     if attacker_items or not defender_items:
         return
-    stolen = defender_items.pop(0)
-    ctx.defender.spec.items = defender_items
-    ctx.attacker.spec.items = attacker_items + [stolen]
+    item_index = 0
+    selector = getattr(ctx.battle, "_delivery_bird_item_index", None)
+    if callable(selector):
+        item_index = int(selector(ctx.defender, defender_items))
+    item_index = max(0, min(item_index, len(defender_items) - 1))
+    stolen = defender_items[item_index]
+    if ctx.defender.has_ability("Sticky Hold"):
+        ctx.events.append(
+            {
+                "type": "ability",
+                "actor": ctx.defender_id,
+                "target": ctx.attacker_id,
+                "ability": "Sticky Hold",
+                "move": ctx.move.name,
+                "effect": "item_block",
+                "item": _item_name_text(stolen),
+                "description": "Sticky Hold prevents item theft.",
+                "target_hp": ctx.defender.hp,
+            }
+        )
+        return
+    item_name = _item_name_text(stolen)
+    if ctx.defender.has_ability("Leek Mastery") and (item_name.lower() == "stick" or "leek" in item_name.lower()):
+        ctx.events.append(
+            {
+                "type": "ability",
+                "actor": ctx.defender_id,
+                "target": ctx.attacker_id,
+                "ability": "Leek Mastery",
+                "move": ctx.move.name,
+                "effect": "item_block",
+                "item": item_name,
+                "description": "Leek Mastery prevents item theft.",
+                "target_hp": ctx.defender.hp,
+            }
+        )
+        return
+    style_blocker = getattr(ctx.battle, "_maybe_style_is_eternal_prevent_item_loss", None)
+    if callable(style_blocker) and style_blocker(
+        target_id=ctx.defender_id,
+        source_actor_id=ctx.attacker_id,
+        item=stolen,
+        cause="item_theft",
+        move_name=ctx.move.name,
+    ):
+        return
+    stolen = defender_items.pop(item_index)
+    attacker_items.append(stolen)
     item_name = _item_name_text(stolen)
     ctx.events.append(
         {
@@ -2779,8 +2873,24 @@ def _aurora_veil(ctx: MoveSpecialContext) -> None:
     for pid, mon in ctx.battle.pokemon.items():
         if ctx.battle._team_for(pid) != team:
             continue
-        if not mon.has_status("Aurora Veil"):
-            mon.statuses.append({"name": "Aurora Veil", "remaining": 4})
+        veil_entry = next(
+            (
+                entry
+                for entry in mon.statuses
+                if mon._normalized_status_name(entry) == "aurora veil"
+            ),
+            None,
+        )
+        if veil_entry is None:
+            mon.statuses.append({"name": "Aurora Veil", "charges": 2})
+        else:
+            veil_entry = (
+                veil_entry
+                if isinstance(veil_entry, dict)
+                else mon._upgrade_status_entry(veil_entry, canonical_name="Aurora Veil")
+            )
+            veil_entry.pop("remaining", None)
+            veil_entry["charges"] = 2
         ctx.events.append(
             {
                 "type": "status",
@@ -10680,19 +10790,8 @@ def _wrap_bonus(ctx: MoveSpecialContext) -> None:
     if ctx.attacker.has_ability("Crush Trap") and not ctx.attacker.get_temporary_effects(
         "crush_trap_used"
     ):
-        struggle_move = MoveSpec(
-            name="Struggle",
-            type="Typeless",
-            category="Physical",
-            db=4,
-            ac=None,
-            range_kind="Melee",
-            range_value=1,
-            target_kind="Melee",
-            target_range=1,
-            freq="At-Will",
-            crit_range=100,
-        )
+        struggle_move = ctx.battle.build_struggle_move(ctx.attacker_id, ctx.attacker, move_type="Typeless")
+        struggle_move.crit_range = 100
         struggle_result = resolve_move_action(
             rng=ctx.battle.rng,
             attacker=ctx.attacker,
@@ -14839,11 +14938,6 @@ def _barb_barrage_poison(ctx: MoveSpecialContext) -> None:
 def _beat_up(ctx: MoveSpecialContext) -> None:
     if ctx.defender is None or ctx.defender_id is None:
         return
-    struggle = _lookup_move_spec("Struggle")
-    if struggle is None:
-        return
-    struggle = copy.deepcopy(struggle)
-    struggle.type = "Dark"
     participants = [ctx.attacker_id]
     if ctx.attacker.position is not None and ctx.defender.position is not None:
         for pid, mon in ctx.battle.pokemon.items():
@@ -14860,6 +14954,7 @@ def _beat_up(ctx: MoveSpecialContext) -> None:
             if len(participants) >= 3:
                 break
     for pid in participants:
+        struggle = ctx.battle.build_struggle_move(pid, move_type="Dark")
         try:
             ctx.battle.resolve_move_targets(
                 attacker_id=pid,
@@ -15783,8 +15878,23 @@ def _lucky_chant(ctx: MoveSpecialContext) -> None:
             continue
         if mon.fainted or not mon.active:
             continue
-        if not mon.has_status("Lucky Chant"):
+        chant_entry = next(
+            (
+                entry
+                for entry in mon.statuses
+                if mon._normalized_status_name(entry) == "lucky chant"
+            ),
+            None,
+        )
+        if chant_entry is None:
             mon.statuses.append({"name": "Lucky Chant", "charges": 3})
+        else:
+            chant_entry = (
+                chant_entry
+                if isinstance(chant_entry, dict)
+                else mon._upgrade_status_entry(chant_entry, canonical_name="Lucky Chant")
+            )
+            chant_entry["charges"] = 3
     ctx.events.append(
         {
             "type": "status",
@@ -18306,7 +18416,9 @@ def _type_strategist(ctx: MoveSpecialContext) -> None:
     if not ctx.attacker.has_ability("Type Strategist"):
         return
     move_type = (ctx.move.type or "").strip().lower()
-    primary = (ctx.attacker.spec.types[0] if ctx.attacker.spec.types else "").strip().lower()
+    metadata = ctx.attacker.ability_metadata("Type Strategist") or {}
+    chosen_type = str(metadata.get("chosen_type") or "").strip().lower()
+    primary = chosen_type or ((ctx.attacker.spec.types[0] if ctx.attacker.spec.types else "").strip().lower())
     if not primary or move_type != primary:
         return
     max_hp = ctx.attacker.max_hp()
@@ -18326,7 +18438,11 @@ def _type_strategist(ctx: MoveSpecialContext) -> None:
             "move": ctx.move.name,
             "effect": "damage_reduction",
             "amount": amount,
-            "description": "Type Strategist grants damage reduction after a matching move.",
+            "description": (
+                f"Type Strategist grants damage reduction after a matching {primary.title()}-type move."
+                if chosen_type
+                else "Type Strategist grants damage reduction after a matching move."
+            ),
             "target_hp": ctx.attacker.hp,
         }
     )

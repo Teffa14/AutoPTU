@@ -382,6 +382,22 @@ class TrainerFeatureTests(unittest.TestCase):
         self.assertEqual(["Battle Prep"], [entry.name for entry in side.trainer_features])
         self.assertEqual(["Novice Edge"], [entry.name for entry in side.trainer_edges])
 
+    def test_trainer_state_recognizes_elite_trainer_granted_choice_feature(self) -> None:
+        battle = _battle_with_feature(
+            {
+                "feature_id": "baseline",
+                "name": "Baseline",
+                "trigger": "",
+                "frequency": "At-Will",
+                "effect_payload": {"type": "log_only"},
+            },
+            extra_features=[{"name": "Elite Trainer", "choice": "Leadership"}],
+        )
+        player = battle.trainers["player"]
+        self.assertTrue(player.has_trainer_feature("Elite Trainer"))
+        self.assertTrue(player.has_trainer_feature("Leadership"))
+        self.assertFalse(player.has_trainer_feature("Agility Training"))
+
 
 if __name__ == "__main__":
     unittest.main()

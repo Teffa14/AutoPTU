@@ -84,7 +84,16 @@ def choose_best_move(
             if not weapon_tags or not any(req.issubset(weapon_tags) for req in requirements):
                 continue
         requires_target = targeting.move_requires_target(move)
-        candidate_ids: Sequence[Optional[str]] = opponents if requires_target else [None]
+        target_kind = targeting.normalized_target_kind(move)
+        if target_kind == "blessing":
+            allies = [
+                pid
+                for pid, state in battle.pokemon.items()
+                if state.active and not state.fainted and _team_for(pid) == actor_team
+            ]
+            candidate_ids = allies or [actor_id]
+        else:
+            candidate_ids = opponents if requires_target else [None]
         if not candidate_ids:
             candidate_ids = [None]
         for target_id in candidate_ids:

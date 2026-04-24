@@ -145,3 +145,40 @@ def test_generate_trainer_coverage_report_honors_explicit_runtime_map(tmp_path):
     )
     assert payload["summary"]["core_runtime_ready"] == 1
     assert payload["entries"][0]["runtime_status"] == "core_runtime_ready"
+
+
+def test_generate_trainer_coverage_report_discovers_indirect_feature_action_subclasses(tmp_path):
+    character_creation = tmp_path / "character_creation.json"
+    character_creation.write_text(
+        json.dumps({"features": [{"name": "Indirect Action Feature"}], "edges_catalog": []}),
+        encoding="utf-8",
+    )
+    perk_dir = tmp_path / "perk_effects"
+    perk_dir.mkdir()
+    runtime_dir = tmp_path / "runtime"
+    runtime_dir.mkdir()
+    (runtime_dir / "battle_state.py").write_text(
+        "\n".join(
+            [
+                "class TrainerFeatureAction:",
+                "    pass",
+                "",
+                "class _SharedAction(TrainerFeatureAction):",
+                "    pass",
+                "",
+                "class IndirectMappedAction(_SharedAction):",
+                "    feature_name = 'Indirect Action Feature'",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    payload = generate_report(
+        character_creation_path=character_creation,
+        perk_effects_dir=perk_dir,
+        runtime_dir=runtime_dir,
+        json_out=tmp_path / "coverage.json",
+        markdown_out=tmp_path / "coverage.md",
+    )
+    assert payload["summary"]["trainer_action_registry_ready"] == 1
+    assert payload["sources"]["trainer_feature_actions"] == ["indirect action feature"]
+    assert payload["entries"][0]["runtime_status"] == "trainer_action_registry_ready"

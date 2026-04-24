@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="design-system/tokens.css" />
     <link rel="stylesheet" href="design-system/components.css" />
     <link rel="stylesheet" href="design-system/layout.css" />
-    <link rel="stylesheet" href="styles.css?v=20260402e" />
-    <link rel="stylesheet" href="battle.css?v=20260402e" />
+    <link rel="stylesheet" href="styles.css?v=20260404m" />
+    <link rel="stylesheet" href="battle.css?v=20260404m" />
   </head>
   <body class="battle-ui">
     <div id="move-tooltip" class="move-tooltip hidden"></div>
@@ -136,6 +136,7 @@
               <select id="ai-model-select"></select>
             </label>
             <button id="ai-model-refresh-top" type="button">Refresh AI</button>
+            <button id="ai-model-branch-top" type="button">Branch AI</button>
             <span id="ai-model-math" class="field-pill ds-pill light">Model score: -</span>
             <span id="ai-model-insight" class="field-pill ds-pill light">Model insight: -</span>
           </div>
@@ -157,6 +158,19 @@
             <div class="panel-title ds-panel-title">Battlefield</div>
             <div class="grid-controls ds-grid-controls">
               <span id="selected-tile-info" class="field-pill ds-pill light">Tile: -</span>
+              <button id="import-terrain-json" type="button">Import Terrain JSON</button>
+              <input id="import-terrain-json-input" type="file" accept="application/json" multiple hidden />
+              <label class="field field-inline battlefield-preset-field">
+                Saved Map
+                <select id="saved-battlefield-select">
+                  <option value="">No saved map</option>
+                </select>
+              </label>
+              <label class="field field-inline battlefield-preset-toggle">
+                <input id="reuse-saved-battlefield" type="checkbox" checked />
+                Reuse
+              </label>
+              <button id="clear-saved-battlefield" type="button">Forget Map</button>
               <button id="zoom-in">Zoom +</button>
               <button id="zoom-out">Zoom -</button>
               <button id="zoom-fit">Fit</button>
@@ -165,6 +179,7 @@
           <div class="battlefield-stage">
             <div class="grid-stage">
               <div class="grid-wrap">
+                <div id="grid-map-surface" class="grid-map-surface" aria-hidden="true"></div>
                 <div id="grid" class="grid"></div>
               </div>
             </div>
@@ -230,9 +245,23 @@
                     <button id="load-trainer" type="button">Load Trainer</button>
                     <button id="import-trainer" type="button" title="Load a saved trainer JSON profile from disk.">Import Trainer JSON</button>
                     <button id="clear-trainer" type="button">Clear Trainer</button>
-                    <button id="import-roster-csv" type="button" title="Load explicit player/foe teams from CSV. This is the canonical battle format.">Import Roster CSV</button>
+                    <button id="import-roster-csv" type="button" title="Load one or more explicit player/foe teams from CSV. The first file can be staged immediately; all files are saved to the roster library.">Import Roster CSV</button>
                     <button id="export-roster-csv" type="button" title="Export current battle or creator teams as roster CSV.">Export Roster CSV</button>
                     <button id="clear-roster-csv" type="button" title="Unload the currently imported roster CSV.">Clear Roster CSV</button>
+                    <label class="field field-inline battlefield-preset-field">
+                      Saved Roster
+                      <select id="saved-roster-select">
+                        <option value="">No saved roster</option>
+                      </select>
+                    </label>
+                    <label class="field field-inline battlefield-preset-field">
+                      Assign To
+                      <select id="saved-roster-side-select">
+                        <option value="__keep__">Keep sides from file</option>
+                      </select>
+                    </label>
+                    <button id="load-saved-roster" type="button">Load Saved Roster</button>
+                    <button id="forget-saved-roster" type="button">Forget Roster</button>
                   </div>
                   <label class="toggle-row" title="When ON, exported CSV includes foe rows for immediate AI vs AI starts.">
                     <input id="export-roster-mirror" type="checkbox" checked />
@@ -255,10 +284,27 @@
                   <div class="panel-title ds-panel-title">Tools</div>
                   <div class="trainer-actions battle-parameter-grid">
                     <button id="ai-model-refresh" type="button">Refresh AI</button>
+                    <button id="ai-model-branch" type="button">Branch AI</button>
                     <button id="download-sprites">Refresh Sprites</button>
                     <button id="open-useful-charts" type="button">Charts</button>
                     <a class="field-pill ds-pill light" href="/create">Character Builder</a>
                     <a class="field-pill ds-pill light" href="ui-gallery.html">UI Gallery</a>
+                  </div>
+                  <div class="panel-title ds-panel-title">AI Learning</div>
+                  <div class="battle-parameter-grid">
+                    <label class="field">
+                      Drift
+                      <input id="ai-drift-threshold" type="number" min="0.01" step="0.01" value="0.35" />
+                    </label>
+                    <label class="field">
+                      Min Updates
+                      <input id="ai-min-updates" type="number" min="1" step="1" value="250" />
+                    </label>
+                    <label class="field">
+                      Check Every
+                      <input id="ai-check-every" type="number" min="1" step="1" value="25" />
+                    </label>
+                    <button id="ai-model-settings-apply" type="button">Apply AI Tuning</button>
                   </div>
                   <div class="panel-title ds-panel-title">Side Names</div>
                   <div id="side-name-editor" class="char-feature-meta">Set trainer names for each side.</div>
@@ -311,6 +357,6 @@
     <script src="logic/character_state.js"></script>
     <script src="ui/battle_ui.js"></script>
     <script src="ui/builder_ui.js"></script>
-    <script src="app.js?v=20260402e"></script>
+    <script src="app.js?v=20260404m"></script>
   </body>
 </html>

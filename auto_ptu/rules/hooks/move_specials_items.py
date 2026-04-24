@@ -37,85 +37,35 @@ def _sticky_hold_blocks_item(holder: Optional[object]) -> bool:
     return bool(holder is not None and getattr(holder, "has_ability", lambda _name: False)("Sticky Hold"))
 
 
+def _style_is_eternal_blocks_item(
+    ctx: MoveSpecialContext,
+    *,
+    holder: Optional[object],
+    holder_id: Optional[str],
+    item: object,
+    cause: str,
+) -> bool:
+    if holder is None or holder_id is None:
+        return False
+    blocker = getattr(ctx.battle, "_maybe_style_is_eternal_prevent_item_loss", None)
+    if not callable(blocker):
+        return False
+    return bool(
+        blocker(
+            target_id=holder_id,
+            source_actor_id=ctx.attacker_id,
+            item=item,
+            cause=cause,
+            move_name=ctx.move.name,
+        )
+    )
+
+
 @register_move_special("covet")
 def _covet(ctx: MoveSpecialContext) -> None:
-    if not ctx.hit or ctx.defender is None or ctx.defender_id is None:
-        return
-    attacker_items = ctx.attacker.spec.items if isinstance(ctx.attacker.spec.items, list) else []
-    defender_items = _items_list(ctx.defender.spec.items)
-    if attacker_items:
-        ctx.events.append(
-            {
-                "type": "move",
-                "actor": ctx.attacker_id,
-                "target": ctx.defender_id,
-                "move": ctx.move.name,
-                "effect": "covet_failed",
-                "description": "Covet fails because the user is already holding an item.",
-                "target_hp": ctx.defender.hp,
-            }
-        )
-        return
-    if not defender_items:
-        ctx.events.append(
-            {
-                "type": "move",
-                "actor": ctx.attacker_id,
-                "target": ctx.defender_id,
-                "move": ctx.move.name,
-                "effect": "covet_failed",
-                "description": "Covet fails because the target has no held items.",
-                "target_hp": ctx.defender.hp,
-            }
-        )
-        return
-    item_index = ctx.battle._delivery_bird_item_index(ctx.defender, defender_items)
-    item = defender_items[item_index]
-    if _sticky_hold_blocks_item(ctx.defender):
-        ctx.events.append(
-            {
-                "type": "ability",
-                "actor": ctx.defender_id,
-                "target": ctx.attacker_id,
-                "ability": "Sticky Hold",
-                "move": ctx.move.name,
-                "effect": "item_block",
-                "item": _item_name_text(item),
-                "description": "Sticky Hold prevents item theft.",
-                "target_hp": ctx.defender.hp,
-            }
-        )
-        return
-    if _leek_mastery_blocks_item(ctx.defender, item):
-        ctx.events.append(
-            {
-                "type": "ability",
-                "actor": ctx.defender_id,
-                "target": ctx.attacker_id,
-                "ability": "Leek Mastery",
-                "move": ctx.move.name,
-                "effect": "item_block",
-                "item": _item_name_text(item),
-                "description": "Leek Mastery prevents item theft.",
-                "target_hp": ctx.defender.hp,
-            }
-        )
-        return
-    item = defender_items.pop(item_index)
-    attacker_items.append(item)
-    _sync_items(ctx.attacker, ctx.defender)
-    ctx.events.append(
-        {
-            "type": "move",
-            "actor": ctx.attacker_id,
-            "target": ctx.defender_id,
-            "move": ctx.move.name,
-            "effect": "covet",
-            "item": _item_name_text(item),
-            "description": "Covet steals the target's held item.",
-            "target_hp": ctx.defender.hp,
-        }
-    )
+    # Covet is handled in move_specials.py. Keep this registration inert to
+    # avoid double-stealing from two post-damage handlers.
+    return
 
 
 @register_move_special("pluck")
@@ -181,6 +131,14 @@ def _pluck(ctx: MoveSpecialContext) -> None:
                 "target_hp": ctx.defender.hp,
             }
         )
+        return
+    if _style_is_eternal_blocks_item(
+        ctx,
+        holder=ctx.defender,
+        holder_id=ctx.defender_id,
+        item=item,
+        cause="item_theft",
+    ):
         return
     item = defender_items.pop(item_index)
     attacker_items.append(item)
@@ -250,6 +208,14 @@ def _thief(ctx: MoveSpecialContext) -> None:
                     "target_hp": ctx.defender.hp,
                 }
             )
+            return
+        if _style_is_eternal_blocks_item(
+            ctx,
+            holder=ctx.defender,
+            holder_id=ctx.defender_id,
+            item=stolen,
+            cause="item_theft",
+        ):
             return
         stolen = defender_items.pop(item_index)
         attacker_items.insert(0, stolen)
@@ -329,6 +295,14 @@ def _knock_off(ctx: MoveSpecialContext) -> None:
                 "target_hp": ctx.defender.hp,
             }
         )
+        return
+    if _style_is_eternal_blocks_item(
+        ctx,
+        holder=ctx.defender,
+        holder_id=ctx.defender_id,
+        item=item,
+        cause="item_loss",
+    ):
         return
     item = defender_items.pop(item_index)
     _sync_items(ctx.defender)
@@ -487,6 +461,16 @@ def _switcheroo(ctx: MoveSpecialContext) -> None:
             if attacker_item is not None:
                 attacker_items.insert(0, attacker_item)
             return
+        if _style_is_eternal_blocks_item(
+            ctx,
+            holder=ctx.defender,
+            holder_id=ctx.defender_id,
+            item=candidate,
+            cause="item_swap",
+        ):
+            if attacker_item is not None:
+                attacker_items.insert(0, attacker_item)
+            return
         defender_item = defender_items.pop(item_index)
     if attacker_item is not None:
         defender_items.insert(0, attacker_item)
@@ -581,6 +565,16 @@ def _trick(ctx: MoveSpecialContext) -> None:
             if attacker_item is not None:
                 attacker_items.insert(0, attacker_item)
             return
+        if _style_is_eternal_blocks_item(
+            ctx,
+            holder=ctx.defender,
+            holder_id=ctx.defender_id,
+            item=candidate,
+            cause="item_swap",
+        ):
+            if attacker_item is not None:
+                attacker_items.insert(0, attacker_item)
+            return
         defender_item = defender_items.pop(item_index)
     if attacker_item is not None:
         defender_items.insert(0, attacker_item)
@@ -637,6 +631,14 @@ def _incinerate(ctx: MoveSpecialContext) -> None:
                     "target_hp": ctx.defender.hp,
                 }
             )
+            return
+        if _style_is_eternal_blocks_item(
+            ctx,
+            holder=ctx.defender,
+            holder_id=ctx.defender_id,
+            item=candidate,
+            cause="item_loss",
+        ):
             return
         dropped = ctx.defender.spec.items.pop(item_index)
     if dropped:

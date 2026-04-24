@@ -577,6 +577,12 @@ def _tolerance_resists_further(ctx: AbilityHookContext) -> None:
         ability="Tolerance",
         description="Tolerance further reduces resisted damage.",
     )
+    if ctx.defender is not None and ctx.defender.get_temporary_effects("duelist_manual_ability"):
+        _shift_type_multiplier_down(
+            ctx,
+            ability="Tolerance",
+            description="Duelist's Manual doubles Tolerance's resisted-damage step.",
+        )
 
 
 @register_ability_hook(phase="post_result", ability="Enduring Rage", holder="defender")

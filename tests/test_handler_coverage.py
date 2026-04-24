@@ -151,7 +151,6 @@ class HandlerCoverageTests(unittest.TestCase):
             "Strength Sap",
             "String Shot",
             "Struggle Bug",
-            "Struggle+",
             "Stuff Cheeks",
             "Substitute",
             "Sucker Punch",

@@ -369,6 +369,21 @@ body.battle-ui .grid-controls .field-pill {
   font-size: calc(11px * var(--battle-scale, 1));
 }
 
+body.battle-ui .grid-controls .battlefield-preset-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+body.battle-ui .grid-controls #saved-battlefield-select {
+  min-width: 150px;
+  max-width: 210px;
+}
+
+body.battle-ui .grid-controls .battlefield-preset-toggle {
+  gap: 6px;
+}
+
 body.battle-ui .grid-legend {
   display: none;
 }
@@ -401,19 +416,103 @@ body.battle-ui .grid-wrap {
 }
 
 body.battle-ui .grid {
-  gap: var(--grid-gap);
-  padding: calc(14px * var(--battle-scale, 1));
-  background: rgba(13, 15, 18, 0.52);
-  box-shadow: inset 0 0 0 1px rgba(189, 199, 209, 0.12), 0 12px 26px rgba(0, 0, 0, 0.28);
+  gap: 1px;
+  padding: 0;
+  background: rgba(210, 222, 238, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(189, 199, 209, 0.16), 0 12px 26px rgba(0, 0, 0, 0.22);
   transform-origin: top left;
   will-change: transform;
   position: relative;
-  overflow: hidden;
-  border-radius: 16px;
+  overflow: visible;
+  border-radius: 12px;
 }
 
 body.battle-ui .cell {
+  border-radius: 0;
+  border: 0;
+  background: rgba(15, 20, 28, 0.08);
+  box-shadow: none;
+}
+
+body.battle-ui #selected-tile-info {
+  cursor: pointer;
+}
+
+body.battle-ui .grid[data-has-map-image="true"] .cell {
+  background: rgba(9, 13, 18, 0.09);
+  border: 0;
+  box-shadow: inset 0 0 0 1px rgba(245, 248, 252, 0.07);
+}
+
+body.battle-ui .grid[data-has-map-image="true"] .cell[data-terrain-theme="grass"],
+body.battle-ui .grid[data-has-map-image="true"] .cell[data-terrain-theme="forest"] {
+  background: linear-gradient(180deg, rgba(88, 171, 95, 0.34), rgba(51, 116, 58, 0.25));
+  box-shadow: inset 0 0 0 1px rgba(167, 230, 152, 0.18);
+}
+
+body.battle-ui .grid[data-has-map-image="true"] .cell[data-terrain-theme="water"] {
+  background: linear-gradient(180deg, rgba(78, 155, 220, 0.4), rgba(37, 95, 148, 0.3));
+  box-shadow: inset 0 0 0 1px rgba(176, 225, 255, 0.2);
+}
+
+body.battle-ui .grid[data-has-map-image="true"] .cell[data-terrain-theme="sand"] {
+  background: linear-gradient(180deg, rgba(214, 177, 104, 0.34), rgba(148, 113, 58, 0.25));
+  box-shadow: inset 0 0 0 1px rgba(243, 220, 163, 0.18);
+}
+
+body.battle-ui .grid[data-has-map-image="true"] .cell[data-terrain-theme="rock"] {
+  background: linear-gradient(180deg, rgba(144, 132, 120, 0.34), rgba(93, 84, 74, 0.25));
+  box-shadow: inset 0 0 0 1px rgba(220, 214, 207, 0.16);
+}
+
+body.battle-ui .grid[data-has-map-image="true"] .cell[data-terrain-theme="urban"] {
+  background: linear-gradient(180deg, rgba(129, 145, 165, 0.32), rgba(84, 99, 117, 0.25));
+  box-shadow: inset 0 0 0 1px rgba(217, 226, 237, 0.16);
+}
+
+body.battle-ui .grid[data-has-map-image="true"] .cell[data-terrain-theme="ice"] {
+  background: linear-gradient(180deg, rgba(168, 224, 255, 0.36), rgba(91, 160, 198, 0.28));
+  box-shadow: inset 0 0 0 1px rgba(229, 247, 255, 0.22);
+}
+
+body.battle-ui .grid[data-has-map-image="true"] .cell[data-terrain-theme="psychic"] {
+  background: linear-gradient(180deg, rgba(199, 129, 239, 0.34), rgba(130, 77, 170, 0.25));
+  box-shadow: inset 0 0 0 1px rgba(240, 206, 255, 0.18);
+}
+
+body.battle-ui .grid[data-has-map-image="true"] .cell[data-terrain-theme="electric"] {
+  background: linear-gradient(180deg, rgba(246, 222, 99, 0.34), rgba(182, 149, 42, 0.25));
+  box-shadow: inset 0 0 0 1px rgba(255, 244, 190, 0.18);
+}
+
+body.battle-ui .grid[data-has-map-image="true"] .cell[data-terrain-theme="misty"] {
+  background: linear-gradient(180deg, rgba(198, 181, 240, 0.34), rgba(137, 120, 184, 0.25));
+  box-shadow: inset 0 0 0 1px rgba(239, 230, 255, 0.18);
+}
+
+body.battle-ui .grid[data-has-map-image="true"] .cell[data-terrain-theme="hazard"] {
+  background: linear-gradient(180deg, rgba(214, 107, 85, 0.36), rgba(146, 62, 48, 0.28));
+  box-shadow: inset 0 0 0 1px rgba(255, 210, 198, 0.16);
+}
+
+body.battle-ui .grid[data-has-map-image="true"] .cell:hover {
+  box-shadow: inset 0 0 0 1px rgba(226, 236, 248, 0.28);
+}
+
+body.battle-ui .grid-map-surface {
+  left: 0;
+  top: 0;
   border-radius: 12px;
+}
+
+body.battle-ui .cell.selected-tile {
+  outline: 2px solid rgba(255, 222, 132, 0.95);
+  outline-offset: -2px;
+  box-shadow: inset 0 0 0 999px rgba(255, 223, 130, 0.08);
+}
+
+body.battle-ui .cell.current {
+  outline-offset: -2px;
 }
 
 body.battle-ui .battle-zone-right {

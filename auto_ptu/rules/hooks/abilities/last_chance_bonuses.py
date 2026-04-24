@@ -41,6 +41,17 @@ def _last_chance_bonuses(ctx: AbilityHookContext) -> None:
     if attacker.hp > max(1, attacker.max_hp() // 3):
         return
     move_type = (ctx.effective_move.type or "").strip().lower()
+    type_ace_metadata = attacker.ability_metadata("Last Chance") or {}
+    type_ace_last_chance = attacker.has_ability("Last Chance") and str(type_ace_metadata.get("source") or "").strip() in {"Type Ace", "Extra Ordinary"}
+    if type_ace_last_chance:
+        chosen_type = str(type_ace_metadata.get("chosen_type") or "").strip().lower()
+        if chosen_type and move_type == chosen_type:
+            _apply_bonus(
+                ctx,
+                ability="Last Chance",
+                bonus_key="last_chance_bonus",
+                description=f"Last Chance powers up {chosen_type.title()}-type moves at low HP.",
+            )
     if move_type == "fire" and attacker.has_ability("Blaze"):
         _apply_bonus(
             ctx,
@@ -55,7 +66,7 @@ def _last_chance_bonuses(ctx: AbilityHookContext) -> None:
             bonus_key="dark_art_bonus",
             description="Dark Art powers up Dark-type moves at low HP.",
         )
-    if move_type == "normal" and attacker.has_ability("Last Chance"):
+    if move_type == "normal" and attacker.has_ability("Last Chance") and not type_ace_last_chance:
         _apply_bonus(
             ctx,
             ability="Last Chance",

@@ -209,24 +209,49 @@ class _TrainerFeatureActionRegistryVisitor(ast.NodeVisitor):
     def __init__(self) -> None:
         self.trainer_feature_names: Set[str] = set()
         self.pokemon_feature_names: Set[str] = set()
+        self._class_bases: Dict[str, Set[str]] = {}
+        self._class_feature_names: Dict[str, str] = {}
 
     def visit_ClassDef(self, node: ast.ClassDef) -> None:
-        bucket: Set[str] | None = None
-        base_names = {self._base_name(base) for base in node.bases}
-        if "TrainerFeatureAction" in base_names:
-            bucket = self.trainer_feature_names
-        elif "PokemonFeatureAction" in base_names:
-            bucket = self.pokemon_feature_names
-        if bucket is not None:
-            for stmt in node.body:
-                if not isinstance(stmt, ast.Assign):
-                    continue
-                for target in stmt.targets:
-                    if isinstance(target, ast.Name) and target.id == "feature_name":
-                        value = self._literal_str(stmt.value)
-                        if value:
-                            bucket.add(_normalize_token(value))
+        class_name = node.name
+        self._class_bases[class_name] = {
+            base_name for base_name in (self._base_name(base) for base in node.bases) if base_name
+        }
+        for stmt in node.body:
+            if not isinstance(stmt, ast.Assign):
+                continue
+            for target in stmt.targets:
+                if isinstance(target, ast.Name) and target.id == "feature_name":
+                    value = self._literal_str(stmt.value)
+                    if value:
+                        self._class_feature_names[class_name] = value
         self.generic_visit(node)
+
+    def finalize(self) -> None:
+        for class_name, feature_name in self._class_feature_names.items():
+            normalized = _normalize_token(feature_name)
+            if not normalized:
+                continue
+            kind = self._class_kind(class_name, seen=set())
+            if kind == "trainer":
+                self.trainer_feature_names.add(normalized)
+            elif kind == "pokemon":
+                self.pokemon_feature_names.add(normalized)
+
+    def _class_kind(self, class_name: str, *, seen: Set[str]) -> str:
+        if class_name in seen:
+            return ""
+        seen.add(class_name)
+        bases = self._class_bases.get(class_name, set())
+        if "TrainerFeatureAction" in bases:
+            return "trainer"
+        if "PokemonFeatureAction" in bases:
+            return "pokemon"
+        for base_name in bases:
+            resolved = self._class_kind(base_name, seen=seen)
+            if resolved:
+                return resolved
+        return ""
 
     @staticmethod
     def _base_name(node: ast.expr) -> str:
@@ -253,6 +278,7 @@ def _discover_trainer_feature_action_registry(runtime_dir: Path) -> Dict[str, Se
         return {"trainer": set(), "pokemon": set()}
     visitor = _TrainerFeatureActionRegistryVisitor()
     visitor.visit(tree)
+    visitor.finalize()
     return {
         "trainer": visitor.trainer_feature_names,
         "pokemon": visitor.pokemon_feature_names,

@@ -5,6 +5,8 @@ import json
 import re
 import threading
 from typing import Any, Dict, Optional
+import tkinter as tk
+from tkinter import filedialog
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, RedirectResponse, Response
@@ -12,8 +14,9 @@ from fastapi.staticfiles import StaticFiles
 
 from .engine_facade import EngineFacade
 from .roleplay_api import router as roleplay_router
+from .terrain_mapper_store import TerrainMapperStore
 from ..config import IMPLEMENTATION_DIR, REPORTS_DIR
-from ..gameplay import list_ai_models, select_ai_model
+from ..gameplay import list_ai_models, select_ai_model, branch_ai_model, update_ai_model_settings
 from ..sprites import sprite_cache_dir, start_download_all, download_status, ensure_sprite_filename
 from ..sprites import sprite_url_for
 from ..pokeapi_assets import (
@@ -41,6 +44,72 @@ GEN9_MOVE_ANIM_DIR = (
 STATIC_MOVE_ANIM_DIR = STATIC_DIR / "assets" / "gen9" / "move-anims"
 SPRITE_DIR = sprite_cache_dir()
 SPRITE_DIR.mkdir(parents=True, exist_ok=True)
+TERRAIN_MAPS_DIR = REPORTS_DIR / "terrain_maps"
+TERRAIN_MAPS_IMAGES_DIR = TERRAIN_MAPS_DIR / "images"
+TERRAIN_EXPORTS_DIR = REPORTS_DIR / "terrain_exports"
+SAVED_BATTLEFIELDS_DIR = REPORTS_DIR / "battlefields"
+SAVED_ROSTERS_DIR = REPORTS_DIR / "rosters"
+TERRAIN_WORKSPACE_DRAFT_PATH = TERRAIN_MAPS_DIR / "_workspace_draft.json"
+TERRAIN_MAPS_STARTER_DIR = Path(__file__).resolve().parents[1] / "data" / "terrain_maps" / "starter"
+TERRAIN_MAPPER_STORE = TerrainMapperStore(TERRAIN_MAPS_DIR, starter_dir=TERRAIN_MAPS_STARTER_DIR)
+TERRAIN_EXPORTS_DIR.mkdir(parents=True, exist_ok=True)
+SAVED_BATTLEFIELDS_DIR.mkdir(parents=True, exist_ok=True)
+SAVED_ROSTERS_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def _choose_save_json_path(initial_filename: str, title: str) -> Optional[Path]:
+    root = tk.Tk()
+    root.withdraw()
+    root.attributes("-topmost", True)
+    try:
+        selected = filedialog.asksaveasfilename(
+            title=title,
+            defaultextension=".json",
+            filetypes=[("JSON Files", "*.json"), ("All Files", "*.*")],
+            initialfile=initial_filename,
+        )
+    finally:
+        root.destroy()
+    if not selected:
+        return None
+    return Path(selected)
+
+
+def _slugify_filename(value: str, fallback: str = "battlefield") -> str:
+    slug = re.sub(r"[^A-Za-z0-9._-]+", "-", str(value or "").strip().lower()).strip("-.")
+    return slug or fallback
+
+
+def _battlefield_path(battlefield_id: str) -> Path:
+    return SAVED_BATTLEFIELDS_DIR / f"{_slugify_filename(battlefield_id)}.json"
+
+
+def _battlefield_summary(record: Dict[str, Any]) -> Dict[str, Any]:
+    return {
+        "id": str(record.get("id") or "").strip(),
+        "name": str(record.get("name") or "Saved Battlefield").strip() or "Saved Battlefield",
+        "source_name": str(record.get("source_name") or "").strip(),
+        "created_at": record.get("created_at"),
+        "updated_at": record.get("updated_at"),
+    }
+
+
+def _roster_path(roster_id: str) -> Path:
+    return SAVED_ROSTERS_DIR / f"{_slugify_filename(roster_id, 'roster')}.json"
+
+
+def _roster_summary(record: Dict[str, Any]) -> Dict[str, Any]:
+    return {
+        "id": str(record.get("id") or "").strip(),
+        "name": str(record.get("name") or "Saved Roster").strip() or "Saved Roster",
+        "source_name": str(record.get("source_name") or "").strip(),
+        "created_at": record.get("created_at"),
+        "updated_at": record.get("updated_at"),
+        "players": int(record.get("players") or 0),
+        "foes": int(record.get("foes") or 0),
+        "side_count": int(record.get("side_count") or 0),
+        "team_size": int(record.get("team_size") or 0),
+    }
 
 _MOVE_ANIM_INDEX: Dict[str, str] = {}
 _MOVE_ANIM_INDEX_LOCK = threading.Lock()
@@ -197,6 +266,7 @@ def battle_new(payload: Dict[str, Any]) -> dict:
             side_names=payload.get("side_names"),
             deployment_overrides=payload.get("deployment_overrides"),
             item_choice_overrides=payload.get("item_choice_overrides"),
+            grid=payload.get("grid"),
             side_count=int(payload.get("side_count", 2)),
             battle_royale=bool(payload.get("battle_royale", False)),
             circle_interval=int(payload.get("circle_interval", 3)),
@@ -221,6 +291,320 @@ def clear_battle() -> dict:
         return engine.clear_battle()
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.get("/api/terrain/load_battle")
+def terrain_load_battle() -> dict:
+    try:
+        return engine.load_battle_grid_for_mapper()
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.post("/api/terrain/apply")
+def terrain_apply(payload: Dict[str, Any]) -> dict:
+    try:
+        return engine.apply_terrain_layout(payload)
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.get("/api/terrain/maps")
+def terrain_maps() -> dict:
+    return {"maps": TERRAIN_MAPPER_STORE.list_maps()}
+
+
+@app.get("/api/terrain/maps/{map_id}")
+def terrain_map_load(map_id: str) -> dict:
+    try:
+        payload = TERRAIN_MAPPER_STORE.get_map(map_id)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Terrain map not found")
+    image_name = str(payload.get("image") or "").strip()
+    image_url = f"/api/terrain/maps/image/{image_name}" if image_name else None
+    return {"map": payload, "image_url": image_url}
+
+
+@app.post("/api/terrain/maps/save")
+def terrain_map_save(payload: Dict[str, Any]) -> dict:
+    try:
+        record = TERRAIN_MAPPER_STORE.save_map(payload)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    image_name = str(record.get("image") or "").strip()
+    return {
+        "status": "ok",
+        "map": {
+            "id": record.get("id"),
+            "name": record.get("name"),
+            "image": image_name or None,
+            "path": str(TERRAIN_MAPPER_STORE._record_path(str(record.get("id") or ""))),
+            "profile_id": record.get("profile_id") or "",
+            "tags": list(record.get("tags") or []),
+        },
+    }
+
+
+@app.post("/api/terrain/export")
+def terrain_export(payload: Dict[str, Any]) -> dict:
+    export_payload = payload.get("payload") if isinstance(payload.get("payload"), dict) else payload
+    filename = str(payload.get("filename") or "terrain-battle-grid.json").strip()
+    filename = re.sub(r"[^A-Za-z0-9._-]+", "-", filename).strip("-.") or "terrain-battle-grid.json"
+    if not filename.lower().endswith(".json"):
+        filename = f"{filename}.json"
+    target = TERRAIN_EXPORTS_DIR / filename
+    target.write_text(json.dumps(export_payload, indent=2), encoding="utf-8")
+    return {
+        "status": "ok",
+        "filename": filename,
+        "path": str(target),
+        "directory": str(TERRAIN_EXPORTS_DIR),
+    }
+
+
+@app.get("/api/terrain/workspace")
+def terrain_workspace_load() -> dict:
+    if not TERRAIN_WORKSPACE_DRAFT_PATH.exists():
+        return {"status": "empty"}
+    payload = json.loads(TERRAIN_WORKSPACE_DRAFT_PATH.read_text(encoding="utf-8"))
+    image_name = str(payload.get("image") or payload.get("image_name") or "").strip()
+    image_url = f"/api/terrain/maps/image/{image_name}" if image_name else None
+    return {
+        "status": "ok",
+        "map": payload,
+        "path": str(TERRAIN_WORKSPACE_DRAFT_PATH),
+        "image_url": image_url,
+    }
+
+
+@app.post("/api/terrain/workspace")
+def terrain_workspace_save(payload: Dict[str, Any]) -> dict:
+    TERRAIN_MAPS_DIR.mkdir(parents=True, exist_ok=True)
+    TERRAIN_WORKSPACE_DRAFT_PATH.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    return {
+        "status": "ok",
+        "path": str(TERRAIN_WORKSPACE_DRAFT_PATH),
+    }
+
+
+@app.post("/api/terrain/workspace/clear")
+def terrain_workspace_clear() -> dict:
+    if TERRAIN_WORKSPACE_DRAFT_PATH.exists():
+        TERRAIN_WORKSPACE_DRAFT_PATH.unlink()
+    return {"status": "ok"}
+
+
+@app.post("/api/terrain/save_as")
+def terrain_save_as(payload: Dict[str, Any]) -> dict:
+    export_payload = payload.get("payload") if isinstance(payload.get("payload"), dict) else payload
+    filename = str(payload.get("filename") or "terrain.json").strip()
+    filename = re.sub(r"[^A-Za-z0-9._-]+", "-", filename).strip("-.") or "terrain.json"
+    if not filename.lower().endswith(".json"):
+        filename = f"{filename}.json"
+    title = str(payload.get("title") or "Save Terrain JSON").strip() or "Save Terrain JSON"
+    target = _choose_save_json_path(filename, title)
+    if target is None:
+        return {"status": "cancelled"}
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps(export_payload, indent=2), encoding="utf-8")
+    return {
+        "status": "ok",
+        "filename": target.name,
+        "path": str(target),
+        "directory": str(target.parent),
+    }
+
+
+@app.get("/api/battlefields")
+def battlefields_list() -> dict:
+    entries: list[dict[str, Any]] = []
+    for path in sorted(SAVED_BATTLEFIELDS_DIR.glob("*.json")):
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            if isinstance(payload, dict):
+                entries.append(_battlefield_summary(payload))
+        except Exception:
+            continue
+    entries.sort(key=lambda entry: str(entry.get("updated_at") or ""), reverse=True)
+    return {"battlefields": entries}
+
+
+@app.get("/api/battlefields/{battlefield_id}")
+def battlefield_load(battlefield_id: str) -> dict:
+    path = _battlefield_path(battlefield_id)
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="Saved battlefield not found")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise HTTPException(status_code=400, detail="Saved battlefield is invalid")
+    return {"battlefield": payload}
+
+
+@app.post("/api/battlefields/save")
+def battlefield_save(payload: Dict[str, Any]) -> dict:
+    grid = payload.get("grid")
+    if not isinstance(grid, dict):
+        raise HTTPException(status_code=400, detail="grid is required")
+    requested_name = str(payload.get("name") or payload.get("source_name") or "Saved Battlefield").strip() or "Saved Battlefield"
+    battlefield_id = _slugify_filename(str(payload.get("id") or requested_name), "battlefield")
+    target = _battlefield_path(battlefield_id)
+    existing: Dict[str, Any] = {}
+    if target.exists():
+        try:
+            loaded = json.loads(target.read_text(encoding="utf-8"))
+            if isinstance(loaded, dict):
+                existing = loaded
+        except Exception:
+            existing = {}
+    record = {
+        "id": battlefield_id,
+        "name": requested_name,
+        "source_name": str(payload.get("source_name") or "").strip(),
+        "created_at": existing.get("created_at"),
+        "updated_at": payload.get("updated_at"),
+        "grid": grid,
+    }
+    if not record["created_at"]:
+        from datetime import datetime, timezone
+
+        record["created_at"] = datetime.now(timezone.utc).isoformat()
+    if not record["updated_at"]:
+        from datetime import datetime, timezone
+
+        record["updated_at"] = datetime.now(timezone.utc).isoformat()
+    target.write_text(json.dumps(record, indent=2), encoding="utf-8")
+    return {
+        "status": "ok",
+        "battlefield": _battlefield_summary(record),
+        "path": str(target),
+    }
+
+
+@app.delete("/api/battlefields/{battlefield_id}")
+def battlefield_delete(battlefield_id: str) -> dict:
+    path = _battlefield_path(battlefield_id)
+    if path.exists():
+        path.unlink()
+    return {"status": "ok"}
+
+
+@app.get("/api/rosters")
+def rosters_list() -> dict:
+    entries: list[dict[str, Any]] = []
+    for path in sorted(SAVED_ROSTERS_DIR.glob("*.json")):
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            if isinstance(payload, dict):
+                entries.append(_roster_summary(payload))
+        except Exception:
+            continue
+    entries.sort(key=lambda entry: str(entry.get("updated_at") or ""), reverse=True)
+    return {"rosters": entries}
+
+
+@app.get("/api/rosters/{roster_id}")
+def roster_load(roster_id: str) -> dict:
+    path = _roster_path(roster_id)
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="Saved roster not found")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise HTTPException(status_code=400, detail="Saved roster is invalid")
+    return {"roster": payload}
+
+
+@app.post("/api/rosters/save")
+def roster_save(payload: Dict[str, Any]) -> dict:
+    csv_text = str(payload.get("csv_text") or "").strip()
+    if not csv_text:
+        raise HTTPException(status_code=400, detail="csv_text is required")
+    requested_name = str(payload.get("name") or payload.get("source_name") or "Saved Roster").strip() or "Saved Roster"
+    roster_id = _slugify_filename(str(payload.get("id") or requested_name), "roster")
+    target = _roster_path(roster_id)
+    existing: Dict[str, Any] = {}
+    if target.exists():
+        try:
+            loaded = json.loads(target.read_text(encoding="utf-8"))
+            if isinstance(loaded, dict):
+                existing = loaded
+        except Exception:
+            existing = {}
+    record = {
+        "id": roster_id,
+        "name": requested_name,
+        "source_name": str(payload.get("source_name") or "").strip(),
+        "created_at": existing.get("created_at"),
+        "updated_at": payload.get("updated_at"),
+        "csv_text": csv_text,
+        "players": int(payload.get("players") or existing.get("players") or 0),
+        "foes": int(payload.get("foes") or existing.get("foes") or 0),
+        "side_count": int(payload.get("side_count") or existing.get("side_count") or 0),
+        "team_size": int(payload.get("team_size") or existing.get("team_size") or 0),
+    }
+    if not record["created_at"]:
+        from datetime import datetime, timezone
+        record["created_at"] = datetime.now(timezone.utc).isoformat()
+    if not record["updated_at"]:
+        from datetime import datetime, timezone
+        record["updated_at"] = datetime.now(timezone.utc).isoformat()
+    target.write_text(json.dumps(record, indent=2), encoding="utf-8")
+    return {
+        "status": "ok",
+        "roster": _roster_summary(record),
+        "path": str(target),
+    }
+
+
+@app.delete("/api/rosters/{roster_id}")
+def roster_delete(roster_id: str) -> dict:
+    path = _roster_path(roster_id)
+    if path.exists():
+        path.unlink()
+    return {"status": "ok"}
+
+
+@app.get("/api/terrain/profiles")
+def terrain_profiles() -> dict:
+    return {"profiles": TERRAIN_MAPPER_STORE.list_profiles()}
+
+
+@app.get("/api/terrain/profiles/{profile_id}")
+def terrain_profile_load(profile_id: str) -> dict:
+    try:
+        return {"profile": TERRAIN_MAPPER_STORE.get_profile(profile_id)}
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Terrain profile not found")
+
+
+@app.post("/api/terrain/profiles/save")
+def terrain_profile_save(payload: Dict[str, Any]) -> dict:
+    try:
+        profile = TERRAIN_MAPPER_STORE.save_profile(payload)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+    return {"status": "ok", "profile": TERRAIN_MAPPER_STORE.profile_summary(profile)}
+
+
+@app.post("/api/terrain/predict")
+def terrain_predict(payload: Dict[str, Any]) -> dict:
+    try:
+        return TERRAIN_MAPPER_STORE.predict_tiles(payload)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.get("/api/terrain/maps/image/{filename}")
+def terrain_map_image(filename: str) -> FileResponse:
+    if "/" in filename or "\\" in filename:
+        raise HTTPException(status_code=404, detail="Invalid terrain map image path")
+    target = TERRAIN_MAPS_IMAGES_DIR / filename
+    if not target.exists():
+        raise HTTPException(status_code=404, detail="Terrain map image not found")
+    media = "image/png"
+    suffix = target.suffix.lower()
+    if suffix in {".jpg", ".jpeg"}:
+        media = "image/jpeg"
+    return FileResponse(target, media_type=media, headers={"Cache-Control": "no-store"})
 
 
 @app.post("/api/battle/stop")
@@ -274,6 +658,29 @@ def ai_models_select(payload: Dict[str, Any]) -> dict:
     try:
         model_id = payload.get("model_id")
         return select_ai_model(str(model_id or ""))
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.post("/api/ai/models/branch")
+def ai_models_branch(payload: Dict[str, Any]) -> dict:
+    try:
+        return branch_ai_model(str(payload.get("label") or ""))
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.post("/api/ai/models/settings")
+def ai_models_settings(payload: Dict[str, Any]) -> dict:
+    try:
+        drift_threshold = payload.get("drift_threshold")
+        min_updates = payload.get("min_updates")
+        check_every = payload.get("check_every")
+        return update_ai_model_settings(
+            drift_threshold=float(drift_threshold) if drift_threshold is not None else None,
+            min_updates=int(min_updates) if min_updates is not None else None,
+            check_every=int(check_every) if check_every is not None else None,
+        )
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
@@ -479,6 +886,11 @@ def index() -> FileResponse:
 @app.get("/create")
 def create() -> FileResponse:
     return FileResponse(STATIC_DIR / "create.html", headers={"Cache-Control": "no-store"})
+
+
+@app.get("/terrain-mapper")
+def terrain_mapper() -> FileResponse:
+    return FileResponse(STATIC_DIR / "terrain-mapper.html", headers={"Cache-Control": "no-store"})
 
 
 @app.get("/favicon.ico")

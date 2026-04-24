@@ -84,7 +84,10 @@ def footprint_tiles(
     size_label: object,
     grid: Optional["GridState"] = None,
 ) -> Set[GridCoord]:
-    return _square_tiles(anchor, footprint_side_for_size(size_label), grid)
+    # Footprints should describe the actor's full occupied body box.
+    # Do not clip to grid here; callers that validate placement must reject
+    # positions where any footprint tile is out of bounds.
+    return _square_tiles(anchor, footprint_side_for_size(size_label), None)
 
 
 def footprint_distance(
@@ -181,6 +184,9 @@ def target_anchor_tiles(
     area = normalized_area_kind(move)
     if area in {"cone", "line"}:
         max_distance = max(1, int(move.area_value or 1))
+        range_text = str(move.range_text or move.range_kind or "").strip().lower()
+        if "pass" in range_text:
+            max_distance = max(max_distance, move_range_distance(move))
         tiles: Set[GridCoord] = set()
         for x in range(origin[0] - max_distance, origin[0] + max_distance + 1):
             for y in range(origin[1] - max_distance, origin[1] + max_distance + 1):

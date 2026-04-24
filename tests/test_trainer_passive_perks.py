@@ -27,6 +27,8 @@ from auto_ptu.rules import (
     PlayThemLikeAFiddleFollowUpAction,
     PsychicResonanceFollowUpAction,
     QuickSwitchAction,
+    SwitchAction,
+    SleightAction,
     movement,
 )
 from auto_ptu.rules.controllers.phase_controller import PhaseController
@@ -55,6 +57,8 @@ def _mon(
     level: int = 20,
     tags: list[str] | None = None,
     moves: list[MoveSpec] | None = None,
+    tutor_points: int = 0,
+    poke_edge_choices: dict | None = None,
 ) -> PokemonSpec:
     return PokemonSpec(
         species=name,
@@ -84,6 +88,8 @@ def _mon(
         trainer_features=list(features or []),
         capabilities=list(capabilities or []),
         tags=list(tags or []),
+        tutor_points=tutor_points,
+        poke_edge_choices=dict(poke_edge_choices or {}),
     )
 
 
@@ -360,6 +366,27 @@ class TrainerPassivePerkTests(unittest.TestCase):
         self.assertLess(battle.pokemon["foe-1"].hp, before_hp)
         self.assertTrue(any(evt.get("feature") == "Long Shot" and evt.get("effect") == "damage_bonus" for evt in battle.log))
 
+    def test_commander_order_group_grants_its_two_orders(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=3)},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Commander", features=[{"name": "Marksman Orders"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(spec=_mon("Archer"), controller_id="player", position=(2, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=random.Random(7),
+        )
+
+        commander = battle.pokemon["player-1"]
+        self.assertTrue(commander.has_trainer_feature("Trick Shot"))
+        self.assertTrue(commander.has_trainer_feature("Long Shot"))
+        create_trainer_feature_action("target_order", actor_id="player-1", target_id="ally-1", order_name="Trick Shot").resolve(battle)
+        self.assertTrue(battle.pokemon["ally-1"].get_temporary_effects("trick_shot_bound"))
+
     def test_target_order_sentinel_stance_intercepts_with_shift_budget(self) -> None:
         water_gun = MoveSpec(
             name="Water Gun",
@@ -557,7 +584,7 @@ class TrainerPassivePerkTests(unittest.TestCase):
         )
         battle = BattleState(
             trainers={
-                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=2),
                 "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
             },
             pokemon={
@@ -641,7 +668,7 @@ class TrainerPassivePerkTests(unittest.TestCase):
         )
         battle = BattleState(
             trainers={
-                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=2),
                 "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
             },
             pokemon={
@@ -1003,6 +1030,631 @@ class TrainerPassivePerkTests(unittest.TestCase):
         )
         self.assertEqual(0, battle.pokemon["ally-1"].combat_stages.get("def", 0))
 
+    def test_cheerleader_playtest_spends_tutor_points_and_grants_friend_guard(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Cheer", features=[{"name": "Cheerleader [Playtest]"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(spec=_mon("Ally"), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(5, 5)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=random.Random(21),
+        )
+        battle.pokemon["ally-1"].spec.tutor_points = 2
+        create_trainer_feature_action("cheerleader_playtest", actor_id="player-1", target_id="ally-1").resolve(battle)
+        self.assertEqual(0, battle.pokemon["ally-1"].spec.tutor_points)
+        self.assertTrue(battle.pokemon["ally-1"].has_ability("Friend Guard"))
+        persisted = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={"ally-1": PokemonState(spec=battle.pokemon["ally-1"].spec, controller_id="player", position=(1, 1))},
+            grid=GridState(width=3, height=3),
+            rng=random.Random(22),
+        )
+        self.assertTrue(persisted.pokemon["ally-1"].has_ability("Friend Guard"))
+
+    def test_cheer_brigade_spends_tutor_points_and_grants_friend_guard(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Cheer", features=[{"name": "Cheer Brigade"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(spec=_mon("Ally", tutor_points=2), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(5, 5)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=random.Random(211),
+        )
+        create_trainer_feature_action("cheer_brigade", actor_id="player-1", target_id="ally-1").resolve(battle)
+        self.assertEqual(0, battle.pokemon["ally-1"].spec.tutor_points)
+        self.assertTrue(battle.pokemon["ally-1"].has_ability("Friend Guard"))
+        persisted = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={"ally-1": PokemonState(spec=battle.pokemon["ally-1"].spec, controller_id="player", position=(1, 1))},
+            grid=GridState(width=3, height=3),
+            rng=random.Random(212),
+        )
+        self.assertTrue(persisted.pokemon["ally-1"].has_ability("Friend Guard"))
+
+    def test_gleeful_interference_penalizes_foe_hit_by_friend_guard_pokemon(self) -> None:
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=4,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Cheer", features=[{"name": "Gleeful Interference"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(spec=_mon("Ally", moves=[tackle]), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=_FixedRng([20, 20, 20]),
+        )
+        battle.pokemon["ally-1"].add_temporary_effect("ability_granted", ability="Friend Guard", source="Test")
+        battle.out_of_turn_prompt = lambda payload: payload.get("feature") == "Gleeful Interference"
+        UseMoveAction(actor_id="ally-1", move_name="Tackle", target_id="foe-1").resolve(battle)
+        penalty = battle.pokemon["foe-1"].get_temporary_effects("accuracy_penalty")
+        self.assertTrue(penalty)
+        self.assertEqual(2, penalty[-1].get("amount"))
+        self.assertEqual(1, battle.trainers["player"].ap)
+        self.assertTrue(any(evt.get("feature") == "Gleeful Interference" for evt in battle.log))
+
+    def test_excited_spends_for_damage_reduction_and_motivated_recovers_lowered_stage(self) -> None:
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "ally-1": PokemonState(spec=_mon("Ally", level=30), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe", moves=[tackle]), controller_id="foe", position=(3, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=_FixedRng([20, 20, 20]),
+        )
+        ally = battle.pokemon["ally-1"]
+        ally.add_temporary_effect("excited", source="Cheerleader")
+        battle.out_of_turn_prompt = lambda payload: payload.get("feature") == "Excited"
+        UseMoveAction(actor_id="foe-1", move_name="Tackle", target_id="ally-1").resolve(battle)
+        self.assertFalse(ally.get_temporary_effects("excited"))
+        self.assertTrue(any(evt.get("feature") == "Excited" and evt.get("effect") == "damage_reduction" for evt in battle.log))
+        ally.add_temporary_effect("motivated", source="Cheerleader")
+        ally.combat_stages["atk"] = -2
+        create_trainer_feature_action("motivated", actor_id="ally-1", stat="atk").resolve(battle)
+        self.assertEqual(-1, ally.combat_stages["atk"])
+        self.assertFalse(ally.get_temporary_effects("motivated"))
+
+    def test_inspirational_support_cheers_ally_after_status_move_from_friend_guard_user(self) -> None:
+        helping_hand = MoveSpec(
+            name="Helping Hand",
+            type="Normal",
+            category="Status",
+            db=0,
+            ac=None,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Cheer",
+                        features=[{"name": "Inspirational Support [Playtest]"}],
+                        tags=["trainer"],
+                        moves=[helping_hand],
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(spec=_mon("Ally"), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(5, 5)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=random.Random(22),
+        )
+        battle.pokemon["player-1"].add_temporary_effect("ability_granted", ability="Friend Guard", source="Test")
+        UseMoveAction(actor_id="player-1", move_name="Helping Hand", target_id="ally-1").resolve(battle)
+        self.assertTrue(battle.pokemon["ally-1"].get_temporary_effects("cheered"))
+
+    def test_bring_it_on_playtest_reduces_damage_and_boosts_breather(self) -> None:
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", skills={"charm": 4}),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Cheer", features=[{"name": "Bring It On! [Playtest]"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(spec=_mon("Ally", level=30), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe", moves=[tackle]), controller_id="foe", position=(3, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=_FixedRng([20, 20, 20, 20]),
+        )
+        ally = battle.pokemon["ally-1"]
+        ally.spec.hp_stat = 30
+        ally.hp = ally.max_hp()
+        ally.add_temporary_effect("cheered", source="Cheers [Playtest]", source_id="player-1", expires_round=battle.round + 1)
+        battle.out_of_turn_prompt = lambda payload: str(payload.get("feature", "")).startswith("Bring It On!")
+        before_hp = ally.hp
+        UseMoveAction(actor_id="foe-1", move_name="Tackle", target_id="ally-1").resolve(battle)
+        self.assertLess(ally.hp, before_hp)
+        self.assertTrue(
+            any(
+                evt.get("feature") == "Bring It On! [Playtest]" and evt.get("effect") == "damage_reduction"
+                for evt in battle.log
+            )
+        )
+        ally.add_temporary_effect("cheered", source="Cheers [Playtest]", source_id="player-1", expires_round=battle.round + 1)
+        battle.apply_take_breather("ally-1")
+        self.assertEqual(4, ally.temp_hp)
+
+    def test_bring_it_on_playtest_adds_save_bonus(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", skills={"charm": 4}),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Cheer", features=[{"name": "Bring It On! [Playtest]"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(spec=_mon("Ally"), controller_id="player", position=(2, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=_FixedRng([9]),
+        )
+        ally = battle.pokemon["ally-1"]
+        status_entry = {"name": "Asleep"}
+        ally.statuses.append(status_entry)
+        ally.add_temporary_effect("cheered", source="Cheers [Playtest]", source_id="player-1", expires_round=battle.round + 1)
+        battle.out_of_turn_prompt = lambda payload: str(payload.get("feature", "")).startswith("Bring It On!")
+        events = ally.sleep_save_events(battle, "ally-1", status_entry, "Asleep")
+        save_event = next(evt for evt in events if evt.get("effect") == "sleep_save")
+        self.assertEqual(2, save_event.get("save_bonus"))
+
+    def test_keep_fighting_playtest_prevents_faint_once_triggered(self) -> None:
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=12,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", skills={"charm": 4}),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Cheer", features=[{"name": "Keep Fighting! [Playtest]"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(spec=_mon("Ally", level=5), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe", moves=[tackle], level=50), controller_id="foe", position=(3, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=_FixedRng([20, 20, 20, 20]),
+        )
+        ally = battle.pokemon["ally-1"]
+        ally.spec.hp_stat = 4
+        ally.hp = 4
+        battle.out_of_turn_prompt = lambda payload: str(payload.get("feature", "")).startswith("Keep Fighting!")
+        UseMoveAction(actor_id="foe-1", move_name="Tackle", target_id="ally-1").resolve(battle)
+        self.assertEqual(1, ally.hp)
+        self.assertEqual(8, ally.temp_hp)
+
+    def test_moment_of_action_playtest_grants_temporary_ap_for_one_full_round(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "ally-trainer": TrainerState(identifier="ally-trainer", name="Ally", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Cheer", features=[{"name": "Moment of Action [Playtest]"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(23),
+        )
+        battle.start_round()
+        battle.current_actor_id = "player"
+        create_trainer_feature_action(
+            "moment_of_action_playtest",
+            actor_id="player-1",
+            target_ids=["player", "ally-trainer"],
+        ).resolve(battle)
+        self.assertEqual(6, battle.trainers["player"].ap)
+        self.assertEqual(6, battle.trainers["ally-trainer"].ap)
+        battle.start_round()
+        self.assertEqual(6, battle.trainers["player"].ap)
+        battle.start_round()
+        self.assertEqual(5, battle.trainers["player"].ap)
+        self.assertEqual(5, battle.trainers["ally-trainer"].ap)
+
+    def test_moment_of_action_temporary_ap_spends_before_permanent_ap(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Cheer",
+                        features=[{"name": "Moment of Action [Playtest]"}],
+                        tags=["trainer"],
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(24),
+        )
+        battle.start_round()
+        battle.current_actor_id = "player"
+        create_trainer_feature_action(
+            "moment_of_action_playtest",
+            actor_id="player-1",
+            target_ids=["player"],
+        ).resolve(battle)
+        battle.trainers["player"].consume_ap(1)
+        self.assertEqual(5, battle.trainers["player"].ap)
+        self.assertEqual([], battle.trainers["player"].temporary_ap)
+
+    def test_go_fight_win_playtest_applies_each_cheer_once_per_scene(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", skills={"charm": 4}),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Cheer", features=[{"name": "Go, Fight, Win! [Playtest]"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(spec=_mon("Ally"), controller_id="player", position=(2, 1)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(25),
+        )
+        battle.start_round()
+        battle.current_actor_id = "player"
+        create_trainer_feature_action(
+            "go_fight_win_playtest",
+            actor_id="player-1",
+            cheer="Show Your Best!",
+            stat="Def",
+        ).resolve(battle)
+        self.assertEqual(1, battle.pokemon["ally-1"].combat_stages.get("def", 0))
+        with self.assertRaises(ValueError):
+            create_trainer_feature_action(
+                "go_fight_win_playtest",
+                actor_id="player-1",
+                cheer="Show Your Best!",
+                stat="Def",
+            ).validate(battle)
+        create_trainer_feature_action(
+            "go_fight_win_playtest",
+            actor_id="player-1",
+            cheer="Don't Stop Now!",
+        ).resolve(battle)
+        self.assertEqual(4, battle.pokemon["ally-1"].temp_hp)
+        create_trainer_feature_action(
+            "go_fight_win_playtest",
+            actor_id="player-1",
+            cheer="I Believe In You!",
+        ).resolve(battle)
+        self.assertTrue(battle.pokemon["ally-1"].get_temporary_effects("evasion_bonus"))
+
+    def test_go_fight_win_core_adds_named_conditions(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", skills={"charm": 3}),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Cheer", features=[{"name": "Go, Fight, Win!"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(spec=_mon("Ally"), controller_id="player", position=(2, 1)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(26),
+        )
+        battle.start_round()
+        battle.current_actor_id = "player"
+        create_trainer_feature_action(
+            "go_fight_win",
+            actor_id="player-1",
+            cheer="Show Your Best!",
+            stat="SpDef",
+        ).resolve(battle)
+        self.assertTrue(battle.pokemon["ally-1"].get_temporary_effects("motivated"))
+        create_trainer_feature_action(
+            "go_fight_win",
+            actor_id="player-1",
+            cheer="Don't Stop Now!",
+        ).resolve(battle)
+        self.assertTrue(battle.pokemon["ally-1"].get_temporary_effects("excited"))
+        create_trainer_feature_action(
+            "go_fight_win",
+            actor_id="player-1",
+            cheer="I Believe In You!",
+        ).resolve(battle)
+        self.assertTrue(battle.pokemon["ally-1"].get_temporary_effects("cheered"))
+
+    def test_duelist_tags_foe_and_momentum_modifies_focused_accuracy(self) -> None:
+        tackle = MoveSpec(name="Tackle", type="Normal", category="Physical", db=4, ac=4, range_kind="Melee", range_value=1, target_kind="Melee", target_range=1, freq="At-Will")
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Duelist", features=[{"name": "Duelist"}], tags=["trainer"]), controller_id="player", position=(1, 1)),
+                "ally-1": PokemonState(spec=_mon("Ally", features=[{"name": "Duelist"}], moves=[tackle]), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 1)),
+                "foe-2": PokemonState(spec=_mon("Other"), controller_id="foe", position=(4, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=_FixedRng([4, 4]),
+        )
+        battle.pokemon["ally-1"].add_temporary_effect("focused_training", source="Focused Training")
+        battle._set_duelist_momentum(battle.pokemon["ally-1"], 3)
+        create_trainer_feature_action("duelist", actor_id="player-1", target_id="foe-1").resolve(battle)
+        hit_tagged = calculations.attack_hits(battle.rng, battle.pokemon["ally-1"], battle.pokemon["foe-1"], tackle)
+        hit_untagged = calculations.attack_hits(battle.rng, battle.pokemon["ally-1"], battle.pokemon["foe-2"], tackle)
+        self.assertTrue(hit_tagged["hit"])
+        self.assertFalse(hit_untagged["hit"])
+
+    def test_effective_methods_grants_persistent_ability_and_directed_focus_gains_momentum(self) -> None:
+        water_gun = MoveSpec(name="Water Gun", type="Water", category="Special", db=4, ac=2, range_kind="Ranged", range_value=6, target_kind="Ranged", target_range=6, freq="At-Will")
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Duelist", features=[{"name": "Effective Methods"}], tags=["trainer"]), controller_id="player", position=(1, 1)),
+                "ally-1": PokemonState(spec=_mon("Ally", features=[{"name": "Duelist"}, {"name": "Directed Focus"}], moves=[water_gun], tutor_points=2), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe", types=["Fire"]), controller_id="foe", position=(3, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=_FixedRng([20, 20, 20]),
+        )
+        create_trainer_feature_action("effective_methods", actor_id="player-1", target_id="ally-1", ability="Exploit").resolve(battle)
+        self.assertTrue(battle.pokemon["ally-1"].has_ability("Exploit"))
+        UseMoveAction(actor_id="ally-1", move_name="Water Gun", target_id="foe-1").resolve(battle)
+        self.assertEqual(1, battle._duelist_momentum(battle.pokemon["ally-1"]))
+        persisted = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={"ally-1": PokemonState(spec=battle.pokemon["ally-1"].spec, controller_id="player", position=(1, 1))},
+            grid=GridState(width=3, height=3),
+            rng=random.Random(213),
+        )
+        self.assertTrue(persisted.pokemon["ally-1"].has_ability("Exploit"))
+
+    def test_expend_momentum_restores_frequency_and_primes_roll_11(self) -> None:
+        spark = MoveSpec(name="Spark", type="Electric", category="Physical", db=4, ac=12, range_kind="Melee", range_value=1, target_kind="Melee", target_range=1, freq="EOT")
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Duelist", features=[{"name": "Expend Momentum"}], tags=["trainer"]), controller_id="player", position=(1, 1)),
+                "ally-1": PokemonState(spec=_mon("Ally", moves=[spark]), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=_FixedRng([1]),
+        )
+        ally = battle.pokemon["ally-1"]
+        ally.add_temporary_effect("focused_training", source="Focused Training")
+        battle.record_move_frequency_usage("ally-1", spark)
+        battle._set_duelist_momentum(ally, 3)
+        create_trainer_feature_action("expend_momentum", actor_id="player-1", target_id="ally-1", mode="eot", move_name="Spark").resolve(battle)
+        self.assertEqual(0, battle.frequency_usage.get("ally-1", {}).get("Spark", 0))
+        create_trainer_feature_action("expend_momentum", actor_id="player-1", target_id="ally-1", mode="roll11").resolve(battle)
+        result = calculations.attack_hits(battle.rng, ally, battle.pokemon["foe-1"], spark)
+        self.assertEqual(11, result["roll"])
+
+    def test_type_methodology_spends_momentum_to_shift_tagged_type_matchup(self) -> None:
+        ember = MoveSpec(name="Ember", type="Fire", category="Special", db=4, ac=2, range_kind="Ranged", range_value=6, target_kind="Ranged", target_range=6, freq="At-Will")
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "ally-1": PokemonState(
+                    spec=_mon("Ally", features=[{"name": "Duelist"}, {"name": "Type Methodology"}], moves=[ember]),
+                    controller_id="player",
+                    position=(2, 1),
+                ),
+                "foe-1": PokemonState(spec=_mon("Foe", types=["Water"]), controller_id="foe", position=(3, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=_FixedRng([20, 20, 20]),
+        )
+        ally = battle.pokemon["ally-1"]
+        ally.add_temporary_effect("ability_granted", ability="Exploit", source="Test")
+        battle._set_duelist_momentum(ally, 2)
+        battle.pokemon["foe-1"].add_temporary_effect("duelist_tag", source="Duelist", source_controller="player")
+        battle.out_of_turn_prompt = lambda payload: payload.get("feature") == "Type Methodology"
+        UseMoveAction(actor_id="ally-1", move_name="Ember", target_id="foe-1").resolve(battle)
+        self.assertEqual(1, battle._duelist_momentum(ally))
+        self.assertTrue(any(evt.get("feature") == "Type Methodology" and evt.get("to") == 1.0 for evt in battle.log))
+
+    def test_duelists_manual_single_target_converts_area_attack_and_expires_ability_grant(self) -> None:
+        burst = MoveSpec(
+            name="Burst Test",
+            type="Normal",
+            category="Physical",
+            db=4,
+            ac=2,
+            range_kind="Self",
+            target_kind="Self",
+            area_kind="Burst",
+            area_value=1,
+            range_value=0,
+            target_range=0,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=5),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Duelist", features=[{"name": "Duelist's Manual"}], tags=["trainer"]), controller_id="player", position=(1, 1)),
+                "ally-1": PokemonState(spec=_mon("Ally", features=[{"name": "Duelist"}], moves=[burst]), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=_FixedRng([20]),
+        )
+        ally = battle.pokemon["ally-1"]
+        ally.add_temporary_effect("focused_training", source="Focused Training")
+        battle._set_duelist_momentum(ally, 2)
+        create_trainer_feature_action("duelists_manual", actor_id="player-1", target_id="ally-1", mode="single_target").resolve(battle)
+        self.assertEqual(0, battle._duelist_momentum(ally))
+        UseMoveAction(actor_id="ally-1", move_name="Burst Test", target_id="foe-1").resolve(battle)
+        self.assertTrue(battle.pokemon["foe-1"].has_status("Vulnerable"))
+        self.assertFalse(ally.get_temporary_effects("duelist_manual_single_target"))
+
+        battle._set_duelist_momentum(ally, 1)
+        create_trainer_feature_action("duelists_manual", actor_id="player-1", target_id="ally-1", mode="ability", ability="Tolerance").resolve(battle)
+        self.assertEqual(0, battle._duelist_momentum(ally))
+        self.assertTrue(ally.has_ability("Tolerance"))
+        battle.round += 2
+        self.assertFalse(ally.has_ability("Tolerance"))
+
+    def test_seize_the_moment_misses_as_smite_and_critical_heals(self) -> None:
+        strike = MoveSpec(name="Strike", type="Normal", category="Physical", db=8, ac=20, range_kind="Melee", range_value=1, target_kind="Melee", target_range=1, freq="At-Will")
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "ally-1": PokemonState(spec=_mon("Ally", features=[{"name": "Duelist"}, {"name": "Seize The Moment"}], moves=[strike]), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=_FixedRng([1]),
+        )
+        ally = battle.pokemon["ally-1"]
+        foe = battle.pokemon["foe-1"]
+        foe.add_temporary_effect("duelist_tag", source="Duelist", source_controller="player")
+        battle._set_duelist_momentum(ally, 6)
+        battle._gain_duelist_momentum("ally-1", reason="test", source_id="foe-1")
+        before = foe.hp
+        create_trainer_feature_action("seize_the_moment", actor_id="ally-1", target_id="foe-1", move_name="Strike").resolve(battle)
+        self.assertLess(foe.hp, before)
+        self.assertEqual(1, battle._duelist_momentum(ally))
+        self.assertFalse(ally.get_temporary_effects("seize_the_moment_ready"))
+
+        battle2 = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "ally-1": PokemonState(spec=_mon("Ally", features=[{"name": "Duelist"}, {"name": "Seize The Moment"}], moves=[strike]), controller_id="player", position=(2, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 1)),
+            },
+            grid=GridState(width=8, height=8),
+            rng=_FixedRng([20]),
+        )
+        ally2 = battle2.pokemon["ally-1"]
+        ally2.hp = max(1, int(ally2.hp or 0) // 2)
+        before_heal = ally2.hp
+        battle2.pokemon["foe-1"].add_temporary_effect("duelist_tag", source="Duelist", source_controller="player")
+        battle2._set_duelist_momentum(ally2, 6)
+        battle2._gain_duelist_momentum("ally-1", reason="test", source_id="foe-1")
+        create_trainer_feature_action("seize_the_moment", actor_id="ally-1", target_id="foe-1", move_name="Strike").resolve(battle2)
+        self.assertGreater(ally2.hp, before_heal)
+        self.assertTrue(any(evt.get("feature") == "Seize The Moment" and evt.get("effect") == "critical_heal" for evt in battle2.log))
+
     def test_strike_again_grants_extra_standard_for_at_will_attack(self) -> None:
         tackle = MoveSpec(
             name="Tackle",
@@ -1180,7 +1832,30 @@ class TrainerPassivePerkTests(unittest.TestCase):
         battle.pokemon["player-1"].injuries = 2
         battle.apply_take_breather("player-1")
         self.assertEqual(1, battle.pokemon["player-1"].injuries)
-        self.assertEqual(1, battle._feature_scene_use_count(battle.pokemon["player-1"], "Shrug Off"))
+        self.assertEqual(1, battle._feature_daily_use_count(battle.pokemon["player-1"], "Shrug Off"))
+
+    def test_shrug_off_action_works_on_pokemon_inheriting_enduring_soul_feature(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(
+                    identifier="player",
+                    name="Player",
+                    team="players",
+                    features=[{"name": "Shrug Off"}],
+                )
+            },
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Trainer", tags=["trainer"]), controller_id="player", position=(1, 1)),
+                "ally-1": PokemonState(spec=_mon("Ally"), controller_id="player", position=(2, 1)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(4),
+        )
+        ally = battle.pokemon["ally-1"]
+        ally.injuries = 1
+        create_trainer_feature_action("shrug_off", actor_id="ally-1").resolve(battle)
+        self.assertEqual(0, ally.injuries)
+        self.assertEqual(1, battle._feature_daily_use_count(ally, "Shrug Off"))
 
     def test_staying_power_prevents_shift_trip_and_stage_reset_on_take_a_breather(self) -> None:
         battle = BattleState(
@@ -1552,6 +2227,123 @@ class TrainerPassivePerkTests(unittest.TestCase):
             any(evt.get("feature") == "Taskmaster" and evt.get("effect") == "harden" for evt in battle.log)
         )
 
+    def test_ace_trainer_applies_trained_stats_and_champ_in_the_making_allows_two(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=2)},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Coach",
+                        features=[{"name": "Ace Trainer"}, {"name": "Champ in the Making"}],
+                        tags=["trainer"],
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Student"), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(8),
+        )
+
+        create_trainer_feature_action(
+            "ace_trainer",
+            actor_id="player-1",
+            target_id="player-2",
+            stats=["atk", "spd"],
+        ).resolve(battle)
+
+        target = battle.pokemon["player-2"]
+        self.assertEqual({"atk", "spd"}, target.trained_stats())
+        self.assertEqual(1, battle.trainers["player"].ap)
+        self.assertEqual(1, target.effective_combat_stage("atk"))
+        self.assertEqual(1, target.effective_combat_stage("spd"))
+        self.assertGreater(offensive_stat(target, "physical"), target.spec.atk)
+        self.assertGreater(speed_stat(target), target.spec.spd)
+
+    def test_take_a_breather_resets_trained_stats_to_default_stage(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Student",
+                        poke_edge_choices={"trained_stats": ["atk"]},
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(10),
+        )
+        actor = battle.pokemon["player-1"]
+        actor.combat_stages["atk"] = 2
+
+        battle.apply_take_breather("player-1")
+
+        self.assertEqual(0, actor.combat_stages["atk"])
+        self.assertEqual(1, actor.effective_combat_stage("atk"))
+        self.assertGreater(offensive_stat(actor, "physical"), actor.spec.atk)
+
+    def test_training_effects_apply_stat_bonuses_and_elite_trainer_allows_two(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Coach",
+                        features=[
+                            {"name": "Elite Trainer", "choice": "Agility Training"},
+                            {"name": "Focused Training"},
+                            {"name": "Inspired Training"},
+                        ],
+                        tags=["trainer"],
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Student"), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(12),
+        )
+
+        battle.pokemon["player-2"].spec.movement["overland"] = 4
+        create_trainer_feature_action("agility_training", actor_id="player-1", target_id="player-2").resolve(battle)
+        create_trainer_feature_action("focused_training", actor_id="player-1", target_id="player-2").resolve(battle)
+        target = battle.pokemon["player-2"]
+        self.assertTrue(target.get_temporary_effects("agility_training"))
+        self.assertTrue(target.get_temporary_effects("focused_training"))
+        self.assertEqual(5, target.movement_speed("overland"))
+        self.assertEqual(16, battle._initiative_entry_for_pokemon("player-2").total)
+        self.assertEqual(2, battle._combatant_skill_rank(target, "focus"))
+
+        with self.assertRaises(ValueError):
+            create_trainer_feature_action("inspired_training", actor_id="player-1", target_id="player-2").validate(battle)
+
+    def test_inspired_training_grants_evasion_and_save_bonus(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Coach", features=[{"name": "Inspired Training"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Student"), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(14),
+        )
+
+        create_trainer_feature_action("inspired_training", actor_id="player-1", target_id="player-2").resolve(battle)
+
+        target = battle.pokemon["player-2"]
+        baseline_evasion = calculations.evasion_value(_battle_with_feature({"name": "Baseline"}).pokemon["player-1"], "physical")
+        self.assertEqual(2, target.save_bonus(battle))
+        self.assertEqual(baseline_evasion + 1, calculations.evasion_value(target, "physical"))
+
     def test_quick_healing_removes_injuries_heals_ticks_and_clears_hardened_at_zero(self) -> None:
         battle = BattleState(
             trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
@@ -1585,6 +2377,27 @@ class TrainerPassivePerkTests(unittest.TestCase):
         self.assertTrue(
             any(evt.get("feature") == "Quick Healing" and evt.get("effect") == "injury_recovery" for evt in battle.log)
         )
+
+    def test_quick_healing_rejects_trainer_combatant_targets(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Medic", features=[{"name": "Quick Healing"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Assistant", tags=["trainer"]), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(10),
+        )
+        target = battle.pokemon["player-2"]
+        target.injuries = 2
+        target.add_temporary_effect("hardened", source="Taskmaster", source_id="player-1")
+        action = create_trainer_feature_action("quick_healing", actor_id="player-1", target_id="player-2", injuries_to_remove=1)
+        with self.assertRaisesRegex(ValueError, "Quick Healing only targets Pokemon"):
+            action.validate(battle)
 
     def test_press_on_spends_ap_and_keeps_hardened_pokemon_active_below_zero(self) -> None:
         battle = BattleState(
@@ -1758,6 +2571,249 @@ class TrainerPassivePerkTests(unittest.TestCase):
         )
         self.assertEqual([], battle._not_yet_move_options("player-1"))
 
+    def test_not_yet_allows_legal_area_moves(self) -> None:
+        discharge = MoveSpec(
+            name="Discharge",
+            type="Electric",
+            category="Special",
+            db=8,
+            ac=2,
+            range_kind="Self",
+            range_value=0,
+            target_kind="Self",
+            target_range=0,
+            area_kind="Burst",
+            area_value=2,
+            freq="Scene",
+        )
+        slash = MoveSpec(
+            name="Scratch",
+            type="Normal",
+            category="Physical",
+            db=4,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Soul", moves=[discharge], features=[{"name": "Not Yet!"}], types=["Electric"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(spec=_mon("Attacker", moves=[slash], level=20), controller_id="foe", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([20, 20, 20]),
+        )
+        actor = battle.pokemon["player-1"]
+        foe = battle.pokemon["foe-1"]
+        actor.hp = 1
+        before_foe_hp = foe.hp
+        options = battle._not_yet_move_options("player-1")
+        self.assertEqual(["Discharge"], [entry["move"] for entry in options])
+        battle.out_of_turn_prompt = lambda payload: {"accept": True, "choice": "Discharge||player-1"}
+        UseMoveAction(actor_id="foe-1", move_name="Scratch", target_id="player-1").resolve(battle)
+        self.assertTrue(actor.fainted)
+        self.assertLess(foe.hp, before_foe_hp)
+        self.assertTrue(any(evt.get("type") == "move" and evt.get("actor") == "player-1" and evt.get("move") == "Discharge" for evt in battle.log))
+
+    def test_not_yet_excludes_setup_moves_that_cannot_resolve_before_fainting(self) -> None:
+        focus_punch = MoveSpec(
+            name="Focus Punch",
+            type="Fighting",
+            category="Physical",
+            db=8,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Soul", moves=[focus_punch], features=[{"name": "Not Yet!"}], types=["Fighting"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(14),
+        )
+        self.assertEqual([], battle._not_yet_move_options("player-1"))
+
+    def test_style_is_eternal_blocks_covet_once_per_scene_and_spends_ap(self) -> None:
+        covet = MoveSpec(
+            name="Covet",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=None,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=4,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Soul", moves=[tackle], features=[{"name": "Style is Eternal"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Thief", moves=[covet]),
+                    controller_id="foe",
+                    position=(1, 2),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([20, 20, 20, 20]),
+        )
+        actor = battle.pokemon["player-1"]
+        actor.spec.items = [{"name": "Charcoal"}]
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or True
+
+        UseMoveAction(actor_id="foe-1", move_name="Covet", target_id="player-1").resolve(battle)
+        self.assertEqual("Charcoal", actor.spec.items[0]["name"])
+        self.assertEqual([], battle.pokemon["foe-1"].spec.items)
+        self.assertEqual(1, battle.trainers["player"].ap)
+        self.assertEqual(1, battle._feature_scene_use_count(actor, "Style is Eternal"))
+        self.assertTrue(any(prompt.get("feature") == "Style is Eternal" for prompt in prompts))
+
+        UseMoveAction(actor_id="foe-1", move_name="Covet", target_id="player-1").resolve(battle)
+        self.assertFalse(actor.spec.items)
+        self.assertEqual("Charcoal", battle.pokemon["foe-1"].spec.items[0]["name"])
+
+    def test_style_is_eternal_does_not_block_item_loss_without_ap(self) -> None:
+        covet = MoveSpec(
+            name="Covet",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=None,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=0),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Soul", features=[{"name": "Style is Eternal"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Thief", moves=[covet]),
+                    controller_id="foe",
+                    position=(1, 2),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([20, 20]),
+        )
+        battle.pokemon["player-1"].spec.items = [{"name": "Charcoal"}]
+        battle.out_of_turn_prompt = lambda payload: True
+
+        UseMoveAction(actor_id="foe-1", move_name="Covet", target_id="player-1").resolve(battle)
+
+        self.assertFalse(battle.pokemon["player-1"].spec.items)
+        self.assertEqual("Charcoal", battle.pokemon["foe-1"].spec.items[0]["name"])
+        self.assertEqual(0, battle._feature_scene_use_count(battle.pokemon["player-1"], "Style is Eternal"))
+
+    def test_accessorize_allows_two_compatible_trainer_accessories(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Stylist", features=[{"name": "Accessorize"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(29),
+        )
+        actor = battle.pokemon["player-1"]
+        actor.spec.items = [{"name": "Fire Brace"}, {"name": "Fire Booster"}]
+
+        held_names = [_item["name"] for _idx, _item, _entry in battle._iter_held_items(actor)]
+
+        self.assertEqual(["Fire Brace", "Fire Booster"], held_names)
+
+    def test_trainer_without_accessorize_only_benefits_from_one_accessory(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Trainer", tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(30),
+        )
+        actor = battle.pokemon["player-1"]
+        actor.spec.items = [{"name": "Fire Brace"}, {"name": "Fire Booster"}]
+
+        held_names = [_item["name"] for _idx, _item, _entry in battle._iter_held_items(actor)]
+
+        self.assertEqual(["Fire Brace"], held_names)
+
+    def test_accessorize_rejects_accessories_with_repeated_effects(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Stylist", features=[{"name": "Accessorize"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(31),
+        )
+        actor = battle.pokemon["player-1"]
+        actor.spec.items = [{"name": "Fire Brace"}, {"name": "Flame Plate"}]
+
+        held_names = [_item["name"] for _idx, _item, _entry in battle._iter_held_items(actor)]
+
+        self.assertEqual(["Fire Brace"], held_names)
+
     def test_press_damages_ally_cures_sleep_and_raises_two_stats(self) -> None:
         battle = BattleState(
             trainers={"player": TrainerState(identifier="player", name="Player", team="players", skills={"intimidate": 4})},
@@ -1784,6 +2840,24 @@ class TrainerPassivePerkTests(unittest.TestCase):
         self.assertEqual(1, target.combat_stages["spd"])
         self.assertTrue(target.get_temporary_effects("press_obedience_bonus"))
         self.assertTrue(any(evt.get("feature") == "Press" and evt.get("effect") == "pressure" for evt in battle.log))
+
+    def test_press_rejects_trainer_combatant_targets(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Coach", features=[{"name": "Press"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Assistant", tags=["trainer"]), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(16),
+        )
+        action = create_trainer_feature_action("press", actor_id="player-1", target_id="player-2", stats=["atk", "spd"])
+        with self.assertRaisesRegex(ValueError, "Press only targets Pokemon"):
+            action.validate(battle)
 
     def test_savage_strike_spends_tutor_points_and_grants_cruelty(self) -> None:
         bite = MoveSpec(
@@ -1819,10 +2893,1070 @@ class TrainerPassivePerkTests(unittest.TestCase):
         action.resolve(battle)
         self.assertEqual(1, target.spec.tutor_points)
         self.assertIn("Cruelty", target.ability_names())
+        persisted = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={"player-2": PokemonState(spec=target.spec, controller_id="player", position=(1, 1))},
+            grid=GridState(width=3, height=3),
+            rng=random.Random(23),
+        )
+        self.assertIn("Cruelty", persisted.pokemon["player-2"].ability_names())
         before_injuries = battle.pokemon["foe-1"].injuries
         UseMoveAction(actor_id="player-2", move_name="Bite", target_id="foe-1").resolve(battle)
         self.assertGreater(battle.pokemon["foe-1"].injuries, before_injuries)
         self.assertTrue(any(evt.get("feature") == "Savage Strike" and evt.get("ability") == "Cruelty" for evt in battle.log))
+
+    def test_vim_and_vigor_spends_tutor_points_grants_vigor_and_is_once_only(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Coach", features=[{"name": "Vim and Vigor"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Tank"), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 3)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(24),
+        )
+        target = battle.pokemon["player-2"]
+        target.spec.tutor_points = 3
+        action = create_trainer_feature_action("vim_and_vigor", actor_id="player-1", target_id="player-2")
+        action.validate(battle)
+        action.resolve(battle)
+        self.assertEqual(1, target.spec.tutor_points)
+        self.assertIn("Vigor", target.ability_names())
+        self.assertTrue(bool((target.spec.poke_edge_choices or {}).get("vim_and_vigor")))
+        persisted = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={"player-2": PokemonState(spec=target.spec, controller_id="player", position=(1, 1))},
+            grid=GridState(width=3, height=3),
+            rng=random.Random(25),
+        )
+        self.assertIn("Vigor", persisted.pokemon["player-2"].ability_names())
+        with self.assertRaises(ValueError):
+            create_trainer_feature_action("vim_and_vigor", actor_id="player-1", target_id="player-2").validate(battle)
+
+    def test_ramming_speed_spends_tutor_points_grants_run_up_and_is_once_only(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Rider", features=[{"name": "Ramming Speed"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Mount"), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 3)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(241),
+        )
+        target = battle.pokemon["player-2"]
+        target.spec.tutor_points = 3
+        action = create_trainer_feature_action("ramming_speed", actor_id="player-1", target_id="player-2")
+        action.validate(battle)
+        action.resolve(battle)
+        self.assertEqual(1, target.spec.tutor_points)
+        self.assertIn("Run Up", target.ability_names())
+        self.assertTrue(bool((target.spec.poke_edge_choices or {}).get("ramming_speed")))
+        persisted = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={"player-2": PokemonState(spec=target.spec, controller_id="player", position=(1, 1))},
+            grid=GridState(width=3, height=3),
+            rng=random.Random(242),
+        )
+        self.assertIn("Run Up", persisted.pokemon["player-2"].ability_names())
+        with self.assertRaises(ValueError):
+            create_trainer_feature_action("ramming_speed", actor_id="player-1", target_id="player-2").validate(battle)
+
+    def test_type_ace_can_grant_chosen_type_strategist_and_persists(self) -> None:
+        water_gun = MoveSpec(
+            name="Water Gun",
+            type="Water",
+            category="Special",
+            db=4,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Ace", features=[{"name": "Type Ace", "chosen_type": "water"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Ally", moves=[water_gun]), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(1, 4)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(301),
+        )
+        target = battle.pokemon["player-2"]
+        target.spec.tutor_points = 2
+        create_trainer_feature_action(
+            "type_ace",
+            actor_id="player-1",
+            target_id="player-2",
+            ability_mode="strategist",
+        ).resolve(battle)
+        self.assertEqual(0, target.spec.tutor_points)
+        self.assertIn("Type Strategist", target.ability_names())
+        self.assertEqual("water", target.ability_metadata("Type Strategist").get("chosen_type"))
+        target.hp = max(1, target.max_hp() // 3)
+        UseMoveAction(actor_id="player-2", move_name="Water Gun", target_id="foe-1").resolve(battle)
+        self.assertTrue(target.get_temporary_effects("damage_reduction"))
+        persisted = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={"player-2": PokemonState(spec=target.spec, controller_id="player", position=(1, 1))},
+            grid=GridState(width=3, height=3),
+            rng=random.Random(302),
+        )
+        self.assertEqual("water", persisted.pokemon["player-2"].ability_metadata("Type Strategist").get("chosen_type"))
+
+    def test_type_ace_can_grant_last_chance_style_ability_for_chosen_type(self) -> None:
+        water_gun = MoveSpec(
+            name="Water Gun",
+            type="Water",
+            category="Special",
+            db=4,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Ace", features=[{"name": "Type Ace", "chosen_type": "water"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Ally", moves=[water_gun]), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(1, 4)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=_FixedRng([20, 20, 20, 20]),
+        )
+        target = battle.pokemon["player-2"]
+        target.spec.tutor_points = 2
+        create_trainer_feature_action(
+            "type_ace",
+            actor_id="player-1",
+            target_id="player-2",
+            ability_mode="last_chance",
+        ).resolve(battle)
+        self.assertIn("Torrent", target.ability_names())
+        target.hp = max(1, target.max_hp() // 3)
+        before_events = len([evt for evt in battle.log if evt.get("ability") == "Torrent" and evt.get("type") == "ability"])
+        UseMoveAction(actor_id="player-2", move_name="Water Gun", target_id="foe-1").resolve(battle)
+        after_events = len([evt for evt in battle.log if evt.get("ability") == "Torrent" and evt.get("type") == "ability"])
+        self.assertGreater(after_events, before_events)
+
+    def test_type_refresh_restores_chosen_type_scene_and_eot_frequencies_once_per_scene(self) -> None:
+        surf = MoveSpec(
+            name="Surf",
+            type="Water",
+            category="Special",
+            db=8,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+            freq="Scene x2",
+        )
+        aqua_ring = MoveSpec(
+            name="Aqua Ring",
+            type="Water",
+            category="Status",
+            db=0,
+            ac=None,
+            range_kind="Self",
+            range_value=0,
+            target_kind="Self",
+            target_range=0,
+            freq="EOT",
+        )
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=2)},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Ace", features=[{"name": "Type Refresh", "chosen_type": "water"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Ally", moves=[surf, aqua_ring]), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(304),
+        )
+        battle.frequency_usage["player-2"] = {"Surf": 1, "Aqua Ring": 1}
+        create_trainer_feature_action("type_refresh", actor_id="player-1", target_id="player-2").resolve(battle)
+        self.assertEqual(0, battle.frequency_usage.get("player-2", {}).get("Surf", 0))
+        self.assertEqual(0, battle.frequency_usage.get("player-2", {}).get("Aqua Ring", 0))
+        with self.assertRaises(ValueError):
+            create_trainer_feature_action("type_refresh", actor_id="player-1", target_id="player-2").validate(battle)
+
+    def test_move_sync_retypes_move_and_replaces_previous_synced_move(self) -> None:
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=4,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        growl = MoveSpec(
+            name="Growl",
+            type="Normal",
+            category="Status",
+            db=0,
+            ac=2,
+            range_kind="Burst",
+            range_value=1,
+            target_kind="Self",
+            target_range=0,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Ace", features=[{"name": "Move Sync", "chosen_type": "electric"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Ally", moves=[tackle, growl], tutor_points=2), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(305),
+        )
+        create_trainer_feature_action("move_sync", actor_id="player-1", target_id="player-2", move_name="Tackle").resolve(battle)
+        target = battle.pokemon["player-2"]
+        self.assertEqual("Electric", battle._find_known_move(target, "Tackle").type)
+        create_trainer_feature_action("move_sync", actor_id="player-1", target_id="player-2", move_name="Growl").resolve(battle)
+        self.assertEqual("Normal", battle._find_known_move(target, "Tackle").type)
+        self.assertEqual("Electric", battle._find_known_move(target, "Growl").type)
+        self.assertEqual(0, target.spec.tutor_points)
+
+    def test_extra_ordinary_grants_missing_normal_partner_ability(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Ace", features=[{"name": "Extra Ordinary"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Ally", types=["Normal"]), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(306),
+        )
+        target = battle.pokemon["player-2"]
+        target.add_temporary_effect("ability_granted", ability="Type Strategist", source="Type Ace", chosen_type="normal")
+        create_trainer_feature_action("extra_ordinary", actor_id="player-1", target_id="player-2").resolve(battle)
+        self.assertIn("Last Chance", target.ability_names())
+        self.assertTrue(bool((target.spec.poke_edge_choices or {}).get("extra_ordinary")))
+
+    def test_clever_ruse_manual_applies_selected_effects(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("DarkMon", types=["Dark"], features=[{"name": "Clever Ruse"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(600),
+        )
+        create_trainer_feature_action(
+            "clever_ruse",
+            actor_id="player-1",
+            choices=["evasion", "ignore_evasion"],
+            manual=True,
+        ).resolve(battle)
+        actor = battle.pokemon["player-1"]
+        self.assertTrue(actor.get_temporary_effects("evasion_bonus"))
+        self.assertTrue(actor.get_temporary_effects("ignore_non_stat_evasion"))
+
+    def test_fairy_lights_can_create_and_react_with_temp_hp(self) -> None:
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=4,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("FairyMon", types=["Fairy"], features=[{"name": "Fairy Lights"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "foe-1": PokemonState(spec=_mon("Foe", moves=[tackle]), controller_id="foe", position=(1, 2), active=True),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([11, 11, 11, 11]),
+        )
+        create_trainer_feature_action("fairy_lights", actor_id="player-1", mode="create").resolve(battle)
+        self.assertEqual(3, len(battle.pokemon["player-1"].get_temporary_effects("fairy_lights")))
+        battle.out_of_turn_prompt = lambda payload: {"accept": True, "choice": "temp_hp"}
+        before = int(battle.pokemon["player-1"].temp_hp or 0)
+        battle._maybe_offer_fairy_lights_reaction(defender_id="player-1", attacker_id="foe-1")
+        self.assertGreater(int(battle.pokemon["player-1"].temp_hp or 0), before)
+
+    def test_potent_venom_replaces_default_poison_spdef_drop(self) -> None:
+        sludge = MoveSpec(
+            name="Sludge",
+            type="Poison",
+            category="Special",
+            db=4,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("PoisonMon", types=["Poison"], features=[{"name": "Potent Venom"}], moves=[sludge]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(1, 3), active=True),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(601),
+        )
+        battle.out_of_turn_prompt = lambda payload: {"accept": True, "choice": "atk"}
+        battle._apply_status([], attacker_id="player-1", target_id="foe-1", move=sludge, target=battle.pokemon["foe-1"], status="Poisoned", effect="test", description="test")
+        target = battle.pokemon["foe-1"]
+        self.assertEqual(-2, int(target.combat_stages.get("atk", 0) or 0))
+        spdef = calculations.defensive_stat(target, "special")
+        baseline = BattleState(
+            trainers={"foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={"foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(1, 1), active=True)},
+            grid=GridState(width=3, height=3),
+            rng=random.Random(602),
+        ).pokemon["foe-1"]
+        self.assertEqual(calculations.defensive_stat(baseline, "special"), spdef)
+
+    def test_insectoid_utility_sky_grants_status_evasion(self) -> None:
+        mon = PokemonState(
+            spec=_mon("BugFly", types=["Bug"], features=[{"name": "Insectoid Utility"}], capabilities=["Sky 4"]),
+            controller_id="player",
+            position=(1, 1),
+            active=True,
+        )
+        self.assertEqual(2, calculations.evasion_value(mon, "status"))
+
+    def test_mold_the_earth_creates_spikes_in_ground_area(self) -> None:
+        mud_slap = MoveSpec(
+            name="Mud Slap",
+            type="Ground",
+            category="Special",
+            db=4,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("GroundMon", types=["Ground"], features=[{"name": "Mold the Earth"}], capabilities=["Groundshaper"], moves=[mud_slap]),
+                    controller_id="player",
+                    position=(2, 2),
+                    active=True,
+                ),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 2), active=True),
+            },
+            grid=GridState(width=7, height=7),
+            rng=_FixedRng([11, 11, 11, 11, 11]),
+        )
+        battle.out_of_turn_prompt = lambda payload: True
+        UseMoveAction(actor_id="player-1", move_name="Mud Slap", target_id="foe-1").resolve(battle)
+        hazard_count = sum(int((meta.get("hazards") or {}).get("spikes", 0) or 0) for meta in battle.grid.tiles.values() if isinstance(meta, dict))
+        self.assertGreaterEqual(hazard_count, 1)
+
+    def test_rider_mount_and_dismount_manage_pair_state_and_position(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Rider", features=[{"name": "Rider"}, {"name": "Mounted Prowess"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Mount"), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(243),
+        )
+        mount = create_trainer_feature_action("mount_pokemon", actor_id="player-1", target_id="player-2")
+        mount.validate(battle)
+        mount.resolve(battle)
+        self.assertEqual("player-2", battle._mounted_mount_id("player-1"))
+        self.assertEqual((1, 2), battle.pokemon["player-1"].position)
+        destination = battle._mounted_dismount_positions("player-1")[0]
+        dismount = create_trainer_feature_action("dismount_pokemon", actor_id="player-1", destination=destination)
+        dismount.validate(battle)
+        dismount.resolve(battle)
+        self.assertIsNone(battle._mounted_mount_id("player-1"))
+        self.assertEqual(destination, battle.pokemon["player-1"].position)
+
+    def test_ride_as_one_swap_turn_and_second_slot_auto_switch(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Rider", features=[{"name": "Rider"}, {"name": "Mounted Prowess"}, {"name": "Ride as One"}], tags=["trainer"], level=30),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Mount", level=10), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("Foe", level=5), controller_id="foe", position=(4, 4)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(244),
+        )
+        battle._mount_pair("player-1", "player-2")
+        entry = battle.advance_turn()
+        while entry is not None and battle.current_actor_id != "player-1":
+            entry = battle.advance_turn()
+        self.assertEqual("player-1", battle.current_actor_id)
+        self.assertEqual(
+            calculations.evasion_value(battle.pokemon["player-1"], "status"),
+            calculations.evasion_value(battle.pokemon["player-2"], "status"),
+        )
+        swap = create_trainer_feature_action("ride_as_one_swap_turn", actor_id="player-1")
+        swap.validate(battle)
+        swap.resolve(battle)
+        self.assertEqual("player-2", battle.current_actor_id)
+        battle.end_turn()
+        entry = battle.advance_turn()
+        while entry is not None and battle.current_actor_id not in {"player-1", "player-2"}:
+            entry = battle.advance_turn()
+        self.assertEqual("player-1", battle.current_actor_id)
+
+    def test_lean_in_resists_area_attack_for_mounted_pair(self) -> None:
+        area_move = MoveSpec(
+            name="Flame Burst",
+            type="Fire",
+            category="Special",
+            db=8,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+            area_kind="Blast",
+            area_value=1,
+            freq="At-Will",
+            range_text="Blast 1, 1 Target",
+        )
+        def _build_battle(with_lean_in: bool) -> BattleState:
+            rider_features = [{"name": "Rider"}, {"name": "Mounted Prowess"}, {"name": "Ride as One"}]
+            if with_lean_in:
+                rider_features.append({"name": "Lean In"})
+            battle = BattleState(
+                trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+                pokemon={
+                    "player-1": PokemonState(spec=_mon("Rider", features=rider_features, tags=["trainer"]), controller_id="player", position=(2, 2)),
+                    "player-2": PokemonState(spec=_mon("Mount"), controller_id="player", position=(2, 3)),
+                    "foe-1": PokemonState(spec=_mon("Foe", moves=[area_move]), controller_id="foe", position=(4, 4)),
+                },
+                grid=GridState(width=6, height=6),
+                rng=_FixedRng([11, 11, 11, 11, 11, 11]),
+            )
+            battle._mount_pair("player-1", "player-2")
+            battle.out_of_turn_prompt = lambda payload: True
+            return battle
+
+        lean_battle = _build_battle(True)
+        plain_battle = _build_battle(False)
+        UseMoveAction(actor_id="foe-1", move_name="Flame Burst", target_id="player-2").resolve(lean_battle)
+        UseMoveAction(actor_id="foe-1", move_name="Flame Burst", target_id="player-2").resolve(plain_battle)
+        self.assertGreater(lean_battle.pokemon["player-1"].hp, plain_battle.pokemon["player-1"].hp)
+        self.assertGreater(lean_battle.pokemon["player-2"].hp, plain_battle.pokemon["player-2"].hp)
+        self.assertTrue(any(evt.get("feature") == "Lean In" for evt in lean_battle.log))
+
+    def test_cavaliers_reprisal_spends_ap_when_mount_is_hit(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=2), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Rider", features=[{"name": "Mounted Prowess"}, {"name": "Ride as One"}, {"name": "Cavalier's Reprisal"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(2, 2),
+                ),
+                "player-2": PokemonState(spec=_mon("Mount"), controller_id="player", position=(2, 3)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 3)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=_FixedRng([11, 11, 11, 11, 11]),
+        )
+        battle._mount_pair("player-1", "player-2")
+        battle.out_of_turn_prompt = lambda payload: True
+        UseMoveAction(actor_id="foe-1", move_name="Tackle", target_id="player-2").resolve(battle)
+        self.assertEqual(1, battle.trainers["player"].ap)
+        self.assertTrue(any(evt.get("feature") == "Cavalier's Reprisal" for evt in battle.log))
+
+    def test_conquerors_march_extends_mounted_run_up_move_targeting_with_pass_range(self) -> None:
+        pass_move = MoveSpec(
+            name="Shock Burst",
+            type="Electric",
+            category="Special",
+            db=7,
+            ac=2,
+            range_kind="Ranged",
+            range_value=1,
+            target_kind="Ranged",
+            target_range=1,
+            area_kind="Blast",
+            area_value=1,
+            freq="At-Will",
+            range_text="Blast 1, 1 Target",
+        )
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Rider", features=[{"name": "Mounted Prowess"}, {"name": "Ride as One"}, {"name": "Conqueror's March"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Mount", moves=[pass_move]), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(4, 2)),
+            },
+            grid=GridState(width=7, height=7),
+            rng=_FixedRng([11, 11, 11, 11, 11]),
+        )
+        battle._mount_pair("player-1", "player-2")
+        battle.pokemon["player-2"].add_temporary_effect("ability_granted", ability="Run Up", source="Ramming Speed", source_id="player-1")
+
+        with self.assertRaises(ValueError):
+            UseMoveAction(actor_id="player-2", move_name="Shock Burst", target_id="foe-1").validate(battle)
+
+        create_trainer_feature_action("conquerors_march", actor_id="player-1", target_id="player-2").resolve(battle)
+        attack = UseMoveAction(actor_id="player-2", move_name="Shock Burst", target_id="foe-1")
+        attack.validate(battle)
+        attack.resolve(battle)
+        self.assertLess(battle.pokemon["foe-1"].hp, battle.pokemon["foe-1"].max_hp())
+
+    def test_switching_out_a_mount_clears_pair_state_immediately(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Rider", features=[{"name": "Rider"}, {"name": "Mounted Prowess"}, {"name": "Ride as One"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "player-2": PokemonState(spec=_mon("Mount"), controller_id="player", position=(1, 2), active=True),
+                "player-3": PokemonState(spec=_mon("Bench"), controller_id="player", position=(3, 3), active=False),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(245),
+        )
+        battle._mount_pair("player-1", "player-2")
+
+        battle._apply_switch(
+            outgoing_id="player-2",
+            replacement_id="player-3",
+            initiator_id="player",
+            allow_replacement_turn=True,
+            allow_immediate=False,
+        )
+
+        self.assertIsNone(battle._mounted_partner_id("player-1"))
+        self.assertIsNone(battle._mounted_mount_id("player-1"))
+        self.assertFalse(battle.pokemon["player-2"].active)
+        self.assertTrue(battle.pokemon["player-3"].active)
+        self.assertFalse(any(entry.get("source") == "Ride as One" for entry in battle.pokemon["player-1"].temporary_effects))
+
+    def test_release_syncs_mounted_state_before_entry_effects(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Rider", features=[{"name": "Mounted Prowess"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(2, 2),
+                    active=True,
+                ),
+                "player-2": PokemonState(spec=_mon("Bench"), controller_id="player", position=None, active=False),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(246),
+        )
+
+        battle._apply_release(
+            trainer_actor_id="player-1",
+            replacement_id="player-2",
+            initiator_id="player",
+            allow_replacement_turn=True,
+            allow_immediate=False,
+        )
+
+        self.assertIsNone(battle._mounted_partner_id("player-1"))
+        self.assertTrue(battle.pokemon["player-2"].active)
+        self.assertIsNotNone(battle.pokemon["player-2"].position)
+
+    def test_attack_embodiment_grants_selected_scene_ability_and_replaces_prior_embodiment(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Ace", features=[{"name": "Attack Embodiment"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Bruiser"), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(26),
+        )
+        target = battle.pokemon["player-2"]
+
+        create_trainer_feature_action(
+            "attack_embodiment",
+            actor_id="player-1",
+            target_id="player-2",
+            ability="Defiant",
+        ).resolve(battle)
+        self.assertIn("Defiant", target.ability_names())
+
+        create_trainer_feature_action(
+            "attack_embodiment",
+            actor_id="player-1",
+            target_id="player-2",
+            ability="Sheer Force",
+        ).resolve(battle)
+        self.assertIn("Sheer Force", target.ability_names())
+        self.assertNotIn("Defiant", target.ability_names())
+        self.assertTrue(
+            any(
+                evt.get("feature") == "Attack Embodiment"
+                and evt.get("ability") == "Sheer Force"
+                for evt in battle.log
+            )
+        )
+
+    def test_generic_stat_embodiment_uses_chosen_stat_payload(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Ace",
+                        features=[{"name": "Stat Embodiment", "chosen_stat": "Special Defense"}],
+                        tags=["trainer"],
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Wall"), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(27),
+        )
+
+        action = create_trainer_feature_action(
+            "stat_embodiment",
+            actor_id="player-1",
+            target_id="player-2",
+            ability="Tolerance",
+        )
+        action.validate(battle)
+        action.resolve(battle)
+
+        target = battle.pokemon["player-2"]
+        self.assertIn("Tolerance", target.ability_names())
+        self.assertTrue(
+            any(
+                evt.get("feature") == "Special Defense Embodiment"
+                and evt.get("ability") == "Tolerance"
+                for evt in battle.log
+            )
+        )
+
+    def test_versatile_wardrobe_makes_pokemon_chic_with_inactive_slots(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Stylist", features=[{"name": "Versatile Wardrobe"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Model", tutor_points=2), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(24),
+        )
+        action = create_trainer_feature_action(
+            "versatile_wardrobe",
+            actor_id="player-1",
+            target_id="player-2",
+            extra_items=[{"name": "Charcoal"}],
+        )
+
+        action.resolve(battle)
+
+        target = battle.pokemon["player-2"]
+        self.assertTrue(target.is_chic())
+        self.assertEqual(0, target.spec.tutor_points)
+        self.assertEqual("Charcoal", target.wardrobe_slots()[0]["name"])
+        self.assertIsNone(target.wardrobe_slots()[1])
+        self.assertFalse(target.spec.items)
+
+    def test_chic_pokemon_swaps_active_item_with_inactive_wardrobe_slot(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Model",
+                        tags=["Chic"],
+                        poke_edge_choices={
+                            "versatile_wardrobe": {
+                                "chic": True,
+                                "slot_count": 2,
+                                "extra_slots": [{"name": "Charcoal"}, None],
+                            }
+                        },
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(25),
+        )
+        actor = battle.pokemon["player-1"]
+        actor.spec.items = [{"name": "Muscle Band"}]
+
+        create_trainer_feature_action("wardrobe_swap", actor_id="player-1", active_item_index=0, wardrobe_index=0).resolve(battle)
+
+        self.assertEqual("Charcoal", actor.spec.items[0]["name"])
+        self.assertEqual("Muscle Band", actor.wardrobe_slots()[0]["name"])
+        self.assertIsNone(actor.wardrobe_slots()[1])
+
+    def test_versatile_wardrobe_rejects_duplicate_carried_items(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Stylist", features=[{"name": "Versatile Wardrobe"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Model", tutor_points=2), controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(26),
+        )
+        battle.pokemon["player-2"].spec.items = [{"name": "Charcoal"}]
+
+        with self.assertRaises(ValueError):
+            create_trainer_feature_action(
+                "versatile_wardrobe",
+                actor_id="player-1",
+                target_id="player-2",
+                extra_items=[{"name": "Charcoal"}],
+            ).validate(battle)
+
+    def test_dress_to_impress_activates_inactive_wardrobe_items_for_one_full_round(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Stylist", features=[{"name": "Dress to Impress"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(
+                    spec=_mon(
+                        "Model",
+                        tags=["Chic"],
+                        poke_edge_choices={
+                            "versatile_wardrobe": {
+                                "chic": True,
+                                "slot_count": 2,
+                                "extra_slots": [{"name": "Eviolite", "chosen_stats": ["def"]}, None],
+                            }
+                        },
+                    ),
+                    controller_id="player",
+                    position=(1, 2),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(27),
+        )
+        target = battle.pokemon["player-2"]
+        before = defensive_stat(target, "physical")
+
+        create_trainer_feature_action("dress_to_impress", actor_id="player-1", target_id="player-2").resolve(battle)
+
+        self.assertEqual(before + 5, defensive_stat(target, "physical"))
+        self.assertEqual(1, battle._feature_scene_use_count(battle.pokemon["player-1"], "Dress to Impress"))
+        self.assertEqual(1, battle._feature_scene_use_count(target, "Dress to Impress:player-2"))
+        battle.round += 1
+        self.assertEqual(before + 5, defensive_stat(target, "physical"))
+        battle.round += 1
+        self.assertEqual(before, defensive_stat(target, "physical"))
+
+    def test_dress_to_impress_target_once_per_scene(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Stylist", features=[{"name": "Dress to Impress"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(
+                    spec=_mon(
+                        "Model",
+                        tags=["Chic"],
+                        poke_edge_choices={
+                            "versatile_wardrobe": {
+                                "chic": True,
+                                "slot_count": 2,
+                                "extra_slots": [{"name": "Charcoal"}, None],
+                            }
+                        },
+                    ),
+                    controller_id="player",
+                    position=(1, 2),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(28),
+        )
+
+        create_trainer_feature_action("dress_to_impress", actor_id="player-1", target_id="player-2").resolve(battle)
+
+        with self.assertRaises(ValueError):
+            create_trainer_feature_action("dress_to_impress", actor_id="player-1", target_id="player-2").validate(battle)
+
+    def test_dashing_makeover_binds_item_effect_without_occupying_slot(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=4)},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Stylist", features=[{"name": "Dashing Makeover"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Model"), controller_id="player", position=(1, 2), active=True),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(29),
+        )
+        target = battle.pokemon["player-2"]
+        before = defensive_stat(target, "physical")
+
+        create_trainer_feature_action(
+            "dashing_makeover",
+            actor_id="player-1",
+            target_id="player-2",
+            item={"name": "Eviolite", "chosen_stats": ["def"]},
+        ).resolve(battle)
+
+        self.assertEqual(2, battle.trainers["player"].ap)
+        self.assertFalse(target.spec.items)
+        self.assertEqual(before + 5, defensive_stat(target, "physical"))
+        self.assertEqual(
+            ["Eviolite"],
+            [_item.name for _idx, _payload, _item in battle._iter_held_items(target)],
+        )
+
+    def test_dashing_makeover_release_removes_bound_item_effect(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=4)},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Stylist", features=[{"name": "Dashing Makeover"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Model"), controller_id="player", position=(1, 2), active=True),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(30),
+        )
+        target = battle.pokemon["player-2"]
+        before = defensive_stat(target, "physical")
+        create_trainer_feature_action(
+            "dashing_makeover",
+            actor_id="player-1",
+            target_id="player-2",
+            item={"name": "Eviolite", "chosen_stats": ["def"]},
+        ).resolve(battle)
+
+        create_trainer_feature_action("release_dashing_makeover", actor_id="player-1").resolve(battle)
+
+        self.assertEqual(before, defensive_stat(target, "physical"))
+        self.assertFalse(target.get_temporary_effects("dashing_makeover_bound"))
+        self.assertFalse(battle.pokemon["player-1"].get_temporary_effects("feature_bound"))
+
+    def test_dashing_makeover_rejects_second_binding_on_target(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=6),
+                "ally": TrainerState(identifier="ally", name="Ally", team="players", ap=4),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Stylist", features=[{"name": "Dashing Makeover"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(
+                    spec=_mon("Assistant", features=[{"name": "Dashing Makeover"}], tags=["trainer"]),
+                    controller_id="ally",
+                    position=(1, 2),
+                ),
+                "player-2": PokemonState(spec=_mon("Model"), controller_id="player", position=(2, 1), active=True),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(31),
+        )
+
+        create_trainer_feature_action(
+            "dashing_makeover",
+            actor_id="player-1",
+            target_id="player-2",
+            item_name="Muscle Band",
+        ).resolve(battle)
+
+        with self.assertRaises(ValueError):
+            create_trainer_feature_action(
+                "dashing_makeover",
+                actor_id="ally-1",
+                target_id="player-2",
+                item_name="Wise Glasses",
+            ).validate(battle)
+
+    def test_dashing_makeover_rejects_incense_on_trainer_targets(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=4)},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Stylist", features=[{"name": "Dashing Makeover"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(
+                    spec=_mon("Target Trainer", tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 2),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(32),
+        )
+
+        with self.assertRaises(ValueError):
+            create_trainer_feature_action(
+                "dashing_makeover",
+                actor_id="player-1",
+                target_id="player-2",
+                item_name="Rock Incense",
+            ).validate(battle)
+
+    def test_parfumier_incense_grants_chosen_move_while_actively_held(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Perfumed", moves=[MoveSpec(name="Tackle", type="Normal", category="Physical", db=6)]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(33),
+        )
+        actor = battle.pokemon["player-1"]
+        actor.spec.items = [{"name": "Rose Incense", "parfumier_move": "Aromatic Mist"}]
+
+        actor._sync_parfumier_moves()
+
+        self.assertIn("Aromatic Mist", [move.name for move in actor.spec.moves])
+        self.assertTrue(actor.get_temporary_effects("parfumier_move_granted"))
+
+        actor.spec.items = []
+        actor._sync_parfumier_moves()
+
+        self.assertNotIn("Aromatic Mist", [move.name for move in actor.spec.moves])
+        self.assertFalse(actor.get_temporary_effects("parfumier_move_granted"))
+
+    def test_parfumier_requires_incense_with_sweet_scent_or_aromatic_mist_choice(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Perfumed", moves=[MoveSpec(name="Tackle", type="Normal", category="Physical", db=6)]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(34),
+        )
+        actor = battle.pokemon["player-1"]
+
+        actor.spec.items = [{"name": "Rose Incense"}]
+        actor._sync_parfumier_moves()
+        self.assertNotIn("Sweet Scent", [move.name for move in actor.spec.moves])
+        self.assertNotIn("Aromatic Mist", [move.name for move in actor.spec.moves])
+
+        actor.spec.items = [{"name": "Rose Incense", "parfumier_move": "Growl"}]
+        actor._sync_parfumier_moves()
+        self.assertNotIn("Growl", [move.name for move in actor.spec.moves])
 
     def test_shocking_speed_primes_electric_move_priority(self) -> None:
         shock = MoveSpec(
@@ -1934,6 +4068,244 @@ class TrainerPassivePerkTests(unittest.TestCase):
             rng=random.Random(3),
         )
         self.assertEqual(2, battle.pokemon["player-1"].save_bonus(battle))
+
+    def test_resilience_negates_critical_hit_and_spends_ap(self) -> None:
+        slash = MoveSpec(
+            name="Critical Slash",
+            type="Normal",
+            category="Physical",
+            db=8,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+            crit_range=1,
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Tank", features=[{"name": "Resilience"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Critter", moves=[slash]),
+                    controller_id="foe",
+                    position=(1, 2),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([20, 6, 5]),
+        )
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or True
+
+        before_hp = battle.pokemon["player-1"].hp
+        UseMoveAction(actor_id="foe-1", move_name="Critical Slash", target_id="player-1").resolve(battle)
+
+        move_event = next(
+            event for event in battle.log if event.get("type") == "move" and event.get("move") == "Critical Slash"
+        )
+        self.assertFalse(move_event.get("crit"))
+        self.assertEqual(0, battle.trainers["player"].ap)
+        self.assertLess(battle.pokemon["player-1"].hp, before_hp)
+        self.assertTrue(any(prompt.get("feature") == "Resilience" for prompt in prompts))
+        self.assertTrue(
+            any(
+                event.get("feature") == "Resilience" and event.get("effect") == "critical_negated"
+                for event in battle.log
+            )
+        )
+
+    def test_resilience_blocks_status_only_trigger_and_spends_ap(self) -> None:
+        move = MoveSpec(
+            name="Scary Swipe",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Tank", features=[{"name": "Resilience"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Attacker", moves=[move]),
+                    controller_id="foe",
+                    position=(1, 2),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(3),
+        )
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or True
+        battle._resilience_context = {"attacker_id": "foe-1", "target_id": "player-1", "move_name": "scary swipe"}
+        events: list[dict] = []
+
+        battle._apply_status(
+            events,
+            attacker_id="foe-1",
+            target_id="player-1",
+            move=move,
+            target=battle.pokemon["player-1"],
+            status="Flinch",
+            effect="test",
+            description="Test flinch.",
+        )
+
+        self.assertFalse(battle.pokemon["player-1"].has_status("Flinch"))
+        self.assertEqual(0, battle.trainers["player"].ap)
+        self.assertTrue(any(prompt.get("feature") == "Resilience" for prompt in prompts))
+        self.assertTrue(any(event.get("feature") == "Resilience" and event.get("effect") == "status_block" for event in events))
+
+    def test_resilience_critical_activation_blocks_later_status_without_second_prompt(self) -> None:
+        move = MoveSpec(
+            name="Brutal Swipe",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Tank", features=[{"name": "Resilience"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Attacker", moves=[move]),
+                    controller_id="foe",
+                    position=(1, 2),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(3),
+        )
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or True
+        battle._resilience_context = {"attacker_id": "foe-1", "target_id": "player-1", "move_name": "brutal swipe"}
+
+        result = {
+            "hit": True,
+            "crit": True,
+            "damage": 18,
+            "pre_type_damage": 18,
+            "type_multiplier": 1.0,
+            "damage_roll": 10,
+            "crit_extra_roll": 4,
+        }
+        updated = battle._maybe_apply_resilience_to_crit("player-1", "foe-1", move, result)
+        events: list[dict] = []
+        battle._apply_status(
+            events,
+            attacker_id="foe-1",
+            target_id="player-1",
+            move=move,
+            target=battle.pokemon["player-1"],
+            status="Flinch",
+            effect="test",
+            description="Test flinch.",
+        )
+
+        self.assertFalse(updated.get("crit"))
+        self.assertFalse(battle.pokemon["player-1"].has_status("Flinch"))
+        self.assertEqual(0, battle.trainers["player"].ap)
+        self.assertEqual(1, len([prompt for prompt in prompts if prompt.get("feature") == "Resilience"]))
+
+    def test_resilience_is_once_per_target_per_scene(self) -> None:
+        move = MoveSpec(
+            name="Grinding Swipe",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=4),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Tank", features=[{"name": "Resilience"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Attacker", moves=[move]),
+                    controller_id="foe",
+                    position=(1, 2),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(3),
+        )
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or True
+
+        battle._resilience_context = {"attacker_id": "foe-1", "target_id": "player-1", "move_name": "grinding swipe"}
+        first_events: list[dict] = []
+        battle._apply_status(
+            first_events,
+            attacker_id="foe-1",
+            target_id="player-1",
+            move=move,
+            target=battle.pokemon["player-1"],
+            status="Flinch",
+            effect="test",
+            description="First flinch.",
+        )
+        battle._clear_resilience_active(battle.pokemon["player-1"])
+        battle._resilience_context = {"attacker_id": "foe-1", "target_id": "player-1", "move_name": "grinding swipe"}
+        second_events: list[dict] = []
+        battle._apply_status(
+            second_events,
+            attacker_id="foe-1",
+            target_id="player-1",
+            move=move,
+            target=battle.pokemon["player-1"],
+            status="Flinch",
+            effect="test",
+            description="Second flinch.",
+        )
+
+        self.assertTrue(battle.pokemon["player-1"].has_status("Flinch"))
+        self.assertEqual(2, battle.trainers["player"].ap)
+        self.assertEqual(1, len([prompt for prompt in prompts if prompt.get("feature") == "Resilience"]))
 
     def test_smooth_applies_trainer_save_and_social_evasion_bonuses(self) -> None:
         trainer = TrainerState(
@@ -2058,6 +4430,36 @@ class TrainerPassivePerkTests(unittest.TestCase):
         before_hp = defender.hp
         UseMoveAction(actor_id="player-1", move_name="Slam", target_id="foe-1").resolve(battle)
         self.assertEqual(before_hp, defender.hp)
+
+    def test_blur_hit_probability_applies_ac_two_and_half_evasion_for_acless_attacks(self) -> None:
+        attacker = PokemonState(
+            spec=_mon(
+                "Attacker",
+                moves=[
+                    MoveSpec(
+                        name="Slam",
+                        type="Normal",
+                        category="Physical",
+                        db=8,
+                        ac=None,
+                        range_kind="Melee",
+                        range_value=1,
+                        target_kind="Melee",
+                        target_range=1,
+                    )
+                ],
+            ),
+            controller_id="player",
+            position=(1, 1),
+        )
+        defender = PokemonState(
+            spec=_mon("TrainerAvatar", tags=["trainer"], features=[{"name": "Blur"}]),
+            controller_id="foe",
+            position=(1, 2),
+        )
+        defender.combat_stages["spd"] = 2
+        p_hit = calculations.hit_probability(attacker, defender, attacker.spec.moves[0])
+        self.assertEqual(0.9, p_hit)
 
     def test_flustering_charisma_applies_volatile_save_penalty_on_social_hit(self) -> None:
         social_move = MoveSpec(
@@ -2640,7 +5042,7 @@ class TrainerPassivePerkTests(unittest.TestCase):
     def test_dirty_fighting_grants_follow_up_after_weapon_attack_hit(self) -> None:
         battle = BattleState(
             trainers={
-                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=2),
                 "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
             },
             pokemon={
@@ -2694,6 +5096,128 @@ class TrainerPassivePerkTests(unittest.TestCase):
         self.assertEqual(1, battle.trainers["player"].ap)
         self.assertTrue(battle.pokemon["foe-1"].has_status("Hindered"))
         self.assertFalse(battle.pokemon["player-1"].get_temporary_effects("dirty_fighting_ready"))
+
+    def test_stacked_deck_adds_bonus_damage_to_burn(self) -> None:
+        tackle = MoveSpec(name="Tackle", type="Normal", category="Physical", ac=2, range_kind="Melee", range_value=1, target_kind="Melee", target_range=1)
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Trickster", moves=[tackle], features=[{"name": "Stacked Deck"}]), controller_id="player", position=(1, 1)),
+                "foe-1": PokemonState(spec=_mon("BurnedTarget"), controller_id="foe", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([10, 10]),
+        )
+        battle.pokemon["foe-1"].statuses.append({"name": "Burned", "remaining": 3})
+        battle.out_of_turn_prompt = lambda prompt: {"accept": True, "choice": "Burned"} if prompt.get("feature") == "Stacked Deck" else True
+        UseMoveAction(actor_id="player-1", move_name="Tackle", target_id="foe-1").resolve(battle)
+        battle.pokemon["foe-1"].actions_taken[ActionType.STANDARD] = "test"
+        hp_before = int(battle.pokemon["foe-1"].hp or 0)
+        battle.pokemon["foe-1"].handle_phase_effects(battle, TurnPhase.END, "foe-1")
+        stacked_damage = hp_before - int(battle.pokemon["foe-1"].hp or 0)
+
+        baseline = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Trickster", moves=[tackle]), controller_id="player", position=(1, 1)),
+                "foe-1": PokemonState(spec=_mon("BurnedTarget"), controller_id="foe", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([10, 10]),
+        )
+        baseline.pokemon["foe-1"].statuses.append({"name": "Burned", "remaining": 3})
+        baseline.pokemon["foe-1"].actions_taken[ActionType.STANDARD] = "test"
+        baseline_before = int(baseline.pokemon["foe-1"].hp or 0)
+        baseline.pokemon["foe-1"].handle_phase_effects(baseline, TurnPhase.END, "foe-1")
+        baseline_damage = baseline_before - int(baseline.pokemon["foe-1"].hp or 0)
+
+        self.assertEqual(baseline_damage + 5, stacked_damage)
+
+    def test_mind_games_applies_vulnerable_after_social_hit(self) -> None:
+        confide = MoveSpec(name="Confide", type="Normal", category="Status", ac=2, range_kind="Ranged", range_value=6, target_kind="Ranged", target_range=6, freq="At-Will", keywords=["Social"])
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Trickster", moves=[confide], features=[{"name": "Mind Games"}]), controller_id="player", position=(1, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(1, 3)),
+            },
+            grid=GridState(width=7, height=7),
+            rng=_FixedRng([4, 10]),
+        )
+        battle.out_of_turn_prompt = lambda prompt: {"accept": True, "choice": ""} if prompt.get("feature") == "Mind Games" else True
+        UseMoveAction(actor_id="player-1", move_name="Confide", target_id="foe-1").resolve(battle)
+        self.assertTrue(battle.pokemon["foe-1"].has_status("Vulnerable"))
+
+    def test_sleight_ignores_substitute_for_status_move(self) -> None:
+        confide = MoveSpec(name="Confide", type="Normal", category="Status", ac=2, range_kind="Ranged", range_value=6, target_kind="Ranged", target_range=6, freq="At-Will", keywords=["Social"])
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players"), "foe": TrainerState(identifier="foe", name="Foe", team="foes")},
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Trickster", moves=[confide], features=[{"name": "Sleight"}]), controller_id="player", position=(1, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(1, 3)),
+            },
+            grid=GridState(width=7, height=7),
+            rng=_FixedRng([4, 10]),
+        )
+        battle.pokemon["foe-1"].statuses.append({"name": "Substitute", "remaining": 3})
+        SleightAction("player-1", "Confide", target_id="foe-1").resolve(battle)
+        self.assertLess(battle.pokemon["foe-1"].combat_stages.get("spatk", 0), 0)
+
+    def test_escape_artist_repositions_after_status_move(self) -> None:
+        confide = MoveSpec(name="Confide", type="Normal", category="Status", ac=2, range_kind="Ranged", range_value=6, target_kind="Ranged", target_range=6, freq="At-Will", keywords=["Social"])
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=1),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Trickster", moves=[confide], features=[{"name": "Escape Artist"}]), controller_id="player", position=(1, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([4, 10]),
+        )
+        battle.out_of_turn_prompt = lambda prompt: {"accept": True} if prompt.get("feature") == "Escape Artist" else True
+        origin = battle.pokemon["player-1"].position
+        UseMoveAction(actor_id="player-1", move_name="Confide", target_id="foe-1").resolve(battle)
+        self.assertNotEqual(origin, battle.pokemon["player-1"].position)
+
+    def test_shell_game_repositions_allied_hazard_layers(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", skills={"guile": 4}),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Trickster", features=[{"name": "Shell Game"}]), controller_id="player", position=(1, 1)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(4, 4)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=_FixedRng([10]),
+        )
+        battle._place_hazard((1, 1), "spikes", 1, source_id="player-1", allow_shell_game=False)
+        battle._place_hazard((2, 1), "spikes", 1, source_id="player-1", allow_shell_game=False)
+
+        create_trainer_feature_action(
+            "shell_game",
+            actor_id="player-1",
+            hazard="spikes",
+            moves=[
+                {"from": [1, 1], "to": [1, 2], "layers": 1},
+                {"from": [2, 1], "to": [1, 2], "layers": 1},
+            ],
+        ).resolve(battle)
+
+        destination_meta = battle.grid.tiles.get((1, 2), {})
+        self.assertEqual(2, int((destination_meta.get("hazards") or {}).get("spikes", 0) or 0))
+        self.assertEqual(0, int((battle.grid.tiles.get((1, 1), {}).get("hazards") or {}).get("spikes", 0) or 0))
+        self.assertEqual(0, int((battle.grid.tiles.get((2, 1), {}).get("hazards") or {}).get("spikes", 0) or 0))
 
     def test_malice_grants_mean_look_and_chip_away_to_trainer_avatar(self) -> None:
         battle = BattleState(
@@ -3463,6 +5987,70 @@ class TrainerPassivePerkTests(unittest.TestCase):
         self.assertTrue(ally.get_temporary_effects("psychic_residue"))
         self.assertTrue(any(prompt.get("feature") == "Telepathic Warning" for prompt in prompts))
 
+    def test_telepathic_warning_still_works_when_attacker_has_mindlock(self) -> None:
+        burst = MoveSpec(
+            name="Shockwave Pulse",
+            type="Electric",
+            category="Special",
+            db=6,
+            ac=2,
+            range_kind="Burst",
+            range_value=1,
+            target_kind="Self",
+            target_range=0,
+            area_kind="Burst",
+            area_value=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Mindlocked Attacker",
+                        moves=[burst],
+                        capabilities=["Mindlock"],
+                    ),
+                    controller_id="player",
+                    position=(2, 2),
+                ),
+                "player-2": PokemonState(
+                    spec=_mon(
+                        "Telepath",
+                        features=[{"name": "Telepathic Warning"}],
+                        capabilities=["Telepath"],
+                    ),
+                    controller_id="player",
+                    position=(1, 2),
+                ),
+                "player-3": PokemonState(
+                    spec=_mon("Ally", moves=[burst]),
+                    controller_id="player",
+                    position=(2, 3),
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Foe", moves=[burst]),
+                    controller_id="foe",
+                    position=(4, 4),
+                ),
+            },
+            grid=GridState(width=7, height=7),
+            rng=_FixedRng([20]),
+        )
+        ally = battle.pokemon["player-3"]
+        ally.spec.movement["overland"] = 3
+        before_hp = ally.hp
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or True
+        UseMoveAction(actor_id="player-1", move_name="Shockwave Pulse", target_id="player-1").resolve(battle)
+        self.assertEqual(before_hp, ally.hp)
+        self.assertNotEqual((2, 3), ally.position)
+        self.assertEqual(1, battle.trainers["player"].ap)
+        self.assertTrue(any(prompt.get("feature") == "Telepathic Warning" for prompt in prompts))
+
     def test_harrier_blocks_priority_and_interrupt_actions_after_hit(self) -> None:
         tackle = MoveSpec(
             name="Tackle",
@@ -3508,7 +6096,7 @@ class TrainerPassivePerkTests(unittest.TestCase):
                 "foe-2": PokemonState(spec=_mon("Ally"), controller_id="foe", position=(1, 3)),
             },
             grid=GridState(width=5, height=5),
-            rng=_FixedRng([20]),
+            rng=_FixedRng([20, 6, 6, 6]),
         )
         UseMoveAction(actor_id="player-1", move_name="Tackle", target_id="foe-1").resolve(battle)
         target = battle.pokemon["foe-1"]
@@ -3551,7 +6139,7 @@ class TrainerPassivePerkTests(unittest.TestCase):
                 ),
             },
             grid=GridState(width=5, height=5),
-            rng=_FixedRng([20]),
+            rng=_FixedRng([20, 6, 6, 6]),
         )
         prompts: list[dict] = []
         battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or True
@@ -3595,7 +6183,7 @@ class TrainerPassivePerkTests(unittest.TestCase):
         )
         battle = BattleState(
             trainers={
-                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=1),
                 "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
             },
             pokemon={
@@ -3635,7 +6223,51 @@ class TrainerPassivePerkTests(unittest.TestCase):
         UseMoveAction(actor_id="foe-1", move_name="Tackle", target_id="player-1").resolve(battle)
         self.assertGreater(battle.pokemon["player-1"].hp, baseline.pokemon["player-1"].hp)
         self.assertEqual(1, battle._feature_scene_use_count(battle.pokemon["player-1"], "Pain Resistance"))
+        self.assertEqual(0, battle.trainers["player"].ap)
         self.assertTrue(any(prompt.get("feature") == "Pain Resistance" for prompt in prompts))
+
+    def test_pain_resistance_requires_ap(self) -> None:
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=8,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=0),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Tank", features=[{"name": "Pain Resistance"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Attacker", moves=[tackle], level=35),
+                    controller_id="foe",
+                    position=(1, 2),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([20]),
+        )
+        battle.pokemon["player-1"].injuries = 2
+        battle.pokemon["player-1"].hp = battle.pokemon["player-1"].max_hp_with_injuries()
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or True
+        hp_before = battle.pokemon["player-1"].hp
+        UseMoveAction(actor_id="foe-1", move_name="Tackle", target_id="player-1").resolve(battle)
+        self.assertLess(battle.pokemon["player-1"].hp, hp_before)
+        self.assertEqual(0, battle._feature_scene_use_count(battle.pokemon["player-1"], "Pain Resistance"))
+        self.assertEqual([], prompts)
 
     def test_perseverance_prevents_triggering_injury_once_per_scene(self) -> None:
         slash = MoveSpec(
@@ -3652,7 +6284,7 @@ class TrainerPassivePerkTests(unittest.TestCase):
         )
         battle = BattleState(
             trainers={
-                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=1),
                 "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
             },
             pokemon={
@@ -3676,7 +6308,49 @@ class TrainerPassivePerkTests(unittest.TestCase):
         defender = battle.pokemon["player-1"]
         self.assertEqual(0, defender.injuries)
         self.assertEqual(1, battle._feature_scene_use_count(defender, "Perseverance"))
+        self.assertEqual(0, battle.trainers["player"].ap)
         self.assertTrue(any(prompt.get("feature") == "Perseverance" for prompt in prompts))
+
+    def test_perseverance_requires_ap(self) -> None:
+        slash = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=16,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=0),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Protege", features=[{"name": "Perseverance"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Attacker", moves=[slash], level=50),
+                    controller_id="foe",
+                    position=(1, 2),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([20]),
+        )
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or True
+        UseMoveAction(actor_id="foe-1", move_name="Slash", target_id="player-1").resolve(battle)
+        defender = battle.pokemon["player-1"]
+        self.assertGreaterEqual(defender.injuries, 1)
+        self.assertEqual(0, battle._feature_scene_use_count(defender, "Perseverance"))
+        self.assertEqual([], prompts)
 
     def test_false_strike_leaves_wild_target_at_one_hp(self) -> None:
         finisher = MoveSpec(
@@ -3865,6 +6539,155 @@ class TrainerPassivePerkTests(unittest.TestCase):
         self.assertTrue(battle.pokemon["foe-1"].has_status("Burned"))
         self.assertTrue(any(evt.get("feature") == "Brightest Flame" for evt in battle.log))
 
+    def test_fire_bringer_grants_two_chosen_moves(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Blazer",
+                        tags=["trainer"],
+                        features=[{"name": "Fire Bringer", "choices": ["Flame Burst", "Will-O-Wisp"]}],
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(35),
+        )
+
+        move_names = {move.name for move in battle.pokemon["player-1"].spec.moves}
+
+        self.assertIn("Flame Burst", move_names)
+        self.assertIn("Will-O-Wisp", move_names)
+        self.assertNotIn("Flame Wheel", move_names)
+
+    def test_fiery_soul_grants_heater_and_burn_immunity(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Blazer", features=[{"name": "Fiery Soul"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(36),
+        )
+        actor = battle.pokemon["player-1"]
+        actor.statuses.append({"name": "Burned"})
+        battle._sync_static_trainer_feature_capabilities_to_pokemon()
+
+        battle._apply_status(
+            [],
+            attacker_id="foe-1",
+            target_id="player-1",
+            move=MoveSpec(name="Will-O-Wisp", type="Fire", category="Status"),
+            target=actor,
+            status="Burned",
+            effect="burn",
+            description="Test burn.",
+        )
+
+        self.assertTrue(actor.has_capability("Heater"))
+        self.assertFalse(actor.has_status("Burned"))
+        self.assertTrue(actor.get_temporary_effects("status_immunity"))
+
+    def test_burning_passion_grants_chosen_ability(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Blazer",
+                        features=[{"name": "Burning Passion", "choice": "Flame Body"}],
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(37),
+        )
+
+        self.assertIn("Flame Body", battle.pokemon["player-1"].ability_names())
+
+    def test_firebrand_burns_fire_type_move_targets_on_nineteen_plus(self) -> None:
+        ember = MoveSpec(
+            name="Flame Jab",
+            type="Fire",
+            category="Special",
+            db=4,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Blazer", features=[{"name": "Firebrand"}], moves=[ember]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(spec=_mon("Target", level=30), controller_id="foe", position=(1, 3)),
+            },
+            grid=GridState(width=7, height=7),
+            rng=_FixedRng([19] * 12),
+        )
+
+        UseMoveAction(actor_id="player-1", move_name="Flame Jab", target_id="foe-1").resolve(battle)
+
+        self.assertTrue(battle.pokemon["foe-1"].has_status("Burned"))
+        self.assertTrue(any(evt.get("feature") == "Firebrand" for evt in battle.log))
+
+    def test_firebrand_increases_existing_burn_effect_range_by_two(self) -> None:
+        ember = MoveSpec(
+            name="Searing Tap",
+            type="Fire",
+            category="Special",
+            db=4,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+            freq="At-Will",
+            effects_text="Burns the target on 19+.",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Blazer", features=[{"name": "Firebrand"}], moves=[ember]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(spec=_mon("Target", level=30), controller_id="foe", position=(1, 3)),
+            },
+            grid=GridState(width=7, height=7),
+            rng=_FixedRng([17] * 12),
+        )
+
+        UseMoveAction(actor_id="player-1", move_name="Searing Tap", target_id="foe-1").resolve(battle)
+
+        self.assertTrue(battle.pokemon["foe-1"].has_status("Burned"))
+
     def test_corrosive_blight_inflicts_blight_on_poison_hit(self) -> None:
         acid = MoveSpec(
             name="Acid",
@@ -4033,6 +6856,35 @@ class TrainerPassivePerkTests(unittest.TestCase):
         self.assertEqual(0, battle.trainers["player"].ap)
         self.assertTrue(battle.pokemon["player-2"].get_temporary_effects("quick_switch_sent_out"))
 
+    def test_juggler_reduces_quick_switch_to_one_ap(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=1)},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Lead", features=[{"name": "Quick Switch"}, {"name": "Juggler"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "player-2": PokemonState(
+                    spec=_mon("Bench"),
+                    controller_id="player",
+                    position=None,
+                    active=False,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(5),
+        )
+        action = QuickSwitchAction(actor_id="player-1", replacement_id="player-2")
+        action.validate(battle)
+        action.resolve(battle)
+        self.assertFalse(battle.pokemon["player-1"].active)
+        self.assertTrue(battle.pokemon["player-2"].active)
+        self.assertEqual((1, 1), battle.pokemon["player-2"].position)
+        self.assertEqual(0, battle.trainers["player"].ap)
+        self.assertTrue(battle.pokemon["player-2"].get_temporary_effects("quick_switch_sent_out"))
+
     def test_quick_switch_triggers_when_ally_faints(self) -> None:
         slash = MoveSpec(
             name="Slash",
@@ -4090,6 +6942,691 @@ class TrainerPassivePerkTests(unittest.TestCase):
         self.assertEqual((1, 1), battle.pokemon["player-2"].position)
         self.assertEqual(0, battle.trainers["player"].ap)
         self.assertTrue(any(prompt.get("feature") == "Quick Switch" and prompt.get("trigger") == "ally_faint" for prompt in prompts))
+
+    def test_round_trip_switches_after_using_move(self) -> None:
+        slash = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=1),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Lead", features=[{"name": "Round Trip"}], tags=["trainer"], moves=[slash]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "player-2": PokemonState(
+                    spec=_mon("Bench"),
+                    controller_id="player",
+                    position=None,
+                    active=False,
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Target", moves=[slash]),
+                    controller_id="foe",
+                    position=(1, 2),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([20, 20]),
+        )
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or {"accept": True, "choice": "player-2"}
+        UseMoveAction(actor_id="player-1", move_name="Slash", target_id="foe-1").resolve(battle)
+        self.assertFalse(battle.pokemon["player-1"].active)
+        self.assertTrue(battle.pokemon["player-2"].active)
+        self.assertEqual((1, 1), battle.pokemon["player-2"].position)
+        self.assertEqual(0, battle.trainers["player"].ap)
+        self.assertTrue(any(prompt.get("feature") == "Round Trip" and prompt.get("move") == "Slash" for prompt in prompts))
+
+    def test_round_trip_allows_switching_while_trapped(self) -> None:
+        slash = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=1),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Lead", features=[{"name": "Round Trip"}], tags=["trainer"], moves=[slash]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                    statuses=[{"name": "Trapped"}],
+                ),
+                "player-2": PokemonState(
+                    spec=_mon("Bench"),
+                    controller_id="player",
+                    position=None,
+                    active=False,
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Target", moves=[slash]),
+                    controller_id="foe",
+                    position=(1, 2),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([20, 20]),
+        )
+        battle.out_of_turn_prompt = lambda payload: {"accept": True, "choice": "player-2"}
+        UseMoveAction(actor_id="player-1", move_name="Slash", target_id="foe-1").resolve(battle)
+        self.assertFalse(battle.pokemon["player-1"].active)
+        self.assertTrue(battle.pokemon["player-2"].active)
+        self.assertEqual((1, 1), battle.pokemon["player-2"].position)
+
+    def test_tag_in_transfers_combat_stages_and_coats_on_switch(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Lead", features=[{"name": "Tag In"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "player-2": PokemonState(
+                    spec=_mon("Bench"),
+                    controller_id="player",
+                    position=None,
+                    active=False,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(12),
+        )
+        outgoing = battle.pokemon["player-1"]
+        replacement = battle.pokemon["player-2"]
+        outgoing.combat_stages["atk"] = 2
+        outgoing.combat_stages["spd"] = 1
+        outgoing.statuses.append({"name": "Reflect"})
+        action = SwitchAction(actor_id="player-1", replacement_id="player-2")
+        action.validate(battle)
+        action.resolve(battle)
+        self.assertEqual(0, outgoing.combat_stages["atk"])
+        self.assertEqual(0, outgoing.combat_stages["spd"])
+        self.assertFalse(outgoing.has_status("Reflect"))
+        self.assertEqual(2, replacement.combat_stages["atk"])
+        self.assertEqual(1, replacement.combat_stages["spd"])
+        self.assertTrue(replacement.has_status("Reflect"))
+        self.assertTrue(
+            any(evt.get("feature") == "Tag In" and evt.get("effect") == "baton_pass" for evt in battle.log)
+        )
+
+    def test_tag_in_applies_when_quick_switch_recalls_user(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=2)},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Lead", features=[{"name": "Quick Switch"}, {"name": "Tag In"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "player-2": PokemonState(
+                    spec=_mon("Bench"),
+                    controller_id="player",
+                    position=None,
+                    active=False,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(13),
+        )
+        outgoing = battle.pokemon["player-1"]
+        replacement = battle.pokemon["player-2"]
+        outgoing.combat_stages["def"] = 3
+        outgoing.statuses.append({"name": "Light Screen"})
+        action = QuickSwitchAction(actor_id="player-1", replacement_id="player-2")
+        action.validate(battle)
+        action.resolve(battle)
+        self.assertEqual(0, outgoing.combat_stages["def"])
+        self.assertFalse(outgoing.has_status("Light Screen"))
+        self.assertEqual(3, replacement.combat_stages["def"])
+        self.assertTrue(replacement.has_status("Light Screen"))
+
+    def test_emergency_release_action_releases_benched_pokemon(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=2)},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Trainer", features=[{"name": "Emergency Release"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "player-2": PokemonState(
+                    spec=_mon("BenchMon"),
+                    controller_id="player",
+                    position=None,
+                    active=False,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=random.Random(14),
+        )
+        action = create_trainer_feature_action("emergency_release", actor_id="player-1", replacement_id="player-2")
+        action.validate(battle)
+        action.resolve(battle)
+        self.assertTrue(battle.pokemon["player-2"].active)
+        self.assertIsNotNone(battle.pokemon["player-2"].position)
+        self.assertEqual(0, battle.trainers["player"].ap)
+        self.assertTrue(any(evt.get("feature") == "Emergency Release" and evt.get("effect") == "release" for evt in battle.log))
+
+    def test_emergency_release_prompts_as_interrupt_before_foe_action(self) -> None:
+        slash = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Trainer", features=[{"name": "Emergency Release"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "player-2": PokemonState(
+                    spec=_mon("BenchMon"),
+                    controller_id="player",
+                    position=None,
+                    active=False,
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("FoeMon", moves=[slash]),
+                    controller_id="foe",
+                    position=(1, 2),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=6, height=6),
+            rng=_FixedRng([20, 20]),
+        )
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or {"accept": True, "choice": "player-2"}
+        battle.queue_action(UseMoveAction(actor_id="foe-1", move_name="Slash", target_id="player-1"))
+        battle.resolve_next_action()
+        self.assertTrue(any(prompt.get("feature") == "Emergency Release" for prompt in prompts))
+        self.assertTrue(battle.pokemon["player-2"].active)
+        self.assertEqual(0, battle.trainers["player"].ap)
+
+    def test_bounce_shot_releases_after_bounce_beyond_normal_throw_range(self) -> None:
+        trainer = TrainerState(
+            identifier="player",
+            name="Player",
+            controller_kind="player",
+            team="players",
+            position=(0, 0),
+        )
+        battle = BattleState(
+            trainers={"player": trainer},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Trainer", features=[{"name": "Bounce Shot"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(0, 0),
+                    active=True,
+                ),
+                "player-2": PokemonState(
+                    spec=_mon("BenchMon"),
+                    controller_id="player",
+                    position=None,
+                    active=False,
+                ),
+            },
+            grid=GridState(width=8, height=8),
+            rng=random.Random(15),
+        )
+        with self.assertRaises(ValueError):
+            create_trainer_feature_action(
+                "emergency_release",
+                actor_id="player-1",
+                replacement_id="player-2",
+                target_position=(5, 0),
+            ).validate(battle)
+        action = create_trainer_feature_action(
+            "bounce_shot",
+            actor_id="player-1",
+            replacement_id="player-2",
+            release_timing="after",
+            target_position=(5, 0),
+        )
+        action.validate(battle)
+        action.resolve(battle)
+        self.assertTrue(battle.pokemon["player-2"].active)
+        self.assertEqual((5, 0), battle.pokemon["player-2"].position)
+        self.assertTrue(any(evt.get("feature") == "Bounce Shot" and evt.get("effect") == "bounce" for evt in battle.log))
+
+    def test_bounce_shot_before_bounce_uses_normal_release_tile(self) -> None:
+        trainer = TrainerState(
+            identifier="player",
+            name="Player",
+            controller_kind="player",
+            team="players",
+            position=(0, 0),
+        )
+        battle = BattleState(
+            trainers={"player": trainer},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Trainer", features=[{"name": "Bounce Shot"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(0, 0),
+                    active=True,
+                ),
+                "player-2": PokemonState(
+                    spec=_mon("BenchMon"),
+                    controller_id="player",
+                    position=None,
+                    active=False,
+                ),
+            },
+            grid=GridState(width=8, height=8),
+            rng=random.Random(16),
+        )
+        action = create_trainer_feature_action(
+            "bounce_shot",
+            actor_id="player-1",
+            replacement_id="player-2",
+            release_timing="before",
+            target_position=(4, 0),
+        )
+        action.validate(battle)
+        action.resolve(battle)
+        self.assertEqual((4, 0), battle.pokemon["player-2"].position)
+        self.assertTrue(any(evt.get("feature") == "Bounce Shot" and evt.get("release_timing") == "before" for evt in battle.log))
+
+    def test_first_blood_uses_current_round_turn_when_released_mid_round(self) -> None:
+        water_gun = MoveSpec(
+            name="Water Gun",
+            type="Water",
+            category="Special",
+            db=4,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+            freq="At-Will",
+        )
+        slash = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Trainer", features=[{"name": "Emergency Release"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "player-2": PokemonState(
+                    spec=_mon("BenchMon", features=[{"name": "First Blood"}], moves=[water_gun]),
+                    controller_id="player",
+                    position=None,
+                    active=False,
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("FoeMon", moves=[slash]),
+                    controller_id="foe",
+                    position=(1, 2),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=6, height=6),
+            rng=_FixedRng([20, 20]),
+        )
+        battle.initiative_order = [
+            InitiativeEntry(actor_id="foe-1", trainer_id="foe", speed=12, trainer_modifier=0, roll=0, total=12),
+        ]
+        battle._initiative_index = 0
+        battle.current_actor_id = "foe-1"
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = (
+            lambda payload: prompts.append(dict(payload)) or {"accept": True, "choice": "Water Gun||foe-1"}
+        )
+
+        create_trainer_feature_action("emergency_release", actor_id="player-1", replacement_id="player-2").resolve(battle)
+
+        self.assertTrue(any(prompt.get("feature") == "First Blood" for prompt in prompts))
+        self.assertTrue(battle.pokemon["player-2"].active)
+        self.assertLess(battle.pokemon["foe-1"].hp, battle.pokemon["foe-1"].max_hp())
+        self.assertFalse(any(entry.actor_id == "player-2" for entry in battle.initiative_order))
+        self.assertTrue(
+            any(
+                evt.get("feature") == "First Blood"
+                and evt.get("effect") == "interrupt_move"
+                and evt.get("turn_window") == "current_round"
+                for evt in battle.log
+            )
+        )
+
+    def test_first_blood_consumes_next_round_turn_on_normal_switch_in(self) -> None:
+        water_gun = MoveSpec(
+            name="Water Gun",
+            type="Water",
+            category="Special",
+            db=4,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Lead"),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "player-2": PokemonState(
+                    spec=_mon("BenchMon", features=[{"name": "First Blood"}], moves=[water_gun]),
+                    controller_id="player",
+                    position=None,
+                    active=False,
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("FoeMon"),
+                    controller_id="foe",
+                    position=(1, 2),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=6, height=6),
+            rng=_FixedRng([20, 20]),
+        )
+        battle.out_of_turn_prompt = lambda _payload: {"accept": True, "choice": "Water Gun||foe-1"}
+        battle.initiative_order = [
+            InitiativeEntry(actor_id="player-1", trainer_id="player", speed=12, trainer_modifier=0, roll=0, total=12),
+            InitiativeEntry(actor_id="foe-1", trainer_id="foe", speed=10, trainer_modifier=0, roll=0, total=10),
+        ]
+        battle._initiative_index = 0
+        battle.current_actor_id = "player-1"
+
+        SwitchAction(actor_id="player-1", replacement_id="player-2").resolve(battle)
+
+        self.assertTrue(battle.pokemon["player-2"].active)
+        self.assertLess(battle.pokemon["foe-1"].hp, battle.pokemon["foe-1"].max_hp())
+        skip_entries = battle.pokemon["player-2"].get_temporary_effects("first_blood_skip_turn")
+        self.assertTrue(any(int(entry.get("round", -1) or -1) == battle.round + 1 for entry in skip_entries))
+
+        battle.round += 1
+        battle.initiative_order = [
+            InitiativeEntry(actor_id="player-2", trainer_id="player", speed=12, trainer_modifier=0, roll=0, total=12),
+            InitiativeEntry(actor_id="foe-1", trainer_id="foe", speed=10, trainer_modifier=0, roll=0, total=10),
+        ]
+        battle._initiative_index = -1
+        battle.current_actor_id = None
+
+        next_entry = battle.advance_turn()
+
+        self.assertIsNotNone(next_entry)
+        self.assertEqual("foe-1", next_entry.actor_id)
+        self.assertFalse(battle.pokemon["player-2"].get_temporary_effects("first_blood_skip_turn"))
+        self.assertTrue(
+            any(
+                evt.get("feature") == "First Blood"
+                and evt.get("effect") == "turn_consumed"
+                and evt.get("turn_window") == "next_round"
+                for evt in battle.log
+            )
+        )
+
+    def test_surprise_uses_better_roll_and_flinches_when_both_hit(self) -> None:
+        slash = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            crit_range=18,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Juggler", features=[{"name": "Surprise!"}], tags=["trainer"], moves=[slash]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Target"),
+                    controller_id="foe",
+                    position=(1, 2),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([5, 19, 12]),
+        )
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or {"accept": True}
+
+        UseMoveAction(actor_id="player-1", move_name="Slash", target_id="foe-1").resolve(battle)
+
+        self.assertEqual(0, battle.trainers["player"].ap)
+        self.assertTrue(battle.pokemon["foe-1"].has_status("Flinch"))
+        feature_event = next(evt for evt in battle.log if evt.get("feature") == "Surprise!")
+        self.assertEqual(5, feature_event.get("first_roll"))
+        self.assertEqual(19, feature_event.get("second_roll"))
+        self.assertTrue(feature_event.get("double_hit"))
+        self.assertTrue(any(prompt.get("feature") == "Surprise!" and prompt.get("ap_cost") == 2 for prompt in prompts))
+
+    def test_surprise_uses_discounted_cost_with_pack_support_and_only_once_per_target(self) -> None:
+        struggle = MoveSpec(
+            name="Struggle",
+            type="Normal",
+            category="Physical",
+            db=4,
+            ac=4,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Juggler", features=[{"name": "Surprise!"}], tags=["trainer"], moves=[struggle]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "ally-1": PokemonState(
+                    spec=_mon("Support"),
+                    controller_id="player",
+                    position=(2, 1),
+                    active=True,
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Target"),
+                    controller_id="foe",
+                    position=(2, 2),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=6, height=6),
+            rng=_FixedRng([12, 17, 11]),
+        )
+        battle.pokemon["ally-1"].spec.abilities = [{"name": "Teamwork"}]
+        battle.pokemon["foe-1"].add_temporary_effect("turn_started_round", round=battle.round)
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or {"accept": True}
+
+        UseMoveAction(actor_id="player-1", move_name="Struggle", target_id="foe-1").resolve(battle)
+        ap_after_first_attack = battle.trainers["player"].ap
+        UseMoveAction(actor_id="player-1", move_name="Struggle", target_id="foe-1").resolve(battle)
+
+        self.assertEqual(1, ap_after_first_attack)
+        self.assertEqual(1, battle.trainers["player"].ap)
+        surprise_prompts = [prompt for prompt in prompts if prompt.get("feature") == "Surprise!"]
+        self.assertEqual(1, len(surprise_prompts))
+        self.assertEqual("pack_support", surprise_prompts[0].get("trigger_reason"))
+
+    def test_surprise_uses_discounted_cost_for_cap_cannon_attack_move(self) -> None:
+        cap_move = MoveSpec(
+            name="Glue Shot",
+            type="Normal",
+            category="Status",
+            db=0,
+            ac=6,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=1),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Juggler", features=[{"name": "Surprise!"}], tags=["trainer"], moves=[cap_move]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Target"),
+                    controller_id="foe",
+                    position=(1, 2),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=6, height=6),
+            rng=_FixedRng([10, 14]),
+        )
+        actor = battle.pokemon["player-1"]
+        actor.add_temporary_effect("weapon_move_granted", name="Glue Shot", source="Cap Cannon [5-15 Playtest]")
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or {"accept": True}
+
+        UseMoveAction(actor_id="player-1", move_name="Glue Shot", target_id="foe-1").resolve(battle)
+
+        surprise_prompt = next(prompt for prompt in prompts if prompt.get("feature") == "Surprise!")
+        self.assertEqual(1, surprise_prompt.get("ap_cost"))
+        self.assertEqual(0, battle.trainers["player"].ap)
+
+    def test_surprise_does_not_discount_unrelated_move_just_for_cap_cannon_equipped(self) -> None:
+        slash = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=2),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Juggler", features=[{"name": "Surprise!"}], tags=["trainer"], moves=[slash]),
+                    controller_id="player",
+                    position=(1, 1),
+                    active=True,
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Target"),
+                    controller_id="foe",
+                    position=(1, 2),
+                    active=True,
+                ),
+            },
+            grid=GridState(width=6, height=6),
+            rng=_FixedRng([8, 13]),
+        )
+        actor = battle.pokemon["player-1"]
+        actor.spec.items.append({"name": "Cap Cannon [5-15 Playtest]", "weapon": True, "weapon_type": "ranged"})
+        actor.equip_weapon(0)
+        prompts: list[dict] = []
+        battle.out_of_turn_prompt = lambda payload: prompts.append(dict(payload)) or {"accept": True}
+
+        UseMoveAction(actor_id="player-1", move_name="Slash", target_id="foe-1").resolve(battle)
+
+        surprise_prompt = next(prompt for prompt in prompts if prompt.get("feature") == "Surprise!")
+        self.assertEqual(2, surprise_prompt.get("ap_cost"))
+        self.assertEqual(0, battle.trainers["player"].ap)
 
     def test_long_jump_action_triggers_quick_gymnastics(self) -> None:
         battle = BattleState(
@@ -4912,6 +8449,272 @@ class TrainerPassivePerkTests(unittest.TestCase):
         self.assertEqual(1, actor.combat_stages["atk"])
         self.assertEqual(2, battle.trainers["player"].ap)
 
+    def test_attack_training_teaches_a_move_and_spends_tutor_point(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("TrainerAvatar", tags=["trainer"], features=[{"name": "Attack Training"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Ally", tutor_points=2), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 3)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(41),
+        )
+        create_trainer_feature_action(
+            "attack_training",
+            actor_id="player-1",
+            target_id="player-2",
+            move_name="Swords Dance",
+        ).resolve(battle)
+        target = battle.pokemon["player-2"]
+        self.assertEqual(1, target.spec.tutor_points)
+        self.assertIn("Swords Dance", {str(move.name or "").strip() for move in target.spec.moves})
+
+    def test_generic_stat_training_uses_chosen_stat_moves(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("TrainerAvatar", tags=["trainer"], features=[{"name": "Stat Training", "chosen_stat": "Special Defense"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Ally", tutor_points=2), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 3)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(4101),
+        )
+        create_trainer_feature_action(
+            "stat_training",
+            actor_id="player-1",
+            target_id="player-2",
+            move_name="Light Screen",
+        ).resolve(battle)
+        target = battle.pokemon["player-2"]
+        self.assertEqual(1, target.spec.tutor_points)
+        self.assertIn("Light Screen", {str(move.name or "").strip() for move in target.spec.moves})
+
+    def test_attack_stratagem_increases_melee_crit_range_from_positive_attack_stages(self) -> None:
+        slash = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+            crit_range=20,
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=3),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("TrainerAvatar", tags=["trainer"], features=[{"name": "Attack Stratagem"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Ally", moves=[slash]), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(1, 3)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=_FixedRng([18]),
+        )
+        battle.pokemon["player-2"].combat_stages["atk"] = 2
+        create_trainer_feature_action("attack_stratagem", actor_id="player-1", target_id="player-2").resolve(battle)
+        UseMoveAction(actor_id="player-2", move_name="Slash", target_id="foe-1").resolve(battle)
+        move_event = next(evt for evt in battle.log if evt.get("type") == "move" and evt.get("actor") == "player-2")
+        self.assertTrue(move_event.get("crit"))
+
+    def test_defense_stratagem_adds_save_bonus_from_positive_defense_stages(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=3),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("TrainerAvatar", tags=["trainer"], features=[{"name": "Defense Stratagem"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Ally"), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 3)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(42),
+        )
+        battle.pokemon["player-2"].combat_stages["def"] = 2
+        create_trainer_feature_action("defense_stratagem", actor_id="player-1", target_id="player-2").resolve(battle)
+        self.assertEqual(4, battle.pokemon["player-2"].save_bonus(battle, "Paralyzed"))
+
+    def test_generic_stat_stratagem_uses_chosen_stat_speed_bonus(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players", ap=3),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("TrainerAvatar", tags=["trainer"], features=[{"name": "Stat Stratagem", "chosen_stat": "Speed"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "player-2": PokemonState(spec=_mon("Ally"), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(3, 3)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(4102),
+        )
+        battle.pokemon["player-2"].spec.movement["overland"] = 4
+        battle.pokemon["player-2"].combat_stages["spd"] = 2
+        create_trainer_feature_action("stat_stratagem", actor_id="player-1", target_id="player-2").resolve(battle)
+        self.assertEqual(6, battle.pokemon["player-2"].movement_speed("overland"))
+
+    def test_stat_mastery_speed_allows_disengage_as_swift(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("SwiftMon", features=[{"name": "Stat Mastery", "chosen_stat": "Speed"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+            },
+            grid=GridState(width=4, height=4),
+            rng=random.Random(421),
+        )
+        battle.pokemon["player-1"].spec.movement["overland"] = 3
+        action = DisengageAction(actor_id="player-1", destination=(1, 2))
+        action.validate(battle)
+        self.assertEqual(ActionType.SWIFT, action.action_type)
+
+    def test_special_defense_mastery_reduces_tick_damage_to_minimum_one(self) -> None:
+        plain = PokemonState(spec=_mon("Plain", level=20), controller_id="player", position=(1, 1))
+        mastered = PokemonState(
+            spec=_mon("Mastered", level=20, features=[{"name": "Stat Mastery", "chosen_stat": "Special Defense"}]),
+            controller_id="player",
+            position=(1, 1),
+        )
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={"plain": plain, "mastered": mastered},
+            grid=GridState(width=4, height=4),
+            rng=random.Random(422),
+        )
+        plain_tick = plain.apply_tick_damage(1)
+        mastery_tick = mastered.apply_tick_damage(1)
+        self.assertGreater(plain_tick, mastery_tick)
+        self.assertEqual(max(1, plain_tick - 5), mastery_tick)
+
+    def test_defense_mastery_grants_damage_reduction_after_not_shifting(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Tank", features=[{"name": "Stat Mastery", "chosen_stat": "Defense"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                )
+            },
+            grid=GridState(width=4, height=4),
+            rng=random.Random(423),
+        )
+        actor = battle.pokemon["player-1"]
+        actor._handle_perk_phase_effects(battle, TurnPhase.END, "player-1")
+        self.assertTrue(any(int(entry.get("amount", 0) or 0) == 5 for entry in actor.get_temporary_effects("damage_reduction")))
+        actor.temporary_effects = [entry for entry in actor.temporary_effects if entry.get("kind") != "damage_reduction"]
+        actor.add_temporary_effect("shifted_this_turn", round=battle.round, source="Shift")
+        actor._handle_perk_phase_effects(battle, TurnPhase.END, "player-1")
+        self.assertFalse(any(int(entry.get("amount", 0) or 0) == 5 for entry in actor.get_temporary_effects("damage_reduction")))
+
+    def test_attack_maneuver_can_expand_melee_attack_to_three_targets(self) -> None:
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Ace", moves=[tackle], features=[{"name": "Attack Maneuver"}]),
+                    controller_id="player",
+                    position=(2, 2),
+                ),
+                "foe-1": PokemonState(spec=_mon("Foe1"), controller_id="foe", position=(2, 3)),
+                "foe-2": PokemonState(spec=_mon("Foe2"), controller_id="foe", position=(1, 2)),
+                "foe-3": PokemonState(spec=_mon("Foe3"), controller_id="foe", position=(3, 2)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=_FixedRng([20, 11, 11, 11, 20, 11, 11, 11, 20, 11, 11, 11]),
+        )
+        battle.out_of_turn_prompt = lambda payload: {"accept": True, "choice": "three_targets"} if payload.get("feature") in {"Attack Maneuver", "Stat Maneuver"} else True
+        before = {pid: battle.pokemon[pid].hp for pid in ("foe-1", "foe-2", "foe-3")}
+        UseMoveAction(actor_id="player-1", move_name="Tackle", target_id="foe-1").resolve(battle)
+        after = {pid: battle.pokemon[pid].hp for pid in ("foe-1", "foe-2", "foe-3")}
+        self.assertTrue(all(after[pid] < before[pid] for pid in before))
+
+    def test_special_attack_mastery_extends_non_melee_special_range(self) -> None:
+        psybeam = MoveSpec(
+            name="Psybeam",
+            type="Psychic",
+            category="Special",
+            db=6,
+            ac=2,
+            range_kind="Ranged",
+            range_value=4,
+            target_kind="Ranged",
+            target_range=4,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Sniper", moves=[psybeam], features=[{"name": "Stat Mastery", "chosen_stat": "Special Attack"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(spec=_mon("Far"), controller_id="foe", position=(1, 7)),
+            },
+            grid=GridState(width=10, height=10),
+            rng=random.Random(424),
+        )
+        action = UseMoveAction(actor_id="player-1", move_name="Psybeam", target_id="foe-1")
+        before_hp = battle.pokemon["foe-1"].hp
+        action.resolve(battle)
+        self.assertLess(battle.pokemon["foe-1"].hp, before_hp)
+
     def test_juggler_grants_opening_round_initiative_bonus_only_for_that_round(self) -> None:
         battle = _battle_with_feature(
             {"feature_id": "juggler", "name": "Juggler"},
@@ -5424,6 +9227,47 @@ class TrainerPassivePerkTests(unittest.TestCase):
         )
         battle._sync_static_trainer_feature_abilities_to_pokemon()
         self.assertTrue(battle.pokemon["player-1"].has_ability("Frostbite"))
+
+    def test_quick_reflexes_grants_dodge_ability_and_avoids_one_attack(self) -> None:
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("Gymnast", tags=["trainer"], features=[{"name": "Quick Reflexes"}]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(
+                    spec=_mon("Attacker", moves=[tackle]),
+                    controller_id="foe",
+                    position=(1, 2),
+                ),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([20, 20]),
+        )
+        battle._sync_static_trainer_feature_abilities_to_pokemon()
+        defender = battle.pokemon["player-1"]
+        self.assertTrue(defender.has_ability("Dodge"))
+        before_hp = defender.hp
+        UseMoveAction(actor_id="foe-1", move_name="Tackle", target_id="player-1").resolve(battle)
+        self.assertEqual(before_hp, defender.hp)
+        self.assertTrue(any(evt.get("ability") == "Dodge" and evt.get("effect") == "avoid" for evt in battle.log))
 
     def test_winters_herald_rank_move_grants_sync_to_trainer(self) -> None:
         battle = BattleState(
@@ -6078,6 +9922,476 @@ class TrainerPassivePerkTests(unittest.TestCase):
         battle._notify_iron_mind("foe-1", source_id="player-1", trigger="Suggestion", detail="Two.")
         alerts = [evt for evt in battle.log if evt.get("feature") == "Iron Mind" and evt.get("trigger") == "Suggestion"]
         self.assertEqual(1, len(alerts))
+
+    def test_top_percentage_grants_tutor_point_on_level_divisible_by_five(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(
+                    identifier="player",
+                    name="Player",
+                    team="players",
+                    features=[{"name": "Ace Trainer"}, {"name": "Top Percentage"}],
+                )
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("AceMon", level=19, tutor_points=2),
+                    controller_id="player",
+                    position=(1, 1),
+                )
+            },
+            grid=GridState(width=4, height=4),
+            rng=random.Random(7),
+        )
+
+        events = battle.item_system.apply_item_use("player", "player-1", {"name": "Rare Candy"})
+
+        state = battle.pokemon["player-1"]
+        self.assertEqual(20, state.spec.level)
+        self.assertEqual(3, state.spec.tutor_points)
+        self.assertEqual({"count": 1}, state.spec.poke_edge_choices.get("top_percentage"))
+        self.assertEqual(1, events[0].get("tutor_points_awarded"))
+        self.assertEqual(1, events[0].get("top_percentage_uses"))
+        self.assertFalse(events[0].get("top_percentage_base_stats_applied"))
+
+    def test_top_percentage_fourth_use_grants_all_base_stats_and_then_caps(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(
+                    identifier="player",
+                    name="Player",
+                    team="players",
+                    features=[{"name": "Ace Trainer"}, {"name": "Top Percentage"}],
+                )
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "AceMon",
+                        level=19,
+                        tutor_points=0,
+                        poke_edge_choices={"top_percentage": {"count": 3}},
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                )
+            },
+            grid=GridState(width=4, height=4),
+            rng=random.Random(9),
+        )
+
+        fourth_events = battle.item_system.apply_item_use("player", "player-1", {"name": "Rare Candy"})
+
+        state = battle.pokemon["player-1"]
+        self.assertEqual(20, state.spec.level)
+        self.assertEqual(1, state.spec.tutor_points)
+        self.assertEqual(13, state.spec.hp_stat)
+        self.assertEqual(13, state.spec.atk)
+        self.assertEqual(13, state.spec.defense)
+        self.assertEqual(13, state.spec.spatk)
+        self.assertEqual(13, state.spec.spdef)
+        self.assertEqual(13, state.spec.spd)
+        self.assertEqual(
+            {"count": 4, "base_stats_applied": True},
+            state.spec.poke_edge_choices.get("top_percentage"),
+        )
+        self.assertEqual(1, fourth_events[0].get("tutor_points_awarded"))
+        self.assertEqual(4, fourth_events[0].get("top_percentage_uses"))
+        self.assertTrue(fourth_events[0].get("top_percentage_base_stats_applied"))
+
+        state.spec.level = 24
+        post_cap_events = battle.item_system.apply_item_use("player", "player-1", {"name": "Rare Candy"})
+
+        self.assertEqual(25, state.spec.level)
+        self.assertEqual(1, state.spec.tutor_points)
+        self.assertEqual(13, state.spec.hp_stat)
+        self.assertEqual(0, post_cap_events[0].get("tutor_points_awarded"))
+        self.assertEqual(0, post_cap_events[0].get("top_percentage_uses"))
+        self.assertFalse(post_cap_events[0].get("top_percentage_base_stats_applied"))
+
+    def test_top_percentage_does_not_trigger_without_feature_or_on_wrong_level(self) -> None:
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon("AceMon", level=18, tutor_points=4),
+                    controller_id="player",
+                    position=(1, 1),
+                )
+            },
+            grid=GridState(width=4, height=4),
+            rng=random.Random(11),
+        )
+
+        no_feature_events = battle.item_system.apply_item_use("player", "player-1", {"name": "Rare Candy"})
+        state = battle.pokemon["player-1"]
+        self.assertEqual(19, state.spec.level)
+        self.assertEqual(4, state.spec.tutor_points)
+        self.assertEqual({}, state.spec.poke_edge_choices)
+        self.assertEqual(0, no_feature_events[0].get("tutor_points_awarded"))
+
+        battle.trainers["player"].features = [{"name": "Top Percentage"}]
+        state.spec.level = 20
+        wrong_level_events = battle.item_system.apply_item_use("player", "player-1", {"name": "Rare Candy"})
+        self.assertEqual(21, state.spec.level)
+        self.assertEqual(4, state.spec.tutor_points)
+        self.assertEqual({}, state.spec.poke_edge_choices)
+        self.assertEqual(0, wrong_level_events[0].get("tutor_points_awarded"))
+
+    def test_signature_technique_action_spends_tp_and_replacement_refunds_one(self) -> None:
+        trainer_features = [
+            {"name": "Signature Technique"},
+            {"name": "Focused Training"},
+            {"name": "Brutal Training"},
+        ]
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=4,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="At-Will",
+            range_text="Melee, 1 Target",
+        )
+        battle = BattleState(
+            trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+            pokemon={
+                "trainer-1": PokemonState(
+                    spec=_mon("Trainer", features=trainer_features, tags=["trainer"]),
+                    controller_id="player",
+                    position=(0, 0),
+                ),
+                "ally-1": PokemonState(
+                    spec=_mon("Ally", moves=[tackle], tutor_points=2),
+                    controller_id="player",
+                    position=(1, 0),
+                ),
+            },
+            grid=GridState(width=4, height=4),
+            rng=random.Random(1),
+        )
+
+        create_trainer_feature_action(
+            "signature_technique",
+            actor_id="trainer-1",
+            target_id="ally-1",
+            move_name="Tackle",
+            modification="Alternative Energy",
+        ).resolve(battle)
+        self.assertEqual(battle.pokemon["ally-1"].spec.tutor_points, 0)
+        self.assertEqual(
+            battle.pokemon["ally-1"].spec.poke_edge_choices["signature_technique"]["modification_key"],
+            "alternativeenergy",
+        )
+
+        battle.pokemon["ally-1"].spec.tutor_points = 1
+        create_trainer_feature_action(
+            "signature_technique",
+            actor_id="trainer-1",
+            target_id="ally-1",
+            move_name="Tackle",
+            modification="Reliable Attack",
+        ).resolve(battle)
+        self.assertEqual(battle.pokemon["ally-1"].spec.tutor_points, 0)
+        self.assertEqual(
+            battle.pokemon["ally-1"].spec.poke_edge_choices["signature_technique"]["modification_key"],
+            "reliableattack",
+        )
+
+    def test_signature_reliable_attack_refunds_frequency_and_struggles_on_miss(self) -> None:
+        move = MoveSpec(
+            name="Sure Bet",
+            type="Normal",
+            category="Physical",
+            db=4,
+            ac=20,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            freq="Scene",
+            range_text="Melee, 1 Target",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Ally",
+                        moves=[move],
+                        poke_edge_choices={
+                            "signature_technique": {
+                                "move": "Sure Bet",
+                                "move_key": "surebet",
+                                "modification": "Reliable Attack",
+                                "modification_key": "reliableattack",
+                            }
+                        },
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([1, 20]),
+        )
+
+        UseMoveAction(actor_id="player-1", move_name="Sure Bet", target_id="foe-1").resolve(battle)
+
+        self.assertNotIn("Sure Bet", battle.frequency_usage.get("player-1", {}))
+        self.assertTrue(
+            any(
+                event.get("move") == "Struggle" and event.get("effect") == "reliable_attack_follow_up"
+                for event in battle.log
+            )
+        )
+
+    def test_signature_scattershot_turns_area_move_into_three_targets(self) -> None:
+        move = MoveSpec(
+            name="Wide Flame",
+            type="Fire",
+            category="Special",
+            db=4,
+            ac=2,
+            range_kind="Self",
+            range_value=3,
+            target_kind="Self",
+            area_kind="Cone",
+            area_value=3,
+            freq="At-Will",
+            range_text="Cone 3",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Ally",
+                        moves=[move],
+                        poke_edge_choices={
+                            "signature_technique": {
+                                "move": "Wide Flame",
+                                "move_key": "wideflame",
+                                "modification": "Scattershot",
+                                "modification_key": "scattershot",
+                            }
+                        },
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(spec=_mon("Foe1"), controller_id="foe", position=(1, 2)),
+                "foe-2": PokemonState(spec=_mon("Foe2"), controller_id="foe", position=(2, 2)),
+                "foe-3": PokemonState(spec=_mon("Foe3"), controller_id="foe", position=(3, 2)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=_FixedRng([20, 20, 20]),
+        )
+
+        UseMoveAction(actor_id="player-1", move_name="Wide Flame", target_id="foe-1").resolve(battle)
+
+        targets = {
+            event.get("target")
+            for event in battle.log
+            if event.get("type") == "move" and event.get("move") == "Wide Flame"
+        }
+        self.assertEqual(targets, {"foe-1", "foe-2", "foe-3"})
+
+    def test_signature_burst_of_motivation_raises_negative_combat_stages(self) -> None:
+        move = MoveSpec(
+            name="Focus Pulse",
+            type="Normal",
+            category="Status",
+            db=0,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+            freq="At-Will",
+            range_text="Range 6, 1 Target",
+        )
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "player-1": PokemonState(
+                    spec=_mon(
+                        "Ally",
+                        moves=[move],
+                        poke_edge_choices={
+                            "signature_technique": {
+                                "move": "Focus Pulse",
+                                "move_key": "focuspulse",
+                                "modification": "Burst of Motivation",
+                                "modification_key": "burstofmotivation",
+                            }
+                        },
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(1, 2)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([20]),
+        )
+        actor = battle.pokemon["player-1"]
+        actor.combat_stages["atk"] = -3
+        actor.combat_stages["def"] = -1
+
+        UseMoveAction(actor_id="player-1", move_name="Focus Pulse", target_id="foe-1").resolve(battle)
+
+        self.assertEqual(actor.combat_stages["atk"], -1)
+        self.assertEqual(actor.combat_stages["def"], 0)
+
+    def test_chef_features_handle_trade_reactions_and_accentuated_taste_from_trainer(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(
+                    identifier="player",
+                    name="Player",
+                    team="players",
+                    ap=3,
+                    skills={"intuition": 2},
+                ),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "chef-1": PokemonState(
+                    spec=_mon(
+                        "Chef",
+                        features=[
+                            {"name": "Hits the Spot"},
+                            {"name": "Complex Aftertaste"},
+                            {"name": "Accentuated Taste"},
+                        ],
+                        tags=["trainer"],
+                    ),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(spec=_mon("Ally"), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(4, 4)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(23),
+        )
+
+        ally = battle.pokemon["ally-1"]
+        ally.add_food_buff(
+            {
+                "name": "Custom Meal",
+                "effect": "Custom Meal",
+                "item": "Chef Special",
+                "taste": "sweet",
+                "instance_id": "meal#1",
+            },
+            ignore_limit=True,
+        )
+
+        battle._consume_food_buff("ally-1", ally, 0, "custom_meal", "Chef meal traded.", [])
+
+        self.assertEqual(1, len(ally.get_temporary_effects("initiative_bonus")))
+        self.assertTrue(battle.pokemon["chef-1"].get_temporary_effects("hits_the_spot_ready"))
+        self.assertTrue(battle.pokemon["chef-1"].get_temporary_effects("complex_aftertaste_ready"))
+
+        create_trainer_feature_action("hits_the_spot", actor_id="chef-1", target_id="ally-1").resolve(battle)
+        self.assertEqual(4, ally.temp_hp)
+        self.assertEqual(2, battle.trainers["player"].ap)
+
+        create_trainer_feature_action("complex_aftertaste", actor_id="chef-1", target_id="ally-1").resolve(battle)
+        self.assertEqual(1, battle.trainers["player"].ap)
+        self.assertEqual(1, len(ally.food_buffs))
+        self.assertEqual("sweet", ally.food_buffs[0].get("taste"))
+
+        battle._consume_food_buff("ally-1", ally, 0, "aftertaste_meal", "Aftertaste meal traded.", [])
+        self.assertEqual(1, len(ally.get_temporary_effects("initiative_bonus")))
+
+    def test_culinary_appreciation_spends_tutor_points_and_grants_gluttony(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(identifier="player", name="Player", team="players"),
+                "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+            },
+            pokemon={
+                "chef-1": PokemonState(
+                    spec=_mon("Chef", features=[{"name": "Culinary Appreciation"}], tags=["trainer"]),
+                    controller_id="player",
+                    position=(1, 1),
+                ),
+                "ally-1": PokemonState(
+                    spec=_mon("Ally", tutor_points=3),
+                    controller_id="player",
+                    position=(1, 2),
+                ),
+                "foe-1": PokemonState(spec=_mon("Foe"), controller_id="foe", position=(4, 4)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(29),
+        )
+
+        create_trainer_feature_action("culinary_appreciation", actor_id="chef-1", target_id="ally-1").resolve(battle)
+
+        ally = battle.pokemon["ally-1"]
+        self.assertEqual(1, ally.spec.tutor_points)
+        self.assertEqual(
+            {"granted": True, "ability": "Gluttony"},
+            ally.spec.poke_edge_choices.get("culinary_appreciation"),
+        )
+        self.assertTrue(ally.has_ability("Gluttony"))
+
+    def test_dietician_raises_vitamin_cap_and_tracks_suppressants(self) -> None:
+        battle = BattleState(
+            trainers={
+                "player": TrainerState(
+                    identifier="player",
+                    name="Player",
+                    team="players",
+                    features=[{"name": "Dietician"}],
+                )
+            },
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Target"), controller_id="player", position=(1, 1)),
+            },
+            grid=GridState(width=4, height=4),
+            rng=random.Random(31),
+        )
+
+        target = battle.pokemon["player-1"]
+        starting_atk = target.spec.atk
+        for _ in range(7):
+            events = battle.item_system.apply_item_use("player", "player-1", {"name": "Protein"})
+            self.assertEqual("stat_up", events[0].get("effect"))
+        self.assertEqual(starting_atk + 7, target.spec.atk)
+        self.assertEqual(7, target.spec.poke_edge_choices.get("vitamins_used", {}).get("total"))
+
+        blocked = battle.item_system.apply_item_use("player", "player-1", {"name": "Protein"})
+        self.assertEqual("vitamin_cap", blocked[0].get("effect"))
+        self.assertEqual(starting_atk + 7, target.spec.atk)
+
+        suppressant = battle.item_system.apply_item_use("player", "player-1", {"name": "Attack Suppressant"})
+        self.assertEqual("stat_down", suppressant[0].get("effect"))
+        self.assertEqual(starting_atk + 6, target.spec.atk)
+        self.assertEqual(6, target.spec.poke_edge_choices.get("vitamins_used", {}).get("total"))
+
+        refreshed = battle.item_system.apply_item_use("player", "player-1", {"name": "Protein"})
+        self.assertEqual("stat_up", refreshed[0].get("effect"))
+        self.assertEqual(starting_atk + 7, target.spec.atk)
+        self.assertEqual(7, target.spec.poke_edge_choices.get("vitamins_used", {}).get("total"))
 
 
 if __name__ == "__main__":

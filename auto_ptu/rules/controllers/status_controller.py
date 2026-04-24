@@ -46,6 +46,53 @@ class StatusController:
         actor = self.battle.pokemon.get(actor_id) if actor_id else None
         if actor is not None:
             pending_status = str(pending.get("status") or "").strip().lower()
+            signature = (getattr(actor.spec, "poke_edge_choices", {}) or {}).get("signature_technique")
+            signature_mod = ""
+            signature_move = ""
+            if isinstance(signature, dict):
+                signature_mod = str(signature.get("modification_key") or signature.get("modification") or "").strip().lower()
+                signature_mod = "".join(ch for ch in signature_mod if ch.isalnum())
+                signature_move = str(signature.get("move") or signature.get("move_name") or "").strip()
+            if signature_mod == "supremeconcentration" and pending_status in {"paralyzed", "flinch", "flinched", "enraged", "rage", "confusion", "confused"}:
+                actor.add_temporary_effect(
+                    "signature_supreme_concentration_ready",
+                    move=signature_move,
+                    status=pending_status,
+                    round=self.battle.round,
+                )
+                self.battle.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": actor_id,
+                        "trainer": actor.controller_id,
+                        "feature": "Signature Technique",
+                        "effect": "supreme_concentration",
+                        "move": signature_move,
+                        "status": pending.get("status"),
+                        "description": "Supreme Concentration allows the Signature Technique move despite the status skip.",
+                        "target_hp": actor.hp,
+                    }
+                )
+                self.battle._pending_status_skip = None
+                return False
+            if (
+                actor.get_temporary_effects("duelist_manual_ignore_status")
+                and pending_status in {"confusion", "confused", "enraged", "rage", "infatuated", "suppressed"}
+            ):
+                self.battle.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": actor_id,
+                        "trainer": actor.controller_id,
+                        "feature": "Duelist's Manual",
+                        "effect": "ignore_status_skip",
+                        "status": pending.get("status"),
+                        "description": "Duelist's Manual allows the Pokemon to act through the volatile status.",
+                        "target_hp": actor.hp,
+                    }
+                )
+                self.battle._pending_status_skip = None
+                return False
             if pending_status in _FREEZE_STATUS_NAMES:
                 end_events = actor.handle_phase_effects(self.battle, TurnPhase.END, actor_id)
                 for payload in end_events:

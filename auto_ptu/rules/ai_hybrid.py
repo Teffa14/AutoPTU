@@ -176,6 +176,67 @@ def current_profile_store_path() -> Optional[Path]:
     return _GLOBAL_STORE.path
 
 
+def _action_eval_cache(battle: BattleState) -> Dict[Tuple[str, str, int, int], dict]:
+    cache = getattr(battle, "_ai_action_eval_cache", None)
+    if not isinstance(cache, dict):
+        cache = {}
+        setattr(battle, "_ai_action_eval_cache", cache)
+    return cache
+
+
+def _simulated_action_outcome(
+    battle: BattleState,
+    actor_id: str,
+    action: object,
+    *,
+    rollouts: int = 2,
+) -> dict:
+    key = (
+        actor_id,
+        _action_label(action),
+        int(getattr(battle, "round", 0) or 0),
+        len(getattr(battle, "log", []) or []),
+    )
+    cache = _action_eval_cache(battle)
+    cached = cache.get(key)
+    if isinstance(cached, dict):
+        return cached
+    if not isinstance(action, UseMoveAction):
+        result = {"damage": 0.0, "self_loss": 0.0, "item_removed": 0.0, "status_gain": 0.0}
+        cache[key] = result
+        return result
+    totals = {"damage": 0.0, "self_loss": 0.0, "item_removed": 0.0, "status_gain": 0.0}
+    samples = 0
+    for rollout in range(max(1, int(rollouts or 1))):
+        sim = _clone_battle(battle)
+        _advance_rng(sim, rollout)
+        actor_before = sim.pokemon.get(actor_id)
+        target_before = sim.pokemon.get(action.target_id) if action.target_id else None
+        actor_hp_before = float(actor_before.hp or 0) if actor_before is not None and actor_before.hp is not None else 0.0
+        target_hp_before = float(target_before.hp or 0) if target_before is not None and target_before.hp is not None else 0.0
+        target_items_before = len(getattr(target_before.spec, "items", []) or []) if target_before is not None else 0
+        target_status_before = len(getattr(target_before, "statuses", []) or []) if target_before is not None else 0
+        _simulate_action(sim, actor_id, copy.deepcopy(action))
+        actor_after = sim.pokemon.get(actor_id)
+        target_after = sim.pokemon.get(action.target_id) if action.target_id else None
+        actor_hp_after = float(actor_after.hp or 0) if actor_after is not None and actor_after.hp is not None else 0.0
+        target_hp_after = float(target_after.hp or 0) if target_after is not None and target_after.hp is not None else 0.0
+        target_items_after = len(getattr(target_after.spec, "items", []) or []) if target_after is not None else 0
+        target_status_after = len(getattr(target_after, "statuses", []) or []) if target_after is not None else 0
+        totals["damage"] += max(0.0, target_hp_before - target_hp_after)
+        totals["self_loss"] += max(0.0, actor_hp_before - actor_hp_after)
+        totals["item_removed"] += max(0.0, float(target_items_before - target_items_after))
+        totals["status_gain"] += max(0.0, float(target_status_after - target_status_before))
+        samples += 1
+    if samples <= 0:
+        result = {"damage": 0.0, "self_loss": 0.0, "item_removed": 0.0, "status_gain": 0.0}
+        cache[key] = result
+        return result
+    result = {name: value / samples for name, value in totals.items()}
+    cache[key] = result
+    return result
+
+
 def generate_candidates(battle: BattleState, actor_id: str) -> List[object]:
     actor = battle.pokemon.get(actor_id)
     if actor is None or actor.fainted or not actor.active:
@@ -209,6 +270,35 @@ def generate_candidates(battle: BattleState, actor_id: str) -> List[object]:
                 )
                 if _action_is_legal(battle, action, actor_id):
                     candidates.append(action)
+            continue
+        if target_kind == "blessing":
+            candidate_ids = [actor_id] + [ally_id for ally_id in ally_ids if ally_id != actor_id]
+            for target_id in candidate_ids:
+                target_state = battle.pokemon.get(target_id)
+                if target_state is None or target_state.fainted:
+                    continue
+                if target_state.position is not None and actor.position is not None:
+                    if not targeting.is_target_in_range(
+                        actor.position,
+                        target_state.position,
+                        move,
+                        attacker_size=getattr(actor.spec, "size", ""),
+                        target_size=getattr(target_state.spec, "size", ""),
+                        grid=battle.grid,
+                    ):
+                        continue
+                    if battle.grid and not battle.has_line_of_sight(actor_id, target_state.position, target_id):
+                        continue
+                choice_values = type_choices or [None]
+                for chosen_type in choice_values:
+                    action = UseMoveAction(
+                        actor_id=actor_id,
+                        move_name=move_name,
+                        target_id=target_id,
+                        chosen_type=chosen_type,
+                    )
+                    if _action_is_legal(battle, action, actor_id):
+                        candidates.append(action)
             continue
         candidate_ids = opponents if target_kind != "ally" else ally_ids
         if not candidate_ids and not requires_target:
@@ -328,7 +418,20 @@ def generate_candidates(battle: BattleState, actor_id: str) -> List[object]:
 
     bench = _bench_candidates(battle, actor_id)
     for candidate in bench:
-        action = SwitchAction(actor_id=actor_id, replacement_id=candidate)
+        target_position = None
+        if hasattr(battle, "_best_ai_switch_position"):
+            try:
+                target_position = battle._best_ai_switch_position(
+                    outgoing_id=actor_id,
+                    replacement_id=candidate,
+                )
+            except Exception:
+                target_position = None
+        action = SwitchAction(
+            actor_id=actor_id,
+            replacement_id=candidate,
+            target_position=target_position,
+        )
         if _action_is_legal(battle, action, actor_id):
             candidates.append(action)
 
@@ -423,6 +526,15 @@ def score_action(battle: BattleState, actor_id: str, action: object) -> float:
             return -8.0
         if _is_maneuver_move(move):
             return _score_maneuver_action(battle, actor_id, move, target)
+        if _is_struggle_name(move.name or action.move_name):
+            score -= 2.5
+            if _damaging_candidate_actions(
+                battle,
+                actor_id,
+                generate_candidates(battle, actor_id),
+                include_struggle=False,
+            ):
+                score -= 6.0
         if (move.category or "").lower() == "status":
             text = _move_effect_blob(move)
             self_debuff_tokens = (
@@ -447,10 +559,37 @@ def score_action(battle: BattleState, actor_id: str, action: object) -> float:
             if not _move_hits_opponent(battle, actor_id, move, action.target_id):
                 return -5.0
         if move.category.lower() != "status" and target is not None:
-            amount = expected_damage(actor, target, move, weather=battle.weather)
+            outcome = _simulated_action_outcome(battle, actor_id, action)
+            amount = float(outcome.get("damage", 0.0) or 0.0)
             score += amount
             if target.hp is not None and target.hp > 0:
                 score += 0.2 * (amount / target.hp)
+            score += 2.25 * float(outcome.get("item_removed", 0.0) or 0.0)
+            score += 0.45 * float(outcome.get("status_gain", 0.0) or 0.0)
+            score -= 0.2 * float(outcome.get("self_loss", 0.0) or 0.0)
+            score += _item_denial_attack_bonus(battle, move, target, current_round)
+            repeated_failures = _recent_same_move_target_no_damage_count(
+                battle,
+                actor_id,
+                action.move_name,
+                action.target_id,
+                limit=6,
+            )
+            if amount <= _MEANINGFUL_DAMAGE_THRESHOLD:
+                score -= 0.9
+                if repeated_failures >= 2:
+                    score -= min(8.0, 2.6 * repeated_failures)
+            low_impact_repeats = _recent_same_move_target_low_damage_count(
+                battle,
+                actor_id,
+                action.move_name,
+                action.target_id,
+                limit=6,
+            )
+            if target.max_hp() > 0 and amount > _MEANINGFUL_DAMAGE_THRESHOLD:
+                damage_ratio = amount / max(1, target.max_hp())
+                if damage_ratio <= 0.12 and low_impact_repeats >= 2:
+                    score -= min(6.5, 1.85 * low_impact_repeats)
         if move.category.lower() == "status":
             score += 0.25
             score += _status_move_setup_score(battle, actor_id, move, action.target_id, current_round)
@@ -460,6 +599,7 @@ def score_action(battle: BattleState, actor_id: str, action: object) -> float:
             if current_round >= 12:
                 score -= 0.45
         score += _combo_description_bonus(battle, actor_id, move, target)
+        score += _combo_intent_bonus(battle, actor_id, action, move, target)
         if move.priority > 0:
             score += 0.3
         last_move = _last_move_name(actor)
@@ -468,9 +608,7 @@ def score_action(battle: BattleState, actor_id: str, action: object) -> float:
     elif isinstance(action, ShiftAction):
         score += _shift_score(battle, actor_id, action.destination)
     elif isinstance(action, DisengageAction):
-        score += _shift_score(battle, actor_id, action.destination) + 0.2
-        if _prefers_ranged_disengage(battle, actor_id):
-            score += 0.9
+        score += _disengage_score(battle, actor_id, action.destination)
     elif isinstance(action, SwitchAction):
         score += _switch_score(battle, actor_id, action)
     elif isinstance(action, GrappleAction):
@@ -546,8 +684,20 @@ def _choose_action_internal(
             filtered_damage = []
             for action in non_struggle_damage:
                 move_name = str(getattr(action, "move_name", "") or "").strip().lower()
+                repeated_failures = (
+                    _recent_same_move_target_no_damage_count(
+                        battle,
+                        actor_id,
+                        getattr(action, "move_name", ""),
+                        getattr(action, "target_id", None),
+                        limit=6,
+                    )
+                    if isinstance(action, UseMoveAction)
+                    else 0
+                )
                 if move_name not in ineffective_names:
-                    filtered_damage.append(action)
+                    if repeated_failures < 2:
+                        filtered_damage.append(action)
                     continue
                 if not isinstance(action, UseMoveAction) or actor is None:
                     continue
@@ -555,20 +705,60 @@ def _choose_action_internal(
                 target = battle.pokemon.get(action.target_id) if action.target_id else None
                 if move is None or target is None:
                     continue
-                if expected_damage(actor, target, move, weather=battle.weather) > _MEANINGFUL_DAMAGE_THRESHOLD:
+                if _expected_damage_for_action(battle, actor_id, action) > _MEANINGFUL_DAMAGE_THRESHOLD:
                     filtered_damage.append(action)
-            if filtered_damage:
-                non_struggle_damage = filtered_damage
-            elif struggle is not None:
+            non_struggle_damage = filtered_damage
+            if not non_struggle_damage and struggle is not None:
+                best_switch = _best_switch_action(battle, actor_id, candidates)
+                if best_switch is not None and score_action(battle, actor_id, best_switch) > 0.75:
+                    return best_switch, {"reason": "stale_switch"}
+                best_disengage = _best_disengage_action(battle, actor_id, candidates)
+                if (
+                    best_disengage is not None
+                    and score_action(battle, actor_id, best_disengage) >= 0.0
+                    and _disengage_has_tactical_value(battle, actor_id, best_disengage.destination)
+                ):
+                    return best_disengage, {"reason": "stale_disengage"}
+                best_status = _best_status_action(battle, actor_id, candidates)
+                best_status_name = (
+                    str(getattr(best_status, "move_name", "") or "").strip().lower()
+                    if isinstance(best_status, UseMoveAction)
+                    else ""
+                )
+                if (
+                    best_status is not None
+                    and best_status_name not in ineffective_names
+                    and score_action(battle, actor_id, best_status) >= -0.1
+                ):
+                    return best_status, {"reason": "stale_setup"}
                 return struggle, {"reason": "stale_ineffective_struggle"}
         if non_struggle_damage:
             non_struggle_damage.sort(key=lambda action: score_action(battle, actor_id, action), reverse=True)
             return non_struggle_damage[0], {"reason": "stale_force_damage"}
-        if struggle is not None:
-            return struggle, {"reason": "stale_struggle"}
         best_switch = _best_switch_action(battle, actor_id, candidates)
         if best_switch is not None and score_action(battle, actor_id, best_switch) > 0.75:
             return best_switch, {"reason": "stale_switch"}
+        best_disengage = _best_disengage_action(battle, actor_id, candidates)
+        if (
+            best_disengage is not None
+            and score_action(battle, actor_id, best_disengage) >= 0.0
+            and _disengage_has_tactical_value(battle, actor_id, best_disengage.destination)
+        ):
+            return best_disengage, {"reason": "stale_disengage"}
+        best_status = _best_status_action(battle, actor_id, candidates)
+        best_status_name = (
+            str(getattr(best_status, "move_name", "") or "").strip().lower()
+            if isinstance(best_status, UseMoveAction)
+            else ""
+        )
+        if (
+            best_status is not None
+            and best_status_name not in ineffective_names
+            and score_action(battle, actor_id, best_status) >= -0.1
+        ):
+            return best_status, {"reason": "stale_setup"}
+        if struggle is not None:
+            return struggle, {"reason": "stale_struggle"}
         forced = _force_engage_action(
             battle,
             actor_id,
@@ -605,13 +795,38 @@ def _choose_action_internal(
         candidates,
         include_struggle=False,
     )
+    best_item_denial = _best_item_denial_action(battle, actor_id, candidates)
     best_disengage = _best_disengage_action(battle, actor_id, candidates)
     best_maneuver = _best_maneuver_action(battle, actor_id, candidates)
     best_status = _best_status_action(battle, actor_id, candidates)
+    damage_score = score_action(battle, actor_id, best_damage) if best_damage is not None else float("-inf")
+    damage_expected = _expected_damage_for_action(battle, actor_id, best_damage) if best_damage is not None else 0.0
+    ineffective_names = _recent_ineffective_move_names(battle, actor_id, limit=3)
+    best_damage_name = (
+        str(getattr(best_damage, "move_name", "") or "").strip().lower()
+        if isinstance(best_damage, UseMoveAction)
+        else ""
+    )
+    repeated_damage_failures = (
+        _recent_same_move_target_no_damage_count(
+            battle,
+            actor_id,
+            best_damage.move_name,
+            best_damage.target_id,
+            limit=6,
+        )
+        if isinstance(best_damage, UseMoveAction)
+        else 0
+    )
+    weak_damage_baseline = bool(
+        best_damage is None
+        or damage_expected <= _MEANINGFUL_DAMAGE_THRESHOLD
+        or (best_damage_name and best_damage_name in ineffective_names)
+        or repeated_damage_failures >= 2
+    )
     if best_maneuver is not None and _should_force_combo_maneuver(battle, actor_id, best_maneuver):
         return best_maneuver, {"reason": "combo_maneuver"}
     if best_damage is not None and best_status is not None:
-        damage_score = score_action(battle, actor_id, best_damage)
         status_score = score_action(battle, actor_id, best_status)
         if _should_prioritize_type_conversion(
             battle,
@@ -624,13 +839,43 @@ def _choose_action_internal(
             return best_status, {"reason": "type_conversion"}
         current_round = getattr(battle, "round", 0) or 0
         opening_round = current_round <= 3
-        low_pressure = damage_score < 7.0
-        if opening_round and status_score + 0.35 >= damage_score:
+        low_pressure = damage_score < 7.0 or weak_damage_baseline
+        if opening_round and weak_damage_baseline and status_score + 0.1 >= damage_score:
+            return best_status, {"reason": "opening_setup"}
+        if opening_round and not weak_damage_baseline and status_score >= damage_score + 1.0:
             return best_status, {"reason": "opening_setup"}
         if low_pressure and status_score >= damage_score - 0.15 and status_streak < 2:
             return best_status, {"reason": "status_value"}
+        if not weak_damage_baseline and status_score < damage_score + 0.75:
+            best_status = None
+    if (
+        best_status is not None
+        and _should_use_setup_before_engage(battle, actor_id, best_status)
+    ):
+        return best_status, {"reason": "pre_engage_setup"}
+    if weak_damage_baseline:
+        best_switch = _best_switch_action(battle, actor_id, candidates)
+        if best_switch is not None and score_action(battle, actor_id, best_switch) >= -0.05:
+            return best_switch, {"reason": "weak_damage_switch"}
+        if (
+            best_disengage is not None
+            and score_action(battle, actor_id, best_disengage) >= 0.0
+            and _disengage_has_tactical_value(battle, actor_id, best_disengage.destination)
+        ):
+            return best_disengage, {"reason": "weak_damage_disengage"}
+        if best_status is not None and status_streak < 2:
+            return best_status, {"reason": "weak_damage_setup"}
     if best_disengage is not None and best_damage is not None and _prefers_ranged_disengage(battle, actor_id):
-        return best_disengage, {"reason": "ranged_disengage"}
+        if _disengage_has_tactical_value(battle, actor_id, best_disengage.destination):
+            return best_disengage, {"reason": "ranged_disengage"}
+    if best_item_denial is not None:
+        item_denial_score = score_action(battle, actor_id, best_item_denial)
+        threshold = 4.5
+        current_round = int(getattr(battle, "round", 0) or 0)
+        if current_round <= 6:
+            threshold += 1.5
+        if best_damage is None or item_denial_score >= damage_score - threshold:
+            return best_item_denial, {"reason": "item_denial"}
     if best_damage is not None:
         return best_damage, {"reason": "attack_in_range"}
     if best_maneuver is not None:
@@ -641,11 +886,6 @@ def _choose_action_internal(
                 return best_maneuver, {"reason": "maneuver"}
         else:
             return best_maneuver, {"reason": "maneuver"}
-    if (
-        best_status is not None
-        and _should_use_setup_before_engage(battle, actor_id, best_status)
-    ):
-        return best_status, {"reason": "pre_engage_setup"}
     if _should_close_distance(battle, actor_id, candidates):
         struggle = _struggle_action(battle, actor_id)
         if struggle is not None:
@@ -797,6 +1037,7 @@ def observe_action(battle: BattleState, actor_id: str, action: object, store: Op
     store = store or get_profile_store()
     store.update(battle, actor_id, action)
     _update_status_streak(battle, actor_id, action)
+    _update_combo_intent(battle, actor_id, action)
 
 
 def _lookahead_value(
@@ -871,6 +1112,7 @@ def _simulate_action(battle: BattleState, actor_id: str, action: object) -> None
     try:
         action.validate(battle)
         action.resolve(battle)
+        _update_combo_intent(battle, actor_id, action)
         if isinstance(battle.phase, TurnPhase) and battle.phase == TurnPhase.ACTION:
             battle.advance_phase()
     except Exception:
@@ -1060,6 +1302,139 @@ def _update_status_streak(battle: BattleState, actor_id: str, action: object) ->
     )
 
 
+def _combo_intent_entries(actor: PokemonState, current_round: int) -> List[dict]:
+    entries: List[dict] = []
+    for entry in actor.get_temporary_effects("ai_combo_intent"):
+        try:
+            expires_round = int(entry.get("expires_round", current_round) or current_round)
+        except (TypeError, ValueError):
+            expires_round = current_round
+        if expires_round < current_round:
+            continue
+        entries.append(entry)
+    return entries
+
+
+def _clear_combo_intents(actor: PokemonState) -> None:
+    actor.temporary_effects = [
+        entry
+        for entry in actor.temporary_effects
+        if not (isinstance(entry, dict) and entry.get("kind") == "ai_combo_intent")
+    ]
+
+
+def _status_move_creates_combo_intent(
+    battle: BattleState,
+    actor_id: str,
+    move: MoveSpec,
+    target: Optional[PokemonState],
+    target_id: Optional[str],
+) -> Optional[dict]:
+    text = _move_effect_blob(move)
+    current_round = int(getattr(battle, "round", 0) or 0)
+    actor = battle.pokemon.get(actor_id)
+    if actor is None:
+        return None
+    if target is not None and _is_accuracy_pressure_move(text):
+        if _has_meaningful_followup_damage(battle, actor, target, exclude_move_name=move.name):
+            return {
+                "intent": "accuracy_pressure_payoff",
+                "target_id": str(target_id or ""),
+                "setup_move": str(move.name or ""),
+                "created_round": current_round,
+                "expires_round": current_round + 2,
+            }
+    if (target_id is None or target_id == actor_id) and any(token in text for token in ("raise", "boost", "increases", "+1", "+2", "combat stage")):
+        if any((candidate.category or "").strip().lower() != "status" for candidate in actor.spec.moves):
+            return {
+                "intent": "self_setup_payoff",
+                "target_id": "",
+                "setup_move": str(move.name or ""),
+                "created_round": current_round,
+                "expires_round": current_round + 2,
+            }
+    return None
+
+
+def _update_combo_intent(battle: BattleState, actor_id: str, action: object) -> None:
+    actor = battle.pokemon.get(actor_id)
+    if actor is None:
+        return
+    current_round = int(getattr(battle, "round", 0) or 0)
+    active_entries = _combo_intent_entries(actor, current_round)
+    retained: List[dict] = []
+    consumed = False
+    if isinstance(action, UseMoveAction):
+        move = _resolve_move(actor, action.move_name)
+        if move is not None:
+            for entry in active_entries:
+                intent = str(entry.get("intent") or "").strip().lower()
+                target_id = str(entry.get("target_id") or "").strip()
+                same_target = not target_id or target_id == str(action.target_id or "").strip()
+                if intent == "accuracy_pressure_payoff" and same_target and (move.category or "").strip().lower() != "status":
+                    consumed = True
+                    continue
+                if intent == "self_setup_payoff" and (move.category or "").strip().lower() != "status":
+                    consumed = True
+                    continue
+                retained.append(entry)
+            new_entry = _status_move_creates_combo_intent(
+                battle,
+                actor_id,
+                move,
+                battle.pokemon.get(action.target_id) if action.target_id else None,
+                action.target_id,
+            )
+            if new_entry:
+                retained.append(new_entry)
+    else:
+        retained = active_entries
+    _clear_combo_intents(actor)
+    for entry in retained:
+        actor.add_temporary_effect("ai_combo_intent", **{k: v for k, v in entry.items() if k != "kind"})
+    if consumed and not retained:
+        actor.add_temporary_effect("ai_combo_intent_cooldown", round=current_round)
+
+
+def _combo_intent_bonus(
+    battle: BattleState,
+    actor_id: str,
+    action: UseMoveAction,
+    move: MoveSpec,
+    target: Optional[PokemonState],
+) -> float:
+    actor = battle.pokemon.get(actor_id)
+    if actor is None:
+        return 0.0
+    entries = _combo_intent_entries(actor, int(getattr(battle, "round", 0) or 0))
+    if not entries:
+        return 0.0
+    bonus = 0.0
+    action_target_id = str(action.target_id or "").strip()
+    move_name = str(move.name or "").strip().lower()
+    is_status = (move.category or "").strip().lower() == "status"
+    for entry in entries:
+        intent = str(entry.get("intent") or "").strip().lower()
+        target_id = str(entry.get("target_id") or "").strip()
+        setup_move = str(entry.get("setup_move") or "").strip().lower()
+        same_target = not target_id or target_id == action_target_id
+        if intent == "accuracy_pressure_payoff":
+            if move_name == setup_move and same_target:
+                bonus -= 0.8
+            elif same_target and not is_status:
+                bonus += 1.45
+                if target is not None:
+                    accuracy_drop = abs(min(0, int(target.combat_stages.get("accuracy", 0) or 0)))
+                    if accuracy_drop > 0:
+                        bonus += min(0.5, 0.15 * accuracy_drop)
+        elif intent == "self_setup_payoff":
+            if move_name == setup_move:
+                bonus -= 0.5
+            elif not is_status:
+                bonus += 1.1
+    return bonus
+
+
 def _danger_score(battle: BattleState, actor_id: str) -> float:
     actor = battle.pokemon.get(actor_id)
     if actor is None or actor.hp is None:
@@ -1108,8 +1483,68 @@ def _best_damaging_action(
     )
     if not moves:
         return None
-    moves.sort(key=lambda action: score_action(battle, actor_id, action), reverse=True)
+    moves.sort(
+        key=lambda action: (
+            _damaging_action_priority_value(battle, actor_id, action),
+            score_action(battle, actor_id, action),
+        ),
+        reverse=True,
+    )
     return moves[0]
+
+
+def _damaging_action_priority_value(
+    battle: BattleState,
+    actor_id: str,
+    action: object,
+) -> float:
+    if not isinstance(action, UseMoveAction):
+        return float("-inf")
+    actor = battle.pokemon.get(actor_id)
+    if actor is None:
+        return float("-inf")
+    move = _resolve_move(actor, action.move_name)
+    target = battle.pokemon.get(action.target_id) if action.target_id else None
+    if move is None or target is None:
+        return float("-inf")
+    if (move.category or "").strip().lower() == "status":
+        return float("-inf")
+    outcome = _simulated_action_outcome(battle, actor_id, action)
+    damage = float(outcome.get("damage", 0.0) or 0.0)
+    item_removed = float(outcome.get("item_removed", 0.0) or 0.0)
+    status_gain = float(outcome.get("status_gain", 0.0) or 0.0)
+    self_loss = float(outcome.get("self_loss", 0.0) or 0.0)
+    priority = damage
+    priority += 3.0 * item_removed
+    priority += 0.45 * status_gain
+    priority -= 0.2 * self_loss
+    priority += _item_denial_attack_bonus(
+        battle,
+        move,
+        target,
+        int(getattr(battle, "round", 0) or 0),
+    )
+    return priority
+
+
+def _expected_damage_for_action(
+    battle: BattleState,
+    actor_id: str,
+    action: object,
+) -> float:
+    if not isinstance(action, UseMoveAction):
+        return 0.0
+    actor = battle.pokemon.get(actor_id)
+    if actor is None:
+        return 0.0
+    move = _resolve_move(actor, action.move_name)
+    target = battle.pokemon.get(action.target_id) if action.target_id else None
+    if move is None or target is None:
+        return 0.0
+    if (move.category or "").strip().lower() == "status":
+        return 0.0
+    outcome = _simulated_action_outcome(battle, actor_id, action)
+    return float(outcome.get("damage", 0.0) or 0.0)
 
 
 def _best_switch_action(
@@ -1122,6 +1557,35 @@ def _best_switch_action(
         return None
     switches.sort(key=lambda action: score_action(battle, actor_id, action), reverse=True)
     return switches[0]
+
+
+def _best_item_denial_action(
+    battle: BattleState,
+    actor_id: str,
+    candidates: Sequence[object],
+) -> Optional[UseMoveAction]:
+    actor = battle.pokemon.get(actor_id)
+    if actor is None:
+        return None
+    actions: List[UseMoveAction] = []
+    for action in candidates:
+        if not isinstance(action, UseMoveAction):
+            continue
+        move = _resolve_move(actor, action.move_name)
+        target = battle.pokemon.get(action.target_id) if action.target_id else None
+        if move is None or target is None:
+            continue
+        if (move.category or "").strip().lower() == "status":
+            continue
+        if _target_item_denial_value(target) <= 0:
+            continue
+        if not _is_item_denial_move(_move_effect_blob(move)):
+            continue
+        actions.append(action)
+    if not actions:
+        return None
+    actions.sort(key=lambda action: score_action(battle, actor_id, action), reverse=True)
+    return actions[0]
 
 
 def _best_disengage_action(
@@ -1154,6 +1618,49 @@ def _switch_score(battle: BattleState, actor_id: str, action: SwitchAction) -> f
     return score
 
 
+def _disengage_score(battle: BattleState, actor_id: str, destination: Tuple[int, int]) -> float:
+    actor = battle.pokemon.get(actor_id)
+    if actor is None or actor.position is None:
+        return 0.0
+    score = _shift_score(battle, actor_id, destination) + 0.2
+    if _prefers_ranged_disengage(battle, actor_id):
+        score += 0.9
+    current_offense = _has_attack_in_range(battle, actor_id)
+    next_offense = _has_attack_in_range_from_position(battle, actor_id, destination)
+    current_threat = _opponents_have_attack_on_position(battle, actor_id, actor.position)
+    next_threat = _opponents_have_attack_on_position(battle, actor_id, destination)
+    if current_threat and not next_threat:
+        score += 1.25
+    elif current_threat and next_threat:
+        score -= 0.95
+    elif not current_threat and next_threat:
+        score -= 1.4
+    if current_offense and not next_offense:
+        score -= 2.25
+    elif not current_offense and next_offense:
+        score += 1.4
+    if current_offense and next_offense and current_threat and next_threat:
+        score -= 0.8
+    return score
+
+
+def _disengage_has_tactical_value(
+    battle: BattleState,
+    actor_id: str,
+    destination: Tuple[int, int],
+) -> bool:
+    actor = battle.pokemon.get(actor_id)
+    if actor is None or actor.position is None:
+        return False
+    current_threat = _opponents_have_attack_on_position(battle, actor_id, actor.position)
+    next_threat = _opponents_have_attack_on_position(battle, actor_id, destination)
+    if current_threat and not next_threat:
+        return True
+    current_offense = _has_attack_in_range(battle, actor_id)
+    next_offense = _has_attack_in_range_from_position(battle, actor_id, destination)
+    return (not current_offense) and next_offense
+
+
 def _force_engage_action(
     battle: BattleState,
     actor_id: str,
@@ -1181,13 +1688,18 @@ def _force_engage_action(
                 if closest:
                     for action in shifts:
                         if action.destination == closest[0]:
-                            return action
+                            if score_action(battle, actor_id, action) > 0.05:
+                                return action
         shifts.sort(key=lambda action: score_action(battle, actor_id, action), reverse=True)
-        return shifts[0]
+        if score_action(battle, actor_id, shifts[0]) > 0.05:
+            return shifts[0]
     if allow_status:
         best_status = _best_status_action(battle, actor_id, candidates)
         if best_status is not None:
             return best_status
+    best_switch = _best_switch_action(battle, actor_id, candidates)
+    if best_switch is not None and score_action(battle, actor_id, best_switch) > -0.15:
+        return best_switch
     return None
 
 
@@ -1241,6 +1753,47 @@ def _recent_no_offense(battle: BattleState, actor_id: str, limit: int = 2) -> bo
     return all(ev.get("type") in passive for ev in recent)
 
 
+def _recent_destinations(
+    battle: BattleState,
+    actor_id: str,
+    *,
+    limit: int = 4,
+) -> List[Tuple[int, int]]:
+    if not battle.log:
+        return []
+    recent: List[Tuple[int, int]] = []
+    for event in reversed(battle.log):
+        if event.get("actor") != actor_id:
+            continue
+        coord = event.get("to") or event.get("destination") or event.get("end")
+        if not (isinstance(coord, (list, tuple)) and len(coord) >= 2):
+            continue
+        try:
+            recent.append((int(coord[0]), int(coord[1])))
+        except Exception:
+            continue
+        if len(recent) >= limit:
+            break
+    return recent
+
+
+def _is_recent_position_loop(
+    battle: BattleState,
+    actor_id: str,
+    destination: Tuple[int, int],
+) -> bool:
+    history = _recent_destinations(battle, actor_id, limit=4)
+    if not history:
+        return False
+    if destination == history[0]:
+        return True
+    if len(history) >= 2 and destination == history[1]:
+        return True
+    if len(history) >= 3 and history[0] == history[2] and destination == history[1]:
+        return True
+    return False
+
+
 def _recent_switch_count(battle: BattleState, actor_id: str, limit: int = 2) -> int:
     if not battle.log:
         return 0
@@ -1282,6 +1835,81 @@ def _recent_ineffective_move_names(battle: BattleState, actor_id: str, limit: in
     return names
 
 
+def _recent_same_move_target_no_damage_count(
+    battle: BattleState,
+    actor_id: str,
+    move_name: str,
+    target_id: Optional[str],
+    *,
+    limit: int = 6,
+) -> int:
+    if not battle.log:
+        return 0
+    target_text = str(target_id or "").strip()
+    move_text = str(move_name or "").strip().lower()
+    if not move_text:
+        return 0
+    count = 0
+    seen = 0
+    for event in reversed(battle.log):
+        if event.get("actor") != actor_id:
+            continue
+        if event.get("type") not in {"move", "attack_of_opportunity"}:
+            continue
+        event_move = str(event.get("move") or "").strip().lower()
+        if event_move != move_text:
+            continue
+        event_target = str(event.get("target") or "").strip()
+        if target_text and event_target and event_target != target_text:
+            continue
+        seen += 1
+        if int(event.get("damage") or 0) <= 0:
+            count += 1
+        else:
+            break
+        if seen >= limit:
+            break
+    return count
+
+
+def _recent_same_move_target_low_damage_count(
+    battle: BattleState,
+    actor_id: str,
+    move_name: str,
+    target_id: Optional[str],
+    *,
+    limit: int = 6,
+) -> int:
+    if not battle.log:
+        return 0
+    target_text = str(target_id or "").strip()
+    move_text = str(move_name or "").strip().lower()
+    if not move_text:
+        return 0
+    count = 0
+    for event in reversed(battle.log):
+        if event.get("actor") != actor_id:
+            continue
+        if event.get("type") not in {"move", "attack_of_opportunity"}:
+            continue
+        event_move = str(event.get("move") or "").strip().lower()
+        if event_move != move_text:
+            continue
+        event_target = str(event.get("target") or "").strip()
+        if target_text and event_target and event_target != target_text:
+            continue
+        damage = int(event.get("damage") or 0)
+        if damage <= 0:
+            count += 1
+        elif damage <= 8:
+            count += 1
+        else:
+            break
+        if count >= limit:
+            break
+    return count
+
+
 def _global_stale(battle: BattleState, rounds: int = 2) -> bool:
     if battle.round <= rounds:
         return False
@@ -1320,6 +1948,58 @@ def _has_attack_in_range(battle: BattleState, actor_id: str) -> bool:
             if _move_hits_opponent(battle, actor_id, move, target_id):
                 return True
     return False
+
+
+def _has_attack_in_range_from_position(
+    battle: BattleState,
+    actor_id: str,
+    position: Tuple[int, int],
+) -> bool:
+    actor = battle.pokemon.get(actor_id)
+    if actor is None:
+        return False
+    original = actor.position
+    actor.position = position
+    try:
+        return _has_attack_in_range(battle, actor_id)
+    finally:
+        actor.position = original
+
+
+def _opponents_have_attack_on_position(
+    battle: BattleState,
+    actor_id: str,
+    position: Tuple[int, int],
+) -> bool:
+    actor = battle.pokemon.get(actor_id)
+    if actor is None:
+        return False
+    original = actor.position
+    actor.position = position
+    try:
+        for foe_id in _opponent_ids(battle, actor_id):
+            foe = battle.pokemon.get(foe_id)
+            if foe is None or foe.position is None:
+                continue
+            for move in foe.spec.moves:
+                if (move.category or "").lower() == "status":
+                    continue
+                if not targeting.is_target_in_range(
+                    foe.position,
+                    position,
+                    move,
+                    attacker_size=getattr(foe.spec, "size", ""),
+                    target_size=getattr(actor.spec, "size", ""),
+                    grid=battle.grid,
+                ):
+                    continue
+                if battle.grid and not battle.has_line_of_sight(foe_id, position, actor_id):
+                    continue
+                if _move_hits_opponent(battle, foe_id, move, actor_id):
+                    return True
+        return False
+    finally:
+        actor.position = original
 
 
 def _should_close_distance(
@@ -1642,6 +2322,16 @@ def _combo_description_bonus(
             bonus += 1.4
         if target_is_bound:
             bonus += 0.35
+    if target is not None and _is_item_denial_move(text):
+        denial_value = _target_item_denial_value(target)
+        if denial_value > 0:
+            bonus += denial_value
+        else:
+            bonus -= 0.5
+    if target is not None and (move.category or "").strip().lower() != "status":
+        accuracy_drop = abs(min(0, int(target.combat_stages.get("accuracy", 0) or 0)))
+        if accuracy_drop > 0:
+            bonus += min(0.85, 0.2 * accuracy_drop)
     bonus += _conditional_target_combo_bonus(battle, actor_id, text, target)
     return bonus
 
@@ -1977,6 +2667,17 @@ def _status_move_setup_score(
             bonus += 0.35
         else:
             bonus -= 0.2
+        recent_same_setup = _recent_same_move_use_count(battle, actor_id, move.name, limit=4)
+        if recent_same_setup >= 1:
+            bonus -= 1.1 * recent_same_setup
+        if "withdraw" in text or "withdrawn" in text:
+            if actor.has_status("Withdrawn"):
+                bonus -= 4.5
+            defense_stage = int(actor.combat_stages.get("def", 0) or 0)
+            if defense_stage >= 2:
+                bonus -= 1.25 + 0.45 * max(0, defense_stage - 2)
+        if any(token in text for token in ("reflect", "light screen", "safeguard")):
+            recent_same_setup = max(recent_same_setup, 1 if _recent_same_move_use_count(battle, actor_id, move.name, limit=3) > 0 else 0)
 
     debuff_tokens = (
         "lower",
@@ -1996,6 +2697,7 @@ def _status_move_setup_score(
         bonus -= 1.5
     if any(token in text for token in debuff_tokens) and targets_enemy:
         bonus += 0.7
+        bonus += _enemy_advantage_setup_bonus(battle, actor_id, actor, move, target)
 
     field_tokens = ("weather", "rain", "sun", "sand", "hail", "terrain", "screen")
     if any(token in text for token in field_tokens):
@@ -2009,6 +2711,146 @@ def _status_move_setup_score(
         bonus += 0.2
 
     return bonus
+
+
+def _recent_same_move_use_count(
+    battle: BattleState,
+    actor_id: str,
+    move_name: str,
+    *,
+    limit: int = 4,
+) -> int:
+    if not battle.log:
+        return 0
+    needle = str(move_name or "").strip().lower()
+    if not needle:
+        return 0
+    count = 0
+    for event in reversed(battle.log):
+        if event.get("actor") != actor_id:
+            continue
+        if event.get("type") not in {"move", "attack_of_opportunity"}:
+            continue
+        event_move = str(event.get("move") or "").strip().lower()
+        if event_move != needle:
+            break
+        count += 1
+        if count >= limit:
+            break
+    return count
+
+
+def _enemy_advantage_setup_bonus(
+    battle: BattleState,
+    actor_id: str,
+    actor: PokemonState,
+    move: MoveSpec,
+    target: Optional[PokemonState],
+) -> float:
+    if target is None:
+        return 0.0
+    text = _move_effect_blob(move)
+    bonus = 0.0
+    if _is_accuracy_pressure_move(text):
+        target_accuracy = int(target.combat_stages.get("accuracy", 0) or 0)
+        if target_accuracy >= 0:
+            bonus += 4.25
+            if _danger_score(battle, actor_id) >= 0.35:
+                bonus += 2.2
+            if _has_meaningful_followup_damage(battle, actor, target, exclude_move_name=move.name):
+                bonus += 1.5
+        else:
+            bonus -= 0.25
+    if _is_item_denial_move(text):
+        denial_value = _target_item_denial_value(target)
+        if denial_value > 0:
+            bonus += denial_value
+        else:
+            bonus -= 0.35
+    return bonus
+
+
+def _is_accuracy_pressure_move(text: str) -> bool:
+    if not text:
+        return False
+    if "accuracy" in text and any(token in text for token in ("lower", "reduce", "decrease", "drops", "-1", "-2")):
+        return True
+    return any(token in text for token in ("sand attack", "mud-slap", "mud slap", "kinesis", "flash", "smokescreen", "night daze", "mud bomb", "muddy water", "omen"))
+
+
+def _is_item_denial_move(text: str) -> bool:
+    if not text:
+        return False
+    if "knock off" in text:
+        return True
+    return "item" in text and any(token in text for token in ("remove", "drop", "lose", "steal", "knock off"))
+
+
+def _item_name(item: object) -> str:
+    if isinstance(item, dict):
+        return str(item.get("name") or item.get("id") or "").strip()
+    return str(item or "").strip()
+
+
+def _target_item_denial_value(target: Optional[PokemonState]) -> float:
+    if target is None:
+        return 0.0
+    items = list(getattr(target.spec, "items", []) or [])
+    if not items:
+        return 0.0
+    bonus = 3.85
+    for item in items:
+        name = _item_name(item).lower()
+        if not name:
+            continue
+        if any(token in name for token in ("berry", "leftovers", "orb", "band", "specs", "scarf", "sash", "eviolite", "helmet", "leek", "stick")):
+            bonus += 0.45
+            break
+    return min(4.6, bonus)
+
+
+def _item_denial_attack_bonus(
+    battle: BattleState,
+    move: MoveSpec,
+    target: Optional[PokemonState],
+    current_round: int,
+) -> float:
+    if target is None:
+        return 0.0
+    text = _move_effect_blob(move)
+    if not _is_item_denial_move(text):
+        return 0.0
+    denial_value = _target_item_denial_value(target)
+    if denial_value <= 0:
+        return -0.45
+    bonus = 1.65 + denial_value * 1.15
+    move_name = str(move.name or "").strip().lower()
+    if move_name == "knock off":
+        bonus += 0.85
+    if current_round <= 6:
+        bonus += 0.8
+    if len(list(getattr(target.spec, "items", []) or [])) >= 2:
+        bonus += 0.45
+    return bonus
+
+
+def _has_meaningful_followup_damage(
+    battle: BattleState,
+    actor: PokemonState,
+    target: PokemonState,
+    *,
+    exclude_move_name: Optional[str] = None,
+) -> bool:
+    skip_name = str(exclude_move_name or "").strip().lower()
+    for candidate in actor.spec.moves:
+        move_name = str(candidate.name or "").strip().lower()
+        if not move_name or move_name == skip_name:
+            continue
+        if (candidate.category or "").strip().lower() == "status":
+            continue
+        if expected_damage(actor, target, candidate, weather=battle.weather) > _MEANINGFUL_DAMAGE_THRESHOLD:
+            return True
+    return False
 
 
 def _action_is_legal(battle: BattleState, action: object, actor_id: str) -> bool:
@@ -2200,11 +3042,21 @@ def _shift_score(battle: BattleState, actor_id: str, destination: Tuple[int, int
     if not opponents:
         return 0.2
     danger = _danger_score(battle, actor_id)
+    current_distances = []
     distances = []
     for pid in opponents:
         foe = battle.pokemon.get(pid)
         if foe is None or foe.position is None:
             continue
+        current_distances.append(
+            targeting.footprint_distance(
+                actor.position,
+                getattr(actor.spec, "size", ""),
+                foe.position,
+                getattr(foe.spec, "size", ""),
+                battle.grid,
+            )
+        )
         distances.append(
             targeting.footprint_distance(
                 destination,
@@ -2216,9 +3068,21 @@ def _shift_score(battle: BattleState, actor_id: str, destination: Tuple[int, int
         )
     if not distances:
         return 0.2
+    min_current = min(current_distances) if current_distances else min(distances)
+    min_next = min(distances)
+    progress = float(min_current - min_next)
     if danger >= 0.4:
-        return 0.12 * max(distances)
-    return 0.08 * (1.0 / max(1, min(distances))) + 0.02
+        return 0.14 * max(distances)
+    score = 0.05 * (1.0 / max(1, min_next)) + 0.02
+    if progress > 0:
+        score += 0.34 * progress
+    elif progress < 0:
+        score -= 0.42 * abs(progress)
+    if _recent_no_offense(battle, actor_id, limit=2) and progress <= 0:
+        score -= 1.4
+    if _is_recent_position_loop(battle, actor_id, destination):
+        score -= 2.6
+    return score
 
 
 def _top_shift_targets(
@@ -2237,12 +3101,15 @@ def _top_shift_targets(
         return list(reachable)[:3]
     ordered = sorted(
         reachable,
-        key=lambda coord: targeting.footprint_distance(
-            coord,
-            getattr(actor.spec, "size", ""),
-            foe.position,
-            getattr(foe.spec, "size", ""),
-            battle.grid,
+        key=lambda coord: (
+            _is_recent_position_loop(battle, actor_id, coord),
+            targeting.footprint_distance(
+                coord,
+                getattr(actor.spec, "size", ""),
+                foe.position,
+                getattr(foe.spec, "size", ""),
+                battle.grid,
+            ),
         ),
     )
     return ordered[:3]

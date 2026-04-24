@@ -366,18 +366,29 @@ def _describe_ai_model_style(vector: Dict[str, float]) -> List[str]:
     risk = _normalized_bucket(_summed_bucket_from_vector(vector, "risk_tolerance"))
     target = _normalized_bucket(_summed_bucket_from_vector(vector, "target_pref"))
     tags: List[str] = []
-    if action.get("attack", 0.0) >= 0.62:
+    attack = action.get("attack", 0.0)
+    defend = action.get("defend", 0.0)
+    support = action.get("other", 0.0)
+    retreats = risk.get("retreats", 0.0)
+    danger = risk.get("stays_in_danger", 0.0)
+    finisher = target.get("lowest_hp", 0.0)
+    nearest = target.get("nearest", 0.0)
+    if attack >= 0.52 and attack - defend >= 0.08:
         tags.append("Aggressive")
-    if action.get("defend", 0.0) >= 0.48:
+    elif defend >= 0.54 and defend - attack >= 0.08:
         tags.append("Defensive")
-    if risk.get("retreats", 0.0) >= 0.55:
+    if support >= 0.34 and support >= max(attack, defend) - 0.06:
+        tags.append("Supportive")
+    if retreats >= 0.5 and retreats - danger >= 0.08:
         tags.append("Switch-prone")
-    if risk.get("stays_in_danger", 0.0) >= 0.55:
+    elif danger >= 0.5 and danger - retreats >= 0.08:
         tags.append("Risk-tolerant")
-    if target.get("lowest_hp", 0.0) >= 0.55:
+    if finisher >= 0.52:
         tags.append("Finisher")
-    if target.get("nearest", 0.0) >= 0.55:
+    if nearest >= 0.52:
         tags.append("Position-first")
+    if not tags and abs(attack - defend) <= 0.06 and abs(retreats - danger) <= 0.06:
+        tags.append("Balanced")
     return tags or ["Balanced"]
 
 
@@ -486,7 +497,7 @@ def _analyze_ai_model(model_id: str, *, models: Optional[Dict[str, Any]] = None)
         "top_moves": top_moves,
         "top_targets": top_targets,
         "top_changes": changes,
-        "analysis_engine": "heuristic_ai_profile_analysis_v1",
+        "analysis_engine": "heuristic_ai_profile_analysis_v2",
     }
 
 
@@ -562,6 +573,44 @@ def select_ai_model(model_id: str) -> Dict[str, Any]:
     _AI_MODEL_REGISTRY["active_path"] = str(path)
     _AI_MODEL_REGISTRY["baseline_vector"] = _profile_vector_from_store(_AI_PROFILE_STORE)
     _AI_MODEL_REGISTRY["updates_since_snapshot"] = 0
+    _persist_ai_model_registry()
+    return list_ai_models()
+
+
+def branch_ai_model(label: str = "") -> Dict[str, Any]:
+    current_id = str(_AI_MODEL_REGISTRY.get("current_model_id") or "legacy_default").strip() or "legacy_default"
+    base_label = "".join(ch.lower() if ch.isalnum() else "_" for ch in str(label or "").strip()).strip("_")
+    next_id = _timestamp_model_id(prefix=base_label[:20] or "model")
+    next_path = _AI_MODEL_DIR / f"{next_id}.json"
+    _AI_MODEL_DIR.mkdir(parents=True, exist_ok=True)
+    _AI_PROFILE_STORE.path = next_path
+    _AI_PROFILE_STORE.save()
+    models = _AI_MODEL_REGISTRY.get("models")
+    if not isinstance(models, dict):
+        models = {}
+    models[next_id] = _create_registry_entry(next_id, next_path, parent_id=current_id, auto_created=False)
+    _AI_MODEL_REGISTRY["models"] = models
+    _AI_MODEL_REGISTRY["current_model_id"] = next_id
+    _AI_MODEL_REGISTRY["active_path"] = str(next_path)
+    _AI_MODEL_REGISTRY["baseline_vector"] = _profile_vector_from_store(_AI_PROFILE_STORE)
+    _AI_MODEL_REGISTRY["updates_since_snapshot"] = 0
+    _persist_ai_model_registry()
+    ai_hybrid.set_profile_store_path(next_path, save_current=False, load=True)
+    return list_ai_models()
+
+
+def update_ai_model_settings(
+    *,
+    drift_threshold: Optional[float] = None,
+    min_updates: Optional[int] = None,
+    check_every: Optional[int] = None,
+) -> Dict[str, Any]:
+    if drift_threshold is not None:
+        _AI_MODEL_REGISTRY["drift_threshold"] = max(0.01, float(drift_threshold))
+    if min_updates is not None:
+        _AI_MODEL_REGISTRY["min_updates"] = max(1, int(min_updates))
+    if check_every is not None:
+        _AI_MODEL_REGISTRY["check_every"] = max(1, int(check_every))
     _persist_ai_model_registry()
     return list_ai_models()
 
@@ -1007,9 +1056,11 @@ class TextBattleSession:
         rng = random.Random((self.plan.seed or 0) + index * 101)
         for side in sides:
             trainer_id = side.identifier or f"trainer-{len(trainers) + 1}"
+            base = self._default_origin_for_side(side, grid_state)
             trainer = RulesTrainerState(
                 identifier=trainer_id,
                 name=side.name,
+                position=base,
                 initiative_modifier=side.initiative_modifier,
                 speed=side.speed,
                 skills=dict(side.skills),
@@ -1026,7 +1077,6 @@ class TextBattleSession:
                 feature_resources=dict(side.feature_resources),
             )
             trainers[trainer_id] = trainer
-            base = self._default_origin_for_side(side, grid_state)
             positions = list(side.start_positions)
             active_limit = max(1, int(self.plan.active_slots))
             active_count = min(len(side.pokemon), active_limit)
@@ -1071,12 +1121,21 @@ class TextBattleSession:
     ) -> None:
         active_slots = max(1, int(self.plan.active_slots or 1))
         for trainer_id, trainer in trainers.items():
-            if trainer.controller_kind != "player":
-                continue
             roster = [cid for cid, mon in pokemon_states.items() if mon.controller_id == trainer_id]
             if len(roster) <= active_slots:
                 continue
             positions = list(active_positions.get(trainer_id, []))
+            if trainer.controller_kind != "player":
+                selected = self._auto_select_starting_pokemon(
+                    trainer_id,
+                    roster,
+                    pokemon_states,
+                    trainers,
+                    active_slots,
+                )
+                if selected:
+                    self._apply_starting_selection(pokemon_states, roster, selected, positions)
+                continue
             label = trainer.name or trainer.identifier
             self._print(f"\nChoose starting Pokemon for {label}:")
             for idx, cid in enumerate(roster, start=1):
@@ -1109,15 +1168,85 @@ class TextBattleSession:
                         selected.append(cid)
                     if len(selected) >= active_slots:
                         break
-            for cid in roster:
-                mon = pokemon_states[cid]
-                mon.active = False
-                mon.position = None
-            for idx, cid in enumerate(selected):
-                mon = pokemon_states[cid]
-                mon.active = True
-                if idx < len(positions):
-                    mon.position = positions[idx]
+            self._apply_starting_selection(pokemon_states, roster, selected, positions)
+
+    def _apply_starting_selection(
+        self,
+        pokemon_states: Dict[str, RulesPokemonState],
+        roster: Sequence[str],
+        selected: Sequence[str],
+        positions: Sequence[Tuple[int, int]],
+    ) -> None:
+        for cid in roster:
+            mon = pokemon_states[cid]
+            mon.active = False
+            mon.position = None
+        for idx, cid in enumerate(selected):
+            mon = pokemon_states[cid]
+            mon.active = True
+            if idx < len(positions):
+                mon.position = positions[idx]
+
+    def _auto_select_starting_pokemon(
+        self,
+        trainer_id: str,
+        roster: Sequence[str],
+        pokemon_states: Dict[str, RulesPokemonState],
+        trainers: Dict[str, RulesTrainerState],
+        active_slots: int,
+    ) -> List[str]:
+        trainer = trainers.get(trainer_id)
+        if trainer is None:
+            return list(roster[:active_slots])
+        team = trainer.team or trainer.identifier
+        opponents = [
+            mon
+            for mon in pokemon_states.values()
+            if (trainers.get(mon.controller_id).team if trainers.get(mon.controller_id) is not None else mon.controller_id) != team
+        ]
+        ranked = sorted(
+            list(roster),
+            key=lambda cid: self._starter_selection_score(pokemon_states[cid], opponents),
+            reverse=True,
+        )
+        return ranked[:active_slots]
+
+    def _starter_selection_score(
+        self,
+        state: RulesPokemonState,
+        opponents: Sequence[RulesPokemonState],
+    ) -> float:
+        spec = state.spec
+        level = float(getattr(spec, "level", 1) or 1)
+        hp_stat = float(getattr(spec, "hp_stat", 1) or 1)
+        atk = float(getattr(spec, "atk", 1) or 1)
+        defense = float(getattr(spec, "defense", 1) or 1)
+        spatk = float(getattr(spec, "spatk", 1) or 1)
+        spdef = float(getattr(spec, "spdef", 1) or 1)
+        spd = float(getattr(spec, "spd", 1) or 1)
+        own_types = {str(kind).strip().lower() for kind in (getattr(spec, "types", []) or []) if str(kind).strip()}
+        own_move_score = 0.0
+        for move in list(getattr(spec, "moves", []) or []):
+            category = str(getattr(move, "category", "") or "").strip().lower()
+            if category == "status":
+                continue
+            db = float(getattr(move, "db", 0) or 0)
+            stab = 1.5 if str(getattr(move, "type", "") or "").strip().lower() in own_types else 1.0
+            attack_stat = spatk if category == "special" else atk
+            own_move_score = max(own_move_score, (db * stab) + (attack_stat * 0.8))
+        matchup_pressure = 0.0
+        for foe_state in opponents:
+            foe = foe_state.spec
+            foe_level = float(getattr(foe, "level", 1) or 1)
+            foe_hp = float(getattr(foe, "hp_stat", 1) or 1)
+            foe_def = float(getattr(foe, "defense", 1) or 1)
+            foe_spdef = float(getattr(foe, "spdef", 1) or 1)
+            own_bulk = hp_stat + defense + spdef
+            foe_bulk = foe_hp + foe_def + foe_spdef
+            matchup_pressure += ((own_move_score + level) - (foe_bulk * 0.35)) + ((own_bulk * 0.12) - (foe_level * 0.2))
+        speed_bonus = spd * 1.1
+        bulk_bonus = (hp_stat * 0.6) + (defense * 0.35) + (spdef * 0.35)
+        return matchup_pressure + speed_bonus + bulk_bonus
 
     def _battle_finished(self, battle: RulesBattleState) -> bool:
         return len(self._alive_teams(battle)) <= 1
@@ -1242,7 +1371,11 @@ class TextBattleSession:
                     and mon.hp > 0
                 ]
                 if bench:
-                    action = SwitchAction(actor_id=actor_id, replacement_id=bench[0])
+                    action = SwitchAction(
+                        actor_id=actor_id,
+                        replacement_id=bench[0],
+                        target_position=self._ai_switch_target_position(battle, actor_id, bench[0]),
+                    )
                     try:
                         self._resolve_selected_action(battle, action)
                         self._record_ai_action_learning(battle, actor_id, action)
@@ -1405,7 +1538,11 @@ class TextBattleSession:
                 ai_level,
             )
             if switch_id:
-                action = SwitchAction(actor_id=actor_id, replacement_id=switch_id)
+                action = SwitchAction(
+                    actor_id=actor_id,
+                    replacement_id=switch_id,
+                    target_position=self._ai_switch_target_position(battle, actor_id, switch_id),
+                )
                 self._resolve_selected_action(battle, action)
                 self._record_ai_action_learning(battle, actor_id, action)
                 self._publish_ai_turn_diagnostics(
@@ -2206,6 +2343,22 @@ class TextBattleSession:
                 best_id = pid
         return best_id
 
+    def _ai_switch_target_position(
+        self,
+        battle: RulesBattleState,
+        outgoing_id: str,
+        replacement_id: str,
+    ) -> Optional[Tuple[int, int]]:
+        if hasattr(battle, "_best_ai_switch_position"):
+            try:
+                return battle._best_ai_switch_position(
+                    outgoing_id=outgoing_id,
+                    replacement_id=replacement_id,
+                )
+            except Exception:
+                return None
+        return None
+
     def _ai_trainer_turn(
         self, battle: RulesBattleState, record: BattleRecord, trainer_id: str
     ) -> None:
@@ -2229,7 +2382,10 @@ class TextBattleSession:
         )
         if outgoing and bench:
             action = TrainerSwitchAction(
-                actor_id=trainer_id, outgoing_id=outgoing, replacement_id=bench[0]
+                actor_id=trainer_id,
+                outgoing_id=outgoing,
+                replacement_id=bench[0],
+                target_position=self._ai_switch_target_position(battle, outgoing, bench[0]),
             )
             try:
                 self._resolve_selected_action(battle, action)

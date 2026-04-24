@@ -1,8 +1,10 @@
 import random
+import json
+from pathlib import Path
 
 from auto_ptu.api.engine_facade import EngineFacade
 from auto_ptu.data_models import MoveSpec, PokemonSpec
-from auto_ptu.rules import BattleState, DirtyFightingFollowUpAction, FlightAction, PokemonState, PsychicResonanceFollowUpAction, QuickWitMoveAction, TrainerState, GridState, TurnPhase, UseMoveAction, WeaponFinesseFollowUpAction
+from auto_ptu.rules import BattleState, DirtyFightingFollowUpAction, FlightAction, PokemonState, PsychicResonanceFollowUpAction, QuickWitMoveAction, TrainerState, GridState, TurnPhase, UseMoveAction, WeaponFinesseFollowUpAction, create_trainer_feature_action
 from auto_ptu.rules.calculations import resolve_move_action
 
 
@@ -105,6 +107,21 @@ def test_engine_facade_snapshot_serializes_large_footprint_tiles():
         assert payload["occupants"][key] == "player-1"
 
 
+def test_terrain_mapper_starter_records_exist():
+    starter_root = Path("auto_ptu/data/terrain_maps/starter")
+    manifest_path = starter_root / "manifest.json"
+    assert manifest_path.exists()
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
+    assert isinstance(manifest, list)
+    assert len(manifest) >= 5
+    first = manifest[0]
+    record_path = starter_root / "records" / str(first["record"])
+    assert record_path.exists()
+    payload = json.loads(record_path.read_text(encoding="utf-8-sig"))
+    assert payload["grid"]["width"] >= 15
+    assert isinstance(payload["grid"]["tiles"], list)
+
+
 def test_engine_facade_random_ai_battle_supports_configurable_side_count():
     facade = EngineFacade()
     state = facade.start_encounter(
@@ -120,6 +137,375 @@ def test_engine_facade_random_ai_battle_supports_configurable_side_count():
     )
     teams = {str(combatant["team"]) for combatant in state["combatants"]}
     assert len(teams) >= 4
+
+
+def test_engine_facade_merges_hobbyist_granted_features_into_trainer_profile():
+    facade = EngineFacade()
+    facade.start_encounter(
+        random_battle=True,
+        team_size=1,
+        active_slots=1,
+        min_level=20,
+        max_level=20,
+        seed=812,
+        trainer_profile={
+            "profile": {"name": "Hobbyist"},
+            "features": ["Hobbyist", "Look and Learn"],
+            "hobbyist_granted_features": ["Focused Command", "Strike Again!"],
+        },
+    )
+
+    trainer = next(iter(facade.battle.trainers.values()))
+    assert [feature["name"] for feature in trainer.features] == [
+        "Hobbyist",
+        "Look and Learn",
+        "Focused Command",
+        "Strike Again!",
+    ]
+
+
+def test_engine_facade_merges_hobbyist_edges_into_trainer_profile():
+    facade = EngineFacade()
+    facade.start_encounter(
+        random_battle=True,
+        team_size=1,
+        active_slots=1,
+        min_level=20,
+        max_level=20,
+        seed=813,
+        trainer_profile={
+            "profile": {"name": "Hobbyist"},
+            "edges": ["Basic Skills"],
+            "hobbyist_skill_edges": ["Hobbyist Skill Edge: Perception -> Adept"],
+            "hobbyist_granted_edges": ["Skill Stunt"],
+        },
+    )
+
+    trainer = next(iter(facade.battle.trainers.values()))
+    assert [edge["name"] for edge in trainer.edges] == [
+        "Basic Skills",
+        "Hobbyist Skill Edge: Perception -> Adept",
+        "Skill Stunt",
+    ]
+
+
+def test_engine_facade_derives_hobbyist_granted_features_from_raw_payload():
+    facade = EngineFacade()
+    facade.start_encounter(
+        random_battle=True,
+        team_size=1,
+        active_slots=1,
+        min_level=20,
+        max_level=20,
+        seed=814,
+        trainer_profile={
+            "profile": {"name": "Hobbyist"},
+            "features": ["Hobbyist", "Look and Learn", "Dilettante Rank 1"],
+            "look_and_learn_features": {"scene": "Focused Command", "ap": "Type Sync"},
+            "dilettante_picks": [{"rank": 1, "feature": "Quick Switch", "edge": "Skill Stunt"}],
+        },
+    )
+
+    trainer = next(iter(facade.battle.trainers.values()))
+    assert [feature["name"] for feature in trainer.features] == [
+        "Hobbyist",
+        "Look and Learn",
+        "Dilettante Rank 1",
+        "Focused Command",
+        "Type Sync",
+        "Quick Switch",
+    ]
+
+
+def test_engine_facade_derives_hobbyist_granted_edges_from_raw_payload():
+    facade = EngineFacade()
+    facade.start_encounter(
+        random_battle=True,
+        team_size=1,
+        active_slots=1,
+        min_level=20,
+        max_level=20,
+        seed=815,
+        trainer_profile={
+            "profile": {"name": "Hobbyist"},
+            "edges": ["Basic Skills"],
+            "hobbyist_skill_edges": ["Hobbyist Skill Edge: Perception -> Adept"],
+            "dilettante_picks": [{"rank": 1, "feature": "Quick Switch", "edge": "Skill Stunt"}],
+        },
+    )
+
+    trainer = next(iter(facade.battle.trainers.values()))
+    assert [edge["name"] for edge in trainer.edges] == [
+        "Basic Skills",
+        "Hobbyist Skill Edge: Perception -> Adept",
+        "Skill Stunt",
+    ]
+
+
+def test_engine_facade_preserves_mentor_skills_on_trainer_class_metadata():
+    facade = EngineFacade()
+    facade.start_encounter(
+        random_battle=True,
+        team_size=1,
+        active_slots=1,
+        min_level=20,
+        max_level=20,
+        seed=816,
+        trainer_profile={
+            "profile": {"name": "Mentor"},
+            "class_id": "class:Mentor",
+            "class_name": "Mentor",
+            "features": ["Mentor", "Inspirational Support"],
+            "mentor_skills": ["Charm", "Intuition"],
+        },
+    )
+
+    trainer = next(iter(facade.battle.trainers.values()))
+    assert trainer.trainer_class["id"] == "class:Mentor"
+    assert trainer.trainer_class["name"] == "Mentor"
+    assert trainer.trainer_class["mentor_skills"] == ["Charm", "Intuition"]
+
+
+def test_engine_facade_preserves_feature_object_payloads_for_stat_ace():
+    facade = EngineFacade()
+    facade.start_encounter(
+        random_battle=True,
+        team_size=1,
+        active_slots=1,
+        min_level=20,
+        max_level=20,
+        seed=817,
+        trainer_profile={
+            "profile": {"name": "Stat Ace"},
+            "features": [
+                {"name": "Stat Ace", "chosen_stat": "spdef"},
+                {"name": "Stat Link", "chosen_stat": "spdef"},
+            ],
+        },
+    )
+
+    trainer = next(iter(facade.battle.trainers.values()))
+    assert trainer.features[0]["name"] == "Stat Ace"
+    assert trainer.features[0]["chosen_stat"] == "spdef"
+    assert trainer.features[1]["name"] == "Stat Link"
+    assert trainer.features[1]["chosen_stat"] == "spdef"
+
+
+def test_engine_facade_snapshot_exposes_stat_training_and_stratagem_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=3)},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Ally", [_move("Tackle")]), controller_id="player", position=(1, 2), active=True),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(93),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Attack Training"}, {"name": "Attack Stratagem"}]
+    battle.pokemon["player-2"].spec.tutor_points = 2
+    facade.battle = battle
+
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["stat_training_ready"] is True
+    assert hints["stat_training_options"][0]["feature"] == "Attack Training"
+    assert hints["stat_training_options"][0]["moves"][0]["move_name"] == "Swords Dance"
+    assert hints["stat_stratagem_ready"] is True
+    assert hints["stat_stratagem_options"][0]["feature"] == "Attack Stratagem"
+
+
+def test_engine_facade_snapshot_exposes_generic_stat_training_and_stratagem_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=3)},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Ally", [_move("Tackle")]), controller_id="player", position=(1, 2), active=True),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(94),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [
+        {"name": "Stat Training", "chosen_stat": "spdef"},
+        {"name": "Stat Stratagem", "chosen_stat": "spd"},
+    ]
+    battle.pokemon["player-2"].spec.tutor_points = 2
+    facade.battle = battle
+
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    training = next(option for option in hints["stat_training_options"] if option["feature"] == "Stat Training")
+    assert training["stat"] == "spdef"
+    assert training["stat_label"] == "SpDef"
+    assert {move["move_name"] for move in training["moves"]} == {"Amnesia", "Light Screen"}
+    stratagem = next(option for option in hints["stat_stratagem_options"] if option["feature"] == "Stat Stratagem")
+    assert stratagem["stat"] == "spd"
+    assert stratagem["stat_label"] == "Speed"
+
+
+def test_engine_facade_snapshot_exposes_type_ace_generic_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=3)},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Ally", [_move("Tackle"), _move("Surf", type="Water", freq="Scene x2")]), controller_id="player", position=(1, 2), active=True),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(95),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [
+        {"name": "Type Ace", "chosen_type": "water"},
+        {"name": "Type Refresh", "chosen_type": "water"},
+        {"name": "Move Sync", "chosen_type": "electric"},
+    ]
+    battle.pokemon["player-2"].spec.tutor_points = 2
+    battle.frequency_usage["player-2"] = {"Surf": 1}
+    facade.battle = battle
+
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["type_ace_ready"] is True
+    assert hints["type_ace_options"][0]["type_label"] == "Water"
+    assert {option["mode"] for option in hints["type_ace_options"][0]["ability_options"]} == {"strategist", "last_chance"}
+    assert hints["type_refresh_ready"] is True
+    assert hints["type_refresh_options"][0]["scene_moves"][0]["move_name"] == "Surf"
+    assert hints["move_sync_ready"] is True
+    assert hints["move_sync_options"][0]["type_label"] == "Electric"
+
+
+def test_engine_facade_snapshot_exposes_type_ace_branch_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=3)},
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("Trainer", [_move("Tackle")]),
+                controller_id="player",
+                position=(1, 1),
+                active=True,
+            ),
+            "player-2": PokemonState(
+                spec=_spec("DarkMon", [_move("Bite", type="Dark"), _move("Surf", type="Water")]),
+                controller_id="player",
+                position=(1, 2),
+                active=True,
+            ),
+            "player-3": PokemonState(
+                spec=_spec("FairyMon", [_move("Fairy Wind", type="Fairy")]),
+                controller_id="player",
+                position=(2, 2),
+                active=True,
+            ),
+            "player-4": PokemonState(
+                spec=_spec("Wing", [_move("Growl", type="Normal", category="Status")]),
+                controller_id="player",
+                position=(2, 1),
+                active=True,
+            ),
+        },
+        grid=GridState(width=6, height=6),
+        rng=random.Random(96),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [
+        {"name": "Close Quarters Mastery"},
+        {"name": "Celerity"},
+        {"name": "Foiling Foliage"},
+    ]
+    battle.pokemon["player-2"].spec.trainer_features = [{"name": "Clever Ruse"}, {"name": "Flood!"}]
+    battle.pokemon["player-2"].spec.types = ["Dark", "Water"]
+    battle.pokemon["player-3"].spec.trainer_features = [{"name": "Fairy Lights"}]
+    battle.pokemon["player-3"].spec.types = ["Fairy"]
+    battle.pokemon["player-4"].spec.trainer_features = [{"name": "Foiling Foliage"}]
+    battle.pokemon["player-4"].spec.types = ["Flying"]
+    facade.battle = battle
+
+    payload = facade.snapshot()
+    trainer_entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    trainer_hints = trainer_entry["trainer_action_hints"]
+    assert trainer_hints["close_quarters_mastery_ready"] is True
+    assert trainer_hints["celerity_ready"] is True
+    assert isinstance(trainer_hints["foiling_foliage_options"], list)
+
+    dark_entry = next(item for item in payload["combatants"] if item["id"] == "player-2")
+    dark_hints = dark_entry["trainer_action_hints"]
+    assert dark_hints["clever_ruse_ready"] is True
+    assert dark_hints["flood_ready"] is True
+
+    fairy_entry = next(item for item in payload["combatants"] if item["id"] == "player-3")
+    fairy_hints = fairy_entry["trainer_action_hints"]
+    assert fairy_hints["fairy_lights_ready"] is True
+
+
+def test_engine_facade_exposes_fairy_lights_reposition_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=3)},
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("FairyMon", [_move("Fairy Wind", type="Fairy")]),
+                controller_id="player",
+                position=(2, 2),
+                active=True,
+            ),
+        },
+        grid=GridState(width=6, height=6),
+        rng=random.Random(97),
+    )
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Fairy Lights"}]
+    battle.pokemon["player-1"].spec.types = ["Fairy"]
+    battle.pokemon["player-1"].add_temporary_effect("fairy_lights", coord=(2, 2), source="Fairy Lights")
+    battle.pokemon["player-1"].add_temporary_effect("fairy_lights", coord=(3, 2), source="Fairy Lights")
+    facade.battle = battle
+
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["fairy_lights_count"] == 2
+    assert hints["fairy_lights_positions"] == [[2, 2], [3, 2]]
+    assert any(option["coord"] == [2, 2] for option in hints["fairy_lights_destination_options"])
+
+
+def test_engine_facade_simulates_attack_maneuver_prompt():
+    facade = EngineFacade()
+    tackle = MoveSpec(
+        name="Tackle",
+        type="Normal",
+        category="Physical",
+        db=6,
+        ac=2,
+        range_kind="Melee",
+        range_value=1,
+        target_kind="Melee",
+        target_range=1,
+        freq="At-Will",
+    )
+    battle = BattleState(
+        trainers={
+            "player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players"),
+            "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+        },
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Ace", [tackle]), controller_id="player", position=(2, 2), active=True),
+            "foe-1": PokemonState(spec=_spec("Target", [_move("Tackle")]), controller_id="foe", position=(2, 3), active=True),
+        },
+        grid=GridState(width=6, height=6),
+        rng=random.Random(66),
+    )
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Attack Maneuver"}]
+    facade.battle = battle
+    prompts = facade._simulate_prompts({"type": "move", "actor_id": "player-1", "move": "Tackle", "target_id": "foe-1"})
+    prompt = next(prompt for prompt in prompts if prompt.get("feature") in {"Attack Maneuver", "Stat Maneuver"})
+    assert prompt["optional"] is True
+    assert {option["value"] for option in prompt["options"]} == {"pass", "three_targets"}
 
 
 def test_engine_facade_ai_battle_royale_generates_large_biome_grid():
@@ -563,6 +949,50 @@ def test_engine_facade_filters_out_of_range_follow_up_targets():
     assert hints["trickster_targets"] == []
 
 
+def test_engine_facade_exposes_sleight_status_options():
+    facade = EngineFacade()
+    confide = _move("Confide", category="Status", range_kind="Ranged", target_kind="Ranged", keywords=["Social"])
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player"), "foe": TrainerState(identifier="foe", name="Foe")},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [confide]), controller_id="player", position=(1, 1)),
+            "foe-1": PokemonState(spec=_spec("Target", [_move("Tackle")]), controller_id="foe", position=(1, 3)),
+        },
+        grid=GridState(width=7, height=7),
+        rng=random.Random(3),
+    )
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Sleight"}]
+    facade.battle = battle
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["sleight_ready"] is True
+    assert hints["sleight_options"][0]["move"] == "Confide"
+
+
+def test_engine_facade_exposes_shell_game_hazard_options():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players", skills={"guile": 4})},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1)),
+        },
+        grid=GridState(width=6, height=6),
+        rng=random.Random(3),
+    )
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Shell Game"}]
+    battle._place_hazard((1, 1), "spikes", 1, source_id="player-1", allow_shell_game=False)
+    battle._place_hazard((2, 1), "spikes", 1, source_id="player-1", allow_shell_game=False)
+    facade.battle = battle
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["shell_game_ready"] is True
+    assert hints["shell_game_uses_left"] == 2
+    assert hints["shell_game_options"][0]["hazard"] == "spikes"
+    assert hints["shell_game_options"][0]["total_layers"] == 2
+
+
 def test_engine_facade_filters_play_them_like_a_fiddle_for_fainted_target():
     facade = EngineFacade()
     battle = BattleState(
@@ -730,7 +1160,7 @@ def test_engine_facade_snapshot_exposes_named_trainer_feature_targets():
 def test_engine_facade_snapshot_exposes_taskmaster_and_quick_healing_hints():
     facade = EngineFacade()
     battle = BattleState(
-        trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players", position=(1, 1))},
         pokemon={
             "player-1": PokemonState(spec=_spec("Coach", [_move("Tackle")]), controller_id="player", position=(1, 1)),
             "player-2": PokemonState(spec=_spec("Bruiser", [_move("Tackle")]), controller_id="player", position=(1, 2)),
@@ -757,6 +1187,39 @@ def test_engine_facade_snapshot_exposes_taskmaster_and_quick_healing_hints():
         option["target"] == "player-2" and option["injuries"] == 2 and option["hardened"] is True
         for option in hints["quick_healing_targets"]
     )
+
+
+def test_engine_facade_snapshot_excludes_trainer_combatants_from_taskmaster_and_quick_healing_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players", position=(1, 1))},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Coach", [_move("Tackle")]), controller_id="player", position=(1, 1)),
+            "player-2": PokemonState(spec=_spec("Bruiser", [_move("Tackle")]), controller_id="player", position=(1, 2)),
+            "player-3": PokemonState(spec=_spec("Assistant", [_move("Tackle")]), controller_id="player", position=(1, 3)),
+        },
+        grid=GridState(width=7, height=7),
+        rng=random.Random(4),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-3"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [
+        {"name": "Brutal Training"},
+        {"name": "Taskmaster"},
+        {"name": "Quick Healing"},
+        {"name": "Press"},
+    ]
+    battle.pokemon["player-2"].injuries = 2
+    battle.pokemon["player-2"].add_temporary_effect("hardened", source="Taskmaster", source_id="player-1")
+    battle.pokemon["player-3"].injuries = 2
+    battle.pokemon["player-3"].add_temporary_effect("hardened", source="Taskmaster", source_id="player-1")
+    facade.battle = battle
+
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert [option["target"] for option in hints["quick_healing_targets"]] == ["player-2"]
+    assert [option["target"] for option in hints["press_targets"]] == ["player-2"]
 
 
 def test_engine_facade_simulates_press_on_prompt():
@@ -836,6 +1299,54 @@ def test_engine_facade_simulates_not_yet_prompt():
     assert prompt["trigger"] == "damage"
 
 
+def test_engine_facade_simulates_not_yet_prompt_with_area_move_option():
+    facade = EngineFacade()
+    scratch = MoveSpec(
+        name="Scratch",
+        type="Normal",
+        category="Physical",
+        db=1,
+        ac=2,
+        range_kind="Melee",
+        range_value=1,
+        target_kind="Melee",
+        target_range=1,
+        freq="At-Will",
+    )
+    discharge = MoveSpec(
+        name="Discharge",
+        type="Electric",
+        category="Special",
+        db=8,
+        ac=2,
+        range_kind="Self",
+        range_value=0,
+        target_kind="Self",
+        target_range=0,
+        area_kind="Burst",
+        area_value=2,
+        freq="Scene",
+    )
+    battle = BattleState(
+        trainers={
+            "player": TrainerState(identifier="player", name="Player", team="players"),
+            "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+        },
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Soul", [discharge]), controller_id="player", position=(1, 1)),
+            "foe-1": PokemonState(spec=_spec("Attacker", [scratch]), controller_id="foe", position=(1, 2)),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(3),
+    )
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Not Yet!"}]
+    battle.pokemon["player-1"].hp = 1
+    facade.battle = battle
+    prompts = facade._simulate_prompts({"type": "move", "actor_id": "foe-1", "move": "Scratch", "target_id": "player-1"})
+    prompt = next(prompt for prompt in prompts if prompt.get("feature") == "Not Yet!")
+    assert any(option["value"] == "Discharge||player-1" for option in prompt["options"])
+
+
 def test_engine_facade_simulates_strike_of_the_whip_prompt():
     tackle = _move("Tackle", ac=2)
     battle = BattleState(
@@ -880,7 +1391,7 @@ def test_engine_facade_simulates_strike_of_the_whip_prompt():
 def test_engine_facade_snapshot_exposes_press_and_savage_strike_hints():
     facade = EngineFacade()
     battle = BattleState(
-        trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players", position=(1, 1))},
         pokemon={
             "player-1": PokemonState(spec=_spec("Coach", [_move("Tackle")]), controller_id="player", position=(1, 1)),
             "player-2": PokemonState(spec=_spec("Bruiser", [_move("Bite", type="Dark")]), controller_id="player", position=(1, 2)),
@@ -994,6 +1505,28 @@ def test_engine_facade_snapshot_exposes_quick_switch_replacements():
     entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
     hints = entry["trainer_action_hints"]
     assert hints["quick_switch_ap_ready"] is True
+    assert hints["quick_switch_ap_cost"] == 2
+    assert hints["quick_switch_replacements"][0]["target_name"] == "Bench"
+
+
+def test_engine_facade_snapshot_reduces_quick_switch_ap_cost_for_juggler():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=1)},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Lead", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Bench", [_move("Tackle")]), controller_id="player", position=None, active=False),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(3),
+    )
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Quick Switch"}, {"name": "Juggler"}]
+    facade.battle = battle
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["quick_switch_ap_cost"] == 1
+    assert hints["quick_switch_ap_ready"] is True
     assert hints["quick_switch_replacements"][0]["target_name"] == "Bench"
 
 
@@ -1066,6 +1599,526 @@ def test_engine_facade_simulates_gravel_before_me_prompt_on_rock_miss():
     assert prompt["kind"] == "choice"
     assert prompt["actor_name"] == "RockAce"
     assert prompt["options"]
+
+
+def test_engine_facade_simulates_round_trip_prompt_after_move():
+    facade = EngineFacade()
+    slash = MoveSpec(
+        name="Slash",
+        type="Normal",
+        category="Physical",
+        db=6,
+        ac=2,
+        range_kind="Melee",
+        range_value=1,
+        target_kind="Melee",
+        target_range=1,
+        freq="At-Will",
+    )
+    battle = BattleState(
+        trainers={
+            "player": TrainerState(identifier="player", name="Player", team="players", ap=1),
+            "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+        },
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Lead", [slash]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Bench", [_move("Tackle")]), controller_id="player", position=None, active=False),
+            "foe-1": PokemonState(spec=_spec("Target", [_move("Tackle")]), controller_id="foe", position=(1, 2), active=True),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(11),
+    )
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Round Trip"}]
+    facade.battle = battle
+    prompts = facade._simulate_prompts({"type": "move", "actor_id": "player-1", "move": "Slash", "target_id": "foe-1"})
+    prompt = next(prompt for prompt in prompts if prompt.get("feature") == "Round Trip")
+    assert prompt["kind"] == "choice"
+    assert prompt["move"] == "Slash"
+    assert prompt["options"][0]["label"] == "Bench"
+
+
+def test_engine_facade_snapshot_exposes_emergency_release_targets():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=2)},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Bench", [_move("Tackle")]), controller_id="player", position=None, active=False),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(5),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Emergency Release"}]
+    facade.battle = battle
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["emergency_release_ap_ready"] is True
+    assert hints["emergency_release_targets"][0]["target_name"] == "Bench"
+
+
+def test_engine_facade_simulates_emergency_release_interrupt_prompt():
+    facade = EngineFacade()
+    slash = MoveSpec(
+        name="Slash",
+        type="Normal",
+        category="Physical",
+        db=6,
+        ac=2,
+        range_kind="Melee",
+        range_value=1,
+        target_kind="Melee",
+        target_range=1,
+        freq="At-Will",
+    )
+    battle = BattleState(
+        trainers={
+            "player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=2),
+            "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+        },
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Bench", [_move("Tackle")]), controller_id="player", position=None, active=False),
+            "foe-1": PokemonState(spec=_spec("Target", [slash]), controller_id="foe", position=(1, 2), active=True),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(6),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Emergency Release"}]
+    facade.battle = battle
+    prompts = facade._simulate_prompts({"type": "move", "actor_id": "foe-1", "move": "Slash", "target_id": "player-1"})
+    prompt = next(prompt for prompt in prompts if prompt.get("feature") == "Emergency Release")
+    assert prompt["kind"] == "choice"
+    assert prompt["options"][0]["label"] == "Bench"
+
+
+def test_engine_facade_snapshot_exposes_bounce_shot_targets():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=2)},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Bench", [_move("Tackle")]), controller_id="player", position=None, active=False),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(7),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Bounce Shot"}]
+    facade.battle = battle
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["bounce_shot_ready"] is True
+    assert hints["bounce_shot_targets"][0]["target_name"] == "Bench"
+
+
+def test_engine_facade_snapshot_exposes_moment_of_action_and_go_fight_win_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={
+            "player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players"),
+            "ally-trainer": TrainerState(identifier="ally-trainer", name="Ally", controller_kind="player", team="players"),
+        },
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("Trainer", [_move("Tackle")]),
+                controller_id="player",
+                position=(1, 1),
+                active=True,
+            ),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(7),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Moment of Action"}, {"name": "Go, Fight, Win!"}]
+    facade.battle = battle
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["moment_of_action_ready"] is True
+    assert {option["target"] for option in hints["moment_of_action_targets"]} == {"player", "ally-trainer"}
+    assert hints["go_fight_win_ready"] is True
+    assert {option["value"] for option in hints["go_fight_win_cheers"]} == {
+        "show_your_best",
+        "dont_stop_now",
+        "i_believe_in_you",
+    }
+
+
+def test_engine_facade_snapshot_exposes_cheerleader_playtest_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players")},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Bench", [_move("Tackle")]), controller_id="player", position=(1, 2), active=True),
+            "player-3": PokemonState(spec=_spec("Candidate", [_move("Tackle")]), controller_id="player", position=(2, 2), active=False),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(7),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Cheerleader [Playtest]"}]
+    battle.pokemon["player-2"].spec.tutor_points = 2
+    facade.battle = battle
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["cheerleader_playtest_ready"] is True
+    assert hints["cheerleader_playtest_targets"][0]["target"] == "player-2"
+
+
+def test_engine_facade_snapshot_exposes_vim_and_vigor_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players")},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Bench", [_move("Tackle")]), controller_id="player", position=(1, 2), active=False),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(9),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Vim and Vigor"}]
+    battle.pokemon["player-2"].spec.tutor_points = 2
+    facade.battle = battle
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["vim_and_vigor_ready"] is True
+    assert hints["vim_and_vigor_targets"][0]["target"] == "player-2"
+
+
+def test_engine_facade_snapshot_exposes_ramming_speed_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players")},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Mount", [_move("Tackle")]), controller_id="player", position=(1, 2), active=False),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(91),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Ramming Speed"}]
+    battle.pokemon["player-2"].spec.tutor_points = 2
+    facade.battle = battle
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["ramming_speed_ready"] is True
+    assert hints["ramming_speed_targets"][0]["target"] == "player-2"
+
+
+def test_engine_facade_snapshot_exposes_rider_mount_and_conquerors_march_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players")},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Mount", [_move("Tackle")]), controller_id="player", position=(1, 2), active=True),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(92),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [
+        {"name": "Mounted Prowess"},
+        {"name": "Ride as One"},
+        {"name": "Conqueror's March"},
+    ]
+    battle.pokemon["player-2"].add_temporary_effect("ability_granted", ability="Run Up", source="Ramming Speed", source_id="player-1")
+
+    facade.battle = battle
+    payload = facade.snapshot()
+    trainer_entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    trainer_hints = trainer_entry["trainer_action_hints"]
+    assert trainer_hints["mount_ready"] is True
+    assert trainer_hints["mount_targets"][0]["target"] == "player-2"
+    assert trainer_hints["mounted_partner_id"] is None
+
+    battle._mount_pair("player-1", "player-2")
+    battle.current_actor_id = "player-1"
+    payload = facade.snapshot()
+    trainer_entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    trainer_hints = trainer_entry["trainer_action_hints"]
+    assert trainer_hints["mounted_partner_id"] == "player-2"
+    assert trainer_hints["mounted_mount_id"] == "player-2"
+    assert trainer_hints["dismount_ready"] is True
+    assert trainer_hints["ride_as_one_swap_ready"] is True
+    assert trainer_hints["conquerors_march_ready"] is True
+    assert trainer_hints["conquerors_march_target"] == "player-2"
+
+
+def test_engine_facade_snapshot_exposes_versatile_wardrobe_and_swap_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players")},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Bench", [_move("Tackle")]), controller_id="player", position=(1, 2), active=True),
+            "player-3": PokemonState(spec=_spec("Candidate", [_move("Tackle")]), controller_id="player", position=(2, 2), active=False),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(11),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Versatile Wardrobe"}, {"name": "Dress to Impress"}]
+    battle.pokemon["player-2"].spec.tutor_points = 2
+    battle.pokemon["player-3"].spec.tutor_points = 2
+    battle.pokemon["player-2"].spec.tags = ["Chic"]
+    battle.pokemon["player-2"].spec.items = [{"name": "Muscle Band"}]
+    battle.pokemon["player-2"].spec.poke_edge_choices = {
+        "versatile_wardrobe": {"chic": True, "slot_count": 2, "extra_slots": [{"name": "Charcoal"}, None]}
+    }
+    facade.battle = battle
+
+    payload = facade.snapshot()
+
+    trainer_entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    trainer_hints = trainer_entry["trainer_action_hints"]
+    assert trainer_hints["versatile_wardrobe_ready"] is True
+    assert trainer_hints["versatile_wardrobe_targets"][0]["target"] == "player-3"
+    assert trainer_hints["dress_to_impress_ready"] is True
+    assert trainer_hints["dress_to_impress_targets"][0]["target"] == "player-2"
+    assert trainer_hints["dress_to_impress_targets"][0]["items"] == ["Charcoal"]
+    chic_entry = next(item for item in payload["combatants"] if item["id"] == "player-2")
+    chic_hints = chic_entry["trainer_action_hints"]
+    assert chic_hints["wardrobe_swap_ready"] is True
+    assert chic_hints["wardrobe_swap_active_items"][0]["item"] == "Muscle Band"
+    assert chic_hints["wardrobe_swap_stored_items"][0]["item"] == "Charcoal"
+
+
+def test_engine_facade_snapshot_exposes_dashing_makeover_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=4)},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Model", [_move("Tackle")]), controller_id="player", position=(1, 2), active=True),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(12),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Dashing Makeover"}]
+    facade.battle = battle
+
+    payload = facade.snapshot()
+
+    trainer_entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = trainer_entry["trainer_action_hints"]
+    assert hints["dashing_makeover_ready"] is True
+    assert hints["dashing_makeover_targets"][0]["target"] == "player-1"
+    target = next(entry for entry in hints["dashing_makeover_targets"] if entry["target"] == "player-2")
+    assert any(item["item"] == "Muscle Band" for item in target["items"])
+
+    create_trainer_feature_action(
+        "dashing_makeover",
+        actor_id="player-1",
+        target_id="player-2",
+        item_name="Muscle Band",
+    ).resolve(battle)
+
+    payload = facade.snapshot()
+    trainer_entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = trainer_entry["trainer_action_hints"]
+    assert hints["dashing_makeover_ready"] is False
+    assert hints["dashing_makeover_release_ready"] is True
+    assert hints["dashing_makeover_bound"]["target_id"] == "player-2"
+    assert hints["dashing_makeover_bound"]["item_name"] == "Muscle Band"
+
+
+def test_engine_facade_snapshot_exposes_parfumier_incense_move():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players")},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Perfumed", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(13),
+    )
+    battle.pokemon["player-1"].spec.items = [{"name": "Rose Incense", "parfumier_move": "Sweet Scent"}]
+    facade.battle = battle
+
+    payload = facade.snapshot()
+
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    move_names = {move["name"] for move in entry["moves"]}
+    assert "Sweet Scent" in move_names
+    sweet_scent = next(move for move in entry["moves"] if move["name"] == "Sweet Scent")
+    assert sweet_scent["source"] == "Rose Incense"
+
+
+def test_engine_facade_simulates_first_blood_prompt_after_emergency_release():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=2)},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Bench", [_move("Water Gun", category="Special", range_kind="Ranged", target_kind="Ranged", db=4)]), controller_id="player", position=None, active=False),
+            "foe-1": PokemonState(spec=_spec("Target", [_move("Tackle")]), controller_id="foe", position=(1, 2), active=True),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(8),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Emergency Release"}]
+    battle.pokemon["player-2"].spec.trainer_features = [{"name": "First Blood"}]
+    facade.battle = battle
+    prompts = facade._simulate_prompts(
+        {
+            "type": "trainer_feature",
+            "action_key": "emergency_release",
+            "actor_id": "player-1",
+            "replacement_id": "player-2",
+        }
+    )
+    prompt = next(prompt for prompt in prompts if prompt.get("feature") == "First Blood")
+    assert prompt["kind"] == "choice"
+    assert prompt["trigger"] == "send_out"
+    assert any(option["value"] == "Water Gun||foe-1" for option in prompt["options"])
+
+
+def test_engine_facade_simulates_surprise_prompt_on_attack():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={
+            "player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=2),
+            "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+        },
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("Trainer", [_move("Slash", ac=2, db=6)]),
+                controller_id="player",
+                position=(1, 1),
+                active=True,
+            ),
+            "foe-1": PokemonState(
+                spec=_spec("Target", [_move("Tackle")]),
+                controller_id="foe",
+                position=(1, 2),
+                active=True,
+            ),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(12),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Surprise!"}]
+    facade.battle = battle
+
+    prompts = facade._simulate_prompts({"type": "move", "actor_id": "player-1", "move": "Slash", "target_id": "foe-1"})
+
+    prompt = next(prompt for prompt in prompts if prompt.get("feature") == "Surprise!")
+    assert prompt["trigger"] == "attack"
+    assert prompt["ap_cost"] == 2
+
+
+def test_engine_facade_simulates_resilience_prompt_on_critical_hit():
+    facade = EngineFacade()
+    crit_move = MoveSpec(
+        name="Critical Slash",
+        type="Normal",
+        category="Physical",
+        db=8,
+        ac=2,
+        range_kind="Melee",
+        range_value=1,
+        target_kind="Melee",
+        target_range=1,
+        freq="At-Will",
+        crit_range=1,
+    )
+    battle = BattleState(
+        trainers={
+            "player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=2),
+            "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+        },
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("Tank", [_move("Tackle")]),
+                controller_id="player",
+                position=(1, 1),
+                active=True,
+            ),
+            "foe-1": PokemonState(
+                spec=_spec("Attacker", [crit_move]),
+                controller_id="foe",
+                position=(1, 2),
+                active=True,
+            ),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(3),
+    )
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Resilience"}]
+    facade.battle = battle
+
+    prompts = facade._simulate_prompts({"type": "move", "actor_id": "foe-1", "move": "Critical Slash", "target_id": "player-1"})
+
+    prompt = next(prompt for prompt in prompts if prompt.get("feature") == "Resilience")
+    assert prompt["trigger"] == "critical_hit"
+    assert prompt["ap_cost"] == 2
+    assert prompt["actor_name"] == "Tank"
+
+
+def test_engine_facade_simulates_style_is_eternal_prompt_on_covet():
+    facade = EngineFacade()
+    covet = MoveSpec(
+        name="Covet",
+        type="Normal",
+        category="Physical",
+        db=6,
+        ac=None,
+        range_kind="Melee",
+        range_value=1,
+        target_kind="Melee",
+        target_range=1,
+        freq="At-Will",
+        range_text="Melee, 1 Target",
+    )
+    battle = BattleState(
+        trainers={
+            "player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players", ap=1),
+            "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+        },
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("Soul", [_move("Tackle")]),
+                controller_id="player",
+                position=(1, 1),
+                active=True,
+            ),
+            "foe-1": PokemonState(
+                spec=_spec("Thief", [covet]),
+                controller_id="foe",
+                position=(1, 2),
+                active=True,
+            ),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(31),
+    )
+    battle.pokemon["player-1"].spec.trainer_features = [{"name": "Style is Eternal"}]
+    battle.pokemon["player-1"].spec.items = [{"name": "Charcoal"}]
+    facade.battle = battle
+
+    prompts = facade._simulate_prompts({"type": "move", "actor_id": "foe-1", "move": "Covet", "target_id": "player-1"})
+
+    prompt = next(prompt for prompt in prompts if prompt.get("feature") == "Style is Eternal")
+    assert prompt["kind"] == "confirm"
+    assert prompt["trigger"] == "item_theft"
+    assert prompt["item"] == "Charcoal"
+    assert prompt["move"] == "Covet"
+    assert prompt["ap_cost"] == 1
 
 
 def test_engine_facade_snapshot_exposes_tough_as_schist_targets():
@@ -1235,7 +2288,7 @@ def test_engine_facade_simulates_cheerleader_prompt_on_orders():
 def test_engine_facade_snapshot_exposes_strike_again_order():
     facade = EngineFacade()
     battle = BattleState(
-        trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players", position=(1, 1))},
         pokemon={
             "player-1": PokemonState(spec=_spec("Commander", [_move("Tackle")]), controller_id="player", position=(1, 1)),
             "ally-1": PokemonState(spec=_spec("Ally", [_move("Tackle")]), controller_id="player", position=(2, 1)),
@@ -1266,7 +2319,7 @@ def test_engine_facade_snapshot_exposes_strike_again_order():
 def test_engine_facade_snapshot_exposes_legal_jumps_and_builds_jump_action():
     facade = EngineFacade()
     battle = BattleState(
-        trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players", position=(1, 1))},
         pokemon={
             "player-1": PokemonState(
                 spec=_spec("Jumper", [_move("Tackle")]),
@@ -1302,7 +2355,7 @@ def test_engine_facade_snapshot_exposes_legal_jumps_and_builds_jump_action():
 def test_engine_facade_snapshot_exposes_core_action_hints():
     facade = EngineFacade()
     battle = BattleState(
-        trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players", position=(1, 1))},
         pokemon={
             "player-1": PokemonState(
                 spec=_spec("Lead", [_move("Tackle")]),
@@ -1375,8 +2428,17 @@ def test_engine_facade_builds_core_action_types():
     battle.advance_turn()
     delay_action = facade._build_action(battle, {"type": "delay", "actor_id": "player-1", "target_total": 10})
     assert delay_action.__class__.__name__ == "DelayAction"
-    switch_action = facade._build_action(battle, {"type": "switch", "actor_id": "player-1", "replacement_id": "bench-1"})
+    switch_action = facade._build_action(
+        battle,
+        {
+            "type": "switch",
+            "actor_id": "player-1",
+            "replacement_id": "bench-1",
+            "target_position": [2, 1],
+        },
+    )
     assert switch_action.__class__.__name__ == "SwitchAction"
+    assert tuple(switch_action.target_position) == (2, 1)
     breather_action = facade._build_action(battle, {"type": "take_breather", "actor_id": "player-1"})
     assert breather_action.__class__.__name__ == "TakeBreatherAction"
     trade_action = facade._build_action(battle, {"type": "trade_standard", "actor_id": "player-1", "target_action": "swift"})
@@ -1391,7 +2453,7 @@ def test_engine_facade_builds_core_action_types():
 def test_engine_facade_snapshot_exposes_trainer_turn_switches():
     facade = EngineFacade()
     battle = BattleState(
-        trainers={"player": TrainerState(identifier="player", name="Player", team="players")},
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players", position=(1, 1))},
         pokemon={
             "player-1": PokemonState(
                 spec=_spec("Lead", [_move("Tackle")]),
@@ -1414,6 +2476,8 @@ def test_engine_facade_snapshot_exposes_trainer_turn_switches():
     payload = facade.snapshot()
     trainer_turn = payload["trainer_turn"]
     assert trainer_turn["id"] == "player"
+    assert trainer_turn["throw_origin"] == [1, 1]
+    assert trainer_turn["throw_range"] >= 4
     assert any(
         option["outgoing_id"] == "player-1" and option["replacement_id"] == "bench-1"
         for option in trainer_turn["switch_options"]
@@ -1448,9 +2512,151 @@ def test_engine_facade_builds_trainer_switch_action_type():
             "actor_id": "player",
             "outgoing_id": "player-1",
             "replacement_id": "bench-1",
+            "target_position": [2, 1],
         },
     )
     assert action.__class__.__name__ == "TrainerSwitchAction"
+    assert tuple(action.target_position) == (2, 1)
+
+
+def test_engine_facade_trainer_feature_payload_preserves_action_specific_kwargs():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=3)},
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("Trainer", [_move("Tackle")]),
+                controller_id="player",
+                position=(1, 1),
+                active=True,
+            ),
+            "bench-1": PokemonState(
+                spec=_spec("Bench", [_move("Tackle")]),
+                controller_id="player",
+                position=(4, 4),
+                active=False,
+            ),
+            "ally-1": PokemonState(
+                spec=_spec("Ally", [_move("Tackle")]),
+                controller_id="player",
+                position=(2, 1),
+                active=True,
+            ),
+        },
+        grid=GridState(width=6, height=6),
+        rng=random.Random(23),
+    )
+
+    quick_switch = facade._build_action(
+        battle,
+        {
+            "type": "trainer_feature",
+            "action_key": "quick_switch",
+            "actor_id": "player-1",
+            "replacement_id": "bench-1",
+        },
+    )
+    assert quick_switch.__class__.__name__ == "QuickSwitchAction"
+    assert quick_switch.replacement_id == "bench-1"
+
+    press = facade._build_action(
+        battle,
+        {
+            "type": "trainer_feature",
+            "action_key": "press",
+            "actor_id": "player-1",
+            "target_id": "ally-1",
+            "stats": ["atk", "spd"],
+        },
+    )
+    assert press.__class__.__name__ == "PressAction"
+    assert press.stats == ["atk", "spd"]
+
+    brutal_training = facade._build_action(
+        battle,
+        {
+            "type": "trainer_feature",
+            "action_key": "brutal_training",
+            "actor_id": "player-1",
+            "target_id": "ally-1",
+            "injuries_to_add": 2,
+        },
+    )
+    assert brutal_training.__class__.__name__ == "BrutalTrainingAction"
+    assert brutal_training.injuries_to_add == 2
+
+    ace_trainer = facade._build_action(
+        battle,
+        {
+            "type": "trainer_feature",
+            "action_key": "ace_trainer",
+            "actor_id": "player-1",
+            "target_id": "ally-1",
+            "stats": ["atk", "spd"],
+        },
+    )
+    assert ace_trainer.__class__.__name__ == "AceTrainerAction"
+    assert ace_trainer.stats == ["atk", "spd"]
+
+    agility_training = facade._build_action(
+        battle,
+        {
+            "type": "trainer_feature",
+            "action_key": "agility_training",
+            "actor_id": "player-1",
+            "target_id": "ally-1",
+        },
+    )
+    assert agility_training.__class__.__name__ == "AgilityTrainingAction"
+
+    focused_training = facade._build_action(
+        battle,
+        {
+            "type": "trainer_feature",
+            "action_key": "focused_training",
+            "actor_id": "player-1",
+            "target_id": "ally-1",
+        },
+    )
+    assert focused_training.__class__.__name__ == "FocusedTrainingAction"
+
+    inspired_training = facade._build_action(
+        battle,
+        {
+            "type": "trainer_feature",
+            "action_key": "inspired_training",
+            "actor_id": "player-1",
+            "target_id": "ally-1",
+        },
+    )
+    assert inspired_training.__class__.__name__ == "InspiredTrainingAction"
+
+    quick_healing = facade._build_action(
+        battle,
+        {
+            "type": "trainer_feature",
+            "action_key": "quick_healing",
+            "actor_id": "player-1",
+            "target_id": "ally-1",
+            "injuries_to_remove": 3,
+        },
+    )
+    assert quick_healing.__class__.__name__ == "QuickHealingAction"
+    assert quick_healing.injuries_to_remove == 3
+
+    go_fight_win = facade._build_action(
+        battle,
+        {
+            "type": "trainer_feature",
+            "action_key": "go_fight_win",
+            "actor_id": "player-1",
+            "cheer": "show_your_best",
+            "stat": "spdef",
+        },
+    )
+    assert go_fight_win.__class__.__name__ == "GoFightWinAction"
+    assert go_fight_win.cheer == "show_your_best"
+    assert go_fight_win.stat == "spdef"
 
 
 def test_engine_facade_snapshot_exposes_telepath_hint_state():
@@ -1470,6 +2676,99 @@ def test_engine_facade_snapshot_exposes_telepath_hint_state():
     hints = entry["trainer_action_hints"]
     assert hints["telepath_ap_ready"] is True
     assert hints["telepath_active"] is False
+
+
+def test_engine_facade_snapshot_exposes_ace_trainer_training_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=2)},
+        pokemon={
+            "player-1": PokemonState(
+                spec=_spec("Coach", [_move("Tackle")]),
+                controller_id="player",
+                position=(1, 1),
+            ),
+            "ally-1": PokemonState(
+                spec=_spec("Ally", [_move("Tackle")]),
+                controller_id="player",
+                position=(1, 2),
+            ),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(13),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [
+        {"name": "Ace Trainer"},
+        {"name": "Champ in the Making"},
+        {"name": "Elite Trainer", "choice": "Agility Training"},
+        {"name": "Focused Training"},
+        {"name": "Inspired Training"},
+    ]
+    facade.battle = battle
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["ace_trainer_ready"] is True
+    assert hints["ace_trainer_stat_count"] == 2
+    assert any(option["value"] == "atk" for option in hints["ace_trainer_stat_options"])
+    assert hints["agility_training_ready"] is True
+    assert hints["focused_training_ready"] is True
+    assert hints["inspired_training_ready"] is True
+
+
+def test_engine_facade_snapshot_exposes_duelist_hint_state():
+    facade = EngineFacade()
+    burst = MoveSpec(
+        name="Burst Test",
+        type="Normal",
+        category="Special",
+        db=6,
+        ac=2,
+        range_kind="Burst",
+        range_value=1,
+        target_kind="Self",
+        target_range=0,
+        area_kind="Burst",
+        area_value=1,
+        freq="EOT",
+    )
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", team="players", ap=3)},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Coach", [_move("Tackle")]), controller_id="player", position=(1, 1)),
+            "ally-1": PokemonState(spec=_spec("Ally", [burst]), controller_id="player", position=(1, 2)),
+            "foe-1": PokemonState(spec=_spec("Foe", [_move("Tackle")]), controller_id="foe", position=(2, 2)),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(27),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [
+        {"name": "Duelist"},
+        {"name": "Effective Methods"},
+        {"name": "Expend Momentum"},
+        {"name": "Duelist's Manual"},
+    ]
+    ally = battle.pokemon["ally-1"]
+    ally.add_temporary_effect("focused_training", source="Focused Training")
+    ally.spec.tutor_points = 2
+    battle._set_duelist_momentum(ally, 2)
+    battle.frequency_usage.setdefault("ally-1", {})["Burst Test"] = 1
+    facade.battle = battle
+
+    payload = facade.snapshot()
+
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["duelist_ready"] is True
+    assert hints["effective_methods_ready"] is True
+    assert hints["expend_momentum_ready"] is True
+    assert hints["duelists_manual_ready"] is True
+    assert hints["duelist_targets"][0]["target"] == "foe-1"
+    assert hints["effective_methods_targets"][0]["target"] == "ally-1"
+    assert any(option["move"] == "Burst Test" for option in hints["expend_momentum_targets"][0]["eot_moves"])
+    assert hints["duelists_manual_targets"][0]["target"] == "ally-1"
 
 
 def test_engine_facade_snapshot_exposes_ambient_aura_hints():
@@ -2041,3 +3340,60 @@ def test_engine_facade_snapshot_exposes_effective_weather_source():
     assert hints["effective_weather"] == "Hail"
     assert hints["effective_weather_source"] == "Arctic Zeal (Ice Beam)"
     assert hints["arctic_zeal_source_move"] == "Ice Beam"
+
+
+def test_engine_facade_snapshot_exposes_chef_hints_and_item_taste():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={
+            "player": TrainerState(identifier="player", name="Player", team="players", ap=3),
+            "foe": TrainerState(identifier="foe", name="Foe", team="foes"),
+        },
+        pokemon={
+            "chef-1": PokemonState(
+                spec=_spec("Chef", [_move("Tackle")]),
+                controller_id="player",
+                position=(1, 1),
+            ),
+            "ally-1": PokemonState(
+                spec=_spec("Ally", [_move("Tackle")]),
+                controller_id="player",
+                position=(2, 1),
+            ),
+            "foe-1": PokemonState(spec=_spec("Foe", [_move("Tackle")]), controller_id="foe", position=(5, 5)),
+        },
+        grid=GridState(width=6, height=6),
+        rng=random.Random(37),
+    )
+    battle.current_actor_id = "chef-1"
+    battle.pokemon["chef-1"].spec.trainer_features = [
+        {"name": "Hits the Spot"},
+        {"name": "Complex Aftertaste"},
+        {"name": "Culinary Appreciation"},
+    ]
+    battle.pokemon["chef-1"].add_temporary_effect("hits_the_spot_ready", target_id="ally-1", target_name="Ally", round=0)
+    battle.pokemon["chef-1"].add_temporary_effect(
+        "complex_aftertaste_ready",
+        target_id="ally-1",
+        target_name="Ally",
+        taste="sweet",
+        source_item="Chef Special",
+        instance_id="meal#1",
+        round=0,
+    )
+    battle.pokemon["ally-1"].spec.items = [{"name": "Sweet Confection", "taste": "sweet"}]
+    battle.pokemon["ally-1"].spec.tutor_points = 2
+    facade.battle = battle
+
+    payload = facade.snapshot()
+    chef = next(item for item in payload["combatants"] if item["id"] == "chef-1")
+    ally = next(item for item in payload["combatants"] if item["id"] == "ally-1")
+    hints = chef["trainer_action_hints"]
+
+    assert hints["culinary_appreciation_ready"] is True
+    assert hints["culinary_appreciation_targets"][0]["target"] == "ally-1"
+    assert hints["hits_the_spot_ready"] is True
+    assert hints["hits_the_spot_targets"][0]["target"] == "ally-1"
+    assert hints["complex_aftertaste_ready"] is True
+    assert hints["complex_aftertaste_targets"][0]["taste"] == "sweet"
+    assert ally["items"][0]["taste"] == "sweet"

@@ -2,7 +2,16 @@ from __future__ import annotations
 
 import pytest
 
-from auto_ptu.rules import BattleState, TrainerState, PokemonState, UseItemAction
+from auto_ptu.rules import (
+    BattleState,
+    TrainerState,
+    PokemonState,
+    UseItemAction,
+    FastPitchAction,
+    GottaCatchEmAllAction,
+    CapturedMomentumAction,
+    DevitalizingThrowAction,
+)
 from auto_ptu.data_models import MoveSpec, PokemonSpec
 
 
@@ -19,6 +28,45 @@ def _pokemon_spec(name: str = "Eevee") -> PokemonSpec:
         spd=12,
         moves=[MoveSpec(name="Tackle", type="Normal", category="Physical", db=4, ac=2)],
     )
+
+
+class FixedRng:
+    def __init__(self, *values: int) -> None:
+        self.values = list(values)
+
+    def randint(self, low: int, high: int) -> int:
+        if not self.values:
+            raise AssertionError(f"No fixed RNG value left for randint({low}, {high})")
+        value = self.values.pop(0)
+        assert low <= value <= high
+        return value
+
+
+def _trainer_combatant(*features: str, item: str = "Basic Ball") -> tuple[TrainerState, PokemonState]:
+    trainer = TrainerState(identifier="ash", name="Ash", team="heroes", ap=5)
+    spec = _pokemon_spec("Ash")
+    spec.tags.append("Trainer")
+    spec.items = [{"name": item}]
+    spec.trainer_features = [{"name": feature} for feature in features]
+    spec.skills = {
+        "acrobatics": 2,
+        "athletics": 4,
+        "stealth": 1,
+        "survival": 3,
+        "guile": 2,
+        "perception": 1,
+    }
+    return trainer, PokemonState(spec=spec, controller_id=trainer.identifier)
+
+
+def _wild_target(level: int = 20, hp: int | None = None) -> PokemonState:
+    spec = _pokemon_spec("Pikachu")
+    spec.level = level
+    spec.tags.append("Wild")
+    target = PokemonState(spec=spec, controller_id="wild")
+    if hp is not None:
+        target.hp = hp
+    return target
 
 
 def _capture_event(ball_name: str, *, target: PokemonState, weather: str | None = None) -> dict:
@@ -179,3 +227,168 @@ def test_capture_ball_feather_ball_flight_bonus() -> None:
     target = PokemonState(spec=spec, controller_id="ash")
     event = _capture_event("Feather Ball", target=target)
     assert event.get("multiplier") == 1.25
+
+
+def test_tools_of_the_trade_adds_poke_ball_accuracy_bonus() -> None:
+    trainer, actor = _trainer_combatant("Tools of the Trade")
+    target = _wild_target()
+    battle = BattleState(trainers={trainer.identifier: trainer}, pokemon={"ash": actor, "wild": target})
+    battle.rng = FixedRng(6, 90)
+
+    battle.queue_action(UseItemAction(actor_id="ash", item_index=0, target_id="wild"))
+    battle.resolve_next_action()
+
+    accuracy = next(evt for evt in battle.log if evt.get("effect") == "capture_accuracy")
+    assert accuracy["hit"] is True
+    assert accuracy["accuracy_bonus"] == 2
+    assert accuracy["tools_of_the_trade"] is True
+
+
+def test_snare_subtracts_ten_from_capture_roll_against_stuck_target() -> None:
+    trainer, actor = _trainer_combatant("Snare")
+    target = _wild_target(level=50)
+    target.statuses.append({"name": "Stuck"})
+    battle = BattleState(trainers={trainer.identifier: trainer}, pokemon={"ash": actor, "wild": target})
+    battle.rng = FixedRng(20, 50)
+
+    battle.queue_action(UseItemAction(actor_id="ash", item_index=0, target_id="wild"))
+    battle.resolve_next_action()
+
+    capture = next(evt for evt in battle.log if evt.get("effect") == "capture_roll")
+    assert "snare" in capture["reasons"]
+    assert capture["roll_modifier"] <= -40
+
+
+def test_gotta_catch_em_all_switches_capture_roll_digits() -> None:
+    trainer, actor = _trainer_combatant("Gotta Catch 'Em All")
+    target = _wild_target(level=50)
+    battle = BattleState(trainers={trainer.identifier: trainer}, pokemon={"ash": actor, "wild": target})
+    battle.rng = FixedRng(20, 91)
+
+    battle.queue_action(GottaCatchEmAllAction(actor_id="ash"))
+    battle.resolve_next_action()
+    battle.queue_action(UseItemAction(actor_id="ash", item_index=0, target_id="wild"))
+    battle.resolve_next_action()
+
+    capture = next(evt for evt in battle.log if evt.get("effect") == "capture_roll")
+    assert capture["digit_swap"] == {"from": 91, "to": 19}
+    assert capture["natural_roll"] == 19
+
+
+def test_devitalizing_throw_triggers_after_escape_and_applies_slow() -> None:
+    trainer, actor = _trainer_combatant("Devitalizing Throw")
+    target = _wild_target(level=80)
+    battle = BattleState(trainers={trainer.identifier: trainer}, pokemon={"ash": actor, "wild": target})
+    battle.rng = FixedRng(20, 99)
+
+    battle.queue_action(UseItemAction(actor_id="ash", item_index=0, target_id="wild"))
+    battle.resolve_next_action()
+    assert actor.get_temporary_effects("devitalizing_throw_ready")
+
+    battle.queue_action(DevitalizingThrowAction(actor_id="ash", mode="slow"))
+    battle.resolve_next_action()
+    assert target.has_status("Slowed")
+    assert trainer.ap == 4
+
+
+def test_captured_momentum_triggers_after_success_and_can_grant_temporary_ap() -> None:
+    trainer, actor = _trainer_combatant("Captured Momentum", item="Master Ball")
+    target = _wild_target(level=80)
+    battle = BattleState(trainers={trainer.identifier: trainer}, pokemon={"ash": actor, "wild": target})
+    battle.rng = FixedRng(20, 99)
+
+    battle.queue_action(UseItemAction(actor_id="ash", item_index=0, target_id="wild"))
+    battle.resolve_next_action()
+    assert actor.get_temporary_effects("captured_momentum_ready")
+    assert target.active is False
+
+    battle.queue_action(CapturedMomentumAction(actor_id="ash", mode="ap"))
+    battle.resolve_next_action()
+    assert trainer.ap == 6
+    assert trainer.temporary_ap
+
+
+def test_fast_pitch_spends_ap_and_throws_capture_ball() -> None:
+    trainer, actor = _trainer_combatant("Fast Pitch")
+    target = _wild_target(level=80)
+    battle = BattleState(trainers={trainer.identifier: trainer}, pokemon={"ash": actor, "wild": target})
+    battle.rng = FixedRng(20, 99)
+
+    battle.queue_action(FastPitchAction(actor_id="ash", item_index=0, target_id="wild"))
+    battle.resolve_next_action()
+
+    assert trainer.ap == 4
+    assert not actor.spec.items
+    assert any(evt.get("feature") == "Fast Pitch" for evt in battle.log)
+    assert any(evt.get("effect") == "capture_roll" for evt in battle.log)
+
+
+def test_hand_net_is_reusable_and_applies_capture_roll_bonus() -> None:
+    trainer, actor = _trainer_combatant("Tools of the Trade", item="Hand Net")
+    actor.spec.items.append({"name": "Basic Ball"})
+    target = _wild_target(level=80)
+    battle = BattleState(trainers={trainer.identifier: trainer}, pokemon={"ash": actor, "wild": target})
+    battle.rng = FixedRng(6, 20, 90)
+
+    battle.queue_action(UseItemAction(actor_id="ash", item_index=0, target_id="wild"))
+    battle.resolve_next_action()
+    assert [item["name"] for item in actor.spec.items] == ["Hand Net", "Basic Ball"]
+    accuracy = next(evt for evt in battle.log if evt.get("effect") == "capture_tool_accuracy")
+    assert accuracy["hit"] is True
+    assert accuracy["accuracy_bonus"] == 2
+    assert target.has_status("Trapped")
+    assert target.get_temporary_effects("capture_tool_trap")[0]["capture_roll_modifier"] == -20
+
+    battle.queue_action(UseItemAction(actor_id="ash", item_index=1, target_id="wild"))
+    battle.resolve_next_action()
+    capture = next(evt for evt in battle.log if evt.get("effect") == "capture_roll")
+    assert "hand net" in capture["reasons"]
+    assert capture["roll_modifier"] <= -40
+
+
+def test_weighted_net_slows_grounds_and_applies_capture_roll_bonus() -> None:
+    trainer, actor = _trainer_combatant(item="Weighted Nets")
+    target = _wild_target(level=40)
+    target.spec.movement["sky"] = 6
+    battle = BattleState(trainers={trainer.identifier: trainer}, pokemon={"ash": actor, "wild": target})
+    battle.rng = FixedRng(10)
+
+    battle.queue_action(UseItemAction(actor_id="ash", item_index=0, target_id="wild"))
+    battle.resolve_next_action()
+
+    assert actor.spec.items[0]["name"] == "Weighted Nets"
+    assert target.has_status("Slowed")
+    assert target.get_temporary_effects("force_grounded")
+    assert target.get_temporary_effects("capture_tool_trap")[0]["capture_roll_modifier"] == -20
+
+
+def test_glue_cannon_critical_hit_sticks_and_traps_target() -> None:
+    trainer, actor = _trainer_combatant(item="Glue Cannon")
+    target = _wild_target(level=40)
+    battle = BattleState(trainers={trainer.identifier: trainer}, pokemon={"ash": actor, "wild": target})
+    battle.rng = FixedRng(20)
+
+    battle.queue_action(UseItemAction(actor_id="ash", item_index=0, target_id="wild"))
+    battle.resolve_next_action()
+
+    assert actor.spec.items[0]["name"] == "Glue Cannon"
+    assert target.has_status("Stuck")
+    assert target.has_status("Trapped")
+    assert any(evt.get("tool") == "glue cannon" and evt.get("critical") is True for evt in battle.log)
+
+
+def test_bait_failed_focus_marks_target_for_snare_capture_bonus() -> None:
+    trainer, actor = _trainer_combatant("Snare", item="Bait")
+    actor.spec.items.append({"name": "Basic Ball"})
+    target = _wild_target(level=80)
+    battle = BattleState(trainers={trainer.identifier: trainer}, pokemon={"ash": actor, "wild": target})
+    battle.rng = FixedRng(1, 20, 90)
+
+    battle.queue_action(UseItemAction(actor_id="ash", item_index=0, target_id="wild"))
+    battle.resolve_next_action()
+    assert target.get_temporary_effects("bait_distracted")
+
+    battle.queue_action(UseItemAction(actor_id="ash", item_index=0, target_id="wild"))
+    battle.resolve_next_action()
+    capture = next(evt for evt in battle.log if evt.get("effect") == "capture_roll")
+    assert "snare" in capture["reasons"]

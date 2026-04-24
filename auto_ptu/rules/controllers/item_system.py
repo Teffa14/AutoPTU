@@ -27,7 +27,7 @@ from ..item_effects import parse_item_effects
 from ..abilities.ability_variants import has_ability_exact
 from ...foundry_loader import load_foundry_species_abilities, pick_abilities_for_level
 from ...learnsets import normalize_species_key
-from .. import targeting, movement
+from .. import calculations, targeting, movement
 from ..hooks.move_effect_tools import clear_hazards
 
 
@@ -119,6 +119,40 @@ def _pokemon_has_trait(pokemon: PokemonState, *traits: str) -> bool:
     trait_set = {_normalize_trait(tag) for tag in (pokemon.spec.tags or []) if tag}
     trait_set.update(_normalize_trait(cap) for cap in pokemon.capability_names())
     return any(_normalize_trait(trait) in trait_set for trait in traits)
+
+
+def _capture_tool_accuracy(battle: BattleState, actor: PokemonState, target: PokemonState, *, ac: int) -> Dict[str, object]:
+    roll = battle.rng.randint(1, 20)
+    evasion = calculations.evasion_value(target, "Status")
+    accuracy_bonus = 0
+    if actor.has_trainer_feature("Tools of the Trade"):
+        accuracy_bonus += 2
+    accuracy_stage = calculations.accuracy_stage_value(
+        actor.combat_stages.get("accuracy", 0) + actor.spec.accuracy_cs + accuracy_bonus
+    )
+    needed = max(2, int(ac) + evasion - accuracy_stage)
+    hit = roll == 20 or (roll != 1 and roll >= needed)
+    return {
+        "roll": roll,
+        "needed": needed,
+        "hit": hit,
+        "crit": roll == 20,
+        "accuracy_bonus": accuracy_bonus,
+        "tools_of_the_trade": actor.has_trainer_feature("Tools of the Trade"),
+    }
+
+
+def _capture_tool_size_rank(value: object) -> int:
+    label = str(value or "").strip().lower()
+    order = {
+        "tiny": 0,
+        "small": 1,
+        "medium": 2,
+        "large": 3,
+        "huge": 4,
+        "gigantic": 5,
+    }
+    return order.get(label, 2 if label else 1)
 
 @dataclass
 class ItemSystem:
@@ -1605,6 +1639,7 @@ class ItemSystem:
         if not name:
             return []
         normalized = name.lower()
+        actor_state = battle.pokemon.get(actor_id)
         events: List[dict] = []
         if normalized == "guard spec":
             target.add_temporary_effect(
@@ -3317,6 +3352,175 @@ class ItemSystem:
                     _apply_status_item(status="Bound", apply_target_id=pid, remaining=5)
                 )
             return events
+        if normalized in {"hand net", "hand nets"}:
+            if actor_state is None or target_id == actor_id:
+                return []
+            if _capture_tool_size_rank(getattr(target.spec, "size", "")) > 1:
+                return [
+                    {
+                        "type": "item",
+                        "actor": actor_id,
+                        "target": target_id,
+                        "item": name,
+                        "effect": "capture_tool_size_blocked",
+                        "tool": "hand net",
+                        "description": "Hand Net may only net Small or smaller Pokemon.",
+                        "target_hp": target.hp,
+                    }
+                ]
+            accuracy = _capture_tool_accuracy(battle, actor_state, target, ac=6)
+            events = [
+                {
+                    "type": "item",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "item": name,
+                    "effect": "capture_tool_accuracy",
+                    "tool": "hand net",
+                    **accuracy,
+                    "description": "Hand Net hits." if accuracy.get("hit") else "Hand Net misses.",
+                    "target_hp": target.hp,
+                }
+            ]
+            if not accuracy.get("hit"):
+                return events
+            target.add_temporary_effect(
+                "capture_tool_trap",
+                tool="hand net",
+                source=name,
+                capture_roll_modifier=-20,
+            )
+            events.extend(_apply_status_item(status="Trapped", apply_target_id=target_id))
+            events.append(
+                {
+                    "type": "item",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "item": name,
+                    "effect": "capture_tool_trap",
+                    "tool": "hand net",
+                    "capture_roll_modifier": -20,
+                    "description": "Hand Net traps the target; capture rolls against it gain a -20 bonus.",
+                    "target_hp": target.hp,
+                }
+            )
+            return events
+        if normalized in {"weighted net", "weighted nets"}:
+            if actor_state is None or target_id == actor_id:
+                return []
+            accuracy = _capture_tool_accuracy(battle, actor_state, target, ac=8)
+            events = [
+                {
+                    "type": "item",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "item": name,
+                    "effect": "capture_tool_accuracy",
+                    "tool": "weighted net",
+                    **accuracy,
+                    "description": "Weighted Net hits." if accuracy.get("hit") else "Weighted Net misses.",
+                    "target_hp": target.hp,
+                }
+            ]
+            if not accuracy.get("hit"):
+                return events
+            target.add_temporary_effect(
+                "capture_tool_trap",
+                tool="weighted net",
+                source=name,
+                capture_roll_modifier=-20,
+            )
+            target.add_temporary_effect("force_grounded", source=name)
+            events.extend(_apply_status_item(status="Slowed", apply_target_id=target_id))
+            events.append(
+                {
+                    "type": "item",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "item": name,
+                    "effect": "capture_tool_trap",
+                    "tool": "weighted net",
+                    "capture_roll_modifier": -20,
+                    "description": "Weighted Net slows and grounds the target; capture rolls against it gain a -20 bonus.",
+                    "target_hp": target.hp,
+                }
+            )
+            return events
+        if normalized == "glue cannon":
+            if actor_state is None or target_id == actor_id:
+                return []
+            accuracy = _capture_tool_accuracy(battle, actor_state, target, ac=8)
+            events = [
+                {
+                    "type": "item",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "item": name,
+                    "effect": "capture_tool_accuracy",
+                    "tool": "glue cannon",
+                    **accuracy,
+                    "description": "Glue Cannon hits." if accuracy.get("hit") else "Glue Cannon misses.",
+                    "target_hp": target.hp,
+                }
+            ]
+            if not accuracy.get("hit"):
+                return events
+            target.add_temporary_effect("capture_tool_trap", tool="glue cannon", source=name)
+            if accuracy.get("crit"):
+                events.extend(_apply_status_item(status="Stuck", apply_target_id=target_id))
+                events.extend(_apply_status_item(status="Trapped", apply_target_id=target_id))
+                description = "Glue Cannon critically hits; the target is Stuck and Trapped."
+            else:
+                events.extend(_apply_status_item(status="Slowed", apply_target_id=target_id))
+                description = "Glue Cannon slows the target."
+            events.append(
+                {
+                    "type": "item",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "item": name,
+                    "effect": "capture_tool_trap",
+                    "tool": "glue cannon",
+                    "critical": bool(accuracy.get("crit")),
+                    "description": description,
+                    "target_hp": target.hp,
+                }
+            )
+            return events
+        if normalized in {"lasso", "lassos"}:
+            if actor_state is None or target_id == actor_id:
+                return []
+            accuracy = _capture_tool_accuracy(battle, actor_state, target, ac=6)
+            events = [
+                {
+                    "type": "item",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "item": name,
+                    "effect": "capture_tool_accuracy",
+                    "tool": "lasso",
+                    **accuracy,
+                    "description": "Lasso hits." if accuracy.get("hit") else "Lasso misses.",
+                    "target_hp": target.hp,
+                }
+            ]
+            if not accuracy.get("hit"):
+                return events
+            target.add_temporary_effect("capture_tool_trap", tool="lasso", source=name)
+            events.extend(_apply_status_item(status="Trapped", apply_target_id=target_id))
+            events.append(
+                {
+                    "type": "item",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "item": name,
+                    "effect": "capture_tool_trap",
+                    "tool": "lasso",
+                    "description": "Lasso traps the target.",
+                    "target_hp": target.hp,
+                }
+            )
+            return events
         if normalized == "trapbust orb":
             if battle.grid is None:
                 return []
@@ -3571,6 +3775,14 @@ class ItemSystem:
             focus_bonus = apply_target.skill_rank("focus")
             total = roll + focus_bonus
             if total < 12:
+                apply_target.add_temporary_effect(
+                    "bait_distracted",
+                    source=name,
+                    expires_round=battle.round + 1,
+                    dc=12,
+                    roll=roll,
+                    total=total,
+                )
                 status_events = _apply_status_item(
                     status="Flinched",
                     apply_target_id=target_id,
@@ -3822,11 +4034,52 @@ class ItemSystem:
         def _modify_base_stat(stat: str, delta: int, effect: str) -> List[dict]:
             if target.hp is None or target.hp <= 0:
                 return []
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            vitamin_data = choices.get("vitamins_used", {})
+            if not isinstance(vitamin_data, dict):
+                vitamin_data = {}
+            vitamin_stats = vitamin_data.get("stats", {})
+            if not isinstance(vitamin_stats, dict):
+                vitamin_stats = {}
+            vitamin_total = max(0, int(vitamin_data.get("total", 0) or 0))
+            trainer = battle.trainers.get(target.controller_id)
+            vitamin_cap = 7 if trainer is not None and trainer.has_trainer_feature("Dietician") else 5
+            if int(delta) > 0 and vitamin_total >= vitamin_cap:
+                return [
+                    {
+                        "type": "item",
+                        "actor": actor_id,
+                        "target": target_id,
+                        "item": name,
+                        "effect": "vitamin_cap",
+                        "stat": stat,
+                        "cap": vitamin_cap,
+                        "vitamins_used": vitamin_total,
+                        "target_hp": target.hp,
+                    }
+                ]
             current = int(getattr(target.spec, stat))
             new_value = max(1, current + int(delta))
             if new_value == current:
                 return []
             setattr(target.spec, stat, new_value)
+            if int(delta) > 0:
+                vitamin_stats[stat] = max(0, int(vitamin_stats.get(stat, 0) or 0)) + 1
+                vitamin_total += 1
+            elif int(delta) < 0:
+                used_for_stat = max(0, int(vitamin_stats.get(stat, 0) or 0))
+                if used_for_stat > 0:
+                    next_used = used_for_stat - 1
+                    if next_used > 0:
+                        vitamin_stats[stat] = next_used
+                    else:
+                        vitamin_stats.pop(stat, None)
+                    vitamin_total = max(0, vitamin_total - 1)
+            choices["vitamins_used"] = {
+                "total": vitamin_total,
+                "stats": vitamin_stats,
+            }
+            target.spec.poke_edge_choices = choices
             if stat == "hp_stat":
                 max_hp = target.max_hp()
                 if (target.hp or 0) > max_hp:
@@ -3840,6 +4093,8 @@ class ItemSystem:
                     "effect": effect,
                     "stat": stat,
                     "amount": new_value - current,
+                    "vitamin_cap": vitamin_cap,
+                    "vitamins_used": vitamin_total,
                     "target_hp": target.hp,
                 }
             ]
@@ -4076,6 +4331,9 @@ class ItemSystem:
                         return []
                     target.spec.level += 1
                     gained: List[str] = []
+                    top_percentage_bonus = 0
+                    top_percentage_uses = 0
+                    top_percentage_base_stats_applied = False
                     pools = load_foundry_species_abilities().get(
                         normalize_species_key(target.spec.species or target.spec.name or "")
                     )
@@ -4094,6 +4352,39 @@ class ItemSystem:
                         if added:
                             gained = added
                             target.spec.abilities = [{"name": name} for name in updated_names]
+                    trainer = battle.trainers.get(target.controller_id)
+                    if (
+                        trainer is not None
+                        and trainer.has_trainer_feature("Top Percentage")
+                        and target.spec.level % 5 == 0
+                    ):
+                        choices = getattr(target.spec, "poke_edge_choices", {}) or {}
+                        top_percentage_data = choices.get("top_percentage", {})
+                        if not isinstance(top_percentage_data, dict):
+                            top_percentage_data = {}
+                        use_count = max(0, int(top_percentage_data.get("count", 0) or 0))
+                        if use_count < 4:
+                            use_count += 1
+                            target.spec.tutor_points = max(
+                                0,
+                                int(getattr(target.spec, "tutor_points", 0) or 0) + 1,
+                            )
+                            top_percentage_bonus = 1
+                            top_percentage_uses = use_count
+                            top_percentage_data["count"] = use_count
+                            if use_count >= 4 and not bool(
+                                top_percentage_data.get("base_stats_applied", False)
+                            ):
+                                for attr in ("hp_stat", "atk", "defense", "spatk", "spdef", "spd"):
+                                    setattr(
+                                        target.spec,
+                                        attr,
+                                        max(1, int(getattr(target.spec, attr, 1) or 1) + 1),
+                                    )
+                                top_percentage_data["base_stats_applied"] = True
+                                top_percentage_base_stats_applied = True
+                            choices["top_percentage"] = top_percentage_data
+                            target.spec.poke_edge_choices = choices
                     return [
                         {
                             "type": "item",
@@ -4103,6 +4394,9 @@ class ItemSystem:
                             "effect": "level_up",
                             "new_level": target.spec.level,
                             "gained_abilities": gained,
+                            "tutor_points_awarded": top_percentage_bonus,
+                            "top_percentage_uses": top_percentage_uses,
+                            "top_percentage_base_stats_applied": top_percentage_base_stats_applied,
                             "target_hp": target.hp,
                         }
                     ]

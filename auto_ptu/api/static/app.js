@@ -1,6 +1,7 @@
 const battleElements = window.PTUBattleUI?.getElements ? window.PTUBattleUI.getElements(document) : {};
 const gridEl = battleElements.gridEl || document.getElementById("grid");
 const gridWrapEl = gridEl?.parentElement;
+const gridMapSurfaceEl = document.getElementById("grid-map-surface");
 const combatantListEl = battleElements.combatantListEl || document.getElementById("combatant-list");
 const detailsEl = battleElements.detailsEl || document.getElementById("combatant-details");
 const trainerDetailsEl = battleElements.trainerDetailsEl || document.getElementById("trainer-details");
@@ -37,13 +38,24 @@ const cinematicPerfEl = document.getElementById("cinematic-perf");
 const aiModelSelect = document.getElementById("ai-model-select");
 const aiModelRefreshButton = document.getElementById("ai-model-refresh");
 const aiModelRefreshTopButton = document.getElementById("ai-model-refresh-top");
+const aiModelBranchButton = document.getElementById("ai-model-branch");
+const aiModelBranchTopButton = document.getElementById("ai-model-branch-top");
 const aiModelMathEl = document.getElementById("ai-model-math");
 const aiModelInsightEl = document.getElementById("ai-model-insight");
+const aiDriftThresholdInput = document.getElementById("ai-drift-threshold");
+const aiMinUpdatesInput = document.getElementById("ai-min-updates");
+const aiCheckEveryInput = document.getElementById("ai-check-every");
+const aiModelSettingsApplyButton = document.getElementById("ai-model-settings-apply");
 const autoIntervalInput = document.getElementById("auto-interval");
 const undoButton = battleElements.undoButton || document.getElementById("undo-action");
 const zoomInButton = battleElements.zoomInButton || document.getElementById("zoom-in");
 const zoomOutButton = battleElements.zoomOutButton || document.getElementById("zoom-out");
 const zoomFitButton = battleElements.zoomFitButton || document.getElementById("zoom-fit");
+const importTerrainJsonButton = document.getElementById("import-terrain-json");
+const importTerrainJsonInput = document.getElementById("import-terrain-json-input");
+const savedBattlefieldSelect = document.getElementById("saved-battlefield-select");
+const reuseSavedBattlefieldToggle = document.getElementById("reuse-saved-battlefield");
+const clearSavedBattlefieldButton = document.getElementById("clear-saved-battlefield");
 const moveTooltip = battleElements.moveTooltip || document.getElementById("move-tooltip");
 const logFilterActions = document.getElementById("log-actions");
 const logFilterDamage = document.getElementById("log-damage");
@@ -71,6 +83,10 @@ const clearTrainerButton = document.getElementById("clear-trainer");
 const importRosterCsvButton = document.getElementById("import-roster-csv");
 const exportRosterCsvButton = document.getElementById("export-roster-csv");
 const clearRosterCsvButton = document.getElementById("clear-roster-csv");
+const savedRosterSelect = document.getElementById("saved-roster-select");
+const savedRosterSideSelect = document.getElementById("saved-roster-side-select");
+const loadSavedRosterButton = document.getElementById("load-saved-roster");
+const forgetSavedRosterButton = document.getElementById("forget-saved-roster");
 const exportRosterMirrorInput = document.getElementById("export-roster-mirror");
 const autoUseCreatorRosterInput = document.getElementById("auto-use-creator-roster");
 const csvStrictModeInput = document.getElementById("csv-strict-mode");
@@ -104,6 +120,13 @@ let _builderRerenderQueued = false;
 let combatantTeamFilter = "all";
 let battleRosterCsvText = "";
 let battleRosterCsvMeta = null;
+let savedRosterSummaries = [];
+let selectedRosterId = "";
+let selectedRosterLoadMode = "__keep__";
+let savedBattlefieldSummaries = [];
+let selectedBattlefieldId = "";
+let selectedBattlefieldGrid = null;
+let useSavedBattlefield = true;
 let sideNameOverrides = {};
 let sideNameEditorSignature = "";
 let deploymentOverrides = {};
@@ -445,6 +468,7 @@ let lastRenderedPositions = new Map();
 let characterData = null;
 let masterData = null;
 let learnsetData = null;
+let pokemonMoveSourceData = null;
 let moveRecordMap = null;
 let characterStep = "profile";
 const _navStack = [];
@@ -542,6 +566,7 @@ let characterState = {
   class_ids: [],
   class_id: "",
   features: new Set(),
+  feature_details: {},
   edges: new Set(),
   feature_order: [],
   edge_order: [],
@@ -595,6 +620,12 @@ let characterState = {
   planner_targets: [],
   planner_targets_expanded: false,
   training_type: "",
+  capture_techniques: [],
+  commander_orders: [],
+  hobbyist_skill_edges: [],
+  look_and_learn_features: {},
+  dilettante_picks: [],
+  mentor_skills: [],
   extras: [],
   pokemon_builds: [],
   inventory: {
@@ -615,6 +646,171 @@ let characterState = {
   pokemon_team_auto_level_explicit: false,
   pokemon_team_autofill: true,
 };
+
+const CAPTURE_TECHNIQUE_NAMES = [
+  "Capture Skills",
+  "Curve Ball",
+  "Devitalizing Throw",
+  "Fast Pitch",
+  "Snare",
+  "Tools of the Trade",
+  "Catch Combo",
+  "False Strike",
+  "Relentless Pursuit",
+];
+
+const STAT_ACE_GENERIC_FEATURES = new Set([
+  "Stat Ace",
+  "Stat Link",
+  "Stat Training",
+  "Stat Maneuver",
+  "Stat Mastery",
+  "Stat Stratagem",
+  "Stat Embodiment",
+]);
+const TYPE_ACE_GENERIC_FEATURES = new Set([
+  "Type Ace",
+  "Type Refresh",
+  "Move Sync",
+]);
+const STAT_ACE_STAT_OPTIONS = [
+  ["atk", "Attack"],
+  ["def", "Defense"],
+  ["spatk", "Special Attack"],
+  ["spdef", "Special Defense"],
+  ["spd", "Speed"],
+];
+const TYPE_ACE_TYPE_OPTIONS = [
+  ["normal", "Normal"],
+  ["fire", "Fire"],
+  ["water", "Water"],
+  ["electric", "Electric"],
+  ["grass", "Grass"],
+  ["ice", "Ice"],
+  ["fighting", "Fighting"],
+  ["poison", "Poison"],
+  ["ground", "Ground"],
+  ["flying", "Flying"],
+  ["psychic", "Psychic"],
+  ["bug", "Bug"],
+  ["rock", "Rock"],
+  ["ghost", "Ghost"],
+  ["dragon", "Dragon"],
+  ["dark", "Dark"],
+  ["steel", "Steel"],
+  ["fairy", "Fairy"],
+];
+const CAPTURE_TECHNIQUE_SKILLS = ["Acrobatics", "Athletics", "Stealth", "Survival", "Guile", "Perception"];
+const COMMANDER_ORDER_GROUP_OPTIONS = [
+  "Ravager Orders",
+  "Marksman Orders",
+  "Trickster Orders",
+  "Guardian Orders",
+  "Precision Orders",
+];
+const HOBBYIST_MILESTONES = [5, 10, 20, 30, 40];
+const HOBBYIST_LOOK_AND_LEARN_SCENE_OPTIONS = [
+  { name: "Critical Moment", trainerClass: "Ace Trainer", listedPrereq: "" },
+  { name: "Nuanced Performance", trainerClass: "Coordinator", listedPrereq: "" },
+  { name: "False Strike", trainerClass: "Capture Specialist", listedPrereq: "" },
+  { name: "Catch Combo", trainerClass: "Capture Specialist", listedPrereq: "" },
+  { name: "Round Trip", trainerClass: "Juggler", listedPrereq: "Quick Switch" },
+  { name: "Staying Power", trainerClass: "Enduring Soul", listedPrereq: "" },
+  { name: "Hits the Spot", trainerClass: "Chef", listedPrereq: "Basic Cooking" },
+  { name: "Sleight", trainerClass: "Trickster", listedPrereq: "" },
+  { name: "Style is Eternal", trainerClass: "Fashionista", listedPrereq: "Groomer" },
+  { name: "Chemical Warfare", trainerClass: "Researcher", listedPrereq: "Repel Crafter" },
+  { name: "Mettle", trainerClass: "Roughneck", listedPrereq: "" },
+];
+const HOBBYIST_LOOK_AND_LEARN_AP_OPTIONS = [
+  { name: "Commander's Voice", trainerClass: "Commander", listedPrereq: "" },
+  { name: "Grace", trainerClass: "Coordinator", listedPrereq: "" },
+  { name: "Poke Ball Crafter", trainerClass: "Poke Ball Crafter", listedPrereq: "" },
+  { name: "Quick Switch", trainerClass: "Juggler", listedPrereq: "" },
+  { name: "Medic Training", trainerClass: "Medic", listedPrereq: "" },
+  { name: "Basic Cooking", trainerClass: "Chef", listedPrereq: "" },
+  { name: "Command Versatility", trainerClass: "Trickster", listedPrereq: "" },
+  { name: "Groomer", trainerClass: "Fashionista", listedPrereq: "" },
+  { name: "Repel Crafter", trainerClass: "Researcher", listedPrereq: "" },
+  { name: "Coaching", trainerClass: "Athlete", listedPrereq: "Swimmer" },
+  { name: "Defender", trainerClass: "Roughneck", listedPrereq: "" },
+  { name: "Quick Gymnastics", trainerClass: "Tumbler", listedPrereq: "Acrobat" },
+];
+const MENTOR_SKILL_OPTIONS = [
+  { label: "Charm", skill: "Charm" },
+  { label: "Intimidate", skill: "Intimidate" },
+  { label: "Intuition", skill: "Intuition" },
+  { label: "Pokemon Education", skill: "Pokémon Ed" },
+];
+const MENTOR_LESSONS = [
+  {
+    key: "empowered_development",
+    name: "Empowered Development",
+    skill: "Charm",
+    cost: 1,
+    onceKey: "empowered_development",
+    effect: "Gain any three of Skill Improvement, Advanced Mobility, or Capability Training.",
+  },
+  {
+    key: "corrective_learning",
+    name: "Corrective Learning",
+    skill: "Intimidate",
+    cost: 0,
+    effect: "Remove one Tutor Point effect or Poke Edge and refund its Tutor Point cost.",
+  },
+  {
+    key: "changing_viewpoints",
+    name: "Changing Viewpoints",
+    skill: "Intuition",
+    cost: 1,
+    effect: "Change Nature to one with the same raised stat or the same lowered stat.",
+  },
+  {
+    key: "versatile_teachings",
+    name: "Versatile Teachings",
+    skill: "Pokémon Ed",
+    cost: 1,
+    effect: "Exchange a Basic Ability for another Basic Ability, or an Advanced Ability for a Basic or Advanced Ability.",
+  },
+];
+const MENTOR_NATURE_CHART = [
+  { nature: "Cuddly", raise: "HP", lower: "Attack" },
+  { nature: "Distracted", raise: "HP", lower: "Defense" },
+  { nature: "Proud", raise: "HP", lower: "Special Atk." },
+  { nature: "Decisive", raise: "HP", lower: "Special Def." },
+  { nature: "Patient", raise: "HP", lower: "Speed" },
+  { nature: "Desperate", raise: "Attack", lower: "HP" },
+  { nature: "Lonely", raise: "Attack", lower: "Defense" },
+  { nature: "Adamant", raise: "Attack", lower: "Special Atk." },
+  { nature: "Naughty", raise: "Attack", lower: "Special Def." },
+  { nature: "Brave", raise: "Attack", lower: "Speed" },
+  { nature: "Stark", raise: "Defense", lower: "HP" },
+  { nature: "Bold", raise: "Defense", lower: "Attack" },
+  { nature: "Impish", raise: "Defense", lower: "Special Atk." },
+  { nature: "Lax", raise: "Defense", lower: "Special Def." },
+  { nature: "Relaxed", raise: "Defense", lower: "Speed" },
+  { nature: "Curious", raise: "Special Atk.", lower: "HP" },
+  { nature: "Modest", raise: "Special Atk.", lower: "Attack" },
+  { nature: "Mild", raise: "Special Atk.", lower: "Defense" },
+  { nature: "Rash", raise: "Special Atk.", lower: "Special Def." },
+  { nature: "Quiet", raise: "Special Atk.", lower: "Speed" },
+  { nature: "Dreamy", raise: "Special Def.", lower: "HP" },
+  { nature: "Calm", raise: "Special Def.", lower: "Attack" },
+  { nature: "Gentle", raise: "Special Def.", lower: "Defense" },
+  { nature: "Careful", raise: "Special Def.", lower: "Special Atk." },
+  { nature: "Sassy", raise: "Special Def.", lower: "Speed" },
+  { nature: "Skittish", raise: "Speed", lower: "HP" },
+  { nature: "Timid", raise: "Speed", lower: "Attack" },
+  { nature: "Hasty", raise: "Speed", lower: "Defense" },
+  { nature: "Jolly", raise: "Speed", lower: "Special Atk." },
+  { nature: "Naive", raise: "Speed", lower: "Special Def." },
+  { nature: "Composed*", raise: "HP", lower: "HP" },
+  { nature: "Hardy*", raise: "Attack", lower: "Attack" },
+  { nature: "Docile*", raise: "Defense", lower: "Defense" },
+  { nature: "Bashful*", raise: "Special Atk.", lower: "Special Atk." },
+  { nature: "Quirky*", raise: "Special Def.", lower: "Special Def." },
+  { nature: "Serious*", raise: "Speed", lower: "Speed" },
+];
 const pokeApiMoveMetaCache = new Map();
 const pokeApiAbilityMetaCache = new Map();
 const pokeApiItemMetaCache = new Map();
@@ -856,6 +1052,873 @@ function _removeFromOrder(order, name) {
   if (idx >= 0) order.splice(idx, 1);
 }
 
+function _captureTechniqueCanonicalName(value) {
+  const text = String(value || "").trim();
+  if (!text) return "";
+  const captureSkillMatch = text.match(/^capture skills\s*:?\s*(.*)$/i);
+  if (captureSkillMatch) {
+    const rawSkill = String(captureSkillMatch[1] || "").trim();
+    if (!rawSkill) return "Capture Skills";
+    const skill = CAPTURE_TECHNIQUE_SKILLS.find((name) => name.toLowerCase() === rawSkill.toLowerCase()) || rawSkill;
+    return `Capture Skills: ${skill}`;
+  }
+  return CAPTURE_TECHNIQUE_NAMES.find((name) => name.toLowerCase() === text.toLowerCase()) || text;
+}
+
+function _isCaptureTechniqueLabel(value) {
+  const label = _captureTechniqueCanonicalName(value);
+  return (
+    label.toLowerCase().startsWith("capture skills") ||
+    CAPTURE_TECHNIQUE_NAMES.some((name) => name.toLowerCase() === label.toLowerCase())
+  );
+}
+
+function _captureTechniqueSelections() {
+  return (Array.isArray(characterState.capture_techniques) ? characterState.capture_techniques : [])
+    .map(_captureTechniqueCanonicalName)
+    .filter(Boolean);
+}
+
+function _captureTechniqueSlots() {
+  let slots = 0;
+  Array.from(characterState.features || []).forEach((name) => {
+    const label = String(name || "").trim();
+    if (label === "Capture Specialist" || /^Advanced Capture Techniques Rank \d+$/i.test(label)) {
+      slots += 2;
+    }
+  });
+  return slots;
+}
+
+function _captureTechniqueRuntimeNames(entries = null) {
+  const out = [];
+  const seen = new Set();
+  (entries || _captureTechniqueSelections()).forEach((entry) => {
+    const label = _captureTechniqueCanonicalName(entry);
+    if (!label || label.toLowerCase().startsWith("capture skills")) return;
+    const key = label.toLowerCase();
+    if (seen.has(key)) return;
+    seen.add(key);
+    out.push(label);
+  });
+  return out;
+}
+
+function _sanitizeCaptureTechniqueSelections() {
+  const slots = _captureTechniqueSlots();
+  const selected = _captureTechniqueSelections();
+  const normalized = selected.slice(0, Math.max(0, slots));
+  if (normalized.join("\n") !== (characterState.capture_techniques || []).join("\n")) {
+    characterState.capture_techniques = normalized;
+  }
+  return normalized;
+}
+
+function _stripRuntimeCaptureTechniques(featureList) {
+  const features = [];
+  const captureTechniques = [];
+  (Array.isArray(featureList) ? featureList : []).forEach((value) => {
+    const featureName = value && typeof value === "object" && !Array.isArray(value)
+      ? String(value.name || value.feature_id || value.id || "").trim()
+      : String(value || "").trim();
+    const label = _captureTechniqueCanonicalName(featureName);
+    if (_isCaptureTechniqueLabel(label) && !["Capture Specialist"].includes(label)) {
+      captureTechniques.push(label);
+    } else if (featureName) {
+      features.push(featureName);
+    }
+  });
+  return { features, captureTechniques };
+}
+
+function _captureExpertSkillCount() {
+  const rules = characterData?.skill_rules || { ranks: [] };
+  return CAPTURE_TECHNIQUE_SKILLS.filter((skill) => _rankIndex(_findSkillRank(skill), rules) >= _rankIndex("Expert", rules)).length;
+}
+
+function _captureSkillGrantBudgetCredit(rules) {
+  const costs = rules?.rank_costs || {};
+  let credit = 0;
+  _captureTechniqueSelections().forEach((entry) => {
+    const match = String(entry || "").match(/^Capture Skills:\s*(.+?)(?:\s*(?:->|to)\s*(Adept|Expert))?$/i);
+    if (!match) return;
+    const targetRank = match[2] || _findSkillRank(match[1].trim());
+    const previousRank = targetRank === "Expert" ? "Adept" : targetRank === "Adept" ? "Novice" : "";
+    if (!previousRank) return;
+    credit += Math.max(0, Number(costs[targetRank] ?? 0) - Number(costs[previousRank] ?? 0));
+  });
+  return credit;
+}
+
+function _captureTechniqueUnavailableReason(name) {
+  if (["Catch Combo", "False Strike", "Relentless Pursuit"].includes(name) && _captureExpertSkillCount() < 3) {
+    return "Requires any 3 Capture Skills at Expert Rank.";
+  }
+  return "";
+}
+
+function _addCaptureSkillTechnique() {
+  const rules = characterData?.skill_rules || { ranks: [] };
+  const choices = CAPTURE_TECHNIQUE_SKILLS.map((skill) => {
+    const rank = _findSkillRank(skill);
+    const idx = _rankIndex(rank, rules);
+    const noviceIdx = _rankIndex("Novice", rules);
+    const expertIdx = _rankIndex("Expert", rules);
+    if (idx < noviceIdx || idx >= expertIdx) return null;
+    const nextRank = idx < _rankIndex("Adept", rules) ? "Adept" : "Expert";
+    return {
+      label: `${skill}: ${rank} -> ${nextRank}`,
+      value: `Capture Skills: ${skill} -> ${nextRank}`,
+      skill,
+      nextRank,
+      description: `Raise ${skill} to ${nextRank}.`,
+    };
+  }).filter(Boolean);
+  if (!choices.length) {
+    notifyUI("warn", "Capture Skills requires one of Acrobatics, Athletics, Stealth, Survival, Guile, or Perception at Novice or Adept.");
+    return;
+  }
+  pickTrainerFeatureOption(
+    "Choose Capture Skill",
+    choices,
+    (choice) => {
+      if (_captureTechniqueSelections().length >= _captureTechniqueSlots()) return;
+      if (choice.skill && choice.nextRank) {
+        characterState.skills[choice.skill] = choice.nextRank;
+      }
+      characterState.capture_techniques = [..._captureTechniqueSelections(), choice.value];
+      saveCharacterToStorage();
+      renderCharacterFeatures();
+    },
+    "Capture Skills raises one Capture Specialist skill from Novice to Adept or Adept to Expert."
+  );
+}
+
+function _renderCaptureTechniquePanel(parent) {
+  const slots = _captureTechniqueSlots();
+  const selected = _sanitizeCaptureTechniqueSelections();
+  if (!slots && !selected.length) return;
+  const panel = document.createElement("div");
+  panel.className = "char-selected-panel";
+  const title = document.createElement("div");
+  title.className = "char-selected-title";
+  title.textContent = `Capture Techniques (${selected.length}/${slots})`;
+  panel.appendChild(title);
+  const meta = document.createElement("div");
+  meta.className = "char-feature-meta";
+  meta.textContent = "These come from Capture Specialist and Advanced Capture Techniques. They do not spend normal feature slots, but are exported to battle as trainer features.";
+  panel.appendChild(meta);
+  const selectedPanel = createSelectedPanel("Selected Capture Techniques", selected, (name) => {
+    const idx = selected.indexOf(name);
+    if (idx >= 0) selected.splice(idx, 1);
+    characterState.capture_techniques = selected;
+    saveCharacterToStorage();
+    renderCharacterFeatures();
+  });
+  panel.appendChild(selectedPanel);
+  const list = document.createElement("div");
+  list.className = "char-list-panel";
+  CAPTURE_TECHNIQUE_NAMES.forEach((name) => {
+    const isCaptureSkills = name === "Capture Skills";
+    const alreadySelected = !isCaptureSkills && selected.some((entry) => entry.toLowerCase() === name.toLowerCase());
+    const unavailable = _captureTechniqueUnavailableReason(name);
+    const row = document.createElement("div");
+    row.className = "char-row";
+    const body = document.createElement("div");
+    body.className = "char-row-main";
+    const label = document.createElement("div");
+    label.className = "char-row-title";
+    label.textContent = name;
+    const detail = document.createElement("div");
+    detail.className = "char-row-meta";
+    detail.textContent = unavailable || (isCaptureSkills ? "Choose one Capture Specialist skill to rank up." : "Capture Technique battle engine support.");
+    body.appendChild(label);
+    body.appendChild(detail);
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "char-mini-button";
+    add.textContent = alreadySelected ? "Selected" : "Add";
+    add.disabled = selected.length >= slots || alreadySelected || !!unavailable;
+    add.addEventListener("click", () => {
+      if (isCaptureSkills) {
+        _addCaptureSkillTechnique();
+        return;
+      }
+      characterState.capture_techniques = [..._captureTechniqueSelections(), name];
+      saveCharacterToStorage();
+      renderCharacterFeatures();
+    });
+    row.appendChild(body);
+    row.appendChild(add);
+    list.appendChild(row);
+  });
+  panel.appendChild(list);
+  parent.appendChild(panel);
+}
+
+function _commanderOrderSelections() {
+  return (Array.isArray(characterState.commander_orders) ? characterState.commander_orders : [])
+    .map((entry) => {
+      const label = String(entry || "").trim();
+      return COMMANDER_ORDER_GROUP_OPTIONS.find((name) => name.toLowerCase() === label.toLowerCase()) || label;
+    })
+    .filter(Boolean);
+}
+
+function _commanderOrderSlots() {
+  return characterState.features?.has?.("Commander") ? 1 : 0;
+}
+
+function _sanitizeCommanderOrderSelections() {
+  const slots = _commanderOrderSlots();
+  const selected = _commanderOrderSelections().slice(0, Math.max(0, slots));
+  if (selected.join("\n") !== (characterState.commander_orders || []).join("\n")) {
+    characterState.commander_orders = selected;
+  }
+  return selected;
+}
+
+function _renderCommanderOrdersPanel(parent) {
+  const slots = _commanderOrderSlots();
+  const selected = _sanitizeCommanderOrderSelections();
+  if (!slots && !selected.length) return;
+  const panel = document.createElement("div");
+  panel.className = "char-selected-panel";
+  const title = document.createElement("div");
+  title.className = "char-selected-title";
+  title.textContent = `Commander Orders (${selected.length}/${slots})`;
+  panel.appendChild(title);
+  const meta = document.createElement("div");
+  meta.className = "char-feature-meta";
+  meta.textContent = "Commander grants one Orders feature for free. This is exported to battle but does not spend a normal feature slot.";
+  panel.appendChild(meta);
+  panel.appendChild(createSelectedPanel("Selected Commander Orders", selected, (name) => {
+    characterState.commander_orders = selected.filter((entry) => entry !== name);
+    saveCharacterToStorage();
+    renderCharacterFeatures();
+  }));
+  const list = document.createElement("div");
+  list.className = "char-list-panel";
+  COMMANDER_ORDER_GROUP_OPTIONS.forEach((name) => {
+    const row = document.createElement("div");
+    row.className = "char-row";
+    const body = document.createElement("div");
+    body.className = "char-row-main";
+    const label = document.createElement("div");
+    label.className = "char-row-title";
+    label.textContent = name;
+    const detail = document.createElement("div");
+    detail.className = "char-row-meta";
+    detail.textContent = "Granted by Commander even if you do not meet this Orders feature's prerequisites.";
+    body.appendChild(label);
+    body.appendChild(detail);
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "char-mini-button";
+    add.textContent = selected.includes(name) ? "Selected" : "Select";
+    add.disabled = selected.includes(name) || selected.length >= slots;
+    add.addEventListener("click", () => {
+      characterState.commander_orders = [name];
+      saveCharacterToStorage();
+      renderCharacterFeatures();
+    });
+    row.appendChild(body);
+    row.appendChild(add);
+    list.appendChild(row);
+  });
+  panel.appendChild(list);
+  parent.appendChild(panel);
+}
+
+function _hasFeature(name) {
+  const key = _normalizeMatchKey(name);
+  return Array.from(characterState.features || []).some((entry) => _normalizeMatchKey(entry) === key);
+}
+
+function _pokemonStatRelationExceptions() {
+  const exceptions = [];
+  if (_hasFeature("Enduring Soul")) {
+    exceptions.push({
+      stat: "HP",
+      source: "Enduring Soul",
+      description: "HP stat points may ignore Base Relations, and you do not need to correct other stats for high HP.",
+    });
+  }
+  return exceptions;
+}
+
+function _pokemonStatRelationExceptionText() {
+  const entries = _pokemonStatRelationExceptions();
+  if (!entries.length) return "";
+  return entries.map((entry) => `${entry.source}: ${entry.description}`).join(" ");
+}
+
+function _isHobbyistActive() {
+  return _hasFeature("Hobbyist");
+}
+
+function _dabblerBonusEdges(level, choices) {
+  if (!_hasFeature("Dabbler")) return 0;
+  const numericLevel = Number(level || 1);
+  return HOBBYIST_MILESTONES.filter((milestone) => numericLevel >= milestone && choices?.[milestone] === "stats").length;
+}
+
+function _dabblerRestrictedStatBonus(level, choices) {
+  if (!_hasFeature("Dabbler")) return 0;
+  const numericLevel = Number(level || 1);
+  return HOBBYIST_MILESTONES.filter(
+    (milestone) => numericLevel >= milestone && ["edges", "feature"].includes(String(choices?.[milestone] || ""))
+  ).length * 2;
+}
+
+function _hobbyistSkillEdgeSlots() {
+  return _isHobbyistActive() ? 3 : 0;
+}
+
+function _hobbyistSkillEdgeSelections() {
+  return (Array.isArray(characterState.hobbyist_skill_edges) ? characterState.hobbyist_skill_edges : [])
+    .map((entry) => String(entry || "").trim())
+    .filter(Boolean);
+}
+
+function _sanitizeHobbyistSkillEdges() {
+  const slots = _hobbyistSkillEdgeSlots();
+  const selected = _hobbyistSkillEdgeSelections().slice(0, Math.max(0, slots));
+  if (selected.join("\n") !== (characterState.hobbyist_skill_edges || []).join("\n")) {
+    characterState.hobbyist_skill_edges = selected;
+  }
+  return selected;
+}
+
+function _skillRankPrevious(targetRank) {
+  if (targetRank === "Master") return "Expert";
+  if (targetRank === "Expert") return "Adept";
+  if (targetRank === "Adept") return "Novice";
+  if (targetRank === "Novice") return "Untrained";
+  if (targetRank === "Untrained") return "Pathetic";
+  return "";
+}
+
+function _hobbyistSkillEdgeBudgetCredit(rules) {
+  const costs = rules?.rank_costs || {};
+  let credit = 0;
+  _hobbyistSkillEdgeSelections().forEach((entry) => {
+    const match = String(entry || "").match(/^Hobbyist Skill Edge:\s*(.+?)\s*(?:->|to)\s*(Untrained|Novice|Adept|Expert|Master)$/i);
+    if (!match) return;
+    const targetRank = match[2];
+    const previousRank = _skillRankPrevious(targetRank);
+    if (!previousRank) return;
+    credit += Math.max(0, Number(costs[targetRank] ?? 0) - Number(costs[previousRank] ?? 0));
+  });
+  return credit;
+}
+
+function _freeSkillGrantBudgetCredit(rules) {
+  return _captureSkillGrantBudgetCredit(rules) + _hobbyistSkillEdgeBudgetCredit(rules);
+}
+
+function _addHobbyistSkillEdge() {
+  const rules = characterData?.skill_rules || { ranks: [] };
+  const ranks = rules.ranks || [];
+  const skills = (characterData?.skills || []).slice().sort((a, b) => String(a).localeCompare(String(b)));
+  const choices = skills
+    .map((skill) => {
+      const currentRank = _findSkillRank(skill);
+      const idx = _rankIndex(currentRank, rules);
+      const nextRank = ranks[idx + 1];
+      if (!nextRank) return null;
+      const edgeName =
+        nextRank === "Adept"
+          ? "Adept Skills"
+          : nextRank === "Expert"
+          ? "Expert Skills"
+          : nextRank === "Master"
+          ? "Master Skills"
+          : "Basic Skills";
+      const edgeEntry = (characterData?.edges_catalog || []).find((entry) => entry.name === edgeName);
+      if (!characterState.override_prereqs && edgeEntry) {
+        const status = prereqStatus(edgeEntry.prerequisites || "", "edge");
+        if (status.status === "blocked") return null;
+      }
+      return {
+        label: `${skill}: ${currentRank} -> ${nextRank}`,
+        value: `Hobbyist Skill Edge: ${skill} -> ${nextRank}`,
+        meta: edgeName,
+        skill,
+        nextRank,
+      };
+    })
+    .filter(Boolean);
+  if (!choices.length) {
+    notifyUI("warn", "No legal Hobbyist Skill Edge rank-up is currently available.");
+    return;
+  }
+  pickTrainerFeatureOption(
+    "Hobbyist Skill Edge",
+    choices,
+    (value, choice) => {
+      if (_hobbyistSkillEdgeSelections().length >= _hobbyistSkillEdgeSlots()) return;
+      if (choice?.skill && choice?.nextRank) {
+        characterState.skills[choice.skill] = choice.nextRank;
+      }
+      characterState.hobbyist_skill_edges = [..._hobbyistSkillEdgeSelections(), value];
+      saveCharacterToStorage();
+      renderCharacterSkills();
+    },
+    "Hobbyist grants three Skill Edges; May Playtest Errata requires these Skill Edges to rank up a Skill."
+  );
+}
+
+function _renderHobbyistSkillEdgesPanel(parent) {
+  const slots = _hobbyistSkillEdgeSlots();
+  const selected = _sanitizeHobbyistSkillEdges();
+  if (!slots && !selected.length) return;
+  const panel = document.createElement("div");
+  panel.className = "char-selected-panel";
+  const title = document.createElement("div");
+  title.className = "char-selected-title";
+  title.textContent = `Hobbyist Skill Edges (${selected.length}/${slots})`;
+  panel.appendChild(title);
+  const meta = document.createElement("div");
+  meta.className = "char-feature-meta";
+  meta.textContent = "Hobbyist grants three free Skill Edges that must rank up Skills. These do not spend normal Edge slots.";
+  panel.appendChild(meta);
+  panel.appendChild(createSelectedPanel("Selected Hobbyist Skill Edges", selected, (name) => {
+    characterState.hobbyist_skill_edges = selected.filter((entry) => entry !== name);
+    saveCharacterToStorage();
+    renderCharacterSkills();
+  }));
+  const row = document.createElement("div");
+  row.className = "char-action-row";
+  const add = document.createElement("button");
+  add.type = "button";
+  add.textContent = "Add Hobbyist Skill Edge";
+  add.disabled = selected.length >= slots;
+  add.addEventListener("click", _addHobbyistSkillEdge);
+  row.appendChild(add);
+  panel.appendChild(row);
+  parent.appendChild(panel);
+}
+
+function _lookAndLearnSelections() {
+  const raw = characterState.look_and_learn_features && typeof characterState.look_and_learn_features === "object"
+    ? characterState.look_and_learn_features
+    : {};
+  return {
+    scene: String(raw.scene || "").trim(),
+    ap: String(raw.ap || "").trim(),
+  };
+}
+
+function _dilettanteRankSlots() {
+  return Array.from(characterState.features || []).filter((name) => /^Dilettante Rank \d+$/i.test(String(name || ""))).length;
+}
+
+function _dilettantePicks() {
+  const slots = _dilettanteRankSlots();
+  const raw = Array.isArray(characterState.dilettante_picks) ? characterState.dilettante_picks : [];
+  const picks = raw.slice(0, Math.max(0, slots)).map((entry, idx) => ({
+    rank: Number(entry?.rank || idx + 1),
+    feature: String(entry?.feature || "").trim(),
+    edge: String(entry?.edge || "").trim(),
+  }));
+  while (picks.length < slots) picks.push({ rank: picks.length + 1, feature: "", edge: "" });
+  characterState.dilettante_picks = picks;
+  return picks;
+}
+
+function _hobbyistGrantedFeatures() {
+  const out = [];
+  const lnl = _lookAndLearnSelections();
+  if (_hasFeature("Look and Learn")) {
+    if (lnl.scene) out.push(lnl.scene);
+    if (lnl.ap) out.push(lnl.ap);
+  }
+  _dilettantePicks().forEach((pick) => {
+    if (pick.feature) out.push(pick.feature);
+  });
+  return Array.from(new Set(out.filter(Boolean)));
+}
+
+function _hobbyistGrantedEdges() {
+  return _dilettantePicks()
+    .map((pick) => pick.edge)
+    .filter(Boolean);
+}
+
+function _hobbyistGeneralFeatureOptions() {
+  return (characterData?.features || [])
+    .filter((entry) => inContentScope(entry))
+    .filter((entry) => {
+      const labels = getFeatureClassLabels(entry);
+      return !labels.length || labels.includes("Hobbyist");
+    })
+    .map((entry) => ({
+      value: entry.name,
+      label: entry.name,
+      meta: entry.prerequisites ? `Prereq: ${entry.prerequisites}` : "General Feature",
+      hint: entry.effects || "",
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
+}
+
+function _hobbyistCatalogEntryByName(name) {
+  const key = _normalizeMatchKey(name);
+  return (
+    (characterData?.features || []).find((entry) => _normalizeMatchKey(entry.name) === key) ||
+    (characterData?.edges_catalog || []).find((entry) => _normalizeMatchKey(entry.name) === key) ||
+    null
+  );
+}
+
+function _hobbyistMeetsListedPrereq(listedPrereq) {
+  const text = String(listedPrereq || "").trim();
+  if (!text) return true;
+  const key = _normalizeMatchKey(text);
+  if (characterState.features?.has?.(text) || characterState.edges?.has?.(text)) return true;
+  return (
+    Array.from(characterState.features || []).some((name) => _normalizeMatchKey(name) === key) ||
+    Array.from(characterState.edges || []).some((name) => _normalizeMatchKey(name) === key) ||
+    _hobbyistGrantedFeatures().some((name) => _normalizeMatchKey(name) === key) ||
+    _hobbyistGrantedEdges().some((name) => _normalizeMatchKey(name) === key)
+  );
+}
+
+function _hobbyistLookAndLearnOptions(kind) {
+  const source = kind === "ap" ? HOBBYIST_LOOK_AND_LEARN_AP_OPTIONS : HOBBYIST_LOOK_AND_LEARN_SCENE_OPTIONS;
+  return source.map((spec) => {
+    const entry = _hobbyistCatalogEntryByName(spec.name);
+    const listedPrereq = String(spec.listedPrereq || "").trim();
+    const prereqMet = _hobbyistMeetsListedPrereq(listedPrereq);
+    return {
+      value: spec.name,
+      label: spec.name,
+      meta: `${spec.trainerClass}${listedPrereq ? ` | Listed prereq: ${listedPrereq}` : ""}${prereqMet ? "" : " | Missing listed prereq"}`,
+      hint: entry?.effects || "",
+      disabled: !prereqMet && !characterState.override_prereqs,
+    };
+  });
+}
+
+function _hobbyistLookAndLearnSpec(kind, name) {
+  const key = _normalizeMatchKey(name);
+  const source = kind === "ap" ? HOBBYIST_LOOK_AND_LEARN_AP_OPTIONS : HOBBYIST_LOOK_AND_LEARN_SCENE_OPTIONS;
+  return source.find((spec) => _normalizeMatchKey(spec.name) === key) || null;
+}
+
+function _hobbyistGeneralEdgeOptions() {
+  return (characterData?.edges_catalog || [])
+    .filter((entry) => inContentScope(entry))
+    .filter((entry) => !getEdgeClassLabels(entry).length)
+    .map((entry) => ({
+      value: entry.name,
+      label: entry.name,
+      meta: entry.prerequisites ? `Prereq: ${entry.prerequisites}` : "General Edge",
+      hint: entry.effects || "",
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
+}
+
+function _renderLookAndLearnPanel(parent) {
+  const selected = _lookAndLearnSelections();
+  if (!_hasFeature("Look and Learn") && !selected.scene && !selected.ap) return;
+  const panel = document.createElement("div");
+  panel.className = "char-selected-panel";
+  const title = document.createElement("div");
+  title.className = "char-selected-title";
+  title.textContent = "Look and Learn";
+  panel.appendChild(title);
+  const meta = document.createElement("div");
+  meta.className = "char-feature-meta";
+  meta.textContent = "Choose one Scene Feature and one Action Point Feature from other classes. They are granted for free and exported to battle.";
+  panel.appendChild(meta);
+  ["scene", "ap"].forEach((kind) => {
+    const row = document.createElement("div");
+    row.className = "char-row";
+    const body = document.createElement("div");
+    body.className = "char-row-main";
+    const label = document.createElement("div");
+    label.className = "char-row-title";
+    label.textContent = kind === "scene" ? "Scene Feature" : "Action Point Feature";
+    const detail = document.createElement("div");
+    detail.className = "char-row-meta";
+    detail.textContent = selected[kind] || "None selected.";
+    body.appendChild(label);
+    body.appendChild(detail);
+    const choose = document.createElement("button");
+    choose.type = "button";
+    choose.className = "char-mini-button";
+    choose.textContent = selected[kind] ? "Change" : "Choose";
+    choose.addEventListener("click", () => {
+      pickTrainerFeatureOption(
+        kind === "scene" ? "Look and Learn Scene Feature" : "Look and Learn AP Feature",
+        _hobbyistLookAndLearnOptions(kind),
+        (value) => {
+          characterState.look_and_learn_features = { ..._lookAndLearnSelections(), [kind]: value };
+          saveCharacterToStorage();
+          renderCharacterFeatures();
+        },
+        "Look and Learn uses the exact rulebook Scene/AP lists. Normal class prerequisites are ignored; listed prerequisites in this picker still apply."
+      );
+    });
+    row.appendChild(body);
+    row.appendChild(choose);
+    panel.appendChild(row);
+  });
+  parent.appendChild(panel);
+}
+
+function _renderDilettantePanel(parent) {
+  const slots = _dilettanteRankSlots();
+  const picks = _dilettantePicks();
+  if (!slots && !picks.some((pick) => pick.feature || pick.edge)) return;
+  const panel = document.createElement("div");
+  panel.className = "char-selected-panel";
+  const title = document.createElement("div");
+  title.className = "char-selected-title";
+  title.textContent = `Dilettante Grants (${picks.filter((pick) => pick.feature && pick.edge).length}/${slots})`;
+  panel.appendChild(title);
+  const meta = document.createElement("div");
+  meta.className = "char-feature-meta";
+  meta.textContent = "Each Dilettante Rank grants one free General Feature and one free Edge. These do not spend normal slots.";
+  panel.appendChild(meta);
+  picks.forEach((pick, idx) => {
+    const row = document.createElement("div");
+    row.className = "char-row";
+    const body = document.createElement("div");
+    body.className = "char-row-main";
+    const label = document.createElement("div");
+    label.className = "char-row-title";
+    label.textContent = `Rank ${idx + 1}`;
+    const detail = document.createElement("div");
+    detail.className = "char-row-meta";
+    detail.textContent = `Feature: ${pick.feature || "None"} | Edge: ${pick.edge || "None"}`;
+    body.appendChild(label);
+    body.appendChild(detail);
+    const chooseFeature = document.createElement("button");
+    chooseFeature.type = "button";
+    chooseFeature.className = "char-mini-button";
+    chooseFeature.textContent = "Feature";
+    chooseFeature.addEventListener("click", () => {
+      pickTrainerFeatureOption("Dilettante General Feature", _hobbyistGeneralFeatureOptions(), (value) => {
+        const next = _dilettantePicks();
+        next[idx] = { ...next[idx], feature: value };
+        characterState.dilettante_picks = next;
+        saveCharacterToStorage();
+        renderCharacterFeatures();
+      });
+    });
+    const chooseEdge = document.createElement("button");
+    chooseEdge.type = "button";
+    chooseEdge.className = "char-mini-button";
+    chooseEdge.textContent = "Edge";
+    chooseEdge.addEventListener("click", () => {
+      pickTrainerFeatureOption("Dilettante Edge", _hobbyistGeneralEdgeOptions(), (value) => {
+        const next = _dilettantePicks();
+        next[idx] = { ...next[idx], edge: value };
+        characterState.dilettante_picks = next;
+        saveCharacterToStorage();
+        renderCharacterFeatures();
+      });
+    });
+    row.appendChild(body);
+    row.appendChild(chooseFeature);
+    row.appendChild(chooseEdge);
+    panel.appendChild(row);
+  });
+  parent.appendChild(panel);
+}
+
+function _mentorSkillSelections() {
+  return (Array.isArray(characterState.mentor_skills) ? characterState.mentor_skills : [])
+    .map((entry) => String(entry || "").trim())
+    .map((entry) => {
+      const option = MENTOR_SKILL_OPTIONS.find(
+        (item) => _normalizeMatchKey(item.label) === _normalizeMatchKey(entry) || _normalizeMatchKey(item.skill) === _normalizeMatchKey(entry)
+      );
+      return option?.skill || entry;
+    })
+    .filter(Boolean)
+    .slice(0, 2);
+}
+
+function _mentorSkillSlots() {
+  return _hasFeature("Mentor") ? 2 : 0;
+}
+
+function _sanitizeMentorSkills() {
+  const slots = _mentorSkillSlots();
+  const seen = new Set();
+  const selected = _mentorSkillSelections().filter((skill) => {
+    const key = _normalizeMatchKey(skill);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  }).slice(0, Math.max(0, slots));
+  if (selected.join("\n") !== (characterState.mentor_skills || []).join("\n")) {
+    characterState.mentor_skills = selected;
+  }
+  return selected;
+}
+
+function _mentorSkillAvailable(skill) {
+  const rank = _findSkillRank(skill);
+  const rules = characterData?.skill_rules || { ranks: [] };
+  return _rankIndex(rank, rules) >= _rankIndex("Novice", rules);
+}
+
+function _mentorSkillLabel(skill) {
+  return MENTOR_SKILL_OPTIONS.find((entry) => _normalizeMatchKey(entry.skill) === _normalizeMatchKey(skill))?.label || skill;
+}
+
+function _renderMentorSkillsPanel(parent) {
+  const slots = _mentorSkillSlots();
+  const selected = _sanitizeMentorSkills();
+  if (!slots && !selected.length) return;
+  const panel = document.createElement("div");
+  panel.className = "char-selected-panel";
+  const title = document.createElement("div");
+  title.className = "char-selected-title";
+  title.textContent = `Mentor Skills (${selected.length}/${slots})`;
+  panel.appendChild(title);
+  const meta = document.createElement("div");
+  meta.className = "char-feature-meta";
+  meta.textContent = "When you take Mentor, choose two of Charm, Intimidate, Intuition, and Pokemon Education at Novice or higher. These unlock Mentor Lessons.";
+  panel.appendChild(meta);
+  panel.appendChild(createSelectedPanel("Selected Mentor Skills", selected, (name) => {
+    characterState.mentor_skills = selected.filter((entry) => entry !== name);
+    saveCharacterToStorage();
+    renderCharacterFeatures();
+  }));
+  const list = document.createElement("div");
+  list.className = "char-list-panel";
+  MENTOR_SKILL_OPTIONS.forEach((option) => {
+    const name = option.skill;
+    const row = document.createElement("div");
+    row.className = "char-row";
+    const body = document.createElement("div");
+    body.className = "char-row-main";
+    const label = document.createElement("div");
+    label.className = "char-row-title";
+    label.textContent = option.label;
+    const detail = document.createElement("div");
+    detail.className = "char-row-meta";
+    const rank = _findSkillRank(name);
+    const available = _mentorSkillAvailable(name);
+    detail.textContent = available ? `Current rank: ${rank}` : `Requires Novice or higher. Current rank: ${rank}`;
+    body.appendChild(label);
+    body.appendChild(detail);
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "char-mini-button";
+    const alreadySelected = selected.some((entry) => _normalizeMatchKey(entry) === _normalizeMatchKey(name));
+    add.textContent = alreadySelected ? "Selected" : "Select";
+    add.disabled = alreadySelected || selected.length >= slots || (!available && !characterState.override_prereqs);
+    add.addEventListener("click", () => {
+      characterState.mentor_skills = [..._sanitizeMentorSkills(), name];
+      saveCharacterToStorage();
+      renderCharacterFeatures();
+    });
+    row.appendChild(body);
+    row.appendChild(add);
+    list.appendChild(row);
+  });
+  panel.appendChild(list);
+  parent.appendChild(panel);
+}
+
+function _renderStatAceFeaturePanel(parent) {
+  const selected = Array.from(characterState.features || []).filter((name) => STAT_ACE_GENERIC_FEATURES.has(String(name || "").trim()));
+  if (!selected.length) return;
+  const panel = document.createElement("div");
+  panel.className = "char-selected-panel";
+  const title = document.createElement("div");
+  title.className = "char-selected-title";
+  title.textContent = "Stat Ace Choices";
+  panel.appendChild(title);
+  const meta = document.createElement("div");
+  meta.className = "char-feature-meta";
+  meta.textContent = "Choose the stat for generic Stat Ace-line features. Use the stat-specific variants if you want multiple separate branches.";
+  panel.appendChild(meta);
+  selected.forEach((name) => {
+    const row = document.createElement("label");
+    row.className = "char-field";
+    row.textContent = name;
+    const select = document.createElement("select");
+    select.className = "item-target-select";
+    const empty = document.createElement("option");
+    empty.value = "";
+    empty.textContent = "Choose stat";
+    select.appendChild(empty);
+    STAT_ACE_STAT_OPTIONS.forEach(([value, label]) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = label;
+      select.appendChild(option);
+    });
+    select.value = String(_featureDetailFor(name)?.chosen_stat || "");
+    select.addEventListener("change", () => {
+      _setFeatureDetail(name, { chosen_stat: select.value });
+      saveCharacterToStorage();
+      renderCharacterFeatures();
+    });
+    row.appendChild(select);
+    panel.appendChild(row);
+  });
+  parent.appendChild(panel);
+}
+
+function _normalizeTypeChoice(value) {
+  const normalized = String(value || "").trim().toLowerCase();
+  return TYPE_ACE_TYPE_OPTIONS.some(([key]) => key === normalized) ? normalized : "";
+}
+
+function _renderTypeAceFeaturePanel(parent) {
+  const selected = Array.from(characterState.features || []).filter((name) => TYPE_ACE_GENERIC_FEATURES.has(String(name || "").trim()));
+  if (!selected.length) return;
+  const panel = document.createElement("div");
+  panel.className = "char-selected-panel";
+  const title = document.createElement("div");
+  title.className = "char-selected-title";
+  title.textContent = "Type Ace Choices";
+  panel.appendChild(title);
+  const meta = document.createElement("div");
+  meta.className = "char-feature-meta";
+  meta.textContent = "Choose the Type Ace branch type for the generic class-line features.";
+  panel.appendChild(meta);
+  selected.forEach((name) => {
+    const row = document.createElement("label");
+    row.className = "char-field";
+    row.textContent = name;
+    const select = document.createElement("select");
+    select.className = "item-target-select";
+    const empty = document.createElement("option");
+    empty.value = "";
+    empty.textContent = "Choose type";
+    select.appendChild(empty);
+    TYPE_ACE_TYPE_OPTIONS.forEach(([value, label]) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = label;
+      select.appendChild(option);
+    });
+    select.value = String(_featureDetailFor(name)?.chosen_type || "");
+    select.addEventListener("change", () => {
+      _setFeatureDetail(name, { ...(_featureDetailFor(name) || {}), chosen_type: select.value });
+      saveCharacterToStorage();
+      renderCharacterFeatures();
+    });
+    row.appendChild(select);
+    panel.appendChild(row);
+  });
+  parent.appendChild(panel);
+}
+
+function _mentorLessonAvailable(lesson) {
+  if (!_hasFeature("Lessons")) return false;
+  return _mentorSkillSelections().some((skill) => _normalizeMatchKey(skill) === _normalizeMatchKey(lesson.skill));
+}
+
 function _featureRankByName(name) {
   const node = (characterData?.nodes || []).find((n) => n.type === "feature" && n.name === name);
   return Number(node?.rank || 1);
@@ -870,6 +1933,42 @@ function _featureByName(name) {
     (characterData?.nodes || []).find((node) => node.type === "feature" && node.name === name) ||
     (characterData?.features || []).find((entry) => entry.name === name)
   );
+}
+
+function _featureDetailKey(name) {
+  return _normalizeMatchKey(name);
+}
+
+function _featureDetailFor(name) {
+  const key = _featureDetailKey(name);
+  return (characterState.feature_details && typeof characterState.feature_details === "object" && key)
+    ? characterState.feature_details[key] || null
+    : null;
+}
+
+function _setFeatureDetail(name, detail) {
+  const key = _featureDetailKey(name);
+  if (!key) return;
+  characterState.feature_details = characterState.feature_details || {};
+  if (!detail || typeof detail !== "object") {
+    delete characterState.feature_details[key];
+    return;
+  }
+  const chosenStat = _normalizeStatChoice(detail.chosen_stat);
+  const chosenType = _normalizeTypeChoice(detail.chosen_type);
+  const payload = {};
+  if (chosenStat) payload.chosen_stat = chosenStat;
+  if (chosenType) payload.chosen_type = chosenType;
+  if (Object.keys(payload).length) characterState.feature_details[key] = payload;
+  else delete characterState.feature_details[key];
+}
+
+function _featurePayloadList() {
+  return Array.from(characterState.features || []).map((name) => {
+    const detail = _featureDetailFor(name);
+    if (detail && typeof detail === "object") return { name, ...detail };
+    return name;
+  });
 }
 
 function _destroySortables() {
@@ -1854,6 +2953,12 @@ function _renderRosterCsvStatus() {
   rosterCsvStatusEl.textContent = `Roster CSV: loaded (${sideLabel})` + (battleRosterCsvMeta.source ? ` - ${battleRosterCsvMeta.source}` : "");
 }
 
+function _savedRosterNameFromSource(sourceName = "") {
+  const raw = String(sourceName || "").trim();
+  if (!raw) return "Imported Roster";
+  return raw.replace(/\.[^.]+$/, "") || "Imported Roster";
+}
+
 function _setBattleRosterCsv(csvText, source = "") {
   const summary = _extractRosterSummary(csvText, { allowSingleTeam: true });
   battleRosterCsvText = String(csvText || "");
@@ -1864,6 +2969,220 @@ function _setBattleRosterCsv(csvText, source = "") {
   renderDeploymentEditor();
   renderCombatants();
   renderPartyBar();
+}
+
+function _rosterSummaryLabel(entry) {
+  const sideCount = Number(entry?.side_count || 0);
+  if (sideCount > 2) return `${sideCount} sides`;
+  return `${Number(entry?.players || 0)} player / ${Number(entry?.foes || 0)} foe`;
+}
+
+function renderSavedRosterControls() {
+  if (savedRosterSelect) {
+    const previous = String(selectedRosterId || "");
+    savedRosterSelect.innerHTML = "";
+    const emptyOption = document.createElement("option");
+    emptyOption.value = "";
+    emptyOption.textContent = savedRosterSummaries.length ? "Choose saved roster" : "No saved roster";
+    savedRosterSelect.appendChild(emptyOption);
+    savedRosterSummaries.forEach((entry) => {
+      const option = document.createElement("option");
+      option.value = String(entry.id || "");
+      option.textContent = `${entry.name || "Saved Roster"} (${_rosterSummaryLabel(entry)})`;
+      savedRosterSelect.appendChild(option);
+    });
+    savedRosterSelect.value = savedRosterSummaries.some((entry) => String(entry.id || "") === previous) ? previous : "";
+  }
+  if (savedRosterSideSelect) {
+    const previousMode = String(selectedRosterLoadMode || "__keep__");
+    savedRosterSideSelect.innerHTML = "";
+    const keepOption = document.createElement("option");
+    keepOption.value = "__keep__";
+    keepOption.textContent = "Keep sides from file";
+    savedRosterSideSelect.appendChild(keepOption);
+    _availableImportSideChoices().forEach((side) => {
+      const option = document.createElement("option");
+      option.value = side;
+      option.textContent = `Load as ${side}`;
+      savedRosterSideSelect.appendChild(option);
+    });
+    savedRosterSideSelect.value = Array.from(savedRosterSideSelect.options).some((option) => option.value === previousMode)
+      ? previousMode
+      : "__keep__";
+  }
+  if (loadSavedRosterButton) {
+    loadSavedRosterButton.disabled = !selectedRosterId;
+  }
+  if (forgetSavedRosterButton) {
+    forgetSavedRosterButton.disabled = !selectedRosterId;
+  }
+}
+
+async function loadSavedRoster(id, options = {}) {
+  const rosterId = String(id || "").trim();
+  if (!rosterId) {
+    selectedRosterId = "";
+    renderSavedRosterControls();
+    if (!options.skipSave) saveSettings();
+    return null;
+  }
+  const response = await api(`/api/rosters/${encodeURIComponent(rosterId)}`);
+  const record = response?.roster || null;
+  _setBattleRosterCsv(String(record?.csv_text || ""), String(record?.source_name || record?.name || "saved"));
+  selectedRosterId = rosterId;
+  renderSavedRosterControls();
+  if (!options.skipSave) saveSettings();
+  return record;
+}
+
+async function applySavedRosterToActive(id, options = {}) {
+  const rosterId = String(id || "").trim();
+  if (!rosterId) {
+    selectedRosterId = "";
+    renderSavedRosterControls();
+    if (!options.skipSave) saveSettings();
+    return null;
+  }
+  const response = await api(`/api/rosters/${encodeURIComponent(rosterId)}`);
+  const record = response?.roster || null;
+  const sourceName = String(record?.source_name || record?.name || "saved");
+  let chosen = null;
+  const requestedMode = String(options.mode || selectedRosterLoadMode || "__keep__").trim() || "__keep__";
+  if (requestedMode === "__prompt__") {
+    chosen = await _chooseRosterImportSide(String(record?.csv_text || ""), sourceName);
+  } else if (requestedMode === "__keep__") {
+    chosen = { mode: "keep", csvText: String(record?.csv_text || "") };
+  } else {
+    chosen = { mode: "assign", side: requestedMode, csvText: _assignRosterCsvSide(String(record?.csv_text || ""), requestedMode) };
+  }
+  if (!chosen) {
+    renderSavedRosterControls();
+    return null;
+  }
+  const nextCsv = chosen.mode === "assign" && battleRosterCsvText
+    ? _mergeRosterCsvBySide(battleRosterCsvText, chosen.csvText)
+    : chosen.csvText;
+  _setBattleRosterCsv(nextCsv, sourceName);
+  selectedRosterId = rosterId;
+  renderSavedRosterControls();
+  if (!options.skipSave) saveSettings();
+  return { record, chosen };
+}
+
+async function ensureSelectedRosterStaged(options = {}) {
+  const rosterId = String(options.id || selectedRosterId || "").trim();
+  if (!rosterId) return null;
+  if (!options.force && battleRosterCsvText) return null;
+  return loadSavedRoster(rosterId, { skipSave: !!options.skipSave });
+}
+
+async function refreshSavedRosters(options = {}) {
+  const response = await api("/api/rosters");
+  savedRosterSummaries = Array.isArray(response?.rosters) ? response.rosters : [];
+  const desiredId = String(options.preferredId || selectedRosterId || "").trim();
+  renderSavedRosterControls();
+  if (desiredId && savedRosterSummaries.some((entry) => String(entry.id || "") === desiredId)) {
+    await loadSavedRoster(desiredId, { skipSave: true });
+    return;
+  }
+  if (selectedRosterId && !savedRosterSummaries.some((entry) => String(entry.id || "") === selectedRosterId)) {
+    selectedRosterId = "";
+    renderSavedRosterControls();
+    if (!options.skipSave) saveSettings();
+  }
+}
+
+async function persistImportedRoster(name, csvText, sourceName = "", summary = null) {
+  const response = await api("/api/rosters/save", {
+    method: "POST",
+    body: JSON.stringify({
+      name,
+      source_name: sourceName,
+      csv_text: csvText,
+      players: Number(summary?.players || 0),
+      foes: Number(summary?.foes || 0),
+      side_count: Number(summary?.sideCount || 0),
+      team_size: Number(summary?.teamSize || 0),
+    }),
+  });
+  await refreshSavedRosters({ preferredId: response?.roster?.id || "", skipSave: true });
+  saveSettings();
+  return response?.roster || null;
+}
+
+async function _extractRosterImportCsv(file) {
+  const lowerName = String(file?.name || "").toLowerCase();
+  if (lowerName.endsWith(".zip")) {
+    const entries = _readZipEntries(await file.arrayBuffer());
+    const teamCsvName = Object.keys(entries).find((name) => /team_roster\.csv$/i.test(name) || /team\.csv$/i.test(name));
+    if (!teamCsvName || !entries[teamCsvName]) {
+      throw new Error(`Project ZIP ${file?.name || ""} did not contain a team CSV.`);
+    }
+    const csvText = String(entries[teamCsvName] || "");
+    return {
+      csvText,
+      displayName: String(file?.name || "imported"),
+      summary: _extractRosterSummary(csvText, { allowSingleTeam: true }),
+    };
+  }
+  const csvText = await _readTextFile(file);
+  return {
+    csvText,
+    displayName: String(file?.name || "imported"),
+    summary: _extractRosterSummary(csvText, { allowSingleTeam: true }),
+  };
+}
+
+async function importRosterFiles(files) {
+  const queue = Array.from(files || []).filter(Boolean);
+  if (!queue.length) return;
+  let stagedResult = null;
+  let savedCount = 0;
+  for (let index = 0; index < queue.length; index += 1) {
+    const file = queue[index];
+    const extracted = await _extractRosterImportCsv(file);
+    await persistImportedRoster(
+      _savedRosterNameFromSource(extracted.displayName || "imported"),
+      extracted.csvText,
+      extracted.displayName || "imported",
+      extracted.summary,
+    );
+    savedCount += 1;
+    if (index === 0) {
+      const chosen = await _chooseRosterImportSide(extracted.csvText, extracted.displayName || "imported");
+      if (chosen) {
+        const nextCsv = chosen.mode === "assign" && battleRosterCsvText
+          ? _mergeRosterCsvBySide(battleRosterCsvText, chosen.csvText)
+          : chosen.csvText;
+        _setBattleRosterCsv(nextCsv, extracted.displayName || "imported");
+        stagedResult = { chosen, fileName: extracted.displayName || "imported" };
+      }
+    }
+  }
+  saveSettings();
+  if (savedCount === 1 && stagedResult?.chosen) {
+    notifyUI(
+      "ok",
+      stagedResult.chosen.mode === "assign"
+        ? `Roster CSV loaded as ${stagedResult.chosen.side}.`
+        : "Roster CSV loaded.",
+      2200,
+    );
+    return;
+  }
+  if (savedCount === 1) {
+    notifyUI("ok", "Roster saved to library.", 2200);
+    return;
+  }
+  if (stagedResult?.chosen) {
+    notifyUI(
+      "ok",
+      `Imported ${savedCount} rosters. ${stagedResult.fileName} is staged now; the rest are in Saved Roster.`,
+      3200,
+    );
+    return;
+  }
+  notifyUI("ok", `Imported ${savedCount} rosters into Saved Roster.`, 2800);
 }
 
 function _clearBattleRosterCsv() {
@@ -1962,6 +3281,12 @@ function _normalizePokeEdgeChoices(value) {
     source.underdog_lessons && typeof source.underdog_lessons === "object" && !Array.isArray(source.underdog_lessons)
       ? source.underdog_lessons
       : {};
+  const signatureRaw =
+    source.signature_technique && typeof source.signature_technique === "object" && !Array.isArray(source.signature_technique)
+      ? source.signature_technique
+      : {};
+  const signatureMove = String(signatureRaw.move || signatureRaw.move_name || "").trim();
+  const signatureModification = String(signatureRaw.modification || signatureRaw.modification_key || "").trim();
   return {
     accuracy_training: normalizeStringArray(source.accuracy_training),
     advanced_connection: normalizeStringArray(source.advanced_connection),
@@ -1969,6 +3294,13 @@ function _normalizePokeEdgeChoices(value) {
       evolution: String(underdogLessonsRaw.evolution || "").trim(),
       moves: normalizeStringArray(underdogLessonsRaw.moves).slice(0, 3),
     },
+    signature_technique: signatureMove || signatureModification ? {
+      move: signatureMove,
+      move_key: _normalizeMoveKey(signatureMove),
+      modification: signatureModification,
+      modification_key: _normalizeMoveKey(signatureModification),
+      required_training: String(signatureRaw.required_training || "").trim(),
+    } : null,
   };
 }
 
@@ -1982,6 +3314,14 @@ function _rosterItemHeader() {
 
 function _rosterMoveLimit() {
   return 8;
+}
+
+function _pokemonActiveMoveLimit() {
+  return _hasFeature("Guidance") ? 7 : 6;
+}
+
+function _pokemonTutorMoveLimit() {
+  return _hasFeature("Lifelong Learning") ? 4 : 3;
 }
 
 function _rosterMoveHeader() {
@@ -2002,6 +3342,8 @@ function _rosterPokeEdgeChoiceHeader() {
     "poke_edge_advanced_connection",
     "poke_edge_underdog_evolution",
     "poke_edge_underdog_moves",
+    "signature_technique_move",
+    "signature_technique_modification",
   ];
 }
 
@@ -2074,6 +3416,8 @@ function _rosterPokeEdgeChoiceCellsFromCombatant(entry) {
     _serializePokeEdgeChoiceList(choices.advanced_connection),
     String(choices.underdog_lessons?.evolution || "").trim(),
     _serializePokeEdgeChoiceList(choices.underdog_lessons?.moves),
+    String(choices.signature_technique?.move || "").trim(),
+    String(choices.signature_technique?.modification || "").trim(),
   ];
 }
 
@@ -2084,6 +3428,8 @@ function _rosterPokeEdgeChoiceCellsFromBuild(build) {
     _serializePokeEdgeChoiceList(choices.advanced_connection),
     String(choices.underdog_lessons?.evolution || "").trim(),
     _serializePokeEdgeChoiceList(choices.underdog_lessons?.moves),
+    String(choices.signature_technique?.move || "").trim(),
+    String(choices.signature_technique?.modification || "").trim(),
   ];
 }
 
@@ -2278,6 +3624,13 @@ function _trainerCsvRowsFromPayload(payload) {
     ["level", String(_normalizeInteger(profile.level, 1, 1))],
     ["class_ids", _trainerCsvListValue(raw.class_ids || (raw.class_id ? [raw.class_id] : []))],
     ["features", _trainerCsvListValue(raw.features)],
+    ["capture_techniques", _trainerCsvListValue(raw.capture_techniques)],
+    ["commander_orders", _trainerCsvListValue(raw.commander_orders)],
+    ["hobbyist_skill_edges", _trainerCsvListValue(raw.hobbyist_skill_edges)],
+    ["look_and_learn_features", _trainerCsvListValue(raw.look_and_learn_features ? [raw.look_and_learn_features.scene, raw.look_and_learn_features.ap] : [])],
+    ["dilettante_features", _trainerCsvListValue((raw.dilettante_picks || []).map((entry) => entry.feature))],
+    ["dilettante_edges", _trainerCsvListValue((raw.dilettante_picks || []).map((entry) => entry.edge))],
+    ["mentor_skills", _trainerCsvListValue(raw.mentor_skills)],
     ["edges", _trainerCsvListValue(raw.edges)],
   ];
   Object.entries(raw.stats && typeof raw.stats === "object" ? raw.stats : {}).forEach(([key, value]) => {
@@ -2328,6 +3681,12 @@ function _applyTrainerCsvToPayload(csvText, existingPayload = null) {
     profile,
     class_ids: Array.isArray(base.class_ids) ? base.class_ids.slice() : [],
     features: Array.isArray(base.features) ? base.features.slice() : [],
+    capture_techniques: Array.isArray(base.capture_techniques) ? base.capture_techniques.slice() : [],
+    commander_orders: Array.isArray(base.commander_orders) ? base.commander_orders.slice() : [],
+    hobbyist_skill_edges: Array.isArray(base.hobbyist_skill_edges) ? base.hobbyist_skill_edges.slice() : [],
+    look_and_learn_features: base.look_and_learn_features && typeof base.look_and_learn_features === "object" ? { ...base.look_and_learn_features } : {},
+    dilettante_picks: Array.isArray(base.dilettante_picks) ? base.dilettante_picks.slice() : [],
+    mentor_skills: Array.isArray(base.mentor_skills) ? base.mentor_skills.slice() : [],
     edges: Array.isArray(base.edges) ? base.edges.slice() : [],
     skills: base.skills && typeof base.skills === "object" ? { ...base.skills } : {},
     stats: base.stats && typeof base.stats === "object" ? { ...base.stats } : {},
@@ -2344,6 +3703,37 @@ function _applyTrainerCsvToPayload(csvText, existingPayload = null) {
     }
     if (field === "features") {
       patch.features = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      continue;
+    }
+    if (field === "capture_techniques") {
+      patch.capture_techniques = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      continue;
+    }
+    if (field === "commander_orders") {
+      patch.commander_orders = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      continue;
+    }
+    if (field === "hobbyist_skill_edges") {
+      patch.hobbyist_skill_edges = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      continue;
+    }
+    if (field === "look_and_learn_features") {
+      const picks = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      patch.look_and_learn_features = { scene: picks[0] || "", ap: picks[1] || "" };
+      continue;
+    }
+    if (field === "dilettante_features") {
+      const picks = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      patch.dilettante_picks = picks.map((feature, idx) => ({ ...(patch.dilettante_picks[idx] || {}), rank: idx + 1, feature }));
+      continue;
+    }
+    if (field === "dilettante_edges") {
+      const picks = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      patch.dilettante_picks = picks.map((edge, idx) => ({ ...(patch.dilettante_picks[idx] || {}), rank: idx + 1, edge }));
+      continue;
+    }
+    if (field === "mentor_skills") {
+      patch.mentor_skills = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
       continue;
     }
     if (field === "edges") {
@@ -2366,6 +3756,18 @@ function _applyTrainerCsvToPayload(csvText, existingPayload = null) {
 function _downloadTournamentSubmissionPack() {
   const payload = {
     profile: characterState.profile,
+    class_ids: Array.isArray(characterState.class_ids) ? characterState.class_ids : [],
+    class_id: characterState.class_id,
+    features: _featurePayloadList(),
+    capture_techniques: _captureTechniqueSelections(),
+    commander_orders: _commanderOrderSelections(),
+    hobbyist_skill_edges: _hobbyistSkillEdgeSelections(),
+    look_and_learn_features: _lookAndLearnSelections(),
+    dilettante_picks: _dilettantePicks(),
+    mentor_skills: _mentorSkillSelections(),
+    edges: Array.from(characterState.edges),
+    skills: characterState.skills,
+    stats: characterState.stats,
     pokemon_builds: Array.isArray(characterState.pokemon_builds) ? characterState.pokemon_builds : [],
   };
   if (!payload.pokemon_builds.length) {
@@ -2437,6 +3839,8 @@ function _builderPokemonImportFromRosterCsv(csvText) {
   const advancedConnectionIdx = header.findIndex((cell) => ["poke_edge_advanced_connection", "edge_advanced_connection", "advanced_connection"].includes(cell));
   const underdogEvolutionIdx = header.findIndex((cell) => ["poke_edge_underdog_evolution", "edge_underdog_evolution", "underdog_evolution"].includes(cell));
   const underdogMovesIdx = header.findIndex((cell) => ["poke_edge_underdog_moves", "edge_underdog_moves", "underdog_moves"].includes(cell));
+  const signatureMoveIdx = header.findIndex((cell) => ["signature_technique_move", "signature_move", "poke_edge_signature_move"].includes(cell));
+  const signatureModificationIdx = header.findIndex((cell) => ["signature_technique_modification", "signature_modification", "poke_edge_signature_modification"].includes(cell));
   const statModeIdx = header.findIndex((cell) => ["stat_mode", "stats_mode", "statmode"].includes(cell));
   const tutorPointsIdx = header.findIndex((cell) => ["tutor_points", "tutor_point", "tutorpoints", "tp"].includes(cell));
   const statIndices = {
@@ -2483,6 +3887,10 @@ function _builderPokemonImportFromRosterCsv(csvText) {
           .map((value) => String(value || "").trim())
           .filter(Boolean)
           .slice(0, 3),
+      },
+      signature_technique: {
+        move: _csvCell(row, signatureMoveIdx),
+        modification: _csvCell(row, signatureModificationIdx),
       },
     });
     const stats = {
@@ -3204,6 +4612,82 @@ function collectTileHazards(hazards, traps) {
   return entries;
 }
 
+function footprintAnchorKeyForCombatant(combatant) {
+  const footprintTiles = Array.isArray(combatant?.footprint_tiles) ? combatant.footprint_tiles : [];
+  if (footprintTiles.length) {
+    let best = null;
+    footprintTiles.forEach((tile) => {
+      if (!Array.isArray(tile) || tile.length < 2) return;
+      const x = Number(tile[0]);
+      const y = Number(tile[1]);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+      if (!best || y < best.y || (y === best.y && x < best.x)) {
+        best = { x, y };
+      }
+    });
+    if (best) {
+      return `${best.x},${best.y}`;
+    }
+  }
+  if (Array.isArray(combatant?.position) && combatant.position.length >= 2) {
+    return `${combatant.position[0]},${combatant.position[1]}`;
+  }
+  return "";
+}
+
+function tokenEdgeInsetForAnchor(x, y, grid, footprintSide = 1) {
+  const width = Math.max(1, Number(grid?.width || 0));
+  const height = Math.max(1, Number(grid?.height || 0));
+  const side = Math.max(1, Number(footprintSide || 1));
+  let shiftX = 0;
+  let shiftY = 0;
+  if (x <= 0) {
+    shiftX = side > 1 ? 0.08 : 0.12;
+  } else if (x + side >= width) {
+    shiftX = side > 1 ? -0.08 : -0.12;
+  }
+  if (y <= 0) {
+    shiftY = side > 1 ? 0.04 : 0.06;
+  } else if (y + side >= height) {
+    shiftY = side > 1 ? -0.12 : -0.18;
+  }
+  return {
+    x: shiftX === 0 ? "0px" : `calc(var(--cell-size) * ${shiftX})`,
+    y: shiftY === 0 ? "0px" : `calc(var(--cell-size) * ${shiftY})`,
+  };
+}
+
+function footprintVisualProfile(footprintSide = 1) {
+  const side = Math.max(1, Number(footprintSide || 1));
+  if (side >= 4) return { scale: 0.44, offsetY: 0.1 };
+  if (side === 3) return { scale: 0.54, offsetY: 0.08 };
+  if (side === 2) return { scale: 0.7, offsetY: 0.04 };
+  return { scale: 0.86, offsetY: 0 };
+}
+
+function footprintGhostSize(cellRect, footprintSide = 1) {
+  const base = Number(cellRect?.width || 64);
+  const side = Math.max(1, Number(footprintSide || 1));
+  const raw = side > 1 ? base * side : base * 0.9;
+  return Math.round(Math.max(54, Math.min(220, raw)));
+}
+
+function tileVisualTheme(tileType, meta = {}) {
+  const tokens = tileTypeTokens(tileType);
+  if (tokens.includes("water") || tokens.includes("river") || tokens.includes("ocean")) return "water";
+  if (tokens.includes("ice") || tokens.includes("snow") || tokens.includes("tundra")) return "ice";
+  if (tokens.includes("sand") || tokens.includes("desert") || tokens.includes("beach")) return "sand";
+  if (tokens.includes("rock") || tokens.includes("stone") || tokens.includes("mountain") || tokens.includes("cave")) return "rock";
+  if (tokens.includes("urban") || tokens.includes("road") || tokens.includes("building") || tokens.includes("roof")) return "urban";
+  if (tokens.includes("forest") || tokens.includes("tree") || tokens.includes("wood")) return "forest";
+  if (tokens.includes("psychic")) return "psychic";
+  if (tokens.includes("electric")) return "electric";
+  if (tokens.includes("misty") || tokens.includes("fairy")) return "misty";
+  if (tokens.includes("grass") || tokens.includes("grassy") || tokens.includes("field")) return "grass";
+  if (meta?.hazards || meta?.traps || meta?.barriers || meta?.frozen_domain) return "hazard";
+  return "neutral";
+}
+
 function trapEffectSummary(name) {
   const normalized = normalizePokeKey(name);
   if (normalized === "dust_trap") return "Slowed and Blinded";
@@ -3530,6 +5014,14 @@ function bindLogTooltips() {
 
 async function startBattle() {
   if (jsStatusEl) jsStatusEl.textContent = "JS: start click";
+  if (selectedRosterId && !battleRosterCsvText) {
+    try {
+      await ensureSelectedRosterStaged({ skipSave: true });
+    } catch (err) {
+      alertError(new Error("Saved roster is selected but could not be loaded."));
+      return;
+    }
+  }
   const mode = modeSelect.value;
   const teamSize = Number(teamSizeInput.value || 1);
   const activeSlots = Number(activeSlotsInput.value || 1);
@@ -3636,6 +5128,9 @@ async function startBattle() {
     if (!confirm(`Step 2/3\nTeam size: ${teamSize}\nActive slots: ${activeSlots}\nContinue?`)) return;
     if (!confirm(`Step 3/3\nMin Level: ${minLevel}\nMax Level: ${maxLevel}\nUse Trainer: ${trainerLabel}\nRoster CSV: ${rosterLabel}\nStart battle?`)) return;
   }
+  if (useSavedBattlefield && selectedBattlefieldGrid) {
+    payload.grid = cloneBattlefieldGrid(selectedBattlefieldGrid);
+  }
   lastBattlePayload = { ...payload };
   saveSettings();
   state = await api("/api/battle/new", {
@@ -3702,6 +5197,340 @@ async function refreshState() {
     selectedId = state.current_actor_id;
   }
   render();
+}
+
+function cloneBattlefieldGrid(grid) {
+  if (!grid || typeof grid !== "object") return null;
+  try {
+    return JSON.parse(JSON.stringify(grid));
+  } catch {
+    return null;
+  }
+}
+
+function normalizeImportedGridPayload(rawGrid) {
+  if (!rawGrid || typeof rawGrid !== "object") {
+    throw new Error("Imported terrain JSON does not contain a valid grid.");
+  }
+  const grid = cloneBattlefieldGrid(rawGrid) || {};
+  const normalized = {
+    width: Number(grid.width || 15),
+    height: Number(grid.height || 10),
+    scale: Number(grid.scale || 1),
+    blockers: Array.isArray(grid.blockers) ? grid.blockers.map((pair) => [Number(pair?.[0] || 0), Number(pair?.[1] || 0)]) : [],
+    tiles: {},
+    map: grid.map && typeof grid.map === "object" ? { ...grid.map } : {},
+  };
+  const rawTiles = grid.tiles;
+  if (Array.isArray(rawTiles)) {
+    rawTiles.forEach((entry) => {
+      if (!Array.isArray(entry) || entry.length < 2) return;
+      const x = Number(entry[0]);
+      const y = Number(entry[1]);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+      const tileMeta = {};
+      if (entry[2] != null && entry[2] !== "") tileMeta.type = String(entry[2]);
+      if (entry[3] && typeof entry[3] === "object") tileMeta.hazards = { ...entry[3] };
+      if (entry[4] && typeof entry[4] === "object") tileMeta.traps = { ...entry[4] };
+      if (entry[5] && typeof entry[5] === "object") tileMeta.barriers = Array.isArray(entry[5]) ? entry[5].map((item) => ({ ...item })) : { ...entry[5] };
+      if (entry[6] && typeof entry[6] === "object") tileMeta.frozen_domain = Array.isArray(entry[6]) ? entry[6].map((item) => ({ ...item })) : { ...entry[6] };
+      if (entry[7] && typeof entry[7] === "object") tileMeta.trap_sources = { ...entry[7] };
+      if (entry[8] != null) tileMeta.height = Number(entry[8]);
+      if (entry[9] != null) tileMeta.difficult = !!entry[9];
+      if (entry[10] != null) tileMeta.obstacle = !!entry[10];
+      normalized.tiles[`${x},${y}`] = tileMeta;
+    });
+  } else if (rawTiles && typeof rawTiles === "object") {
+    Object.entries(rawTiles).forEach(([key, value]) => {
+      normalized.tiles[key] = value && typeof value === "object" ? { ...value } : { type: String(value ?? "") };
+    });
+  }
+  return normalized;
+}
+
+function gridImportSignature(grid) {
+  const map = grid && typeof grid === "object" ? grid.map : null;
+  const image = map && typeof map === "object" ? map.image : null;
+  return JSON.stringify({
+    width: Number(grid?.width || 0),
+    height: Number(grid?.height || 0),
+    blockers: Array.isArray(grid?.blockers) ? grid.blockers.length : 0,
+    tiles: Array.isArray(grid?.tiles) ? grid.tiles.length : Object.keys(grid?.tiles || {}).length,
+    imageName: String(image?.image_name || ""),
+    imageSize: `${Number(image?.width_px || 0)}x${Number(image?.height_px || 0)}`,
+    exportTarget: String(map?.export_target || ""),
+    atlasName: String(map?.atlas_name || map?.name || ""),
+  });
+}
+
+function renderSavedBattlefieldControls() {
+  if (savedBattlefieldSelect) {
+    const previous = String(selectedBattlefieldId || "");
+    savedBattlefieldSelect.innerHTML = "";
+    const emptyOption = document.createElement("option");
+    emptyOption.value = "";
+    emptyOption.textContent = savedBattlefieldSummaries.length ? "Choose saved map" : "No saved map";
+    savedBattlefieldSelect.appendChild(emptyOption);
+    savedBattlefieldSummaries.forEach((entry) => {
+      const option = document.createElement("option");
+      option.value = String(entry.id || "");
+      option.textContent = String(entry.name || entry.id || "Saved Battlefield");
+      savedBattlefieldSelect.appendChild(option);
+    });
+    savedBattlefieldSelect.value = previous && savedBattlefieldSummaries.some((entry) => entry.id === previous) ? previous : "";
+  }
+  if (reuseSavedBattlefieldToggle) {
+    reuseSavedBattlefieldToggle.checked = !!useSavedBattlefield;
+    reuseSavedBattlefieldToggle.disabled = !selectedBattlefieldGrid;
+  }
+  if (clearSavedBattlefieldButton) {
+    clearSavedBattlefieldButton.disabled = !selectedBattlefieldId;
+  }
+}
+
+async function loadSavedBattlefieldGrid(battlefieldId, options = {}) {
+  const id = String(battlefieldId || "").trim();
+  if (!id) {
+    selectedBattlefieldId = "";
+    selectedBattlefieldGrid = null;
+    renderSavedBattlefieldControls();
+    saveSettings();
+    return null;
+  }
+  const response = await api(`/api/battlefields/${encodeURIComponent(id)}`);
+  const record = response?.battlefield && typeof response.battlefield === "object" ? response.battlefield : null;
+  selectedBattlefieldId = id;
+  selectedBattlefieldGrid = cloneBattlefieldGrid(record?.grid);
+  renderSavedBattlefieldControls();
+  if (!options.skipSave) saveSettings();
+  return record;
+}
+
+async function refreshSavedBattlefields(options = {}) {
+  const response = await api("/api/battlefields");
+  savedBattlefieldSummaries = Array.isArray(response?.battlefields) ? response.battlefields : [];
+  renderSavedBattlefieldControls();
+  const desiredId = String(options.preferredId || selectedBattlefieldId || "").trim();
+  if (desiredId && savedBattlefieldSummaries.some((entry) => String(entry.id || "") === desiredId)) {
+    await loadSavedBattlefieldGrid(desiredId, { skipSave: !!options.skipSave });
+    return;
+  }
+  if (selectedBattlefieldId && !savedBattlefieldSummaries.some((entry) => String(entry.id || "") === selectedBattlefieldId)) {
+    selectedBattlefieldId = "";
+    selectedBattlefieldGrid = null;
+    renderSavedBattlefieldControls();
+    if (!options.skipSave) saveSettings();
+  }
+}
+
+function resolveImportedTerrainName(parsed, fileName) {
+  const candidates = [
+    parsed?.name,
+    parsed?.segment_name,
+    parsed?.map?.name,
+    parsed?.grid?.name,
+    parsed?.atlas?.name,
+    fileName ? String(fileName).replace(/\.[^.]+$/, "") : "",
+  ];
+  for (const candidate of candidates) {
+    const text = String(candidate || "").trim();
+    if (text) return text;
+  }
+  return "Imported Battlefield";
+}
+
+async function persistImportedBattlefield(name, grid, sourceName = "") {
+  const response = await api("/api/battlefields/save", {
+    method: "POST",
+    body: JSON.stringify({
+      name,
+      source_name: sourceName,
+      grid,
+    }),
+  });
+  useSavedBattlefield = true;
+  await refreshSavedBattlefields({ preferredId: response?.battlefield?.id || "", skipSave: true });
+  saveSettings();
+  return response?.battlefield || null;
+}
+
+function buildCurrentBattleStartPayload() {
+  const mode = modeSelect.value;
+  const teamSize = Number(teamSizeInput.value || 1);
+  const activeSlots = Number(activeSlotsInput.value || 1);
+  const sideCount = Math.max(2, Number(sideCountInput?.value || 2));
+  const circleInterval = Math.max(1, Number(circleIntervalInput?.value || 3));
+  const multiSideRandomMode = mode === "ai-royale" || (mode === "ai-random" && sideCount > 2);
+  const minLevel = Number(minLevelInput.value || 20);
+  const maxLevel = Number(maxLevelInput.value || 40);
+  const payload = {
+    team_size: teamSize,
+    active_slots: activeSlots,
+    min_level: minLevel,
+    max_level: maxLevel,
+  };
+  const hasRosterCsv = !!battleRosterCsvText;
+  if (hasRosterCsv && battleRosterCsvMeta) {
+    payload.team_size = Math.max(1, Number(battleRosterCsvMeta.teamSize || teamSize));
+    payload.active_slots = Math.max(1, Math.min(Number(payload.active_slots || 1), payload.team_size));
+    payload.roster_csv = battleRosterCsvText;
+  }
+  const namedSides = _normalizedSideNameOverrides(sideNameOverrides);
+  if (Object.keys(namedSides).length) payload.side_names = namedSides;
+  const normalizedDeployment = _normalizeDeploymentPayload();
+  if (Object.keys(normalizedDeployment).length) payload.deployment_overrides = normalizedDeployment;
+  const normalizedItemChoices = _normalizeItemChoicePayload();
+  if (Object.keys(normalizedItemChoices).length) payload.item_choice_overrides = normalizedItemChoices;
+  const normalizedAbilityChoices = _normalizeAbilityChoicePayload();
+  if (Object.keys(normalizedAbilityChoices).length) payload.ability_choice_overrides = normalizedAbilityChoices;
+  if (mode === "random" && !hasRosterCsv) {
+    payload.random_battle = true;
+  } else if (mode === "ai") {
+    payload.ai_mode = "ai";
+    payload.step_ai = true;
+  } else if (mode === "ai-random") {
+    payload.ai_mode = "ai";
+    payload.step_ai = true;
+    payload.side_count = sideCount;
+    payload.random_battle = true;
+  } else if (mode === "ai-royale") {
+    payload.ai_mode = "ai";
+    payload.step_ai = true;
+    payload.random_battle = true;
+    payload.battle_royale = true;
+    payload.side_count = Math.max(3, sideCount);
+    payload.circle_interval = circleInterval;
+  }
+  if (useTrainerInput?.checked && trainerProfileRaw) {
+    payload.trainer_profile = trainerProfileRaw;
+  }
+  if (useSavedBattlefield && selectedBattlefieldGrid) {
+    payload.grid = cloneBattlefieldGrid(selectedBattlefieldGrid);
+  }
+  return payload;
+}
+
+async function importTerrainJsonFile(file) {
+  if (!file) return;
+  const text = await _readTextFile(file);
+  const parsed = JSON.parse(text);
+  const rawGrid = parsed && typeof parsed === "object" && parsed.grid && typeof parsed.grid === "object" ? parsed.grid : parsed;
+  const grid = normalizeImportedGridPayload(rawGrid);
+  const savedName = resolveImportedTerrainName(parsed, file.name || "");
+  const savedBattlefield = await persistImportedBattlefield(savedName, grid, file.name || "");
+  const expectedSignature = gridImportSignature(grid);
+  if (state?.grid) {
+    let appliedState = null;
+    try {
+      appliedState = await api("/api/terrain/apply", {
+        method: "POST",
+        body: JSON.stringify({ grid }),
+      });
+    } catch (err) {
+      appliedState = null;
+    }
+    const appliedSignature = gridImportSignature(appliedState?.grid || null);
+    if (appliedState?.grid && appliedSignature === expectedSignature) {
+      state = appliedState;
+    } else {
+      const payload = buildCurrentBattleStartPayload();
+      payload.grid = grid;
+      lastBattlePayload = { ...payload };
+      saveSettings();
+      state = await api("/api/battle/new", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+      notifyUI("warn", "Imported map could not safely replace the live battle, so a new battle was started with that map.", 4200);
+    }
+  } else {
+    const payload = buildCurrentBattleStartPayload();
+    payload.grid = grid;
+    lastBattlePayload = { ...payload };
+    saveSettings();
+    state = await api("/api/battle/new", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+  }
+  if (!selectedId && state?.current_actor_id) {
+    selectedId = state.current_actor_id;
+  }
+  render();
+  notifyUI("ok", `Imported terrain from ${file.name || "JSON"} and saved ${savedBattlefield?.name || "battlefield"} for reuse.`, 3200);
+}
+
+async function _readTerrainImportRecord(file) {
+  const text = await _readTextFile(file);
+  const parsed = JSON.parse(text);
+  const rawGrid = parsed && typeof parsed === "object" && parsed.grid && typeof parsed.grid === "object" ? parsed.grid : parsed;
+  return {
+    file,
+    parsed,
+    grid: normalizeImportedGridPayload(rawGrid),
+    savedName: resolveImportedTerrainName(parsed, file?.name || ""),
+  };
+}
+
+async function importTerrainJsonFiles(files) {
+  const queue = Array.from(files || []).filter(Boolean);
+  if (!queue.length) return;
+  if (queue.length === 1) {
+    await importTerrainJsonFile(queue[0]);
+    return;
+  }
+  const imported = [];
+  for (const file of queue) {
+    const record = await _readTerrainImportRecord(file);
+    const savedBattlefield = await persistImportedBattlefield(record.savedName, record.grid, file.name || "");
+    imported.push({ ...record, savedBattlefield });
+  }
+  const primary = imported[0];
+  if (!primary) return;
+  const expectedSignature = gridImportSignature(primary.grid);
+  if (state?.grid) {
+    let appliedState = null;
+    try {
+      appliedState = await api("/api/terrain/apply", {
+        method: "POST",
+        body: JSON.stringify({ grid: primary.grid }),
+      });
+    } catch (err) {
+      appliedState = null;
+    }
+    const appliedSignature = gridImportSignature(appliedState?.grid || null);
+    if (appliedState?.grid && appliedSignature === expectedSignature) {
+      state = appliedState;
+    } else {
+      const payload = buildCurrentBattleStartPayload();
+      payload.grid = primary.grid;
+      lastBattlePayload = { ...payload };
+      saveSettings();
+      state = await api("/api/battle/new", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+      notifyUI("warn", "Imported map could not safely replace the live battle, so a new battle was started with that map.", 4200);
+    }
+  } else {
+    const payload = buildCurrentBattleStartPayload();
+    payload.grid = primary.grid;
+    lastBattlePayload = { ...payload };
+    saveSettings();
+    state = await api("/api/battle/new", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+  }
+  if (!selectedId && state?.current_actor_id) {
+    selectedId = state.current_actor_id;
+  }
+  render();
+  notifyUI(
+    "ok",
+    `Imported ${imported.length} maps. ${primary.file.name || "The first map"} is active now; the rest are in Saved Map.`,
+    3600,
+  );
 }
 
 async function commitAction(payload) {
@@ -4241,7 +6070,9 @@ function spawnPokemonMovementGhost(actor, fromCoord, toCoord) {
   if (!fromCell || !toCell) return 0;
   const fromRect = fromCell.getBoundingClientRect();
   const toRect = toCell.getBoundingClientRect();
-  const size = Math.round(Math.max(54, Math.min(92, fromRect.width * 0.9)));
+  const footprintSide = Math.max(1, Number(actor?.footprint_side || 1));
+  const footprintVisual = footprintVisualProfile(footprintSide);
+  const size = footprintGhostSize(fromRect, footprintSide);
   const ghost = document.createElement("div");
   ghost.className = "fx-pokemon-move";
   ghost.style.width = `${size}px`;
@@ -4250,6 +6081,10 @@ function spawnPokemonMovementGhost(actor, fromCoord, toCoord) {
   ghost.style.top = `${Math.round(fromRect.top + fromRect.height / 2)}px`;
   const wrap = document.createElement("div");
   wrap.className = "token-sprite-wrap loaded";
+  wrap.style.width = `${size}px`;
+  wrap.style.height = `${size}px`;
+  wrap.style.setProperty("--footprint-render-scale", String(footprintVisual.scale));
+  wrap.style.setProperty("--footprint-render-offset-y", `${footprintVisual.offsetY * 100}%`);
   const img = document.createElement("img");
   img.className = "token-sprite";
   img.src = actor.sprite_url;
@@ -4458,6 +6293,9 @@ function renderAiModelMath(source) {
   const updates = Number.isFinite(Number(math.updates_since_snapshot)) ? Number(math.updates_since_snapshot) : 0;
   const style = Array.isArray(selectedAnalysis?.styles) && selectedAnalysis.styles.length ? ` | ${selectedAnalysis.styles[0]}` : "";
   aiModelMathEl.textContent = `Model score: ${score}/${threshold} | updates ${updates}${style}`;
+  if (aiDriftThresholdInput && Number.isFinite(Number(math.threshold))) aiDriftThresholdInput.value = String(Number(math.threshold));
+  if (aiMinUpdatesInput && Number.isFinite(Number(math.min_updates))) aiMinUpdatesInput.value = String(Number(math.min_updates));
+  if (aiCheckEveryInput && Number.isFinite(Number(math.check_every))) aiCheckEveryInput.value = String(Number(math.check_every));
   if (aiModelInsightEl) {
     const summary = String(selectedAnalysis?.summary || "").trim();
     const strengths = Array.isArray(selectedAnalysis?.strengths) ? selectedAnalysis.strengths.filter(Boolean).slice(0, 2) : [];
@@ -4546,6 +6384,36 @@ async function selectAiModel(modelId) {
   notifyUI("ok", `Selected AI model: ${modelId}`, 1800);
 }
 
+async function branchAiModel() {
+  const currentId = String(aiModelSelect?.value || aiModelsCache?.current_model_id || "").trim();
+  const payload = await api("/api/ai/models/branch", {
+    method: "POST",
+    body: JSON.stringify({ label: currentId ? `${currentId}_branch` : "" }),
+  });
+  aiModelsCache = payload;
+  applyAiModelSelectionFromPayload(payload);
+  preferredAiModelId = String(payload?.current_model_id || currentId || "").trim();
+  saveSettings();
+  notifyUI("ok", `Branched AI model: ${preferredAiModelId}`, 2200);
+}
+
+async function applyAiModelSettings() {
+  const driftThreshold = Number(aiDriftThresholdInput?.value);
+  const minUpdates = Number(aiMinUpdatesInput?.value);
+  const checkEvery = Number(aiCheckEveryInput?.value);
+  const payload = await api("/api/ai/models/settings", {
+    method: "POST",
+    body: JSON.stringify({
+      drift_threshold: Number.isFinite(driftThreshold) ? driftThreshold : undefined,
+      min_updates: Number.isFinite(minUpdates) ? minUpdates : undefined,
+      check_every: Number.isFinite(checkEvery) ? checkEvery : undefined,
+    }),
+  });
+  aiModelsCache = payload;
+  applyAiModelSelectionFromPayload(payload);
+  notifyUI("ok", "AI learning settings updated.", 1800);
+}
+
 function render() {
   renderSideNameEditor();
   if (deferredBattlePanelsTimer && (!state || state.status !== "ok")) {
@@ -4625,7 +6493,8 @@ function render() {
     };
   }
   if (mapSeedEl) {
-    const seedValue = Number.isFinite(Number(state.seed)) ? String(state.seed) : "-";
+    const seedCandidate = state?.map?.seed ?? state?.grid?.map?.seed ?? state.seed;
+    const seedValue = seedCandidate !== undefined && seedCandidate !== null && String(seedCandidate).trim() ? String(seedCandidate) : "-";
     mapSeedEl.textContent = `Seed: ${seedValue}`;
   }
   roundInfoEl.textContent = `Round ${state.round} | ${state.phase || "-"}`;
@@ -4685,8 +6554,15 @@ function renderGrid() {
     viewManuallyAdjusted = false;
   }
   const cellSize = currentGridCellSize();
+  const gap = currentGridGap();
+  const gridPixelWidth = grid.width * cellSize + Math.max(0, grid.width - 1) * gap;
+  const gridPixelHeight = grid.height * cellSize + Math.max(0, grid.height - 1) * gap;
   gridEl.style.gridTemplateColumns = `repeat(${grid.width}, ${cellSize}px)`;
   gridEl.style.gridTemplateRows = `repeat(${grid.height}, ${cellSize}px)`;
+  if (gridMapSurfaceEl) {
+    gridMapSurfaceEl.style.width = `${gridPixelWidth}px`;
+    gridMapSurfaceEl.style.height = `${gridPixelHeight}px`;
+  }
   const expectedCells = grid.width * grid.height;
   if (gridCellByKey.size !== expectedCells) {
     gridEl.innerHTML = "";
@@ -4743,6 +6619,9 @@ function renderGrid() {
         barriers: entry[5],
         frozen_domain: entry[6],
         trap_sources: entry[7],
+        height: entry[8],
+        difficult: entry[9],
+        obstacle: entry[10],
       });
       return;
     }
@@ -4776,6 +6655,9 @@ function renderGrid() {
           barriers: entry.barriers,
           frozen_domain: entry.frozen_domain,
           trap_sources: entry.trap_sources,
+          height: entry.height,
+          difficult: entry.difficult,
+          obstacle: entry.obstacle,
         });
       }
       return;
@@ -4794,6 +6676,7 @@ function renderGrid() {
   } else if (rawTiles && typeof rawTiles === "object") {
     Object.entries(rawTiles).forEach(([key, entry]) => ingestTileEntry(entry, key));
   }
+  applyGridMapSurface(grid, tileMeta);
   const combatantsById = new Map((state.combatants || []).map((combatant) => [combatant.id, combatant]));
   const occupantMap = state.occupants || {};
   const currentPos = state.current_pos ? `${state.current_pos[0]},${state.current_pos[1]}` : null;
@@ -4823,6 +6706,7 @@ function renderGrid() {
       const cell = gridCellByKey.get(key);
       if (!cell) continue;
       cell.className = "cell";
+      delete cell.dataset.terrainTheme;
       cell.style.removeProperty("--team-primary");
       cell.style.removeProperty("--team-secondary");
       cell.textContent = "";
@@ -4832,11 +6716,18 @@ function renderGrid() {
       const meta = tileMeta.get(key) || {};
       const tileType = meta.type;
       const tileTokens = tileTypeTokens(tileType);
+      cell.dataset.terrainTheme = tileVisualTheme(tileType, meta);
       if (tileTokens.includes("water")) {
         cell.classList.add("water");
       }
       if (tileTokens.includes("difficult") || tileTokens.includes("rough")) {
         cell.classList.add("difficult");
+      }
+      if (Number(meta?.height || 0) > 0) {
+        cell.classList.add("elevated");
+        cell.style.setProperty("--tile-height-level", String(Math.max(0, Number(meta.height) || 0)));
+      } else {
+        cell.style.removeProperty("--tile-height-level");
       }
       if (tileTokens.includes("wall") || tileTokens.includes("blocker") || tileTokens.includes("blocking")) {
         cell.classList.add("blocker");
@@ -4874,43 +6765,7 @@ function renderGrid() {
       const frozenEntries = frozenDomainEntries(meta);
       if (hazardEntries.length || barrierEntries.length || frozenEntries.length) {
         cell.classList.add("has-hazard");
-        const hazardWrap = document.createElement("div");
-        hazardWrap.className = "hazard-stack";
-        hazardEntries.slice(0, 4).forEach((entry) => {
-          const badge = document.createElement("div");
-          badge.className = `hazard-badge ${entry.kind === "trap" ? "trap" : "hazard"}`;
-          const normalized = normalizePokeKey(entry.name);
-          const glyph =
-            (entry.kind === "trap" ? TRAP_GLYPHS[normalized] : HAZARD_GLYPHS[normalized]) ||
-            String(entry.name || "?").charAt(0).toUpperCase();
-          badge.textContent = entry.layers > 1 ? `${glyph}${entry.layers}` : glyph;
-          badge.title = trapBadgeTitle(entry, meta);
-          hazardWrap.appendChild(badge);
-        });
-      barrierEntries.slice(0, Math.max(0, 4 - hazardEntries.length)).forEach((entry) => {
-        const badge = document.createElement("div");
-        badge.className = "hazard-badge blocker";
-        badge.textContent = "⛶";
-        badge.title = barrierBadgeTitle(entry);
-        hazardWrap.appendChild(badge);
-      });
-      if (frozenEntries.length && hazardWrap.childElementCount < 4) {
-        const badge = document.createElement("div");
-        badge.className = "hazard-badge frozen";
-        badge.textContent = "❄";
-        badge.title = frozenDomainBadgeTitle(frozenEntries);
-        hazardWrap.appendChild(badge);
       }
-      const totalObjects = hazardEntries.length + barrierEntries.length + frozenEntries.length;
-      if (totalObjects > hazardWrap.childElementCount) {
-        const badge = document.createElement("div");
-        badge.className = "hazard-badge counter";
-        badge.textContent = `+${totalObjects - hazardWrap.childElementCount}`;
-        badge.title = `Tile has ${totalObjects} battlefield objects: ${hazardEntries.filter((entry) => entry.kind !== "trap").length} hazards, ${hazardEntries.filter((entry) => entry.kind === "trap").length} traps, ${barrierEntries.length} barriers, ${frozenEntries.length} Frozen Domain.`;
-        hazardWrap.appendChild(badge);
-      }
-      cell.appendChild(hazardWrap);
-    }
       const occupantId = occupantMap[key];
       const combatant = occupantId ? combatantsById.get(occupantId) : null;
       if (occupantId) {
@@ -4918,9 +6773,7 @@ function renderGrid() {
           const teamVisual = getTeamVisual(teamKeyForCombatant(combatant));
           const gimmicks = combatant.gimmicks || {};
           const teraType = gimmicks?.terastallized?.tera_type || "";
-          const anchorKey = Array.isArray(combatant.position)
-            ? `${combatant.position[0]},${combatant.position[1]}`
-            : "";
+          const anchorKey = footprintAnchorKeyForCombatant(combatant);
           const footprintSide = Math.max(1, Number(combatant.footprint_side || 1));
           const isFootprintAnchor = key === anchorKey || !anchorKey;
           cell.classList.add("occupied");
@@ -4951,6 +6804,7 @@ function renderGrid() {
             cell.style.setProperty("--tera-secondary", teraPalette.secondary);
           }
           if (isFootprintAnchor) {
+            const footprintBox = `var(--cell-size) * ${footprintSide} + var(--grid-gap) * ${Math.max(0, footprintSide - 1)}`;
             const bar = document.createElement("div");
             bar.className = "hp-bar";
             bar.style.background = teamVisual.track;
@@ -4974,36 +6828,44 @@ function renderGrid() {
               hpValue.style.right = "auto";
             }
             cell.appendChild(hpValue);
+            const footprintShadow = document.createElement("div");
+            footprintShadow.className = "token-footprint-shadow";
+            footprintShadow.style.background = `color-mix(in srgb, ${teamVisual.primary} 58%, transparent)`;
+            footprintShadow.style.width = `calc(${footprintBox})`;
+            footprintShadow.style.height = `calc(${footprintBox})`;
+            footprintShadow.style.left = "0";
+            footprintShadow.style.top = "0";
+            footprintShadow.style.bottom = "auto";
+            footprintShadow.style.borderRadius = "calc(var(--cell-size) * 0.18)";
+            cell.appendChild(footprintShadow);
             attachSprite(cell, combatant.sprite_url, combatant.name);
             const spriteWrap = cell.querySelector(".token-sprite-wrap");
             if (spriteWrap) {
-              const footprintBox = `var(--cell-size) * ${footprintSide} + var(--grid-gap) * ${Math.max(0, footprintSide - 1)}`;
-              const footprintVisual =
-                footprintSide >= 4
-                  ? { scale: 0.46, left: 0.22, top: 0.26 }
-                  : footprintSide === 3
-                    ? { scale: 0.56, left: 0.18, top: 0.18 }
-                    : footprintSide === 2
-                      ? { scale: 0.72, left: 0.14, top: 0.1 }
-                      : { scale: 0.86, left: 0, top: 0 };
-              spriteWrap.style.width = `calc((${footprintBox}) * ${footprintVisual.scale})`;
-              spriteWrap.style.height = `calc((${footprintBox}) * ${footprintVisual.scale})`;
+              const edgeInset = tokenEdgeInsetForAnchor(x, y, grid, footprintSide);
+              const footprintVisual = footprintVisualProfile(footprintSide);
               if (footprintSide > 1) {
-                spriteWrap.style.left = `calc((${footprintBox}) * ${footprintVisual.left})`;
-                spriteWrap.style.top = `calc((${footprintBox}) * ${footprintVisual.top})`;
+                spriteWrap.style.width = `calc(${footprintBox})`;
+                spriteWrap.style.height = `calc(${footprintBox})`;
+                spriteWrap.style.left = edgeInset.x === "0px" ? "0" : `calc(0px + ${edgeInset.x})`;
+                spriteWrap.style.top = edgeInset.y === "0px" ? "0" : `calc(0px + ${edgeInset.y})`;
+                spriteWrap.style.marginLeft = "";
+                spriteWrap.style.marginTop = "";
+                spriteWrap.style.setProperty("--footprint-render-scale", String(footprintVisual.scale));
+                spriteWrap.style.setProperty("--footprint-render-offset-y", `${footprintVisual.offsetY * 100}%`);
               } else {
+                spriteWrap.style.width = "";
+                spriteWrap.style.height = "";
                 spriteWrap.style.left = "";
                 spriteWrap.style.top = "";
+                spriteWrap.style.marginLeft = edgeInset.x === "0px" ? "" : edgeInset.x;
+                spriteWrap.style.marginTop = edgeInset.y === "0px" ? "" : edgeInset.y;
+                spriteWrap.style.removeProperty("--footprint-render-scale");
+                spriteWrap.style.removeProperty("--footprint-render-offset-y");
               }
             }
             appendTokenItemIcons(cell, combatant);
             appendTokenStatusBadges(cell, combatant);
             appendTokenGimmickBadges(cell, combatant);
-            const marker = document.createElement("div");
-            marker.className = "marker";
-            marker.textContent = combatant.marker;
-            marker.style.background = `linear-gradient(135deg, ${teamVisual.primary}, ${teamVisual.secondary})`;
-            cell.appendChild(marker);
             const injuryCount = Number(combatant.injuries || 0);
             if (injuryCount > 0) {
               const injuryWrap = document.createElement("div");
@@ -5062,9 +6924,11 @@ function renderGrid() {
 function updateSelectedTileInfo(tileMeta) {
   if (!selectedTileInfoEl) return;
   if (!selectedTileKey) {
-    selectedTileInfoEl.textContent = "Tile: -";
+    selectedTileInfoEl.textContent = "Click a tile to inspect";
+    selectedTileInfoEl.title = "";
     selectedTileInfoEl.onmouseenter = null;
     selectedTileInfoEl.onmouseleave = null;
+    selectedTileInfoEl.onclick = null;
     if (terrainInfoEl) {
       const label = normalizeFieldName(terrainNameValue(state?.terrain)) || "None";
       terrainInfoEl.textContent = `Terrain: ${label}`;
@@ -5088,26 +6952,35 @@ function updateSelectedTileInfo(tileMeta) {
   const trapEntries = hazardEntries.filter((entry) => entry.kind === "trap");
   const standardHazards = hazardEntries.filter((entry) => entry.kind !== "trap");
   const objectCount = standardHazards.length + trapEntries.length + barrierEntries.length + frozenEntries.length;
+  const hardTerrain = !!(meta?.difficult || tileTypeTokens(meta?.type).includes("difficult"));
+  const heightLevel = Math.max(0, Number(meta?.height || 0));
   selectedTileInfoEl.textContent = [
     `Tile ${x},${y}`,
     typeLabel,
-    occupant ? occupant.name || occupant.species || occupant.id : isBlocked ? "Blocked" : "",
-    objectCount ? `${objectCount} object${objectCount === 1 ? "" : "s"}` : "",
-  ].filter(Boolean).join(" | ");
+    heightLevel > 0 ? `Height ${heightLevel}` : "",
+    hardTerrain ? "Hard Terrain" : "",
+    isBlocked ? "Blocked" : "",
+    occupant ? `Occupant: ${occupant.name || occupant.species || occupant.id}` : "",
+    objectCount ? `${objectCount} battlefield object${objectCount === 1 ? "" : "s"}` : "",
+  ].filter(Boolean).join(" • ");
+  const draftNotes = [];
+  if (armedTileAction === "trapper") draftNotes.push(`Trapper draft ${trapperDraftTiles.length}/8`);
+  if (armedTileAction === "frozen_domain") draftNotes.push(`Frozen draft ${frozenDomainDraftTiles.length}/6`);
+  if (armedTileAction === "psionic_overload_barrier") draftNotes.push(`Overload barrier ${psionicOverloadBarrierTiles.length}/2`);
+  const detailBody = [
+    buildTileTooltip(meta, x, y),
+    typeDesc ? `\n${typeDesc}` : "",
+    draftNotes.length ? `\n${draftNotes.join("\n")}` : "",
+  ].filter(Boolean).join("\n");
+  selectedTileInfoEl.title = `Inspect tile ${x},${y}`;
   selectedTileInfoEl.onmouseenter = () => {
-    const draftNotes = [];
-    if (armedTileAction === "trapper") draftNotes.push(`Trapper draft ${trapperDraftTiles.length}/8`);
-    if (armedTileAction === "frozen_domain") draftNotes.push(`Frozen draft ${frozenDomainDraftTiles.length}/6`);
-    if (armedTileAction === "psionic_overload_barrier") draftNotes.push(`Overload barrier ${psionicOverloadBarrierTiles.length}/2`);
-    const detailBody = [
-      buildTileTooltip(meta, x, y),
-      typeDesc ? `\n${typeDesc}` : "",
-      draftNotes.length ? `\n${draftNotes.join("\n")}` : "",
-    ].filter(Boolean).join("\n");
     showDetailTooltip(selectedTileInfoEl, `Tile ${x},${y}`, detailBody);
   };
   selectedTileInfoEl.onmouseleave = () => {
     scheduleTooltipHide();
+  };
+  selectedTileInfoEl.onclick = () => {
+    showDetailTooltip(selectedTileInfoEl, `Tile ${x},${y}`, detailBody);
   };
   if (terrainInfoEl) {
     const label = normalizeFieldName(terrainNameValue(state?.terrain)) || "None";
@@ -5903,17 +7776,26 @@ function spawnMovementEchoes(actor, fromCoord, toCoord) {
   if (!fromCell || !toCell) return;
   const fromRect = fromCell.getBoundingClientRect();
   const toRect = toCell.getBoundingClientRect();
+  const footprintSide = Math.max(1, Number(actor?.footprint_side || 1));
+  const footprintVisual = footprintVisualProfile(footprintSide);
+  const ghostSize = footprintGhostSize(fromRect, footprintSide);
   const dx = (toRect.left + toRect.width / 2) - (fromRect.left + fromRect.width / 2);
   const dy = (toRect.top + toRect.height / 2) - (fromRect.top + fromRect.height / 2);
   const fractions = [0.32, 0.64];
   fractions.forEach((fraction, index) => {
     const ghost = document.createElement("div");
     ghost.className = "fx-move-echo";
+    ghost.style.width = `${ghostSize}px`;
+    ghost.style.height = `${ghostSize}px`;
     ghost.style.left = `${Math.round(fromRect.left + fromRect.width / 2 + dx * fraction)}px`;
     ghost.style.top = `${Math.round(fromRect.top + fromRect.height / 2 + dy * fraction)}px`;
     ghost.style.animationDelay = `${index * 40}ms`;
     const wrap = document.createElement("div");
     wrap.className = "token-sprite-wrap loaded";
+    wrap.style.width = `${ghostSize}px`;
+    wrap.style.height = `${ghostSize}px`;
+    wrap.style.setProperty("--footprint-render-scale", String(footprintVisual.scale));
+    wrap.style.setProperty("--footprint-render-offset-y", `${footprintVisual.offsetY * 100}%`);
     const img = document.createElement("img");
     img.className = "token-sprite";
     img.src = actor.sprite_url;
@@ -7831,6 +9713,56 @@ function tileTypeDescription(tileType) {
   return notes.join(" ");
 }
 
+function inferGridMapTheme(grid, tileMeta) {
+  const directTheme = String(grid?.map?.theme || grid?.map_theme || state?.map?.theme || "").trim().toLowerCase();
+  if (directTheme) return directTheme;
+  const terrainName = normalizeFieldName(terrainNameValue(state?.terrain) || "").toLowerCase();
+  if (terrainName.includes("psychic")) return "psychic";
+  if (terrainName.includes("grassy")) return "grassy";
+  if (terrainName.includes("electric")) return "electric";
+  if (terrainName.includes("misty")) return "misty";
+  if (terrainName.includes("gravity")) return "rock";
+  if (terrainName.includes("warped")) return "psychic";
+  const counts = new Map();
+  for (const meta of tileMeta.values()) {
+    const tokens = tileTypeTokens(meta?.type);
+    tokens.forEach((token) => counts.set(token, (counts.get(token) || 0) + 1));
+  }
+  const dominant = [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || "";
+  if (["water", "ice", "grass", "forest", "sand", "rock", "cave", "urban", "psychic"].includes(dominant)) {
+    return dominant === "grass" ? "grassy" : dominant;
+  }
+  return "default";
+}
+
+function applyGridMapSurface(grid, tileMeta) {
+  if (!gridMapSurfaceEl) return;
+  const theme = inferGridMapTheme(grid, tileMeta);
+  const mapName = String(grid?.map?.name || grid?.map_name || state?.map?.name || "").trim();
+  gridMapSurfaceEl.dataset.theme = theme || "default";
+  if (mapName) {
+    gridMapSurfaceEl.dataset.mapName = mapName;
+  } else {
+    delete gridMapSurfaceEl.dataset.mapName;
+  }
+  const imageDataUrl = String(grid?.map?.image?.data_url || "").trim();
+  if (imageDataUrl) {
+    gridMapSurfaceEl.style.backgroundImage = `url("${imageDataUrl.replace(/"/g, '\\"')}")`;
+    gridMapSurfaceEl.style.backgroundRepeat = "no-repeat";
+    gridMapSurfaceEl.style.backgroundPosition = "0 0";
+    gridMapSurfaceEl.style.backgroundSize = "100% 100%";
+    gridMapSurfaceEl.dataset.hasImage = "true";
+    if (gridEl) gridEl.dataset.hasMapImage = "true";
+  } else {
+    gridMapSurfaceEl.style.backgroundImage = "";
+    gridMapSurfaceEl.style.backgroundRepeat = "";
+    gridMapSurfaceEl.style.backgroundPosition = "";
+    gridMapSurfaceEl.style.backgroundSize = "";
+    delete gridMapSurfaceEl.dataset.hasImage;
+    if (gridEl) delete gridEl.dataset.hasMapImage;
+  }
+}
+
 function trapBadgeTitle(entry, meta) {
   const suffix = entry.layers > 1 ? ` x${entry.layers}` : "";
   if (entry.kind !== "trap") return `${entry.name}${suffix}`;
@@ -7854,6 +9786,8 @@ function buildTileTooltip(meta, x, y) {
   lines.push(`Tile: ${x},${y}`);
   lines.push(`Type: ${tileTypeLabel(meta?.type)}`);
   lines.push(tileTypeDescription(meta?.type));
+  lines.push(`Height: ${Math.max(0, Number(meta?.height || 0))}`);
+  lines.push(`Hard Terrain: ${meta?.difficult || tileTypeTokens(meta?.type).includes("difficult") ? "Yes" : "No"}`);
   const blockers = new Set((state?.grid?.blockers || []).map((c) => `${c[0]},${c[1]}`));
   const isBlocked = blockers.has(`${x},${y}`);
   const occupantId = state?.occupants ? state.occupants[`${x},${y}`] : null;
@@ -8015,6 +9949,9 @@ function renderItemChips(items) {
     if (summaryLines.length) {
       tooltipParts.push(summaryLines.join("\n"));
     }
+    if (item.taste) {
+      tooltipParts.push(`Taste: ${String(item.taste).trim().replace(/^./, (ch) => ch.toUpperCase())}`);
+    }
     if (description) {
       tooltipParts.push(description);
     } else if (meta?.effect) {
@@ -8046,6 +9983,7 @@ function normalizeCombatantItems(items) {
         if (!name) return null;
         return {
           name,
+          taste: String(item.taste || "").trim().toLowerCase(),
           equipped: Boolean(item.equipped),
           visible_on_token: item.visible_on_token !== false,
           kind: String(item.kind || "").trim(),
@@ -8417,6 +10355,7 @@ function pickTrainerFeatureOption(title, options, onSelect, helpText = "") {
             label: entry.label ?? entry.name ?? String(entry.value ?? entry.id ?? ""),
             meta: entry.meta || "",
             hint: entry.hint || "",
+            disabled: !!entry.disabled,
           }
     ),
     onSelect: (value, entry) => {
@@ -8571,6 +10510,8 @@ function renderTrainerFeatureActions(moveListEl, combatant, canAct) {
   const targetMap = new Map(targets.map((entry) => [entry.value, entry]));
   const quickWitOptionMap = new Map((hints.quick_wit_manipulate_options || []).map((entry) => [entry.target, entry]));
   const tricksterOptionMap = new Map((hints.trickster_options || []).map((entry) => [entry.target, entry]));
+  const sleightOptionMap = new Map((hints.sleight_options || []).map((entry) => [`${entry.move}||${entry.target_id || ""}`, entry]));
+  const shellGameOptionMap = new Map((hints.shell_game_options || []).map((entry) => [String(entry.hazard || "").toLowerCase(), entry]));
   const dirtyFightingOptionMap = new Map((hints.dirty_fighting_options || []).map((entry) => [entry.target, entry]));
   const weaponFinesseOptionMap = new Map((hints.weapon_finesse_target_options || []).map((entry) => [entry.target, entry]));
   const psychicResonanceOptionMap = new Map((hints.psychic_resonance_target_options || []).map((entry) => [entry.target, entry]));
@@ -8981,9 +10922,10 @@ function renderTrainerFeatureActions(moveListEl, combatant, canAct) {
   }
 
   if (features.has("quick switch")) {
+    const quickSwitchApCost = Math.max(1, Number(hints.quick_switch_ap_cost || 2));
     addTrainerFeatureButton(
       list,
-      `Quick Switch${trainerAp ? ` (${trainerAp} AP)` : ""}`,
+      `Quick Switch (${quickSwitchApCost} AP)`,
       canAct && !!hints.quick_switch_ap_ready && quickSwitchOptions.length > 0,
       () => {
         pickTrainerFeatureOption(
@@ -8992,10 +10934,323 @@ function renderTrainerFeatureActions(moveListEl, combatant, canAct) {
           (replacementId) => {
             commitAction({ type: "trainer_feature", action_key: "quick_switch", actor_id: combatant.id, replacement_id: replacementId }).catch(alertError);
           },
-          "Spend 2 AP to switch to a benched ally without losing a Pokemon turn."
+          `Spend ${quickSwitchApCost} AP to switch to a benched ally without losing a Pokemon turn.`
         );
       },
-      !hints.quick_switch_ap_ready ? "Requires 2 AP." : (quickSwitchOptions.length ? "" : "No valid Quick Switch replacements.")
+      !hints.quick_switch_ap_ready ? `Requires ${quickSwitchApCost} AP.` : (quickSwitchOptions.length ? "" : "No valid Quick Switch replacements.")
+    );
+  }
+
+  if (features.has("emergency release")) {
+    const emergencyReleaseTargets = (hints.emergency_release_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      `Emergency Release${trainerAp ? ` (${trainerAp} AP)` : ""}`,
+      canAct && !!hints.emergency_release_ready && emergencyReleaseTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Emergency Release Target",
+          emergencyReleaseTargets,
+          (replacementId) => {
+            commitAction({
+              type: "trainer_feature",
+              action_key: "emergency_release",
+              actor_id: combatant.id,
+              replacement_id: replacementId,
+              target_position: selectedTileCoord(),
+            }).catch(alertError);
+          },
+          "Spend 2 AP and your Shift Action to release a benched Pokemon onto the field."
+        );
+      },
+      !hints.emergency_release_ap_ready ? "Requires 2 AP." : (emergencyReleaseTargets.length ? "Choose a benched Pokemon to release." : "No benched Pokemon can be released right now.")
+    );
+  }
+
+  if (features.has("bounce shot")) {
+    const bounceShotTargets = (hints.bounce_shot_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Bounce Shot",
+      canAct && !!hints.bounce_shot_ready && bounceShotTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Bounce Shot Target",
+          bounceShotTargets,
+          (replacementId) => {
+            pickTrainerFeatureOption(
+              "Release Timing",
+              [
+                { value: "after", label: "After Bounce", hint: "Release at the bounced landing tile." },
+                { value: "before", label: "Before Bounce", hint: "Release at the normal landing tile, then bounce away." },
+              ],
+              (releaseTiming) => {
+                commitAction({
+                  type: "trainer_feature",
+                  action_key: "bounce_shot",
+                  actor_id: combatant.id,
+                  replacement_id: replacementId,
+                  release_timing: releaseTiming,
+                  target_position: selectedTileCoord(),
+                }).catch(alertError);
+              },
+              "Choose whether the Pokemon is released before or after the bounce."
+            );
+          },
+          "Choose a benched Pokemon to release with Bounce Shot."
+        );
+      },
+      bounceShotTargets.length ? "Select a target tile first if you want the bounced landing to matter." : "No benched Pokemon can be released right now."
+    );
+  }
+
+  if (features.has("fast pitch")) {
+    const captureBallItems = (hints.capture_ball_items || []).map((entry) => ({
+      value: String(entry.index),
+      label: entry.item || `Item ${entry.index}`,
+    }));
+    const captureTargets = (hints.capture_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      `Fast Pitch${trainerAp ? ` (${trainerAp} AP)` : ""}`,
+      canAct && !!hints.fast_pitch_ready && captureBallItems.length > 0 && captureTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption("Poke Ball", captureBallItems, (itemIndex) => {
+          pickTrainerFeatureOption("Capture Target", captureTargets, (targetId) => {
+            commitAction({
+              type: "trainer_feature",
+              action_key: "fast_pitch",
+              actor_id: combatant.id,
+              item_index: Number(itemIndex),
+              target_id: targetId,
+            }).catch(alertError);
+          }, "Choose the Pokemon to target with the Poke Ball.");
+        }, "Spend 1 AP and a Standard Action to throw a Poke Ball with Priority.");
+      },
+      !hints.fast_pitch_ap_ready ? "Requires 1 AP." : "Choose a Poke Ball and a target."
+    );
+  }
+
+  if (features.has("culinary appreciation")) {
+    const appreciationTargets = (hints.culinary_appreciation_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target} (${Number(entry.tutor_points || 0)} TP)`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Culinary Appreciation",
+      canAct && !!hints.culinary_appreciation_ready && appreciationTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Culinary Appreciation Target",
+          appreciationTargets,
+          (targetId) => {
+            commitAction({
+              type: "trainer_feature",
+              action_key: "culinary_appreciation",
+              actor_id: combatant.id,
+              target_id: targetId,
+            }).catch(alertError);
+          },
+          "Spend 2 Tutor Points to permanently grant Gluttony to one allied Pokemon."
+        );
+      },
+      appreciationTargets.length ? "Choose an allied Pokemon with at least 2 Tutor Points." : "No allied Pokemon can receive Culinary Appreciation right now."
+    );
+  }
+
+  if (features.has("hits the spot")) {
+    const hitsTheSpotTargets = (hints.hits_the_spot_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      `Hits the Spot${trainerAp ? ` (${trainerAp} AP)` : ""}`,
+      canAct && !!hints.hits_the_spot_ready && hitsTheSpotTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Hits the Spot Target",
+          hitsTheSpotTargets,
+          (targetId) => {
+            commitAction({
+              type: "trainer_feature",
+              action_key: "hits_the_spot",
+              actor_id: combatant.id,
+              target_id: targetId,
+            }).catch(alertError);
+          },
+          "Spend 1 AP after a digestion trade to grant temporary HP."
+        );
+      },
+      !trainerAp ? "Requires 1 AP." : (hitsTheSpotTargets.length ? "Choose the ally that traded away a food buff." : "No Hits the Spot trigger is ready.")
+    );
+  }
+
+  if (features.has("complex aftertaste")) {
+    const complexAftertasteTargets = (hints.complex_aftertaste_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target}${entry.taste_label ? ` | ${entry.taste_label}` : ""}${entry.source_item ? ` | ${entry.source_item}` : ""}`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      `Complex Aftertaste${trainerAp ? ` (${trainerAp} AP)` : ""}`,
+      canAct && !!hints.complex_aftertaste_ready && complexAftertasteTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Complex Aftertaste Target",
+          complexAftertasteTargets,
+          (targetId) => {
+            commitAction({
+              type: "trainer_feature",
+              action_key: "complex_aftertaste",
+              actor_id: combatant.id,
+              target_id: targetId,
+            }).catch(alertError);
+          },
+          "Spend 1 AP to add the matching Tasty Snack digestion buff after a taste-based trade."
+        );
+      },
+      !trainerAp ? "Requires 1 AP." : (complexAftertasteTargets.length ? "Choose the ally that triggered the matching taste trade." : "No Complex Aftertaste trigger is ready.")
+    );
+  }
+
+  if (features.has("gotta catch 'em all")) {
+    addTrainerFeatureButton(
+      list,
+      `Gotta Catch 'Em All (${Math.max(0, Number(hints.gotta_catch_em_all_uses_left || 0))} left)`,
+      canAct && !!hints.gotta_catch_em_all_ready,
+      () => {
+        commitAction({ type: "trainer_feature", action_key: "gotta_catch_em_all", actor_id: combatant.id }).catch(alertError);
+      },
+      hints.gotta_catch_em_all_primed
+        ? "Already primed for the next Capture Roll."
+        : "Swift Action: switch the digits of your next Capture Roll."
+    );
+  }
+
+  if (features.has("captured momentum")) {
+    const momentumTargets = (hints.captured_momentum_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Captured Momentum",
+      canAct && !!hints.captured_momentum_ready,
+      () => {
+        pickTrainerFeatureOption(
+          "Captured Momentum",
+          [
+            { value: "accuracy", label: "+2 Accuracy", hint: "You or your Pokemon gain +2 to the next Accuracy Roll this combat." },
+            { value: "capture", label: "Next Capture", hint: "Subtract your best capture skill rank from your next Capture Roll." },
+            { value: "ap", label: "Temporary AP", hint: "Gain 1 Temporary AP for one full round." },
+          ],
+          (mode) => {
+            if (mode === "accuracy") {
+              pickTrainerFeatureOption("Accuracy Target", momentumTargets, (targetId) => {
+                commitAction({ type: "trainer_feature", action_key: "captured_momentum", actor_id: combatant.id, mode, target_id: targetId }).catch(alertError);
+              });
+              return;
+            }
+            commitAction({ type: "trainer_feature", action_key: "captured_momentum", actor_id: combatant.id, mode }).catch(alertError);
+          },
+          "Choose the benefit from your successful capture."
+        );
+      },
+      "Available after you successfully capture a Pokemon."
+    );
+  }
+
+  if (features.has("devitalizing throw")) {
+    const statOptions = hints.devitalizing_throw_stat_options || [];
+    addTrainerFeatureButton(
+      list,
+      `Devitalizing Throw${trainerAp ? ` (${trainerAp} AP)` : ""}`,
+      canAct && !!hints.devitalizing_throw_ready && trainerAp >= 1,
+      () => {
+        pickTrainerFeatureOption(
+          "Devitalizing Throw",
+          [
+            { value: "slow", label: "Slow", hint: "The escaped target becomes Slowed." },
+            { value: "stat", label: "Lower Stat", hint: "The escaped target loses 1 Combat Stage in a chosen stat." },
+            { value: "save", label: "-3 Save", hint: "The escaped target suffers -3 to its next Save Roll." },
+          ],
+          (mode) => {
+            if (mode === "stat") {
+              pickTrainerFeatureOption("Stat", statOptions, (stat) => {
+                commitAction({ type: "trainer_feature", action_key: "devitalizing_throw", actor_id: combatant.id, mode, stat }).catch(alertError);
+              });
+              return;
+            }
+            commitAction({ type: "trainer_feature", action_key: "devitalizing_throw", actor_id: combatant.id, mode }).catch(alertError);
+          },
+          "Spend 1 AP after a Pokemon escapes your Poke Ball."
+        );
+      },
+      trainerAp < 1 ? "Requires 1 AP." : "Available after a Pokemon escapes your Poke Ball."
+    );
+  }
+
+  if (features.has("catch combo")) {
+    const captureBallItems = (hints.capture_ball_items || []).map((entry) => ({
+      value: String(entry.index),
+      label: entry.item || `Item ${entry.index}`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      `Catch Combo (${Math.max(0, Number(hints.catch_combo_uses_left || 0))} left)`,
+      canAct && !!hints.catch_combo_ready && captureBallItems.length > 0,
+      () => {
+        pickTrainerFeatureOption("Poke Ball", captureBallItems, (itemIndex) => {
+          commitAction({
+            type: "trainer_feature",
+            action_key: "catch_combo",
+            actor_id: combatant.id,
+            item_index: Number(itemIndex),
+          }).catch(alertError);
+        }, "Choose the Poke Ball to throw at the fainted wild Pokemon.");
+      },
+      captureBallItems.length ? "Available after your Pokemon faints a wild Pokemon." : "Requires a Poke Ball in inventory."
+    );
+  }
+
+  if (features.has("relentless pursuit")) {
+    const pursuers = (hints.relentless_pursuit_pokemon || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    const pursuitTargets = (hints.relentless_pursuit_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      `Relentless Pursuit${trainerAp ? ` (${trainerAp} AP)` : ""}`,
+      canAct && !!hints.relentless_pursuit_ready && pursuers.length > 0 && pursuitTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption("Pursuing Pokemon", pursuers, (pokemonId) => {
+          pickTrainerFeatureOption("Fleeing Foe", pursuitTargets, (targetId) => {
+            commitAction({
+              type: "trainer_feature",
+              action_key: "relentless_pursuit",
+              actor_id: combatant.id,
+              pokemon_id: pokemonId,
+              target_id: targetId,
+            }).catch(alertError);
+          }, "Choose the foe attempting to run away.");
+        }, "Choose the allied Pokemon that Shifts and uses Struggle.");
+      },
+      !hints.relentless_pursuit_ap_ready ? "Requires 2 AP." : "Manual trigger for when a foe attempts to run away."
     );
   }
 
@@ -9054,6 +11309,1321 @@ function renderTrainerFeatureActions(moveListEl, combatant, canAct) {
     addTrainerFeatureButton(list, `Flight${flightSpeed > 0 ? `: Sky ${flightSpeed}` : ""}`, canAct && flightSpeed > 0 && !flightActive && !!hints.flight_ap_ready, () => {
       commitAction({ type: "trainer_feature", action_key: "flight", actor_id: combatant.id }).catch(alertError);
     }, flightActive ? "Flight is already active this round." : (!hints.flight_ap_ready ? "Requires 1 AP." : "Spend 1 AP to gain temporary Sky movement for the round."));
+  }
+
+  if (features.has("ghost step")) {
+    const ghostStepDestinations = (hints.ghost_step_destinations || []).map((coord) => ({
+      value: Array.isArray(coord) ? coord.join(",") : "",
+      label: Array.isArray(coord) ? `${coord[0]}, ${coord[1]}` : "",
+    })).filter((entry) => entry.value);
+    addTrainerFeatureButton(
+      list,
+      `Ghost Step (${Math.max(0, Number(hints.ghost_step_uses_left || 0))} left)`,
+      canAct && !!hints.ghost_step_ready && ghostStepDestinations.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Ghost Step Destination",
+          ghostStepDestinations,
+          (value) => {
+            const [x, y] = String(value || "").split(",").map((entry) => Number(entry));
+            commitAction({
+              type: "trainer_feature",
+              action_key: "ghost_step",
+              actor_id: combatant.id,
+              destination: [x, y],
+            }).catch(alertError);
+          },
+          "Phase out, then reappear in a legal Shift tile at the start of your next turn."
+        );
+      },
+      Number(hints.ghost_step_uses_left || 0) <= 0 ? "Ghost Step is out of uses this scene." : "Choose a legal Shift destination to reappear in next round."
+    );
+  }
+
+  if (features.has("shrug off")) {
+    addTrainerFeatureButton(
+      list,
+      `Shrug Off (${Math.max(0, Number(hints.shrug_off_uses_left || 0))} left)`,
+      canAct && !!hints.shrug_off_ready,
+      () => {
+        commitAction({ type: "trainer_feature", action_key: "shrug_off", actor_id: combatant.id }).catch(alertError);
+      },
+      Number(hints.shrug_off_uses_left || 0) <= 0 ? "Shrug Off is out of uses today." : "Spend your Shift to remove one injury."
+    );
+  }
+
+  if (features.has("shocking speed")) {
+    const shockingSpeedMoves = (hints.shocking_speed_moves || []).map((entry) => ({
+      value: entry.move || entry.move_name,
+      label: entry.move_name || entry.move,
+    })).filter((entry) => entry.value);
+    addTrainerFeatureButton(
+      list,
+      `Shocking Speed (${Math.max(0, Number(hints.shocking_speed_uses_left || 0))} left)`,
+      canAct && !!hints.shocking_speed_ready && shockingSpeedMoves.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Shocking Speed Move",
+          shockingSpeedMoves,
+          (moveName) => {
+            commitAction({ type: "trainer_feature", action_key: "shocking_speed", actor_id: combatant.id, move_name: moveName }).catch(alertError);
+          },
+          "Prime an At-Will Electric move to gain priority this turn."
+        );
+      },
+      !shockingSpeedMoves.length ? "No eligible At-Will Electric move is available." : "Choose an At-Will Electric move to prime."
+    );
+  }
+
+  if (features.has("brutal training")) {
+    const brutalTrainingTargets = (hints.brutal_training_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      hints.taskmaster_ready ? "Brutal Training / Taskmaster" : "Brutal Training",
+      canAct && !!hints.brutal_training_ready && brutalTrainingTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Brutal Training Target",
+          brutalTrainingTargets,
+          (targetId) => {
+            if (!hints.taskmaster_ready) {
+              commitAction({ type: "trainer_feature", action_key: "brutal_training", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+              return;
+            }
+            pickTrainerFeatureOption(
+              "Taskmaster Injuries",
+              [0, 1, 2, 3].map((value) => ({
+                value,
+                label: value === 0 ? "No extra injuries" : `${value} extra injur${value === 1 ? "y" : "ies"}`,
+              })),
+              (injuriesToAdd) => {
+                commitAction({
+                  type: "trainer_feature",
+                  action_key: "brutal_training",
+                  actor_id: combatant.id,
+                  target_id: targetId,
+                  injuries_to_add: Number(injuriesToAdd || 0),
+                }).catch(alertError);
+              },
+              "Taskmaster may add up to 3 injuries when applying Brutal Training."
+            );
+          },
+          "Apply Brutal Training to an allied active Pokemon."
+        );
+      },
+      hints.taskmaster_ready ? "Apply Brutal Training, optionally adding Taskmaster injuries." : "Apply Brutal Training to an allied active Pokemon."
+    );
+  }
+
+  if (features.has("ace trainer")) {
+    const aceTrainerTargets = (hints.ace_trainer_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    const aceTrainerStats = (hints.ace_trainer_stat_options || []).map((entry) => ({
+      value: entry.value,
+      label: entry.label,
+    }));
+    const aceTrainerStatCount = Number(hints.ace_trainer_stat_count || 1);
+    addTrainerFeatureButton(
+      list,
+      aceTrainerStatCount >= 2 ? "Ace Trainer / Champ in the Making" : "Ace Trainer",
+      canAct && !!hints.ace_trainer_ready && aceTrainerTargets.length > 0 && aceTrainerStats.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Ace Trainer Target",
+          aceTrainerTargets,
+          (targetId) => {
+            pickTrainerFeatureOption(
+              "First Trained Stat",
+              aceTrainerStats,
+              (firstStat) => {
+                if (aceTrainerStatCount < 2) {
+                  commitAction({
+                    type: "trainer_feature",
+                    action_key: "ace_trainer",
+                    actor_id: combatant.id,
+                    target_id: targetId,
+                    stats: [firstStat],
+                  }).catch(alertError);
+                  return;
+                }
+                pickTrainerFeatureOption(
+                  "Second Trained Stat",
+                  aceTrainerStats.filter((entry) => entry.value !== firstStat),
+                  (secondStat) => {
+                    commitAction({
+                      type: "trainer_feature",
+                      action_key: "ace_trainer",
+                      actor_id: combatant.id,
+                      target_id: targetId,
+                      stats: [firstStat, secondStat],
+                    }).catch(alertError);
+                  },
+                  "Choose the second trained stat."
+                );
+              },
+              "Choose the first trained stat."
+            );
+          },
+          "Choose an allied Pokemon to train."
+        );
+      },
+      aceTrainerStatCount >= 2 ? "Spend 1 AP to give an ally two trained stats." : "Spend 1 AP to give an ally one trained stat."
+    );
+  }
+
+  if (features.has("signature technique")) {
+    const signatureTargets = (hints.signature_technique_targets || []).map((entry) => ({
+      ...entry,
+      value: entry.target,
+      label: `${entry.target_name || entry.target} (${Number(entry.tutor_points || 0)} TP${Number(entry.replacement_refund || 0) ? ", +1 refund" : ""})`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Signature Technique",
+      canAct && !!hints.signature_technique_ready && signatureTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Signature Target",
+          signatureTargets,
+          (targetId) => {
+            const target = signatureTargets.find((entry) => entry.value === targetId);
+            const moves = (target?.moves || []).map((entry) => ({
+              ...entry,
+              value: entry.move,
+              label: entry.move_name || entry.move,
+            }));
+            pickTrainerFeatureOption(
+              "Signature Move",
+              moves,
+              (moveName) => {
+                const move = moves.find((entry) => entry.value === moveName);
+                const modifications = (move?.modifications || []).map((entry) => ({
+                  value: entry.value,
+                  label: `${entry.label}${entry.training ? ` (${entry.training})` : ""}`,
+                }));
+                pickTrainerFeatureOption(
+                  "Signature Modification",
+                  modifications,
+                  (modification) => {
+                    commitAction({
+                      type: "trainer_feature",
+                      action_key: "signature_technique",
+                      actor_id: combatant.id,
+                      target_id: targetId,
+                      move_name: moveName,
+                      modification,
+                    }).catch(alertError);
+                  },
+                  "Choose a legal modification for the selected move."
+                );
+              },
+              "Choose the Pokemon move that becomes its Signature Technique."
+            );
+          },
+          "Spend 2 Tutor Points to teach a legal Signature Technique. Replacing an old one refunds 1 TP first."
+        );
+      },
+      "Choose an allied Pokemon, move, and legal Signature Technique modification."
+    );
+  }
+
+  if (features.has("agility training")) {
+    const agilityTrainingTargets = (hints.agility_training_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Agility Training",
+      canAct && !!hints.agility_training_ready && agilityTrainingTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Agility Training Target",
+          agilityTrainingTargets,
+          (targetId) => {
+            commitAction({ type: "trainer_feature", action_key: "agility_training", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+          },
+          "Apply Agility Training to an allied active Pokemon."
+        );
+      },
+      "Apply Agility Training to an allied active Pokemon."
+    );
+  }
+
+  if (features.has("focused training")) {
+    const focusedTrainingTargets = (hints.focused_training_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Focused Training",
+      canAct && !!hints.focused_training_ready && focusedTrainingTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Focused Training Target",
+          focusedTrainingTargets,
+          (targetId) => {
+            commitAction({ type: "trainer_feature", action_key: "focused_training", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+          },
+          "Apply Focused Training to an allied active Pokemon."
+        );
+      },
+      "Apply Focused Training to an allied active Pokemon."
+    );
+  }
+
+  if (features.has("duelist")) {
+    const duelistTargets = (hints.duelist_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Duelist Tag",
+      canAct && !!hints.duelist_ready && duelistTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Tagged Foe",
+          duelistTargets,
+          (targetId) => {
+            commitAction({ type: "trainer_feature", action_key: "duelist", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+          },
+          "Tag one foe, or remove your existing tag if they are already tagged."
+        );
+      },
+      "Tag one active foe for Duelist Momentum bonuses."
+    );
+  }
+
+  if (features.has("effective methods")) {
+    const effectiveMethodsTargets = (hints.effective_methods_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target} (${Number(entry.tutor_points || 0)} TP)`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Effective Methods",
+      canAct && !!hints.effective_methods_ready && effectiveMethodsTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Effective Methods Target",
+          effectiveMethodsTargets,
+          (targetId) => {
+            pickTrainerFeatureOption(
+              "Granted Ability",
+              [
+                { value: "Exploit", label: "Exploit" },
+                { value: "Tolerance", label: "Tolerance" },
+              ],
+              (ability) => {
+                commitAction({ type: "trainer_feature", action_key: "effective_methods", actor_id: combatant.id, target_id: targetId, ability }).catch(alertError);
+              },
+              "Choose the ability to grant permanently."
+            );
+          },
+          "Spend 2 Tutor Points to grant Exploit or Tolerance once per Pokemon."
+        );
+      },
+      "Choose an allied Pokemon with at least 2 Tutor Points."
+    );
+  }
+
+  if (features.has("expend momentum")) {
+    const expendTargets = hints.expend_momentum_targets || [];
+    const targetOptions = expendTargets.map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target} (${Number(entry.momentum || 0)} Momentum)`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Expend Momentum",
+      canAct && !!hints.expend_momentum_ready && targetOptions.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Momentum Target",
+          targetOptions,
+          (targetId) => {
+            const entry = expendTargets.find((item) => item.target === targetId) || {};
+            const momentum = Number(entry.momentum || 0);
+            const modes = [];
+            if (momentum >= 1 && (entry.eot_moves || []).length) modes.push({ value: "eot", label: "1 Momentum: Restore EOT Move" });
+            if (momentum >= 2) modes.push({ value: "roll11", label: "2 Momentum: Next d20 is 11" });
+            if (momentum >= 3 && (entry.scene_moves || []).length) modes.push({ value: "scene", label: "3 Momentum: Restore Scene Move" });
+            pickTrainerFeatureOption("Expend Momentum Mode", modes, (mode) => {
+              if (mode === "roll11") {
+                commitAction({ type: "trainer_feature", action_key: "expend_momentum", actor_id: combatant.id, target_id: targetId, mode }).catch(alertError);
+                return;
+              }
+              const moves = mode === "eot" ? (entry.eot_moves || []) : (entry.scene_moves || []);
+              pickTrainerFeatureOption(
+                "Move to Restore",
+                moves.map((move) => ({ value: move.move || move.move_name, label: move.move_name || move.move })),
+                (moveName) => {
+                  commitAction({ type: "trainer_feature", action_key: "expend_momentum", actor_id: combatant.id, target_id: targetId, mode, move_name: moveName }).catch(alertError);
+                },
+                "Choose the spent move frequency to restore."
+              );
+            }, "Spend Momentum for one Duelist effect.");
+          },
+          "Choose a Focused Training Pokemon with Momentum."
+        );
+      },
+      "Spend Momentum for Duelist effects."
+    );
+  }
+
+  if (features.has("duelist's manual") || features.has("duelist’s manual")) {
+    const manualTargets = hints.duelists_manual_targets || [];
+    const targetOptions = manualTargets.map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target} (${Number(entry.momentum || 0)} Momentum)`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Duelist's Manual",
+      canAct && !!hints.duelists_manual_ready && targetOptions.length > 0,
+      () => {
+        pickTrainerFeatureOption("Manual Target", targetOptions, (targetId) => {
+          const entry = manualTargets.find((item) => item.target === targetId) || {};
+          const momentum = Number(entry.momentum || 0);
+          const modes = [];
+          if (momentum >= 1) modes.push({ value: "ability", label: "1 Momentum: Boost Exploit/Tolerance" });
+          if (momentum >= 2) modes.push({ value: "single_target", label: "2 Momentum: Focus Area Attack" });
+          if (momentum >= 3) modes.push({ value: "ignore_status", label: "3 Momentum: Ignore Volatile Status" });
+          pickTrainerFeatureOption("Manual Mode", modes, (mode) => {
+            if (mode !== "ability") {
+              commitAction({ type: "trainer_feature", action_key: "duelists_manual", actor_id: combatant.id, target_id: targetId, mode }).catch(alertError);
+              return;
+            }
+            pickTrainerFeatureOption(
+              "Temporary Ability",
+              [
+                { value: "", label: "Keep current ability" },
+                { value: "Exploit", label: "Exploit" },
+                { value: "Tolerance", label: "Tolerance" },
+              ],
+              (ability) => {
+                commitAction({ type: "trainer_feature", action_key: "duelists_manual", actor_id: combatant.id, target_id: targetId, mode, ability }).catch(alertError);
+              },
+              "Optionally add Exploit or Tolerance until the end of the next turn."
+            );
+          }, "Choose one Duelist's Manual effect.");
+        }, "Choose a Focused Training Pokemon with enough Momentum.");
+      },
+      "Spend 2 AP to apply one Duelist's Manual effect."
+    );
+  }
+
+  if (features.has("seize the moment")) {
+    const seizeTargets = hints.seize_the_moment_targets || [];
+    const targetOptions = seizeTargets.map((entry) => ({ value: entry.target, label: entry.target_name || entry.target }));
+    addTrainerFeatureButton(
+      list,
+      "Seize The Moment",
+      canAct && !!hints.seize_the_moment_ready && targetOptions.length > 0,
+      () => {
+        pickTrainerFeatureOption("Tagged Foe", targetOptions, (targetId) => {
+          const entry = seizeTargets.find((item) => item.target === targetId) || {};
+          const moves = (entry.moves || []).map((move) => ({ value: move.move || move.move_name, label: move.move_name || move.move }));
+          pickTrainerFeatureOption("Interrupt Attack", moves, (moveName) => {
+            commitAction({ type: "trainer_feature", action_key: "seize_the_moment", actor_id: combatant.id, target_id: targetId, move_name: moveName }).catch(alertError);
+          }, "Choose the attack to make against the tagged foe.");
+        }, "Choose the tagged foe to attack.");
+      },
+      "Resolve the pending Seize The Moment interrupt attack."
+    );
+  }
+
+  if (features.has("inspired training")) {
+    const inspiredTrainingTargets = (hints.inspired_training_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Inspired Training",
+      canAct && !!hints.inspired_training_ready && inspiredTrainingTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Inspired Training Target",
+          inspiredTrainingTargets,
+          (targetId) => {
+            commitAction({ type: "trainer_feature", action_key: "inspired_training", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+          },
+          "Apply Inspired Training to an allied active Pokemon."
+        );
+      },
+      "Apply Inspired Training to an allied active Pokemon."
+    );
+  }
+
+  if (
+    features.has("stat training")
+    || features.has("attack training")
+    || features.has("defense training")
+    || features.has("special attack training")
+    || features.has("special defense training")
+    || features.has("speed training")
+  ) {
+    addTrainerFeatureButton(
+      list,
+      "Stat Training",
+      canAct && !!hints.stat_training_ready && Array.isArray(hints.stat_training_options) && hints.stat_training_options.length > 0,
+      () => {
+        const featureOptions = (hints.stat_training_options || []).map((entry, index) => ({
+          value: String(index),
+          label: `${entry.feature}${entry.stat_label ? ` (${entry.stat_label})` : ""}: ${entry.target_name || entry.target}`,
+        }));
+        pickTrainerFeatureOption("Stat Training", featureOptions, (choiceValue) => {
+          const entry = (hints.stat_training_options || [])[Number(choiceValue || 0)] || {};
+          const moveOptions = (entry.moves || []).map((move) => ({
+            value: move.move || move.move_name,
+            label: move.move_name || move.move,
+          }));
+          pickTrainerFeatureOption("Training Move", moveOptions, (moveName) => {
+            const actionKey = String(entry.feature || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "_");
+            commitAction({
+              type: "trainer_feature",
+              action_key: actionKey,
+              actor_id: combatant.id,
+              target_id: entry.target,
+              move_name: moveName,
+            }).catch(alertError);
+          }, "Choose the move to teach with Stat Training.");
+        }, "Choose a Stat Training branch and allied Pokemon target.");
+      },
+      "Spend 1 Tutor Point to teach the chosen branch move."
+    );
+  }
+
+  if (
+    features.has("stat stratagem")
+    || features.has("attack stratagem")
+    || features.has("defense stratagem")
+    || features.has("special attack stratagem")
+    || features.has("special defense stratagem")
+    || features.has("speed stratagem")
+  ) {
+    addTrainerFeatureButton(
+      list,
+      "Stat Stratagem",
+      canAct && !!hints.stat_stratagem_ready && Array.isArray(hints.stat_stratagem_options) && hints.stat_stratagem_options.length > 0,
+      () => {
+        const options = (hints.stat_stratagem_options || []).map((entry, index) => ({
+          value: String(index),
+          label: `${entry.feature}${entry.stat_label ? ` (${entry.stat_label})` : ""}: ${entry.target_name || entry.target}`,
+        }));
+        pickTrainerFeatureOption("Stat Stratagem", options, (choiceValue) => {
+          const entry = (hints.stat_stratagem_options || [])[Number(choiceValue || 0)] || {};
+          const actionKey = String(entry.feature || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "_");
+          commitAction({
+            type: "trainer_feature",
+            action_key: actionKey,
+            actor_id: combatant.id,
+            target_id: entry.target,
+          }).catch(alertError);
+        }, "Choose the Stratagem branch and allied Pokemon to bind.");
+      },
+      "Spend 2 AP to bind a Stat Stratagem to an allied active Pokemon."
+    );
+  }
+
+  if (features.has("type ace")) {
+    addTrainerFeatureButton(
+      list,
+      "Type Ace",
+      canAct && !!hints.type_ace_ready && Array.isArray(hints.type_ace_options) && hints.type_ace_options.length > 0,
+      () => {
+        const options = (hints.type_ace_options || []).map((entry, index) => ({
+          value: String(index),
+          label: `${entry.type_label || entry.chosen_type}: ${entry.target_name || entry.target}`,
+        }));
+        pickTrainerFeatureOption("Type Ace", options, (choiceValue) => {
+          const entry = (hints.type_ace_options || [])[Number(choiceValue || 0)] || {};
+          const abilityOptions = (entry.ability_options || []).map((option) => ({
+            value: option.mode,
+            label: option.label || option.mode,
+          }));
+          pickTrainerFeatureOption("Type Ace Ability", abilityOptions, (mode) => {
+            commitAction({
+              type: "trainer_feature",
+              action_key: "type_ace",
+              actor_id: combatant.id,
+              target_id: entry.target,
+              ability_mode: mode,
+            }).catch(alertError);
+          }, "Choose which Type Ace ability to grant.");
+        }, "Choose the Type Ace branch target.");
+      },
+      "Spend 2 Tutor Points to grant a chosen-type strategist or low-HP ability to an allied Pokemon."
+    );
+  }
+
+  if (features.has("type refresh")) {
+    addTrainerFeatureButton(
+      list,
+      `Type Refresh${trainerAp ? ` (${trainerAp} AP)` : ""}`,
+      canAct && !!hints.type_refresh_ready && Array.isArray(hints.type_refresh_options) && hints.type_refresh_options.length > 0,
+      () => {
+        const options = (hints.type_refresh_options || []).map((entry, index) => ({
+          value: String(index),
+          label: `${entry.type_label || entry.chosen_type}: ${entry.target_name || entry.target}`,
+          meta: []
+            .concat((entry.scene_moves || []).map((move) => `Scene ${move.move_name || move.move}`))
+            .concat((entry.eot_moves || []).map((move) => `EOT ${move.move_name || move.move}`))
+            .join(", "),
+        }));
+        pickTrainerFeatureOption("Type Refresh", options, (choiceValue) => {
+          const entry = (hints.type_refresh_options || [])[Number(choiceValue || 0)] || {};
+          commitAction({
+            type: "trainer_feature",
+            action_key: "type_refresh",
+            actor_id: combatant.id,
+            target_id: entry.target,
+          }).catch(alertError);
+        }, "Refresh one spent Scene move and all spent EOT moves of the chosen type.");
+      },
+      "Spend 2 AP to refresh chosen-type move frequency on an allied Pokemon once per scene."
+    );
+  }
+
+  if (features.has("move sync")) {
+    addTrainerFeatureButton(
+      list,
+      "Move Sync",
+      canAct && !!hints.move_sync_ready && Array.isArray(hints.move_sync_options) && hints.move_sync_options.length > 0,
+      () => {
+        const options = (hints.move_sync_options || []).map((entry, index) => ({
+          value: String(index),
+          label: `${entry.type_label || entry.chosen_type}: ${entry.target_name || entry.target}`,
+        }));
+        pickTrainerFeatureOption("Move Sync Target", options, (choiceValue) => {
+          const entry = (hints.move_sync_options || [])[Number(choiceValue || 0)] || {};
+          const moveOptions = (entry.moves || []).map((move) => ({
+            value: move.move || move.move_name,
+            label: `${move.move_name || move.move} (${move.current_type || "?"})`,
+          }));
+          pickTrainerFeatureOption("Synced Move", moveOptions, (moveName) => {
+            commitAction({
+              type: "trainer_feature",
+              action_key: "move_sync",
+              actor_id: combatant.id,
+              target_id: entry.target,
+              move_name: moveName,
+            }).catch(alertError);
+          }, "Choose the move to retype.");
+        }, "Choose the allied Pokemon and then the move to sync.");
+      },
+      "Spend 1 Tutor Point to change one move's type to your chosen Type Ace type."
+    );
+  }
+
+  if (features.has("extra ordinary")) {
+    const targets = (hints.extra_ordinary_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Extra Ordinary",
+      canAct && !!hints.extra_ordinary_ready && targets.length > 0,
+      () => {
+        pickTrainerFeatureOption("Extra Ordinary Target", targets, (targetId) => {
+          commitAction({
+            type: "trainer_feature",
+            action_key: "extra_ordinary",
+            actor_id: combatant.id,
+            target_id: targetId,
+          }).catch(alertError);
+        }, "Grant the missing Normal Type Ace ability to a qualifying allied Pokemon.");
+      },
+      "Target a Normal-type ally with Last Chance or Normal Strategist to grant the missing partner ability."
+    );
+  }
+
+  if (features.has("close quarters mastery")) {
+    const targets = (hints.close_quarters_mastery_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Close Quarters Mastery",
+      canAct && !!hints.close_quarters_mastery_ready && targets.length > 0,
+      () => {
+        pickTrainerFeatureOption("Close Quarters Mastery Target", targets, (targetId) => {
+          commitAction({
+            type: "trainer_feature",
+            action_key: "close_quarters_mastery",
+            actor_id: combatant.id,
+            target_id: targetId,
+          }).catch(alertError);
+        }, "Bind Close Quarters Mastery to an active allied Pokemon.");
+      },
+      "Spend 2 AP to bind Close Quarters Mastery to an active allied Pokemon."
+    );
+  }
+
+  if (features.has("celerity")) {
+    const targets = (hints.celerity_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target}${Number(entry.initiative_bonus || 0) ? ` (+${Number(entry.initiative_bonus || 0)} Init)` : ""}`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Celerity",
+      canAct && !!hints.celerity_ready && targets.length > 0,
+      () => {
+        pickTrainerFeatureOption("Celerity Target", targets, (targetId) => {
+          commitAction({
+            type: "trainer_feature",
+            action_key: "celerity",
+            actor_id: combatant.id,
+            target_id: targetId,
+          }).catch(alertError);
+        }, "Bind Celerity to an active Flying-type or sky-capable ally.");
+      },
+      "Spend 2 AP to grant initiative and stronger disengages to an active Flying-type or sky-capable ally."
+    );
+  }
+
+  if (features.has("foiling foliage")) {
+    addTrainerFeatureButton(
+      list,
+      "Foiling Foliage",
+      canAct && !!hints.foiling_foliage_ready && Array.isArray(hints.foiling_foliage_options) && hints.foiling_foliage_options.length > 0,
+      () => {
+        const options = (hints.foiling_foliage_options || []).map((entry, index) => ({
+          value: String(index),
+          label: `${entry.target_name || entry.target}${entry.current_move ? ` (${entry.current_move})` : ""}`,
+        }));
+        pickTrainerFeatureOption("Foiling Foliage Target", options, (choiceValue) => {
+          const entry = (hints.foiling_foliage_options || [])[Number(choiceValue || 0)] || {};
+          const moveOptions = (entry.moves || []).map((move) => ({
+            value: move.move || move.move_name,
+            label: move.move_name || move.move,
+          }));
+          pickTrainerFeatureOption("Foiling Foliage Move", moveOptions, (moveName) => {
+            commitAction({
+              type: "trainer_feature",
+              action_key: "foiling_foliage",
+              actor_id: combatant.id,
+              target_id: entry.target,
+              move_name: moveName,
+            }).catch(alertError);
+          }, "Choose the Grass-type Status move that should bypass the move limit.");
+        }, "Choose the allied Pokemon to teach through Foiling Foliage.");
+      },
+      "Extended Action. Let one Grass-type Status move bypass the target's move limit."
+    );
+  }
+
+  if (features.has("clever ruse")) {
+    addTrainerFeatureButton(
+      list,
+      `Clever Ruse${hints.clever_ruse_triggered ? " (Triggered)" : ""}`,
+      canAct && !!hints.clever_ruse_ready && Array.isArray(hints.clever_ruse_options) && hints.clever_ruse_options.length > 0,
+      () => {
+        const options = (hints.clever_ruse_options || []).map((entry) => ({
+          value: entry.value,
+          label: entry.label,
+        }));
+        pickTrainerFeatureOption("Clever Ruse Effects", options, (choiceValue) => {
+          const entry = (hints.clever_ruse_options || []).find((option) => option.value === choiceValue) || {};
+          commitAction({
+            type: "trainer_feature",
+            action_key: "clever_ruse",
+            actor_id: combatant.id,
+            choices: Array.isArray(entry.choices) ? entry.choices : String(choiceValue || "").split(",").filter(Boolean),
+            manual: !hints.clever_ruse_triggered,
+          }).catch(alertError);
+        }, "Choose the two Clever Ruse effects to apply.");
+      },
+      hints.clever_ruse_triggered
+        ? "Free Action after missing all targets with a Dark-type attack."
+        : "Standard Action. Apply any two Clever Ruse effects once per round."
+    );
+  }
+
+  if (features.has("fairy lights")) {
+    addTrainerFeatureButton(
+      list,
+      `Fairy Lights${Number(hints.fairy_lights_count || 0) ? ` (${Number(hints.fairy_lights_count || 0)} active)` : ""}`,
+      canAct && !!hints.fairy_lights_ready,
+      () => {
+        commitAction({
+          type: "trainer_feature",
+          action_key: "fairy_lights",
+          actor_id: combatant.id,
+          mode: "create",
+        }).catch(alertError);
+      },
+      Number(hints.fairy_lights_count || 0) > 0
+        ? "Standard Action. Recreate the three Fairy Lights around this Pokemon."
+        : "Standard Action. Create three Fairy Lights around this Pokemon."
+    );
+    if (Number(hints.fairy_lights_count || 0) > 0 && Array.isArray(hints.fairy_lights_positions) && hints.fairy_lights_positions.length > 0) {
+      addTrainerFeatureButton(
+        list,
+        "Fairy Lights Reposition",
+        canAct && !!hints.fairy_lights_ready && Array.isArray(hints.fairy_lights_destination_options) && hints.fairy_lights_destination_options.length > 0,
+        () => {
+          chooseFairyLightsPlan(
+            hints.fairy_lights_positions || [],
+            hints.fairy_lights_destination_options || [],
+            (positions) => {
+              commitAction({
+                type: "trainer_feature",
+                action_key: "fairy_lights",
+                actor_id: combatant.id,
+                mode: "reposition",
+                positions,
+              }).catch(alertError);
+            }
+          );
+        },
+        "Extended Action. Reposition each active Fairy Light to a tile within 6 meters."
+      );
+    }
+  }
+
+  if (features.has("flood!")) {
+    addTrainerFeatureButton(
+      list,
+      "Flood!",
+      canAct && !!hints.flood_ready && Array.isArray(hints.flood_options) && hints.flood_options.length > 0,
+      () => {
+        const options = (hints.flood_options || []).map((entry, index) => ({
+          value: String(index),
+          label: `${entry.move_name || entry.move} -> ${entry.mode_label || entry.mode}`,
+        }));
+        pickTrainerFeatureOption("Flood Move", options, (choiceValue) => {
+          const entry = (hints.flood_options || [])[Number(choiceValue || 0)] || {};
+          const selectedTargetId = selectedTileOccupantId();
+          const selectedTargetPosition = selectedTileCoord();
+          if (!selectedTargetId && !selectedTargetPosition) {
+            notifyUI("warn", "Select a battlefield tile or target first.", 2200);
+            return;
+          }
+          commitAction({
+            type: "trainer_feature",
+            action_key: "flood",
+            actor_id: combatant.id,
+            move_name: entry.move || entry.move_name,
+            mode: entry.mode,
+            target_id: selectedTargetId || null,
+            target_position: selectedTargetPosition,
+          }).catch(alertError);
+        }, "Choose the Water-type move and Flood shape to use this turn.");
+      },
+      "Shift Action. Use a damaging Water-type move as Line 4 or Close Blast 2."
+    );
+  }
+
+  if (features.has("quick healing")) {
+    const quickHealingTargets = (hints.quick_healing_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target} (${Number(entry.injuries || 0)} injuries)`,
+      injuries: Number(entry.injuries || 0),
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Quick Healing",
+      canAct && !!hints.quick_healing_ready && quickHealingTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Quick Healing Target",
+          quickHealingTargets,
+          (targetId) => {
+            const target = quickHealingTargets.find((entry) => entry.value === targetId);
+            const injuries = Math.max(1, Math.min(3, Number(target?.injuries || 1)));
+            pickTrainerFeatureOption(
+              "Injuries To Remove",
+              Array.from({ length: injuries }, (_value, index) => index + 1).map((value) => ({
+                value,
+                label: `${value} injur${value === 1 ? "y" : "ies"}`,
+              })),
+              (injuriesToRemove) => {
+                commitAction({
+                  type: "trainer_feature",
+                  action_key: "quick_healing",
+                  actor_id: combatant.id,
+                  target_id: targetId,
+                  injuries_to_remove: Number(injuriesToRemove || 1),
+                }).catch(alertError);
+              },
+              "Quick Healing removes up to 3 injuries from a Hardened ally."
+            );
+          },
+          "Choose a Hardened ally with injuries."
+        );
+      },
+      "Choose a Hardened ally and how many injuries to remove."
+    );
+  }
+
+  if (features.has("press")) {
+    const pressTargets = (hints.press_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    const pressStats = [
+      { value: "atk", label: "Attack" },
+      { value: "def", label: "Defense" },
+      { value: "spatk", label: "Special Attack" },
+      { value: "spdef", label: "Special Defense" },
+      { value: "spd", label: "Speed" },
+      { value: "accuracy", label: "Accuracy" },
+      { value: "evasion", label: "Evasion" },
+    ];
+    addTrainerFeatureButton(
+      list,
+      "Press",
+      canAct && !!hints.press_ready && pressTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Press Target",
+          pressTargets,
+          (targetId) => {
+            pickTrainerFeatureOption(
+              "First Press Stat",
+              pressStats,
+              (firstStat) => {
+                pickTrainerFeatureOption(
+                  "Second Press Stat",
+                  pressStats,
+                  (secondStat) => {
+                    commitAction({
+                      type: "trainer_feature",
+                      action_key: "press",
+                      actor_id: combatant.id,
+                      target_id: targetId,
+                      stats: [firstStat, secondStat],
+                    }).catch(alertError);
+                  },
+                  "Choose the second combat stage to raise."
+                );
+              },
+              "Choose the first combat stage to raise."
+            );
+          },
+          "Deal damage to your ally, then raise two combat stages."
+        );
+      },
+      "Choose an allied target, then select two combat stages to raise."
+    );
+  }
+
+  if (features.has("savage strike")) {
+    const savageStrikeTargets = (hints.savage_strike_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target} (${Number(entry.tutor_points || 0)} TP)`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Savage Strike",
+      canAct && !!hints.savage_strike_ready && savageStrikeTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Savage Strike Target",
+          savageStrikeTargets,
+          (targetId) => {
+            commitAction({ type: "trainer_feature", action_key: "savage_strike", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+          },
+          "Spend 2 Tutor Points to permanently grant Cruelty to an allied Pokemon."
+        );
+      },
+      "Choose an allied Pokemon with at least 2 Tutor Points."
+    );
+  }
+
+  if (features.has("cheerleader [playtest]")) {
+    const cheerleaderTargets = (hints.cheerleader_playtest_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target} (${Number(entry.tutor_points || 0)} TP)`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Cheerleader [Playtest]",
+      canAct && !!hints.cheerleader_playtest_ready && cheerleaderTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Cheerleader Target",
+          cheerleaderTargets,
+          (targetId) => {
+            commitAction({ type: "trainer_feature", action_key: "cheerleader_playtest", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+          },
+          "Spend 2 Tutor Points to permanently grant Friend Guard to an allied Pokemon."
+        );
+      },
+      "Choose an allied Pokemon with at least 2 Tutor Points."
+    );
+  }
+
+  if (features.has("cheer brigade")) {
+    const cheerBrigadeTargets = (hints.cheer_brigade_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target} (${Number(entry.tutor_points || 0)} TP)`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Cheer Brigade",
+      canAct && !!hints.cheer_brigade_ready && cheerBrigadeTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Cheer Brigade Target",
+          cheerBrigadeTargets,
+          (targetId) => {
+            commitAction({ type: "trainer_feature", action_key: "cheer_brigade", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+          },
+          "Spend 2 Tutor Points to permanently grant Friend Guard to an allied Pokemon."
+        );
+      },
+      "Choose an allied Pokemon with at least 2 Tutor Points."
+    );
+  }
+
+  if (features.has("vim and vigor")) {
+    const vimAndVigorTargets = (hints.vim_and_vigor_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target} (${Number(entry.tutor_points || 0)} TP)`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Vim and Vigor",
+      canAct && !!hints.vim_and_vigor_ready && vimAndVigorTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Vim and Vigor Target",
+          vimAndVigorTargets,
+          (targetId) => {
+            commitAction({ type: "trainer_feature", action_key: "vim_and_vigor", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+          },
+          "Spend 2 Tutor Points to permanently grant Vigor to an allied Pokemon. Each Pokemon can only benefit once."
+        );
+      },
+      "Choose an allied Pokemon with at least 2 Tutor Points that has not already received Vim and Vigor."
+    );
+  }
+
+  if (features.has("ramming speed")) {
+    const rammingSpeedTargets = (hints.ramming_speed_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target} (${Number(entry.tutor_points || 0)} TP)`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Ramming Speed",
+      canAct && !!hints.ramming_speed_ready && rammingSpeedTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Ramming Speed Target",
+          rammingSpeedTargets,
+          (targetId) => {
+            commitAction({ type: "trainer_feature", action_key: "ramming_speed", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+          },
+          "Spend 2 Tutor Points to permanently grant Run Up to an allied Pokemon. Each Pokemon can only benefit once."
+        );
+      },
+      "Choose an allied Pokemon with at least 2 Tutor Points that has not already received Ramming Speed."
+    );
+  }
+
+  if (features.has("rider") || features.has("ride as one") || features.has("mounted prowess")) {
+    const mountTargets = (hints.mount_targets || []).map((entry) => ({
+      value: entry.target,
+      label: entry.target_name || entry.target,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Mount",
+      canAct && !!hints.mount_ready && mountTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Mount Target",
+          mountTargets,
+          (targetId) => {
+            commitAction({ type: "trainer_feature", action_key: "mount_pokemon", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+          },
+          "Mount an adjacent allied Pokemon."
+        );
+      },
+      "Choose an adjacent allied Pokemon to mount."
+    );
+    const dismountPositions = (hints.dismount_positions || []).map((entry) => ({
+      value: `${entry.tile[0]},${entry.tile[1]}`,
+      label: `${entry.tile[0]}, ${entry.tile[1]}`,
+      tile: entry.tile,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Dismount",
+      canAct && !!hints.dismount_ready && dismountPositions.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Dismount Tile",
+          dismountPositions,
+          (tileKey) => {
+            const chosen = dismountPositions.find((entry) => entry.value === tileKey);
+            if (!chosen) return;
+            commitAction({ type: "trainer_feature", action_key: "dismount_pokemon", actor_id: combatant.id, destination: chosen.tile }).catch(alertError);
+          },
+          "Choose an adjacent tile to dismount onto."
+        );
+      },
+      "Choose an adjacent tile to dismount onto."
+    );
+  }
+
+  if (features.has("ride as one")) {
+    addTrainerFeatureButton(
+      list,
+      "Ride as One Swap",
+      canAct && !!hints.ride_as_one_swap_ready,
+      () => {
+        commitAction({ type: "trainer_feature", action_key: "ride_as_one_swap_turn", actor_id: combatant.id }).catch(alertError);
+      },
+      "Hand the current initiative slot to your mounted partner before taking actions."
+    );
+  }
+
+  if (features.has("conqueror's march")) {
+    addTrainerFeatureButton(
+      list,
+      "Conqueror's March",
+      canAct && !!hints.conquerors_march_ready && !!hints.conquerors_march_target,
+      () => {
+        commitAction({ type: "trainer_feature", action_key: "conquerors_march", actor_id: combatant.id, target_id: hints.conquerors_march_target }).catch(alertError);
+      },
+      "Apply Conqueror's March to your mounted Pokemon with Run Up for the round."
+    );
+  }
+
+  if (features.has("versatile wardrobe")) {
+    const versatileWardrobeTargets = (hints.versatile_wardrobe_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target} (${Number(entry.tutor_points || 0)} TP)`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Versatile Wardrobe",
+      canAct && !!hints.versatile_wardrobe_ready && versatileWardrobeTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Versatile Wardrobe Target",
+          versatileWardrobeTargets,
+          (targetId) => {
+            commitAction({ type: "trainer_feature", action_key: "versatile_wardrobe", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+          },
+          "Spend 2 Tutor Points to make an allied Pokemon Chic and grant two inactive extra held item slots."
+        );
+      },
+      "Choose an allied Pokemon with at least 2 Tutor Points that is not already Chic."
+    );
+  }
+
+  if (hints.wardrobe_swap_ready) {
+    const activeItems = (hints.wardrobe_swap_active_items || []).map((entry) => ({
+      value: String(entry.index),
+      label: `${entry.item || "Held Item"} (active slot ${Number(entry.index || 0) + 1})`,
+    }));
+    const storedItems = (hints.wardrobe_swap_stored_items || []).map((entry) => ({
+      value: String(entry.index),
+      label: `${entry.item || "Wardrobe Item"} (extra slot ${Number(entry.index || 0) + 1})`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Wardrobe Swap",
+      canAct && activeItems.length > 0 && storedItems.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Active Item",
+          activeItems,
+          (activeIndex) => {
+            pickTrainerFeatureOption(
+              "Wardrobe Item",
+              storedItems,
+              (wardrobeIndex) => {
+                commitAction({
+                  type: "trainer_feature",
+                  action_key: "wardrobe_swap",
+                  actor_id: combatant.id,
+                  active_item_index: Number(activeIndex),
+                  wardrobe_index: Number(wardrobeIndex),
+                }).catch(alertError);
+              },
+              "Choose the inactive wardrobe item to swap in."
+            );
+          },
+          "Choose the active held item to store."
+        );
+      },
+      "Swift Action: swap one active held item with an inactive Versatile Wardrobe item."
+    );
+  }
+
+  if (features.has("dress to impress")) {
+    const dressTargets = (hints.dress_to_impress_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target}${Array.isArray(entry.items) && entry.items.length ? ` (${entry.items.join(", ")})` : ""}`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Dress to Impress",
+      canAct && !!hints.dress_to_impress_ready && dressTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Dress to Impress Target",
+          dressTargets,
+          (targetId) => {
+            commitAction({ type: "trainer_feature", action_key: "dress_to_impress", actor_id: combatant.id, target_id: targetId }).catch(alertError);
+          },
+          "Standard Action: activate all inactive Versatile Wardrobe item effects for one full round. Each Pokemon can be targeted once per Scene."
+        );
+      },
+      "Choose an active Chic allied Pokemon with items in its extra wardrobe slots."
+    );
+  }
+
+  if (features.has("dashing makeover")) {
+    const dashingTargets = (hints.dashing_makeover_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target}${entry.is_trainer ? " (Trainer)" : ""}`,
+      items: Array.isArray(entry.items) ? entry.items : [],
+    }));
+    addTrainerFeatureButton(
+      list,
+      "Dashing Makeover",
+      canAct && !!hints.dashing_makeover_ready && dashingTargets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Dashing Makeover Target",
+          dashingTargets,
+          (targetId) => {
+            const target = dashingTargets.find((entry) => entry.value === targetId);
+            const itemOptions = ((target && target.items) || []).map((entry) => ({
+              value: entry.item_name || entry.item,
+              label: entry.item_name || entry.item,
+            }));
+            pickTrainerFeatureOption(
+              "Dashing Makeover Item",
+              itemOptions,
+              (itemName) => {
+                commitAction({
+                  type: "trainer_feature",
+                  action_key: "dashing_makeover",
+                  actor_id: combatant.id,
+                  target_id: targetId,
+                  item_name: itemName,
+                }).catch(alertError);
+              },
+              "Choose one legal Equipment or Held Item effect to bind without using an item slot."
+            );
+          },
+          "Bind 2 AP - Extended Action: choose an allied Trainer or Pokemon."
+        );
+      },
+      !hints.dashing_makeover_ap_ready ? "Requires 2 AP." : "Choose an allied Trainer or Pokemon and one legal item effect."
+    );
+  }
+
+  if (hints.dashing_makeover_release_ready) {
+    const bound = hints.dashing_makeover_bound || {};
+    addTrainerFeatureButton(
+      list,
+      "Release Dashing Makeover",
+      canAct,
+      () => {
+        commitAction({ type: "trainer_feature", action_key: "release_dashing_makeover", actor_id: combatant.id }).catch(alertError);
+      },
+      `Free Action: release ${bound.item_name || "the bound item effect"}.`
+    );
+  }
+
+  if (features.has("moment of action") || features.has("moment of action [playtest]")) {
+    const momentOfActionTargets = (hints.moment_of_action_targets || []).map((entry) => ({
+      value: entry.target,
+      label: `${entry.target_name || entry.target}${entry.team ? ` (${formatTeamLabel(entry.team)})` : ""}`,
+    }));
+    addTrainerFeatureButton(
+      list,
+      features.has("moment of action [playtest]") ? "Moment of Action [Playtest]" : "Moment of Action",
+      canAct && !!hints.moment_of_action_ready && momentOfActionTargets.length > 0,
+      () => {
+        pickMultipleTrainerTargets(
+          "Moment of Action Targets",
+          momentOfActionTargets,
+          1,
+          2,
+          (targetIds) => {
+            commitAction({
+              type: "trainer_feature",
+              action_key: features.has("moment of action [playtest]") ? "moment_of_action_playtest" : "moment_of_action",
+              actor_id: combatant.id,
+              target_ids: targetIds,
+            }).catch(alertError);
+          },
+          "Choose one or two allied trainers to gain 1 temporary AP for one full round."
+        );
+      },
+      "Choose one or two allied trainers to gain 1 temporary AP for one full round."
+    );
+  }
+
+  if (features.has("go, fight, win!") || features.has("go, fight, win! [playtest]")) {
+    const goFightWinCheerOptions = (hints.go_fight_win_cheers || []).map((entry) => ({
+      value: entry.value,
+      label: entry.label,
+      stats: Array.isArray(entry.stats) ? entry.stats : [],
+    }));
+    addTrainerFeatureButton(
+      list,
+      features.has("go, fight, win! [playtest]") ? "Go, Fight, Win! [Playtest]" : "Go, Fight, Win!",
+      canAct && !!hints.go_fight_win_ready && goFightWinCheerOptions.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Go, Fight, Win! Cheer",
+          goFightWinCheerOptions,
+          (cheerValue) => {
+            const selected = goFightWinCheerOptions.find((entry) => entry.value === cheerValue);
+            const statOptions = Array.isArray(selected?.stats) ? selected.stats : [];
+            if (statOptions.length) {
+              pickTrainerFeatureOption(
+                "Show Your Best Stat",
+                statOptions,
+                (statValue) => {
+                  commitAction({
+                    type: "trainer_feature",
+                    action_key: features.has("go, fight, win! [playtest]") ? "go_fight_win_playtest" : "go_fight_win",
+                    actor_id: combatant.id,
+                    cheer: cheerValue,
+                    stat: statValue,
+                  }).catch(alertError);
+                },
+                "Choose which defensive stat Show Your Best! emphasizes."
+              );
+              return;
+            }
+            commitAction({
+              type: "trainer_feature",
+              action_key: features.has("go, fight, win! [playtest]") ? "go_fight_win_playtest" : "go_fight_win",
+              actor_id: combatant.id,
+              cheer: cheerValue,
+            }).catch(alertError);
+          },
+          "Choose a cheer. Each cheer may only be used once per scene."
+        );
+      },
+      goFightWinCheerOptions.length
+        ? "Choose a remaining cheer. Each cheer may only be used once per scene."
+        : "All Go, Fight, Win! cheers have already been used this scene."
+    );
   }
 
   if (features.has("telepath")) {
@@ -9658,6 +13228,75 @@ function renderTrainerFeatureActions(moveListEl, combatant, canAct) {
     });
   });
 
+  if (hints.sleight_ready) {
+    addTrainerFeatureButton(list, "Sleight", canAct, () => {
+      const options = (hints.sleight_options || []).map((entry) => {
+        const key = `${entry.move}||${entry.target_id || ""}`;
+        const targetName = entry.target_name || targetMap.get(entry.target_id)?.label || "";
+        return {
+          value: key,
+          label: targetName ? `${entry.move} -> ${targetName}` : String(entry.label || entry.move || key),
+        };
+      });
+      if (!options.length) {
+        notifyUI("warn", "No Sleight Status moves are currently available.", 2200);
+        return;
+      }
+      pickTrainerFeatureOption("Sleight Move", options, (value) => {
+        const chosen = sleightOptionMap.get(String(value || ""));
+        if (!chosen) return;
+        commitAction({
+          type: "trainer_feature",
+          action_key: "sleight",
+          actor_id: combatant.id,
+          move_name: chosen.move,
+          target_id: chosen.target_id || null,
+          target_position: chosen.target_position || null,
+        }).catch(alertError);
+      });
+    }, "Scene x2. Immediately use a Status move; foe-targeting uses ignore Substitute, Defensive Abilities, and Blessings.");
+  }
+
+  if (features.has("shell game")) {
+    const shellGameUsesLeft = Math.max(0, Number(hints.shell_game_uses_left || 0));
+    addTrainerFeatureButton(
+      list,
+      `Shell Game (${shellGameUsesLeft} left)`,
+      canAct && !!hints.shell_game_ready,
+      () => {
+        const options = (hints.shell_game_options || []).map((entry) => ({
+          value: String(entry.hazard || "").toLowerCase(),
+          label: `${entry.label || entry.hazard} (${Math.max(1, Number(entry.total_layers || 1))} layer${Number(entry.total_layers || 1) === 1 ? "" : "s"})`,
+        }));
+        if (!options.length) {
+          notifyUI("warn", "No allied hazards can currently be moved with Shell Game.", 2200);
+          return;
+        }
+        pickTrainerFeatureOption(
+          "Shell Game Hazard",
+          options,
+          (value) => {
+            const entry = shellGameOptionMap.get(String(value || "").toLowerCase());
+            if (!entry) return;
+            chooseShellGamePlan(entry, (moves) => {
+              commitAction({
+                type: "trainer_feature",
+                action_key: "shell_game",
+                actor_id: combatant.id,
+                hazard: entry.hazard,
+                moves,
+              }).catch(alertError);
+            });
+          },
+          "Choose one allied hazard type, then assign a destination for each source tile."
+        );
+      },
+      shellGameUsesLeft <= 0
+        ? "Shell Game is out of uses for this scene."
+        : "Scene x2. Reposition every allied layer of one hazard type."
+    );
+  }
+
   (hints.dirty_fighting_targets || []).forEach((targetId) => {
     const target = dirtyFightingOptionMap.get(targetId);
     addTrainerFeatureButton(list, target?.target_name ? `Dirty Fighting: ${target.target_name}` : `Dirty Fighting: ${targetId}`, canAct && !!hints.dirty_fighting_ap_ready, () => {
@@ -10038,11 +13677,13 @@ function renderCoreBattleActions(moveListEl, combatant, canAct) {
   const switchOptions = Array.isArray(hints.switch_replacements) ? hints.switch_replacements : [];
   const delayOptions = Array.isArray(hints.delay_options) ? hints.delay_options : [];
   const weaponOptions = Array.isArray(hints.weapon_options) ? hints.weapon_options : [];
+  const motivatedStatOptions = Array.isArray(hints.motivated_stat_options) ? hints.motivated_stat_options : [];
   const equippedWeaponName = String(hints.equipped_weapon_name || "").trim();
   const hasAnyCoreAction =
     !!hints.can_take_breather ||
     !!hints.can_trade_standard_shift ||
     !!hints.can_trade_standard_swift ||
+    !!hints.motivated_ready ||
     !!hints.can_unequip_weapon ||
     switchOptions.length > 0 ||
     delayOptions.length > 0 ||
@@ -10093,7 +13734,12 @@ function renderCoreBattleActions(moveListEl, combatant, canAct) {
           label: entry.target_name || entry.target,
         })),
         (replacementId) => {
-          commitAction({ type: "switch", actor_id: combatant.id, replacement_id: replacementId }).catch(alertError);
+          commitAction({
+            type: "switch",
+            actor_id: combatant.id,
+            replacement_id: replacementId,
+            target_position: selectedTileCoord(),
+          }).catch(alertError);
         },
         "Recall the active combatant and send out a benched ally."
       );
@@ -10122,6 +13768,21 @@ function renderCoreBattleActions(moveListEl, combatant, canAct) {
       commitAction({ type: "take_breather", actor_id: combatant.id }).catch(alertError);
     },
     "Recover, clear volatile effects, and reposition according to the engine's Take a Breather rules."
+  );
+  addActionButton(
+    "Use Motivated",
+    !!hints.motivated_ready && motivatedStatOptions.length > 0,
+    () => {
+      pickTrainerFeatureOption(
+        "Motivated Stat",
+        motivatedStatOptions,
+        (stat) => {
+          commitAction({ type: "trainer_feature", action_key: "motivated", actor_id: combatant.id, stat }).catch(alertError);
+        },
+        "Spend Motivated as a Free Action to raise one lowered combat stage by 1."
+      );
+    },
+    "Spend Motivated to recover one combat stage below its default value."
   );
   addActionButton(
     "Trade Standard -> Shift",
@@ -10343,6 +14004,7 @@ function renderTrainerTurnActions(moveListEl) {
           actor_id: trainerTurn.id,
           outgoing_id: outgoingId,
           replacement_id: replacementId,
+          target_position: selectedTileCoord(),
         }).catch(alertError);
       },
       "Choose which active ally to recall and which benched ally to send out."
@@ -10717,6 +14379,7 @@ function _buildBattleFeedLines({ filtered = true, limit = 520, applyClearOffset 
     const { text, category, prefix } = renderEventLine(event);
     if (filtered && !passesLogFilter(category)) return;
     if (isLikelyDuplicateMoveEcho(event, lastRenderedEvent)) return;
+    if (isLikelyDuplicateStatusMoveEcho(event, lastRenderedEvent)) return;
     const round = Number(event?.round);
     if (Number.isFinite(round) && round !== lastRound) {
       if (!filtered || (logFilterPhase?.checked ?? true)) {
@@ -10873,6 +14536,25 @@ function renderPrompts() {
       });
       wrapper.appendChild(choiceSelect);
     }
+    let resetCombatStagesInput = null;
+    if (prompt.reset_combat_stages_option) {
+      const resetLabel = document.createElement("label");
+      resetLabel.className = "prompt-inline-option";
+      resetCombatStagesInput = document.createElement("input");
+      resetCombatStagesInput.type = "checkbox";
+      resetCombatStagesInput.checked = false;
+      const resetText = document.createElement("span");
+      resetText.textContent = "Reset Combat Stages";
+      resetLabel.appendChild(resetCombatStagesInput);
+      resetLabel.appendChild(resetText);
+      resetCombatStagesInput.addEventListener("change", () => {
+        const existing = promptAnswers[id];
+        if (existing && typeof existing === "object") {
+          promptAnswers[id] = { ...existing, reset_combat_stages: resetCombatStagesInput.checked };
+        }
+      });
+      wrapper.appendChild(resetLabel);
+    }
     const yes = document.createElement("button");
     yes.textContent = prompt.yes_label || "Yes";
     const no = document.createElement("button");
@@ -10885,16 +14567,26 @@ function renderPrompts() {
       no.classList.toggle("active", declined);
     };
     yes.addEventListener("click", () => {
+      const extra = resetCombatStagesInput
+        ? { reset_combat_stages: resetCombatStagesInput.checked }
+        : {};
       if (choiceSelect) {
-        promptAnswers[id] = { accept: true, choice: choiceSelect.value || "" };
+        promptAnswers[id] = { accept: true, choice: choiceSelect.value || "", ...extra };
+      } else if (resetCombatStagesInput) {
+        promptAnswers[id] = { accept: true, ...extra };
       } else {
         promptAnswers[id] = true;
       }
       update();
     });
     no.addEventListener("click", () => {
+      const extra = resetCombatStagesInput
+        ? { reset_combat_stages: resetCombatStagesInput.checked }
+        : {};
       if (choiceSelect) {
-        promptAnswers[id] = { accept: false, choice: choiceSelect.value || "" };
+        promptAnswers[id] = { accept: false, choice: choiceSelect.value || "", ...extra };
+      } else if (resetCombatStagesInput) {
+        promptAnswers[id] = { accept: false, ...extra };
       } else {
         promptAnswers[id] = false;
       }
@@ -11092,6 +14784,12 @@ function _resetScenarioBuildState() {
   characterState.class_id = "";
   characterState.features = new Set();
   characterState.edges = new Set();
+  characterState.capture_techniques = [];
+  characterState.commander_orders = [];
+  characterState.hobbyist_skill_edges = [];
+  characterState.look_and_learn_features = {};
+  characterState.dilettante_picks = [];
+  characterState.mentor_skills = [];
   characterState.feature_order = [];
   characterState.edge_order = [];
   characterState.training_type = "";
@@ -11175,7 +14873,7 @@ function applyCharacterScenario(scenario) {
 }
 
 async function loadMasterData() {
-  if (masterData && learnsetData && moveRecordMap) return;
+  if (masterData && learnsetData && pokemonMoveSourceData && moveRecordMap) return;
   if (!masterData && characterData && (characterData.pokemon || characterData.items)) {
     masterData = {
       trainer: {
@@ -11204,6 +14902,9 @@ async function loadMasterData() {
   }
   if (!learnsetData && window.__AUTO_PTU_LEARNSET_DATA) {
     learnsetData = window.__AUTO_PTU_LEARNSET_DATA;
+  }
+  if (!pokemonMoveSourceData && window.__AUTO_PTU_POKEMON_MOVE_SOURCES) {
+    pokemonMoveSourceData = window.__AUTO_PTU_POKEMON_MOVE_SOURCES;
   }
   const embeddedMaster = document.getElementById("master-data");
   if (embeddedMaster && embeddedMaster.textContent) {
@@ -11269,6 +14970,38 @@ async function loadMasterData() {
   }
   if (!learnsetData && location.protocol === "file:" && window.__AUTO_PTU_LEARNSET_DATA) {
     learnsetData = window.__AUTO_PTU_LEARNSET_DATA;
+  }
+  if (!pokemonMoveSourceData) {
+    try {
+      const sourceResponse = await fetch("pokemon_move_sources.json");
+      if (sourceResponse.ok) {
+        pokemonMoveSourceData = await sourceResponse.json();
+      }
+    } catch {
+      // Keep embedded/cached data if present.
+    }
+  }
+  if (!pokemonMoveSourceData && location.protocol === "file:") {
+    try {
+      await new Promise((resolve, reject) => {
+        const existing = document.querySelector('script[data-fallback-move-sources="true"]');
+        if (existing) {
+          resolve();
+          return;
+        }
+        const script = document.createElement("script");
+        script.src = "pokemon_move_sources.embed.js";
+        script.dataset.fallbackMoveSources = "true";
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error("Embedded Pokemon move-source dataset failed to load."));
+        document.head.appendChild(script);
+      });
+    } catch {
+      // ignore fallback failures
+    }
+  }
+  if (!pokemonMoveSourceData && location.protocol === "file:" && window.__AUTO_PTU_POKEMON_MOVE_SOURCES) {
+    pokemonMoveSourceData = window.__AUTO_PTU_POKEMON_MOVE_SOURCES;
   }
   if (!masterData && !characterData?.pokemon?.moves && !learnsetData) moveRecordMap = null;
   else _rebuildMoveRecordMap();
@@ -11615,9 +15348,10 @@ function computeStatBudgets(level, choices) {
     numericLevel >= 30 && choices?.[30] === "stats" ? 5 : 0, // levels 32-40 even
     numericLevel >= 40 && choices?.[40] === "stats" ? 5 : 0, // levels 42-50 even
   ];
-  const restricted = restrictedSegments.reduce((a, b) => a + b, 0);
+  const dabblerRestricted = _dabblerRestrictedStatBonus(numericLevel, choices);
+  const restricted = restrictedSegments.reduce((a, b) => a + b, 0) + dabblerRestricted;
   const general = baseAllocation + perLevel + bonusLevel5;
-  return { general, restricted };
+  return { general, restricted, dabblerRestricted };
 }
 
 function computeDerivedStats(stats, skills, rules, level) {
@@ -12035,6 +15769,7 @@ function renderCharacterSkills() {
   budgetControls.appendChild(nonSkillWrap);
   controlsBox.appendChild(makeMetaRow("Budget", budgetControls));
   charContentEl.appendChild(controlsBox);
+  _renderHobbyistSkillEdgesPanel(charContentEl);
 
   const skillsWrap = document.createElement("div");
   skillsWrap.className = "class-tree-tier-list";
@@ -12110,9 +15845,19 @@ function renderCharacterSkills() {
 
   const summary = document.createElement("div");
   summary.className = "char-feature-meta";
+  const captureSkillCredit = _captureSkillGrantBudgetCredit(rules);
+  const hobbyistSkillCredit = _hobbyistSkillEdgeBudgetCredit(rules);
+  const freeSkillCredit = captureSkillCredit + hobbyistSkillCredit;
+  const effectiveTotalCost = Math.max(0, totalCost - freeSkillCredit);
   const budgetText = budget === null ? "No budget limit" : `Budget ${budget}`;
-  summary.textContent = `${budgetText} | Total cost ${totalCost}`;
-  if (budget !== null && totalCost > budget) {
+  summary.textContent = `${budgetText} | Total cost ${effectiveTotalCost}`;
+  if (captureSkillCredit) {
+    summary.textContent += ` (${captureSkillCredit} Capture Skills grant credit)`;
+  }
+  if (hobbyistSkillCredit) {
+    summary.textContent += ` (${hobbyistSkillCredit} Hobbyist Skill Edge credit)`;
+  }
+  if (budget !== null && effectiveTotalCost > budget) {
     summary.textContent += " (over budget)";
   }
   charContentEl.appendChild(summary);
@@ -12214,13 +15959,14 @@ function computeAdvancementTotals(level, choices) {
     (numericLevel >= 20 && choices?.[20] === "edges" ? 2 : 0) +
     (numericLevel >= 30 && choices?.[30] === "edges" ? 2 : 0) +
     (numericLevel >= 40 && choices?.[40] === "edges" ? 2 : 0);
+  const dabblerEdges = _dabblerBonusEdges(numericLevel, choices);
   const baseFeatures = 4;
   const trainingFeature = 1;
   const baseEdges = 4;
   return {
     level: numericLevel,
     features: baseFeatures + trainingFeature + oddFeatures + choiceFeatures,
-    edges: baseEdges + evenEdges + bonusSkillEdges + choiceEdges,
+    edges: baseEdges + evenEdges + bonusSkillEdges + choiceEdges + dabblerEdges,
     baseFeatures,
     trainingFeature,
     oddFeatures,
@@ -12229,6 +15975,86 @@ function computeAdvancementTotals(level, choices) {
     evenEdges,
     bonusSkillEdges,
     choiceEdges,
+    dabblerEdges,
+  };
+  const chooseShellGamePlan = (shellGameEntry, onComplete, existingMoves = [], index = 0) => {
+    const entries = Array.isArray(shellGameEntry?.entries) ? shellGameEntry.entries : [];
+    if (index >= entries.length) {
+      onComplete(existingMoves);
+      return;
+    }
+    const sourceEntry = entries[index] || {};
+    const sourceCoord = Array.isArray(sourceEntry.from) ? sourceEntry.from : [];
+    const sourceLabel = sourceCoord.length === 2 ? `(${sourceCoord[0]}, ${sourceCoord[1]})` : `Source ${index + 1}`;
+    const destinationOptions = (sourceEntry.destinations || []).map((entry) => {
+      const coord = Array.isArray(entry.coord) ? entry.coord : [];
+      const coordLabel = coord.length === 2 ? `(${coord[0]}, ${coord[1]})` : "Tile";
+      return {
+        value: JSON.stringify(coord),
+        label: coordLabel,
+      };
+    });
+    pickTrainerFeatureOption(
+      `Shell Game ${sourceLabel}`,
+      destinationOptions,
+      (value) => {
+        let destination = [];
+        try {
+          destination = JSON.parse(String(value || "[]"));
+        } catch (_error) {
+          destination = [];
+        }
+        if (!Array.isArray(destination) || destination.length !== 2) return;
+        chooseShellGamePlan(
+          shellGameEntry,
+          onComplete,
+          [
+            ...existingMoves,
+            {
+              from: sourceCoord,
+              to: destination,
+              layers: Math.max(1, Number(sourceEntry.layers || 1)),
+            },
+          ],
+          index + 1
+        );
+      },
+      `Move ${Math.max(1, Number(sourceEntry.layers || 1))} layer${Number(sourceEntry.layers || 1) === 1 ? "" : "s"} from ${sourceLabel}.`
+    );
+  };
+  const chooseFairyLightsPlan = (positions, destinationOptions, onComplete, existing = [], index = 0) => {
+    const entries = Array.isArray(positions) ? positions : [];
+    if (index >= entries.length) {
+      onComplete(existing);
+      return;
+    }
+    const source = Array.isArray(entries[index]) ? entries[index] : [];
+    const sourceLabel = source.length === 2 ? `(${source[0]}, ${source[1]})` : `Light ${index + 1}`;
+    const options = (destinationOptions || []).map((entry) => ({
+      value: JSON.stringify(entry.coord || []),
+      label: entry.label || JSON.stringify(entry.coord || []),
+    }));
+    pickTrainerFeatureOption(
+      `Fairy Light ${index + 1}`,
+      options,
+      (value) => {
+        let destination = [];
+        try {
+          destination = JSON.parse(String(value || "[]"));
+        } catch (_error) {
+          destination = [];
+        }
+        if (!Array.isArray(destination) || destination.length !== 2) return;
+        chooseFairyLightsPlan(
+          positions,
+          destinationOptions,
+          onComplete,
+          [...existing, destination],
+          index + 1
+        );
+      },
+      `Choose the new tile for the Fairy Light currently at ${sourceLabel}.`
+    );
   };
 }
 
@@ -12296,6 +16122,12 @@ function randomLegalBuild() {
   characterState.class_ids = [];
   characterState.features = new Set();
   characterState.edges = new Set();
+  characterState.capture_techniques = [];
+  characterState.commander_orders = [];
+  characterState.hobbyist_skill_edges = [];
+  characterState.look_and_learn_features = {};
+  characterState.dilettante_picks = [];
+  characterState.mentor_skills = [];
   characterState.extras = [];
   characterState.feature_order = [];
   characterState.edge_order = [];
@@ -12686,7 +16518,7 @@ function renderCharacterAdvancement() {
   const breakdownRow = document.createElement("div");
   breakdownRow.className = "char-pill-list";
   const featureBreakdown = `Features: Base ${summary.baseFeatures} + Training ${summary.trainingFeature} + Odd Levels ${summary.oddFeatures} + Choice ${summary.choiceFeatures}`;
-  const edgeBreakdown = `Edges: Base ${summary.baseEdges} + Even Levels ${summary.evenEdges} + Skill Rank Bonuses ${summary.bonusSkillEdges} + Choice ${summary.choiceEdges}`;
+  const edgeBreakdown = `Edges: Base ${summary.baseEdges} + Even Levels ${summary.evenEdges} + Skill Rank Bonuses ${summary.bonusSkillEdges} + Choice ${summary.choiceEdges} + Dabbler ${summary.dabblerEdges || 0}`;
   [featureBreakdown, edgeBreakdown].forEach((text) => {
     const pill = document.createElement("span");
     pill.className = "char-pill";
@@ -12806,6 +16638,7 @@ function getStepValidity() {
       if (!skills.includes(skill)) return;
       totalCost += Number(rules.rank_costs?.[rank] ?? 0);
     });
+    totalCost = Math.max(0, totalCost - _freeSkillGrantBudgetCredit(rules));
     if (totalCost > budget) skillsValid = false;
   }
   if (!characterState.override_prereqs) {
@@ -13004,6 +16837,7 @@ function renderStepGuide() {
         if (!skills.includes(skill)) return;
         totalCost += Number(ruleset.rank_costs?.[rank] ?? 0);
       });
+      totalCost = Math.max(0, totalCost - _freeSkillGrantBudgetCredit(ruleset));
       items.push({ ok: totalCost <= characterState.skill_budget, text: "Stay within skill budget" });
     }
   } else if (characterStep === "class") {
@@ -13399,6 +17233,8 @@ function renderCharacterClass() {
               _addToOrder(characterState.feature_order, f.name);
             }
           });
+          _sanitizeCaptureTechniqueSelections();
+          _sanitizeCommanderOrderSelections();
           missingEdges.forEach((e) => {
             if (isEdgeAllowed(e, characterState.override_prereqs)) {
               characterState.edges.add(e.name);
@@ -13588,6 +17424,13 @@ function renderCharacterFeatures() {
     if (!confirm("Clear all selected features?")) return;
     characterState.features = new Set();
     characterState.feature_order = [];
+    characterState.capture_techniques = [];
+    characterState.commander_orders = [];
+    characterState.hobbyist_skill_edges = [];
+    characterState.look_and_learn_features = {};
+    characterState.dilettante_picks = [];
+    characterState.mentor_skills = [];
+    characterState.feature_details = {};
     saveCharacterToStorage();
     renderCharacterFeatures();
   });
@@ -13613,11 +17456,23 @@ function renderCharacterFeatures() {
     createSelectedPanel("Selected Features", Array.from(characterState.features), (name) => {
       if (!confirmChoice("Remove", "Feature", name)) return;
       characterState.features.delete(name);
+      _setFeatureDetail(name, null);
       _removeFromOrder(characterState.feature_order, name);
+      _sanitizeCaptureTechniqueSelections();
+      _sanitizeCommanderOrderSelections();
+      _sanitizeHobbyistSkillEdges();
+      _dilettantePicks();
       saveCharacterToStorage();
       renderCharacterFeatures();
     })
   );
+  _renderCaptureTechniquePanel(charContentEl);
+  _renderCommanderOrdersPanel(charContentEl);
+  _renderLookAndLearnPanel(charContentEl);
+  _renderDilettantePanel(charContentEl);
+  _renderMentorSkillsPanel(charContentEl);
+  _renderStatAceFeaturePanel(charContentEl);
+  _renderTypeAceFeaturePanel(charContentEl);
 
   const search = document.createElement("input");
   search.className = "char-search";
@@ -13880,8 +17735,11 @@ function renderCharacterFeatures() {
               _addToOrder(characterState.feature_order, node.name);
             } else {
               characterState.features.delete(node.name);
+              _setFeatureDetail(node.name, null);
               _removeFromOrder(characterState.feature_order, node.name);
             }
+            _sanitizeCaptureTechniqueSelections();
+            _sanitizeCommanderOrderSelections();
             saveCharacterToStorage();
             renderCharacterFeatures();
           });
@@ -14066,6 +17924,8 @@ function renderCharacterFeatures() {
           characterState.features.delete(entry.name);
           _removeFromOrder(characterState.feature_order, entry.name);
         }
+        _sanitizeCaptureTechniqueSelections();
+        _sanitizeCommanderOrderSelections();
         saveCharacterToStorage();
         renderCharacterFeatures();
       });
@@ -16092,11 +19952,26 @@ function renderCharacterPokemonTeam() {
       renderCharacterPokemonTeam();
     });
     caughtField.appendChild(caughtInput);
+    const tutorField = document.createElement("label");
+    tutorField.className = "char-field";
+    tutorField.textContent = "Tutor Points";
+    const tutorInput = document.createElement("input");
+    tutorInput.type = "number";
+    tutorInput.min = "0";
+    tutorInput.step = "1";
+    tutorInput.value = String(Number(build.tutor_points || 0));
+    tutorInput.addEventListener("input", () => {
+      build.tutor_points = _normalizeInteger(tutorInput.value, 0, 0);
+      saveCharacterToStorage();
+      renderCharacterPokemonTeam();
+    });
+    tutorField.appendChild(tutorInput);
     grid.appendChild(nameField);
     grid.appendChild(levelField);
     grid.appendChild(speciesField);
     grid.appendChild(sideField);
     grid.appendChild(caughtField);
+    grid.appendChild(tutorField);
     card.appendChild(grid);
     if (speciesEntry) {
       const info = document.createElement("div");
@@ -16195,6 +20070,13 @@ function renderCharacterPokemonTeam() {
     else budgetMeta.textContent = "Point budget complete";
     budgetRow.appendChild(budgetMeta);
     card.appendChild(budgetRow);
+    const statRelationNote = _pokemonStatRelationExceptionText();
+    if (statRelationNote) {
+      const note = document.createElement("div");
+      note.className = "char-feature-meta";
+      note.textContent = statRelationNote;
+      card.appendChild(note);
+    }
     const statGrid = document.createElement("div");
     statGrid.className = "char-field-grid";
     const statLabels = {
@@ -16330,6 +20212,76 @@ function renderCharacterPokemonTeam() {
     fillRow.appendChild(fillBtn);
     lists.appendChild(fillRow);
 
+    const mentorActions = document.createElement("div");
+    mentorActions.className = "char-selected-panel";
+    const mentorTitle = document.createElement("div");
+    mentorTitle.className = "char-selected-title";
+    mentorTitle.textContent = "Mentor Extended Actions";
+    mentorActions.appendChild(mentorTitle);
+    const mentorMeta = document.createElement("div");
+    mentorMeta.className = "char-feature-meta";
+    const mentorApps = _ensureMentorApplications(build);
+    mentorMeta.textContent = `Tutor Points: ${Number(build.tutor_points || 0)} | Mentor Skills: ${_mentorSkillSelections().map(_mentorSkillLabel).join(", ") || "none"}`;
+    mentorActions.appendChild(mentorMeta);
+    const mentorButtons = document.createElement("div");
+    mentorButtons.className = "char-action-row";
+    if (_hasFeature("Mentor")) {
+      const mentorMove = document.createElement("button");
+      mentorMove.type = "button";
+      mentorMove.className = "char-mini-button";
+      mentorMove.textContent = "Mentor Move (-1 TP)";
+      mentorMove.disabled = Number(build.tutor_points || 0) < 1;
+      mentorMove.addEventListener("click", () => _applyMentorTeachMove(build, "mentor"));
+      mentorButtons.appendChild(mentorMove);
+    }
+    if (_hasFeature("Expand Horizons")) {
+      const expand = document.createElement("button");
+      expand.type = "button";
+      expand.className = "char-mini-button";
+      expand.textContent = mentorApps.expand_horizons ? "Expand Horizons Used" : "Expand Horizons (+3 TP)";
+      expand.disabled = !!mentorApps.expand_horizons;
+      expand.addEventListener("click", () => _applyExpandHorizons(build));
+      mentorButtons.appendChild(expand);
+    }
+    if (_hasFeature("Move Tutor")) {
+      const moveTutor = document.createElement("button");
+      moveTutor.type = "button";
+      moveTutor.className = "char-mini-button";
+      moveTutor.textContent = "Move Tutor (-2 TP)";
+      moveTutor.disabled = Number(build.tutor_points || 0) < 2;
+      moveTutor.addEventListener("click", () => _applyMentorTeachMove(build, "move_tutor"));
+      mentorButtons.appendChild(moveTutor);
+    }
+    if (_hasFeature("Egg Tutor")) {
+      const eggTutor = document.createElement("button");
+      eggTutor.type = "button";
+      eggTutor.className = "char-mini-button";
+      eggTutor.textContent = "Egg Tutor (-2 TP)";
+      eggTutor.disabled = Number(build.tutor_points || 0) < 2 || !!mentorApps.egg_tutor_moves.length;
+      eggTutor.addEventListener("click", () => _applyMentorTeachMove(build, "egg_tutor"));
+      mentorButtons.appendChild(eggTutor);
+    }
+    if (_hasFeature("Lessons")) {
+      MENTOR_LESSONS.forEach((lesson) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "char-mini-button";
+        btn.textContent = lesson.name;
+        btn.title = `${_mentorSkillLabel(lesson.skill)} Lesson. ${lesson.effect}`;
+        btn.disabled = !_mentorLessonAvailable(lesson) || (lesson.cost > 0 && Number(build.tutor_points || 0) < lesson.cost);
+        btn.addEventListener("click", () => _applyMentorLesson(build, lesson.key));
+        mentorButtons.appendChild(btn);
+      });
+    }
+    if (!mentorButtons.children.length) {
+      const empty = document.createElement("span");
+      empty.className = "char-feature-meta";
+      empty.textContent = "Select Mentor Features to enable Mentor actions for this Pokemon.";
+      mentorButtons.appendChild(empty);
+    }
+    mentorActions.appendChild(mentorButtons);
+    lists.appendChild(mentorActions);
+
     const moveRow = document.createElement("div");
     moveRow.className = "char-action-row";
     const moveLabel = document.createElement("div");
@@ -16400,6 +20352,11 @@ function renderCharacterPokemonTeam() {
         event.preventDefault();
         event.stopPropagation();
         build.moves = (build.moves || []).filter((n) => n !== name);
+        build.poke_edge_choices = _normalizePokeEdgeChoices(build.poke_edge_choices);
+        if (_normalizeMoveKey(build.poke_edge_choices.signature_technique?.move) === _normalizeMoveKey(name)) {
+          build.poke_edge_choices.signature_technique = null;
+          build.tutor_points = Math.max(0, Number(build.tutor_points || 0) + 1);
+        }
         saveCharacterToStorage();
         renderCharacterPokemonTeam();
       });
@@ -16415,6 +20372,85 @@ function renderCharacterPokemonTeam() {
       moveList.appendChild(empty);
     }
     lists.appendChild(moveList);
+
+    build.poke_edge_choices = _normalizePokeEdgeChoices(build.poke_edge_choices);
+    const signatureRow = document.createElement("div");
+    signatureRow.className = "char-action-row";
+    const signatureLabel = document.createElement("div");
+    signatureLabel.className = "char-feature-meta";
+    const currentSignature = build.poke_edge_choices.signature_technique;
+    signatureLabel.textContent = currentSignature
+      ? `Signature Technique: ${currentSignature.move || "-"} / ${currentSignature.modification || "-"}`
+      : "Signature Technique: none";
+    const signatureActions = document.createElement("div");
+    signatureActions.className = "char-action-row";
+    const setSignature = document.createElement("button");
+    setSignature.type = "button";
+    setSignature.className = "char-mini-button";
+    setSignature.textContent = currentSignature ? "Replace Signature" : "Set Signature";
+    setSignature.disabled = !_hasFeature("Signature Technique") || !_signatureTechniqueOptionsForBuild(build).length;
+    setSignature.addEventListener("click", () => {
+      const options = _signatureTechniqueOptionsForBuild(build);
+      const replacing = !!build.poke_edge_choices.signature_technique;
+      const availableTp = Number(build.tutor_points || 0) + (replacing ? 1 : 0);
+      if (availableTp < 2) {
+        alert("Signature Technique requires 2 Tutor Points, after the +1 TP refund for replacing an old Signature Technique.");
+        return;
+      }
+      openListPicker({
+        title: "Signature Technique Move",
+        helpText: "Choose a move with at least one legal Signature Technique modification for your selected trainer features.",
+        items: options.map((entry) => ({
+          name: entry.move,
+          meta: entry.modifications.map((mod) => mod.label).join(", "),
+          hint: "This move can become the Pokemon's Signature Technique.",
+        })),
+        onSelect: (moveName) => {
+          const selected = options.find((entry) => entry.move === moveName);
+          openListPicker({
+            title: "Signature Modification",
+            helpText: "Only modifications matching the move category and your Training Features are shown.",
+            items: (selected?.modifications || []).map((mod) => ({
+              name: mod.label,
+              meta: mod.training,
+              hint: "Costs 2 TP. Replacing a previous Signature Technique refunds 1 TP first.",
+              value: mod.value,
+            })),
+            onSelect: (modValue) => {
+              const mod = (selected?.modifications || []).find((entry) => entry.value === modValue) || selected?.modifications?.[0];
+              if (!mod) return;
+              build.tutor_points = Math.max(0, Number(build.tutor_points || 0) + (replacing ? 1 : 0) - 2);
+              build.poke_edge_choices.signature_technique = {
+                move: moveName,
+                move_key: _normalizeMoveKey(moveName),
+                modification: mod.label,
+                modification_key: mod.value,
+                required_training: mod.training,
+              };
+              saveCharacterToStorage();
+              renderCharacterPokemonTeam();
+            },
+          });
+        },
+      });
+    });
+    signatureActions.appendChild(setSignature);
+    if (currentSignature) {
+      const clearSignature = document.createElement("button");
+      clearSignature.type = "button";
+      clearSignature.className = "char-mini-button";
+      clearSignature.textContent = "Forget Signature (+1 TP)";
+      clearSignature.addEventListener("click", () => {
+        build.tutor_points = Math.max(0, Number(build.tutor_points || 0) + 1);
+        build.poke_edge_choices.signature_technique = null;
+        saveCharacterToStorage();
+        renderCharacterPokemonTeam();
+      });
+      signatureActions.appendChild(clearSignature);
+    }
+    signatureRow.appendChild(signatureLabel);
+    signatureRow.appendChild(signatureActions);
+    lists.appendChild(signatureRow);
 
     const abilityRow = document.createElement("div");
     abilityRow.className = "char-action-row";
@@ -16505,7 +20541,7 @@ function renderCharacterPokemonTeam() {
         items,
         onSelect: (name) => {
           if (!Array.isArray(build.items)) build.items = [];
-          if (!build.items.includes(name)) build.items.push(name);
+          if (!_pokemonBuildHasItemNamed(build, name)) build.items.push({ name });
           saveCharacterToStorage();
           renderCharacterPokemonTeam();
         },
@@ -16516,19 +20552,20 @@ function renderCharacterPokemonTeam() {
     lists.appendChild(itemRow);
     const itemList = document.createElement("div");
     itemList.className = "char-visual-token-list";
-    (build.items || []).forEach((name) => {
-      const cachedMeta = pokeApiCacheGet(pokeApiItemMetaCache, name);
-      if (!pokeApiCacheHas(pokeApiItemMetaCache, name)) ensureItemMeta(name).then(() => _queueBuilderRerender());
-      const entry = _findItemByName(name);
+    (build.items || []).forEach((itemEntry, idx) => {
+      const itemName = _pokemonBuildItemName(itemEntry);
+      const cachedMeta = pokeApiCacheGet(pokeApiItemMetaCache, itemName);
+      if (!pokeApiCacheHas(pokeApiItemMetaCache, itemName)) ensureItemMeta(itemName).then(() => _queueBuilderRerender());
+      const entry = _findItemByName(itemName);
       const row = document.createElement("div");
       row.className = "char-visual-token";
-      row.addEventListener("click", () => showItemDetail(name));
+      row.addEventListener("click", () => showItemDetail(itemName));
       const icon = document.createElement("span");
       icon.className = "char-visual-token-icon";
       if (cachedMeta?.icon_url) {
         const img = document.createElement("img");
         img.src = cachedMeta.icon_url;
-        img.alt = name;
+        img.alt = itemName;
         img.loading = "lazy";
         icon.appendChild(img);
       } else {
@@ -16538,12 +20575,41 @@ function renderCharacterPokemonTeam() {
       body.className = "char-visual-token-body";
       const title = document.createElement("span");
       title.className = "char-visual-token-title";
-      title.textContent = _pokemonBuildItemLabel(name);
+      title.textContent = _pokemonBuildItemLabel(itemEntry);
       const meta = document.createElement("span");
       meta.className = "char-visual-token-meta";
       meta.textContent = `${entry?.category || "Item"}${_hasDisplayValue(entry?.cost) ? ` | $${entry.cost}` : ""}`;
       body.appendChild(title);
       body.appendChild(meta);
+      if (_pokemonBuildItemSupportsTaste(itemEntry)) {
+        const tasteWrap = document.createElement("label");
+        tasteWrap.className = "char-feature-meta";
+        tasteWrap.textContent = "Taste";
+        const tasteSelect = document.createElement("select");
+        tasteSelect.className = "item-target-select";
+        const noneOption = document.createElement("option");
+        noneOption.value = "";
+        noneOption.textContent = "Default / None";
+        tasteSelect.appendChild(noneOption);
+        _CHEF_TASTE_OPTIONS.forEach((option) => {
+          const el = document.createElement("option");
+          el.value = option.value;
+          el.textContent = option.label;
+          tasteSelect.appendChild(el);
+        });
+        tasteSelect.value = _pokemonBuildItemTaste(itemEntry);
+        tasteSelect.addEventListener("click", (event) => {
+          event.stopPropagation();
+        });
+        tasteSelect.addEventListener("change", (event) => {
+          event.stopPropagation();
+          _setPokemonBuildItemTaste(build, idx, tasteSelect.value);
+          saveCharacterToStorage();
+          renderCharacterPokemonTeam();
+        });
+        tasteWrap.appendChild(tasteSelect);
+        body.appendChild(tasteWrap);
+      }
       const remove = document.createElement("button");
       remove.type = "button";
       remove.className = "char-mini-button";
@@ -16551,7 +20617,7 @@ function renderCharacterPokemonTeam() {
       remove.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
-        build.items = (build.items || []).filter((n) => n !== name);
+        build.items = (build.items || []).filter((_entry, entryIdx) => entryIdx !== idx);
         saveCharacterToStorage();
         renderCharacterPokemonTeam();
       });
@@ -18706,6 +22772,52 @@ function _getMoveDetail(name) {
   return moves.find((move) => _normalizeSearchText(move.name) === key) || null;
 }
 
+const SIGNATURE_TECHNIQUE_MODS = [
+  { value: "scattershot", label: "Scattershot", training: "Agility Training", group: "area" },
+  { value: "shockandawe", label: "Shock and Awe", training: "Inspired Training", group: "area" },
+  { value: "viciousstorm", label: "Vicious Storm", training: "Brutal Training", group: "area", damaging: true },
+  { value: "guardingstrike", label: "Guarding Strike", training: "Inspired Training", group: "single" },
+  { value: "unbalancingblow", label: "Unbalancing Blow", training: "Brutal Training", group: "single" },
+  { value: "reliableattack", label: "Reliable Attack", training: "Focused Training", group: "single", noSmite: true },
+  { value: "alternativeenergy", label: "Alternative Energy", training: "Focused Training", group: "damaging" },
+  { value: "bloodiedspeed", label: "Bloodied Speed", training: "Agility Training", group: "damaging" },
+  { value: "doubledown", label: "Double Down", training: "Brutal Training", group: "damaging", lowDb: true },
+  { value: "burstofmotivation", label: "Burst of Motivation", training: "Inspired Training", group: "status" },
+  { value: "supremeconcentration", label: "Supreme Concentration", training: "Focused Training", group: "status" },
+  { value: "doublecurse", label: "Double Curse", training: "Agility Training", group: "status", singleOnly: true },
+];
+
+function _signatureModLegalForMove(move, mod) {
+  const category = String(move?.category || "").trim().toLowerCase();
+  const db = Number(move?.damage_base ?? move?.db ?? 0) || 0;
+  const rangeText = `${move?.range || ""} ${move?.target || ""}`.toLowerCase();
+  const isStatus = category === "status";
+  const isDamaging = !isStatus && db > 0;
+  const isArea = ["cone", "line", "burst", "blast"].some((token) => rangeText.includes(token));
+  const isSingle = !isArea && (rangeText.includes("1 target") || rangeText.includes("one target") || rangeText.includes("melee") || rangeText.includes("ranged"));
+  if (mod.group === "area" && !isArea) return false;
+  if (mod.group === "single" && !isSingle) return false;
+  if (mod.group === "damaging" && !isDamaging) return false;
+  if (mod.group === "status" && !isStatus) return false;
+  if (mod.damaging && !isDamaging) return false;
+  if (mod.noSmite && rangeText.includes("smite")) return false;
+  if (mod.singleOnly && !isSingle) return false;
+  if (mod.lowDb && db > 4) return false;
+  return true;
+}
+
+function _signatureTechniqueOptionsForBuild(build) {
+  const trainerFeatures = characterState?.features instanceof Set ? characterState.features : new Set();
+  return (build?.moves || [])
+    .map((moveName) => {
+      const move = _getMoveDetail(moveName) || { name: moveName };
+      const modifications = SIGNATURE_TECHNIQUE_MODS.filter((mod) => trainerFeatures.has(String(mod.training || "").toLowerCase()))
+        .filter((mod) => _signatureModLegalForMove(move, mod));
+      return { move: moveName, modifications };
+    })
+    .filter((entry) => entry.modifications.length > 0);
+}
+
 function _getAbilityDetail(name) {
   const abilities = _pokemonAbilityCatalog();
   const key = _normalizeSearchText(name);
@@ -18763,13 +22875,70 @@ function _findItemByName(name) {
   return lists.find((entry) => _normalizeSearchText(entry.name) === key) || null;
 }
 
-function _pokemonBuildItemLabel(name) {
-  const itemName = String(name || "").trim();
+const _CHEF_TASTE_OPTIONS = [
+  { value: "salty", label: "Salty" },
+  { value: "spicy", label: "Spicy" },
+  { value: "sour", label: "Sour" },
+  { value: "dry", label: "Dry" },
+  { value: "bitter", label: "Bitter" },
+  { value: "sweet", label: "Sweet" },
+];
+
+function _pokemonBuildItemName(entry) {
+  if (entry && typeof entry === "object") return String(entry.name || "").trim();
+  return String(entry || "").trim();
+}
+
+function _pokemonBuildItemTaste(entry) {
+  if (!entry || typeof entry !== "object") return "";
+  const value = String(entry.taste || "").trim().toLowerCase();
+  return _CHEF_TASTE_OPTIONS.some((option) => option.value === value) ? value : "";
+}
+
+function _normalizePokemonBuildItemEntry(entry) {
+  const name = _pokemonBuildItemName(entry);
+  if (!name) return null;
+  const taste = _pokemonBuildItemTaste(entry);
+  if (!taste) return { name };
+  return { name, taste };
+}
+
+function _normalizePokemonBuildItems(value) {
+  if (!Array.isArray(value)) return [];
+  return value.map((entry) => _normalizePokemonBuildItemEntry(entry)).filter(Boolean).slice(0, 8);
+}
+
+function _pokemonBuildHasItemNamed(build, name) {
+  const key = _normalizeSearchText(name);
+  return (Array.isArray(build?.items) ? build.items : []).some((entry) => _normalizeSearchText(_pokemonBuildItemName(entry)) === key);
+}
+
+function _pokemonBuildItemSupportsTaste(entry) {
+  const itemName = _pokemonBuildItemName(entry);
+  if (!itemName) return false;
+  const itemData = _findItemByName(itemName);
+  return String(itemData?.category || "").trim().toLowerCase() === "food items";
+}
+
+function _setPokemonBuildItemTaste(build, index, taste) {
+  if (!build || !Array.isArray(build.items) || index < 0 || index >= build.items.length) return;
+  const itemName = _pokemonBuildItemName(build.items[index]);
+  if (!itemName) return;
+  const normalizedTaste = _CHEF_TASTE_OPTIONS.some((option) => option.value === String(taste || "").trim().toLowerCase())
+    ? String(taste || "").trim().toLowerCase()
+    : "";
+  build.items[index] = normalizedTaste ? { name: itemName, taste: normalizedTaste } : { name: itemName };
+}
+
+function _pokemonBuildItemLabel(entry) {
+  const itemName = _pokemonBuildItemName(entry);
   if (!itemName) return "";
-  const entry = _findItemByName(itemName);
-  const cost = entry?.cost;
-  if (!_hasDisplayValue(cost)) return itemName;
-  return `${itemName} ($${cost})`;
+  const itemData = _findItemByName(itemName);
+  const cost = itemData?.cost;
+  const taste = _pokemonBuildItemTaste(entry);
+  const tasteLabel = taste ? ` [${taste.charAt(0).toUpperCase()}${taste.slice(1)}]` : "";
+  if (!_hasDisplayValue(cost)) return `${itemName}${tasteLabel}`;
+  return `${itemName}${tasteLabel} ($${cost})`;
 }
 
 function _queueBuilderRerender() {
@@ -18899,13 +23068,20 @@ function _sanitizePokemonBuildForLevel(build, speciesEntry = null) {
   const learnset = resolvedSpecies ? _getLearnsetForSpecies(resolvedSpecies.name) : [];
   const learnableByLevel = new Set(
     (learnset || [])
-      .filter((entry) => Number(entry.level || 0) <= safeLevel)
+      .filter((entry) => {
+        const moveLevel = Number(entry.level || 0);
+        return moveLevel > 0 && moveLevel <= safeLevel;
+      })
       .map((entry) => _normalizeSearchText(entry.move))
   );
   if (Array.isArray(build.moves)) {
+    const sourceMap = _normalizePokemonMoveSources(build.move_sources);
+    const mentorMoves = _mentorApplicationMoveSet(build, "mentor");
     const nextMoves = build.moves.filter((name) => {
       const moveName = String(name || "").trim();
       if (!moveName || !_getMoveDetail(moveName)) return false;
+      const moveKey = _normalizeMoveKey(moveName);
+      if (["tutor", "egg", "sketch"].includes(sourceMap[moveKey]) || mentorMoves.has(moveKey)) return true;
       if (resolvedSpecies && learnsetData && learnset.length) {
         return learnableByLevel.has(_normalizeSearchText(moveName));
       }
@@ -18959,7 +23135,7 @@ function _pokemonBuildLegality(build) {
     const seen = new Set();
     const duplicates = [];
     (values || []).forEach((name) => {
-      const raw = String(name || "").trim();
+      const raw = label === "items" ? _pokemonBuildItemName(name) : String(name || "").trim();
       if (!raw) return;
       const key = _normalizeSearchText(raw);
       if (!key) return;
@@ -19002,21 +23178,43 @@ function _pokemonBuildLegality(build) {
       message: `Unassigned stat points (${statSpent}/${statBudget}).`,
     });
   }
+  _pokemonStatRelationExceptions().forEach((entry) => {
+    issues.push({
+      severity: "warn",
+      message: `${entry.source}: ${entry.description}`,
+    });
+  });
   const learnset = speciesEntry ? _getLearnsetForSpecies(speciesEntry.name) : [];
   const learnableByLevel = new Set(
     (learnset || [])
-      .filter((entry) => Number(entry.level || 0) <= safeLevel)
+      .filter((entry) => {
+        const moveLevel = Number(entry.level || 0);
+        return moveLevel > 0 && moveLevel <= safeLevel;
+      })
       .map((entry) => _normalizeSearchText(entry.move))
   );
   const moves = Array.isArray(build?.moves) ? build.moves : [];
+  const sourceMap = _normalizePokemonMoveSources(build?.move_sources);
+  const mentorMoves = _mentorApplicationMoveSet(build, "mentor");
   const abilities = Array.isArray(build?.abilities) ? build.abilities : [];
   const items = Array.isArray(build?.items) ? build.items : [];
   const pokeEdges = Array.isArray(build?.poke_edges) ? build.poke_edges : [];
-  const MAX_ACTIVE_MOVES = 6;
+  const MAX_ACTIVE_MOVES = _pokemonActiveMoveLimit();
   if (moves.length > MAX_ACTIVE_MOVES) {
     issues.push({
       severity: "error",
-      message: `Move list exceeds limit (${moves.length}/${MAX_ACTIVE_MOVES}).`,
+      message: `Move list exceeds limit (${moves.length}/${MAX_ACTIVE_MOVES}${_hasFeature("Guidance") ? " with Guidance" : ""}).`,
+    });
+  }
+  const tutorMoveCount = moves.reduce((total, name) => {
+    const source = sourceMap[_normalizeMoveKey(name)];
+    return total + (source === "tutor" ? 1 : 0);
+  }, 0);
+  const tutorMoveLimit = _pokemonTutorMoveLimit();
+  if (tutorMoveCount > tutorMoveLimit) {
+    issues.push({
+      severity: "error",
+      message: `TM/Move Tutor move limit exceeded (${tutorMoveCount}/${tutorMoveLimit}${_hasFeature("Lifelong Learning") ? " with Lifelong Learning" : ""}).`,
     });
   }
   pushDuplicateIssues(moves, "moves");
@@ -19031,6 +23229,8 @@ function _pokemonBuildLegality(build) {
       issues.push({ severity: "error", message: `Move not found: ${moveName}.` });
       return;
     }
+    const moveKey = _normalizeMoveKey(moveName);
+    if (["tutor", "egg", "sketch"].includes(sourceMap[moveKey]) || mentorMoves.has(moveKey)) return;
     if (speciesEntry && learnsetData && learnset.length && !learnableByLevel.has(_normalizeSearchText(moveName))) {
       issues.push({
         severity: "error",
@@ -19064,7 +23264,7 @@ function _pokemonBuildLegality(build) {
     }
   });
   items.forEach((name) => {
-    const itemName = String(name || "").trim();
+    const itemName = _pokemonBuildItemName(name);
     if (!itemName) return;
     if (!_findItemByName(itemName)) {
       issues.push({ severity: "error", message: `Item not found: ${itemName}.` });
@@ -19702,6 +23902,29 @@ function _getLearnsetForSpecies(name) {
   return [];
 }
 
+function _getMoveSourcesForSpecies(name) {
+  const entries = pokemonMoveSourceData?.entries;
+  if (!entries || typeof entries !== "object") return null;
+  const candidates = _learnsetKeyCandidates(name);
+  for (const key of candidates) {
+    for (const [speciesName, source] of Object.entries(entries)) {
+      if (_normalizeSpeciesKey(speciesName) !== key) continue;
+      if (!source || typeof source !== "object") return null;
+      return {
+        egg: Array.isArray(source.egg) ? source.egg : [],
+        tm: Array.isArray(source.tm) ? source.tm : [],
+        tutor: Array.isArray(source.tutor) ? source.tutor : [],
+        natural: Array.isArray(source.natural) ? source.natural : [],
+      };
+    }
+  }
+  return null;
+}
+
+function _moveSourceNameSet(source, key) {
+  return new Set((Array.isArray(source?.[key]) ? source[key] : []).map((name) => _normalizeSearchText(name)).filter(Boolean));
+}
+
 function _getAbilityPoolsForSpecies(name) {
   const pools = _allPokedexAbilityPools();
   const candidates = _abilityKeyCandidates(name);
@@ -20083,7 +24306,10 @@ function _augmentMovePool(speciesEntry, basePool) {
 function _selectMovesForSpecies(speciesEntry, level) {
   if (!speciesEntry || !moveRecordMap || !learnsetData) return [];
   const learnset = _getLearnsetForSpecies(speciesEntry.name);
-  const eligible = learnset.filter((entry) => Number(entry.level || 0) <= Number(level || 1));
+  const eligible = learnset.filter((entry) => {
+    const moveLevel = Number(entry.level || 0);
+    return moveLevel > 0 && moveLevel <= Number(level || 1);
+  });
   const candidateRecords = _recordsFromLearnset(eligible);
   let moves = _buildMinMaxMoveset(speciesEntry, candidateRecords);
   const damagingCount = moves.filter((record) => _isDamagingMove(record)).length;
@@ -20164,7 +24390,10 @@ function _movePickerItemsForBuild(build, speciesEntry) {
   const learnset = speciesEntry ? _getLearnsetForSpecies(speciesEntry.name) : [];
   const learnableByLevel = new Set(
     (learnset || [])
-      .filter((entry) => Number(entry.level || 0) <= buildLevel)
+      .filter((entry) => {
+        const moveLevel = Number(entry.level || 0);
+        return moveLevel > 0 && moveLevel <= buildLevel;
+      })
       .map((entry) => _normalizeSearchText(entry.move))
   );
   const allMoves = _pokemonMoveCatalog().slice();
@@ -20261,6 +24490,474 @@ function _pokeEdgePickerItems() {
     }));
 }
 
+function _ensureMentorApplications(build) {
+  if (!build || typeof build !== "object") return _normalizeMentorApplications({});
+  build.mentor_applications = _normalizeMentorApplications(build.mentor_applications);
+  return build.mentor_applications;
+}
+
+function _mentorApplicationMoveSet(build, kind = "") {
+  const apps = _normalizeMentorApplications(build?.mentor_applications);
+  const names = [];
+  if (!kind || kind === "mentor") names.push(...apps.mentor_moves);
+  if (!kind || kind === "move_tutor") names.push(...apps.move_tutor_moves);
+  if (!kind || kind === "egg_tutor") names.push(...apps.egg_tutor_moves);
+  return new Set(names.map((name) => _normalizeMoveKey(name)).filter(Boolean));
+}
+
+function _removeOneNormalizedName(list, name) {
+  const key = _normalizeSearchText(name);
+  let removed = false;
+  const next = [];
+  (Array.isArray(list) ? list : []).forEach((entry) => {
+    if (!removed && _normalizeSearchText(entry) === key) {
+      removed = true;
+      return;
+    }
+    next.push(entry);
+  });
+  return next;
+}
+
+function _removeMoveFromBuild(build, moveName) {
+  const moveKey = _normalizeMoveKey(moveName);
+  build.moves = (Array.isArray(build.moves) ? build.moves : []).filter((entry) => _normalizeMoveKey(entry) !== moveKey);
+  build.move_sources = _normalizePokemonMoveSources(build.move_sources);
+  delete build.move_sources[moveKey];
+}
+
+function _addBuildMove(build, moveName, source = "") {
+  const name = String(moveName || "").trim();
+  if (!name) return false;
+  if (!Array.isArray(build.moves)) build.moves = [];
+  if (!build.moves.some((entry) => _normalizeMoveKey(entry) === _normalizeMoveKey(name))) {
+    build.moves.push(name);
+  }
+  if (source) {
+    build.move_sources = _normalizePokemonMoveSources(build.move_sources);
+    build.move_sources[_normalizeMoveKey(name)] = _normalizePokemonMoveSource(source);
+  }
+  return true;
+}
+
+function _mentorNatureProfile(name) {
+  const key = _normalizeSearchText(name);
+  return MENTOR_NATURE_CHART.find((entry) => _normalizeSearchText(entry.nature) === key) || null;
+}
+
+function _mentorAbilityPoolForName(pools, abilityName) {
+  const key = _normalizeSearchText(abilityName);
+  const inPool = (list) => (list || []).some((name) => _normalizeSearchText(name) === key);
+  if (inPool(pools?.high)) return "high";
+  if (inPool(pools?.advanced)) return "advanced";
+  if (inPool(pools?.basic) || inPool(pools?.starting)) return "basic";
+  return "";
+}
+
+function _mentorAbilityExchangeOptions(pools, oldAbility) {
+  const pool = _mentorAbilityPoolForName(pools, oldAbility);
+  const oldKey = _normalizeSearchText(oldAbility);
+  const names =
+    pool === "basic"
+      ? [...(pools?.starting || []), ...(pools?.basic || [])]
+      : pool === "advanced"
+        ? [...(pools?.starting || []), ...(pools?.basic || []), ...(pools?.advanced || [])]
+        : [];
+  const seen = new Set();
+  return names
+    .map((name) => String(name || "").trim())
+    .filter((name) => {
+      const key = _normalizeSearchText(name);
+      if (!key || key === oldKey || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+function _mentorMoveOptionsForBuild(build, mode) {
+  const speciesEntry = _getPokemonSpeciesEntry(build.species || build.name || "");
+  const buildLevel = _clampPokemonLevel(build?.level || 1, 1);
+  const learnset = speciesEntry ? _getLearnsetForSpecies(speciesEntry.name) : [];
+  const sourceData = speciesEntry ? _getMoveSourcesForSpecies(speciesEntry.name) : null;
+  const mentorSkillSum = _mentorSkillSelections().reduce((total, skill) => {
+    const rank = _findSkillRank(skill);
+    return total + skillRankValue(rank, characterData?.skill_rules || { ranks: [] });
+  }, 0);
+  const mentorLevelCap = buildLevel + mentorSkillSum;
+  const currentMoves = new Set((Array.isArray(build?.moves) ? build.moves : []).map((name) => _normalizeMoveKey(name)));
+  const levelUpMoves = new Set();
+  const fallbackTutorListMoves = new Set();
+  (learnset || []).forEach((entry) => {
+    const key = _normalizeSearchText(entry.move);
+    if (!key) return;
+    const moveLevel = Number(entry.level || 0);
+    if (moveLevel > 0 && moveLevel <= mentorLevelCap) levelUpMoves.add(key);
+    if (moveLevel <= 0) fallbackTutorListMoves.add(key);
+  });
+  const naturalMoves = sourceData ? _moveSourceNameSet(sourceData, "natural") : fallbackTutorListMoves;
+  const tutorMoves = sourceData ? _moveSourceNameSet(sourceData, "tutor") : fallbackTutorListMoves;
+  const eggMoves = sourceData ? _moveSourceNameSet(sourceData, "egg") : fallbackTutorListMoves;
+  return _pokemonMoveCatalog()
+    .slice()
+    .map((entry) => {
+      const key = _normalizeSearchText(entry.name);
+      const naturalByMentor = levelUpMoves.has(key) || naturalMoves.has(key);
+      const legalTutor = tutorMoves.has(key);
+      const legalEgg = eggMoves.has(key);
+      const legal = mode === "mentor" ? naturalByMentor : mode === "egg_tutor" ? legalEgg : legalTutor;
+      const meta = [
+        entry.type || "",
+        entry.category || "",
+        entry.damage_base ? `DB ${entry.damage_base}` : "Status",
+        mode === "mentor" && levelUpMoves.has(key) ? `Level-up <= Mentor cap Lv ${mentorLevelCap}` : "",
+        mode === "mentor" && naturalMoves.has(key) ? "(N) natural Tutor entry" : "",
+        mode === "move_tutor" && legalTutor ? "Tutor Move list entry" : "",
+        mode === "egg_tutor" && legalEgg ? "Egg Move list entry" : "",
+        !sourceData ? "Using fallback non-level source data" : "",
+        !legal && (learnset.length || sourceData) ? "Not legal for this action" : "",
+      ]
+        .filter(Boolean)
+        .join(" | ");
+      return {
+        name: entry.name,
+        meta,
+        hint: _eli5MoveSummary(entry),
+        sortWeight: currentMoves.has(_normalizeMoveKey(entry.name)) ? 1 : legal ? 0 : 2,
+        disabled: currentMoves.has(_normalizeMoveKey(entry.name)) || ((learnset.length || sourceData) && !legal && !characterState.override_prereqs),
+      };
+    })
+    .sort((a, b) => a.sortWeight - b.sortWeight || a.name.localeCompare(b.name));
+}
+
+function _applyMentorTeachMove(build, mode) {
+  const costs = { mentor: 1, move_tutor: 2, egg_tutor: 2 };
+  const featureNames = { mentor: "Mentor", move_tutor: "Move Tutor", egg_tutor: "Egg Tutor" };
+  const cost = costs[mode] || 1;
+  if (Number(build.tutor_points || 0) < cost) {
+    alert(`${featureNames[mode]} requires ${cost} Tutor Point${cost === 1 ? "" : "s"}.`);
+    return;
+  }
+  openListPicker({
+    title: featureNames[mode] || "Tutor Move",
+    helpText:
+      mode === "mentor"
+        ? "Mentor costs 1 TP and teaches a natural move from (N) Tutor or level-up up to Pokemon level plus Mentor Skill Rank sum. The picker enforces level-up data when available."
+        : `${featureNames[mode]} costs ${cost} TP. Pick a legal ${mode === "egg_tutor" ? "Egg-source" : "Tutor"} move from the available species source list.`,
+    items: _mentorMoveOptionsForBuild(build, mode),
+    onSelect: (name) => {
+      build.tutor_points = Math.max(0, Number(build.tutor_points || 0) - cost);
+      _addBuildMove(build, name, mode === "mentor" ? "level_up" : mode === "egg_tutor" ? "egg" : "tutor");
+      const apps = _ensureMentorApplications(build);
+      if (mode === "mentor") apps.mentor_moves.push(name);
+      if (mode === "move_tutor") apps.move_tutor_moves.push(name);
+      if (mode === "egg_tutor") apps.egg_tutor_moves.push(name);
+      saveCharacterToStorage();
+      renderCharacterPokemonTeam();
+    },
+  });
+}
+
+function _applyExpandHorizons(build) {
+  const apps = _ensureMentorApplications(build);
+  if (apps.expand_horizons) {
+    alert("Expand Horizons may target a Pokemon only once.");
+    return;
+  }
+  build.tutor_points = Math.max(0, Number(build.tutor_points || 0) + 3);
+  apps.expand_horizons = true;
+  saveCharacterToStorage();
+  renderCharacterPokemonTeam();
+}
+
+function _applyEmpoweredDevelopment(build) {
+  const apps = _ensureMentorApplications(build);
+  if (apps.lessons.empowered_development) {
+    alert("Empowered Development may target a Pokemon only once.");
+    return;
+  }
+  if (Number(build.tutor_points || 0) < 1) {
+    alert("Empowered Development requires at least 1 Tutor Point.");
+    return;
+  }
+  if (!Array.isArray(build.poke_edges)) build.poke_edges = [];
+  ["Skill Improvement", "Advanced Mobility", "Capability Training"].forEach((name) => {
+    if (!build.poke_edges.includes(name)) build.poke_edges.push(name);
+  });
+  build.tutor_points = Math.max(0, Number(build.tutor_points || 0) - 1);
+  apps.lessons.empowered_development = true;
+  saveCharacterToStorage();
+  renderCharacterPokemonTeam();
+}
+
+function _applyChangingViewpoints(build) {
+  const apps = _ensureMentorApplications(build);
+  if (Number(build.tutor_points || 0) < 1) {
+    alert("Changing Viewpoints requires at least 1 Tutor Point.");
+    return;
+  }
+  const current = _mentorNatureProfile(build.nature);
+  if (!current) {
+    alert("Changing Viewpoints requires the Pokemon to already have a Nature from the PTU Nature Chart.");
+    return;
+  }
+  const items = MENTOR_NATURE_CHART.map((entry) => {
+    const sameNature = _normalizeSearchText(entry.nature) === _normalizeSearchText(current.nature);
+    const legal = !sameNature && (entry.raise === current.raise || entry.lower === current.lower);
+    return {
+      name: entry.nature,
+      meta: `Raise ${entry.raise} | Lower ${entry.lower}${legal ? "" : " | Not legal from current Nature"}`,
+      sortWeight: legal ? 0 : 2,
+      disabled: !legal && !characterState.override_prereqs,
+    };
+  });
+  openListPicker({
+    title: "Changing Viewpoints Nature",
+    helpText: `Current Nature: ${current.nature} raises ${current.raise} and lowers ${current.lower}. Choose a different Nature sharing the raised stat or lowered stat.`,
+    items,
+    onSelect: (name) => {
+      const nextNature = _mentorNatureProfile(name);
+      if (!nextNature) return;
+      build.nature = nextNature.nature;
+      build.tutor_points = Math.max(0, Number(build.tutor_points || 0) - 1);
+      apps.lessons.changing_viewpoints.push({ old_nature: current.nature, new_nature: nextNature.nature });
+      saveCharacterToStorage();
+      renderCharacterPokemonTeam();
+    },
+  });
+}
+
+function _applyVersatileTeachings(build) {
+  const speciesEntry = _getPokemonSpeciesEntry(build.species || build.name || "");
+  if (Number(build.tutor_points || 0) < 1) {
+    alert("Versatile Teachings requires at least 1 Tutor Point.");
+    return;
+  }
+  const pools = speciesEntry ? _getAbilityPoolsForSpecies(speciesEntry.name) : null;
+  if (!speciesEntry || !pools) {
+    alert("Versatile Teachings requires a species with Basic and Advanced Ability pools.");
+    return;
+  }
+  const currentAbilities = (Array.isArray(build.abilities) ? build.abilities : [])
+    .map((name) => String(name || "").trim())
+    .filter(Boolean)
+    .map((name) => {
+      const pool = _mentorAbilityPoolForName(pools, name);
+      return {
+        value: name,
+        label: name,
+        meta: pool ? `Current ${pool === "advanced" ? "Advanced" : "Basic"} Ability` : "High or unlisted Ability cannot be exchanged by this Lesson",
+        disabled: !["basic", "advanced"].includes(pool),
+        sortWeight: ["basic", "advanced"].includes(pool) ? 0 : 2,
+      };
+    });
+  if (!currentAbilities.length) {
+    alert("Add the Pokemon's current Basic or Advanced Ability before using Versatile Teachings.");
+    return;
+  }
+  openListPicker({
+    title: "Versatile Teachings: Ability to Replace",
+    helpText: "Choose the existing Basic or Advanced Ability to exchange. High Abilities and unlisted/random-roll Abilities are not legal targets.",
+    items: currentAbilities,
+    onSelect: (oldAbility) => {
+      const replacementNames = _mentorAbilityExchangeOptions(pools, oldAbility);
+      if (!replacementNames.length) {
+        alert("No legal replacement Abilities are available for that Ability pool.");
+        return;
+      }
+      openListPicker({
+        title: "Versatile Teachings: Replacement",
+        helpText: "Basic Ability targets may become another Basic Ability. Advanced Ability targets may become a Basic or Advanced Ability.",
+        items: replacementNames.map((name) => {
+          const pool = _mentorAbilityPoolForName(pools, name);
+          return {
+            name,
+            meta: `Pool: ${pool === "advanced" ? "Advanced" : "Basic"}`,
+            hint: _eli5AbilitySummary(_getAbilityDetail(name) || {}),
+            sortWeight: pool === "basic" ? 0 : 1,
+          };
+        }),
+        onSelect: (newAbility) => {
+          if (!Array.isArray(build.abilities)) build.abilities = [];
+          let replaced = false;
+          build.abilities = build.abilities.map((entry) => {
+            if (!replaced && _normalizeSearchText(entry) === _normalizeSearchText(oldAbility)) {
+              replaced = true;
+              return newAbility;
+            }
+            return entry;
+          });
+          if (!replaced) build.abilities.push(newAbility);
+          build.tutor_points = Math.max(0, Number(build.tutor_points || 0) - 1);
+          const nextApps = _ensureMentorApplications(build);
+          nextApps.lessons.versatile_teachings.push({ old_ability: oldAbility, new_ability: newAbility });
+          saveCharacterToStorage();
+          renderCharacterPokemonTeam();
+        },
+      });
+    },
+  });
+}
+
+function _applyCorrectiveLearning(build) {
+  const apps = _ensureMentorApplications(build);
+  const choices = [];
+  (build.poke_edges || []).forEach((name) => {
+    const entry = _findPokeEdgeByName(name);
+    choices.push({
+      value: `edge|${name}`,
+      label: `Remove Poke Edge: ${name}`,
+      meta: _formatCostLabel(entry?.cost || 1, "Refund "),
+      hint: entry?.effects || "",
+    });
+  });
+  if (apps.expand_horizons) {
+    choices.push({
+      value: "expand_horizons|",
+      label: "Remove Feature Effect: Expand Horizons",
+      meta: "Remove the one-time +3 TP grant",
+      hint: "Expand Horizons grants 3 Tutor Points once per Pokemon. Corrective Learning removes that Feature effect.",
+    });
+  }
+  if (apps.lessons.empowered_development) {
+    choices.push({
+      value: "empowered_development|",
+      label: "Remove Lesson: Empowered Development",
+      meta: "Refund 1 TP and remove its three granted Poke Edges",
+      hint: "Removes Skill Improvement, Advanced Mobility, and Capability Training if present.",
+    });
+  }
+  apps.mentor_moves.forEach((name, index) => {
+    choices.push({
+      value: `mentor_move|${index}`,
+      label: `Remove Mentor Move: ${name}`,
+      meta: "Refund 1 TP",
+      hint: "Removes the move learned through Mentor.",
+    });
+  });
+  apps.move_tutor_moves.forEach((name, index) => {
+    choices.push({
+      value: `move_tutor|${index}`,
+      label: `Remove Move Tutor Move: ${name}`,
+      meta: "Refund 2 TP",
+      hint: "Removes the move learned through Move Tutor.",
+    });
+  });
+  apps.egg_tutor_moves.forEach((name, index) => {
+    choices.push({
+      value: `egg_tutor|${index}`,
+      label: `Remove Egg Tutor Move: ${name}`,
+      meta: "Refund 2 TP",
+      hint: "Removes the move learned through Egg Tutor.",
+    });
+  });
+  apps.lessons.changing_viewpoints.forEach((entry, index) => {
+    choices.push({
+      value: `changing_viewpoints|${index}`,
+      label: `Undo Changing Viewpoints: ${entry.new_nature || "Nature change"}`,
+      meta: "Refund 1 TP",
+      hint: entry.old_nature ? `Restores ${entry.old_nature}.` : "Removes the tracked Nature change.",
+    });
+  });
+  apps.lessons.versatile_teachings.forEach((entry, index) => {
+    choices.push({
+      value: `versatile_teachings|${index}`,
+      label: `Undo Versatile Teachings: ${entry.new_ability || "Ability exchange"}`,
+      meta: "Refund 1 TP",
+      hint: entry.old_ability ? `Restores ${entry.old_ability}.` : "Removes the tracked Ability exchange.",
+    });
+  });
+  if (!choices.length) {
+    alert("Corrective Learning needs a Poke Edge or Tutor Point Feature effect to remove.");
+    return;
+  }
+  openListPicker({
+    title: "Corrective Learning",
+    helpText: "Remove one effect gained from a Poke Edge or Feature and refund all Tutor Points spent on it.",
+    items: choices,
+    onSelect: (value) => {
+      const [kind, rawRef] = String(value || "").split("|");
+      let refund = 0;
+      let label = kind;
+      if (kind === "edge") {
+        const name = String(rawRef || "");
+        const entry = _findPokeEdgeByName(name);
+        const costMatch = String(entry?.cost || "1").match(/\d+/);
+        refund = Math.max(1, Number(costMatch?.[0] || 1));
+        build.poke_edges = _removeOneNormalizedName(build.poke_edges, name);
+        label = name;
+      } else if (kind === "expand_horizons") {
+        apps.expand_horizons = false;
+        build.tutor_points = Math.max(0, Number(build.tutor_points || 0) - 3);
+        label = "Expand Horizons";
+      } else if (kind === "empowered_development") {
+        ["Skill Improvement", "Advanced Mobility", "Capability Training"].forEach((name) => {
+          build.poke_edges = _removeOneNormalizedName(build.poke_edges, name);
+        });
+        apps.lessons.empowered_development = false;
+        refund = 1;
+        label = "Empowered Development";
+      } else if (kind === "mentor_move") {
+        const index = Number(rawRef || 0);
+        const name = apps.mentor_moves[index];
+        _removeMoveFromBuild(build, name);
+        apps.mentor_moves.splice(index, 1);
+        refund = 1;
+        label = name;
+      } else if (kind === "move_tutor") {
+        const index = Number(rawRef || 0);
+        const name = apps.move_tutor_moves[index];
+        _removeMoveFromBuild(build, name);
+        apps.move_tutor_moves.splice(index, 1);
+        refund = 2;
+        label = name;
+      } else if (kind === "egg_tutor") {
+        const index = Number(rawRef || 0);
+        const name = apps.egg_tutor_moves[index];
+        _removeMoveFromBuild(build, name);
+        apps.egg_tutor_moves.splice(index, 1);
+        refund = 2;
+        label = name;
+      } else if (kind === "changing_viewpoints") {
+        const index = Number(rawRef || 0);
+        const entry = apps.lessons.changing_viewpoints[index] || {};
+        if (entry.old_nature) build.nature = entry.old_nature;
+        apps.lessons.changing_viewpoints.splice(index, 1);
+        refund = 1;
+        label = entry.new_nature || "Changing Viewpoints";
+      } else if (kind === "versatile_teachings") {
+        const index = Number(rawRef || 0);
+        const entry = apps.lessons.versatile_teachings[index] || {};
+        if (entry.old_ability && entry.new_ability && Array.isArray(build.abilities)) {
+          let restored = false;
+          build.abilities = build.abilities.map((name) => {
+            if (!restored && _normalizeSearchText(name) === _normalizeSearchText(entry.new_ability)) {
+              restored = true;
+              return entry.old_ability;
+            }
+            return name;
+          });
+        }
+        apps.lessons.versatile_teachings.splice(index, 1);
+        refund = 1;
+        label = entry.new_ability || "Versatile Teachings";
+      }
+      build.tutor_points = Math.max(0, Number(build.tutor_points || 0) + refund);
+      apps.lessons.corrective_learning.push(label);
+      saveCharacterToStorage();
+      renderCharacterPokemonTeam();
+    },
+  });
+}
+
+function _applyMentorLesson(build, lessonKey) {
+  const lesson = MENTOR_LESSONS.find((entry) => entry.key === lessonKey);
+  if (!lesson || !_mentorLessonAvailable(lesson)) return;
+  if (lessonKey === "empowered_development") return _applyEmpoweredDevelopment(build);
+  if (lessonKey === "changing_viewpoints") return _applyChangingViewpoints(build);
+  if (lessonKey === "versatile_teachings") return _applyVersatileTeachings(build);
+  if (lessonKey === "corrective_learning") return _applyCorrectiveLearning(build);
+}
+
 function _speciesPickerItems() {
   const species = _pokemonSpeciesCatalog().slice();
   return species
@@ -20320,15 +25017,69 @@ function _normalizePokemonBuild(build) {
   normalized.battle_side = String(raw.battle_side || "").trim();
   normalized.moves = _moveNameList(raw.moves).slice(0, _rosterMoveLimit());
   normalized.abilities = _entryNameList(raw.abilities).slice(0, 4);
-  normalized.items = _entryNameList(raw.items).slice(0, 8);
+  normalized.items = _normalizePokemonBuildItems(raw.items);
   normalized.poke_edges = _entryNameList(raw.poke_edges).slice(0, 8);
   normalized.move_sources = _normalizePokemonMoveSources(raw.move_sources);
   normalized.poke_edge_choices = _normalizePokeEdgeChoices(raw.poke_edge_choices);
   normalized.stat_mode = _normalizePokemonStatMode(raw.stat_mode);
   normalized.tutor_points = _normalizeInteger(raw.tutor_points, 0, 0);
+  normalized.mentor_applications = _normalizeMentorApplications(raw.mentor_applications);
   normalized.stats = _normalizedRosterStats(raw.stats);
   normalized.stat_points = _normalizePokemonStatPointsShape(raw.stat_points || {});
   return normalized;
+}
+
+function _normalizeMentorApplications(value) {
+  const raw = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  const lessons = raw.lessons && typeof raw.lessons === "object" && !Array.isArray(raw.lessons) ? raw.lessons : {};
+  const normalizeNameList = (entry) =>
+    Array.isArray(entry) ? entry.map((name) => String(name || "").trim()).filter(Boolean) : [];
+  const normalizeNatureChanges = (entry) => {
+    if (Array.isArray(entry)) {
+      return entry
+        .map((item) => (item && typeof item === "object" && !Array.isArray(item) ? {
+          old_nature: String(item.old_nature || "").trim(),
+          new_nature: String(item.new_nature || "").trim(),
+        } : null))
+        .filter(Boolean);
+    }
+    if (entry && typeof entry === "object" && !Array.isArray(entry)) {
+      return [{
+        old_nature: String(entry.old_nature || "").trim(),
+        new_nature: String(entry.new_nature || "").trim(),
+      }];
+    }
+    return [];
+  };
+  const normalizeAbilityExchanges = (entry) => {
+    if (Array.isArray(entry)) {
+      return entry
+        .map((item) => (item && typeof item === "object" && !Array.isArray(item) ? {
+          old_ability: String(item.old_ability || "").trim(),
+          new_ability: String(item.new_ability || "").trim(),
+        } : null))
+        .filter(Boolean);
+    }
+    if (entry && typeof entry === "object" && !Array.isArray(entry)) {
+      return [{
+        old_ability: String(entry.old_ability || "").trim(),
+        new_ability: String(entry.new_ability || "").trim(),
+      }];
+    }
+    return [];
+  };
+  return {
+    expand_horizons: !!raw.expand_horizons,
+    mentor_moves: normalizeNameList(raw.mentor_moves),
+    move_tutor_moves: normalizeNameList(raw.move_tutor_moves),
+    egg_tutor_moves: normalizeNameList(raw.egg_tutor_moves),
+    lessons: {
+      empowered_development: !!lessons.empowered_development,
+      changing_viewpoints: normalizeNatureChanges(lessons.changing_viewpoints),
+      versatile_teachings: normalizeAbilityExchanges(lessons.versatile_teachings),
+      corrective_learning: normalizeNameList(lessons.corrective_learning),
+    },
+  };
 }
 
 function _normalizePokemonBuildPokeEdges(build) {
@@ -20447,6 +25198,7 @@ function openListPicker({ title, items, onSelect, helpText = "" }) {
       label,
       meta,
       hint,
+      disabled: !!entry?.disabled,
       sortWeight: Number.isFinite(Number(entry?.sortWeight)) ? Number(entry.sortWeight) : 0,
       order: index,
     };
@@ -20474,7 +25226,7 @@ function openListPicker({ title, items, onSelect, helpText = "" }) {
       visible += 1;
       const row = document.createElement("button");
       row.type = "button";
-      row.className = "char-feature-row status-available";
+      row.className = `char-feature-row ${entry.disabled ? "status-blocked" : "status-available"}`;
       const label = document.createElement("div");
       label.className = "char-row-title";
       label.textContent = entry.label;
@@ -20492,6 +25244,7 @@ function openListPicker({ title, items, onSelect, helpText = "" }) {
         row.appendChild(hint);
       }
       row.addEventListener("click", () => {
+        if (entry.disabled) return;
         if (onSelect) onSelect(entry.value, entry);
         modal.remove();
       });
@@ -21193,7 +25946,7 @@ function showItemDetail(entry, kindHint = "") {
   addBuild.addEventListener("click", () => {
     openPokemonBuildPicker((build) => {
       if (!Array.isArray(build.items)) build.items = [];
-      if (!build.items.includes(entry.name)) build.items.push(entry.name);
+      if (!_pokemonBuildHasItemNamed(build, entry.name)) build.items.push({ name: entry.name });
       saveCharacterToStorage();
     });
     modal.remove();
@@ -21517,6 +26270,12 @@ function _renderBuilderPanel(container) {
     characterState.class_id = "";
     characterState.features = new Set();
     characterState.edges = new Set();
+    characterState.capture_techniques = [];
+    characterState.commander_orders = [];
+    characterState.hobbyist_skill_edges = [];
+    characterState.look_and_learn_features = {};
+    characterState.dilettante_picks = [];
+    characterState.mentor_skills = [];
     characterState.feature_order = [];
     characterState.edge_order = [];
     characterState.skill_background = { adept: "", novice: "", pathetic: [] };
@@ -21704,6 +26463,7 @@ function _validationWarnings() {
       if (!skills.includes(skill)) return;
       totalCost += Number(rules.rank_costs?.[rank] ?? 0);
     });
+    totalCost = Math.max(0, totalCost - _freeSkillGrantBudgetCredit(rules));
     if (totalCost > budget) {
       warnings.push(`Skill points exceed budget (${totalCost}/${budget}).`);
     }
@@ -21783,6 +26543,67 @@ function _validationWarnings() {
   const selectedFeatures = Array.from(characterState.features);
   const selectedEdges = Array.from(characterState.edges);
   const nodes = characterData.nodes || [];
+  const captureSlots = _captureTechniqueSlots();
+  const captureSelections = _captureTechniqueSelections();
+  if (captureSelections.length > captureSlots) {
+    warnings.push(`Capture Techniques exceed slots (${captureSelections.length}/${captureSlots}).`);
+  }
+  if (captureSlots > 0 && captureSelections.length < captureSlots) {
+    warnings.push(`Select ${captureSlots} Capture Techniques (${captureSelections.length}/${captureSlots}).`);
+  }
+  captureSelections.forEach((name) => {
+    const baseName = /^Capture Skills/i.test(name) ? "Capture Skills" : name;
+    const reason = _captureTechniqueUnavailableReason(baseName);
+    if (reason) warnings.push(`${name}: ${reason}`);
+  });
+  const commanderOrderSlots = _commanderOrderSlots();
+  const commanderOrderSelections = _commanderOrderSelections();
+  if (commanderOrderSelections.length > commanderOrderSlots) {
+    warnings.push(`Commander Orders exceed slots (${commanderOrderSelections.length}/${commanderOrderSlots}).`);
+  }
+  if (commanderOrderSlots > 0 && commanderOrderSelections.length < commanderOrderSlots) {
+    warnings.push("Select one Commander Orders feature.");
+  }
+  const hobbyistSkillSlots = _hobbyistSkillEdgeSlots();
+  const hobbyistSkillSelections = _sanitizeHobbyistSkillEdges();
+  if (hobbyistSkillSelections.length > hobbyistSkillSlots) {
+    warnings.push(`Hobbyist Skill Edges exceed slots (${hobbyistSkillSelections.length}/${hobbyistSkillSlots}).`);
+  }
+  if (hobbyistSkillSlots > 0 && hobbyistSkillSelections.length < hobbyistSkillSlots) {
+    warnings.push(`Select ${hobbyistSkillSlots} Hobbyist Skill Edges.`);
+  }
+  if (_hasFeature("Look and Learn")) {
+    const lnl = _lookAndLearnSelections();
+    if (!lnl.scene || !lnl.ap) warnings.push("Look and Learn: select one Scene Feature and one Action Point Feature.");
+    [
+      ["scene", lnl.scene],
+      ["ap", lnl.ap],
+    ].forEach(([kind, name]) => {
+      if (!name) return;
+      const spec = _hobbyistLookAndLearnSpec(kind, name);
+      if (!spec) {
+        warnings.push(`Look and Learn: ${name} is not on the rulebook ${kind === "scene" ? "Scene" : "Action Point"} list.`);
+        return;
+      }
+      if (spec.listedPrereq && !_hobbyistMeetsListedPrereq(spec.listedPrereq)) {
+        warnings.push(`Look and Learn: ${name} requires ${spec.listedPrereq}.`);
+      }
+    });
+  }
+  const dilettantePicks = _dilettantePicks();
+  if (dilettantePicks.some((pick) => !pick.feature || !pick.edge)) {
+    warnings.push("Dilettante: each rank must select one General Feature and one Edge.");
+  }
+  const mentorSlots = _mentorSkillSlots();
+  const mentorSkills = _sanitizeMentorSkills();
+  if (mentorSlots > 0 && mentorSkills.length < mentorSlots) {
+    warnings.push(`Mentor: select ${mentorSlots} Mentor Skills.`);
+  }
+  mentorSkills.forEach((skill) => {
+    if (!_mentorSkillAvailable(skill) && !characterState.override_prereqs) {
+      warnings.push(`Mentor: ${_mentorSkillLabel(skill)} must be Novice Rank or higher.`);
+    }
+  });
 
   if (classEntry && featureSlots) {
     const countByRank = {};
@@ -21952,6 +26773,14 @@ function renderCharacterSummary() {
     class_id: characterState.class_id,
     class_name: (characterData.classes || []).find((cls) => cls.id === characterState.class_id)?.name || "",
     features: Array.from(characterState.features).sort(),
+    capture_techniques: _captureTechniqueSelections(),
+    commander_orders: _commanderOrderSelections(),
+    hobbyist_skill_edges: _hobbyistSkillEdgeSelections(),
+    look_and_learn_features: _lookAndLearnSelections(),
+    dilettante_picks: _dilettantePicks(),
+    mentor_skills: _mentorSkillSelections(),
+    hobbyist_granted_features: _hobbyistGrantedFeatures(),
+    hobbyist_granted_edges: _hobbyistGrantedEdges(),
     edges: Array.from(characterState.edges).sort(),
     skills: characterState.skills,
     stats: characterState.stats,
@@ -22130,6 +26959,11 @@ function renderCharacterSummary() {
         className
       )}">${escapeHtml(className)}</button>`;
   const featureList = Array.from(characterState.features).sort();
+  const captureTechniqueList = _captureTechniqueSelections();
+  const commanderOrderList = _commanderOrderSelections();
+  const hobbyistSkillEdgeList = _hobbyistSkillEdgeSelections();
+  const hobbyistFeatureList = _hobbyistGrantedFeatures();
+  const hobbyistEdgeList = _hobbyistGrantedEdges();
   const edgeList = Array.from(characterState.edges).sort();
   const skills = characterData.skills || [];
   const skillLines = skills
@@ -22182,6 +27016,26 @@ function renderCharacterSummary() {
         )
         .join("")
     : "<button type=\"button\" class=\"char-pill char-pill-link\" data-sheet-action=\"open-step\" data-step=\"edges\">Open Edges</button>";
+  const captureTechniquePills = captureTechniqueList.length
+    ? captureTechniqueList
+        .map(
+          (name) =>
+            `<button type="button" class="char-pill char-pill-link" data-sheet-action="open-step" data-step="features">${escapeHtml(name)}</button>`
+        )
+        .join("")
+    : "<button type=\"button\" class=\"char-pill char-pill-link\" data-sheet-action=\"open-step\" data-step=\"features\">Open Capture Techniques</button>";
+  const commanderOrderPills = commanderOrderList.length
+    ? commanderOrderList
+        .map((name) => `<button type="button" class="char-pill char-pill-link" data-sheet-action="open-step" data-step="features">${escapeHtml(name)}</button>`)
+        .join("")
+    : "<button type=\"button\" class=\"char-pill char-pill-link\" data-sheet-action=\"open-step\" data-step=\"features\">Open Commander Orders</button>";
+  const hobbyistPills = [...hobbyistSkillEdgeList, ...hobbyistFeatureList, ...hobbyistEdgeList].length
+    ? [
+        ...hobbyistSkillEdgeList.map((name) => `<button type="button" class="char-pill char-pill-link" data-sheet-action="open-step" data-step="skills">${escapeHtml(name)}</button>`),
+        ...hobbyistFeatureList.map((name) => `<button type="button" class="char-pill char-pill-link" data-sheet-action="open-step" data-step="features">${escapeHtml(name)}</button>`),
+        ...hobbyistEdgeList.map((name) => `<button type="button" class="char-pill char-pill-link" data-sheet-action="open-step" data-step="features">${escapeHtml(name)}</button>`),
+      ].join("")
+    : "<button type=\"button\" class=\"char-pill char-pill-link\" data-sheet-action=\"open-step\" data-step=\"features\">Open Hobbyist Grants</button>";
   const extras = Array.isArray(characterState.extras) ? characterState.extras : [];
   const extrasList = extras.length
     ? extras
@@ -22242,10 +27096,10 @@ function renderCharacterSummary() {
             .join("");
           const itemPills = items
             .map(
-              (name) =>
+              (itemEntry) =>
                 `<button type="button" class="char-pill char-pill-link" data-sheet-action="item" data-name="${escapeAttr(
-                  name
-                )}">${escapeHtml(_pokemonBuildItemLabel(name))}</button>`
+                  _pokemonBuildItemName(itemEntry)
+                )}">${escapeHtml(_pokemonBuildItemLabel(itemEntry))}</button>`
             )
             .join("");
           const pokeEdgePills = pokeEdges.map((name) => `<span class="char-pill">${escapeHtml(name)}</span>`).join("");
@@ -22305,6 +27159,18 @@ function renderCharacterSummary() {
     <div class="char-sheet-section">
       <div class="char-sheet-title">Features (${featureList.length})</div>
       <div class="char-pill-list">${featurePills}</div>
+    </div>
+    <div class="char-sheet-section">
+      <div class="char-sheet-title">Capture Techniques (${captureTechniqueList.length}/${_captureTechniqueSlots()})</div>
+      <div class="char-pill-list">${captureTechniquePills}</div>
+    </div>
+    <div class="char-sheet-section">
+      <div class="char-sheet-title">Commander Orders (${commanderOrderList.length}/${_commanderOrderSlots()})</div>
+      <div class="char-pill-list">${commanderOrderPills}</div>
+    </div>
+    <div class="char-sheet-section">
+      <div class="char-sheet-title">Hobbyist Grants (${hobbyistSkillEdgeList.length + hobbyistFeatureList.length + hobbyistEdgeList.length})</div>
+      <div class="char-pill-list">${hobbyistPills}</div>
     </div>
     <div class="char-sheet-section">
       <div class="char-sheet-title">Edges (${edgeList.length})</div>
@@ -22432,7 +27298,19 @@ function renderCharacterSummary() {
       const parsed = JSON.parse(text);
       if (parsed.profile) characterState.profile = { ...characterState.profile, ...parsed.profile };
       if (parsed.class_id) characterState.class_id = parsed.class_id;
-      if (Array.isArray(parsed.features)) characterState.features = new Set(parsed.features);
+      if (Array.isArray(parsed.features)) {
+        const split = _stripRuntimeCaptureTechniques(parsed.features);
+        characterState.features = new Set(split.features);
+        if (!Array.isArray(parsed.capture_techniques) && split.captureTechniques.length) {
+          characterState.capture_techniques = split.captureTechniques;
+        }
+      }
+      if (Array.isArray(parsed.capture_techniques)) characterState.capture_techniques = parsed.capture_techniques.map(_captureTechniqueCanonicalName).filter(Boolean);
+      if (Array.isArray(parsed.commander_orders)) characterState.commander_orders = parsed.commander_orders.slice();
+      if (Array.isArray(parsed.hobbyist_skill_edges)) characterState.hobbyist_skill_edges = parsed.hobbyist_skill_edges.slice();
+      if (parsed.look_and_learn_features && typeof parsed.look_and_learn_features === "object") characterState.look_and_learn_features = { ...parsed.look_and_learn_features };
+      if (Array.isArray(parsed.dilettante_picks)) characterState.dilettante_picks = parsed.dilettante_picks.slice();
+      if (Array.isArray(parsed.mentor_skills)) characterState.mentor_skills = parsed.mentor_skills.slice();
       if (Array.isArray(parsed.edges)) characterState.edges = new Set(parsed.edges);
       if (parsed.skills && typeof parsed.skills === "object") {
         characterState.skills = { ...characterState.skills, ...parsed.skills };
@@ -22542,7 +27420,15 @@ function saveCharacterToStorage() {
       profile: characterState.profile,
       class_ids: Array.isArray(characterState.class_ids) ? characterState.class_ids : [],
       class_id: characterState.class_id,
-      features: Array.from(characterState.features),
+      features: _featurePayloadList(),
+      capture_techniques: _captureTechniqueSelections(),
+      commander_orders: _commanderOrderSelections(),
+      hobbyist_skill_edges: _hobbyistSkillEdgeSelections(),
+      look_and_learn_features: _lookAndLearnSelections(),
+      dilettante_picks: _dilettantePicks(),
+      mentor_skills: _mentorSkillSelections(),
+      hobbyist_granted_features: _hobbyistGrantedFeatures(),
+      hobbyist_granted_edges: _hobbyistGrantedEdges(),
       edges: Array.from(characterState.edges),
       feature_order: characterState.feature_order,
       edge_order: characterState.edge_order,
@@ -22621,7 +27507,26 @@ function setCharacterFromPayload(parsed) {
   if ((!characterState.class_ids || !characterState.class_ids.length) && characterState.class_id) {
     characterState.class_ids = [characterState.class_id];
   }
-  if (Array.isArray(parsed.features)) characterState.features = new Set(parsed.features);
+  if (Array.isArray(parsed.features)) {
+    const split = _stripRuntimeCaptureTechniques(parsed.features);
+    characterState.features = new Set(split.features);
+    characterState.feature_details = {};
+    parsed.features.forEach((entry) => {
+      if (!entry || typeof entry !== "object" || Array.isArray(entry)) return;
+      const name = String(entry.name || entry.feature_id || entry.id || "").trim();
+      if (!name) return;
+      _setFeatureDetail(name, { chosen_stat: entry.chosen_stat, chosen_type: entry.chosen_type });
+    });
+    if (!Array.isArray(parsed.capture_techniques) && split.captureTechniques.length) {
+      characterState.capture_techniques = split.captureTechniques;
+    }
+  }
+  if (Array.isArray(parsed.capture_techniques)) characterState.capture_techniques = parsed.capture_techniques.map(_captureTechniqueCanonicalName).filter(Boolean);
+  if (Array.isArray(parsed.commander_orders)) characterState.commander_orders = parsed.commander_orders.slice();
+  if (Array.isArray(parsed.hobbyist_skill_edges)) characterState.hobbyist_skill_edges = parsed.hobbyist_skill_edges.slice();
+  if (parsed.look_and_learn_features && typeof parsed.look_and_learn_features === "object") characterState.look_and_learn_features = { ...parsed.look_and_learn_features };
+  if (Array.isArray(parsed.dilettante_picks)) characterState.dilettante_picks = parsed.dilettante_picks.slice();
+  if (Array.isArray(parsed.mentor_skills)) characterState.mentor_skills = parsed.mentor_skills.slice();
   if (Array.isArray(parsed.edges)) characterState.edges = new Set(parsed.edges);
   if (Array.isArray(parsed.feature_order)) characterState.feature_order = parsed.feature_order.slice();
   if (Array.isArray(parsed.edge_order)) characterState.edge_order = parsed.edge_order.slice();
@@ -22756,7 +27661,26 @@ function loadCharacterFromStorage() {
     if ((!characterState.class_ids || !characterState.class_ids.length) && characterState.class_id) {
       characterState.class_ids = [characterState.class_id];
     }
-    if (Array.isArray(parsed.features)) characterState.features = new Set(parsed.features);
+    if (Array.isArray(parsed.features)) {
+      const split = _stripRuntimeCaptureTechniques(parsed.features);
+      characterState.features = new Set(split.features);
+      characterState.feature_details = {};
+      parsed.features.forEach((entry) => {
+        if (!entry || typeof entry !== "object" || Array.isArray(entry)) return;
+        const name = String(entry.name || entry.feature_id || entry.id || "").trim();
+        if (!name) return;
+        _setFeatureDetail(name, { chosen_stat: entry.chosen_stat, chosen_type: entry.chosen_type });
+      });
+      if (!Array.isArray(parsed.capture_techniques) && split.captureTechniques.length) {
+        characterState.capture_techniques = split.captureTechniques;
+      }
+    }
+    if (Array.isArray(parsed.capture_techniques)) characterState.capture_techniques = parsed.capture_techniques.map(_captureTechniqueCanonicalName).filter(Boolean);
+    if (Array.isArray(parsed.commander_orders)) characterState.commander_orders = parsed.commander_orders.slice();
+    if (Array.isArray(parsed.hobbyist_skill_edges)) characterState.hobbyist_skill_edges = parsed.hobbyist_skill_edges.slice();
+    if (parsed.look_and_learn_features && typeof parsed.look_and_learn_features === "object") characterState.look_and_learn_features = { ...parsed.look_and_learn_features };
+    if (Array.isArray(parsed.dilettante_picks)) characterState.dilettante_picks = parsed.dilettante_picks.slice();
+    if (Array.isArray(parsed.mentor_skills)) characterState.mentor_skills = parsed.mentor_skills.slice();
     if (Array.isArray(parsed.edges)) characterState.edges = new Set(parsed.edges);
     if (parsed.skills && typeof parsed.skills === "object") {
       characterState.skills = { ...characterState.skills, ...parsed.skills };
@@ -22913,6 +27837,20 @@ function renderSnapshotPanel() {
 function extractTrainerProfile(payload) {
   if (!payload || typeof payload !== "object") return null;
   const profile = payload.profile || {};
+  const lookAndLearn = payload.look_and_learn_features && typeof payload.look_and_learn_features === "object"
+    ? payload.look_and_learn_features
+    : {};
+  const dilettantePicks = Array.isArray(payload.dilettante_picks) ? payload.dilettante_picks : [];
+  const hobbyistGrantedFeatures = Array.isArray(payload.hobbyist_granted_features) && payload.hobbyist_granted_features.length
+    ? payload.hobbyist_granted_features
+    : [
+        String(lookAndLearn.scene || "").trim(),
+        String(lookAndLearn.ap || "").trim(),
+        ...dilettantePicks.map((entry) => String(entry?.feature || "").trim()),
+      ].filter(Boolean);
+  const hobbyistGrantedEdges = Array.isArray(payload.hobbyist_granted_edges) && payload.hobbyist_granted_edges.length
+    ? payload.hobbyist_granted_edges
+    : dilettantePicks.map((entry) => String(entry?.edge || "").trim()).filter(Boolean);
   return {
     name: String(profile.name || "Trainer"),
     level: Number(profile.level || 1),
@@ -22921,9 +27859,18 @@ function extractTrainerProfile(payload) {
     class_id: String(payload.class_id || ""),
     class_name: String(payload.class_name || payload.class_id || "").replace(/^class:/i, ""),
     features: Array.isArray(payload.features) ? payload.features : [],
+    capture_techniques: Array.isArray(payload.capture_techniques) ? payload.capture_techniques : [],
+    commander_orders: Array.isArray(payload.commander_orders) ? payload.commander_orders : [],
+    hobbyist_granted_features: Array.from(new Set(hobbyistGrantedFeatures)),
+    hobbyist_skill_edges: Array.isArray(payload.hobbyist_skill_edges) ? payload.hobbyist_skill_edges : [],
+    hobbyist_granted_edges: Array.from(new Set(hobbyistGrantedEdges)),
+    look_and_learn_features: lookAndLearn,
+    dilettante_picks: dilettantePicks,
+    mentor_skills: Array.isArray(payload.mentor_skills) ? payload.mentor_skills : [],
     edges: Array.isArray(payload.edges) ? payload.edges : [],
     skills: payload.skills && typeof payload.skills === "object" ? payload.skills : {},
     stats: payload.stats && typeof payload.stats === "object" ? payload.stats : {},
+    pokemon_stat_relation_exceptions: _pokemonStatRelationExceptions(),
   };
 }
 
@@ -22963,6 +27910,16 @@ function renderTrainerDetails() {
   }
   const classLabel = trainerProfile.class_name || trainerProfile.class_id || "Unassigned";
   const featureCount = trainerProfile.features?.length || 0;
+  const captureTechniqueCount = trainerProfile.capture_techniques?.length || 0;
+  const commanderOrdersCount = trainerProfile.commander_orders?.length || 0;
+  const hobbyistGrantCount =
+    (trainerProfile.hobbyist_granted_features?.length || 0) +
+    (trainerProfile.hobbyist_skill_edges?.length || 0) +
+    (trainerProfile.hobbyist_granted_edges?.length || 0);
+  const mentorSkillList = Array.isArray(trainerProfile.mentor_skills) ? trainerProfile.mentor_skills.filter(Boolean) : [];
+  const pokemonStatNotes = Array.isArray(trainerProfile.pokemon_stat_relation_exceptions)
+    ? trainerProfile.pokemon_stat_relation_exceptions.map((entry) => `${entry.stat}: ${entry.source}`).filter(Boolean)
+    : [];
   const edgeCount = trainerProfile.edges?.length || 0;
   const stats = trainerProfile.stats || {};
   const statsLine =
@@ -22979,8 +27936,10 @@ function renderTrainerDetails() {
     <div class="details-row">Class: ${escapeHtml(classLabel)}</div>
     <div class="details-row">Region: ${escapeHtml(trainerProfile.region || "-")}</div>
     <div class="details-row">Concept: ${escapeHtml(trainerProfile.concept || "-")}</div>
+    <div class="details-row">Mentor Skills: ${escapeHtml(mentorSkillList.length ? mentorSkillList.join(", ") : "-")}</div>
+    <div class="details-row">Pokemon Stat Exceptions: ${escapeHtml(pokemonStatNotes.length ? pokemonStatNotes.join(", ") : "-")}</div>
     <div class="details-row">Stats: ${escapeHtml(statsLine)}</div>
-    <div class="details-row">Features: ${escapeHtml(featureCount)}</div>
+    <div class="details-row">Features: ${escapeHtml(featureCount)} | Capture Techniques: ${escapeHtml(captureTechniqueCount)} | Commander Orders: ${escapeHtml(commanderOrdersCount)} | Hobbyist Grants: ${escapeHtml(hobbyistGrantCount)}</div>
     <div class="details-row">Edges: ${escapeHtml(edgeCount)}</div>
   `;
 }
@@ -23164,10 +28123,20 @@ function formatMoveEventLine(event, actor, target, moveName) {
 
 function formatMoveUtilityEventLine(event, actor, target, moveName) {
   const move = String(moveName || event.move || "a move").trim();
+  const moveMeta = moveMetaFromEvent(event);
+  const moveCategory = String(event?.category || moveMeta?.category || "").trim().toLowerCase();
+  const isStatusCategory = moveCategory === "status";
   const effect = String(event?.effect || "").trim().toLowerCase();
   const description = String(event?.description || "").trim();
   const hpText = hpSuffix(event, event.target ?? event.target_id ?? event.defender ?? event.actor ?? event.actor_id);
   const suffix = hpText ? ` (${hpText})` : "";
+  const roll = Number(event?.roll);
+  const needed = Number(event?.needed ?? event?.ac);
+  const rollText = Number.isFinite(roll)
+    ? Number.isFinite(needed)
+      ? ` (roll ${roll}/${needed})`
+      : ` (roll ${roll})`
+    : "";
   if (effect === "struggle" && !target && event.hit == null && !Number.isFinite(Number(event.damage))) {
     return "";
   }
@@ -23179,6 +28148,15 @@ function formatMoveUtilityEventLine(event, actor, target, moveName) {
   }
   if (effect === "riposte_ready") {
     return description || `${actor || "A unit"} readied Riposte${target ? ` against ${target}` : ""}.${suffix}`;
+  }
+  if (isStatusCategory) {
+    if (description) {
+      return `${description}${rollText}${suffix}`;
+    }
+    if (target) {
+      return `${actor || "A unit"} used ${move} on ${target}${rollText}.`;
+    }
+    return `${actor || "A unit"} used ${move}${rollText}.`;
   }
   if (description && event.hit == null && !Number.isFinite(Number(event.damage)) && !Number.isFinite(Number(event.roll))) {
     return `${description}${suffix}`;
@@ -23201,6 +28179,28 @@ function isLikelyDuplicateMoveEcho(currentEvent, previousEvent) {
   const previousTarget = previousEvent.target ?? previousEvent.target_id ?? previousEvent.defender ?? null;
   if (currentTarget || !previousTarget) return false;
   if (!Number.isFinite(Number(currentEvent.target_hp))) return false;
+  return true;
+}
+
+function isLikelyDuplicateStatusMoveEcho(currentEvent, previousEvent) {
+  if (!currentEvent || !previousEvent) return false;
+  const currentType = String(currentEvent.type || "").trim().toLowerCase();
+  const previousType = String(previousEvent.type || "").trim().toLowerCase();
+  if (!["move", "use_move"].includes(currentType) || !["move", "use_move"].includes(previousType)) return false;
+  const currentMove = String(currentEvent.move || "").trim().toLowerCase();
+  const previousMove = String(previousEvent.move || "").trim().toLowerCase();
+  if (!currentMove || currentMove !== previousMove) return false;
+  const currentActor = String(currentEvent.actor || "").trim();
+  const previousActor = String(previousEvent.actor || "").trim();
+  if (!currentActor || currentActor !== previousActor) return false;
+  const currentTarget = String(currentEvent.target ?? currentEvent.target_id ?? currentEvent.defender ?? "").trim();
+  const previousTarget = String(previousEvent.target ?? previousEvent.target_id ?? previousEvent.defender ?? "").trim();
+  if (currentTarget !== previousTarget) return false;
+  const currentMeta = moveMetaFromEvent(currentEvent);
+  const previousMeta = moveMetaFromEvent(previousEvent);
+  const currentCategory = String(currentEvent.category || currentMeta?.category || "").trim().toLowerCase();
+  const previousCategory = String(previousEvent.category || previousMeta?.category || "").trim().toLowerCase();
+  if (currentCategory !== "status" || previousCategory !== "status") return false;
   return true;
 }
 
@@ -23699,8 +28699,21 @@ function resolveName(value) {
   if (trainer) return trainer.name || trainer.id;
   if (normalizeTeamLabel(value) === "player") return friendlySideLabel("player") || "Your Team";
   if (normalizeTeamLabel(value) === "foe") return friendlySideLabel("foe") || "Opposing Team";
-  if (typeof value === "string") return value;
+  if (typeof value === "string") return collapseCombatantLabel(value);
   return String(value);
+}
+
+function collapseCombatantLabel(value) {
+  const text = String(value || "").trim();
+  if (!text.includes(":")) return text;
+  const parts = text.split(":").map((part) => String(part || "").trim()).filter(Boolean);
+  if (parts.length >= 3) {
+    return parts[parts.length - 1];
+  }
+  if (parts.length === 2 && /\d+$/.test(parts[0])) {
+    return parts[1];
+  }
+  return text;
 }
 
 function cleanLogLine(line, previous) {
@@ -23714,6 +28727,7 @@ function cleanLogLine(line, previous) {
   if (lower === `${foeLabel}.`) return null;
   if (lower === `${playerLabel} is up.`) return `${friendlySideLabel("player") || "Your Team"} is up.`;
   if (lower === `${foeLabel} is up.`) return `${friendlySideLabel("foe") || "Opposing Team"} is up.`;
+  if (lower === "terrain.") return null;
   if (lower === "phase: command.") return "Command phase.";
   if (lower === "phase: action." || lower === "phase: end.") return null;
   const genericMove = trimmed.match(/^(.+?) used (.+?)\.$/i);
@@ -23934,7 +28948,8 @@ function onGridClick(x, y, occupantId, options = {}) {
   if (selectedId) {
     const legalShift = new Set((state.legal_shifts || []).map((c) => `${c[0]},${c[1]}`));
     if (!legalShift.has(`${x},${y}`)) {
-      alertError(new Error("Invalid destination."));
+      selectedTileKey = clickedKey;
+      render();
       return;
     }
     commitAction({
@@ -23971,6 +28986,9 @@ aiStepButton?.addEventListener("click", () => aiStep().catch(alertError));
 aiAutoButton?.addEventListener("click", () => toggleAuto());
 aiModelRefreshButton?.addEventListener("click", () => refreshAiModels().catch(alertError));
 aiModelRefreshTopButton?.addEventListener("click", () => refreshAiModels().catch(alertError));
+aiModelBranchButton?.addEventListener("click", () => branchAiModel().catch(alertError));
+aiModelBranchTopButton?.addEventListener("click", () => branchAiModel().catch(alertError));
+aiModelSettingsApplyButton?.addEventListener("click", () => applyAiModelSettings().catch(alertError));
 aiModelSelect?.addEventListener("change", () => {
   const value = String(aiModelSelect.value || "");
   if (!value) return;
@@ -24073,33 +29091,12 @@ importRosterCsvButton?.addEventListener("click", () => {
   const input = document.createElement("input");
   input.type = "file";
   input.accept = ".csv,text/csv,.zip,application/zip";
+  input.multiple = true;
   input.addEventListener("change", async () => {
-    const file = input.files && input.files[0];
-    if (!file) return;
+    const files = Array.from(input.files || []).filter(Boolean);
+    if (!files.length) return;
     try {
-      const lowerName = String(file.name || "").toLowerCase();
-      if (lowerName.endsWith(".zip")) {
-        const entries = _readZipEntries(await file.arrayBuffer());
-        const teamCsvName = Object.keys(entries).find((name) => /team_roster\.csv$/i.test(name) || /team\.csv$/i.test(name));
-        if (!teamCsvName || !entries[teamCsvName]) throw new Error("Project ZIP did not contain a team CSV.");
-        const chosen = await _chooseRosterImportSide(entries[teamCsvName], file.name || "imported");
-        if (!chosen) return;
-        const nextCsv = chosen.mode === "assign" && battleRosterCsvText
-          ? _mergeRosterCsvBySide(battleRosterCsvText, chosen.csvText)
-          : chosen.csvText;
-        _setBattleRosterCsv(nextCsv, file.name || "imported");
-        notifyUI("ok", chosen.mode === "assign" ? `Project ZIP team loaded as ${chosen.side}.` : "Project ZIP team CSV loaded.", 2200);
-      } else {
-        const text = await _readTextFile(file);
-        const chosen = await _chooseRosterImportSide(text, file.name || "imported");
-        if (!chosen) return;
-        const nextCsv = chosen.mode === "assign" && battleRosterCsvText
-          ? _mergeRosterCsvBySide(battleRosterCsvText, chosen.csvText)
-          : chosen.csvText;
-        _setBattleRosterCsv(nextCsv, file.name || "imported");
-        notifyUI("ok", chosen.mode === "assign" ? `Roster CSV loaded as ${chosen.side}.` : "Roster CSV loaded.", 2200);
-      }
-      saveSettings();
+      await importRosterFiles(files);
     } catch (err) {
       alertError(err);
     }
@@ -24124,6 +29121,47 @@ exportRosterCsvButton?.addEventListener("click", () => {
   alertError(new Error("No battle teams or trainer Pokemon builds found to export."));
 });
 clearRosterCsvButton?.addEventListener("click", () => clearBattleAndRoster().catch(alertError));
+savedRosterSelect?.addEventListener("change", async () => {
+  const id = String(savedRosterSelect.value || "").trim();
+  selectedRosterId = id;
+  renderSavedRosterControls();
+  saveSettings();
+});
+savedRosterSideSelect?.addEventListener("change", () => {
+  selectedRosterLoadMode = String(savedRosterSideSelect.value || "__keep__").trim() || "__keep__";
+  saveSettings();
+});
+loadSavedRosterButton?.addEventListener("click", async () => {
+  const id = String(selectedRosterId || "").trim();
+  if (!id) return;
+  try {
+    const result = await applySavedRosterToActive(id);
+    if (result?.chosen) {
+      notifyUI(
+        "ok",
+        result.chosen.mode === "assign"
+          ? `Saved roster loaded as ${result.chosen.side}.`
+          : "Saved roster loaded.",
+        2200,
+      );
+    }
+  } catch (err) {
+    alertError(err);
+  }
+});
+forgetSavedRosterButton?.addEventListener("click", async () => {
+  const id = String(selectedRosterId || "").trim();
+  if (!id) return;
+  try {
+    await api(`/api/rosters/${encodeURIComponent(id)}`, { method: "DELETE" });
+    selectedRosterId = "";
+    await refreshSavedRosters({ skipSave: true });
+    saveSettings();
+    notifyUI("ok", "Saved roster forgotten.", 2200);
+  } catch (err) {
+    alertError(err);
+  }
+});
 clearTrainerButton?.addEventListener("click", () => {
   trainerProfile = null;
   trainerProfileRaw = null;
@@ -24192,6 +29230,48 @@ zoomOutButton?.addEventListener("click", () => setGridScale(gridScale - 0.1));
 zoomFitButton?.addEventListener("click", () => {
   viewManuallyAdjusted = false;
   fitGridToViewport(true);
+});
+importTerrainJsonButton?.addEventListener("click", () => importTerrainJsonInput?.click());
+importTerrainJsonInput?.addEventListener("change", async () => {
+  const files = Array.from(importTerrainJsonInput.files || []).filter(Boolean);
+  if (!files.length) return;
+  try {
+    await importTerrainJsonFiles(files);
+  } catch (err) {
+    alertError(err);
+  } finally {
+    importTerrainJsonInput.value = "";
+  }
+});
+savedBattlefieldSelect?.addEventListener("change", async () => {
+  try {
+    const id = String(savedBattlefieldSelect.value || "").trim();
+    await loadSavedBattlefieldGrid(id);
+    if (id) {
+      notifyUI("ok", "Saved battlefield selected for future starts.", 2200);
+    }
+  } catch (err) {
+    alertError(err);
+  }
+});
+reuseSavedBattlefieldToggle?.addEventListener("change", () => {
+  useSavedBattlefield = !!reuseSavedBattlefieldToggle.checked;
+  saveSettings();
+});
+clearSavedBattlefieldButton?.addEventListener("click", async () => {
+  const id = String(selectedBattlefieldId || "").trim();
+  if (!id) return;
+  try {
+    await api(`/api/battlefields/${encodeURIComponent(id)}`, { method: "DELETE" });
+    selectedBattlefieldId = "";
+    selectedBattlefieldGrid = null;
+    useSavedBattlefield = false;
+    await refreshSavedBattlefields({ skipSave: true });
+    saveSettings();
+    notifyUI("ok", "Saved battlefield removed.", 2200);
+  } catch (err) {
+    alertError(err);
+  }
 });
 
 window.addEventListener("resize", () => {
@@ -24342,6 +29422,21 @@ function currentGridGap() {
   return Number.isFinite(raw) && raw >= 0 ? raw : GRID_GAP;
 }
 
+function importedPreferredCellSize(grid = state?.grid) {
+  const image = grid?.map?.image;
+  const width = Number(grid?.width || 0);
+  const height = Number(grid?.height || 0);
+  const widthPx = Number(image?.width_px || 0);
+  const heightPx = Number(image?.height_px || 0);
+  const imageScale = Math.max(0.25, Number(image?.image_scale || 1));
+  if (width <= 0 || height <= 0 || widthPx <= 0 || heightPx <= 0) return null;
+  const byWidth = widthPx / width;
+  const byHeight = heightPx / height;
+  const preferred = Math.min(byWidth, byHeight) * imageScale;
+  if (!Number.isFinite(preferred) || preferred <= 0) return null;
+  return Math.round(preferred);
+}
+
 function battleViewportScale() {
   const widthFactor = window.innerWidth / 1600;
   const heightFactor = window.innerHeight / 920;
@@ -24355,7 +29450,10 @@ function applyResponsiveBattleMetrics() {
   document.body.style.setProperty("--battle-scale", String(viewportScale));
   const grid = state?.grid || null;
   const gap = Math.max(6, Math.min(14, Math.round(GRID_GAP * viewportScale)));
-  let cellSize = Math.max(44, Math.min(124, Math.round(GRID_CELL_SIZE * viewportScale)));
+  const preferredCell = importedPreferredCellSize(grid);
+  let cellSize = preferredCell
+    ? Math.max(32, Math.min(160, preferredCell))
+    : Math.max(44, Math.min(124, Math.round(GRID_CELL_SIZE * viewportScale)));
   if (grid && gridWrapEl?.clientWidth > 120 && gridWrapEl?.clientHeight > 120) {
     const outerPad = 28;
     const availableWidth = Math.max(120, gridWrapEl.clientWidth - outerPad);
@@ -24386,7 +29484,7 @@ function scheduleResponsiveBattleMetrics(forceFit = false) {
     if (state?.grid) {
       renderGrid();
     }
-    fitGridToViewport(true);
+    fitGridToViewport(forceFit);
     applyGridTransform();
   }, 120);
 }
@@ -24408,9 +29506,14 @@ function fitGridToViewport(force = false) {
   const fitY = (wrap.clientHeight - pad) / height;
   const fitScale = Math.min(fitX, fitY);
   if (!Number.isFinite(fitScale) || fitScale <= 0) return;
-  const nextScale = force ? fitScale : Math.min(1.1, fitScale);
+  const authoredCell = importedPreferredCellSize(state?.grid);
+  const nextScale = authoredCell
+    ? (force ? fitScale : Math.min(1, fitScale))
+    : (force ? fitScale : Math.min(1.1, fitScale));
   const adaptiveFloor = window.innerWidth >= 1200 ? 0.6 : 0.42;
-  gridScale = Math.max(adaptiveFloor, Math.min(MAX_GRID_SCALE, nextScale));
+  gridScale = authoredCell
+    ? Math.max(0.2, Math.min(MAX_GRID_SCALE, nextScale))
+    : Math.max(adaptiveFloor, Math.min(MAX_GRID_SCALE, nextScale));
   const scaledWidth = width * gridScale;
   const scaledHeight = height * gridScale;
   const centeredX = (wrap.clientWidth - scaledWidth) / 2;
@@ -24424,6 +29527,10 @@ function fitGridToViewport(force = false) {
 function applyGridTransform() {
   if (!gridEl) return;
   gridEl.style.transform = `translate(${gridOffset.x}px, ${gridOffset.y}px) scale(${gridScale})`;
+  if (gridMapSurfaceEl) {
+    gridMapSurfaceEl.style.transform = `translate(${gridOffset.x}px, ${gridOffset.y}px) scale(${gridScale})`;
+    gridMapSurfaceEl.style.transformOrigin = "0 0";
+  }
 }
 
 function saveSettings() {
@@ -24462,6 +29569,10 @@ function saveSettings() {
     itemChoiceOverrides: _normalizeItemChoicePayload(),
     abilityChoiceOverrides: _normalizeAbilityChoicePayload(),
     preferredAiModelId: preferredAiModelId || String(aiModelSelect?.value || "").trim(),
+    selectedBattlefieldId: selectedBattlefieldId || "",
+    selectedRosterId: selectedRosterId || "",
+    selectedRosterLoadMode: selectedRosterLoadMode || "__keep__",
+    useSavedBattlefield: !!useSavedBattlefield,
   };
   localStorage.setItem("autoptu_settings", JSON.stringify(settings));
 }
@@ -24561,6 +29672,18 @@ function loadSettings() {
     }
     if (typeof settings.preferredAiModelId === "string") {
       preferredAiModelId = settings.preferredAiModelId.trim();
+    }
+    if (typeof settings.selectedBattlefieldId === "string") {
+      selectedBattlefieldId = settings.selectedBattlefieldId.trim();
+    }
+    if (typeof settings.selectedRosterId === "string") {
+      selectedRosterId = settings.selectedRosterId.trim();
+    }
+    if (typeof settings.selectedRosterLoadMode === "string") {
+      selectedRosterLoadMode = settings.selectedRosterLoadMode.trim() || "__keep__";
+    }
+    if (typeof settings.useSavedBattlefield === "boolean") {
+      useSavedBattlefield = settings.useSavedBattlefield;
     }
     sideNameOverrides = _normalizedSideNameOverrides(settings.sideNameOverrides);
     deploymentOverrides = settings.deploymentOverrides && typeof settings.deploymentOverrides === "object" ? settings.deploymentOverrides : {};
@@ -24691,6 +29814,8 @@ if (isBattleUI) {
     }
   }, 5000);
   loadSettings();
+  refreshSavedBattlefields({ preferredId: selectedBattlefieldId, skipSave: true }).catch(() => {});
+  refreshSavedRosters({ preferredId: selectedRosterId, skipSave: true }).catch(() => {});
   applyModeFieldVisibility();
   _applyCsvModeControls();
   renderSideNameEditor();

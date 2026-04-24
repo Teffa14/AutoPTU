@@ -513,6 +513,7 @@ class GridSpec:
     scale: float = 1.0
     blockers: List[Tuple[int, int]] = field(default_factory=list)
     tiles: Dict[Tuple[int, int], Dict[str, object]] = field(default_factory=dict)
+    map: Dict[str, Any] = field(default_factory=dict)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "GridSpec":
@@ -572,6 +573,7 @@ class GridSpec:
             scale=float(data.get("scale", 1.0)),
             blockers=blockers,
             tiles=tiles,
+            map=dict(data.get("map", {}) or {}),
         )
 
     def to_engine_grid(self):  # type: ignore[override]

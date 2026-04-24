@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 from auto_ptu.api.engine_facade import EngineFacade
-from auto_ptu.gameplay import ai_model_status
+from auto_ptu.gameplay import ai_model_status, _describe_ai_model_style
 from auto_ptu.ai import model_ratings
 
 
@@ -55,6 +55,29 @@ def test_ai_model_status_includes_selected_analysis():
     if status.get("models"):
         assert "selected_analysis" in status
         assert "ratings" in status
+
+
+def test_ai_model_style_analysis_is_not_always_defensive():
+    aggressive = _describe_ai_model_style(
+        {
+            "sig|action_type|attack": 8.0,
+            "sig|action_type|defend": 2.0,
+            "sig|risk_tolerance|stays_in_danger": 6.0,
+            "sig|risk_tolerance|retreats": 1.0,
+            "sig|target_pref|lowest_hp": 6.0,
+        }
+    )
+    defensive = _describe_ai_model_style(
+        {
+            "sig|action_type|attack": 2.0,
+            "sig|action_type|defend": 8.0,
+            "sig|risk_tolerance|retreats": 6.0,
+            "sig|risk_tolerance|stays_in_danger": 1.0,
+        }
+    )
+    assert "Aggressive" in aggressive
+    assert "Defensive" not in aggressive
+    assert "Defensive" in defensive
 
 
 def test_model_ratings_record_wins_and_losses(tmp_path: Path):

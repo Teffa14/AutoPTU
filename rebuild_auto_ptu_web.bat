@@ -43,20 +43,36 @@ for /f %%i in ('git rev-parse --short HEAD 2^>nul') do set "GIT_SHA=%%i"
   echo Rebuild command: rebuild_auto_ptu_web.bat
 ) > "%STAGED_APP%\BUILD_INFO.txt"
 
-if exist "%FINAL_APP%" (
-  rmdir /s /q "%FINAL_APP%" >nul 2>&1
+if exist "%FINAL_APP%.bak" (
+  rmdir /s /q "%FINAL_APP%.bak" >nul 2>&1
 )
-if exist "%FINAL_APP%" goto :fail_replace
+if exist "%FINAL_APP%" (
+  move "%FINAL_APP%" "%FINAL_APP%.bak" >nul 2>&1
+)
+if exist "%FINAL_APP%" goto :fail_replace_restore
 
 move "%STAGED_APP%" "%FINAL_APP%" >nul 2>&1
-if not exist "%FINAL_APP%\AutoPTUWeb.exe" goto :fail_replace
+if not exist "%FINAL_APP%\AutoPTUWeb.exe" goto :fail_replace_restore
+
+if exist "%FINAL_APP%.bak" (
+  rmdir /s /q "%FINAL_APP%.bak" >nul 2>&1
+)
 
 echo Build complete. Launch from "%FINAL_APP%\AutoPTUWeb.exe"
 popd
 exit /b 0
 
+:fail_replace_restore
+if not exist "%FINAL_APP%" if exist "%FINAL_APP%.bak" (
+  move "%FINAL_APP%.bak" "%FINAL_APP%" >nul 2>&1
+)
+
 :fail_replace
-echo Failed to replace "%FINAL_APP%". AutoPTUWeb may still be locked.
+if exist "%FINAL_APP%.bak" (
+  echo Rebuild failed during package replace. Previous AutoPTUWeb build was restored.
+) else (
+  echo Failed to replace "%FINAL_APP%". AutoPTUWeb may still be locked.
+)
 echo See "%LOGFILE%" for packaging output if step 2 started.
 popd
 exit /b 1

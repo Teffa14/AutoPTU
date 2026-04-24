@@ -4,6 +4,7 @@ import time
 import webbrowser
 from dataclasses import dataclass
 import os
+import shutil
 import socket
 from pathlib import Path
 from urllib.error import URLError
@@ -11,8 +12,6 @@ from urllib.request import urlopen
 import threading
 import traceback
 import sys
-
-from auto_ptu.api import server as _server  # Ensure FastAPI app is bundled.
 
 _DEFAULT_WEB_PORT = 8010
 
@@ -23,6 +22,7 @@ class _ServerRuntime:
 
 
 def main() -> int:
+    _prepare_runtime_env()
     port = _pick_web_port()
     url = f"http://127.0.0.1:{port}"
     if _is_server_responding(url):
@@ -79,7 +79,9 @@ def _is_server_responding(url: str) -> bool:
 
 def _run_server(runtime: _ServerRuntime, port: int) -> None:
     try:
+        _prepare_runtime_env()
         import uvicorn
+        from auto_ptu.api import server as _server  # noqa: F401 Ensure FastAPI app is bundled.
     except Exception:
         runtime.error = "Failed to import uvicorn.\n" + traceback.format_exc()
         return
@@ -139,10 +141,53 @@ def _lock_path() -> Path:
 def _portable_state_root() -> Path:
     env_root = os.environ.get("AUTO_PTU_RUNTIME_ROOT")
     if env_root:
-        return Path(env_root) / "portable_data"
+        return Path(env_root)
     if getattr(sys, "frozen", False):
-        return Path(sys.executable).resolve().parent / "portable_data"
+        return _frozen_runtime_data_root()
     return Path.home() / ".autoptu"
+
+
+def _prepare_runtime_env() -> Path:
+    if getattr(sys, "frozen", False):
+        runtime_root = _frozen_runtime_data_root()
+        _migrate_legacy_frozen_portable_data(runtime_root)
+    else:
+        runtime_root = Path(__file__).resolve().parent
+    portable_root = runtime_root if getattr(sys, "frozen", False) else runtime_root / "portable_data"
+    reports_root = portable_root / "reports"
+    for folder in (
+        portable_root,
+        reports_root,
+        reports_root / "battlefields",
+    ):
+        folder.mkdir(parents=True, exist_ok=True)
+    os.environ.setdefault("AUTO_PTU_RUNTIME_ROOT", str(runtime_root))
+    os.environ.setdefault("AUTO_PTU_REPORTS_DIR", str(reports_root))
+    return portable_root
+
+
+def _frozen_runtime_data_root() -> Path:
+    exe_dir = Path(sys.executable).resolve().parent
+    parent = exe_dir.parent
+    return parent / "AutoPTUWeb_data"
+
+
+def _migrate_legacy_frozen_portable_data(new_root: Path) -> None:
+    try:
+        exe_dir = Path(sys.executable).resolve().parent
+        legacy_root = exe_dir / "portable_data"
+        if not legacy_root.exists():
+            return
+        new_root.mkdir(parents=True, exist_ok=True)
+        for child in legacy_root.iterdir():
+            target = new_root / child.name
+            if child.is_dir():
+                shutil.copytree(child, target, dirs_exist_ok=True)
+            else:
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(child, target)
+    except Exception:
+        pass
 
 
 def _read_lock_timestamp(lock: Path) -> float | None:

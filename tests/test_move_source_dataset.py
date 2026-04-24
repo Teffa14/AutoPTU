@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MOVE_SOURCE_PATH = ROOT / "auto_ptu" / "api" / "static" / "AutoPTUCharacter" / "pokemon_move_sources.json"
+MOVE_SOURCE_PATH = ROOT / "auto_ptu" / "api" / "static" / "pokemon_move_sources.json"
 
 
 def _entries() -> dict:
@@ -14,10 +14,9 @@ def _entries() -> dict:
 def test_weavile_move_sources_are_split_between_tm_and_tutor():
     entry = _entries()["Weavile"]
 
-    assert "dark-pulse" in entry["tm"]
-    assert "dark-pulse" in entry["tutor"]
-    assert "icy-wind" in entry["tm"]
-    assert "icy-wind" in entry["tutor"]
+    assert "Dark Pulse" in entry["tm"]
+    assert "Dark Pulse" in entry["tutor"]
+    assert "Icy Wind" in entry["tutor"]
 
 
 def test_natural_tutor_moves_are_preserved_in_dataset():

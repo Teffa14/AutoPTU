@@ -119,6 +119,8 @@ def _split_semicolon_list(value: object) -> List[str]:
 
 
 def _collect_poke_edge_choices(row: Dict[str, object]) -> Dict[str, object]:
+    signature_move = _pick_first(row, ("signature_technique_move", "signature_move", "poke_edge_signature_move"))
+    signature_mod = _pick_first(row, ("signature_technique_modification", "signature_modification", "poke_edge_signature_modification"))
     return {
         "accuracy_training": _split_semicolon_list(_pick_first(row, ("poke_edge_accuracy_training", "edge_accuracy_training", "accuracy_training"))),
         "advanced_connection": _split_semicolon_list(_pick_first(row, ("poke_edge_advanced_connection", "edge_advanced_connection", "advanced_connection"))),
@@ -126,6 +128,12 @@ def _collect_poke_edge_choices(row: Dict[str, object]) -> Dict[str, object]:
             "evolution": _pick_first(row, ("poke_edge_underdog_evolution", "edge_underdog_evolution", "underdog_evolution")),
             "moves": _split_semicolon_list(_pick_first(row, ("poke_edge_underdog_moves", "edge_underdog_moves", "underdog_moves")))[:3],
         },
+        "signature_technique": {
+            "move": signature_move,
+            "move_key": _normalize_move_key(signature_move),
+            "modification": signature_mod,
+            "modification_key": _normalize_move_key(signature_mod),
+        } if signature_move or signature_mod else None,
     }
 
 
@@ -270,6 +278,18 @@ def _apply_poke_edge_choices(spec: PokemonSpec, poke_edge_choices: Dict[str, obj
             "moves": [name for name in _split_semicolon_list(";".join(map(str, underdog.get("moves", []) or []))) if _clean(name)][:3],
         },
     }
+    signature = poke_edge_choices.get("signature_technique")
+    if isinstance(signature, dict):
+        move = _clean(signature.get("move") or signature.get("move_name"))
+        modification = _clean(signature.get("modification") or signature.get("modification_key"))
+        if move or modification:
+            spec.poke_edge_choices["signature_technique"] = {
+                "move": move,
+                "move_key": _normalize_move_key(move),
+                "modification": modification,
+                "modification_key": _normalize_move_key(modification),
+                "required_training": _clean(signature.get("required_training")),
+            }
 
 
 def _apply_poke_edges(spec: PokemonSpec, poke_edges: List[str]) -> None:
@@ -290,6 +310,17 @@ def _canonicalize_names(repo: PTUCsvRepository, row: _RosterRow) -> _RosterRow:
         source_value = (row.move_sources or {}).get(original_key, "")
         if canonical_key and source_value:
             move_sources[canonical_key] = source_value
+    poke_edge_choices = dict(row.poke_edge_choices or {})
+    signature = poke_edge_choices.get("signature_technique")
+    if isinstance(signature, dict):
+        signature = dict(signature)
+        sig_key = _normalize_move_key(signature.get("move") or signature.get("move_name"))
+        for original_name, canonical_name in zip(row.moves or [], move_names):
+            if _normalize_move_key(original_name) == sig_key:
+                signature["move"] = canonical_name
+                signature["move_key"] = _normalize_move_key(canonical_name)
+                break
+        poke_edge_choices["signature_technique"] = signature
     return _RosterRow(
         side=row.side,
         slot=row.slot,
@@ -304,7 +335,7 @@ def _canonicalize_names(repo: PTUCsvRepository, row: _RosterRow) -> _RosterRow:
         tutor_points=row.tutor_points,
         moves=move_names,
         move_sources=move_sources,
-        poke_edge_choices=dict(row.poke_edge_choices or {}),
+        poke_edge_choices=poke_edge_choices,
         stats=dict(row.stats or {}),
         order=row.order,
     )

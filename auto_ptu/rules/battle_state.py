@@ -17,7 +17,7 @@ from typing import Callable, Deque, Dict, List, Optional, Sequence, Set, Tuple
 from .. import ptu_engine
 from ..data_models import MoveSpec, PokemonSpec
 from ..config import FILES_DIR
-from ..natures import apply_nature_to_spec
+from ..natures import apply_nature_to_spec, nature_profile
 from . import calculations
 from .calculations import resolve_move_action
 from .move_traits import (
@@ -101,6 +101,191 @@ def _normalize_ability_key(value: object) -> str:
     return re.sub(r"[^a-z0-9]+", "", text)
 
 
+def _normalize_signature_key(value: object) -> str:
+    text = str(value or "").strip().lower()
+    text = text.replace("â€™", "'").replace("`", "'")
+    return re.sub(r"[^a-z0-9]+", "", text)
+
+
+_SIGNATURE_TECHNIQUE_MODIFICATIONS: Dict[str, Dict[str, object]] = {
+    "scattershot": {"label": "Scattershot", "training": "Agility Training", "group": "area"},
+    "shockandawe": {"label": "Shock and Awe", "training": "Inspired Training", "group": "area"},
+    "viciousstorm": {"label": "Vicious Storm", "training": "Brutal Training", "group": "area", "damaging": True},
+    "guardingstrike": {"label": "Guarding Strike", "training": "Inspired Training", "group": "single"},
+    "unbalancingblow": {"label": "Unbalancing Blow", "training": "Brutal Training", "group": "single"},
+    "reliableattack": {"label": "Reliable Attack", "training": "Focused Training", "group": "single", "no_smite": True},
+    "alternativeenergy": {"label": "Alternative Energy", "training": "Focused Training", "group": "damaging"},
+    "bloodiedspeed": {"label": "Bloodied Speed", "training": "Agility Training", "group": "damaging"},
+    "doubledown": {"label": "Double Down", "training": "Brutal Training", "group": "damaging", "low_db": True},
+    "burstofmotivation": {"label": "Burst of Motivation", "training": "Inspired Training", "group": "status"},
+    "supremeconcentration": {"label": "Supreme Concentration", "training": "Focused Training", "group": "status"},
+    "doublecurse": {"label": "Double Curse", "training": "Agility Training", "group": "status", "single_only": True},
+}
+
+
+_SIGNATURE_VARIABLE_DAMAGE_MOVES: Set[str] = {
+    "bide", "counter", "dragon rage", "endeavor", "final gambit", "flail", "frustration",
+    "fury cutter", "grass knot", "gyro ball", "heat crash", "heavy slam", "hidden power",
+    "ice ball", "low kick", "mirror coat", "night shade", "psywave", "return", "reversal",
+    "seismic toss", "spit up", "stored power", "trump card", "water spout", "wring out",
+}
+
+_CAPTURE_BALL_NAMES: Set[str] = {
+    "air ball", "basic ball", "beacon ball", "beast ball", "cherish ball", "coolant ball",
+    "dark ball", "dive ball", "dream ball", "dusk ball", "earth ball", "fabulous ball",
+    "fast ball", "feather ball", "friend ball", "gigaton ball", "gossamer ball",
+    "great ball", "hail ball", "haunt ball", "heal ball", "heat ball", "heavy ball",
+    "hefty ball", "jet ball", "leaden ball", "learning ball", "level ball", "love ball",
+    "lure ball", "luxury ball", "master ball", "mold ball", "moon ball", "mystic ball",
+    "nest ball", "net ball", "park ball", "power ball", "premier ball", "quick ball",
+    "rain ball", "repeat ball", "safari ball", "sand ball", "smog ball", "solid ball",
+    "sport ball", "strange ball", "sun ball", "tiller ball", "timer ball", "ultra ball",
+    "vane ball", "wing ball",
+}
+
+_CAPTURE_SKILL_NAMES: Tuple[str, ...] = (
+    "acrobatics", "athletics", "stealth", "survival", "guile", "perception",
+)
+
+_PERSISTENT_CAPTURE_STATUSES: Set[str] = {
+    "burn", "burned", "poison", "poisoned", "badly poisoned", "paralysis",
+    "paralyzed", "frozen", "freeze", "sleep", "asleep", "bad sleep", "drowsy",
+}
+
+_DEVITALIZING_STAT_ALIASES: Dict[str, str] = {
+    "atk": "atk",
+    "attack": "atk",
+    "def": "def",
+    "defense": "def",
+    "spatk": "spatk",
+    "special attack": "spatk",
+    "special_attack": "spatk",
+    "special-attack": "spatk",
+    "spdef": "spdef",
+    "special defense": "spdef",
+    "special_defense": "spdef",
+    "special-defense": "spdef",
+    "spd": "spd",
+    "speed": "spd",
+}
+
+
+def _capture_item_key(value: object) -> str:
+    return re.sub(r"\s+", " ", str(value or "").strip().lower())
+
+
+def _is_capture_ball_name(value: object) -> bool:
+    return _capture_item_key(value) in _CAPTURE_BALL_NAMES
+
+
+def _signature_entry(spec: object) -> Optional[dict]:
+    choices = getattr(spec, "poke_edge_choices", {}) or {}
+    if not isinstance(choices, dict):
+        return None
+    entry = choices.get("signature_technique")
+    return entry if isinstance(entry, dict) else None
+
+
+def _signature_entry_for_move(pokemon: "PokemonState", move: MoveSpec) -> Optional[dict]:
+    entry = _signature_entry(getattr(pokemon, "spec", None))
+    if not entry:
+        return None
+    move_key = _normalize_signature_key(entry.get("move_key") or entry.get("move") or entry.get("move_name"))
+    if move_key and move_key == _normalize_signature_key(move.name):
+        return entry
+    return None
+
+
+def _signature_mod_key(entry: Optional[dict]) -> str:
+    if not entry:
+        return ""
+    return _normalize_signature_key(entry.get("modification_key") or entry.get("modification"))
+
+
+def _signature_move_is_area(move: MoveSpec) -> bool:
+    area = targeting.normalized_area_kind(move)
+    if area in {"cone", "line", "burst", "blast", "closeblast"}:
+        return True
+    range_text = f"{move.range_text or ''} {move.range_kind or ''}".lower()
+    return any(token in range_text for token in ("cone", "line", "burst", "blast"))
+
+
+def _signature_move_is_single_target(move: MoveSpec) -> bool:
+    if _signature_move_is_area(move):
+        return False
+    if not targeting.move_requires_target(move):
+        return False
+    text = f"{move.range_text or ''} {move.target_kind or ''}".lower()
+    if "1 target" in text or "one target" in text:
+        return True
+    return targeting.normalized_target_kind(move) in {"melee", "ranged", "blessing"}
+
+
+def _signature_move_is_damaging(move: MoveSpec) -> bool:
+    return str(move.category or "").strip().lower() != "status" and int(move.db or 0) > 0
+
+
+def _signature_move_is_status(move: MoveSpec) -> bool:
+    return str(move.category or "").strip().lower() == "status"
+
+
+def _signature_mod_legal_for_move(move: MoveSpec, mod_key: str) -> Tuple[bool, str]:
+    spec = _SIGNATURE_TECHNIQUE_MODIFICATIONS.get(mod_key)
+    if not spec:
+        return False, "Unknown Signature Technique modification."
+    group = str(spec.get("group") or "")
+    if group == "area" and not _signature_move_is_area(move):
+        return False, "This modification requires a Cone, Line, Burst, or Blast move."
+    if group == "single" and not _signature_move_is_single_target(move):
+        return False, "This modification requires a single-target move."
+    if group == "damaging" and not _signature_move_is_damaging(move):
+        return False, "This modification requires a damaging move."
+    if group == "status" and not _signature_move_is_status(move):
+        return False, "This modification requires a Status move."
+    if spec.get("damaging") and not _signature_move_is_damaging(move):
+        return False, "This modification requires a damaging move."
+    if spec.get("no_smite") and has_range_keyword(move, "smite"):
+        return False, "Reliable Attack cannot be applied to Smite moves."
+    if spec.get("single_only") and not _signature_move_is_single_target(move):
+        return False, "Double Curse can only be applied to 1-Target moves."
+    if spec.get("low_db"):
+        if int(move.db or 0) > 4:
+            return False, "Double Down can only be applied to moves with DB 4 or less."
+        move_name = str(move.name or "").strip().lower()
+        if move_name in _SIGNATURE_VARIABLE_DAMAGE_MOVES:
+            return False, "Double Down cannot be applied to variable or special-case damage moves."
+        text = f"{move.effects_text or ''} {move.range_text or ''}".lower()
+        if "damage base" in text and any(token in text for token in ("varies", "changes", "equal", "depends")):
+            return False, "Double Down cannot be applied to variable damage moves."
+    return True, ""
+
+
+def _signature_technique_options_for_target(actor: "PokemonState", target: "PokemonState") -> List[dict]:
+    options: List[dict] = []
+    for move in target.spec.moves:
+        move_name = str(move.name or "").strip()
+        if not move_name:
+            continue
+        modifications = []
+        for mod_key, mod_spec in _SIGNATURE_TECHNIQUE_MODIFICATIONS.items():
+            training = str(mod_spec.get("training") or "")
+            if training and not actor.has_trainer_feature(training):
+                continue
+            legal, _reason = _signature_mod_legal_for_move(move, mod_key)
+            if not legal:
+                continue
+            modifications.append(
+                {
+                    "value": mod_key,
+                    "label": str(mod_spec.get("label") or mod_key),
+                    "training": training,
+                }
+            )
+        if modifications:
+            options.append({"move": move_name, "move_name": move_name, "modifications": modifications})
+    return options
+
+
 @dataclass
 class InitiativeEntry:
     """Stored initiative order details for the active round."""
@@ -144,6 +329,54 @@ _GROUND_HAZARDS: Set[str] = {
     "fire",
 }
 _TOXIC_SPIKES_IMMUNES: Set[str] = {"poison", "steel"}
+
+_TRICKSTER_STACKED_DECK_DAMAGE_CONDITIONS: Set[str] = {
+    "bad dreams",
+    "cursed",
+    "leech seed",
+    "seeded",
+    "burned",
+    "burn",
+    "poisoned",
+    "poison",
+}
+_TRICKSTER_STACKED_DECK_SAVE_CONDITIONS: Set[str] = {
+    "paralyzed",
+    "paralysis",
+    "frozen",
+    "freeze",
+    "vortex",
+    "sleep",
+    "asleep",
+}
+_TRICKSTER_STACKED_DECK_ACCURACY_CONDITIONS: Set[str] = {
+    "confused",
+    "confusion",
+    "enraged",
+    "rage",
+    "suppressed",
+    "infatuated",
+}
+
+
+def _normalize_trickster_condition(value: Optional[str]) -> str:
+    normalized = str(value or "").strip().lower()
+    alias_map = {
+        "burn": "burned",
+        "poison": "poisoned",
+        "paralyze": "paralyzed",
+        "paralysis": "paralyzed",
+        "freeze": "frozen",
+        "sleep": "asleep",
+        "seeded": "leech seed",
+        "curse": "cursed",
+        "rage": "enraged",
+        "confuse": "confused",
+        "confusion": "confused",
+        "infatuation": "infatuated",
+        "suppression": "suppressed",
+    }
+    return alias_map.get(normalized, normalized)
 _SIZE_RANKS: Dict[str, int] = {
     "small": 1,
     "medium": 2,
@@ -167,7 +400,16 @@ _SUMMARY_ACTION_TYPES: Tuple[ActionType, ...] = (
     ActionType.FULL,
     ActionType.FREE,
 )
-_USE_ITEM_WEAPON_EXCEPTIONS: Set[str] = {"devoncorp impact glove"}
+_USE_ITEM_WEAPON_EXCEPTIONS: Set[str] = {
+    "devoncorp impact glove",
+    "glue cannon",
+    "hand net",
+    "hand nets",
+    "lasso",
+    "lassos",
+    "weighted net",
+    "weighted nets",
+}
 _TERRAIN_ADJACENCY_CYCLE: Tuple[str, ...] = (
     "grassland",
     "forest",
@@ -879,6 +1121,7 @@ TRAINER_FEATURE_MOVE_GRANTS: Dict[str, Tuple[str, ...]] = {
     "phantom menace": ("Shadow Claw", "Phantom Force"),
 }
 CHOICE_TRAINER_FEATURE_MOVE_GRANTS: Dict[str, Tuple[str, ...]] = {
+    "fire bringer": ("Flame Burst", "Flame Wheel", "Flame Charge", "Will-O-Wisp"),
     "frost touched": ("Haze", "Ice Shard", "Mist", "Powder Snow"),
     "winter's herald rank 1": ("Freeze-Dry", "Ice Punch", "Ice Beam", "Icicle Crash"),
     "winterâ€™s herald rank 1": ("Freeze-Dry", "Ice Punch", "Ice Beam", "Icicle Crash"),
@@ -886,6 +1129,7 @@ CHOICE_TRAINER_FEATURE_MOVE_GRANTS: Dict[str, Tuple[str, ...]] = {
     "winterâ€™s herald rank 2": ("Freeze-Dry", "Ice Punch", "Ice Beam", "Icicle Crash", "Avalanche", "Blizzard", "Frost Breath", "Icicle Spear"),
 }
 TRAINER_FEATURE_CAPABILITY_GRANTS: Dict[str, Tuple[str, ...]] = {
+    "fiery soul": ("Heater",),
     "the cold never bothered me anyway": ("Naturewalk (Tundra)",),
     "mental resistance": ("Mindlock",),
     "psychic navigator": ("Psychic Navigator",),
@@ -912,9 +1156,269 @@ SUPPORTED_TARGET_ORDER_SPECS: Dict[str, Dict[str, object]] = {
     "long shot": {"scene_limit": 2, "mode": "scene"},
     "sentinel stance": {"scene_limit": 2, "mode": "scene"},
     "perfect aim": {"scene_limit": 2, "mode": "scene"},
+    "conqueror's march": {"ap_cost": 0, "mode": "bind"},
+    "conquerors march": {"ap_cost": 0, "mode": "bind"},
+}
+COMMANDER_ORDER_GROUPS: Dict[str, Tuple[str, ...]] = {
+    "ravager orders": ("reckless advance", "strike again!"),
+    "marksman orders": ("trick shot", "long shot"),
+    "trickster orders": ("capricious whirl", "dazzling dervish"),
+    "guardian orders": ("brace for impact", "sentinel stance"),
+    "precision orders": ("pinpoint strike", "perfect aim"),
 }
 _MOVE_SPEC_CACHE: Optional[List[MoveSpec]] = None
 _ALWAYS_HIT_MOVES: Set[str] = {"false surrender", "feint attack", "future sight"}
+_TRAINING_EFFECT_KINDS: Tuple[str, ...] = (
+    "agility_training",
+    "brutal_training",
+    "focused_training",
+    "inspired_training",
+)
+_TRAINED_STAT_NAME_ALIASES: Dict[str, str] = {
+    "attack": "atk",
+    "atk": "atk",
+    "defense": "def",
+    "def": "def",
+    "special attack": "spatk",
+    "special_attack": "spatk",
+    "special-attack": "spatk",
+    "spatk": "spatk",
+    "special defense": "spdef",
+    "special_defense": "spdef",
+    "special-defense": "spdef",
+    "spdef": "spdef",
+    "speed": "spd",
+    "spd": "spd",
+}
+_STAT_EMBODIMENT_ABILITIES: Dict[str, Tuple[str, str]] = {
+    "atk": ("Sheer Force", "Defiant"),
+    "def": ("Filter", "Battle Armor"),
+    "spatk": ("Tinted Lens", "Competitive"),
+    "spdef": ("Multiscale", "Tolerance"),
+    "spd": ("Speed Boost", "Vanguard"),
+}
+_STAT_EMBODIMENT_FEATURE_TO_STAT: Dict[str, str] = {
+    "attack embodiment": "atk",
+    "defense embodiment": "def",
+    "special attack embodiment": "spatk",
+    "special defense embodiment": "spdef",
+    "speed embodiment": "spd",
+}
+_STAT_ACE_SPECIFIC_FEATURE_TO_STAT: Dict[str, str] = {
+    "attack ace": "atk",
+    "defense ace": "def",
+    "special attack ace": "spatk",
+    "special defense ace": "spdef",
+    "speed ace": "spd",
+    "attack link": "atk",
+    "defense link": "def",
+    "special attack link": "spatk",
+    "special defense link": "spdef",
+    "speed link": "spd",
+    "attack training": "atk",
+    "defense training": "def",
+    "special attack training": "spatk",
+    "special defense training": "spdef",
+    "speed training": "spd",
+    "attack maneuver": "atk",
+    "defense maneuver": "def",
+    "special attack maneuver": "spatk",
+    "special defense maneuver": "spdef",
+    "speed maneuver": "spd",
+    "attack mastery": "atk",
+    "defense mastery": "def",
+    "special attack mastery": "spatk",
+    "special defense mastery": "spdef",
+    "speed mastery": "spd",
+    "attack stratagem": "atk",
+    "defense stratagem": "def",
+    "special attack stratagem": "spatk",
+    "special defense stratagem": "spdef",
+    "speed stratagem": "spd",
+}
+_STAT_TRAINING_MOVES: Dict[str, Tuple[str, str]] = {
+    "atk": ("Swords Dance", "Rage"),
+    "def": ("Iron Defense", "Reflect"),
+    "spatk": ("Nasty Plot", "Hidden Power"),
+    "spdef": ("Amnesia", "Light Screen"),
+    "spd": ("Agility", "After You"),
+}
+_STAT_STRATAGEM_SAVE_STATUSES: Dict[str, Set[str]] = {
+    "def": {"paralyzed", "paralysis", "sleep", "asleep", "frozen", "freeze"},
+    "spdef": {"confused", "confusion", "enraged", "rage", "infatuated"},
+}
+
+
+def _normalize_trained_stat_name(value: object) -> str:
+    return _TRAINED_STAT_NAME_ALIASES.get(str(value or "").strip().lower(), "")
+
+
+def _stat_ace_feature_stat(entry: object, feature_name: str = "") -> str:
+    normalized_name = str(feature_name or "").strip().lower()
+    if normalized_name in _STAT_ACE_SPECIFIC_FEATURE_TO_STAT:
+        return _STAT_ACE_SPECIFIC_FEATURE_TO_STAT[normalized_name]
+    if isinstance(entry, dict):
+        chosen = (
+            entry.get("chosen_stat")
+            or entry.get("stat")
+            or entry.get("chosen_base_stat")
+            or entry.get("selected_stat")
+        )
+        return _normalize_trained_stat_name(chosen)
+    return ""
+
+
+def _trainer_feature_stat_entries(actor: "PokemonState", feature_name: str) -> List[str]:
+    normalized_name = str(feature_name or "").strip().lower()
+    entries: List[str] = []
+    seen: Set[str] = set()
+    for feature in list(getattr(actor.spec, "trainer_features", []) or []):
+        if isinstance(feature, str):
+            name = feature.strip()
+            stat_key = _stat_ace_feature_stat(None, name)
+        elif isinstance(feature, dict):
+            name = str(feature.get("name") or feature.get("feature_id") or feature.get("id") or "").strip()
+            stat_key = _stat_ace_feature_stat(feature, name)
+        else:
+            continue
+        if not name or str(name).strip().lower() != normalized_name:
+            continue
+        if not stat_key or stat_key in seen:
+            continue
+        seen.add(stat_key)
+        entries.append(stat_key)
+    return entries
+
+
+def _trainer_feature_stat_sources(
+    actor: "PokemonState",
+    generic_feature_name: str,
+    specific_prefix: str,
+) -> List[Tuple[str, str]]:
+    entries: List[Tuple[str, str]] = []
+    seen: Set[Tuple[str, str]] = set()
+    generic_name = str(generic_feature_name or "").strip()
+    for stat_key in _trainer_feature_stat_entries(actor, generic_name):
+        item = (generic_name, stat_key)
+        if item not in seen:
+            seen.add(item)
+            entries.append(item)
+    normalized_prefix = str(specific_prefix or "").strip().lower()
+    for feature_name, stat_key in _STAT_ACE_SPECIFIC_FEATURE_TO_STAT.items():
+        if not feature_name.startswith(normalized_prefix):
+            continue
+        label = feature_name.title().replace("Spatk", "Special Attack").replace("Spdef", "Special Defense")
+        if actor.has_trainer_feature(label):
+            item = (label, stat_key)
+            if item not in seen:
+                seen.add(item)
+                entries.append(item)
+    return entries
+
+
+_TYPE_ACE_LAST_CHANCE_ABILITIES: Dict[str, str] = {
+    "bug": "Swarm",
+    "dark": "Dark Art",
+    "dragon": "Pure Blooded",
+    "electric": "Overcharge",
+    "fairy": "Miracle Mile",
+    "fighting": "Focus",
+    "fire": "Blaze",
+    "flying": "Mach Speed",
+    "ghost": "Haunt",
+    "grass": "Overgrow",
+    "ground": "Landslide",
+    "ice": "Freezing Point",
+    "normal": "Last Chance",
+    "poison": "Venom",
+    "psychic": "Mind Mold",
+    "rock": "Mountain Peak",
+    "steel": "Unbreakable",
+    "water": "Torrent",
+}
+_TYPE_LINKED_SKILL_OPTIONS: Dict[str, Tuple[str, str]] = {
+    "bug": ("command", "survival"),
+    "dark": ("guile", "stealth"),
+    "dragon": ("command", "intimidate"),
+    "electric": ("focus", "technology education"),
+    "fairy": ("charm", "guile"),
+    "fighting": ("combat", "intuition"),
+    "fire": ("focus", "intimidate"),
+    "flying": ("acrobatics", "perception"),
+    "ghost": ("intimidate", "occult education"),
+    "grass": ("survival", "general education"),
+    "ground": ("perception", "intuition"),
+    "ice": ("athletics", "survival"),
+    "normal": ("charm", "intuition"),
+    "poison": ("intimidate", "stealth"),
+    "psychic": ("focus", "occult education"),
+    "rock": ("combat", "survival"),
+    "steel": ("athletics", "intimidate"),
+    "water": ("athletics", "intuition"),
+}
+
+
+def _normalize_type_ace_type_name(value: object) -> str:
+    normalized = re.sub(r"[^a-z]+", "", str(value or "").strip().lower())
+    return normalized if normalized in _TYPE_ACE_LAST_CHANCE_ABILITIES else ""
+
+
+def _type_ace_feature_type(entry: object, feature_name: str = "") -> str:
+    normalized_name = str(feature_name or "").strip().lower()
+    if normalized_name == "extra ordinary":
+        return "normal"
+    if isinstance(entry, dict):
+        chosen = (
+            entry.get("chosen_type")
+            or entry.get("type")
+            or entry.get("selected_type")
+            or entry.get("type_choice")
+        )
+        return _normalize_type_ace_type_name(chosen)
+    return ""
+
+
+def _trainer_feature_type_entries(actor: "PokemonState", feature_name: str) -> List[str]:
+    normalized_name = str(feature_name or "").strip().lower()
+    entries: List[str] = []
+    seen: Set[str] = set()
+    for feature in list(getattr(actor.spec, "trainer_features", []) or []):
+        if isinstance(feature, str):
+            name = feature.strip()
+            type_key = _type_ace_feature_type(None, name)
+        elif isinstance(feature, dict):
+            name = str(feature.get("name") or feature.get("feature_id") or feature.get("id") or "").strip()
+            type_key = _type_ace_feature_type(feature, name)
+        else:
+            continue
+        if not name or str(name).strip().lower() != normalized_name:
+            continue
+        if not type_key or type_key in seen:
+            continue
+        seen.add(type_key)
+        entries.append(type_key)
+    return entries
+
+
+def _type_ace_last_chance_ability(type_name: object) -> str:
+    return _TYPE_ACE_LAST_CHANCE_ABILITIES.get(_normalize_type_ace_type_name(type_name), "")
+
+
+def _canonical_combat_stat_name(value: object) -> str:
+    normalized = re.sub(r"[^a-z]+", "", str(value or "").strip().lower())
+    aliases = {
+        "attack": "Attack",
+        "atk": "Attack",
+        "defense": "Defense",
+        "def": "Defense",
+        "specialattack": "Special Attack",
+        "spatk": "Special Attack",
+        "specialdefense": "Special Defense",
+        "spdef": "Special Defense",
+        "speed": "Speed",
+        "spd": "Speed",
+    }
+    return aliases.get(normalized, "")
 
 
 def _load_food_buff_items() -> Dict[str, str]:
@@ -945,7 +1449,7 @@ def _food_buffs_from_items(items: Sequence[dict]) -> List[dict]:
     if not mapping:
         return []
     buffs: List[dict] = []
-    for entry in items:
+    for index, entry in enumerate(items):
         if not isinstance(entry, dict):
             continue
         item_name = str(entry.get("name", "")).strip()
@@ -953,8 +1457,59 @@ def _food_buffs_from_items(items: Sequence[dict]) -> List[dict]:
             continue
         buff = mapping.get(item_name.lower())
         if buff:
-            buffs.append({"name": buff, "effect": buff, "item": item_name})
+            taste = _chef_food_taste(entry)
+            payload = {
+                "name": buff,
+                "effect": buff,
+                "item": item_name,
+                "instance_id": str(entry.get("instance_id") or f"{item_name.lower()}#{index}"),
+            }
+            if taste:
+                payload["taste"] = taste
+            buffs.append(payload)
     return buffs
+
+
+_CHEF_TASTE_DEFAULTS = {
+    "salty surprise": "salty",
+    "spicy wrap": "spicy",
+    "sour candy": "sour",
+    "dry wafer": "dry",
+    "bitter treat": "bitter",
+    "sweet confection": "sweet",
+}
+_CHEF_TASTE_SNACK_NAMES = {
+    "salty": "Salty Surprise",
+    "spicy": "Spicy Wrap",
+    "sour": "Sour Candy",
+    "dry": "Dry Wafer",
+    "bitter": "Bitter Treat",
+    "sweet": "Sweet Confection",
+}
+_CHEF_TASTE_STAT_MAP = {
+    "salty": "hp_stat",
+    "spicy": "atk",
+    "sour": "defense",
+    "dry": "spatk",
+    "bitter": "spdef",
+    "sweet": "spd",
+}
+
+
+def _normalize_chef_taste(value: object) -> str:
+    normalized = str(value or "").strip().lower()
+    return normalized if normalized in _CHEF_TASTE_SNACK_NAMES else ""
+
+
+def _chef_food_taste(item: object) -> str:
+    if isinstance(item, dict):
+        explicit = _normalize_chef_taste(item.get("taste"))
+        if explicit:
+            return explicit
+        item_name = str(item.get("name") or "").strip()
+    else:
+        item_name = str(item or "").strip()
+    return _CHEF_TASTE_DEFAULTS.get(item_name.lower(), "")
 
 
 def _feature_choice_names(entry: object) -> List[str]:
@@ -996,6 +1551,224 @@ def _item_entry_for(item: object) -> Optional[ItemEntry]:
     if not name:
         return None
     return get_item_entry(name)
+
+
+def _wardrobe_choices(spec: PokemonSpec) -> Dict[str, object]:
+    choices = getattr(spec, "poke_edge_choices", {}) or {}
+    data = choices.get("versatile_wardrobe")
+    return data if isinstance(data, dict) else {}
+
+
+def _wardrobe_slots(spec: PokemonSpec) -> List[object]:
+    data = _wardrobe_choices(spec)
+    slots = data.get("extra_slots")
+    if not isinstance(slots, list):
+        return []
+    normalized = list(slots[:2])
+    while len(normalized) < 2:
+        normalized.append(None)
+    return normalized
+
+
+def _set_wardrobe_slots(spec: PokemonSpec, slots: Sequence[object]) -> None:
+    choices = dict(getattr(spec, "poke_edge_choices", {}) or {})
+    data = dict(choices.get("versatile_wardrobe") or {})
+    normalized = list(slots[:2])
+    while len(normalized) < 2:
+        normalized.append(None)
+    data.update({"chic": True, "extra_slots": normalized, "slot_count": 2})
+    choices["versatile_wardrobe"] = data
+    spec.poke_edge_choices = choices
+
+
+def _is_chic_spec(spec: PokemonSpec) -> bool:
+    data = _wardrobe_choices(spec)
+    tags = {str(tag or "").strip().lower() for tag in getattr(spec, "tags", []) or []}
+    return bool(data.get("chic")) or "chic" in tags
+
+
+def _wardrobe_item_signature(item: object) -> Tuple[str, str]:
+    name = _item_name_text(item).strip().lower()
+    entry = _item_entry_for(item)
+    if entry is None:
+        return ("name", name)
+    effects = parse_item_effects(entry)
+    meaningful = {key: value for key, value in effects.items() if value not in (None, False, [], {}, "")}
+    if meaningful:
+        return ("effects", json.dumps(meaningful, sort_keys=True, default=str))
+    description = re.sub(r"\s+", " ", str(entry.description or "").strip().lower())
+    return ("description", description or name)
+
+
+def _wardrobe_items_are_compatible(items: Sequence[object]) -> bool:
+    names: Set[str] = set()
+    signatures: Set[Tuple[str, str]] = set()
+    for item in items:
+        name = _item_name_text(item).strip().lower()
+        if not name:
+            continue
+        if name in names:
+            return False
+        names.add(name)
+        signature = _wardrobe_item_signature(item)
+        if signature in signatures:
+            return False
+        signatures.add(signature)
+    return True
+
+
+_PLATE_TYPE_ALIASES = {
+    "draco": "dragon",
+    "dread": "dark",
+    "earth": "ground",
+    "fist": "fighting",
+    "flame": "fire",
+    "icicle": "ice",
+    "insect": "bug",
+    "iron": "steel",
+    "meadow": "grass",
+    "mind": "psychic",
+    "pixie": "fairy",
+    "sky": "flying",
+    "splash": "water",
+    "spooky": "ghost",
+    "stone": "rock",
+    "toxic": "poison",
+    "zap": "electric",
+    "normal": "normal",
+}
+
+
+def _is_accessory_slot_item(item: object) -> bool:
+    entry = _item_entry_for(item)
+    if entry is None:
+        return False
+    text = f"{entry.name} {entry.description} {' '.join(sorted(entry.traits))}".lower()
+    return "accessory slot item" in text or "accessory item" in text
+
+
+def _accessory_type_effect_keys(item: object) -> Set[str]:
+    name = _item_name_text(item).strip().lower()
+    keys: Set[str] = set()
+    entry = _item_entry_for(item)
+    if entry is not None:
+        effects = parse_item_effects(entry)
+        for key, value in effects.items():
+            if value in (None, False, [], {}, ""):
+                continue
+            if isinstance(value, tuple) and value:
+                keys.add(f"{key}:{str(value[0]).strip().lower()}")
+            else:
+                keys.add(str(key).strip().lower())
+    for type_name in _ELEMENTAL_TYPES:
+        type_key = type_name.lower()
+        if name.startswith(type_key):
+            if "brace" in name:
+                keys.add(f"type_damage_reduction:{type_key}")
+            if "booster" in name:
+                keys.add(f"type_damage_flat:{type_key}")
+            if "gem" in name:
+                keys.add(f"type_gem:{type_key}")
+    plate_prefix = name.split(" ", 1)[0] if name else ""
+    plate_type = _PLATE_TYPE_ALIASES.get(plate_prefix)
+    if plate_type and "plate" in name:
+        keys.add(f"type_damage_reduction:{plate_type}")
+        keys.add(f"type_damage_flat:{plate_type}")
+    if not keys:
+        keys.add(f"name:{name}")
+    return keys
+
+
+_DASHING_MAKEOVER_ITEM_OPTIONS: Tuple[str, ...] = (
+    "Muscle Band",
+    "Wise Glasses",
+    "Power Anklet",
+    "Power Band",
+    "Power Belt",
+    "Power Bracer",
+    "Power Lens",
+    "Power Weight",
+    "Fire Booster",
+    "Water Booster",
+    "Grass Booster",
+    "Electric Booster",
+    "Ice Booster",
+    "Fighting Booster",
+    "Poison Booster",
+    "Ground Booster",
+    "Flying Booster",
+    "Psychic Booster",
+    "Bug Booster",
+    "Rock Booster",
+    "Ghost Booster",
+    "Dragon Booster",
+    "Dark Booster",
+    "Steel Booster",
+    "Fairy Booster",
+    "Fire Brace",
+    "Water Brace",
+    "Grass Brace",
+    "Electric Brace",
+    "Ice Brace",
+    "Fighting Brace",
+    "Poison Brace",
+    "Ground Brace",
+    "Flying Brace",
+    "Psychic Brace",
+    "Bug Brace",
+    "Rock Brace",
+    "Ghost Brace",
+    "Dragon Brace",
+    "Dark Brace",
+    "Steel Brace",
+    "Fairy Brace",
+    "Air Balloon",
+    "Leftovers",
+)
+
+
+def _dashing_makeover_item_allowed(target: "PokemonState", item: object) -> Tuple[bool, str]:
+    item_name = _item_name_text(item)
+    if not item_name:
+        return False, "Dashing Makeover requires an item."
+    entry = _item_entry_for(item)
+    if entry is None:
+        return False, "Dashing Makeover requires a known Equipment or Held Item."
+    effects = parse_item_effects(entry)
+    if effects.get("consumable") or "consumable" in {str(trait).lower() for trait in entry.traits}:
+        return False, "Dashing Makeover cannot bind consumable item effects."
+    text = f"{entry.name} {entry.description} {' '.join(sorted(entry.traits))}".lower()
+    if target.is_trainer_combatant() and "incense" in text:
+        return False, "Trainers cannot equip Incense Items."
+    item_kind_ok = bool(
+        {"held", "combat", "defensive", "accessory", "equipment"}.intersection(
+            {str(trait).strip().lower() for trait in entry.traits}
+        )
+        or "held item" in text
+        or "equipment" in text
+        or "accessory slot item" in text
+    )
+    if not item_kind_ok:
+        return False, "Dashing Makeover requires Equipment or a Held Item."
+    return True, ""
+
+
+def _dashing_makeover_item_options_for_target(target: "PokemonState") -> List[dict]:
+    options: List[dict] = []
+    seen: Set[str] = set()
+    for item_name in _DASHING_MAKEOVER_ITEM_OPTIONS:
+        allowed, _reason = _dashing_makeover_item_allowed(target, {"name": item_name})
+        if not allowed:
+            continue
+        entry = _item_entry_for({"name": item_name})
+        if entry is None:
+            continue
+        key = entry.normalized_name()
+        if key in seen:
+            continue
+        seen.add(key)
+        options.append({"item": entry.name, "item_name": entry.name})
+    return options
 
 
 def _load_maneuver_moves() -> Dict[str, MoveSpec]:
@@ -1083,8 +1856,26 @@ def _load_move_specs() -> List[MoveSpec]:
     except json.JSONDecodeError:
         _MOVE_SPEC_CACHE = []
         return _MOVE_SPEC_CACHE
-    _MOVE_SPEC_CACHE = [MoveSpec.from_dict(entry) for entry in data]
+    _MOVE_SPEC_CACHE = [
+        MoveSpec.from_dict(entry)
+        for entry in data
+        if str(entry.get("name") or "").strip().lower() != "struggle+"
+    ]
     return _MOVE_SPEC_CACHE
+
+
+def _move_spec_by_name(name: object) -> Optional[MoveSpec]:
+    normalized = str(name or "").strip().lower()
+    if not normalized:
+        return None
+    for move in _load_move_specs():
+        if str(move.name or "").strip().lower() == normalized:
+            return copy.deepcopy(move)
+    return None
+
+
+def _is_struggle_attack_name(name: object) -> bool:
+    return str(name or "").strip().lower() in {"struggle", "struggle attack", "struggle+"}
 
 
 def _move_effects_text(move: MoveSpec) -> str:
@@ -1146,6 +1937,7 @@ class TrainerState:
 
     identifier: str
     name: str
+    position: Optional[Tuple[int, int]] = None
     initiative_modifier: int = 0
     speed: Optional[int] = None
     skills: Dict[str, int] = field(default_factory=dict)
@@ -1163,6 +1955,7 @@ class TrainerState:
     trainer_class: Dict[str, object] = field(default_factory=dict)
     feature_resources: Dict[str, int] = field(default_factory=dict)
     feature_usage: Dict[str, Dict[str, int]] = field(default_factory=dict)
+    temporary_ap: List[dict] = field(default_factory=list)
     combat_stages: Dict[str, int] = field(default_factory=lambda: {
         "atk": 0,
         "def": 0,
@@ -1184,6 +1977,121 @@ class TrainerState:
     def action_consumed_detail(self, action_type: ActionType) -> Optional[str]:
         return self.actions_taken.get(action_type)
 
+    def available_ap(self, current_round: Optional[int] = None) -> int:
+        if current_round is not None:
+            self.expire_temporary_ap(current_round)
+        return int(self.ap or 0)
+
+    def grant_temporary_ap(self, amount: int, *, expires_round: int, source: str = "") -> None:
+        amount = int(amount or 0)
+        if amount <= 0:
+            return
+        self.temporary_ap.append(
+            {
+                "amount": amount,
+                "expires_round": int(expires_round),
+                "source": str(source or "").strip(),
+            }
+        )
+        self.ap += amount
+
+    def expire_temporary_ap(self, current_round: int) -> int:
+        expired = 0
+        remaining_entries: List[dict] = []
+        for entry in list(self.temporary_ap):
+            try:
+                amount = int(entry.get("amount", 0) or 0)
+            except (AttributeError, TypeError, ValueError):
+                amount = 0
+            try:
+                expires_round = int(entry.get("expires_round", current_round) or current_round)
+            except (AttributeError, TypeError, ValueError):
+                expires_round = current_round
+            if amount <= 0:
+                continue
+            if current_round > expires_round:
+                expired += amount
+                continue
+            remaining_entries.append(
+                {
+                    "amount": amount,
+                    "expires_round": expires_round,
+                    "source": str(entry.get("source") or "").strip(),
+                }
+            )
+        self.temporary_ap = remaining_entries
+        if expired:
+            self.ap = max(0, int(self.ap or 0) - expired)
+        return expired
+
+    def consume_ap(self, amount: int) -> List[dict]:
+        amount = int(amount or 0)
+        if amount <= 0:
+            return []
+        if int(self.ap or 0) < amount:
+            raise ValueError(f"Trainer requires {amount} AP.")
+        spent: List[dict] = []
+        remaining = amount
+        updated_temp: List[dict] = []
+        for entry in list(self.temporary_ap):
+            entry_amount = int(entry.get("amount", 0) or 0)
+            if entry_amount <= 0:
+                continue
+            if remaining <= 0:
+                updated_temp.append(entry)
+                continue
+            used = min(entry_amount, remaining)
+            remaining -= used
+            leftover = entry_amount - used
+            spent.append(
+                {
+                    "amount": used,
+                    "temporary": True,
+                    "expires_round": entry.get("expires_round"),
+                    "source": str(entry.get("source") or "").strip(),
+                }
+            )
+            if leftover > 0:
+                updated_temp.append(
+                    {
+                        "amount": leftover,
+                        "expires_round": entry.get("expires_round"),
+                        "source": str(entry.get("source") or "").strip(),
+                    }
+                )
+        self.temporary_ap = updated_temp
+        if remaining > 0:
+            spent.append({"amount": remaining, "temporary": False})
+        self.ap -= amount
+        return spent
+
+    def restore_ap(self, refund: object) -> None:
+        if isinstance(refund, int):
+            amount = int(refund or 0)
+            if amount > 0:
+                self.ap += amount
+            return
+        if not isinstance(refund, list):
+            return
+        restored = 0
+        for entry in refund:
+            if not isinstance(entry, dict):
+                continue
+            amount = int(entry.get("amount", 0) or 0)
+            if amount <= 0:
+                continue
+            restored += amount
+            if entry.get("temporary"):
+                self.temporary_ap.append(
+                    {
+                        "amount": amount,
+                        "expires_round": entry.get("expires_round"),
+                        "source": str(entry.get("source") or "").strip(),
+                    }
+                )
+        if restored:
+            self.ap += restored
+
     def skill_rank(self, name: str) -> int:
         if not name:
             return 0
@@ -1203,6 +2111,21 @@ class TrainerState:
                     value = str(entry.get(key) or "").strip().lower()
                     if value == target:
                         return True
+                entry_name = str(
+                    entry.get("name") or entry.get("feature_id") or entry.get("id") or ""
+                ).strip().lower()
+                if entry_name != "elite trainer":
+                    continue
+                chosen = str(
+                    entry.get("choice")
+                    or entry.get("chosen_feature")
+                    or entry.get("selected_feature")
+                    or entry.get("feature")
+                    or entry.get("option")
+                    or ""
+                ).strip().lower()
+                if chosen == target:
+                    return True
         return False
 
     def initiative_bonus(self) -> int:
@@ -1278,6 +2201,7 @@ class PokemonState:
                     self.equipped_weapon_index = idx
                     break
         self._sync_weapon_moves()
+        self._sync_parfumier_moves()
         self._ensure_ability_moves()
         apply_post_init_ability_effects(self)
 
@@ -1330,6 +2254,60 @@ class PokemonState:
                         name=move_name,
                         source=feature_name.title(),
                     )
+
+    def _sync_parfumier_moves(self) -> None:
+        for entry in list(self.get_temporary_effects("parfumier_move_granted")):
+            move_name = str(entry.get("name") or "").strip().lower()
+            if move_name:
+                self.spec.moves = [
+                    move for move in self.spec.moves if (move.name or "").strip().lower() != move_name
+                ]
+                move_sources = dict(getattr(self.spec, "move_sources", {}) or {})
+                move_sources.pop(move_name, None)
+                move_sources.pop(re.sub(r"[^a-z0-9]+", "", move_name), None)
+                self.spec.move_sources = move_sources
+            if entry in self.temporary_effects:
+                self.temporary_effects.remove(entry)
+        if self.is_trainer_combatant():
+            return
+        existing = {str(move.name or "").strip().lower() for move in self.spec.moves}
+        for item in list(self.spec.items or []):
+            if not _item_name_text(item):
+                continue
+            entry = _item_entry_for(item)
+            if entry is None:
+                continue
+            item_text = f"{entry.name} {entry.description} {' '.join(sorted(entry.traits))}".lower()
+            if "incense" not in item_text:
+                continue
+            choice = ""
+            if isinstance(item, dict):
+                for key in ("parfumier_move", "parfumier_choice", "chosen_move", "move"):
+                    raw = str(item.get(key) or "").strip()
+                    if raw:
+                        choice = raw
+                        break
+            normalized = choice.lower()
+            if normalized not in {"sweet scent", "aromatic mist"}:
+                continue
+            move = _move_spec_by_name(choice)
+            if move is None:
+                move = MoveSpec(name=choice.title(), type="Normal", category="Status", ac=None)
+            move_name = str(move.name or choice).strip()
+            move_key = move_name.lower()
+            if not move_name or move_key in existing:
+                continue
+            self.spec.moves.append(move)
+            existing.add(move_key)
+            move_sources = dict(getattr(self.spec, "move_sources", {}) or {})
+            move_sources[move_key] = _item_name_text(item)
+            move_sources[re.sub(r"[^a-z0-9]+", "", move_key)] = _item_name_text(item)
+            self.spec.move_sources = move_sources
+            self.add_temporary_effect(
+                "parfumier_move_granted",
+                name=move_name,
+                source=_item_name_text(item),
+            )
 
     def _is_berry_food_buff(self, buff: dict) -> bool:
         item_name = str(buff.get("item") or "").strip().lower()
@@ -1598,6 +2576,8 @@ class PokemonState:
                             )
         if self.fainted:
             self.pending_resolution = None
+            while self.remove_temporary_effect("duelist_momentum"):
+                continue
             self.clear_volatile_statuses()
             battle = getattr(self, "battle", None)
             if before_hp > 0 and battle is not None:
@@ -1873,7 +2853,10 @@ class PokemonState:
 
     def save_bonus(self, battle: "BattleState", status_name: Optional[str] = None) -> int:
         bonus = 0
+        normalized_status = str(status_name or "").strip().lower()
         if self.has_trainer_feature("Awareness"):
+            bonus += 2
+        if self.get_temporary_effects("inspired_training"):
             bonus += 2
         if self.is_trainer_combatant():
             trainer = battle.trainers.get(self.controller_id)
@@ -1885,10 +2868,24 @@ class PokemonState:
                 if entry in self.temporary_effects:
                     self.temporary_effects.remove(entry)
                 continue
+            statuses = {
+                str(value or "").strip().lower()
+                for value in (entry.get("statuses") or [])
+                if str(value or "").strip()
+            }
+            if statuses and normalized_status not in statuses:
+                continue
             try:
                 bonus = max(bonus, int(entry.get("amount", 0) or 0))
             except (TypeError, ValueError):
                 continue
+        for entry in list(self.get_temporary_effects("stat_stratagem")):
+            stat_key = str(entry.get("stat") or "").strip().lower()
+            statuses = _STAT_STRATAGEM_SAVE_STATUSES.get(stat_key)
+            if not statuses or normalized_status not in statuses:
+                continue
+            stage_key = "def" if stat_key == "def" else "spdef"
+            bonus += min(6, max(0, int(self.combat_stages.get(stage_key, 0) or 0)) * 2)
         for entry in list(self.get_temporary_effects("resistance_bonus")):
             expires_round = entry.get("expires_round")
             if expires_round is not None and battle.round > int(expires_round):
@@ -1929,6 +2926,18 @@ class PokemonState:
                 penalty += int(entry.get("amount", 0) or 0)
             except (TypeError, ValueError):
                 continue
+            if entry.get("consume_on_save"):
+                charges = entry.get("charges")
+                if charges is None:
+                    if entry in self.temporary_effects:
+                        self.temporary_effects.remove(entry)
+                else:
+                    try:
+                        entry["charges"] = int(charges) - 1
+                    except (TypeError, ValueError):
+                        entry["charges"] = 0
+                    if int(entry.get("charges", 0) or 0) <= 0 and entry in self.temporary_effects:
+                        self.temporary_effects.remove(entry)
         for entry in list(self.get_temporary_effects("all_roll_penalty")):
             expires_round = entry.get("expires_round")
             if expires_round is not None and battle.round > int(expires_round):
@@ -1960,6 +2969,11 @@ class PokemonState:
         elif "hail" in weather or "snow" in weather:
             modifier = -2
         save_bonus = self.save_bonus(battle, status_name)
+        save_bonus += battle._maybe_apply_bring_it_on_save_bonus(
+            actor_id,
+            self,
+            status_name=status_name,
+        )
         type_names = {t.lower().strip() for t in self.spec.types if t}
         dc = 11 if "fire" in type_names else 16
         roll = battle.rng.randint(1, 20)
@@ -1988,6 +3002,7 @@ class PokemonState:
         if total >= dc:
             if status_entry in self.statuses:
                 self.statuses.remove(status_entry)
+            battle._maybe_trigger_stacked_deck_save_follow_up(actor_id, status_name)
             events.append(
                 {
                     "type": "status",
@@ -2037,7 +3052,13 @@ class PokemonState:
             return events
         roll = battle.rng.randint(1, 20)
         roll2 = None
+        bring_it_on_save_bonus = 0
         if self.get_temporary_effects("cheered"):
+            bring_it_on_save_bonus = battle._maybe_apply_bring_it_on_save_bonus(
+                actor_id,
+                self,
+                status_name=status_name,
+            )
             roll2 = battle.rng.randint(1, 20)
             roll = max(roll, roll2)
             self.remove_temporary_effect("cheered")
@@ -2045,6 +3066,7 @@ class PokemonState:
         save_bonus = self.save_bonus(battle, status_name)
         if has_ability_exact(self, "Early Bird [Errata]"):
             save_bonus += 3
+        save_bonus += bring_it_on_save_bonus
         total = roll + save_bonus
         events: List[dict] = [
             {
@@ -2078,6 +3100,7 @@ class PokemonState:
         if total >= dc:
             if status_entry in self.statuses:
                 self.statuses.remove(status_entry)
+            battle._maybe_trigger_stacked_deck_save_follow_up(actor_id, status_name)
             events.append(
                 {
                     "type": "status",
@@ -2123,10 +3146,21 @@ class PokemonState:
 
     def ability_names(self) -> List[str]:
         names: List[str] = []
+        battle = getattr(self, "battle", None)
+
+        def _is_expired(entry: dict) -> bool:
+            expires_round = entry.get("expires_round")
+            if expires_round is None or battle is None:
+                return False
+            try:
+                return int(getattr(battle, "round", 0) or 0) > int(expires_round)
+            except (TypeError, ValueError):
+                return False
+
         disabled = {
             str(entry.get("ability", "")).strip().lower()
             for entry in self.get_temporary_effects("ability_disabled")
-            if isinstance(entry, dict)
+            if isinstance(entry, dict) and not _is_expired(entry)
         }
         for entry in self.spec.abilities:
             if isinstance(entry, str):
@@ -2139,6 +3173,8 @@ class PokemonState:
                     names.append(str(name).strip())
         granted: List[str] = []
         for entry in self.get_temporary_effects("ability_granted"):
+            if not isinstance(entry, dict) or _is_expired(entry):
+                continue
             ability_name = str(entry.get("ability") or "").strip()
             if ability_name and ability_name.lower() not in disabled:
                 granted.append(ability_name)
@@ -2170,6 +3206,26 @@ class PokemonState:
                 return True
         return False
 
+    def ability_metadata(self, name: str) -> Optional[dict]:
+        target = _normalize_ability_key(name)
+        if not target:
+            return None
+        for entry in reversed(list(self.get_temporary_effects("ability_granted"))):
+            if not isinstance(entry, dict):
+                continue
+            ability_name = str(entry.get("ability") or "").strip()
+            if _normalize_ability_key(ability_name) == target:
+                return dict(entry)
+        for entry in reversed(list(getattr(self.spec, "abilities", []) or [])):
+            if isinstance(entry, str):
+                continue
+            if not isinstance(entry, dict):
+                continue
+            ability_name = str(entry.get("name") or "").strip()
+            if _normalize_ability_key(ability_name) == target:
+                return dict(entry)
+        return None
+
     def indirect_damage_block_ability(self) -> Optional[str]:
         if self.has_ability("Magic Guard"):
             return "Magic Guard"
@@ -2191,6 +3247,44 @@ class PokemonState:
                     name = entry.get("name")
                     if name:
                         names.append(str(name).strip())
+                    feature_name = str(
+                        entry.get("name") or entry.get("feature_id") or entry.get("id") or ""
+                    ).strip().lower()
+                    if feature_name != "elite trainer":
+                        continue
+                    chosen = str(
+                        entry.get("choice")
+                        or entry.get("chosen_feature")
+                        or entry.get("selected_feature")
+                        or entry.get("feature")
+                        or entry.get("option")
+                        or ""
+                    ).strip()
+                    if chosen:
+                        names.append(chosen)
+                    continue
+                if feature_name == "commander":
+                    chosen = str(
+                        entry.get("choice")
+                        or entry.get("chosen_orders")
+                        or entry.get("selected_orders")
+                        or entry.get("orders")
+                        or entry.get("option")
+                        or ""
+                    ).strip()
+                    if chosen:
+                        names.append(chosen)
+                        for implied in COMMANDER_ORDER_GROUPS.get(chosen.lower(), ()):
+                            names.append(implied.title())
+                    continue
+        expanded: List[str] = []
+        for name in names:
+            if not name:
+                continue
+            expanded.append(name)
+            for implied in COMMANDER_ORDER_GROUPS.get(name.lower(), ()):
+                expanded.append(implied.title())
+        names = expanded
         return names
 
     def has_trainer_feature(self, name: str) -> bool:
@@ -2198,6 +3292,59 @@ class PokemonState:
         if not target:
             return False
         return any(feature.lower() == target for feature in self.trainer_feature_names())
+
+    def trainer_feature_entries(self, name: str) -> List[dict]:
+        target = str(name or "").strip().lower()
+        if not target:
+            return []
+        matches: List[dict] = []
+        for collection in (self.spec.trainer_features, getattr(self.spec, "trainer_edges", [])):
+            for entry in collection:
+                if not isinstance(entry, dict):
+                    continue
+                feature_name = str(
+                    entry.get("name") or entry.get("feature_id") or entry.get("id") or ""
+                ).strip().lower()
+                if feature_name == target:
+                    matches.append(entry)
+        return matches
+
+    def is_chic(self) -> bool:
+        return _is_chic_spec(self.spec)
+
+    def wardrobe_slots(self) -> List[object]:
+        return _wardrobe_slots(self.spec)
+
+    def trained_stats(self) -> Set[str]:
+        choices = getattr(self.spec, "poke_edge_choices", {}) or {}
+        raw = choices.get("trained_stats", [])
+        if isinstance(raw, str):
+            raw_values = [part.strip() for part in raw.split(",")]
+        elif isinstance(raw, list):
+            raw_values = raw
+        else:
+            raw_values = []
+        normalized: Set[str] = set()
+        for value in raw_values:
+            key = _normalize_trained_stat_name(value)
+            if key:
+                normalized.add(key)
+        return normalized
+
+    def default_combat_stage(self, stat: str) -> int:
+        return 1 if str(stat or "").strip().lower() in self.trained_stats() else 0
+
+    def effective_combat_stage(self, stat: str) -> int:
+        key = str(stat or "").strip().lower()
+        return int(self.combat_stages.get(key, 0) or 0) + self.default_combat_stage(key)
+
+    def set_effective_combat_stage(self, stat: str, value: int) -> None:
+        key = str(stat or "").strip().lower()
+        self.combat_stages[key] = int(value) - self.default_combat_stage(key)
+
+    def reset_combat_stages_to_default(self) -> None:
+        for stat in self.combat_stages:
+            self.combat_stages[stat] = 0
 
     def skill_rank(self, name: str) -> int:
         if not name:
@@ -2298,6 +3445,10 @@ class PokemonState:
     def movement_speed(self, mode: str, weather: Optional[str] = None) -> int:
         battle = getattr(self, "battle", None)
         base = self.spec.movement.get(mode, 0)
+        if self.get_temporary_effects("agility_training"):
+            base += 1
+            if battle is not None and hasattr(battle, "_rider_agility_training_doubled") and battle._rider_agility_training_doubled(getattr(self, "_battle_id", None)):
+                base += 1
         if (
             mode == "overland"
             and battle is not None
@@ -2327,6 +3478,10 @@ class PokemonState:
                 base += int(entry.get("amount", 0) or 0)
             except (TypeError, ValueError):
                 continue
+        for entry in list(self.get_temporary_effects("stat_stratagem")):
+            if str(entry.get("stat") or "").strip().lower() != "spd":
+                continue
+            base += min(3, max(0, int(self.combat_stages.get("spd", 0) or 0)))
         for entry in list(self.get_temporary_effects("movement_halved")):
             expires_round = entry.get("expires_round")
             if expires_round is not None and battle is not None and battle.round > int(expires_round):
@@ -3544,19 +4699,7 @@ class PokemonState:
                     "roll": roll,
                 }
                 if roll <= 8:
-                    struggle = MoveSpec(
-                        name="Struggle",
-                        type="Typeless",
-                        category="Physical",
-                        db=4,
-                        ac=None,
-                        range_kind="Melee",
-                        range_value=1,
-                        target_kind="Melee",
-                        target_range=1,
-                        freq="At-Will",
-                        range_text="Melee, 1 Target",
-                    )
+                    struggle = battle.build_struggle_move(actor_id, self, move_type="Typeless")
                     result = resolve_move_action(
                         rng=battle.rng,
                         attacker=self,
@@ -3671,6 +4814,11 @@ class PokemonState:
                     )
                 else:
                     damage = self._apply_tick_damage(1)
+                    battle._maybe_apply_stacked_deck_damage(
+                        actor_id=actor_id,
+                        condition=name,
+                        trigger_effect="bonus_condition_damage",
+                    )
                     events.append(
                         {
                             "type": "status",
@@ -3708,6 +4856,11 @@ class PokemonState:
                     )
                 else:
                     damage = self._apply_tick_damage(1)
+                    battle._maybe_apply_stacked_deck_damage(
+                        actor_id=actor_id,
+                        condition=name,
+                        trigger_effect="bonus_condition_damage",
+                    )
                     events.append(
                         {
                             "type": "status",
@@ -3802,6 +4955,11 @@ class PokemonState:
                     )
                 else:
                     damage = self._apply_tick_damage(1)
+                    battle._maybe_apply_stacked_deck_damage(
+                        actor_id=actor_id,
+                        condition=name,
+                        trigger_effect="bonus_condition_damage",
+                    )
                     source_id = status_entry.get("source_id")
                     source_hp = None
                     healed = 0
@@ -4102,6 +5260,33 @@ class PokemonState:
                     self.apply_damage(damage_target)
                 damage = max(0, before - (self.hp or 0))
                 if damage > 0:
+                    battle._maybe_apply_stacked_deck_damage(
+                        actor_id=actor_id,
+                        condition=name,
+                        trigger_effect="bonus_condition_damage",
+                    )
+                    bonus = 0
+                    for entry in list(self.get_temporary_effects("potent_venom_bonus_damage")):
+                        try:
+                            bonus = max(bonus, int(entry.get("amount", 0) or 0))
+                        except (TypeError, ValueError):
+                            continue
+                    if bonus > 0:
+                        before_bonus_hp = int(self.hp or 0)
+                        self.apply_damage(bonus)
+                        bonus_damage = max(0, before_bonus_hp - int(self.hp or 0))
+                        if bonus_damage > 0:
+                            events.append(
+                                {
+                                    "type": "trainer_feature",
+                                    "actor": actor_id,
+                                    "status": name,
+                                    "phase": phase.value,
+                                    "effect": "potent_venom_bonus_damage",
+                                    "amount": bonus_damage,
+                                    "target_hp": self.hp,
+                                }
+                            )
                     events.append(
                         {
                             "type": "status",
@@ -4160,6 +5345,7 @@ class PokemonState:
                         }
                     )
                 else:
+                    battle._maybe_trigger_stacked_deck_save_follow_up(actor_id, name)
                     events.append(
                         {
                             "type": "status",
@@ -4240,6 +5426,34 @@ class PokemonState:
             damage = self._apply_tick_damage(max(1, ticks))
             if damage <= 0:
                 continue
+            battle._maybe_apply_stacked_deck_damage(
+                actor_id=actor_id,
+                condition=name,
+                trigger_effect="bonus_condition_damage",
+            )
+            if name in {"poisoned", "badly poisoned"}:
+                bonus = 0
+                for entry in list(self.get_temporary_effects("potent_venom_bonus_damage")):
+                    try:
+                        bonus = max(bonus, int(entry.get("amount", 0) or 0))
+                    except (TypeError, ValueError):
+                        continue
+                if bonus > 0:
+                    before_bonus_hp = int(self.hp or 0)
+                    self.apply_damage(bonus)
+                    bonus_damage = max(0, before_bonus_hp - int(self.hp or 0))
+                    if bonus_damage > 0:
+                        events.append(
+                            {
+                                "type": "trainer_feature",
+                                "actor": actor_id,
+                                "status": name,
+                                "phase": phase.value,
+                                "effect": "potent_venom_bonus_damage",
+                                "amount": bonus_damage,
+                                "target_hp": self.hp,
+                            }
+                        )
             events.append(
                 {
                     "type": "status",
@@ -4312,11 +5526,13 @@ class PokemonState:
         scaled = int(math.floor(amount * multiplier))
         if scaled > 0 and self.has_ability("Permafrost"):
             scaled = max(0, scaled - 5)
+        battle = getattr(self, "battle", None)
+        if scaled > 0 and battle is not None and battle._stat_mastery_sources(self, "spdef"):
+            scaled = max(1, scaled - 5)
         if scaled <= 0:
             return 0
         block_ability = self.indirect_damage_block_ability()
         if block_ability:
-            battle = getattr(self, "battle", None)
             combatant_id = battle._combatant_id_for_state(self) if battle is not None else None
             if battle is not None and combatant_id:
                 battle.log_event(
@@ -4459,13 +5675,13 @@ class PokemonState:
 
         def validate_ap(self, battle: "BattleState", amount: int) -> Tuple["PokemonState", "TrainerState"]:
             actor, trainer = self.validate_feature_owner(battle)
-            if trainer.ap < int(amount):
+            if trainer.available_ap(battle.round) < int(amount):
                 raise ValueError(f"{self.feature_name} requires {int(amount)} AP.")
             return actor, trainer
 
         def spend_ap(self, battle: "BattleState", amount: int) -> Tuple["PokemonState", "TrainerState"]:
             actor, trainer = self.validate_ap(battle, amount)
-            trainer.ap -= int(amount)
+            trainer.consume_ap(int(amount))
             return actor, trainer
 
 
@@ -4583,6 +5799,7 @@ class PokemonState:
             teracrystal: bool = False,
             tera_type: Optional[str] = None,
             chosen_type: Optional[str] = None,
+            range_override_mode: Optional[str] = None,
             allow_reaction_declared: bool = False,
         ) -> None:
             super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
@@ -4595,6 +5812,7 @@ class PokemonState:
             self.teracrystal = bool(teracrystal)
             self.tera_type = str(tera_type or "").strip()
             self.chosen_type = str(chosen_type or "").strip()
+            self.range_override_mode = str(range_override_mode or "").strip().lower()
             self.allow_reaction_declared = bool(allow_reaction_declared)
 
         def _apply_gimmicks(
@@ -4728,7 +5946,10 @@ class PokemonState:
 
             return effective_move, events
 
-        def _resolve_move(self, attacker: PokemonState) -> MoveSpec:
+        def _resolve_move(self, battle: BattleState, attacker: PokemonState) -> MoveSpec:
+            if _is_struggle_attack_name(self.move_name):
+                return battle.build_struggle_move(self.actor_id, attacker)
+            attacker._sync_parfumier_moves()
             names = [mv.name for mv in attacker.spec.moves]
             if self.move_name not in names:
                 maneuver = _load_maneuver_moves().get(self.move_name.lower())
@@ -4750,6 +5971,23 @@ class PokemonState:
         ) -> MoveSpec:
             move_name = (move.name or "").strip().lower()
             effective = move
+            if _is_struggle_attack_name(move_name):
+                return effective
+            if self.range_override_mode in {"flood_line", "flood_close_blast"}:
+                if copy_move := copy.deepcopy(effective):
+                    copy_move.range_kind = "Self"
+                    copy_move.target_kind = "Self"
+                    copy_move.range_value = None
+                    copy_move.target_range = None
+                    if self.range_override_mode == "flood_line":
+                        copy_move.area_kind = "Line"
+                        copy_move.area_value = 4
+                        copy_move.range_text = "Line 4"
+                    else:
+                        copy_move.area_kind = "CloseBlast"
+                        copy_move.area_value = 2
+                        copy_move.range_text = "Close Blast 2"
+                    effective = copy_move
             if attacker.has_ability("Radiant Beam") and (move.category or "").strip().lower() != "status":
                 if (move.type or "").strip().lower() == "grass":
                     if copy_move := copy.deepcopy(effective):
@@ -4912,6 +6150,223 @@ class PokemonState:
                             "target_hp": attacker.hp,
                         }
                     )
+            if (
+                attacker.get_temporary_effects("conquerors_march")
+                and getattr(attacker, "_battle_id", None)
+                and battle._mounted_rider_id(getattr(attacker, "_battle_id", None)) is not None
+                and attacker.has_ability("Run Up")
+            ):
+                area_kind = targeting.normalized_area_kind(effective)
+                if (
+                    area_kind in {"burst", "blast", "cone", "line"}
+                    or move_has_keyword(effective, "dash")
+                    or has_range_keyword(effective, "dash")
+                ):
+                    if copy_move := copy.deepcopy(effective):
+                        pass_distance = max(
+                            3,
+                            int(
+                                attacker.movement_speed("overland")
+                                or copy_move.target_range
+                                or copy_move.range_value
+                                or copy_move.area_value
+                                or 1
+                            ),
+                        )
+                        copy_move.range_value = pass_distance
+                        copy_move.target_range = pass_distance
+                        range_text = str(copy_move.range_text or copy_move.range_kind or "").strip()
+                        if "pass" not in range_text.lower():
+                            copy_move.range_text = (
+                                f"{range_text}, Pass".strip(", ")
+                                if range_text
+                                else "Pass"
+                            )
+                        effective = copy_move
+            if (
+                (effective.category or "").strip().lower() == "special"
+                and targeting.normalized_target_kind(effective) != "melee"
+                and (mastery_sources := battle._stat_mastery_sources(attacker, "spatk"))
+            ):
+                if copy_move := copy.deepcopy(effective):
+                    base_range = int(copy_move.target_range or copy_move.range_value or 0)
+                    if base_range > 0:
+                        copy_move.target_range = base_range + 2
+                        copy_move.range_value = base_range + 2
+                        effective = copy_move
+                        if consume:
+                            actor_id = getattr(attacker, "_battle_id", None) or attacker.spec.name or attacker.spec.species
+                            battle.log_event(
+                                {
+                                    "type": "trainer_feature",
+                                    "actor": actor_id,
+                                    "trainer": attacker.controller_id,
+                                    "feature": mastery_sources[0],
+                                    "effect": "range_bonus",
+                                    "move": move.name,
+                                    "amount": 2,
+                                    "description": "Special Attack Mastery increases the range of non-melee Special moves.",
+                                    "target_hp": attacker.hp,
+                                }
+                            )
+            stat_maneuver_special = attacker.get_temporary_effects("stat_maneuver_ready")
+            if stat_maneuver_special:
+                active_entry = next(
+                    (
+                        entry
+                        for entry in stat_maneuver_special
+                        if str(entry.get("maneuver_kind") or "").strip().lower() == "special_attack"
+                    ),
+                    None,
+                )
+                if active_entry and (copy_move := copy.deepcopy(effective)):
+                    area_kind = targeting.normalized_area_kind(copy_move)
+                    changed = False
+                    if area_kind == "burst":
+                        copy_move.area_value = 1
+                        changed = True
+                    elif area_kind == "cone":
+                        copy_move.area_value = 2
+                        changed = True
+                    elif area_kind == "closeblast":
+                        copy_move.area_value = 2
+                        changed = True
+                    elif area_kind == "line":
+                        copy_move.area_value = 4
+                        changed = True
+                    elif area_kind == "blast":
+                        copy_move.area_value = 2
+                        changed = True
+                    if changed:
+                        effective = copy_move
+                        self._consume_stat_maneuver_ready(attacker, "special_attack")
+                        battle.log_event(
+                            {
+                                "type": "trainer_feature",
+                                "actor": attacker_id,
+                                "target": cid,
+                                "trainer": attacker.controller_id,
+                                "feature": active_entry.get("feature") or "Stat Maneuver",
+                                "effect": "reshape_area",
+                                "move": move.name,
+                                "area_kind": area_kind,
+                                "area_value": copy_move.area_value,
+                                "description": "Stat Maneuver resizes the special area attack.",
+                                "target_hp": attacker.hp,
+                            }
+                        )
+            stat_maneuver_speed = attacker.get_temporary_effects("stat_maneuver_ready")
+            if any(str(entry.get("maneuver_kind") or "").strip().lower() == "speed" for entry in stat_maneuver_speed):
+                if copy_move := copy.deepcopy(effective):
+                    copy_move.priority = int(copy_move.priority or 0) + 1 if int(copy_move.priority or 0) > 0 else 1
+                    effective = copy_move
+                    consumed = self._consume_stat_maneuver_ready(attacker, "speed")
+                    battle.log_event(
+                        {
+                            "type": "trainer_feature",
+                            "actor": attacker_id,
+                            "target": cid,
+                            "trainer": attacker.controller_id,
+                            "feature": (consumed or {}).get("feature") or "Stat Maneuver",
+                            "effect": "priority",
+                            "move": move.name,
+                            "priority": copy_move.priority,
+                            "description": "Stat Maneuver boosts the move's priority.",
+                            "target_hp": attacker.hp,
+                        }
+                    )
+            if attacker.get_temporary_effects("duelist_manual_single_target") and (effective.category or "").strip().lower() != "status":
+                area_kind = targeting.normalized_area_kind(effective)
+                area_text = str(effective.area_kind or effective.range_kind or effective.range_text or "").strip().lower()
+                target_kind = targeting.normalized_target_kind(effective)
+                copy_move = copy.deepcopy(effective)
+                converted = False
+                if area_kind in {"pass", "cone", "close", "closeblast", "burst"} or "close blast" in area_text:
+                    copy_move.range_kind = "Melee"
+                    copy_move.target_kind = "Melee"
+                    copy_move.range_value = 1
+                    copy_move.target_range = 1
+                    copy_move.area_kind = None
+                    copy_move.area_value = None
+                    copy_move.range_text = "Melee, 1 Target"
+                    converted = True
+                elif area_kind in {"line", "ranged", "rangedblast"} or target_kind in {"rangedblast"} or "ranged blast" in area_text:
+                    copy_move.range_kind = "Ranged"
+                    copy_move.target_kind = "Ranged"
+                    range_value = int(copy_move.target_range or copy_move.range_value or copy_move.area_value or 6)
+                    copy_move.range_value = max(1, range_value)
+                    copy_move.target_range = max(1, range_value)
+                    copy_move.area_kind = None
+                    copy_move.area_value = None
+                    copy_move.range_text = f"Range {max(1, range_value)}, 1 Target"
+                    converted = True
+                if converted:
+                    effective = copy_move
+                    if consume:
+                        attacker.add_temporary_effect(
+                            "duelist_manual_single_target_attack",
+                            source="Duelist's Manual",
+                            expires_round=battle.round,
+                        )
+            return effective
+
+        def _apply_signature_technique_tweaks(
+            self,
+            battle: BattleState,
+            attacker: PokemonState,
+            move: MoveSpec,
+        ) -> MoveSpec:
+            entry = _signature_entry_for_move(attacker, move)
+            mod_key = _signature_mod_key(entry)
+            if not mod_key:
+                return move
+            legal, reason = _signature_mod_legal_for_move(move, mod_key)
+            if not legal:
+                battle.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": self.actor_id,
+                        "trainer": attacker.controller_id,
+                        "feature": "Signature Technique",
+                        "effect": "illegal_modification_ignored",
+                        "move": move.name,
+                        "modification": str((entry or {}).get("modification") or ""),
+                        "description": reason,
+                        "target_hp": attacker.hp,
+                    }
+                )
+                return move
+            effective = move
+            if mod_key == "scattershot":
+                effective = copy.deepcopy(move)
+                effective.range_kind = "Ranged"
+                effective.range_value = 4
+                effective.target_kind = "Ranged"
+                effective.target_range = 4
+                effective.area_kind = None
+                effective.area_value = None
+                effective.range_text = "Range 4, 3 Targets"
+            elif mod_key == "viciousstorm":
+                effective = copy.deepcopy(move)
+                if "Smite" not in effective.keywords:
+                    effective.keywords.append("Smite")
+                if "smite" not in str(effective.range_text or "").lower():
+                    effective.range_text = f"{effective.range_text or effective.range_kind}, Smite".strip(", ")
+            elif mod_key == "alternativeenergy":
+                if str(move.category or "").strip().lower() in {"physical", "special"}:
+                    effective = copy.deepcopy(move)
+                    effective.category = "Special" if str(move.category or "").strip().lower() == "physical" else "Physical"
+            elif mod_key == "bloodiedspeed":
+                max_hp = attacker.max_hp_with_injuries()
+                if max_hp > 0 and int(attacker.hp or 0) * 2 < max_hp:
+                    effective = copy.deepcopy(move)
+                    effective.priority = max(int(effective.priority or 0), 1)
+            elif mod_key == "doubledown":
+                effective = copy.deepcopy(move)
+                if "Double Strike" not in effective.keywords:
+                    effective.keywords.append("Double Strike")
+                if "double strike" not in str(effective.range_text or "").lower():
+                    effective.range_text = f"{effective.range_text or effective.range_kind}, Double Strike".strip(", ")
             return effective
 
         def _resolve_action_type(self, attacker: PokemonState, move: MoveSpec) -> ActionType:
@@ -5070,9 +6525,10 @@ class PokemonState:
                 raise ValueError(f"Unknown combatant '{self.actor_id}'")
             if attacker.has_status("Tripped"):
                 raise ValueError("Tripped combatants must stand up before taking actions.")
-            move = self._resolve_move(attacker)
-            self.action_type = self._resolve_action_type(attacker, move)
+            move = self._resolve_move(battle, attacker)
             move = self._apply_ability_move_tweaks(battle, attacker, move, consume=False)
+            move = self._apply_signature_technique_tweaks(battle, attacker, move)
+            self.action_type = self._resolve_action_type(attacker, move)
             canonical_text = ""
             move_key = (move.name or "").strip().lower()
             for known in _load_move_specs():
@@ -5268,9 +6724,9 @@ class PokemonState:
                 if "sun" in weather or "sunny" in weather or "harsh sunlight" in weather:
                     pass
                 else:
-                    battle.ensure_move_frequency_available(self.actor_id, move)
+                    battle.ensure_move_frequency_available(self.actor_id, move, target_id=self.target_id)
             else:
-                battle.ensure_move_frequency_available(self.actor_id, move)
+                battle.ensure_move_frequency_available(self.actor_id, move, target_id=self.target_id)
             requirements = _weapon_requirements_for_move(move)
             if requirements:
                 weapon = attacker.equipped_weapon()
@@ -5280,6 +6736,12 @@ class PokemonState:
             if move_name == "baton pass":
                 return
             defender = battle.pokemon.get(self.target_id) if self.target_id else None
+            target_kind = targeting.normalized_target_kind(move)
+            if target_kind == "blessing" and defender is not None:
+                attacker_team = battle._team_for(self.actor_id)
+                defender_team = battle._team_for(self.target_id)
+                if attacker_team != defender_team:
+                    raise ValueError(f"{move.name} may only target the user or an ally.")
             requires_target = targeting.move_requires_target(move)
             if move_name == "missile launch" and self.action_type == ActionType.SWIFT:
                 return
@@ -5394,8 +6856,9 @@ class PokemonState:
 
         def resolve(self, battle: BattleState) -> None:
             attacker = battle.pokemon[self.actor_id]
-            move = self._resolve_move(attacker)
+            move = self._resolve_move(battle, attacker)
             move = self._apply_ability_move_tweaks(battle, attacker, move, consume=True)
+            move = self._apply_signature_technique_tweaks(battle, attacker, move)
             move, gimmick_events = self._apply_gimmicks(battle, attacker, move)
             for payload in gimmick_events:
                 battle.log_event(payload)
@@ -5404,7 +6867,7 @@ class PokemonState:
                 battle._move_missile_launch_tokens(self.actor_id)
                 return
             battle._apply_stance_change_pre_move(self.actor_id, attacker, move)
-            battle.record_move_frequency_usage(self.actor_id, move)
+            battle.record_move_frequency_usage(self.actor_id, move, target_id=self.target_id)
             battle._record_move_used(self.actor_id, move.name or "")
             if (move.name or "").strip().lower() == "mimic" and attacker.has_ability("Mimitree"):
                 battle._restore_move_frequency_usage(self.actor_id, move)
@@ -5443,7 +6906,7 @@ class PokemonState:
             ):
                 definition = battle._frequency_definition(move)
                 if definition is not None and definition.limit is not None:
-                    battle.record_move_frequency_usage(self.actor_id, move)
+                    battle.record_move_frequency_usage(self.actor_id, move, target_id=self.target_id)
                     battle.log_event(
                         {
                             "type": "ability",
@@ -5531,6 +6994,9 @@ class PokemonState:
                 target_position=target_pos,
                 move_params={"chosen_type": self.chosen_type} if self.chosen_type else None,
             )
+            while attacker.remove_temporary_effect("signature_supreme_concentration_ready"):
+                continue
+            battle._maybe_trigger_round_trip(self.actor_id, move_name=move.name or self.move_name)
 
         def describe_action(self) -> str:
             return f"Move {self.move_name}"
@@ -5549,6 +7015,8 @@ class PokemonState:
             actor = battle.pokemon.get(self.actor_id)
             if actor is None:
                 raise ValueError(f"Unknown combatant '{self.actor_id}'")
+            movement_actor_id = battle._mounted_mount_id(self.actor_id) if actor.is_trainer_combatant() else None
+            movement_actor = battle.pokemon.get(movement_actor_id) if movement_actor_id else actor
             for entry in list(actor.get_temporary_effects("shift_blocked")):
                 expires_round = entry.get("expires_round")
                 if expires_round is not None and battle.round > int(expires_round):
@@ -5566,8 +7034,8 @@ class PokemonState:
                 if self.destination != actor.position:
                     raise ValueError("Withdrawn combatants cannot Shift.")
                 return
-            if actor.has_ability("Line Charge") and actor.position is not None:
-                if self.destination[0] != actor.position[0] and self.destination[1] != actor.position[1]:
+            if movement_actor.has_ability("Line Charge") and movement_actor.position is not None:
+                if self.destination[0] != movement_actor.position[0] and self.destination[1] != movement_actor.position[1]:
                     raise ValueError("Line Charge only allows shifting in cardinal directions.")
             for name in _TRAPPED_STATUS_NAMES:
                 if actor.has_status(name):
@@ -5630,7 +7098,7 @@ class PokemonState:
                         )
                         if blocked and not (actor.can_fly() or actor.can_burrow() or actor.can_phase() or actor.has_status("Liquefied")):
                             raise ValueError("Shift destination is blocked.")
-                        if not battle._position_can_fit(self.actor_id, self.destination, conscious_only=True):
+                        if not battle._position_can_fit(movement_actor._battle_id, self.destination, exclude_id=movement_actor._battle_id, conscious_only=True):
                             raise ValueError("Shift destination is occupied.")
                         return
             for entry in actor.get_temporary_effects("surf_shift"):
@@ -5647,13 +7115,13 @@ class PokemonState:
                         )
                         if blocked and not (actor.can_fly() or actor.can_burrow() or actor.can_phase() or actor.has_status("Liquefied")):
                             raise ValueError("Shift destination is blocked.")
-                        if not battle._position_can_fit(self.actor_id, self.destination, conscious_only=True):
+                        if not battle._position_can_fit(movement_actor._battle_id, self.destination, exclude_id=movement_actor._battle_id, conscious_only=True):
                             raise ValueError("Shift destination is occupied.")
                         return
-            reachable = movement.legal_shift_tiles(battle, self.actor_id)
+            reachable = movement.legal_shift_tiles(battle, movement_actor._battle_id)
             if self.destination not in reachable:
                 raise ValueError(f"Destination {self.destination} is not reachable for {actor.spec.name or actor.spec.species}.")
-            if not battle._position_can_fit(self.actor_id, self.destination):
+            if not battle._position_can_fit(movement_actor._battle_id, self.destination, exclude_id=movement_actor._battle_id):
                 raise ValueError("Shift destination is occupied.")
 
         def resolve(self, battle: BattleState) -> None:
@@ -5699,6 +7167,11 @@ class PokemonState:
             if actor.fainted:
                 return
             actor.position = self.destination
+            actor.add_temporary_effect("shifted_this_turn", round=battle.round, source="Shift")
+            partner_id = battle._mounted_partner_id(self.actor_id)
+            partner = battle.pokemon.get(partner_id) if partner_id else None
+            if partner is not None:
+                partner.position = self.destination
             if traversed_tiles and actor.get_temporary_effects("dazzling_dervish_bound"):
                 traversed_set = {tuple(tile) for tile in traversed_tiles}
                 for pid, mon in battle.pokemon.items():
@@ -5921,6 +7394,8 @@ class PokemonState:
                 raise ValueError(f"Unknown combatant '{self.actor_id}'")
             if actor.has_trainer_feature("Nimble Steps"):
                 self.action_type = ActionType.SWIFT
+            elif battle._stat_mastery_sources(actor, "spd"):
+                self.action_type = ActionType.SWIFT
             if actor.has_status("Tripped"):
                 raise ValueError("Tripped combatants must stand up before disengaging.")
             if actor.get_temporary_effects("play_them_like_a_fiddle_sweet_kiss") and actor.has_status("Confused"):
@@ -5934,6 +7409,8 @@ class PokemonState:
                 max_distance = max(max_distance, 2)
             if actor.has_trainer_feature("Nimble Movement"):
                 max_distance = max(max_distance, 2)
+            if actor.get_temporary_effects("celerity_bound"):
+                max_distance = max(max_distance, max(1, movement.shift_distance(battle, self.actor_id)))
             if (
                 battle._combatant_distance_to_coord(
                     self.actor_id,
@@ -5951,6 +7428,7 @@ class PokemonState:
             actor = battle.pokemon[self.actor_id]
             origin = actor.position
             actor.position = self.destination
+            actor.add_temporary_effect("shifted_this_turn", round=battle.round, source="Disengage")
             if actor.has_ability("Lancer") and origin is not None and self.destination is not None:
                 distance = battle._combatant_distance_to_coord(
                     self.actor_id,
@@ -6031,9 +7509,16 @@ class PokemonState:
     class SwitchAction(Action):
         """Standard action to recall the user and send out a benched ally."""
 
-        def __init__(self, actor_id: str, replacement_id: str) -> None:
+        def __init__(
+            self,
+            actor_id: str,
+            replacement_id: str,
+            *,
+            target_position: Optional[Tuple[int, int]] = None,
+        ) -> None:
             super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
             self.replacement_id = replacement_id
+            self.target_position = target_position
 
         def validate(self, battle: "BattleState") -> None:
             actor = battle.pokemon.get(self.actor_id)
@@ -6062,12 +7547,19 @@ class PokemonState:
                 raise ValueError("Target is already active.")
             if actor.controller_id != replacement.controller_id:
                 raise ValueError("Can only switch with an ally from the same trainer.")
+            battle._validate_switch_target_position(
+                outgoing_id=self.actor_id,
+                replacement_id=self.replacement_id,
+                target_position=self.target_position,
+            )
 
         def resolve(self, battle: "BattleState") -> None:
             battle._apply_switch(
                 outgoing_id=self.actor_id,
                 replacement_id=self.replacement_id,
                 initiator_id=self.actor_id,
+                target_position=self.target_position,
+                apply_tag_in=True,
                 allow_replacement_turn=False,
                 allow_immediate=False,
             )
@@ -6085,11 +7577,13 @@ class PokemonState:
             outgoing_id: str,
             replacement_id: str,
             *,
+            target_position: Optional[Tuple[int, int]] = None,
             forced: bool = False,
         ) -> None:
             super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
             self.outgoing_id = outgoing_id
             self.replacement_id = replacement_id
+            self.target_position = target_position
             self.forced = forced
 
         def validate(self, battle: "BattleState") -> None:
@@ -6124,6 +7618,11 @@ class PokemonState:
                     raise ValueError(
                         f"{outgoing.spec.name or outgoing.spec.species} cannot switch while No Retreat."
                     )
+            battle._validate_switch_target_position(
+                outgoing_id=self.outgoing_id,
+                replacement_id=self.replacement_id,
+                target_position=self.target_position,
+            )
             if outgoing.fainted or self.forced:
                 self.action_type = ActionType.SHIFT
             else:
@@ -6140,6 +7639,8 @@ class PokemonState:
                 outgoing_id=self.outgoing_id,
                 replacement_id=self.replacement_id,
                 initiator_id=self.actor_id,
+                target_position=self.target_position,
+                apply_tag_in=True,
                 allow_replacement_turn=allow_turn,
                 allow_immediate=not battle.is_league_battle(),
             )
@@ -6521,9 +8022,10 @@ class PokemonState:
                 raise ValueError("No Dirty Fighting follow-up is available for that target.")
 
         def resolve(self, battle: "BattleState") -> None:
-            actor, trainer = self.spend_ap(battle, 1)
+            actor, trainer = self.validate_ap(battle, 1)
+            spent_ap = trainer.consume_ap(1)
             if not battle._consume_dirty_fighting_ready(actor, self.target_id):
-                trainer.ap += 1
+                trainer.restore_ap(spent_ap)
                 return
             battle.resolve_dirty_trick_action(self.actor_id, self.trick, self.target_id)
             battle.log_event(
@@ -6541,6 +8043,150 @@ class PokemonState:
 
         def describe_action(self) -> str:
             return f"Dirty Fighting {self.trick}"
+
+
+    class SleightAction(TrainerFeatureAction):
+        """Use Sleight to immediately fire a Status move as an interrupt-style action."""
+
+        feature_name = "Sleight"
+
+        def __init__(
+            self,
+            actor_id: str,
+            move_name: str,
+            target_id: Optional[str] = None,
+            target_position: Optional[Tuple[int, int]] = None,
+        ) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+            self.move_name = str(move_name or "").strip()
+            self.target_id = target_id
+            self.target_position = target_position
+
+        def validate(self, battle: "BattleState") -> None:
+            actor = battle.pokemon.get(self.actor_id)
+            if actor is None:
+                raise ValueError("Unknown Sleight user.")
+            if not actor.has_trainer_feature("Sleight"):
+                raise ValueError("Sleight requires the Sleight feature.")
+            if battle._feature_scene_use_count(actor, "Sleight") >= 2:
+                raise ValueError("Sleight is out of uses for this scene.")
+            probe = PokemonState.UseMoveAction(
+                actor_id=self.actor_id,
+                move_name=self.move_name,
+                target_id=self.target_id,
+                target_position=self.target_position,
+                allow_reaction_declared=True,
+            )
+            probe.action_type = ActionType.FREE
+            probe.validate(battle)
+            move = probe._resolve_move(battle, actor)
+            if str(move.category or "").strip().lower() != "status":
+                raise ValueError("Sleight only allows a Status-Class move.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor = battle.pokemon.get(self.actor_id)
+            if actor is None:
+                raise ValueError("Unknown Sleight user.")
+            if battle._feature_scene_use_count(actor, "Sleight") >= 2:
+                raise ValueError("Sleight is out of uses for this scene.")
+            battle._record_feature_scene_use(actor, "Sleight")
+            probe = PokemonState.UseMoveAction(
+                actor_id=self.actor_id,
+                move_name=self.move_name,
+                target_id=self.target_id,
+                target_position=self.target_position,
+                allow_reaction_declared=True,
+            )
+            move = probe._resolve_move(battle, actor)
+            if battle._trickster_move_targets_foes(self.actor_id, move, target_id=self.target_id):
+                actor.add_temporary_effect("ignore_substitute", move=move.name, round=battle.round, charges=1)
+                actor.add_temporary_effect("ignore_defensive_abilities", move=move.name, round=battle.round, charges=1)
+                actor.add_temporary_effect("ignore_blessings", move=move.name, round=battle.round, charges=1)
+            try:
+                resolved = battle._resolve_out_of_turn_move(
+                    self.actor_id,
+                    move_name=self.move_name,
+                    target_id=self.target_id,
+                    target_position=self.target_position,
+                )
+            finally:
+                while actor.remove_temporary_effect("ignore_substitute"):
+                    continue
+                while actor.remove_temporary_effect("ignore_defensive_abilities"):
+                    continue
+                while actor.remove_temporary_effect("ignore_blessings"):
+                    continue
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Sleight",
+                    "effect": "interrupt_move",
+                    "move": self.move_name,
+                    "resolved": resolved,
+                    "scene_uses": battle._feature_scene_use_count(actor, "Sleight"),
+                    "target_hp": actor.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return f"Sleight {self.move_name}"
+
+
+    class ShellGameAction(TrainerFeatureAction):
+        """Reposition allied hazard layers with Shell Game."""
+
+        feature_name = "Shell Game"
+
+        def __init__(
+            self,
+            actor_id: str,
+            hazard: str,
+            moves: Sequence[dict],
+            *,
+            free_action: bool = False,
+        ) -> None:
+            super().__init__(
+                actor_id=actor_id,
+                action_type=ActionType.FREE if free_action else ActionType.STANDARD,
+            )
+            self.hazard = str(hazard or "").strip()
+            self.moves = [dict(entry) for entry in moves]
+            self.free_action = bool(free_action)
+
+        def validate(self, battle: "BattleState") -> None:
+            actor = battle.pokemon.get(self.actor_id)
+            if actor is None:
+                raise ValueError("Unknown Shell Game user.")
+            if not actor.has_trainer_feature("Shell Game"):
+                raise ValueError("Shell Game requires the Shell Game feature.")
+            if battle._feature_scene_use_count(actor, "Shell Game") >= 2:
+                raise ValueError("Shell Game is out of uses for this scene.")
+            battle._apply_shell_game(
+                actor_id=self.actor_id,
+                hazard=self.hazard,
+                moves=self.moves,
+                free_action=self.free_action,
+                validate_only=True,
+            )
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor = battle.pokemon.get(self.actor_id)
+            if actor is None:
+                raise ValueError("Unknown Shell Game user.")
+            if battle._feature_scene_use_count(actor, "Shell Game") >= 2:
+                raise ValueError("Shell Game is out of uses for this scene.")
+            battle._apply_shell_game(
+                actor_id=self.actor_id,
+                hazard=self.hazard,
+                moves=self.moves,
+                free_action=self.free_action,
+            )
+
+        def describe_action(self) -> str:
+            return f"Shell Game {self.hazard}"
 
 
     class WeaponFinesseFollowUpAction(TrainerFeatureAction):
@@ -6571,9 +8217,10 @@ class PokemonState:
                 raise ValueError("No Weapon Finesse follow-up is available for that target.")
 
         def resolve(self, battle: "BattleState") -> None:
-            actor, trainer = self.spend_ap(battle, 2)
+            actor, trainer = self.validate_ap(battle, 2)
+            spent_ap = trainer.consume_ap(2)
             if not battle._consume_weapon_finesse_ready(actor, self.target_id):
-                trainer.ap += 2
+                trainer.restore_ap(spent_ap)
                 return
             actor.add_temporary_effect(
                 "accuracy_bonus",
@@ -6723,7 +8370,7 @@ class PokemonState:
             return "Ghost Step"
 
 
-    class ShrugOffAction(TrainerFeatureAction):
+    class ShrugOffAction(PokemonFeatureAction):
         """Spend a shift to remove one injury."""
 
         feature_name = "Shrug Off"
@@ -6732,14 +8379,17 @@ class PokemonState:
             super().__init__(actor_id=actor_id, action_type=ActionType.SHIFT)
 
         def validate(self, battle: "BattleState") -> None:
-            actor, _trainer = self.validate_scene_uses(battle, 1)
+            actor, _trainer = self.validate_feature_owner(battle)
+            if battle._feature_daily_use_count(actor, "Shrug Off") >= 1:
+                raise ValueError("Shrug Off has no daily uses remaining for this Pokemon.")
             if int(actor.injuries or 0) <= 0:
                 raise ValueError("Shrug Off requires at least one injury.")
             if actor.has_status("Tripped"):
                 raise ValueError("Tripped combatants must stand before using Shrug Off.")
 
         def resolve(self, battle: "BattleState") -> None:
-            actor = self.spend_scene_use(battle)
+            actor, _trainer = self.validate_feature_owner(battle)
+            battle._record_feature_daily_use(actor, "Shrug Off")
             removed = battle._apply_shrug_off(actor, source="Shrug Off")
             battle.log_event(
                 {
@@ -6750,7 +8400,7 @@ class PokemonState:
                     "effect": "injury_recovery",
                     "amount": removed,
                     "injuries": actor.injuries,
-                    "scene_uses": battle._feature_scene_use_count(actor, "Shrug Off"),
+                    "daily_uses": battle._feature_daily_use_count(actor, "Shrug Off"),
                     "target_hp": actor.hp,
                 }
             )
@@ -6828,8 +8478,13 @@ class PokemonState:
             target = battle.pokemon.get(self.target_id)
             if target is None or target.fainted or not target.active:
                 raise ValueError("Brutal Training requires an active allied Pokemon target.")
+            if target.is_trainer_combatant():
+                raise ValueError("Brutal Training only targets Pokemon.")
             if target.controller_id != actor.controller_id:
                 raise ValueError("Brutal Training only targets your own Pokemon.")
+            active_training = battle._active_training_effects(target)
+            if len([kind for kind in active_training if kind != "brutal_training"]) >= battle._training_limit_for_actor(actor):
+                raise ValueError("That Pokemon already has the maximum number of Training effects.")
             if self.injuries_to_add and not actor.has_trainer_feature("Taskmaster"):
                 raise ValueError("Only Taskmaster can add injuries through Brutal Training.")
             if self.injuries_to_add > 3:
@@ -6838,9 +8493,13 @@ class PokemonState:
         def resolve(self, battle: "BattleState") -> None:
             actor, _trainer = self.validate_feature_owner(battle)
             target = battle.pokemon[self.target_id]
-            while target.remove_temporary_effect("brutal_training"):
-                continue
-            target.add_temporary_effect("brutal_training", source="Brutal Training", source_id=self.actor_id)
+            battle._apply_training_effect(
+                actor=actor,
+                actor_id=self.actor_id,
+                target=target,
+                effect_kind="brutal_training",
+                feature_name="Brutal Training",
+            )
             injuries_added = 0
             hardened_applied = False
             if actor.has_trainer_feature("Taskmaster") and self.injuries_to_add > 0:
@@ -6882,6 +8541,621 @@ class PokemonState:
             return "Brutal Training"
 
 
+    class AgilityTrainingAction(TrainerFeatureAction):
+        """Apply Agility Training to an allied Pokemon."""
+
+        feature_name = "Agility Training"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or not target.active:
+                raise ValueError("Agility Training requires an active allied Pokemon target.")
+            if target.is_trainer_combatant():
+                raise ValueError("Agility Training only targets Pokemon.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Agility Training only targets your own Pokemon.")
+            active_training = battle._active_training_effects(target)
+            if len([kind for kind in active_training if kind != "agility_training"]) >= battle._training_limit_for_actor(actor):
+                raise ValueError("That Pokemon already has the maximum number of Training effects.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            battle._apply_training_effect(
+                actor=actor,
+                actor_id=self.actor_id,
+                target=target,
+                effect_kind="agility_training",
+                feature_name="Agility Training",
+            )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Agility Training",
+                    "effect": "apply_training",
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Agility Training"
+
+
+    class FocusedTrainingAction(TrainerFeatureAction):
+        """Apply Focused Training to an allied Pokemon."""
+
+        feature_name = "Focused Training"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or not target.active:
+                raise ValueError("Focused Training requires an active allied Pokemon target.")
+            if target.is_trainer_combatant():
+                raise ValueError("Focused Training only targets Pokemon.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Focused Training only targets your own Pokemon.")
+            active_training = battle._active_training_effects(target)
+            if len([kind for kind in active_training if kind != "focused_training"]) >= battle._training_limit_for_actor(actor):
+                raise ValueError("That Pokemon already has the maximum number of Training effects.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            battle._apply_training_effect(
+                actor=actor,
+                actor_id=self.actor_id,
+                target=target,
+                effect_kind="focused_training",
+                feature_name="Focused Training",
+            )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Focused Training",
+                    "effect": "apply_training",
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Focused Training"
+
+
+    class DuelistAction(TrainerFeatureAction):
+        """Tag or untag a single foe for Duelist momentum bonuses."""
+
+        feature_name = "Duelist"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.SWIFT)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or not target.active:
+                raise ValueError("Duelist requires a living active foe.")
+            if battle._team_for(self.target_id) == battle._team_for(self.actor_id):
+                raise ValueError("Duelist may only tag foes.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            already_tagged = battle._is_duelist_tagged_for(target, actor)
+            for mon in battle.pokemon.values():
+                mon.temporary_effects = [
+                    entry for entry in mon.temporary_effects
+                    if not (
+                        isinstance(entry, dict)
+                        and entry.get("kind") == "duelist_tag"
+                        and str(entry.get("source_controller") or "").strip() == actor.controller_id
+                    )
+                ]
+            if not already_tagged:
+                target.add_temporary_effect(
+                    "duelist_tag",
+                    source="Duelist",
+                    source_id=self.actor_id,
+                    source_controller=actor.controller_id,
+                )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Duelist",
+                    "effect": "tag_removed" if already_tagged else "tagged",
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Duelist"
+
+
+    class ExpendMomentumAction(TrainerFeatureAction):
+        """Spend Duelist Momentum for frequency recovery or a stored d20 roll."""
+
+        feature_name = "Expend Momentum"
+
+        def __init__(self, actor_id: str, target_id: str, mode: str, move_name: str = "") -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+            self.mode = str(mode or "").strip().lower()
+            self.move_name = str(move_name or "").strip()
+
+        def _target_move(self, target: PokemonState) -> Optional[MoveSpec]:
+            key = self.move_name.lower()
+            if not key:
+                return None
+            return next((move for move in target.spec.moves if str(move.name or "").strip().lower() == key), None)
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or not target.active:
+                raise ValueError("Expend Momentum requires an active allied Pokemon.")
+            if target.controller_id != actor.controller_id or target.is_trainer_combatant():
+                raise ValueError("Expend Momentum targets your own Pokemon.")
+            if not target.get_temporary_effects("focused_training"):
+                raise ValueError("Expend Momentum requires Focused Training.")
+            cost = {"eot": 1, "roll11": 2, "scene": 3}.get(self.mode)
+            if cost is None:
+                raise ValueError("Invalid Expend Momentum mode.")
+            if battle._duelist_momentum(target) < cost:
+                raise ValueError("Not enough Momentum.")
+            if self.mode in {"eot", "scene"}:
+                move = self._target_move(target)
+                if move is None:
+                    raise ValueError("Expend Momentum requires a move selection.")
+                freq = str(move.freq or "").strip().lower()
+                if self.mode == "eot" and freq != "eot":
+                    raise ValueError("Spend 1 Momentum can only restore an EOT move.")
+                if self.mode == "scene" and not freq.startswith("scene"):
+                    raise ValueError("Spend 3 Momentum can only restore a Scene move.")
+                if battle.frequency_usage.get(self.target_id, {}).get(move.name, 0) <= 0:
+                    raise ValueError("Selected move has no spent frequency use to restore.")
+                if self.mode == "scene" and battle._feature_scene_use_count(target, f"Expend Momentum:Scene:{move.name}") >= 1:
+                    raise ValueError("That Pokemon has already restored that Scene move with Expend Momentum this Scene.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            cost = {"eot": 1, "roll11": 2, "scene": 3}[self.mode]
+            battle._spend_duelist_momentum(target, cost, source="Expend Momentum", source_id=self.actor_id)
+            restored_move = None
+            if self.mode in {"eot", "scene"}:
+                restored_move = self._target_move(target)
+                if restored_move is not None:
+                    battle._restore_move_frequency_usage(self.target_id, restored_move)
+                    if self.mode == "scene":
+                        battle._record_feature_scene_use(target, f"Expend Momentum:Scene:{restored_move.name}")
+            elif self.mode == "roll11":
+                target.add_temporary_effect("duelist_roll11", source="Expend Momentum", source_id=self.actor_id, expires_round=battle.round + 1)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Expend Momentum",
+                    "effect": self.mode,
+                    "momentum_spent": cost,
+                    "move": restored_move.name if restored_move is not None else None,
+                    "momentum": battle._duelist_momentum(target),
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Expend Momentum"
+
+
+    class EffectiveMethodsAction(TrainerFeatureAction):
+        """Trade Tutor Points for Exploit or Tolerance."""
+
+        feature_name = "Effective Methods"
+
+        def __init__(self, actor_id: str, target_id: str, ability: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+            self.ability = str(ability or "").strip().title()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Effective Methods requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id or target.is_trainer_combatant():
+                raise ValueError("Effective Methods targets your own Pokemon.")
+            if self.ability not in {"Exploit", "Tolerance"}:
+                raise ValueError("Effective Methods grants Exploit or Tolerance.")
+            if int(getattr(target.spec, "tutor_points", 0) or 0) < 2:
+                raise ValueError("Effective Methods requires at least 2 Tutor Points.")
+            choices = getattr(target.spec, "poke_edge_choices", {}) or {}
+            if choices.get("effective_methods"):
+                raise ValueError("A Pokemon can only benefit from Effective Methods once.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            target.spec.tutor_points = max(0, int(getattr(target.spec, "tutor_points", 0) or 0) - 2)
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            choices["effective_methods"] = {"granted": True, "ability": self.ability}
+            target.spec.poke_edge_choices = choices
+            target.add_temporary_effect("ability_granted", ability=self.ability, source="Effective Methods", source_id=self.actor_id)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Effective Methods",
+                    "effect": "ability_granted",
+                    "ability": self.ability,
+                    "permanent": True,
+                    "tutor_points_remaining": int(getattr(target.spec, "tutor_points", 0) or 0),
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Effective Methods"
+
+
+    class DuelistsManualAction(TrainerFeatureAction):
+        """Apply one Duelist's Manual momentum-gated technique."""
+
+        feature_name = "Duelist's Manual"
+
+        def __init__(self, actor_id: str, target_id: str, mode: str, ability: str = "") -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+            self.mode = str(mode or "").strip().lower()
+            self.ability = str(ability or "").strip().title()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_ap(battle, 2)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or not target.active:
+                raise ValueError("Duelist's Manual requires an active allied Pokemon.")
+            if target.controller_id != actor.controller_id or target.is_trainer_combatant():
+                raise ValueError("Duelist's Manual targets your own Pokemon.")
+            if not target.get_temporary_effects("focused_training"):
+                raise ValueError("Duelist's Manual requires Focused Training.")
+            required = {"ability": 1, "single_target": 2, "ignore_status": 3}.get(self.mode)
+            if required is None:
+                raise ValueError("Invalid Duelist's Manual mode.")
+            if battle._duelist_momentum(target) < required:
+                raise ValueError("Not enough Momentum for Duelist's Manual.")
+            if self.mode == "ability" and self.ability and self.ability not in {"Exploit", "Tolerance"}:
+                raise ValueError("Duelist's Manual can temporarily switch between Exploit and Tolerance.")
+            if self.mode == "ignore_status" and battle._feature_scene_use_count(target, "Duelist's Manual:Ignore Status") >= 1:
+                raise ValueError("That Pokemon has already used this Duelist's Manual option this Scene.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.spend_ap(battle, 2)
+            target = battle.pokemon[self.target_id]
+            required = {"ability": 1, "single_target": 2, "ignore_status": 3}[self.mode]
+            expires_round = battle.round + 1
+            battle._spend_duelist_momentum(target, required, source="Duelist's Manual", source_id=self.actor_id)
+            if self.mode == "ability":
+                target.add_temporary_effect(
+                    "duelist_manual_ability",
+                    source="Duelist's Manual",
+                    source_id=self.actor_id,
+                    expires_round=expires_round,
+                )
+                if self.ability in {"Exploit", "Tolerance"} and not target.has_ability(self.ability):
+                    target.add_temporary_effect("ability_granted", ability=self.ability, source="Duelist's Manual", expires_round=expires_round)
+            elif self.mode == "single_target":
+                target.add_temporary_effect(
+                    "duelist_manual_single_target",
+                    source="Duelist's Manual",
+                    source_id=self.actor_id,
+                    expires_round=expires_round,
+                )
+            elif self.mode == "ignore_status":
+                target.add_temporary_effect(
+                    "duelist_manual_ignore_status",
+                    source="Duelist's Manual",
+                    source_id=self.actor_id,
+                    expires_round=expires_round,
+                )
+                battle._record_feature_scene_use(target, "Duelist's Manual:Ignore Status")
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Duelist's Manual",
+                    "effect": self.mode,
+                    "ability": self.ability or None,
+                    "ap_remaining": trainer.available_ap(battle.round),
+                    "momentum_spent": required,
+                    "momentum": battle._duelist_momentum(target),
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Duelist's Manual"
+
+
+    class SeizeTheMomentAction(PokemonFeatureAction):
+        """Resolve the pending Seize The Moment trigger with an interrupt attack."""
+
+        feature_name = "Seize The Moment"
+
+        def __init__(self, actor_id: str, target_id: str, move_name: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+            self.target_id = str(target_id or "").strip()
+            self.move_name = str(move_name or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            if not actor.get_temporary_effects("seize_the_moment_ready"):
+                raise ValueError("Seize The Moment is not pending.")
+            if battle._feature_scene_use_count(actor, "Seize The Moment") >= 1:
+                raise ValueError("That Pokemon has already used Seize The Moment this Scene.")
+            if battle._controller_feature_scene_use_count(actor.controller_id, "Seize The Moment") >= 2:
+                raise ValueError("Seize The Moment has no scene uses remaining.")
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or not target.active:
+                raise ValueError("Seize The Moment requires an active tagged foe.")
+            if not battle._is_duelist_tagged_for(target, actor):
+                raise ValueError("Seize The Moment must target a tagged foe.")
+            if not any(str(move.name or "").strip().lower() == self.move_name.lower() for move in actor.spec.moves):
+                raise ValueError("Seize The Moment requires one of the Pokemon's moves.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            while actor.remove_temporary_effect("seize_the_moment_ready"):
+                continue
+            battle._set_duelist_momentum(actor, 1)
+            actor.add_temporary_effect("seize_the_moment_attack", source="Seize The Moment", expires_round=battle.round)
+            battle._resolve_out_of_turn_move(self.actor_id, move_name=self.move_name, target_id=self.target_id)
+            battle._record_feature_scene_use(actor, "Seize The Moment")
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Seize The Moment",
+                    "effect": "interrupt_attack",
+                    "move": self.move_name,
+                    "momentum": battle._duelist_momentum(actor),
+                    "target_hp": battle.pokemon[self.target_id].hp if self.target_id in battle.pokemon else None,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Seize The Moment"
+
+
+    class InspiredTrainingAction(TrainerFeatureAction):
+        """Apply Inspired Training to an allied Pokemon."""
+
+        feature_name = "Inspired Training"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or not target.active:
+                raise ValueError("Inspired Training requires an active allied Pokemon target.")
+            if target.is_trainer_combatant():
+                raise ValueError("Inspired Training only targets Pokemon.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Inspired Training only targets your own Pokemon.")
+            active_training = battle._active_training_effects(target)
+            if len([kind for kind in active_training if kind != "inspired_training"]) >= battle._training_limit_for_actor(actor):
+                raise ValueError("That Pokemon already has the maximum number of Training effects.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            battle._apply_training_effect(
+                actor=actor,
+                actor_id=self.actor_id,
+                target=target,
+                effect_kind="inspired_training",
+                feature_name="Inspired Training",
+            )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Inspired Training",
+                    "effect": "apply_training",
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Inspired Training"
+
+
+    class AceTrainerAction(TrainerFeatureAction):
+        """Apply trained stats to an allied Pokemon."""
+
+        feature_name = "Ace Trainer"
+
+        def __init__(self, actor_id: str, target_id: str, stats: Sequence[str]) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+            self.stats = [str(value or "").strip() for value in list(stats or []) if str(value or "").strip()]
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or not target.active:
+                raise ValueError("Ace Trainer requires an active allied Pokemon target.")
+            if target.is_trainer_combatant():
+                raise ValueError("Ace Trainer only targets Pokemon.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Ace Trainer only targets your own Pokemon.")
+            if trainer.ap < 1:
+                raise ValueError("Ace Trainer requires 1 AP.")
+            normalized_stats = [_normalize_trained_stat_name(value) for value in self.stats]
+            normalized_stats = [value for value in normalized_stats if value]
+            if len(set(normalized_stats)) != len(normalized_stats):
+                raise ValueError("Ace Trainer requires different trained stats.")
+            max_stats = 2 if actor.has_trainer_feature("Champ in the Making") else 1
+            if len(normalized_stats) != max_stats:
+                if max_stats == 1:
+                    raise ValueError("Ace Trainer requires exactly one trained stat.")
+                raise ValueError("Champ in the Making requires exactly two trained stats.")
+            self.stats = normalized_stats
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            trainer.ap -= 1
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            choices["trained_stats"] = list(self.stats)
+            target.spec.poke_edge_choices = choices
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Ace Trainer",
+                    "effect": "apply_trained_stats",
+                    "stats": list(self.stats),
+                    "ap_remaining": trainer.ap,
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return f"Ace Trainer {self.target_id}"
+
+
+    class SignatureTechniqueAction(TrainerFeatureAction):
+        """Teach one Signature Technique modification to an allied Pokemon."""
+
+        feature_name = "Signature Technique"
+
+        def __init__(self, actor_id: str, target_id: str, move_name: str, modification: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+            self.move_name = str(move_name or "").strip()
+            self.modification = str(modification or "").strip()
+            self.modification_key = _normalize_signature_key(self.modification)
+
+        def _target_move(self, target: PokemonState) -> MoveSpec:
+            move_key = _normalize_signature_key(self.move_name)
+            for move in target.spec.moves:
+                if _normalize_signature_key(move.name) == move_key:
+                    return move
+            raise ValueError("Signature Technique requires a move on the target's move list.")
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Signature Technique requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Signature Technique only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Signature Technique only targets Pokemon.")
+            move = self._target_move(target)
+            mod_key = _normalize_signature_key(self.modification)
+            mod_spec = _SIGNATURE_TECHNIQUE_MODIFICATIONS.get(mod_key)
+            if not mod_spec:
+                raise ValueError("Unknown Signature Technique modification.")
+            training = str(mod_spec.get("training") or "")
+            if training and not actor.has_trainer_feature(training):
+                raise ValueError(f"{mod_spec.get('label')} requires {training}.")
+            legal, reason = _signature_mod_legal_for_move(move, mod_key)
+            if not legal:
+                raise ValueError(reason)
+            existing = _signature_entry(target.spec)
+            replacing = bool(
+                existing
+                and (
+                    _normalize_signature_key(existing.get("move_key") or existing.get("move")) != _normalize_signature_key(move.name)
+                    or _signature_mod_key(existing) != mod_key
+                )
+            )
+            available_tp = int(getattr(target.spec, "tutor_points", 0) or 0) + (1 if replacing else 0)
+            if available_tp < 2:
+                raise ValueError("Signature Technique requires at least 2 Tutor Points, after any replacement refund.")
+            self.move_name = move.name
+            self.modification = str(mod_spec.get("label") or self.modification)
+            self.modification_key = mod_key
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            move = self._target_move(target)
+            mod_spec = _SIGNATURE_TECHNIQUE_MODIFICATIONS[self.modification_key]
+            existing = _signature_entry(target.spec)
+            replacing = bool(
+                existing
+                and (
+                    _normalize_signature_key(existing.get("move_key") or existing.get("move")) != _normalize_signature_key(move.name)
+                    or _signature_mod_key(existing) != self.modification_key
+                )
+            )
+            if replacing:
+                target.spec.tutor_points = int(getattr(target.spec, "tutor_points", 0) or 0) + 1
+            target.spec.tutor_points = max(0, int(getattr(target.spec, "tutor_points", 0) or 0) - 2)
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            choices["signature_technique"] = {
+                "move": move.name,
+                "move_key": _normalize_signature_key(move.name),
+                "modification": str(mod_spec.get("label") or self.modification),
+                "modification_key": self.modification_key,
+                "required_training": str(mod_spec.get("training") or ""),
+            }
+            target.spec.poke_edge_choices = choices
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Signature Technique",
+                    "effect": "teach_signature_technique",
+                    "move": move.name,
+                    "modification": choices["signature_technique"]["modification"],
+                    "tp_remaining": target.spec.tutor_points,
+                    "replacement_refund": 1 if replacing else 0,
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return f"Signature Technique {self.target_id}"
+
+
     class QuickHealingAction(TrainerFeatureAction):
         """Remove up to three injuries from a Hardened allied Pokemon and heal two ticks per injury."""
 
@@ -6899,6 +9173,8 @@ class PokemonState:
                 raise ValueError("Quick Healing requires an active allied Pokemon target.")
             if target.controller_id != actor.controller_id:
                 raise ValueError("Quick Healing only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Quick Healing only targets Pokemon.")
             if not target.is_hardened():
                 raise ValueError("Quick Healing requires a Hardened Pokemon.")
             if int(target.injuries or 0) <= 0:
@@ -6951,6 +9227,8 @@ class PokemonState:
                 raise ValueError("Press requires an active allied Pokemon target.")
             if target.controller_id != actor.controller_id:
                 raise ValueError("Press only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Press only targets Pokemon.")
             if self.target_id == self.actor_id:
                 raise ValueError("Press must target one of your Pokemon, not the acting trainer combatant.")
             allowed = {"atk", "def", "spatk", "spdef", "spd", "accuracy", "evasion"}
@@ -7034,6 +9312,50 @@ class PokemonState:
             return "Press"
 
 
+    class MotivatedAction(Action):
+        """Spend the Motivated condition to recover one lowered combat stage."""
+
+        _ALLOWED_STATS = {"atk", "def", "spatk", "spdef", "spd", "accuracy", "evasion"}
+
+        def __init__(self, actor_id: str, stat: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+            self.stat = str(stat or "").strip().lower()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor = battle.pokemon.get(self.actor_id)
+            if actor is None or actor.fainted or not actor.active:
+                raise ValueError("Motivated requires a living active combatant.")
+            if not actor.get_temporary_effects("motivated"):
+                raise ValueError("Motivated requires the Motivated condition.")
+            if self.stat not in self._ALLOWED_STATS:
+                raise ValueError("Motivated requires a valid combat stage.")
+            if int(actor.combat_stages.get(self.stat, 0) or 0) >= 0:
+                raise ValueError("Motivated can only raise a combat stage below its default value.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            self.validate(battle)
+            actor = battle.pokemon[self.actor_id]
+            before = int(actor.combat_stages.get(self.stat, 0) or 0)
+            actor.combat_stages[self.stat] = min(0, before + 1)
+            actor.remove_temporary_effect("motivated")
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "feature": "Motivated",
+                    "effect": "combat_stage_recovery",
+                    "stat": self.stat,
+                    "amount": actor.combat_stages[self.stat] - before,
+                    "new_stage": actor.combat_stages[self.stat],
+                    "description": "Motivated is spent to raise one combat stage below its default value by 1.",
+                    "target_hp": actor.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Motivated"
+
+
     class SavageStrikeAction(TrainerFeatureAction):
         """Trade Tutor Points for Cruelty on an allied Pokemon."""
 
@@ -7046,27 +9368,24 @@ class PokemonState:
         def validate(self, battle: "BattleState") -> None:
             actor, _trainer = self.validate_feature_owner(battle)
             target = battle.pokemon.get(self.target_id)
-            if target is None or target.fainted or not target.active:
-                raise ValueError("Savage Strike requires an active allied Pokemon target.")
+            if target is None or target.fainted:
+                raise ValueError("Savage Strike requires an allied Pokemon target.")
             if target.controller_id != actor.controller_id:
                 raise ValueError("Savage Strike only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Savage Strike only targets Pokemon.")
             if int(getattr(target.spec, "tutor_points", 0) or 0) < 2:
                 raise ValueError("Savage Strike requires at least 2 Tutor Points.")
+            if target.has_ability("Cruelty"):
+                raise ValueError("Savage Strike cannot target a Pokemon that already has Cruelty.")
 
         def resolve(self, battle: "BattleState") -> None:
             actor, _trainer = self.validate_feature_owner(battle)
             target = battle.pokemon[self.target_id]
             target.spec.tutor_points = max(0, int(getattr(target.spec, "tutor_points", 0) or 0) - 2)
-            target.temporary_effects = [
-                entry
-                for entry in target.temporary_effects
-                if not (
-                    isinstance(entry, dict)
-                    and str(entry.get("kind") or "").strip().lower() == "ability_granted"
-                    and str(entry.get("ability") or "").strip().lower() == "cruelty"
-                    and str(entry.get("source") or "").strip().lower() == "savage strike"
-                )
-            ]
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            choices["savage_strike"] = {"granted": True, "ability": "Cruelty"}
+            target.spec.poke_edge_choices = choices
             target.add_temporary_effect("ability_granted", ability="Cruelty", source="Savage Strike", source_id=self.actor_id)
             battle.log_event(
                 {
@@ -7077,6 +9396,7 @@ class PokemonState:
                     "feature": "Savage Strike",
                     "effect": "ability_granted",
                     "ability": "Cruelty",
+                    "permanent": True,
                     "tutor_points_remaining": int(getattr(target.spec, "tutor_points", 0) or 0),
                     "target_hp": target.hp,
                 }
@@ -7084,6 +9404,2121 @@ class PokemonState:
 
         def describe_action(self) -> str:
             return "Savage Strike"
+
+
+    class CheerleaderPlaytestAction(TrainerFeatureAction):
+        """Trade Tutor Points for Friend Guard on an allied Pokemon."""
+
+        feature_name = "Cheerleader [Playtest]"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Cheerleader [Playtest] requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Cheerleader [Playtest] only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Cheerleader [Playtest] only targets Pokemon.")
+            if int(getattr(target.spec, "tutor_points", 0) or 0) < 2:
+                raise ValueError("Cheerleader [Playtest] requires at least 2 Tutor Points.")
+            if target.has_ability("Friend Guard"):
+                raise ValueError("Cheerleader [Playtest] cannot target a Pokemon that already has Friend Guard.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            target.spec.tutor_points = max(0, int(getattr(target.spec, "tutor_points", 0) or 0) - 2)
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            choices["cheerleader_playtest"] = {"granted": True, "ability": "Friend Guard"}
+            target.spec.poke_edge_choices = choices
+            target.add_temporary_effect("ability_granted", ability="Friend Guard", source="Cheerleader [Playtest]", source_id=self.actor_id)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Cheerleader [Playtest]",
+                    "effect": "ability_granted",
+                    "ability": "Friend Guard",
+                    "permanent": True,
+                    "tutor_points_remaining": int(getattr(target.spec, "tutor_points", 0) or 0),
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Cheerleader [Playtest]"
+
+
+    class CheerBrigadeAction(TrainerFeatureAction):
+        """Trade Tutor Points for Friend Guard on an allied Pokemon."""
+
+        feature_name = "Cheer Brigade"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Cheer Brigade requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Cheer Brigade only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Cheer Brigade only targets Pokemon.")
+            if int(getattr(target.spec, "tutor_points", 0) or 0) < 2:
+                raise ValueError("Cheer Brigade requires at least 2 Tutor Points.")
+            if target.has_ability("Friend Guard"):
+                raise ValueError("Cheer Brigade cannot target a Pokemon that already has Friend Guard.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            target.spec.tutor_points = max(0, int(getattr(target.spec, "tutor_points", 0) or 0) - 2)
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            choices["cheer_brigade"] = {"granted": True, "ability": "Friend Guard"}
+            target.spec.poke_edge_choices = choices
+            target.add_temporary_effect("ability_granted", ability="Friend Guard", source="Cheer Brigade", source_id=self.actor_id)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Cheer Brigade",
+                    "effect": "ability_granted",
+                    "ability": "Friend Guard",
+                    "permanent": True,
+                    "tutor_points_remaining": int(getattr(target.spec, "tutor_points", 0) or 0),
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Cheer Brigade"
+
+
+    class VimAndVigorAction(TrainerFeatureAction):
+        """Trade Tutor Points for a permanent Vigor ability grant."""
+
+        feature_name = "Vim and Vigor"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Vim and Vigor requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Vim and Vigor only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Vim and Vigor only targets Pokemon.")
+            if int(getattr(target.spec, "tutor_points", 0) or 0) < 2:
+                raise ValueError("Vim and Vigor requires at least 2 Tutor Points.")
+            choices = getattr(target.spec, "poke_edge_choices", {}) or {}
+            if choices.get("vim_and_vigor") or target.has_ability("Vigor"):
+                raise ValueError("Vim and Vigor may only target a Pokemon once.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            target.spec.tutor_points = max(0, int(getattr(target.spec, "tutor_points", 0) or 0) - 2)
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            choices["vim_and_vigor"] = {"granted": True, "ability": "Vigor"}
+            target.spec.poke_edge_choices = choices
+            target.add_temporary_effect("ability_granted", ability="Vigor", source="Vim and Vigor", source_id=self.actor_id)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Vim and Vigor",
+                    "effect": "ability_granted",
+                    "ability": "Vigor",
+                    "permanent": True,
+                    "tutor_points_remaining": int(getattr(target.spec, "tutor_points", 0) or 0),
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Vim and Vigor"
+
+
+    class RammingSpeedAction(TrainerFeatureAction):
+        """Trade Tutor Points for a permanent Run Up ability grant."""
+
+        feature_name = "Ramming Speed"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Ramming Speed requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Ramming Speed only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Ramming Speed only targets Pokemon.")
+            if int(getattr(target.spec, "tutor_points", 0) or 0) < 2:
+                raise ValueError("Ramming Speed requires at least 2 Tutor Points.")
+            choices = getattr(target.spec, "poke_edge_choices", {}) or {}
+            if choices.get("ramming_speed") or target.has_ability("Run Up"):
+                raise ValueError("Ramming Speed may only target a Pokemon once.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            target.spec.tutor_points = max(0, int(getattr(target.spec, "tutor_points", 0) or 0) - 2)
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            choices["ramming_speed"] = {"granted": True, "ability": "Run Up"}
+            target.spec.poke_edge_choices = choices
+            target.add_temporary_effect("ability_granted", ability="Run Up", source="Ramming Speed", source_id=self.actor_id)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Ramming Speed",
+                    "effect": "ability_granted",
+                    "ability": "Run Up",
+                    "permanent": True,
+                    "tutor_points_remaining": int(getattr(target.spec, "tutor_points", 0) or 0),
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Ramming Speed"
+
+
+    class HitsTheSpotAction(TrainerFeatureAction):
+        """Spend AP after a digestion trade to gain stacking temporary HP."""
+
+        feature_name = "Hits the Spot"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+            self.target_id = str(target_id or "").strip()
+
+        def _ready_entry(self, actor: "PokemonState") -> Optional[dict]:
+            for entry in reversed(list(actor.get_temporary_effects("hits_the_spot_ready"))):
+                if str(entry.get("target_id") or "").strip() == self.target_id:
+                    return entry
+            return None
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_ap(battle, 1)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Hits the Spot requires the combatant that traded the digestion buff.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Hits the Spot only applies to you or your Pokemon.")
+            entry = self._ready_entry(actor)
+            if entry is None:
+                raise ValueError("Hits the Spot requires a recent digestion trade trigger.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_ap(battle, 1)
+            target = battle.pokemon[self.target_id]
+            trainer.consume_ap(1)
+            while True:
+                entry = self._ready_entry(actor)
+                if entry is None:
+                    break
+                if entry in actor.temporary_effects:
+                    actor.temporary_effects.remove(entry)
+                    break
+            intuition_rank = max(
+                trainer.skill_rank("intuition"),
+                battle._combatant_skill_rank(actor, "intuition", trainer_override_id=actor.controller_id),
+            )
+            gained = target.add_temp_hp(max(0, intuition_rank * 2))
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Hits the Spot",
+                    "effect": "temp_hp",
+                    "amount": gained,
+                    "temp_hp": target.temp_hp,
+                    "description": "Hits the Spot grants temporary HP when a digestion buff is traded.",
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Hits the Spot"
+
+
+    class ComplexAftertasteAction(TrainerFeatureAction):
+        """Spend AP to add the matching tasty-snack digestion buff after a taste trigger."""
+
+        feature_name = "Complex Aftertaste"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+            self.target_id = str(target_id or "").strip()
+
+        def _ready_entry(self, actor: "PokemonState") -> Optional[dict]:
+            for entry in reversed(list(actor.get_temporary_effects("complex_aftertaste_ready"))):
+                if str(entry.get("target_id") or "").strip() == self.target_id:
+                    return entry
+            return None
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_ap(battle, 1)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Complex Aftertaste requires the combatant that traded the taste buff.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Complex Aftertaste only applies to you or an ally.")
+            entry = self._ready_entry(actor)
+            if entry is None:
+                raise ValueError("Complex Aftertaste requires a recent taste-triggered digestion trade.")
+            bonus_buff = battle._chef_aftertaste_buff(
+                str(entry.get("taste") or ""),
+                source_item=str(entry.get("source_item") or ""),
+                instance_id=str(entry.get("instance_id") or ""),
+            )
+            if bonus_buff is None:
+                raise ValueError("Complex Aftertaste could not resolve the matching tasty snack buff.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_ap(battle, 1)
+            target = battle.pokemon[self.target_id]
+            trainer.consume_ap(1)
+            entry = self._ready_entry(actor)
+            if entry is None:
+                return
+            if entry in actor.temporary_effects:
+                actor.temporary_effects.remove(entry)
+            bonus_buff = battle._chef_aftertaste_buff(
+                str(entry.get("taste") or ""),
+                source_item=str(entry.get("source_item") or ""),
+                instance_id=str(entry.get("instance_id") or ""),
+            )
+            if bonus_buff is None:
+                return
+            target.add_food_buff(bonus_buff, ignore_limit=True)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Complex Aftertaste",
+                    "effect": "food_buff",
+                    "taste": str(entry.get("taste") or ""),
+                    "buff": str(bonus_buff.get("name") or bonus_buff.get("effect") or ""),
+                    "description": "Complex Aftertaste adds the matching Tasty Snack digestion buff.",
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Complex Aftertaste"
+
+
+    class CulinaryAppreciationAction(TrainerFeatureAction):
+        """Trade Tutor Points for a permanent Gluttony grant."""
+
+        feature_name = "Culinary Appreciation"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Culinary Appreciation requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Culinary Appreciation only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Culinary Appreciation only targets Pokemon.")
+            if int(getattr(target.spec, "tutor_points", 0) or 0) < 2:
+                raise ValueError("Culinary Appreciation requires at least 2 Tutor Points.")
+            choices = getattr(target.spec, "poke_edge_choices", {}) or {}
+            if choices.get("culinary_appreciation") or target.has_ability("Gluttony"):
+                raise ValueError("That Pokemon already benefits from Culinary Appreciation.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            target.spec.tutor_points = max(0, int(getattr(target.spec, "tutor_points", 0) or 0) - 2)
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            choices["culinary_appreciation"] = {"granted": True, "ability": "Gluttony"}
+            target.spec.poke_edge_choices = choices
+            target.add_temporary_effect("ability_granted", ability="Gluttony", source="Culinary Appreciation", source_id=self.actor_id)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Culinary Appreciation",
+                    "effect": "ability_granted",
+                    "ability": "Gluttony",
+                    "permanent": True,
+                    "tutor_points_remaining": int(getattr(target.spec, "tutor_points", 0) or 0),
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Culinary Appreciation"
+
+
+    class TypeAceAction(TrainerFeatureAction):
+        """Trade Tutor Points for a chosen-type strategist or low-HP ability."""
+
+        feature_name = "Type Ace"
+
+        def __init__(self, actor_id: str, target_id: str, ability_mode: str = "strategist") -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+            self.ability_mode = str(ability_mode or "strategist").strip().lower()
+
+        def _chosen_type(self, actor: "PokemonState") -> str:
+            chosen = next(iter(_trainer_feature_type_entries(actor, self.feature_name)), "")
+            if not chosen:
+                raise ValueError("Type Ace requires a chosen type.")
+            return chosen
+
+        def _granted_ability(self, chosen_type: str) -> str:
+            if self.ability_mode in {"last_chance", "last chance", "surge"}:
+                ability = _type_ace_last_chance_ability(chosen_type)
+                if not ability:
+                    raise ValueError("Type Ace could not resolve a matching Last Chance ability.")
+                return ability
+            if self.ability_mode not in {"strategist", "type_strategist", "type strategist"}:
+                raise ValueError("Type Ace requires either strategist or last_chance mode.")
+            return "Type Strategist"
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            chosen_type = self._chosen_type(actor)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Type Ace requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Type Ace only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Type Ace only targets Pokemon.")
+            if int(getattr(target.spec, "tutor_points", 0) or 0) < 2:
+                raise ValueError("Type Ace requires at least 2 Tutor Points.")
+            choices = getattr(target.spec, "poke_edge_choices", {}) or {}
+            if choices.get("type_ace"):
+                raise ValueError("Type Ace may only target a Pokemon once.")
+            ability = self._granted_ability(chosen_type)
+            if ability == "Type Strategist":
+                metadata = target.ability_metadata("Type Strategist") or {}
+                if _normalize_type_ace_type_name(metadata.get("chosen_type")) == chosen_type:
+                    raise ValueError("That Pokemon already has the matching Strategist ability.")
+            elif target.has_ability(ability):
+                raise ValueError("That Pokemon already has the chosen Type Ace ability.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            chosen_type = self._chosen_type(actor)
+            target = battle.pokemon[self.target_id]
+            ability = self._granted_ability(chosen_type)
+            target.spec.tutor_points = max(0, int(getattr(target.spec, "tutor_points", 0) or 0) - 2)
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            choices["type_ace"] = {
+                "granted": True,
+                "ability": ability,
+                "chosen_type": chosen_type,
+                "ability_mode": "last_chance" if ability != "Type Strategist" else "strategist",
+            }
+            target.spec.poke_edge_choices = choices
+            effect_kwargs = {"ability": ability, "source": "Type Ace", "source_id": self.actor_id}
+            if ability == "Type Strategist":
+                effect_kwargs["chosen_type"] = chosen_type
+            target.add_temporary_effect("ability_granted", **effect_kwargs)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Type Ace",
+                    "effect": "ability_granted",
+                    "ability": ability,
+                    "chosen_type": chosen_type,
+                    "ability_mode": choices["type_ace"]["ability_mode"],
+                    "permanent": True,
+                    "tutor_points_remaining": int(getattr(target.spec, "tutor_points", 0) or 0),
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Type Ace"
+
+
+    class TypeRefreshAction(TrainerFeatureAction):
+        """Restore chosen-type Scene and EOT move frequencies on an allied Pokemon."""
+
+        feature_name = "Type Refresh"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+
+        def _chosen_type(self, actor: "PokemonState") -> str:
+            chosen = next(iter(_trainer_feature_type_entries(actor, self.feature_name)), "")
+            if not chosen:
+                raise ValueError("Type Refresh requires a chosen type.")
+            return chosen
+
+        def _refreshable_moves(self, battle: "BattleState", target: "PokemonState", chosen_type: str) -> Tuple[List[MoveSpec], List[MoveSpec]]:
+            scene_moves: List[MoveSpec] = []
+            eot_moves: List[MoveSpec] = []
+            usage = battle.frequency_usage.get(self.target_id, {})
+            for move in target.spec.moves:
+                if _normalize_type_ace_type_name(move.type) != chosen_type:
+                    continue
+                if int(usage.get(move.name, 0) or 0) <= 0:
+                    continue
+                definition = battle._effective_move_frequency_definition(target, move)
+                if definition is None:
+                    definition = battle._frequency_definition(move)
+                if definition is None:
+                    continue
+                freq = str(definition.raw or "").strip().lower()
+                if freq == "eot":
+                    eot_moves.append(move)
+                elif freq.startswith("scene"):
+                    scene_moves.append(move)
+            return scene_moves, eot_moves
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_ap(battle, 2)
+            chosen_type = self._chosen_type(actor)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Type Refresh requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Type Refresh only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Type Refresh only targets Pokemon.")
+            if battle._feature_scene_use_count(target, "Type Refresh") >= 1:
+                raise ValueError("Type Refresh may only affect a Pokemon once per scene.")
+            scene_moves, eot_moves = self._refreshable_moves(battle, target, chosen_type)
+            if not scene_moves and not eot_moves:
+                raise ValueError("Type Refresh requires spent chosen-type Scene or EOT moves.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.spend_ap(battle, 2)
+            chosen_type = self._chosen_type(actor)
+            target = battle.pokemon[self.target_id]
+            scene_moves, eot_moves = self._refreshable_moves(battle, target, chosen_type)
+            restored_scene = None
+            if scene_moves:
+                restored_scene = scene_moves[0]
+                battle._restore_move_frequency_usage(self.target_id, restored_scene)
+            refreshed_eot: List[str] = []
+            for move in eot_moves:
+                battle._restore_move_frequency_usage(self.target_id, move)
+                refreshed_eot.append(str(move.name or "").strip())
+            battle._record_feature_scene_use(target, "Type Refresh")
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": trainer.identifier,
+                    "feature": "Type Refresh",
+                    "effect": "refresh_frequency",
+                    "chosen_type": chosen_type,
+                    "scene_move": str(restored_scene.name or "").strip() if restored_scene is not None else "",
+                    "eot_moves": refreshed_eot,
+                    "ap_spent": 2,
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Type Refresh"
+
+
+    class MoveSyncAction(TrainerFeatureAction):
+        """Retype one allied Pokemon move to the trainer's chosen Type Ace type."""
+
+        feature_name = "Move Sync"
+
+        def __init__(self, actor_id: str, target_id: str, move_name: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+            self.move_name = str(move_name or "").strip()
+
+        def _chosen_type(self, actor: "PokemonState") -> str:
+            chosen = next(iter(_trainer_feature_type_entries(actor, self.feature_name)), "")
+            if not chosen:
+                raise ValueError("Move Sync requires a chosen type.")
+            return chosen
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            chosen_type = self._chosen_type(actor)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Move Sync requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Move Sync only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Move Sync only targets Pokemon.")
+            if int(getattr(target.spec, "tutor_points", 0) or 0) < 1:
+                raise ValueError("Move Sync requires at least 1 Tutor Point.")
+            move = battle._find_known_move(target, self.move_name)
+            if move is None:
+                raise ValueError("Move Sync requires a known move.")
+            existing = (getattr(target.spec, "poke_edge_choices", {}) or {}).get("move_sync")
+            existing_move = str(existing.get("move") or "").strip().lower() if isinstance(existing, dict) else ""
+            if existing_move == self.move_name.strip().lower() and _normalize_type_ace_type_name(move.type) == chosen_type:
+                raise ValueError("That move is already synced to the chosen type.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            chosen_type = self._chosen_type(actor)
+            target = battle.pokemon[self.target_id]
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            existing = choices.get("move_sync")
+            if isinstance(existing, dict):
+                previous_name = str(existing.get("move") or "").strip()
+                previous = battle._find_known_move(target, previous_name)
+                if previous is not None:
+                    original_type = str(existing.get("original_type") or "").strip()
+                    if original_type:
+                        previous.type = original_type
+            move = battle._find_known_move(target, self.move_name)
+            if move is None:
+                raise ValueError("Move Sync requires a known move.")
+            original_type = move.type
+            if isinstance(existing, dict) and str(existing.get("move") or "").strip().lower() == self.move_name.lower():
+                original_type = str(existing.get("original_type") or "").strip() or original_type
+            move.type = chosen_type.title()
+            target.spec.tutor_points = max(0, int(getattr(target.spec, "tutor_points", 0) or 0) - 1)
+            choices["move_sync"] = {
+                "move": move.name,
+                "original_type": original_type,
+                "synced_type": chosen_type,
+            }
+            target.spec.poke_edge_choices = choices
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Move Sync",
+                    "effect": "retype_move",
+                    "move": move.name,
+                    "original_type": original_type,
+                    "chosen_type": chosen_type,
+                    "tutor_points_remaining": int(getattr(target.spec, "tutor_points", 0) or 0),
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Move Sync"
+
+
+    class ExtraOrdinaryAction(TrainerFeatureAction):
+        """Grant the missing normal Type Ace ability to a qualifying allied Pokemon."""
+
+        feature_name = "Extra Ordinary"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+
+        def _has_normal_strategist(self, target: "PokemonState") -> bool:
+            metadata = target.ability_metadata("Type Strategist") or {}
+            return _normalize_type_ace_type_name(metadata.get("chosen_type")) == "normal"
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Extra Ordinary requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Extra Ordinary only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Extra Ordinary only targets Pokemon.")
+            if "normal" not in {_normalize_type_ace_type_name(token) for token in target.spec.types}:
+                raise ValueError("Extra Ordinary only targets Normal-type Pokemon.")
+            choices = getattr(target.spec, "poke_edge_choices", {}) or {}
+            if choices.get("extra_ordinary"):
+                raise ValueError("Extra Ordinary may only target a Pokemon once.")
+            has_last_chance = target.has_ability("Last Chance")
+            has_strategist = self._has_normal_strategist(target)
+            if not (has_last_chance or has_strategist):
+                raise ValueError("Extra Ordinary requires Last Chance or Normal Strategist.")
+            if has_last_chance and has_strategist:
+                raise ValueError("That Pokemon already has both Normal Type Ace abilities.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            has_last_chance = target.has_ability("Last Chance")
+            ability = "Type Strategist" if has_last_chance else "Last Chance"
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            choices["extra_ordinary"] = {
+                "granted": True,
+                "ability": ability,
+                "chosen_type": "normal",
+            }
+            target.spec.poke_edge_choices = choices
+            effect_kwargs = {"ability": ability, "source": "Extra Ordinary", "source_id": self.actor_id}
+            if ability == "Type Strategist":
+                effect_kwargs["chosen_type"] = "normal"
+            target.add_temporary_effect("ability_granted", **effect_kwargs)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Extra Ordinary",
+                    "effect": "ability_granted",
+                    "ability": ability,
+                    "chosen_type": "normal",
+                    "permanent": True,
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Extra Ordinary"
+
+
+    class CleverRuseAction(PokemonFeatureAction):
+        """Resolve Clever Ruse after a miss or by spending a Standard Action."""
+
+        feature_name = "Clever Ruse"
+        _VALID_CHOICES = {"evasion", "ignore_evasion", "disengage"}
+
+        def __init__(self, actor_id: str, choices: Optional[Sequence[str]] = None, manual: bool = False) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE if not manual else ActionType.STANDARD)
+            self.choices = [str(choice or "").strip().lower() for choice in (choices or []) if str(choice or "").strip()]
+            self.manual = bool(manual)
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            if actor.fainted or not actor.active:
+                raise ValueError("Clever Ruse requires an active Pokemon.")
+            if "dark" not in {_normalize_type_ace_type_name(token) for token in actor.spec.types}:
+                raise ValueError("Clever Ruse requires a Dark-Type Pokemon.")
+            if any(
+                str(entry.get("feature") or "").strip().lower() == "clever ruse"
+                and int(entry.get("round", -1) or -1) == battle.round
+                for entry in actor.get_temporary_effects("feature_round_marker")
+            ):
+                raise ValueError("Clever Ruse may only be used once per round.")
+            if not self.manual and not actor.get_temporary_effects("clever_ruse_ready"):
+                raise ValueError("Clever Ruse is not currently triggered.")
+            chosen = []
+            seen: Set[str] = set()
+            for choice in self.choices:
+                if choice not in self._VALID_CHOICES or choice in seen:
+                    continue
+                seen.add(choice)
+                chosen.append(choice)
+            if len(chosen) != 2:
+                raise ValueError("Clever Ruse requires exactly two distinct effects.")
+            if "disengage" in chosen and actor.position is not None:
+                destination = battle._best_disengage_destination(actor_id=self.actor_id)
+                if destination is None or destination == actor.position:
+                    raise ValueError("Clever Ruse cannot currently disengage.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            chosen = []
+            seen: Set[str] = set()
+            for choice in self.choices:
+                if choice in self._VALID_CHOICES and choice not in seen:
+                    seen.add(choice)
+                    chosen.append(choice)
+            actor.add_temporary_effect(
+                "feature_round_marker",
+                feature="Clever Ruse",
+                round=battle.round,
+                expires_round=battle.round,
+            )
+            while actor.remove_temporary_effect("clever_ruse_ready"):
+                continue
+            if "evasion" in chosen:
+                actor.add_temporary_effect(
+                    "evasion_bonus",
+                    amount=4,
+                    scope="all",
+                    source="Clever Ruse",
+                    expires_round=battle.round + 1,
+                )
+            if "ignore_evasion" in chosen:
+                actor.add_temporary_effect(
+                    "ignore_non_stat_evasion",
+                    source="Clever Ruse",
+                    expires_round=battle.round + 1,
+                )
+            destination = None
+            if "disengage" in chosen:
+                destination = battle._best_disengage_destination(actor_id=self.actor_id)
+                if destination is not None and actor.position is not None and destination != actor.position:
+                    origin = actor.position
+                    actor.position = destination
+                    battle.log_event(
+                        {
+                            "type": "trainer_feature",
+                            "actor": self.actor_id,
+                            "trainer": actor.controller_id,
+                            "feature": "Clever Ruse",
+                            "effect": "disengage",
+                            "from": origin,
+                            "to": destination,
+                            "description": "Clever Ruse lets the user slip away after the triggering miss.",
+                            "target_hp": actor.hp,
+                        }
+                    )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Clever Ruse",
+                    "effect": "resolve",
+                    "choices": list(chosen),
+                    "manual": self.manual,
+                    "destination": list(destination) if destination else None,
+                    "target_hp": actor.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Clever Ruse"
+
+
+    class FairyLightsAction(PokemonFeatureAction):
+        """Create or reposition Fairy Lights around a Fairy-Type Pokemon."""
+
+        feature_name = "Fairy Lights"
+
+        def __init__(self, actor_id: str, mode: str = "create", positions: Optional[Sequence[Tuple[int, int]]] = None) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD if str(mode or "").strip().lower() != "reposition" else ActionType.FULL)
+            self.mode = str(mode or "create").strip().lower()
+            self.positions = [
+                (int(coord[0]), int(coord[1]))
+                for coord in (positions or [])
+                if isinstance(coord, (list, tuple)) and len(coord) >= 2
+            ]
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            if actor.fainted or not actor.active or actor.position is None:
+                raise ValueError("Fairy Lights requires an active Pokemon on the field.")
+            if "fairy" not in {_normalize_type_ace_type_name(token) for token in actor.spec.types}:
+                raise ValueError("Fairy Lights requires a Fairy-Type Pokemon.")
+            if self.mode == "reposition":
+                entries = list(actor.get_temporary_effects("fairy_lights"))
+                if not entries:
+                    raise ValueError("Fairy Lights must exist before they can be repositioned.")
+                if self.positions and len(self.positions) != len(entries):
+                    raise ValueError("Fairy Lights repositioning requires one destination per active light.")
+                if battle.grid is not None:
+                    for coord in self.positions:
+                        if not battle.grid.in_bounds(coord):
+                            raise ValueError("Fairy Light destination is out of bounds.")
+                        if targeting.chebyshev_distance(actor.position, coord) > 6:
+                            raise ValueError("Fairy Lights must remain within 6 meters of the creator.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            if self.mode == "reposition":
+                entries = list(actor.get_temporary_effects("fairy_lights"))
+                if self.positions:
+                    for entry, coord in zip(entries, self.positions):
+                        entry["coord"] = coord
+                battle.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": self.actor_id,
+                        "trainer": actor.controller_id,
+                        "feature": "Fairy Lights",
+                        "effect": "reposition",
+                        "positions": [list(entry.get("coord")) for entry in entries if entry.get("coord") is not None],
+                        "target_hp": actor.hp,
+                    }
+                )
+                return
+            while actor.remove_temporary_effect("fairy_lights"):
+                continue
+            coords = [actor.position, actor.position, actor.position]
+            for coord in coords:
+                actor.add_temporary_effect("fairy_lights", coord=coord, source="Fairy Lights")
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Fairy Lights",
+                    "effect": "create",
+                    "lights": 3,
+                    "target_hp": actor.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Fairy Lights"
+
+
+    class CloseQuartersMasteryAction(TrainerFeatureAction):
+        """Bind Close Quarters Mastery to an allied Pokemon."""
+
+        feature_name = "Close Quarters Mastery"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            if trainer.available_ap(battle.round) < 2:
+                raise ValueError("Close Quarters Mastery requires 2 AP.")
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or target.is_trainer_combatant() or not target.active:
+                raise ValueError("Close Quarters Mastery requires an active allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Close Quarters Mastery only targets your own Pokemon.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            trainer.consume_ap(2)
+            while target.remove_temporary_effect("close_quarters_mastery_bound"):
+                continue
+            target.add_temporary_effect(
+                "close_quarters_mastery_bound",
+                source="Close Quarters Mastery",
+                source_id=self.actor_id,
+                trainer_id=trainer.identifier,
+            )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": trainer.identifier,
+                    "feature": "Close Quarters Mastery",
+                    "effect": "feature_bound",
+                    "ap_spent": 2,
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Close Quarters Mastery"
+
+
+    class CelerityAction(TrainerFeatureAction):
+        """Bind Celerity to an allied Flying-type or sky-capable Pokemon."""
+
+        feature_name = "Celerity"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            if trainer.available_ap(battle.round) < 2:
+                raise ValueError("Celerity requires 2 AP.")
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or target.is_trainer_combatant() or not target.active:
+                raise ValueError("Celerity requires an active allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Celerity only targets your own Pokemon.")
+            has_sky_speed = bool(target.movement_speed("sky") or target.movement_speed("levitate"))
+            if "flying" not in {_normalize_type_ace_type_name(token) for token in target.spec.types} and not has_sky_speed:
+                raise ValueError("Celerity requires a Flying-Type Pokemon or one with Sky/Levitate movement.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            trainer.consume_ap(2)
+            rank = battle._type_linked_rank(actor, "flying")
+            while target.remove_temporary_effect("celerity_bound"):
+                continue
+            for entry in list(target.get_temporary_effects("initiative_bonus")):
+                if str(entry.get("source") or "").strip().lower() == "celerity" and entry in target.temporary_effects:
+                    target.temporary_effects.remove(entry)
+            target.add_temporary_effect(
+                "celerity_bound",
+                source="Celerity",
+                source_id=self.actor_id,
+                trainer_id=trainer.identifier,
+                amount=rank,
+            )
+            if rank > 0:
+                target.add_temporary_effect(
+                    "initiative_bonus",
+                    amount=rank,
+                    source="Celerity",
+                )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": trainer.identifier,
+                    "feature": "Celerity",
+                    "effect": "feature_bound",
+                    "amount": rank,
+                    "ap_spent": 2,
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Celerity"
+
+
+    class FoilingFoliageAction(TrainerFeatureAction):
+        """Allow one Grass-Type Status move to bypass move-slot limits."""
+
+        feature_name = "Foiling Foliage"
+
+        def __init__(self, actor_id: str, target_id: str, move_name: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+            self.move_name = str(move_name or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or target.is_trainer_combatant():
+                raise ValueError("Foiling Foliage requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Foiling Foliage only targets your own Pokemon.")
+            move = battle._find_known_move(target, self.move_name)
+            if move is None:
+                raise ValueError("Foiling Foliage requires a known move.")
+            if _normalize_type_ace_type_name(move.type) != "grass" or str(move.category or "").strip().lower() != "status":
+                raise ValueError("Foiling Foliage requires a Grass-Type Status move.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            choices = dict(getattr(target.spec, "poke_edge_choices", {}) or {})
+            choices["foiling_foliage"] = {"move": self.move_name}
+            target.spec.poke_edge_choices = choices
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Foiling Foliage",
+                    "effect": "move_slot_bypass",
+                    "move": self.move_name,
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Foiling Foliage"
+
+
+    class FloodAction(PokemonFeatureAction):
+        """Use a damaging Water-Type move with Flood!'s alternate area."""
+
+        feature_name = "Flood!"
+
+        def __init__(
+            self,
+            actor_id: str,
+            move_name: str,
+            mode: str,
+            target_id: Optional[str] = None,
+            target_position: Optional[Tuple[int, int]] = None,
+        ) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.SHIFT)
+            self.move_name = str(move_name or "").strip()
+            self.mode = str(mode or "").strip().lower()
+            self.target_id = str(target_id or "").strip() or None
+            self.target_position = target_position
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            if "water" not in {_normalize_type_ace_type_name(token) for token in actor.spec.types}:
+                raise ValueError("Flood! requires a Water-Type Pokemon.")
+            move = battle._find_known_move(actor, self.move_name)
+            if move is None:
+                raise ValueError("Flood! requires a known move.")
+            if _normalize_type_ace_type_name(move.type) != "water" or str(move.category or "").strip().lower() == "status":
+                raise ValueError("Flood! requires a damaging Water-Type move.")
+            override = "flood_line" if self.mode in {"line", "line_4", "flood_line"} else "flood_close_blast"
+            UseMoveAction(
+                actor_id=self.actor_id,
+                move_name=self.move_name,
+                target_id=self.target_id,
+                target_position=self.target_position,
+                range_override_mode=override,
+            ).validate(battle)
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            override = "flood_line" if self.mode in {"line", "line_4", "flood_line"} else "flood_close_blast"
+            UseMoveAction(
+                actor_id=self.actor_id,
+                move_name=self.move_name,
+                target_id=self.target_id,
+                target_position=self.target_position,
+                range_override_mode=override,
+            ).resolve(battle)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Flood!",
+                    "effect": "range_override",
+                    "mode": override,
+                    "move": self.move_name,
+                    "target_hp": actor.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Flood!"
+
+
+    class MountPokemonAction(TrainerFeatureAction):
+        """Mount an adjacent allied Pokemon."""
+
+        feature_name = ""
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.SHIFT)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self._actor_and_trainer(battle)
+            if not actor.is_trainer_combatant():
+                raise ValueError("Only trainer combatants can mount Pokemon.")
+            if not (
+                actor.has_trainer_feature("Mounted Prowess")
+                or actor.has_trainer_feature("Ride as One")
+                or actor.has_trainer_feature("Rider")
+            ):
+                raise ValueError("Mounting requires Mounted Prowess or Rider training.")
+            if battle._is_mounted_actor(self.actor_id):
+                raise ValueError("That trainer is already mounted.")
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or not target.active:
+                raise ValueError("Mounting requires an active allied Pokemon.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("You may only mount your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("You can only mount Pokemon.")
+            if battle._is_mounted_actor(self.target_id):
+                raise ValueError("That Pokemon is already serving as a mount.")
+            if actor.position is None or target.position is None or battle._combatant_distance(actor, target) > 1:
+                raise ValueError("Mounting requires an adjacent allied Pokemon.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self._actor_and_trainer(battle)
+            battle._mount_pair(self.actor_id, self.target_id)
+            target = battle.pokemon[self.target_id]
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Mounted Prowess",
+                    "effect": "mount",
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Mount"
+
+
+    class DismountPokemonAction(TrainerFeatureAction):
+        """Dismount from the current mount."""
+
+        feature_name = ""
+
+        def __init__(self, actor_id: str, destination: Optional[Tuple[int, int]] = None) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.SHIFT)
+            self.destination = (
+                (int(destination[0]), int(destination[1]))
+                if destination is not None
+                else None
+            )
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self._actor_and_trainer(battle)
+            if not actor.is_trainer_combatant():
+                raise ValueError("Only trainer combatants can dismount.")
+            mount_id = battle._mounted_mount_id(self.actor_id)
+            if mount_id is None:
+                raise ValueError("That trainer is not mounted.")
+            legal_positions = battle._mounted_dismount_positions(self.actor_id)
+            if self.destination is not None and self.destination not in legal_positions:
+                raise ValueError("That tile is not a legal dismount destination.")
+            if self.destination is None and not legal_positions:
+                raise ValueError("No legal dismount tile is available.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self._actor_and_trainer(battle)
+            mount_id = battle._mounted_mount_id(self.actor_id)
+            destination = battle._dismount_pair(self.actor_id, self.destination)
+            mount = battle.pokemon.get(mount_id) if mount_id else None
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": mount_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Mounted Prowess",
+                    "effect": "dismount",
+                    "destination": list(destination) if destination is not None else None,
+                    "target_hp": mount.hp if mount is not None else None,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Dismount"
+
+
+    class RideAsOneSwapTurnAction(TrainerFeatureAction):
+        """Swap the current Ride as One slot to the mounted partner."""
+
+        feature_name = "Ride as One"
+
+        def __init__(self, actor_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            if not actor.is_trainer_combatant():
+                raise ValueError("Ride as One requires a trainer combatant.")
+            if not battle._ride_as_one_slot_swap_available(self.actor_id):
+                raise ValueError("Ride as One can only swap the first slot before taking actions.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            partner_id = battle._ride_as_one_swap_turn(self.actor_id)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": partner_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Ride as One",
+                    "effect": "turn_swap",
+                    "target_hp": battle.pokemon.get(partner_id).hp if battle.pokemon.get(partner_id) is not None else None,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Ride as One Turn Swap"
+
+
+    class ConquerorsMarchAction(TrainerFeatureAction):
+        """Apply Conqueror's March to a mounted ally with Run Up for the round."""
+
+        feature_name = "Conqueror's March"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or not target.active:
+                raise ValueError("Conqueror's March requires an active allied Pokemon target.")
+            if target.controller_id != actor.controller_id or target.is_trainer_combatant():
+                raise ValueError("Conqueror's March only targets your own Pokemon.")
+            if not target.has_ability("Run Up"):
+                raise ValueError("Conqueror's March requires a Pokemon with Run Up.")
+            if battle._mounted_rider_id(self.target_id) != self.actor_id:
+                raise ValueError("Conqueror's March requires your current mount.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            target.add_temporary_effect(
+                "conquerors_march",
+                source="Conqueror's March",
+                source_id=self.actor_id,
+                expires_round=battle.round,
+            )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Conqueror's March",
+                    "effect": "order_applied",
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Conqueror's March"
+
+
+    class _StatEmbodimentAction(TrainerFeatureAction):
+        """Grant a scene-long stat-themed ability to an allied Pokemon."""
+
+        stat_key: str = ""
+
+        def __init__(self, actor_id: str, target_id: str, ability: str = "") -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.SWIFT)
+            self.target_id = str(target_id or "").strip()
+            self.ability = str(ability or "").strip().title()
+
+        def _resolve_stat_key(self, actor: "PokemonState") -> str:
+            if self.stat_key:
+                return self.stat_key
+            for entry in actor.trainer_feature_entries(self.feature_name):
+                chosen = (
+                    entry.get("chosen_stat")
+                    or entry.get("stat")
+                    or entry.get("selected_stat")
+                    or entry.get("choice")
+                    or entry.get("option")
+                )
+                normalized = _normalize_trained_stat_name(chosen)
+                if normalized in _STAT_EMBODIMENT_ABILITIES:
+                    return normalized
+            return ""
+
+        def _allowed_abilities(self, stat_key: str) -> Tuple[str, str]:
+            return _STAT_EMBODIMENT_ABILITIES.get(stat_key, ("", ""))
+
+        def _source_label(self, stat_key: str) -> str:
+            label = self.feature_name or "Stat Embodiment"
+            if label == "Stat Embodiment":
+                for feature_name, mapped_stat in _STAT_EMBODIMENT_FEATURE_TO_STAT.items():
+                    if mapped_stat == stat_key:
+                        return feature_name.title()
+            return label
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_ap(battle, 1)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError(f"{self.feature_name or 'Stat Embodiment'} requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id or target.is_trainer_combatant():
+                raise ValueError(f"{self.feature_name or 'Stat Embodiment'} only targets your own Pokemon.")
+            stat_key = self._resolve_stat_key(actor)
+            if stat_key not in _STAT_EMBODIMENT_ABILITIES:
+                raise ValueError("Stat Embodiment requires a chosen stat.")
+            allowed = {value.lower() for value in self._allowed_abilities(stat_key) if value}
+            if not self.ability:
+                self.ability = next(iter(_STAT_EMBODIMENT_ABILITIES[stat_key]))
+            if self.ability.lower() not in allowed:
+                options = " or ".join(self._allowed_abilities(stat_key))
+                raise ValueError(f"{self._source_label(stat_key)} grants {options}.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.spend_ap(battle, 1)
+            target = battle.pokemon[self.target_id]
+            stat_key = self._resolve_stat_key(actor)
+            source_label = self._source_label(stat_key)
+            target.temporary_effects = [
+                entry
+                for entry in target.temporary_effects
+                if not (
+                    isinstance(entry, dict)
+                    and entry.get("kind") == "ability_granted"
+                    and str(entry.get("source") or "").strip().lower()
+                    in {
+                        "stat embodiment",
+                        "attack embodiment",
+                        "defense embodiment",
+                        "special attack embodiment",
+                        "special defense embodiment",
+                        "speed embodiment",
+                    }
+                )
+            ]
+            target.add_temporary_effect(
+                "ability_granted",
+                ability=self.ability,
+                source=source_label,
+                source_id=self.actor_id,
+            )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": trainer.identifier,
+                    "feature": source_label,
+                    "effect": "ability_granted",
+                    "ability": self.ability,
+                    "scene": True,
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return self.feature_name or "Stat Embodiment"
+
+
+    class StatEmbodimentAction(_StatEmbodimentAction):
+        feature_name = "Stat Embodiment"
+
+
+    class AttackEmbodimentAction(_StatEmbodimentAction):
+        feature_name = "Attack Embodiment"
+        stat_key = "atk"
+
+
+    class DefenseEmbodimentAction(_StatEmbodimentAction):
+        feature_name = "Defense Embodiment"
+        stat_key = "def"
+
+
+    class SpecialAttackEmbodimentAction(_StatEmbodimentAction):
+        feature_name = "Special Attack Embodiment"
+        stat_key = "spatk"
+
+
+    class SpecialDefenseEmbodimentAction(_StatEmbodimentAction):
+        feature_name = "Special Defense Embodiment"
+        stat_key = "spdef"
+
+
+    class SpeedEmbodimentAction(_StatEmbodimentAction):
+        feature_name = "Speed Embodiment"
+        stat_key = "spd"
+
+
+    class _StatTrainingAction(TrainerFeatureAction):
+        feature_name = "Stat Training"
+        stat_key: Optional[str] = None
+
+        def __init__(self, actor_id: str, target_id: str, move_name: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+            self.move_name = str(move_name or "").strip()
+
+        def _resolved_stat_key(self, actor: "PokemonState") -> str:
+            if self.stat_key:
+                return self.stat_key
+            stats = _trainer_feature_stat_entries(actor, self.feature_name)
+            return stats[0] if stats else ""
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or target.is_trainer_combatant():
+                raise ValueError("Stat Training requires a conscious allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Stat Training only targets your own Pokemon.")
+            if int(getattr(target.spec, "tutor_points", 0) or 0) < 1:
+                raise ValueError("Stat Training requires at least 1 Tutor Point.")
+            stat_key = self._resolved_stat_key(actor)
+            legal_moves = _STAT_TRAINING_MOVES.get(stat_key)
+            if not legal_moves:
+                raise ValueError("Stat Training requires a chosen stat.")
+            move_name = str(self.move_name or "").strip().lower()
+            if move_name not in {name.lower() for name in legal_moves}:
+                raise ValueError("Stat Training requires one of the legal moves for the chosen stat.")
+            if any(str(move.name or "").strip().lower() == move_name for move in target.spec.moves):
+                raise ValueError("That Pokemon already knows the chosen move.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            move_cache = {str(move.name or "").strip().lower(): move for move in _load_move_specs()}
+            move_spec = move_cache.get(str(self.move_name or "").strip().lower())
+            if move_spec is None:
+                raise ValueError("Unknown move for Stat Training.")
+            target.spec.tutor_points = max(0, int(getattr(target.spec, "tutor_points", 0) or 0) - 1)
+            target.spec.moves.append(copy.deepcopy(move_spec))
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": self.feature_name,
+                    "effect": "learn_move",
+                    "move": move_spec.name,
+                    "stat": self._resolved_stat_key(actor),
+                    "tutor_points_remaining": int(getattr(target.spec, "tutor_points", 0) or 0),
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return self.feature_name
+
+
+    class StatTrainingAction(_StatTrainingAction):
+        feature_name = "Stat Training"
+
+
+    class AttackTrainingAction(_StatTrainingAction):
+        feature_name = "Attack Training"
+        stat_key = "atk"
+
+
+    class DefenseTrainingAction(_StatTrainingAction):
+        feature_name = "Defense Training"
+        stat_key = "def"
+
+
+    class SpecialAttackTrainingAction(_StatTrainingAction):
+        feature_name = "Special Attack Training"
+        stat_key = "spatk"
+
+
+    class SpecialDefenseTrainingAction(_StatTrainingAction):
+        feature_name = "Special Defense Training"
+        stat_key = "spdef"
+
+
+    class SpeedTrainingAction(_StatTrainingAction):
+        feature_name = "Speed Training"
+        stat_key = "spd"
+
+
+    class _StatStratagemAction(TrainerFeatureAction):
+        feature_name = "Stat Stratagem"
+        stat_key: Optional[str] = None
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+
+        def _resolved_stat_key(self, actor: "PokemonState") -> str:
+            if self.stat_key:
+                return self.stat_key
+            stats = _trainer_feature_stat_entries(actor, self.feature_name)
+            return stats[0] if stats else ""
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            if trainer.available_ap(battle.round) < 2:
+                raise ValueError("Stat Stratagem requires 2 AP.")
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or target.is_trainer_combatant() or not target.active:
+                raise ValueError("Stat Stratagem requires an active allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Stat Stratagem only targets your own Pokemon.")
+            if not self._resolved_stat_key(actor):
+                raise ValueError("Stat Stratagem requires a chosen stat.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            stat_key = self._resolved_stat_key(actor)
+            trainer.consume_ap(2)
+            while target.remove_temporary_effect("stat_stratagem"):
+                continue
+            target.add_temporary_effect(
+                "stat_stratagem",
+                stat=stat_key,
+                source=self.feature_name,
+                source_id=self.actor_id,
+                trainer_id=trainer.identifier,
+            )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": trainer.identifier,
+                    "feature": self.feature_name,
+                    "effect": "bind_stratagem",
+                    "stat": stat_key,
+                    "ap_spent": 2,
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return self.feature_name
+
+
+    class StatStratagemAction(_StatStratagemAction):
+        feature_name = "Stat Stratagem"
+
+
+    class AttackStratagemAction(_StatStratagemAction):
+        feature_name = "Attack Stratagem"
+        stat_key = "atk"
+
+
+    class DefenseStratagemAction(_StatStratagemAction):
+        feature_name = "Defense Stratagem"
+        stat_key = "def"
+
+
+    class SpecialAttackStratagemAction(_StatStratagemAction):
+        feature_name = "Special Attack Stratagem"
+        stat_key = "spatk"
+
+
+    class SpecialDefenseStratagemAction(_StatStratagemAction):
+        feature_name = "Special Defense Stratagem"
+        stat_key = "spdef"
+
+
+    class SpeedStratagemAction(_StatStratagemAction):
+        feature_name = "Speed Stratagem"
+        stat_key = "spd"
+
+
+    class VersatileWardrobeAction(TrainerFeatureAction):
+        """Trade Tutor Points to make an allied Pokemon Chic."""
+
+        feature_name = "Versatile Wardrobe"
+
+        def __init__(self, actor_id: str, target_id: str, extra_items: Optional[Sequence[object]] = None) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+            self.extra_items = list(extra_items or [])
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Versatile Wardrobe requires an allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Versatile Wardrobe only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Versatile Wardrobe only targets Pokemon.")
+            if int(getattr(target.spec, "tutor_points", 0) or 0) < 2:
+                raise ValueError("Versatile Wardrobe requires at least 2 Tutor Points.")
+            if target.is_chic():
+                raise ValueError("Versatile Wardrobe may only target a Pokemon once.")
+            if len([item for item in self.extra_items if _item_name_text(item)]) > 2:
+                raise ValueError("Versatile Wardrobe grants only two extra held item slots.")
+            active_items = list(target.spec.items or []) if isinstance(target.spec.items, list) else []
+            if not _wardrobe_items_are_compatible(active_items + list(self.extra_items)):
+                raise ValueError("Chic Pokemon may not carry duplicate items or repeated item effects.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            target.spec.tutor_points = max(0, int(getattr(target.spec, "tutor_points", 0) or 0) - 2)
+            tags = list(getattr(target.spec, "tags", []) or [])
+            if not any(str(tag or "").strip().lower() == "chic" for tag in tags):
+                tags.append("Chic")
+            target.spec.tags = tags
+            slots = list(self.extra_items[:2])
+            while len(slots) < 2:
+                slots.append(None)
+            _set_wardrobe_slots(target.spec, slots)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Versatile Wardrobe",
+                    "effect": "chic",
+                    "extra_slots": [_item_name_text(item) for item in slots if _item_name_text(item)],
+                    "tutor_points_remaining": int(getattr(target.spec, "tutor_points", 0) or 0),
+                    "target_hp": target.hp,
+                    "description": "Versatile Wardrobe makes the Pokemon Chic and grants two inactive extra held item slots.",
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Versatile Wardrobe"
+
+
+    class WardrobeSwapAction(Action):
+        """Swift Action for Chic Pokemon to swap active and inactive held items."""
+
+        def __init__(self, actor_id: str, active_item_index: int = 0, wardrobe_index: int = 0) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.SWIFT)
+            self.active_item_index = int(active_item_index or 0)
+            self.wardrobe_index = int(wardrobe_index or 0)
+
+        def validate(self, battle: "BattleState") -> None:
+            actor = battle.pokemon.get(self.actor_id)
+            if actor is None or actor.fainted:
+                raise ValueError("Wardrobe swap requires a conscious Chic Pokemon.")
+            if not actor.is_chic():
+                raise ValueError("Only Chic Pokemon may use Versatile Wardrobe swaps.")
+            if not isinstance(actor.spec.items, list) or not actor.spec.items:
+                raise ValueError("Wardrobe swap requires an active held item to exchange.")
+            if self.active_item_index < 0 or self.active_item_index >= len(actor.spec.items):
+                raise ValueError("Invalid active held item slot.")
+            slots = actor.wardrobe_slots()
+            if self.wardrobe_index < 0 or self.wardrobe_index >= len(slots):
+                raise ValueError("Invalid wardrobe slot.")
+            if not _item_name_text(slots[self.wardrobe_index]):
+                raise ValueError("Wardrobe swap requires an item in the chosen extra slot.")
+            proposed_active = list(actor.spec.items)
+            proposed_slots = list(slots)
+            proposed_active[self.active_item_index], proposed_slots[self.wardrobe_index] = (
+                proposed_slots[self.wardrobe_index],
+                proposed_active[self.active_item_index],
+            )
+            if not _wardrobe_items_are_compatible(proposed_active + proposed_slots):
+                raise ValueError("Chic Pokemon may not carry duplicate items or repeated item effects.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            self.validate(battle)
+            actor = battle.pokemon[self.actor_id]
+            active_items = actor.spec.items if isinstance(actor.spec.items, list) else []
+            slots = actor.wardrobe_slots()
+            outgoing = active_items[self.active_item_index]
+            incoming = slots[self.wardrobe_index]
+            active_items[self.active_item_index] = incoming
+            slots[self.wardrobe_index] = outgoing
+            _set_wardrobe_slots(actor.spec, slots)
+            actor._sync_source_items()
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "feature": "Versatile Wardrobe",
+                    "effect": "wardrobe_swap",
+                    "active_item": _item_name_text(incoming),
+                    "stored_item": _item_name_text(outgoing),
+                    "active_item_index": self.active_item_index,
+                    "wardrobe_index": self.wardrobe_index,
+                    "target_hp": actor.hp,
+                    "description": "The Chic Pokemon swaps an active held item with an inactive wardrobe item.",
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Wardrobe Swap"
+
+
+    class DressToImpressAction(TrainerFeatureAction):
+        """Temporarily activate a Chic Pokemon's inactive wardrobe slots."""
+
+        feature_name = "Dress to Impress"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Dress to Impress requires a conscious Chic Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Dress to Impress only targets your own Pokemon.")
+            if target.is_trainer_combatant():
+                raise ValueError("Dress to Impress only targets Pokemon.")
+            if not target.active:
+                raise ValueError("Dress to Impress requires an active Pokemon target.")
+            if not target.is_chic():
+                raise ValueError("Dress to Impress requires a Chic Pokemon target.")
+            slots = [item for item in target.wardrobe_slots() if _item_name_text(item)]
+            if not slots:
+                raise ValueError("Dress to Impress requires at least one item in an extra wardrobe slot.")
+            if battle._feature_scene_use_count(actor, "Dress to Impress") >= 2:
+                raise ValueError("Dress to Impress may only be used twice per scene.")
+            target_key = f"Dress to Impress:{self.target_id}"
+            if battle._feature_scene_use_count(target, target_key) >= 1:
+                raise ValueError("Dress to Impress may only target a Pokemon once per scene.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            target = battle.pokemon[self.target_id]
+            slots = [copy.deepcopy(item) for item in target.wardrobe_slots()]
+            target.add_temporary_effect(
+                "dress_to_impress",
+                source="Dress to Impress",
+                source_id=self.actor_id,
+                items=slots,
+                expires_round=battle.round + 1,
+            )
+            battle._record_feature_scene_use(actor, "Dress to Impress")
+            battle._record_feature_scene_use(target, f"Dress to Impress:{self.target_id}")
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Dress to Impress",
+                    "effect": "activate_wardrobe",
+                    "items": [_item_name_text(item) for item in slots if _item_name_text(item)],
+                    "expires_round": battle.round + 1,
+                    "target_hp": target.hp,
+                    "description": "Dress to Impress activates the Chic Pokemon's extra wardrobe item effects for one full round.",
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Dress to Impress"
+
+
+    class DashingMakeoverAction(TrainerFeatureAction):
+        """Bind a created held item or equipment effect to one legal target."""
+
+        feature_name = "Dashing Makeover"
+
+        def __init__(self, actor_id: str, target_id: str, item: object = None, item_name: str = "") -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FULL)
+            self.target_id = str(target_id or "").strip()
+            if item is None:
+                item = {"name": str(item_name or "").strip()}
+            elif isinstance(item, str):
+                item = {"name": item}
+            self.item = copy.deepcopy(item)
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            if trainer.available_ap(battle.round) < 2:
+                raise ValueError("Dashing Makeover requires 2 AP.")
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Dashing Makeover requires a conscious Trainer or Pokemon target.")
+            if battle._team_for(self.actor_id) != battle._team_for(self.target_id):
+                raise ValueError("Dashing Makeover targets an ally.")
+            if any(target.get_temporary_effects("dashing_makeover_bound")):
+                raise ValueError("A target may only be affected by one Dashing Makeover at a time.")
+            if battle._current_dashing_makeover_binding(self.actor_id, trainer.identifier):
+                raise ValueError("Dashing Makeover is already bound; release it before binding a new target.")
+            allowed, reason = _dashing_makeover_item_allowed(target, self.item)
+            if not allowed:
+                raise ValueError(reason)
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            spent_ap = trainer.consume_ap(2)
+            target = battle.pokemon.get(self.target_id)
+            if target is None:
+                trainer.restore_ap(spent_ap)
+                return
+            entry = _item_entry_for(self.item)
+            if entry is None:
+                trainer.restore_ap(spent_ap)
+                return
+            item_payload = copy.deepcopy(self.item)
+            if isinstance(item_payload, dict):
+                item_payload["name"] = entry.name
+            else:
+                item_payload = {"name": entry.name}
+            target.add_temporary_effect(
+                "dashing_makeover_bound",
+                source="Dashing Makeover",
+                source_id=self.actor_id,
+                trainer_id=trainer.identifier,
+                item=item_payload,
+                item_name=entry.name,
+            )
+            actor.add_temporary_effect(
+                "feature_bound",
+                feature="Dashing Makeover",
+                target_id=self.target_id,
+                item=item_payload,
+            )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": trainer.identifier,
+                    "feature": "Dashing Makeover",
+                    "effect": "bind",
+                    "ap_spent": 2,
+                    "item": entry.name,
+                    "description": "Dashing Makeover binds a legal held item or equipment effect without occupying a slot.",
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return f"Dashing Makeover {self.target_id}"
+
+
+    class ReleaseDashingMakeoverAction(TrainerFeatureAction):
+        """Release an active Dashing Makeover binding."""
+
+        feature_name = "Dashing Makeover"
+
+        def __init__(self, actor_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            if not battle._current_dashing_makeover_binding(self.actor_id, trainer.identifier):
+                raise ValueError("No Dashing Makeover binding is active.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            released = battle._clear_dashing_makeover_binding(self.actor_id, trainer.identifier)
+            if not released:
+                return
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "trainer": trainer.identifier,
+                    "target": released.get("target_id"),
+                    "feature": "Dashing Makeover",
+                    "effect": "release",
+                    "item": released.get("item_name"),
+                    "description": "Dashing Makeover is released and the granted item effect fades.",
+                    "target_hp": actor.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Release Dashing Makeover"
+
+
+    class MomentOfActionAction(TrainerFeatureAction):
+        """Grant temporary AP to up to two allied trainers for one full round."""
+
+        def __init__(
+            self,
+            actor_id: str,
+            target_ids: Optional[Sequence[str]] = None,
+            trainer_ids: Optional[Sequence[str]] = None,
+            targets: Optional[Sequence[str]] = None,
+        ) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            raw_targets = list(target_ids or trainer_ids or targets or [])
+            self.target_ids = [str(target_id or "").strip() for target_id in raw_targets if str(target_id or "").strip()]
+
+        def _feature_label(self, actor: "PokemonState") -> str:
+            if actor.has_trainer_feature("Moment of Action"):
+                return "Moment of Action"
+            if actor.has_trainer_feature("Moment of Action [Playtest]"):
+                return "Moment of Action [Playtest]"
+            return ""
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self._actor_and_trainer(battle)
+            feature_name = self._feature_label(actor)
+            if not actor.is_trainer_combatant():
+                raise ValueError("Moment of Action requires a trainer combatant.")
+            if not feature_name:
+                raise ValueError("Moment of Action requires the Moment of Action feature.")
+            if battle.current_actor_id != trainer.identifier:
+                raise ValueError("Moment of Action may only be used during your trainer turn.")
+            if not self.target_ids:
+                raise ValueError("Moment of Action requires at least one allied trainer target.")
+            if len(self.target_ids) > 2:
+                raise ValueError("Moment of Action targets up to two allied trainers.")
+            if len(set(self.target_ids)) != len(self.target_ids):
+                raise ValueError("Moment of Action requires different trainer targets.")
+            actor_team = battle._team_for(self.actor_id)
+            for target_id in self.target_ids:
+                target_trainer = battle.trainers.get(target_id)
+                if target_trainer is None:
+                    raise ValueError("Moment of Action requires valid trainer targets.")
+                target_team = str(getattr(target_trainer, "team", "") or "").strip().lower()
+                if actor_team and target_team and target_team != actor_team:
+                    raise ValueError("Moment of Action only targets allied trainers.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            self.validate(battle)
+            actor, trainer = self._actor_and_trainer(battle)
+            feature_name = self._feature_label(actor)
+            expires_round = battle.round + 1
+            for target_id in self.target_ids:
+                target_trainer = battle.trainers.get(target_id)
+                if target_trainer is None:
+                    continue
+                target_trainer.grant_temporary_ap(1, expires_round=expires_round, source=feature_name)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "trainer": trainer.identifier,
+                    "feature": feature_name,
+                    "effect": "temporary_ap",
+                    "targets": list(self.target_ids),
+                    "amount": 1,
+                    "expires_round": expires_round,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return f"Moment of Action {' + '.join(self.target_ids)}"
+
+
+    class GoFightWinAction(TrainerFeatureAction):
+        """Apply one Cheerleader teamwide cheer, once each per scene."""
+
+        def __init__(self, actor_id: str, cheer: Optional[str] = None, stat: Optional[str] = None) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.cheer = str(cheer or "").strip().lower()
+            self.stat = str(stat or "").strip().lower()
+
+        def _feature_label(self, actor: "PokemonState") -> str:
+            if actor.has_trainer_feature("Go, Fight, Win!"):
+                return "Go, Fight, Win!"
+            if actor.has_trainer_feature("Go, Fight, Win! [Playtest]"):
+                return "Go, Fight, Win! [Playtest]"
+            return ""
+
+        def _normalized_cheer(self) -> str:
+            cheer = self.cheer
+            if cheer in {"show_your_best", "show your best", "show your best!"}:
+                return "show your best"
+            if cheer in {"dont_stop_now", "don't stop now", "don’t stop now", "dont stop now", "don't stop now!", "don’t stop now!"}:
+                return "don't stop now"
+            if cheer in {"i_believe_in_you", "i believe in you", "i believe in you!"}:
+                return "i believe in you"
+            return cheer
+
+        def _normalized_stat(self) -> str:
+            stat = self.stat
+            if stat in {"def", "defense"}:
+                return "def"
+            if stat in {"spdef", "special defense", "special_defense", "sp. def", "sp. defense"}:
+                return "spdef"
+            return stat
+
+        def _scene_use_key(self) -> str:
+            return f"go, fight, win!:{self._normalized_cheer()}"
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self._actor_and_trainer(battle)
+            feature_name = self._feature_label(actor)
+            if not actor.is_trainer_combatant():
+                raise ValueError("Go, Fight, Win! requires a trainer combatant.")
+            if not feature_name:
+                raise ValueError("Go, Fight, Win! requires the Go, Fight, Win! feature.")
+            if battle.current_actor_id != trainer.identifier:
+                raise ValueError("Go, Fight, Win! may only be used during your trainer turn.")
+            cheer = self._normalized_cheer()
+            if cheer not in {"show your best", "don't stop now", "i believe in you"}:
+                raise ValueError("Go, Fight, Win! requires a valid cheer selection.")
+            if battle._feature_scene_use_count(actor, self._scene_use_key()) >= 1:
+                raise ValueError("That Go, Fight, Win! cheer has already been used this scene.")
+            if cheer == "show your best" and self._normalized_stat() not in {"def", "spdef"}:
+                raise ValueError("Show Your Best! requires Defense or Special Defense.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            self.validate(battle)
+            actor, trainer = self._actor_and_trainer(battle)
+            feature_name = self._feature_label(actor)
+            cheer = self._normalized_cheer()
+            stat = self._normalized_stat()
+            battle._record_feature_scene_use(actor, self._scene_use_key())
+            allied_targets = [
+                (pid, mon)
+                for pid, mon in battle.pokemon.items()
+                if mon.active and not mon.fainted and battle._team_for(pid) == battle._team_for(self.actor_id)
+            ]
+            expires_round = battle.round + 1
+            dummy_move = MoveSpec(
+                name=feature_name,
+                type="Normal",
+                category="Status",
+                db=0,
+                ac=None,
+                range_kind="Self",
+                range_value=0,
+                target_kind="Self",
+                target_range=0,
+                freq="Scene",
+            )
+            if cheer == "show your best":
+                for target_id, target in allied_targets:
+                    battle._apply_combat_stage(
+                        [],
+                        attacker_id=self.actor_id,
+                        target_id=target_id,
+                        move=dummy_move,
+                        target=target,
+                        stat=stat,
+                        delta=1,
+                        description="Go, Fight, Win! raises an ally's defensive Combat Stage.",
+                    )
+                    if feature_name == "Go, Fight, Win!":
+                        battle._apply_cheer_condition(
+                            actor_id=self.actor_id,
+                            target_id=target_id,
+                            condition="motivated",
+                            source_feature=feature_name,
+                            expires_round=expires_round,
+                        )
+            elif cheer == "don't stop now":
+                amount = battle._charm_rank_for_combatant(actor, actor_id=self.actor_id)
+                for target_id, target in allied_targets:
+                    target.temp_hp = max(int(target.temp_hp or 0), amount)
+                    if feature_name == "Go, Fight, Win!":
+                        battle._apply_cheer_condition(
+                            actor_id=self.actor_id,
+                            target_id=target_id,
+                            condition="excited",
+                            source_feature=feature_name,
+                            expires_round=expires_round,
+                        )
+            else:
+                for target_id, target in allied_targets:
+                    target.add_temporary_effect(
+                        "evasion_bonus",
+                        amount=2,
+                        source=feature_name,
+                        expires_round=expires_round,
+                    )
+                    if feature_name == "Go, Fight, Win!":
+                        battle._apply_cheer_condition(
+                            actor_id=self.actor_id,
+                            target_id=target_id,
+                            condition="cheered",
+                            source_feature=feature_name,
+                            expires_round=expires_round,
+                        )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "trainer": trainer.identifier,
+                    "feature": feature_name,
+                    "effect": "team_cheer",
+                    "cheer": cheer,
+                    "stat": stat if cheer == "show your best" else None,
+                    "targets": [target_id for target_id, _target in allied_targets],
+                    "expires_round": expires_round if cheer == "i believe in you" or feature_name == "Go, Fight, Win!" else None,
+                    "scene_uses": battle._feature_scene_use_count(actor, self._scene_use_key()),
+                }
+            )
+
+        def describe_action(self) -> str:
+            return f"Go, Fight, Win! {self.cheer}"
 
 
     class TargetOrderAction(TrainerFeatureAction):
@@ -7274,7 +11709,7 @@ class PokemonState:
             if self.mode == "scheme_twist" and not is_scene_order:
                 raise ValueError("Scheme Twist only spreads Scene or Daily Orders.")
             extra_ap_cost = self._extra_ap_cost()
-            if trainer.ap < int(spec.get("ap_cost", 0) or 0) + extra_ap_cost:
+            if trainer.available_ap(battle.round) < int(spec.get("ap_cost", 0) or 0) + extra_ap_cost:
                 raise ValueError(f"{feature_name} requires {int(spec.get('ap_cost', 0) or 0) + extra_ap_cost} AP.")
             if not battle._order_available_for_use(actor, trainer, self.order_name):
                 raise ValueError(f"{self.order_name.title()} is not currently available.")
@@ -7303,7 +11738,7 @@ class PokemonState:
             target_ids = self._resolve_target_ids(battle, actor)
             extra_ap_cost = self._extra_ap_cost()
             if extra_ap_cost:
-                trainer.ap -= extra_ap_cost
+                trainer.consume_ap(extra_ap_cost)
             for index, target_id in enumerate(target_ids):
                 battle._apply_supported_target_order(
                     actor_id=self.actor_id,
@@ -7396,7 +11831,7 @@ class PokemonState:
             if battle._focused_command_extra_turn_pending(self.secondary_target_id):
                 raise ValueError("That Pokemon already has a pending Focused Command turn this round.")
             ap_cost = self._ap_cost()
-            if trainer.ap < ap_cost:
+            if trainer.available_ap(battle.round) < ap_cost:
                 raise ValueError(f"Focused Command requires {ap_cost} AP for that option.")
 
         def resolve(self, battle: "BattleState") -> None:
@@ -7404,7 +11839,7 @@ class PokemonState:
             actor, trainer = self.validate_feature_owner(battle)
             ap_cost = self._ap_cost()
             if ap_cost:
-                trainer.ap -= ap_cost
+                trainer.consume_ap(ap_cost)
             if self.consume_swift:
                 trainer.mark_action(ActionType.SWIFT, self.describe_action())
             battle._apply_focused_command_restrictions(
@@ -8243,7 +12678,7 @@ class PokemonState:
 
         def validate(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
-            if trainer.ap < 2:
+            if trainer.available_ap(battle.round) < 2:
                 raise ValueError("Polar Vortex requires 2 AP.")
             target = battle.pokemon.get(self.target_id or self.actor_id)
             if target is None or target.fainted or not target.active:
@@ -8256,10 +12691,10 @@ class PokemonState:
 
         def resolve(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
-            trainer.ap -= 2
+            spent_ap = trainer.consume_ap(2)
             target = battle.pokemon.get(self.target_id or self.actor_id)
             if target is None:
-                trainer.ap += 2
+                trainer.restore_ap(spent_ap)
                 return
             battle._clear_polar_vortex_binding(self.actor_id, trainer.identifier)
             target.add_temporary_effect(
@@ -8336,7 +12771,7 @@ class PokemonState:
 
         def validate(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
-            if trainer.ap < 2:
+            if trainer.available_ap(battle.round) < 2:
                 raise ValueError("Frozen Domain requires 2 AP.")
             if battle.grid is None or actor.position is None:
                 raise ValueError("Frozen Domain requires an active grid.")
@@ -8357,7 +12792,7 @@ class PokemonState:
 
         def resolve(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
-            trainer.ap -= 2
+            trainer.consume_ap(2)
             cluster = list(dict.fromkeys(self.target_positions))
             survival_rank = battle._combatant_skill_rank(actor, "survival", trainer_override_id=trainer.identifier)
             dc = 4 + max(0, int(survival_rank or 0)) * 2
@@ -8403,7 +12838,7 @@ class PokemonState:
 
         def validate(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
-            if trainer.ap < 1:
+            if trainer.available_ap(battle.round) < 1:
                 raise ValueError("Natural Fighter requires 1 AP.")
             move_name = self._terrain_move_name(battle, actor)
             if not move_name:
@@ -8418,7 +12853,7 @@ class PokemonState:
         def resolve(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
             move_name = self._terrain_move_name(battle, actor)
-            trainer.ap -= 1
+            trainer.consume_ap(1)
             proxy = PokemonState.UseMoveAction(
                 actor_id=self.actor_id,
                 move_name=move_name,
@@ -8601,7 +13036,7 @@ class PokemonState:
 
         def validate(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
-            if trainer.ap < 2:
+            if trainer.available_ap(battle.round) < 2:
                 raise ValueError("Mindbreak requires 2 AP.")
             target = battle.pokemon.get(self.target_id)
             if target is None or target.fainted:
@@ -8613,10 +13048,10 @@ class PokemonState:
 
         def resolve(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
-            trainer.ap -= 2
+            spent_ap = trainer.consume_ap(2)
             target = battle.pokemon.get(self.target_id)
             if target is None:
-                trainer.ap += 2
+                trainer.restore_ap(spent_ap)
                 return
             battle._clear_mindbreak_binding(self.actor_id, trainer.identifier)
             target.add_temporary_effect("mindbreak_bound", trainer_id=trainer.identifier, source_id=self.actor_id)
@@ -8684,7 +13119,7 @@ class PokemonState:
 
         def validate(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
-            if trainer.ap < 2:
+            if trainer.available_ap(battle.round) < 2:
                 raise ValueError("Tough as Schist requires 2 AP.")
             target = battle.pokemon.get(self.target_id)
             if target is None or target.fainted or not target.active:
@@ -8699,10 +13134,10 @@ class PokemonState:
 
         def resolve(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
-            trainer.ap -= 2
+            spent_ap = trainer.consume_ap(2)
             target = battle.pokemon.get(self.target_id)
             if target is None:
-                trainer.ap += 2
+                trainer.restore_ap(spent_ap)
                 return
             battle._clear_tough_as_schist_binding(self.actor_id, trainer.identifier)
             target.add_temporary_effect(
@@ -8844,7 +13279,7 @@ class PokemonState:
 
         def validate(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
-            if trainer.ap < 1:
+            if trainer.available_ap(battle.round) < 1:
                 raise ValueError("Psionic Overload requires 1 AP.")
             pending = next(iter(actor.get_temporary_effects("psionic_overload_ready")), None)
             if pending is None:
@@ -8862,7 +13297,7 @@ class PokemonState:
             pending = battle._consume_psionic_overload_ready(actor)
             if pending is None:
                 return
-            trainer.ap -= 1
+            trainer.consume_ap(1)
             trigger_move = str(pending.get("move") or "").strip()
             trigger_key = trigger_move.lower()
             target_id = str(pending.get("target_id") or "").strip() or None
@@ -8986,8 +13421,9 @@ class PokemonState:
 
         def validate(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
-            if trainer.ap < 2:
-                raise ValueError("Quick Switch requires 2 AP.")
+            ap_cost = 1 if actor.has_trainer_feature("Juggler") else 2
+            if trainer.available_ap(battle.round) < ap_cost:
+                raise ValueError(f"Quick Switch requires {ap_cost} AP.")
             if not actor.active or actor.fainted:
                 raise ValueError("Quick Switch requires an active Pokemon.")
             replacement = battle.pokemon.get(self.replacement_id)
@@ -9000,11 +13436,13 @@ class PokemonState:
 
         def resolve(self, battle: "BattleState") -> None:
             actor, trainer = self.validate_feature_owner(battle)
-            trainer.ap -= 2
+            ap_cost = 1 if actor.has_trainer_feature("Juggler") else 2
+            trainer.consume_ap(ap_cost)
             battle._apply_switch(
                 outgoing_id=self.actor_id,
                 replacement_id=self.replacement_id,
                 initiator_id=trainer.identifier,
+                apply_tag_in=True,
                 allow_replacement_turn=True,
                 allow_immediate=False,
                 allow_quick_switch_triggers=False,
@@ -9026,6 +13464,511 @@ class PokemonState:
 
         def describe_action(self) -> str:
             return "Quick Switch"
+
+
+    class EmergencyReleaseAction(TrainerFeatureAction):
+        """Release a benched Pokemon onto the field."""
+
+        feature_name = "Emergency Release"
+
+        def __init__(
+            self,
+            actor_id: str,
+            replacement_id: str,
+            *,
+            target_position: Optional[Tuple[int, int]] = None,
+        ) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.SHIFT)
+            self.replacement_id = replacement_id
+            self.target_position = target_position
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            if not actor.active or actor.fainted:
+                raise ValueError("Emergency Release requires an active trainer combatant.")
+            if trainer.available_ap(battle.round) < 2:
+                raise ValueError("Emergency Release requires 2 AP.")
+            replacement = battle.pokemon.get(self.replacement_id)
+            if replacement is None:
+                raise ValueError("Invalid Emergency Release target.")
+            if self.replacement_id not in battle._emergency_release_replacements(self.actor_id):
+                raise ValueError("Emergency Release target must be a benched allied Pokemon and a release slot must be available.")
+            battle._validate_release_target_position(
+                trainer_actor_id=self.actor_id,
+                replacement_id=self.replacement_id,
+                target_position=self.target_position,
+            )
+
+        def resolve(self, battle: "BattleState") -> None:
+            _actor, trainer = self.validate_feature_owner(battle)
+            trainer.consume_ap(2)
+            battle._apply_release(
+                trainer_actor_id=self.actor_id,
+                replacement_id=self.replacement_id,
+                initiator_id=trainer.identifier,
+                target_position=self.target_position,
+                allow_replacement_turn=True,
+                allow_immediate=True,
+                feature_name="Emergency Release",
+            )
+
+        def describe_action(self) -> str:
+            return f"Emergency Release {self.replacement_id}"
+
+
+    class BounceShotAction(TrainerFeatureAction):
+        """Release a benched Pokemon with Bounce Shot positioning."""
+
+        feature_name = "Bounce Shot"
+
+        def __init__(
+            self,
+            actor_id: str,
+            replacement_id: str,
+            *,
+            target_position: Optional[Tuple[int, int]] = None,
+            release_timing: str = "after",
+        ) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+            self.replacement_id = replacement_id
+            self.target_position = target_position
+            self.release_timing = str(release_timing or "after").strip().lower()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            if not actor.active or actor.fainted:
+                raise ValueError("Bounce Shot requires an active trainer combatant.")
+            replacement = battle.pokemon.get(self.replacement_id)
+            if replacement is None:
+                raise ValueError("Invalid Bounce Shot target.")
+            if self.replacement_id not in battle._emergency_release_replacements(self.actor_id):
+                raise ValueError("Bounce Shot requires a benched allied Pokemon and an open release slot.")
+            if self.release_timing not in {"before", "after"}:
+                raise ValueError("Bounce Shot release timing must be 'before' or 'after'.")
+            battle._resolve_bounce_shot_release_position(
+                trainer_actor_id=self.actor_id,
+                replacement_id=self.replacement_id,
+                release_timing=self.release_timing,
+                target_position=self.target_position,
+            )
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            resolved_position = battle._resolve_bounce_shot_release_position(
+                trainer_actor_id=self.actor_id,
+                replacement_id=self.replacement_id,
+                release_timing=self.release_timing,
+                target_position=self.target_position,
+            )
+            battle._apply_release(
+                trainer_actor_id=self.actor_id,
+                replacement_id=self.replacement_id,
+                initiator_id=trainer.identifier,
+                resolved_position_override=resolved_position,
+                allow_replacement_turn=True,
+                allow_immediate=True,
+                feature_name="Bounce Shot",
+            )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.replacement_id,
+                    "trainer": trainer.identifier,
+                    "feature": "Bounce Shot",
+                    "effect": "bounce",
+                    "release_timing": self.release_timing,
+                    "target_position": resolved_position,
+                    "description": (
+                        "Bounce Shot released the Pokemon after the bounce."
+                        if self.release_timing == "after"
+                        else "Bounce Shot released the Pokemon before the bounce."
+                    ),
+                }
+            )
+
+        def describe_action(self) -> str:
+            return f"Bounce Shot {self.replacement_id}"
+
+
+    class FastPitchAction(TrainerFeatureAction):
+        """Spend 1 AP to throw a Poke Ball as Fast Pitch."""
+
+        feature_name = "Fast Pitch"
+
+        def __init__(self, actor_id: str, item_index: int, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.item_index = int(item_index)
+            self.target_id = target_id
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_ap(battle, 1)
+            if not actor.active or actor.fainted:
+                raise ValueError("Fast Pitch requires an active trainer combatant.")
+            if self.item_index < 0 or self.item_index >= len(actor.spec.items):
+                raise ValueError("Invalid Fast Pitch item selection.")
+            if not _is_capture_ball_name(_item_name_text(actor.spec.items[self.item_index])):
+                raise ValueError("Fast Pitch must throw a Poke Ball.")
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted:
+                raise ValueError("Fast Pitch requires a valid target.")
+            if trainer.available_ap(battle.round) < 1:
+                raise ValueError("Fast Pitch requires 1 AP.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.spend_ap(battle, 1)
+            if self.item_index < 0 or self.item_index >= len(actor.spec.items):
+                return
+            item = actor.spec.items.pop(self.item_index)
+            actor.record_consumed_item("item", item)
+            actor._sync_source_items()
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": trainer.identifier,
+                    "feature": "Fast Pitch",
+                    "effect": "throw_ball",
+                    "item": _item_name_text(item),
+                    "ap_spent": 1,
+                    "description": "Fast Pitch throws a Poke Ball as a Priority Standard Action.",
+                }
+            )
+            for payload in battle.item_system.apply_item_use(self.actor_id, self.target_id, item):
+                battle.log_event(payload)
+                if payload.get("effect") == "capture_attempt":
+                    battle.resolve_capture_attempt_event(payload)
+
+        def describe_action(self) -> str:
+            return "Fast Pitch"
+
+
+    class GottaCatchEmAllAction(TrainerFeatureAction):
+        """Prime the next capture roll to switch d100 digits."""
+
+        feature_name = "Gotta Catch 'Em All"
+
+        def __init__(self, actor_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.SWIFT)
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            if battle._feature_scene_use_count(actor, self.feature_name) >= 3:
+                raise ValueError("Gotta Catch 'Em All has no daily uses remaining.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor = self.spend_scene_use(battle)
+            actor.add_temporary_effect("gotta_catch_em_all_ready", source=self.feature_name)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "trainer": actor.controller_id,
+                    "feature": self.feature_name,
+                    "effect": "capture_digit_swap_ready",
+                    "uses_remaining": max(0, 3 - battle._feature_scene_use_count(actor, self.feature_name)),
+                    "description": "Gotta Catch 'Em All will switch the digits of the next Capture Roll.",
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Gotta Catch 'Em All"
+
+
+    class CapturedMomentumAction(TrainerFeatureAction):
+        """Choose the benefit after a successful capture."""
+
+        feature_name = "Captured Momentum"
+
+        def __init__(self, actor_id: str, mode: str, target_id: Optional[str] = None) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+            self.mode = str(mode or "").strip().lower()
+            self.target_id = target_id
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            if not actor.get_temporary_effects("captured_momentum_ready"):
+                raise ValueError("Captured Momentum requires a successful capture trigger.")
+            if self.mode not in {"accuracy", "capture", "ap"}:
+                raise ValueError("Captured Momentum mode must be accuracy, capture, or ap.")
+            if self.mode == "accuracy":
+                target_id = self.target_id or self.actor_id
+                target = battle.pokemon.get(target_id)
+                if target is None or target.fainted:
+                    raise ValueError("Captured Momentum accuracy mode requires a valid target.")
+                if battle._team_for(target_id) != battle._team_for(self.actor_id):
+                    raise ValueError("Captured Momentum accuracy mode must target you or your Pokemon.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            actor.remove_temporary_effect("captured_momentum_ready")
+            event = {
+                "type": "trainer_feature",
+                "actor": self.actor_id,
+                "trainer": trainer.identifier,
+                "feature": self.feature_name,
+                "effect": self.mode,
+            }
+            if self.mode == "accuracy":
+                target_id = self.target_id or self.actor_id
+                target = battle.pokemon[target_id]
+                target.add_temporary_effect("accuracy_bonus", amount=2, source=self.feature_name)
+                event.update(
+                    {
+                        "target": target_id,
+                        "amount": 2,
+                        "description": "Captured Momentum grants +2 to the target's next Accuracy Roll this combat.",
+                        "target_hp": target.hp,
+                    }
+                )
+            elif self.mode == "capture":
+                amount = battle._capture_specialist_skill_rank(actor)
+                actor.add_temporary_effect("next_capture_roll_modifier", amount=-amount, source=self.feature_name)
+                event.update(
+                    {
+                        "amount": -amount,
+                        "description": "Captured Momentum subtracts the trainer's best capture skill rank from their next Capture Roll.",
+                    }
+                )
+            else:
+                trainer.grant_temporary_ap(1, expires_round=battle.round + 1, source=self.feature_name)
+                event.update(
+                    {
+                        "amount": 1,
+                        "expires_round": battle.round + 1,
+                        "description": "Captured Momentum grants 1 Temporary AP until one full round passes.",
+                    }
+                )
+            battle.log_event(event)
+
+        def describe_action(self) -> str:
+            return "Captured Momentum"
+
+
+    class DevitalizingThrowAction(TrainerFeatureAction):
+        """Apply a penalty after a Pokemon escapes from the user's Poke Ball."""
+
+        feature_name = "Devitalizing Throw"
+
+        def __init__(self, actor_id: str, mode: str, stat: Optional[str] = None) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+            self.mode = str(mode or "").strip().lower()
+            self.stat = stat
+
+        def _pending(self, actor: "PokemonState") -> Optional[dict]:
+            for entry in actor.get_temporary_effects("devitalizing_throw_ready"):
+                if str(entry.get("target") or "").strip():
+                    return entry
+            return None
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_ap(battle, 1)
+            pending = self._pending(actor)
+            if pending is None:
+                raise ValueError("Devitalizing Throw requires a recent escaped Poke Ball.")
+            target = battle.pokemon.get(str(pending.get("target") or ""))
+            if target is None or target.fainted:
+                raise ValueError("Devitalizing Throw target is no longer valid.")
+            if self.mode not in {"slow", "stat", "save"}:
+                raise ValueError("Devitalizing Throw mode must be slow, stat, or save.")
+            if self.mode == "stat" and _DEVITALIZING_STAT_ALIASES.get(str(self.stat or "").strip().lower(), "") == "":
+                raise ValueError("Devitalizing Throw stat mode requires a valid stat.")
+            if trainer.available_ap(battle.round) < 1:
+                raise ValueError("Devitalizing Throw requires 1 AP.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.spend_ap(battle, 1)
+            pending = self._pending(actor)
+            if pending is None:
+                return
+            target_id = str(pending.get("target") or "").strip()
+            target = battle.pokemon.get(target_id)
+            actor.remove_temporary_effect("devitalizing_throw_ready")
+            if target is None:
+                return
+            event = {
+                "type": "trainer_feature",
+                "actor": self.actor_id,
+                "target": target_id,
+                "trainer": trainer.identifier,
+                "feature": self.feature_name,
+                "effect": self.mode,
+                "ap_spent": 1,
+                "target_hp": target.hp,
+            }
+            if self.mode == "slow":
+                if not target.has_status("Slowed"):
+                    target.statuses.append({"name": "Slowed", "remaining": 1})
+                event["description"] = "Devitalizing Throw Slows the Pokemon that escaped the Poke Ball."
+            elif self.mode == "stat":
+                stat_key = _DEVITALIZING_STAT_ALIASES[str(self.stat or "").strip().lower()]
+                target.combat_stages[stat_key] = int(target.combat_stages.get(stat_key, 0) or 0) - 1
+                event.update(
+                    {
+                        "stat": stat_key,
+                        "amount": -1,
+                        "description": "Devitalizing Throw lowers one Combat Stage on the Pokemon that escaped the Poke Ball.",
+                    }
+                )
+            else:
+                target.add_temporary_effect("save_penalty", amount=3, source=self.feature_name)
+                event.update(
+                    {
+                        "amount": -3,
+                        "description": "Devitalizing Throw gives the escaped Pokemon -3 to its next Save Roll.",
+                    }
+                )
+            battle.log_event(event)
+
+        def describe_action(self) -> str:
+            return "Devitalizing Throw"
+
+
+    class CatchComboAction(TrainerFeatureAction):
+        """Throw a Poke Ball at a wild Pokemon just fainted by your Pokemon."""
+
+        feature_name = "Catch Combo"
+
+        def __init__(self, actor_id: str, item_index: int) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+            self.item_index = int(item_index)
+
+        def _pending(self, actor: "PokemonState") -> Optional[dict]:
+            for entry in actor.get_temporary_effects("catch_combo_ready"):
+                if str(entry.get("target") or "").strip():
+                    return entry
+            return None
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, _trainer = self.validate_feature_owner(battle)
+            if battle._feature_scene_use_count(actor, self.feature_name) >= 1:
+                raise ValueError("Catch Combo has already been used this scene.")
+            pending = self._pending(actor)
+            if pending is None:
+                raise ValueError("Catch Combo requires your Pokemon to have fainted a wild Pokemon.")
+            target = battle.pokemon.get(str(pending.get("target") or ""))
+            if target is None:
+                raise ValueError("Catch Combo target is no longer valid.")
+            if self.item_index < 0 or self.item_index >= len(actor.spec.items):
+                raise ValueError("Invalid Catch Combo item selection.")
+            if not _is_capture_ball_name(_item_name_text(actor.spec.items[self.item_index])):
+                raise ValueError("Catch Combo must throw a Poke Ball.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            pending = self._pending(actor)
+            if pending is None or self.item_index < 0 or self.item_index >= len(actor.spec.items):
+                return
+            target_id = str(pending.get("target") or "").strip()
+            item = actor.spec.items.pop(self.item_index)
+            actor.record_consumed_item("item", item)
+            actor._sync_source_items()
+            actor.remove_temporary_effect("catch_combo_ready")
+            battle._record_feature_scene_use(actor, self.feature_name)
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": target_id,
+                    "trainer": trainer.identifier,
+                    "feature": self.feature_name,
+                    "effect": "throw_ball",
+                    "item": _item_name_text(item),
+                    "description": "Catch Combo throws a Poke Ball at the fainted wild Pokemon, treating it as if it had 1 HP.",
+                }
+            )
+            for payload in battle.item_system.apply_item_use(self.actor_id, target_id, item):
+                if payload.get("effect") == "capture_attempt":
+                    payload["catch_combo"] = True
+                battle.log_event(payload)
+                if payload.get("effect") == "capture_attempt":
+                    battle.resolve_capture_attempt_event(payload)
+
+        def describe_action(self) -> str:
+            return "Catch Combo"
+
+
+    class RelentlessPursuitAction(TrainerFeatureAction):
+        """Spend 2 AP to let one Pokemon pursue a fleeing foe with Struggle."""
+
+        feature_name = "Relentless Pursuit"
+
+        def __init__(self, actor_id: str, pokemon_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+            self.pokemon_id = pokemon_id
+            self.target_id = target_id
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_ap(battle, 2)
+            pursuer = battle.pokemon.get(self.pokemon_id)
+            target = battle.pokemon.get(self.target_id)
+            if pursuer is None or pursuer.fainted or not pursuer.active:
+                raise ValueError("Relentless Pursuit requires an active allied Pokemon.")
+            if target is None or target.fainted or not target.active:
+                raise ValueError("Relentless Pursuit requires an active fleeing foe.")
+            if battle._team_for(self.pokemon_id) != battle._team_for(self.actor_id):
+                raise ValueError("Relentless Pursuit pursuer must be allied.")
+            if battle._team_for(self.target_id) == battle._team_for(self.actor_id):
+                raise ValueError("Relentless Pursuit target must be a foe.")
+            if trainer.available_ap(battle.round) < 2:
+                raise ValueError("Relentless Pursuit requires 2 AP.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.spend_ap(battle, 2)
+            pursuer = battle.pokemon.get(self.pokemon_id)
+            target = battle.pokemon.get(self.target_id)
+            if pursuer is None or target is None:
+                return
+            shifted_to = None
+            if battle.grid is not None and pursuer.position is not None and target.position is not None:
+                legal = movement.legal_shift_tiles(battle, self.pokemon_id)
+                if legal:
+                    legal.sort(key=lambda coord: targeting.chebyshev_distance(coord, target.position))
+                    shifted_to = legal[0]
+                    pursuer.position = shifted_to
+            struggle = MoveSpec(name="Relentless Pursuit Struggle", type="Normal", category="Physical", db=4, ac=4)
+            result = resolve_move_action(
+                battle.rng,
+                pursuer,
+                target,
+                struggle,
+                battle.effective_weather(),
+                battle.terrain or {},
+            )
+            hit = bool(result.get("hit"))
+            damage = 0
+            if hit:
+                damage = battle._apply_damage_with_injury_rules(
+                    self.target_id,
+                    int(result.get("damage", 0) or 0),
+                    attacker_id=self.pokemon_id,
+                    move=struggle,
+                )
+                if not target.has_status("Tripped"):
+                    target.statuses.append({"name": "Tripped"})
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": trainer.identifier,
+                    "feature": self.feature_name,
+                    "effect": "pursuit_struggle",
+                    "pursuer": self.pokemon_id,
+                    "shifted_to": shifted_to,
+                    "hit": hit,
+                    "roll": result.get("roll"),
+                    "needed": result.get("needed"),
+                    "damage": damage,
+                    "ap_spent": 2,
+                    "description": "Relentless Pursuit shifts an allied Pokemon and uses Struggle; on hit, the fleeing foe is Tripped.",
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Relentless Pursuit"
 
 
     class PlayThemLikeAFiddleFollowUpAction(TrainerFeatureAction):
@@ -9737,7 +14680,9 @@ class PokemonState:
             item = actor.spec.items[self.item_index]
             entry = _item_entry_for(item)
             effects = parse_item_effects(entry) if entry is not None else {}
-            consume_item = not effects.get("scene_once")
+            item_name = _item_name_text(item).strip().lower()
+            reusable_capture_tools = {"hand net", "hand nets", "weighted net", "weighted nets", "glue cannon", "lasso", "lassos"}
+            consume_item = not effects.get("scene_once") and item_name not in reusable_capture_tools
             if consume_item:
                 item = actor.spec.items.pop(self.item_index)
                 actor.record_consumed_item("item", item)
@@ -9757,6 +14702,8 @@ class PokemonState:
                 return
             for payload in events:
                 battle.log_event(payload)
+                if payload.get("effect") == "capture_attempt":
+                    battle.resolve_capture_attempt_event(payload)
 
         def describe_action(self) -> str:
             return "Use item"
@@ -9818,7 +14765,10 @@ class PokemonState:
         wishes: List[dict] = field(default_factory=list)
         delayed_hits: List[dict] = field(default_factory=list)
         _last_action_actor_id: Optional[str] = None
+        mounted_pairs: Dict[str, str] = field(default_factory=dict)
+        ride_as_one_turn_state: Dict[str, dict] = field(default_factory=dict)
         out_of_turn_prompt: Optional[Callable[[dict], bool]] = None
+        _resilience_context: Optional[dict] = None
         extension_packs: List[ExtensionPack] = field(default_factory=list)
         phase_controller: "PhaseController" = field(init=False, repr=False)
         status_controller: "StatusController" = field(init=False, repr=False)
@@ -9861,10 +14811,12 @@ class PokemonState:
             self._sync_static_trainer_feature_capabilities_to_pokemon()
             self._sync_static_trainer_feature_abilities_to_pokemon()
             self._sync_poke_edges_to_pokemon()
+            self._sync_persistent_trainer_feature_ability_grants_to_pokemon()
             register_all_hooks()
             initialize_move_specials()
             if not self.extension_packs:
                 self.extension_packs = discover_extension_packs()
+            self._sync_mounted_pairs()
 
         def _trainer_runtime_features(self, trainer: Optional[TrainerState]) -> List[dict]:
             if trainer is None:
@@ -10035,12 +14987,30 @@ class PokemonState:
                             source="The Cold Never Bothered Me Anyway",
                         )
                         existing_weather.add(weather_name)
+                if mon.has_trainer_feature("Fiery Soul"):
+                    mon.statuses = [
+                        status for status in mon.statuses
+                        if mon._normalized_status_name(status) not in {"burned", "burn"}
+                    ]
+                    has_burn_immunity = any(
+                        isinstance(entry, dict)
+                        and str(entry.get("status") or "").strip().lower() in {"burned", "burn"}
+                        and str(entry.get("source") or "").strip().lower() == "fiery soul"
+                        for entry in mon.get_temporary_effects("status_immunity")
+                    )
+                    if not has_burn_immunity:
+                        mon.add_temporary_effect(
+                            "status_immunity",
+                            status="Burned",
+                            source="Fiery Soul",
+                        )
 
         def _sync_static_trainer_feature_abilities_to_pokemon(self) -> None:
             for mon in self.pokemon.values():
                 chosen_awareness = ""
                 granted_abilities: Set[str] = set()
                 glacial_defense_choice = ""
+                burning_passion_choice = ""
                 for entry in mon.spec.trainer_features or []:
                     if isinstance(entry, str):
                         if entry.strip().lower() == "telepathic awareness" and not chosen_awareness:
@@ -10051,6 +15021,8 @@ class PokemonState:
                             granted_abilities.add("Frostbite")
                         elif entry.strip().lower() == "glacial defense" and not glacial_defense_choice:
                             glacial_defense_choice = "Ice Shield"
+                        elif entry.strip().lower() == "burning passion" and not burning_passion_choice:
+                            burning_passion_choice = "Flash Fire"
                         continue
                     if not isinstance(entry, dict):
                         continue
@@ -10060,8 +15032,27 @@ class PokemonState:
                     if feature_name == "tumbler":
                         granted_abilities.add("Run Away")
                         continue
+                    if feature_name == "quick reflexes":
+                        granted_abilities.add("Dodge")
+                        continue
                     if feature_name == "winter is coming":
                         granted_abilities.add("Frostbite")
+                        continue
+                    if feature_name == "burning passion":
+                        raw_choice = str(
+                            entry.get("choice")
+                            or entry.get("chosen_ability")
+                            or entry.get("selected_ability")
+                            or entry.get("ability")
+                            or entry.get("option")
+                            or ""
+                        ).strip().lower()
+                        if raw_choice in {"flame body", "flamebody"}:
+                            burning_passion_choice = "Flame Body"
+                        elif raw_choice in {"flash fire", "flashfire"}:
+                            burning_passion_choice = "Flash Fire"
+                        elif not burning_passion_choice:
+                            burning_passion_choice = "Flash Fire"
                         continue
                     if feature_name == "glacial defense":
                         raw_choice = str(
@@ -10104,6 +15095,12 @@ class PokemonState:
                         "ability_granted",
                         ability=glacial_defense_choice,
                         source="Glacial Defense",
+                    )
+                if burning_passion_choice and not mon.has_ability(burning_passion_choice):
+                    mon.add_temporary_effect(
+                        "ability_granted",
+                        ability=burning_passion_choice,
+                        source="Burning Passion",
                     )
                 for ability_name in sorted(granted_abilities):
                     if mon.has_ability(ability_name):
@@ -10170,6 +15167,44 @@ class PokemonState:
                             source="Poke Edge",
                         )
                         existing_abilities.add(normalized)
+
+        def _sync_persistent_trainer_feature_ability_grants_to_pokemon(self) -> None:
+            persistent_grants = {
+                "savage_strike": ("Cruelty", "Savage Strike"),
+                "cheer_brigade": ("Friend Guard", "Cheer Brigade"),
+                "cheerleader_playtest": ("Friend Guard", "Cheerleader [Playtest]"),
+                "culinary_appreciation": ("Gluttony", "Culinary Appreciation"),
+                "effective_methods": ("", "Effective Methods"),
+                "ramming_speed": ("Run Up", "Ramming Speed"),
+                "type_ace": ("", "Type Ace"),
+                "extra_ordinary": ("", "Extra Ordinary"),
+                "vim_and_vigor": ("Vigor", "Vim and Vigor"),
+            }
+            for mon in self.pokemon.values():
+                choices = getattr(mon.spec, "poke_edge_choices", {}) or {}
+                existing_abilities = {str(name or "").strip().lower() for name in mon.ability_names()}
+                for choice_key, (ability_name, source_name) in persistent_grants.items():
+                    choice_value = choices.get(choice_key)
+                    if not choice_value:
+                        continue
+                    effect_kwargs: Dict[str, object] = {}
+                    if choice_key in {"effective_methods", "type_ace", "extra_ordinary"} and isinstance(choice_value, dict):
+                        ability_name = str(choice_value.get("ability") or "").strip()
+                        chosen_type = _normalize_type_ace_type_name(choice_value.get("chosen_type"))
+                        if chosen_type:
+                            effect_kwargs["chosen_type"] = chosen_type
+                    if not ability_name:
+                        continue
+                    normalized = ability_name.strip().lower()
+                    if normalized in existing_abilities:
+                        continue
+                    mon.add_temporary_effect(
+                        "ability_granted",
+                        ability=ability_name,
+                        source=source_name,
+                        **effect_kwargs,
+                    )
+                    existing_abilities.add(normalized)
 
         def _apply_send_out_trainer_feature_effects(self, actor_id: str, *, initial_setup: bool = False) -> None:
             actor = self.pokemon.get(actor_id)
@@ -10288,6 +15323,833 @@ class PokemonState:
                 conscious_only=conscious_only,
             )
             return candidate_tiles.isdisjoint(occupied)
+
+        def _trainer_throw_origin(self, trainer_id: str) -> Optional[Tuple[int, int]]:
+            trainer = self.trainers.get(trainer_id)
+            if trainer is None or getattr(trainer, "position", None) is None:
+                return None
+            position = trainer.position
+            return (int(position[0]), int(position[1]))
+
+        def _mounted_mount_id(self, rider_id: Optional[str]) -> Optional[str]:
+            rider_key = str(rider_id or "").strip()
+            if not rider_key:
+                return None
+            mount_id = str(self.mounted_pairs.get(rider_key) or "").strip()
+            return mount_id or None
+
+        def _mounted_rider_id(self, actor_id: Optional[str]) -> Optional[str]:
+            actor_key = str(actor_id or "").strip()
+            if not actor_key:
+                return None
+            if actor_key in self.mounted_pairs:
+                return actor_key
+            for rider_id, mount_id in list((self.mounted_pairs or {}).items()):
+                if str(mount_id or "").strip() == actor_key:
+                    return str(rider_id or "").strip() or None
+            return None
+
+        def _mounted_partner_id(self, actor_id: Optional[str]) -> Optional[str]:
+            rider_id = self._mounted_rider_id(actor_id)
+            if rider_id is None:
+                return None
+            actor_key = str(actor_id or "").strip()
+            mount_id = self._mounted_mount_id(rider_id)
+            if actor_key == rider_id:
+                return mount_id
+            return rider_id
+
+        def _is_mounted_actor(self, actor_id: Optional[str]) -> bool:
+            return self._mounted_rider_id(actor_id) is not None
+
+        def _mounted_dismount_positions(self, rider_id: str) -> List[Tuple[int, int]]:
+            rider = self.pokemon.get(rider_id)
+            mount_id = self._mounted_mount_id(rider_id)
+            mount = self.pokemon.get(mount_id) if mount_id else None
+            if rider is None or mount is None or mount.position is None:
+                return []
+            candidates: List[Tuple[int, int]] = []
+            base_x, base_y = mount.position
+            for dx in (-1, 0, 1):
+                for dy in (-1, 0, 1):
+                    if dx == 0 and dy == 0:
+                        continue
+                    coord = (base_x + dx, base_y + dy)
+                    if not self._position_can_fit(rider_id, coord, exclude_id=rider_id):
+                        continue
+                    candidates.append(coord)
+            candidates.sort(key=lambda coord: (abs(coord[0] - base_x) + abs(coord[1] - base_y), coord[0], coord[1]))
+            return candidates
+
+        def _clear_mounted_pair(self, rider_id: str) -> None:
+            rider_key = str(rider_id or "").strip()
+            if not rider_key:
+                return
+            self.mounted_pairs.pop(rider_key, None)
+            self.ride_as_one_turn_state.pop(rider_key, None)
+
+        def _mount_pair(self, rider_id: str, mount_id: str) -> None:
+            rider = self.pokemon.get(rider_id)
+            mount = self.pokemon.get(mount_id)
+            if rider is None or mount is None:
+                return
+            self._clear_mounted_pair(rider_id)
+            existing_rider = self._mounted_rider_id(mount_id)
+            if existing_rider is not None:
+                self._clear_mounted_pair(existing_rider)
+            self.mounted_pairs[str(rider_id)] = str(mount_id)
+            if mount.position is not None:
+                rider.position = (int(mount.position[0]), int(mount.position[1]))
+            self._sync_mounted_pairs()
+
+        def _dismount_pair(self, rider_id: str, destination: Optional[Tuple[int, int]] = None) -> Optional[Tuple[int, int]]:
+            rider = self.pokemon.get(rider_id)
+            mount_id = self._mounted_mount_id(rider_id)
+            mount = self.pokemon.get(mount_id) if mount_id else None
+            if rider is None or mount is None:
+                self._clear_mounted_pair(rider_id)
+                return None
+            legal_positions = self._mounted_dismount_positions(rider_id)
+            chosen = destination
+            if chosen is not None:
+                chosen = (int(chosen[0]), int(chosen[1]))
+                if chosen not in legal_positions:
+                    raise ValueError("That tile is not a legal dismount destination.")
+            elif legal_positions:
+                chosen = legal_positions[0]
+            else:
+                chosen = None
+            self._clear_mounted_pair(rider_id)
+            if chosen is not None:
+                rider.position = chosen
+            self._sync_mounted_pairs()
+            return chosen
+
+        def _rider_agility_training_doubled(self, actor_id: Optional[str]) -> bool:
+            rider_id = self._mounted_rider_id(actor_id)
+            if rider_id is None:
+                return False
+            mount_id = self._mounted_mount_id(rider_id)
+            rider = self.pokemon.get(rider_id)
+            mount = self.pokemon.get(mount_id) if mount_id else None
+            return bool(
+                rider is not None
+                and mount is not None
+                and rider.has_trainer_feature("Rider")
+                and mount.get_temporary_effects("agility_training")
+            )
+
+        def _ride_as_one_rider_id(self, actor_id: Optional[str]) -> Optional[str]:
+            rider_id = self._mounted_rider_id(actor_id)
+            if rider_id is None:
+                return None
+            rider = self.pokemon.get(rider_id)
+            mount = self.pokemon.get(self._mounted_mount_id(rider_id))
+            if rider is None or mount is None or rider.fainted or mount.fainted or not rider.active or not mount.active:
+                return None
+            if not rider.has_trainer_feature("Ride as One"):
+                return None
+            return rider_id
+
+        def _ride_as_one_state(self, actor_id: Optional[str], *, create: bool = False) -> Optional[dict]:
+            rider_id = self._ride_as_one_rider_id(actor_id)
+            if rider_id is None:
+                return None
+            state = self.ride_as_one_turn_state.get(rider_id)
+            if state is None and create:
+                state = {"round": self.round, "acted_ids": [], "slot_actor": None}
+                self.ride_as_one_turn_state[rider_id] = state
+            elif state is not None and int(state.get("round", -1) or -1) != self.round:
+                state = {"round": self.round, "acted_ids": [], "slot_actor": None}
+                self.ride_as_one_turn_state[rider_id] = state
+            return state
+
+        def _ride_as_one_partner_id(self, actor_id: Optional[str]) -> Optional[str]:
+            rider_id = self._ride_as_one_rider_id(actor_id)
+            if rider_id is None:
+                return None
+            mount_id = self._mounted_mount_id(rider_id)
+            actor_key = str(actor_id or "").strip()
+            return mount_id if actor_key == rider_id else rider_id
+
+        def _ride_as_one_second_slot_actor(self, actor_id: Optional[str]) -> Optional[str]:
+            rider_id = self._ride_as_one_rider_id(actor_id)
+            if rider_id is None:
+                return str(actor_id or "").strip() or None
+            state = self._ride_as_one_state(actor_id, create=True)
+            if state is None:
+                return str(actor_id or "").strip() or None
+            acted_ids = [str(value or "").strip() for value in list(state.get("acted_ids") or []) if str(value or "").strip()]
+            if len(acted_ids) != 1:
+                return str(actor_id or "").strip() or None
+            partner_id = self._ride_as_one_partner_id(actor_id)
+            if partner_id and acted_ids[0] != partner_id:
+                return partner_id
+            return str(actor_id or "").strip() or None
+
+        def _ride_as_one_slot_swap_available(self, actor_id: Optional[str]) -> bool:
+            actor_key = str(actor_id or "").strip()
+            if not actor_key or self.current_actor_id != actor_key:
+                return False
+            rider_id = self._ride_as_one_rider_id(actor_key)
+            if rider_id is None:
+                return False
+            state = self._ride_as_one_state(actor_key, create=True)
+            if state is None:
+                return False
+            acted_ids = [str(value or "").strip() for value in list(state.get("acted_ids") or []) if str(value or "").strip()]
+            if acted_ids:
+                return False
+            actor = self.pokemon.get(actor_key)
+            return bool(actor is not None and not actor.actions_taken)
+
+        def _ride_as_one_swap_turn(self, actor_id: str) -> str:
+            if not self._ride_as_one_slot_swap_available(actor_id):
+                raise ValueError("Ride as One turn swap is not currently available.")
+            partner_id = self._ride_as_one_partner_id(actor_id)
+            partner = self.pokemon.get(partner_id) if partner_id else None
+            if partner is None or partner.fainted or not partner.active:
+                raise ValueError("Ride as One requires an active mounted partner.")
+            state = self._ride_as_one_state(actor_id, create=True)
+            if state is not None:
+                state["slot_actor"] = partner_id
+            self.current_actor_id = partner_id
+            partner.reset_actions()
+            return partner_id
+
+        def _ride_as_one_finish_slot(self, actor_id: Optional[str]) -> None:
+            rider_id = self._ride_as_one_rider_id(actor_id)
+            if rider_id is None:
+                return
+            state = self._ride_as_one_state(actor_id, create=True)
+            if state is None:
+                return
+            actor_key = str(actor_id or "").strip()
+            if actor_key:
+                acted_ids = [str(value or "").strip() for value in list(state.get("acted_ids") or []) if str(value or "").strip()]
+                if actor_key not in acted_ids:
+                    acted_ids.append(actor_key)
+                state["acted_ids"] = acted_ids[-2:]
+            state["slot_actor"] = None
+
+        def _sync_mounted_pairs(self) -> None:
+            for mon in self.pokemon.values():
+                mon.temporary_effects = [
+                    entry
+                    for entry in mon.temporary_effects
+                    if not (
+                        isinstance(entry, dict)
+                        and str(entry.get("kind") or "").strip().lower() == "evasion_bonus"
+                        and str(entry.get("source") or "").strip().lower() == "ride as one"
+                    )
+                ]
+            for rider_id, mount_id in list((self.mounted_pairs or {}).items()):
+                rider = self.pokemon.get(rider_id)
+                mount = self.pokemon.get(mount_id)
+                if (
+                    rider is None
+                    or mount is None
+                    or rider.fainted
+                    or mount.fainted
+                    or not rider.active
+                    or not mount.active
+                    or mount.is_trainer_combatant()
+                    or rider.controller_id != mount.controller_id
+                ):
+                    self._clear_mounted_pair(rider_id)
+                    continue
+                if mount.position is not None:
+                    rider.position = (int(mount.position[0]), int(mount.position[1]))
+                elif rider.position is not None:
+                    mount.position = (int(rider.position[0]), int(rider.position[1]))
+                if not rider.has_trainer_feature("Ride as One"):
+                    self.ride_as_one_turn_state.pop(rider_id, None)
+                    continue
+                rider_speed_evasion = calculations.evasion_value(rider, "status")
+                mount_speed_evasion = calculations.evasion_value(mount, "status")
+                shared = (
+                    rider_speed_evasion + 1
+                    if rider_speed_evasion == mount_speed_evasion
+                    else max(rider_speed_evasion, mount_speed_evasion)
+                )
+                rider_bonus = shared - rider_speed_evasion
+                mount_bonus = shared - mount_speed_evasion
+                if rider_bonus > 0:
+                    rider.add_temporary_effect(
+                        "evasion_bonus",
+                        amount=rider_bonus,
+                        scope="status",
+                        source="Ride as One",
+                    )
+                if mount_bonus > 0:
+                    mount.add_temporary_effect(
+                        "evasion_bonus",
+                        amount=mount_bonus,
+                        scope="status",
+                        source="Ride as One",
+                    )
+
+        def _trainer_throw_range(self, trainer_id: str) -> int:
+            trainer = self.trainers.get(trainer_id)
+            athletics = int((getattr(trainer, "skills", {}) or {}).get("athletics", 0) or 0) if trainer is not None else 0
+            return max(1, 4 + athletics)
+
+        def _resolve_switch_position(
+            self,
+            *,
+            outgoing_id: str,
+            replacement_id: str,
+            target_position: Optional[Tuple[int, int]] = None,
+        ) -> Optional[Tuple[int, int]]:
+            outgoing = self.pokemon.get(outgoing_id)
+            replacement = self.pokemon.get(replacement_id)
+            if outgoing is None or replacement is None:
+                return None
+            origin = outgoing.position
+            if self.grid is None:
+                return target_position if target_position is not None else origin
+            if origin is None:
+                raise ValueError("Cannot switch without a valid outgoing position.")
+            trainer_id = str(replacement.controller_id or outgoing.controller_id or "").strip()
+            throw_origin = self._trainer_throw_origin(trainer_id)
+            throw_range = self._trainer_throw_range(trainer_id)
+            replacement_size = getattr(replacement.spec, "size", "")
+            outgoing_size = getattr(outgoing.spec, "size", "")
+
+            def within_throw_range(coord: Tuple[int, int]) -> bool:
+                if throw_origin is None:
+                    return True
+                distance = targeting.footprint_distance(
+                    throw_origin,
+                    "Medium",
+                    coord,
+                    replacement_size,
+                    self.grid,
+                )
+                return distance <= throw_range
+
+            def is_valid(coord: Tuple[int, int]) -> bool:
+                return self._position_can_fit(
+                    replacement_id,
+                    coord,
+                    exclude_id=outgoing_id,
+                ) and within_throw_range(coord)
+
+            if target_position is not None:
+                if not is_valid(target_position):
+                    trainer = self.trainers.get(trainer_id)
+                    trainer_name = trainer.name or trainer.identifier if trainer is not None else trainer_id
+                    raise ValueError(
+                        f"Switch target {target_position} is not a legal send-out tile for {trainer_name}."
+                    )
+                return target_position
+
+            if is_valid(origin):
+                return origin
+
+            candidates: List[Tuple[int, int]] = []
+            for x in range(self.grid.width):
+                for y in range(self.grid.height):
+                    coord = (x, y)
+                    if is_valid(coord):
+                        candidates.append(coord)
+            if not candidates:
+                trainer = self.trainers.get(trainer_id)
+                trainer_name = trainer.name or trainer.identifier if trainer is not None else trainer_id
+                raise ValueError(f"No legal send-out tile is available within {trainer_name}'s throwing range.")
+            candidates.sort(
+                key=lambda coord: (
+                    targeting.footprint_distance(
+                        coord,
+                        replacement_size,
+                        origin,
+                        outgoing_size,
+                        self.grid,
+                    ),
+                    coord[1],
+                    coord[0],
+                )
+            )
+            return candidates[0]
+
+        def _validate_switch_target_position(
+            self,
+            *,
+            outgoing_id: str,
+            replacement_id: str,
+            target_position: Optional[Tuple[int, int]],
+        ) -> None:
+            if target_position is None:
+                return
+            self._resolve_switch_position(
+                outgoing_id=outgoing_id,
+                replacement_id=replacement_id,
+                target_position=target_position,
+            )
+
+        def _legal_release_positions(
+            self,
+            *,
+            trainer_actor_id: str,
+            replacement_id: str,
+        ) -> List[Tuple[int, int]]:
+            trainer_actor = self.pokemon.get(trainer_actor_id)
+            replacement = self.pokemon.get(replacement_id)
+            if trainer_actor is None or replacement is None:
+                return []
+            if self.grid is None:
+                return [trainer_actor.position] if trainer_actor.position is not None else []
+            trainer_id = str(replacement.controller_id or trainer_actor.controller_id or "").strip()
+            throw_origin = self._trainer_throw_origin(trainer_id)
+            throw_range = self._trainer_throw_range(trainer_id)
+            replacement_size = getattr(replacement.spec, "size", "")
+
+            def within_throw_range(coord: Tuple[int, int]) -> bool:
+                if throw_origin is None:
+                    return True
+                distance = targeting.footprint_distance(
+                    throw_origin,
+                    "Medium",
+                    coord,
+                    replacement_size,
+                    self.grid,
+                )
+                return distance <= throw_range
+
+            positions: List[Tuple[int, int]] = []
+            for x in range(self.grid.width):
+                for y in range(self.grid.height):
+                    coord = (x, y)
+                    if not self._position_can_fit(replacement_id, coord):
+                        continue
+                    if not within_throw_range(coord):
+                        continue
+                    positions.append(coord)
+            positions.sort(key=lambda coord: (coord[1], coord[0]))
+            return positions
+
+        def _resolve_release_position(
+            self,
+            *,
+            trainer_actor_id: str,
+            replacement_id: str,
+            target_position: Optional[Tuple[int, int]] = None,
+        ) -> Optional[Tuple[int, int]]:
+            trainer_actor = self.pokemon.get(trainer_actor_id)
+            if trainer_actor is None:
+                return None
+            if self.grid is None:
+                if target_position is not None:
+                    return target_position
+                return trainer_actor.position
+            legal_positions = self._legal_release_positions(
+                trainer_actor_id=trainer_actor_id,
+                replacement_id=replacement_id,
+            )
+            if target_position is not None:
+                if target_position not in legal_positions:
+                    trainer = self.trainers.get(trainer_actor.controller_id)
+                    trainer_name = trainer.name or trainer.identifier if trainer is not None else trainer_actor.controller_id
+                    raise ValueError(
+                        f"Release target {target_position} is not a legal send-out tile for {trainer_name}."
+                    )
+                return target_position
+            if not legal_positions:
+                trainer = self.trainers.get(trainer_actor.controller_id)
+                trainer_name = trainer.name or trainer.identifier if trainer is not None else trainer_actor.controller_id
+                raise ValueError(f"No legal release tile is available within {trainer_name}'s throwing range.")
+            origin = trainer_actor.position
+            if origin is not None and origin in legal_positions:
+                return origin
+            if origin is None:
+                return legal_positions[0]
+            replacement = self.pokemon.get(replacement_id)
+            replacement_size = getattr(replacement.spec, "size", "") if replacement is not None else "Medium"
+            legal_positions.sort(
+                key=lambda coord: (
+                    targeting.footprint_distance(
+                        coord,
+                        replacement_size,
+                        origin,
+                        "Medium",
+                        self.grid,
+                    ),
+                    coord[1],
+                    coord[0],
+                )
+            )
+            return legal_positions[0]
+
+        def _validate_release_target_position(
+            self,
+            *,
+            trainer_actor_id: str,
+            replacement_id: str,
+            target_position: Optional[Tuple[int, int]],
+        ) -> None:
+            if target_position is None:
+                return
+            self._resolve_release_position(
+                trainer_actor_id=trainer_actor_id,
+                replacement_id=replacement_id,
+                target_position=target_position,
+            )
+
+        def _emergency_release_replacements(self, trainer_actor_id: str) -> List[str]:
+            actor = self.pokemon.get(trainer_actor_id)
+            if actor is None or not actor.is_trainer_combatant():
+                return []
+            active_pokemon_count = sum(
+                1
+                for pid, mon in self.pokemon.items()
+                if mon.controller_id == actor.controller_id
+                and mon.active
+                and not mon.fainted
+                and not mon.is_trainer_combatant()
+            )
+            if active_pokemon_count >= max(1, int(self.active_slots or 1)):
+                return []
+            replacements: List[str] = []
+            for pid, mon in self.pokemon.items():
+                if mon.controller_id != actor.controller_id:
+                    continue
+                if mon.active or mon.fainted or mon.is_trainer_combatant():
+                    continue
+                replacements.append(pid)
+            replacements.sort()
+            return replacements
+
+        def _legal_bounce_shot_release_positions(
+            self,
+            *,
+            trainer_actor_id: str,
+            replacement_id: str,
+        ) -> List[Tuple[int, int]]:
+            if self.grid is None:
+                return self._legal_release_positions(
+                    trainer_actor_id=trainer_actor_id,
+                    replacement_id=replacement_id,
+                )
+            landing_positions = self._legal_release_positions(
+                trainer_actor_id=trainer_actor_id,
+                replacement_id=replacement_id,
+            )
+            replacement = self.pokemon.get(replacement_id)
+            if replacement is None:
+                return []
+            replacement_size = getattr(replacement.spec, "size", "")
+            candidates: Set[Tuple[int, int]] = set(landing_positions)
+            for landing in landing_positions:
+                for x in range(self.grid.width):
+                    for y in range(self.grid.height):
+                        coord = (x, y)
+                        if not self._position_can_fit(replacement_id, coord):
+                            continue
+                        if (
+                            targeting.footprint_distance(
+                                landing,
+                                replacement_size,
+                                coord,
+                                replacement_size,
+                                self.grid,
+                            )
+                            > 3
+                        ):
+                            continue
+                        candidates.add(coord)
+            return sorted(candidates, key=lambda coord: (coord[1], coord[0]))
+
+        def _resolve_bounce_shot_release_position(
+            self,
+            *,
+            trainer_actor_id: str,
+            replacement_id: str,
+            release_timing: str,
+            target_position: Optional[Tuple[int, int]] = None,
+        ) -> Optional[Tuple[int, int]]:
+            timing = str(release_timing or "after").strip().lower()
+            if timing == "before":
+                return self._resolve_release_position(
+                    trainer_actor_id=trainer_actor_id,
+                    replacement_id=replacement_id,
+                    target_position=target_position,
+                )
+            legal_positions = self._legal_bounce_shot_release_positions(
+                trainer_actor_id=trainer_actor_id,
+                replacement_id=replacement_id,
+            )
+            if target_position is not None:
+                if target_position not in legal_positions:
+                    trainer_actor = self.pokemon.get(trainer_actor_id)
+                    trainer = self.trainers.get(trainer_actor.controller_id) if trainer_actor is not None else None
+                    trainer_name = trainer.name or trainer.identifier if trainer is not None else trainer_actor_id
+                    raise ValueError(
+                        f"Bounce Shot target {target_position} is not a legal bounced release tile for {trainer_name}."
+                    )
+                return target_position
+            if not legal_positions:
+                return self._resolve_release_position(
+                    trainer_actor_id=trainer_actor_id,
+                    replacement_id=replacement_id,
+                    target_position=None,
+                )
+            trainer_actor = self.pokemon.get(trainer_actor_id)
+            origin = trainer_actor.position if trainer_actor is not None else None
+            if origin is None:
+                return legal_positions[0]
+            replacement = self.pokemon.get(replacement_id)
+            replacement_size = getattr(replacement.spec, "size", "") if replacement is not None else "Medium"
+            legal_positions.sort(
+                key=lambda coord: (
+                    targeting.footprint_distance(
+                        coord,
+                        replacement_size,
+                        origin,
+                        "Medium",
+                        self.grid,
+                    ),
+                    coord[1],
+                    coord[0],
+                )
+            )
+            return legal_positions[0]
+
+        def _apply_release(
+            self,
+            *,
+            trainer_actor_id: str,
+            replacement_id: str,
+            initiator_id: str,
+            target_position: Optional[Tuple[int, int]] = None,
+            resolved_position_override: Optional[Tuple[int, int]] = None,
+            allow_replacement_turn: bool,
+            allow_immediate: bool,
+            feature_name: str = "Emergency Release",
+            allow_quick_switch_triggers: bool = True,
+        ) -> None:
+            trainer_actor = self.pokemon.get(trainer_actor_id)
+            replacement = self.pokemon.get(replacement_id)
+            if trainer_actor is None or replacement is None:
+                return
+            resolved_position = (
+                resolved_position_override
+                if resolved_position_override is not None
+                else self._resolve_release_position(
+                    trainer_actor_id=trainer_actor_id,
+                    replacement_id=replacement_id,
+                    target_position=target_position,
+                )
+            )
+            replacement.active = True
+            replacement.position = resolved_position
+            replacement.add_temporary_effect("joined_round", round=self.round)
+            replacement.add_temporary_effect("released_from_ball", round=self.round, expires_round=self.round)
+            self._sync_mounted_pairs()
+            self._apply_send_out_trainer_feature_effects(replacement_id)
+            if self._room_effect_active("Wonder Room") and not replacement.has_status("Wondered"):
+                replacement.statuses.append({"name": "Wondered", "remaining": 5})
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": trainer_actor_id,
+                    "target": replacement_id,
+                    "trainer": initiator_id,
+                    "feature": feature_name,
+                    "effect": "release",
+                    "description": f"{feature_name} releases {replacement.spec.name or replacement.spec.species} onto the field.",
+                    "target_hp": replacement.hp,
+                }
+            )
+            self._trigger_intimidate(replacement_id)
+            self._trigger_impostor(replacement_id)
+            self._trigger_ball_fetch(replacement_id)
+            if replacement.has_ability("Curious Medicine") and not replacement.get_temporary_effects("curious_medicine_used"):
+                team = self._team_for(replacement_id)
+                for pid, mon in self.pokemon.items():
+                    if self._team_for(pid) != team:
+                        continue
+                    if mon.position is None or replacement.position is None:
+                        continue
+                    if self._combatant_distance(mon, replacement) > 2:
+                        continue
+                    if any(value != 0 for value in mon.combat_stages.values()):
+                        for stat in mon.combat_stages:
+                            mon.combat_stages[stat] = 0
+                        self.log_event(
+                            {
+                                "type": "ability",
+                                "actor": replacement_id,
+                                "target": pid,
+                                "ability": "Curious Medicine",
+                                "move": "Curious Medicine",
+                                "effect": "reset_cs",
+                                "description": "Curious Medicine resets combat stages on entry.",
+                                "target_hp": mon.hp,
+                            }
+                        )
+                replacement.add_temporary_effect("curious_medicine_used")
+            if allow_replacement_turn:
+                self._insert_replacement_initiative(replacement_id, allow_immediate=allow_immediate)
+            self._maybe_trigger_first_blood(replacement_id, trigger_feature=feature_name)
+            if allow_quick_switch_triggers:
+                for pid, mon in self.pokemon.items():
+                    if pid == replacement_id or mon.fainted or not mon.active:
+                        continue
+                    if self._team_for(pid) == self._team_for(replacement_id):
+                        continue
+                    self._maybe_trigger_quick_switch(
+                        pid,
+                        trigger="opponent_send_out",
+                        trigger_target_id=replacement_id,
+                    )
+
+        def _legal_switch_positions(
+            self,
+            *,
+            outgoing_id: str,
+            replacement_id: str,
+        ) -> List[Tuple[int, int]]:
+            outgoing = self.pokemon.get(outgoing_id)
+            replacement = self.pokemon.get(replacement_id)
+            if outgoing is None or replacement is None:
+                return []
+            origin = outgoing.position
+            if self.grid is None:
+                return [origin] if origin is not None else []
+            trainer_id = str(replacement.controller_id or outgoing.controller_id or "").strip()
+            throw_origin = self._trainer_throw_origin(trainer_id)
+            throw_range = self._trainer_throw_range(trainer_id)
+            replacement_size = getattr(replacement.spec, "size", "")
+
+            def within_throw_range(coord: Tuple[int, int]) -> bool:
+                if throw_origin is None:
+                    return True
+                return (
+                    targeting.footprint_distance(
+                        throw_origin,
+                        "Medium",
+                        coord,
+                        replacement_size,
+                        self.grid,
+                    )
+                    <= throw_range
+                )
+
+            candidates: List[Tuple[int, int]] = []
+            for x in range(self.grid.width):
+                for y in range(self.grid.height):
+                    coord = (x, y)
+                    if not within_throw_range(coord):
+                        continue
+                    if not self._position_can_fit(replacement_id, coord, exclude_id=outgoing_id):
+                        continue
+                    candidates.append(coord)
+            return candidates
+
+        def _best_ai_switch_position(
+            self,
+            *,
+            outgoing_id: str,
+            replacement_id: str,
+        ) -> Optional[Tuple[int, int]]:
+            outgoing = self.pokemon.get(outgoing_id)
+            replacement = self.pokemon.get(replacement_id)
+            if outgoing is None or replacement is None:
+                return None
+            candidates = self._legal_switch_positions(
+                outgoing_id=outgoing_id,
+                replacement_id=replacement_id,
+            )
+            if not candidates:
+                return outgoing.position
+            if self.grid is None:
+                return candidates[0]
+            replacement_team = self._team_for(replacement_id)
+            weather = self.effective_weather()
+            foes = [
+                (pid, mon)
+                for pid, mon in self.pokemon.items()
+                if mon.active and not mon.fainted and mon.position is not None and self._team_for(pid) != replacement_team
+            ]
+            damaging_moves = [
+                move
+                for move in replacement.spec.moves
+                if str(getattr(move, "category", "") or "").strip().lower() != "status"
+            ]
+            prefers_ranged = any(
+                targeting.normalized_target_kind(move) != "melee" and targeting.move_range_distance(move) > 1
+                for move in damaging_moves
+            )
+            prefers_melee = any(targeting.normalized_target_kind(move) == "melee" for move in damaging_moves)
+            best_coord = candidates[0]
+            best_score = float("-inf")
+            for coord in candidates:
+                best_attack = 0.0
+                max_threat = 0.0
+                nearest_foe = 99
+                in_range_attacks = 0
+                for foe_id, foe in foes:
+                    distance = targeting.footprint_distance(
+                        coord,
+                        getattr(replacement.spec, "size", ""),
+                        foe.position,
+                        getattr(foe.spec, "size", ""),
+                        self.grid,
+                    )
+                    nearest_foe = min(nearest_foe, distance)
+                    for move in damaging_moves:
+                        if not targeting.is_target_in_range(
+                            coord,
+                            foe.position,
+                            move,
+                            attacker_size=getattr(replacement.spec, "size", ""),
+                            target_size=getattr(foe.spec, "size", ""),
+                            grid=self.grid,
+                        ):
+                            continue
+                        if self.grid and not self.has_line_of_sight_from(coord, foe.position, exclude_ids={replacement_id, foe_id}):
+                            continue
+                        in_range_attacks += 1
+                        try:
+                            damage = calculations.expected_damage(replacement, foe, move, weather=weather)
+                        except Exception:
+                            damage = 0.0
+                        if damage > 0:
+                            best_attack = max(best_attack, float(damage) / float(max(1, foe.max_hp())))
+                    for foe_move in foe.spec.moves:
+                        if str(getattr(foe_move, "category", "") or "").strip().lower() == "status":
+                            continue
+                        if not targeting.is_target_in_range(
+                            foe.position,
+                            coord,
+                            foe_move,
+                            attacker_size=getattr(foe.spec, "size", ""),
+                            target_size=getattr(replacement.spec, "size", ""),
+                            grid=self.grid,
+                        ):
+                            continue
+                        if self.grid and not self.has_line_of_sight_from(foe.position, coord, exclude_ids={foe_id, replacement_id}):
+                            continue
+                        try:
+                            threat = calculations.expected_damage(foe, replacement, foe_move, weather=weather)
+                        except Exception:
+                            threat = 0.0
+                        if threat > 0:
+                            max_threat = max(max_threat, float(threat) / float(max(1, replacement.max_hp())))
+                score = (best_attack * 3.4) - (max_threat * 1.9)
+                if in_range_attacks == 0:
+                    if prefers_melee:
+                        score -= nearest_foe * 0.08
+                    else:
+                        score -= nearest_foe * 0.03
+                elif prefers_ranged:
+                    score += min(nearest_foe, 6) * 0.06
+                else:
+                    score -= nearest_foe * 0.02
+                if score > best_score:
+                    best_score = score
+                    best_coord = coord
+            return best_coord
 
         def _combatant_distance(
             self,
@@ -10412,8 +16274,302 @@ class PokemonState:
         def should_trigger_out_of_turn(self, actor_id: Optional[str], payload: dict) -> bool:
             return bool(self.prompt_response(actor_id, payload))
 
+        def _stat_mastery_sources(self, actor: Optional[PokemonState], stat: str) -> List[str]:
+            if actor is None:
+                return []
+            normalized = str(stat or "").strip().lower()
+            sources: List[str] = []
+            seen: Set[str] = set()
+            for feature_name, feature_stat in _trainer_feature_stat_sources(actor, "Stat Mastery", ""):
+                if feature_stat != normalized:
+                    continue
+                if feature_name not in seen:
+                    seen.add(feature_name)
+                    sources.append(feature_name)
+            return sources
+
+        def _stat_maneuver_sources(self, actor: Optional[PokemonState], stat: str) -> List[str]:
+            if actor is None:
+                return []
+            normalized = str(stat or "").strip().lower()
+            sources: List[str] = []
+            seen: Set[str] = set()
+            for feature_name, feature_stat in _trainer_feature_stat_sources(actor, "Stat Maneuver", ""):
+                if feature_stat != normalized:
+                    continue
+                if feature_name not in seen:
+                    seen.add(feature_name)
+                    sources.append(feature_name)
+            return sources
+
+        def _stat_maneuver_scene_key(self, feature_name: str, stat: str) -> str:
+            label = str(feature_name or "Stat Maneuver").strip() or "Stat Maneuver"
+            return f"{label}:{str(stat or '').strip().lower()}"
+
+        def _consume_stat_maneuver_ready(self, actor: PokemonState, ready_kind: str) -> Optional[dict]:
+            normalized = str(ready_kind or "").strip().lower()
+            for entry in list(actor.get_temporary_effects("stat_maneuver_ready")):
+                if str(entry.get("maneuver_kind") or "").strip().lower() != normalized:
+                    continue
+                if entry in actor.temporary_effects:
+                    actor.temporary_effects.remove(entry)
+                return dict(entry)
+            return None
+
+        def _apply_attack_mastery_tick(self, actor_id: str, target_id: Optional[str], *, source: str) -> int:
+            actor = self.pokemon.get(actor_id)
+            target = self.pokemon.get(target_id) if target_id else None
+            if actor is None or target is None or target.fainted:
+                return 0
+            if not self._stat_mastery_sources(actor, "atk"):
+                return 0
+            tick = target.apply_tick_damage(1)
+            if tick > 0:
+                self.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": actor_id,
+                        "target": target_id,
+                        "trainer": actor.controller_id,
+                        "feature": "Attack Mastery" if actor.has_trainer_feature("Attack Mastery") else "Stat Mastery",
+                        "effect": "tick_damage",
+                        "amount": tick,
+                        "source": source,
+                        "description": "Attack Mastery deals a Tick of damage after a successful combat maneuver.",
+                        "target_hp": target.hp,
+                    }
+                )
+            return tick
+
+        def _maybe_prepare_stat_maneuver_move(
+            self,
+            attacker_id: str,
+            move: MoveSpec,
+            target_id: Optional[str],
+        ) -> Optional[dict]:
+            attacker = self.pokemon.get(attacker_id)
+            if attacker is None or attacker.fainted:
+                return None
+            category = str(move.category or "").strip().lower()
+            target_kind = targeting.normalized_target_kind(move)
+            area_kind = targeting.normalized_area_kind(move)
+            move_name = str(move.name or "").strip()
+            if category == "physical" and target_kind == "melee" and not area_kind:
+                sources = self._stat_maneuver_sources(attacker, "atk")
+                if sources:
+                    feature_name = sources[0]
+                    key = self._stat_maneuver_scene_key(feature_name, "atk")
+                    if self._feature_scene_use_count(attacker, key) < 1:
+                        prompt = {
+                            "actor_id": attacker_id,
+                            "target_id": target_id,
+                            "label": f"{feature_name}: {move_name}?",
+                            "detail": "Reshape this Physical Melee 1-Target move into a Pass attack or a 3-target attack.",
+                            "yes_label": "Apply",
+                            "no_label": "Hold",
+                            "phase": "trigger",
+                            "optional": True,
+                            "feature": feature_name,
+                            "move": move.name,
+                            "options": [
+                                {"value": "pass", "label": "Melee, Pass"},
+                                {"value": "three_targets", "label": "Melee, 3 Targets"},
+                            ],
+                        }
+                        response = self.prompt_response(attacker_id, prompt)
+                        accepted = bool(response)
+                        choice = "pass"
+                        if isinstance(response, dict):
+                            accepted = bool(response.get("accept", True))
+                            choice = str(response.get("choice") or choice).strip().lower()
+                        if accepted and choice in {"pass", "three_targets"}:
+                            self._record_feature_scene_use(attacker, key)
+                            payload = {
+                                "maneuver_kind": "attack",
+                                "mode": choice,
+                                "feature": feature_name,
+                                "round": self.round,
+                                "target_id": target_id,
+                            }
+                            attacker.add_temporary_effect("stat_maneuver_ready", **payload)
+                            self.log_event(
+                                {
+                                    "type": "trainer_feature",
+                                    "actor": attacker_id,
+                                    "target": target_id,
+                                    "trainer": attacker.controller_id,
+                                    "feature": feature_name,
+                                    "effect": "prepare",
+                                    "mode": choice,
+                                    "move": move.name,
+                                    "description": "Stat Maneuver reshapes the user's next attack.",
+                                    "target_hp": attacker.hp,
+                                }
+                            )
+                            return payload
+            if category == "special":
+                sources = self._stat_maneuver_sources(attacker, "spatk")
+                legal_area = area_kind in {"burst", "cone", "closeblast", "line", "blast"}
+                if sources and legal_area:
+                    feature_name = sources[0]
+                    key = self._stat_maneuver_scene_key(feature_name, "spatk")
+                    if self._feature_scene_use_count(attacker, key) < 1:
+                        prompt = {
+                            "actor_id": attacker_id,
+                            "target_id": target_id,
+                            "label": f"{feature_name}: {move_name}?",
+                            "detail": "Resize this Special area move to Burst 1, Cone 2, Close Blast 2, or Line 4 as appropriate.",
+                            "yes_label": "Apply",
+                            "no_label": "Hold",
+                            "phase": "trigger",
+                            "optional": True,
+                            "feature": feature_name,
+                            "move": move.name,
+                        }
+                        if self.should_trigger_out_of_turn(attacker_id, prompt):
+                            self._record_feature_scene_use(attacker, key)
+                            payload = {
+                                "maneuver_kind": "special_attack",
+                                "feature": feature_name,
+                                "round": self.round,
+                            }
+                            attacker.add_temporary_effect("stat_maneuver_ready", **payload)
+                            self.log_event(
+                                {
+                                    "type": "trainer_feature",
+                                    "actor": attacker_id,
+                                    "target": target_id,
+                                    "trainer": attacker.controller_id,
+                                    "feature": feature_name,
+                                    "effect": "prepare",
+                                    "move": move.name,
+                                    "description": "Stat Maneuver resizes the user's next special area attack.",
+                                    "target_hp": attacker.hp,
+                                }
+                            )
+                            return payload
+            sources = self._stat_maneuver_sources(attacker, "spd")
+            if sources:
+                feature_name = sources[0]
+                key = self._stat_maneuver_scene_key(feature_name, "spd")
+                if self._feature_scene_use_count(attacker, key) < 1:
+                    prompt = {
+                        "actor_id": attacker_id,
+                        "target_id": target_id,
+                        "label": f"{feature_name}: {move_name}?",
+                        "detail": "Use this move as Priority, or raise an existing Priority move to Priority (Advanced).",
+                        "yes_label": "Apply",
+                        "no_label": "Hold",
+                        "phase": "trigger",
+                        "optional": True,
+                        "feature": feature_name,
+                        "move": move.name,
+                    }
+                    if self.should_trigger_out_of_turn(attacker_id, prompt):
+                        self._record_feature_scene_use(attacker, key)
+                        payload = {
+                            "maneuver_kind": "speed",
+                            "feature": feature_name,
+                            "round": self.round,
+                        }
+                        attacker.add_temporary_effect("stat_maneuver_ready", **payload)
+                        self.log_event(
+                            {
+                                "type": "trainer_feature",
+                                "actor": attacker_id,
+                                "target": target_id,
+                                "trainer": attacker.controller_id,
+                                "feature": feature_name,
+                                "effect": "prepare",
+                                "move": move.name,
+                                "description": "Stat Maneuver boosts the priority of the user's next move.",
+                                "target_hp": attacker.hp,
+                            }
+                        )
+                        return payload
+            return None
+
+        def _maybe_apply_defensive_stat_maneuver(
+            self,
+            *,
+            defender_id: str,
+            attacker_id: str,
+            move: MoveSpec,
+            result: Dict[str, object],
+        ) -> Dict[str, object]:
+            defender = self.pokemon.get(defender_id)
+            attacker = self.pokemon.get(attacker_id)
+            if defender is None or attacker is None:
+                return result
+            category = str(move.category or "").strip().lower()
+            stat = "def" if category == "physical" else "spdef" if category == "special" else ""
+            if not stat:
+                return result
+            sources = self._stat_maneuver_sources(defender, stat)
+            if not sources:
+                return result
+            feature_name = sources[0]
+            key = self._stat_maneuver_scene_key(feature_name, stat)
+            if self._feature_scene_use_count(defender, key) >= 1:
+                return result
+            prompt = {
+                "actor_id": defender_id,
+                "attacker_id": attacker_id,
+                "defender_id": defender_id,
+                "label": f"{feature_name}?",
+                "detail": f"Resolve this hit as if {defender.spec.name or defender.spec.species}'s {'Defense' if stat == 'def' else 'Special Defense'} Combat Stages were +6.",
+                "yes_label": "Apply",
+                "no_label": "Hold",
+                "phase": "interrupt",
+                "optional": True,
+                "feature": feature_name,
+                "move": move.name,
+            }
+            if not self.should_trigger_out_of_turn(defender_id, prompt):
+                return result
+            self._record_feature_scene_use(defender, key)
+            original_stage = int(defender.combat_stages.get(stat, 0) or 0)
+            try:
+                defender.combat_stages[stat] = 6
+                recalculated = resolve_move_action(
+                    rng=self.rng,
+                    attacker=attacker,
+                    defender=defender,
+                    move=move,
+                    weather=self.effective_weather_for_actor(attacker),
+                    terrain=self.terrain,
+                    context={},
+                    force_hit=bool(result.get("hit")),
+                    accuracy_override=int(result.get("roll", 0) or 0) if result.get("hit") else None,
+                    ignore_defender_abilities=attacker.has_ability("Mold Breaker") and attacker_id != defender_id,
+                )
+            finally:
+                defender.combat_stages[stat] = original_stage
+            updated = dict(result)
+            updated["damage"] = int(recalculated.get("damage", result.get("damage", 0)) or 0)
+            updated["pre_type_damage"] = recalculated.get("pre_type_damage", result.get("pre_type_damage"))
+            updated["type_multiplier"] = recalculated.get("type_multiplier", result.get("type_multiplier"))
+            updated["stat_maneuver"] = stat
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": defender_id,
+                    "target": attacker_id,
+                    "trainer": defender.controller_id,
+                    "feature": feature_name,
+                    "effect": "damage_reduction",
+                    "move": move.name,
+                    "stat": stat,
+                    "description": "Stat Maneuver resolves the attack with maximized defensive stages.",
+                    "target_hp": defender.hp,
+                }
+            )
+            return updated
+
         def start_round(self) -> None:
             self._reset_round_limited_move_usage()
+            self.ride_as_one_turn_state = {}
+            self._sync_mounted_pairs()
             self.phase_controller.start_round()
 
         def _has_taken_turn_this_round(self, actor_id: str) -> bool:
@@ -10485,6 +16641,1241 @@ class PokemonState:
                 self.current_actor_id = previous_actor
             return True
 
+        def _trickster_move_targets_foes(
+            self,
+            actor_id: str,
+            move: MoveSpec,
+            *,
+            target_id: Optional[str] = None,
+        ) -> bool:
+            target_kind = targeting.normalized_target_kind(move)
+            if target_kind in {"self", "ally", "blessing", "field"}:
+                return False
+            if target_id:
+                attacker_team = self._team_for(actor_id)
+                target_team = self._team_for(target_id)
+                return attacker_team is not None and target_team is not None and attacker_team != target_team
+            return target_kind not in {"self", "ally", "blessing", "field"}
+
+        def _trickster_status_move_qualifies(
+            self,
+            actor_id: str,
+            move: MoveSpec,
+            *,
+            target_id: Optional[str] = None,
+        ) -> bool:
+            if str(move.category or "").strip().lower() != "status":
+                return False
+            return self._trickster_move_targets_foes(actor_id, move, target_id=target_id)
+
+        def _trickster_can_ignore_non_stat_evasion(
+            self,
+            actor_id: str,
+            move: MoveSpec,
+            *,
+            target_id: Optional[str] = None,
+        ) -> bool:
+            attacker = self.pokemon.get(actor_id)
+            return bool(
+                attacker is not None
+                and attacker.has_trainer_feature("Flourish")
+                and self._trickster_status_move_qualifies(actor_id, move, target_id=target_id)
+            )
+
+        def _trickster_status_save_move(self, move: MoveSpec) -> bool:
+            text = str(move.effects_text or "").strip().lower()
+            return "save check" in text and any(
+                token in text
+                for token in (
+                    "burn",
+                    "poison",
+                    "paraly",
+                    "sleep",
+                    "freeze",
+                    "confus",
+                    "infatuat",
+                    "suppress",
+                    "enrage",
+                )
+            )
+
+        def _trickster_stage_drop_stats(self, move: MoveSpec) -> List[str]:
+            text = str(move.effects_text or "").strip().lower()
+            if "combat stage" not in text and "combat stages" not in text:
+                return []
+            mapping = [
+                ("attack", "atk"),
+                ("defense", "def"),
+                ("special attack", "spatk"),
+                ("special defense", "spdef"),
+                ("speed", "spd"),
+                ("accuracy", "accuracy"),
+                ("evasion", "evasion"),
+            ]
+            stats = [stat for token, stat in mapping if token in text]
+            return list(dict.fromkeys(stats))
+
+        def _trickster_weather_move(self, move: MoveSpec) -> bool:
+            move_name = str(move.name or "").strip().lower()
+            text = str(move.effects_text or "").strip().lower()
+            return move_name in {"rain dance", "sunny day", "sandstorm", "hail", "snowscape"} or "weather" in text
+
+        def _trickster_hazard_move(self, move: MoveSpec) -> bool:
+            text = str(move.effects_text or "").strip().lower()
+            return move_has_keyword(move, "hazard") or any(
+                token in text for token in ("hazard", "spikes", "stealth rock", "sticky web")
+            )
+
+        def _shell_game_range(self, actor_id: str) -> int:
+            actor = self.pokemon.get(actor_id)
+            if actor is None:
+                return 0
+            rank = int(
+                self._combatant_skill_rank(
+                    actor,
+                    "guile",
+                    trainer_override_id=actor.controller_id,
+                )
+                or 0
+            )
+            return max(1, rank // 2) if rank > 0 else 0
+
+        def _shell_game_hazard_options(self, actor_id: str) -> List[dict]:
+            actor = self.pokemon.get(actor_id)
+            if actor is None or self.grid is None:
+                return []
+            actor_team = self._team_for(actor_id)
+            move_limit = self._shell_game_range(actor_id)
+            if move_limit <= 0:
+                return []
+            grouped: Dict[str, List[dict]] = {}
+            for coord, tile in self.grid.tiles.items():
+                if not isinstance(tile, dict):
+                    continue
+                hazards = self._normalize_hazard_layers(tile.get("hazards"))
+                if not hazards:
+                    continue
+                hazard_sources = {
+                    str(key or "").strip().lower(): str(value or "").strip()
+                    for key, value in dict(tile.get("hazard_sources") or {}).items()
+                }
+                for hazard_name, layers in hazards.items():
+                    normalized = str(hazard_name or "").strip().lower()
+                    if int(layers or 0) <= 0:
+                        continue
+                    source_id = hazard_sources.get(normalized)
+                    if not source_id or self._team_for(source_id) != actor_team:
+                        continue
+                    destinations: List[dict] = []
+                    for x in range(self.grid.width):
+                        for y in range(self.grid.height):
+                            destination = (x, y)
+                            if targeting.chebyshev_distance(coord, destination) > move_limit:
+                                continue
+                            tile_info = self.grid.tiles.get(destination, {})
+                            tile_type = str(tile_info.get("type", "")).strip().lower() if isinstance(tile_info, dict) else str(tile_info or "").strip().lower()
+                            if destination in self.grid.blockers or "void" in tile_type:
+                                continue
+                            destinations.append({"coord": [x, y]})
+                    if not destinations:
+                        continue
+                    grouped.setdefault(normalized, []).append(
+                        {
+                            "from": [coord[0], coord[1]],
+                            "layers": int(layers or 0),
+                            "source_id": source_id,
+                            "destinations": destinations,
+                        }
+                    )
+            options: List[dict] = []
+            for hazard_name, entries in grouped.items():
+                total_layers = sum(int(entry.get("layers", 0) or 0) for entry in entries)
+                options.append(
+                    {
+                        "hazard": hazard_name,
+                        "label": hazard_name.replace("_", " ").title(),
+                        "total_layers": total_layers,
+                        "entries": entries,
+                    }
+                )
+            return sorted(options, key=lambda entry: str(entry.get("label") or entry.get("hazard") or ""))
+
+        def _apply_shell_game(
+            self,
+            *,
+            actor_id: str,
+            hazard: str,
+            moves: Sequence[dict],
+            free_action: bool = False,
+            validate_only: bool = False,
+        ) -> dict:
+            actor = self.pokemon.get(actor_id)
+            if actor is None or self.grid is None:
+                raise ValueError("Invalid Shell Game user.")
+            normalized = str(hazard or "").strip().lower()
+            available = {
+                tuple(int(value) for value in entry.get("from", [])): int(entry.get("layers", 0) or 0)
+                for entry in self._shell_game_hazard_options(actor_id)
+                if str(entry.get("hazard") or "").strip().lower() == normalized
+                for entry in entry.get("entries", [])
+            }
+            if not available:
+                raise ValueError("No allied hazards of that type can be moved with Shell Game.")
+            if not moves:
+                raise ValueError("Shell Game requires at least one hazard relocation.")
+            moved_by_source: Dict[Tuple[int, int], int] = {}
+            relocated: List[dict] = []
+            total_available = sum(available.values())
+            total_moved = 0
+            for raw in moves:
+                if not isinstance(raw, dict):
+                    raise ValueError("Invalid Shell Game relocation entry.")
+                from_coord = tuple(int(value) for value in raw.get("from", []))
+                to_coord = tuple(int(value) for value in raw.get("to", []))
+                if len(from_coord) != 2 or len(to_coord) != 2:
+                    raise ValueError("Shell Game relocations require source and destination coordinates.")
+                if from_coord not in available:
+                    raise ValueError("Shell Game source tile is invalid.")
+                layer_count = int(raw.get("layers", available[from_coord]) or 0)
+                if layer_count <= 0:
+                    raise ValueError("Shell Game must move at least one hazard layer.")
+                moved_so_far = moved_by_source.get(from_coord, 0)
+                if moved_so_far + layer_count > available[from_coord]:
+                    raise ValueError("Shell Game cannot move more hazard layers than are present on a source tile.")
+                if not self.grid.in_bounds(to_coord):
+                    raise ValueError("Shell Game destination is out of bounds.")
+                tile_info = self.grid.tiles.get(to_coord, {})
+                tile_type = str(tile_info.get("type", "")).strip().lower() if isinstance(tile_info, dict) else str(tile_info or "").strip().lower()
+                if to_coord in self.grid.blockers or "void" in tile_type:
+                    raise ValueError("Shell Game destination is blocked.")
+                if targeting.chebyshev_distance(from_coord, to_coord) > self._shell_game_range(actor_id):
+                    raise ValueError("Shell Game destination is too far from the source tile.")
+                moved_by_source[from_coord] = moved_so_far + layer_count
+                total_moved += layer_count
+                relocated.append({"from": from_coord, "to": to_coord, "layers": layer_count})
+            if total_moved != total_available:
+                raise ValueError("Shell Game must move all allied instances of the chosen hazard.")
+            payload = {
+                "type": "trainer_feature",
+                "actor": actor_id,
+                "trainer": actor.controller_id,
+                "feature": "Shell Game",
+                "effect": "relocate_hazards",
+                "hazard": normalized,
+                "moves": [
+                    {
+                        "from": [entry["from"][0], entry["from"][1]],
+                        "to": [entry["to"][0], entry["to"][1]],
+                        "layers": entry["layers"],
+                    }
+                    for entry in relocated
+                ],
+                "free_action": free_action,
+                "target_hp": actor.hp,
+            }
+            if validate_only:
+                return payload
+            for from_coord, available_layers in available.items():
+                moved_layers = moved_by_source.get(from_coord, 0)
+                if moved_layers != available_layers:
+                    raise ValueError("Shell Game must account for every hazard layer on each source tile.")
+                remaining = self._consume_hazard_layers(from_coord, normalized, moved_layers)
+                if remaining != 0:
+                    raise ValueError("Shell Game failed to remove the source hazard layers cleanly.")
+            for entry in relocated:
+                self._place_hazard(
+                    entry["to"],
+                    normalized,
+                    entry["layers"],
+                    source_id=actor_id,
+                    allow_shell_game=False,
+                )
+            self._record_feature_scene_use(actor, "Shell Game")
+            self.log_event(payload)
+            return payload
+
+        def _maybe_offer_shell_game(
+            self,
+            *,
+            actor_id: Optional[str],
+            just_placed_hazard: Optional[str] = None,
+        ) -> None:
+            actor = self.pokemon.get(actor_id) if actor_id else None
+            if (
+                actor is None
+                or actor.fainted
+                or not actor.has_trainer_feature("Shell Game")
+                or self._feature_scene_use_count(actor, "Shell Game") >= 2
+            ):
+                return
+            options = self._shell_game_hazard_options(actor_id)
+            if just_placed_hazard:
+                normalized = str(just_placed_hazard or "").strip().lower()
+                options = [entry for entry in options if str(entry.get("hazard") or "").strip().lower() == normalized] + [
+                    entry for entry in options if str(entry.get("hazard") or "").strip().lower() != normalized
+                ]
+            if not options:
+                return
+            prompt = {
+                "actor_id": actor_id,
+                "label": "Shell Game?",
+                "detail": "Spend a Shell Game use to immediately move all allied layers of one hazard type.",
+                "yes_label": "Use Shell Game",
+                "no_label": "Skip",
+                "phase": "action",
+                "optional": True,
+                "feature": "Shell Game",
+                "kind": "shell_game",
+                "hazards": options,
+            }
+            response = self.prompt_response(actor_id, prompt)
+            accepted = bool(response)
+            hazard_name = ""
+            relocations: List[dict] = []
+            if isinstance(response, dict):
+                accepted = bool(response.get("accept", True))
+                hazard_name = str(response.get("hazard") or response.get("choice") or "").strip()
+                relocations = list(response.get("moves") or [])
+            elif isinstance(response, str):
+                hazard_name = response.strip()
+            if not accepted or not hazard_name:
+                return
+            self._apply_shell_game(actor_id=actor_id, hazard=hazard_name, moves=relocations, free_action=True)
+
+        def _available_stacked_deck_conditions(self, target: PokemonState) -> List[str]:
+            options: List[str] = []
+            for status in target.statuses:
+                normalized = _normalize_trickster_condition(target._normalized_status_name(status))
+                if normalized in (
+                    _TRICKSTER_STACKED_DECK_DAMAGE_CONDITIONS
+                    | _TRICKSTER_STACKED_DECK_SAVE_CONDITIONS
+                    | _TRICKSTER_STACKED_DECK_ACCURACY_CONDITIONS
+                ):
+                    options.append(normalized)
+            return sorted(dict.fromkeys(options))
+
+        def _stacked_deck_target_key(self, target_id: str) -> str:
+            return f"Stacked Deck:{target_id}"
+
+        def _stacked_deck_accuracy_penalty(self, actor: PokemonState) -> int:
+            penalty = 0
+            for entry in list(actor.get_temporary_effects("stacked_deck_accuracy_evasion")):
+                condition = _normalize_trickster_condition(entry.get("condition"))
+                if not condition or not actor.has_status(condition):
+                    continue
+                try:
+                    penalty = max(penalty, int(entry.get("amount", 0) or 0))
+                except (TypeError, ValueError):
+                    continue
+            return penalty
+
+        def _stacked_deck_evasion_penalty(self, actor: PokemonState) -> int:
+            return self._stacked_deck_accuracy_penalty(actor)
+
+        def _maybe_apply_stacked_deck_damage(
+            self,
+            *,
+            actor_id: str,
+            condition: str,
+            trigger_effect: str,
+        ) -> int:
+            actor = self.pokemon.get(actor_id)
+            if actor is None or actor.fainted:
+                return 0
+            normalized = _normalize_trickster_condition(condition)
+            for entry in list(actor.get_temporary_effects("stacked_deck_bonus_damage")):
+                if _normalize_trickster_condition(entry.get("condition")) != normalized:
+                    continue
+                before_hp = int(actor.hp or 0)
+                actor.apply_damage(5)
+                extra = max(0, before_hp - int(actor.hp or 0))
+                if extra:
+                    self.log_event(
+                        {
+                            "type": "trainer_feature",
+                            "actor": entry.get("source_id"),
+                            "target": actor_id,
+                            "trainer": entry.get("trainer_id"),
+                            "feature": "Stacked Deck",
+                            "effect": trigger_effect,
+                            "condition": normalized,
+                            "amount": extra,
+                            "description": "Stacked Deck increases damage from the chosen condition by 5.",
+                            "target_hp": actor.hp,
+                        }
+                    )
+                return extra
+            return 0
+
+        def _maybe_trigger_stacked_deck_save_follow_up(self, actor_id: str, condition: str) -> bool:
+            actor = self.pokemon.get(actor_id)
+            if actor is None or actor.fainted:
+                return False
+            normalized = _normalize_trickster_condition(condition)
+            for entry in list(actor.get_temporary_effects("stacked_deck_save_trap")):
+                if _normalize_trickster_condition(entry.get("condition")) != normalized:
+                    continue
+                if entry in actor.temporary_effects:
+                    actor.temporary_effects.remove(entry)
+                if not actor.has_status("Tripped"):
+                    actor.statuses.append({"name": "Tripped", "remaining": 1})
+                if not actor.has_status("Slowed"):
+                    actor.statuses.append({"name": "Slowed", "remaining": 1})
+                self.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": entry.get("source_id"),
+                        "target": actor_id,
+                        "trainer": entry.get("trainer_id"),
+                        "feature": "Stacked Deck",
+                        "effect": "save_follow_up",
+                        "condition": normalized,
+                        "description": "Stacked Deck makes the target Tripped and Slowed after their next successful save.",
+                        "target_hp": actor.hp,
+                    }
+                )
+                return True
+            return False
+
+        def _close_quarters_mark_source(self, target: Optional[PokemonState]) -> Optional[dict]:
+            if target is None:
+                return None
+            for entry in list(target.get_temporary_effects("close_quarters_mark")):
+                expires_round = entry.get("expires_round")
+                if expires_round is not None and self.round > int(expires_round):
+                    if entry in target.temporary_effects:
+                        target.temporary_effects.remove(entry)
+                    continue
+                return entry
+            return None
+
+        def _apply_close_quarters_mark(self, *, source_id: str, target_id: str) -> bool:
+            source = self.pokemon.get(source_id)
+            target = self.pokemon.get(target_id)
+            if source is None or target is None or source.fainted or target.fainted:
+                return False
+            if not source.get_temporary_effects("close_quarters_mastery_bound"):
+                return False
+            if self._team_for(source_id) == self._team_for(target_id):
+                return False
+            for entry in list(target.get_temporary_effects("close_quarters_mark")):
+                if entry in target.temporary_effects:
+                    target.temporary_effects.remove(entry)
+            target.add_temporary_effect(
+                "close_quarters_mark",
+                source_id=source_id,
+                trainer_id=source.controller_id,
+                expires_round=self.round + 1,
+            )
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": source_id,
+                    "target": target_id,
+                    "trainer": source.controller_id,
+                    "feature": "Close Quarters Mastery",
+                    "effect": "mark",
+                    "description": "Close Quarters Mastery marks the foe for one full round.",
+                    "target_hp": target.hp,
+                }
+            )
+            return True
+
+        def _maybe_trigger_tyrants_roar(self, *, actor_id: str, move: MoveSpec, anchor_id: Optional[str]) -> bool:
+            actor = self.pokemon.get(actor_id)
+            anchor = self.pokemon.get(anchor_id) if anchor_id else None
+            if actor is None or actor.fainted or anchor is None or anchor.position is None:
+                return False
+            if not actor.has_trainer_feature("Tyrant’s Roar") and not actor.has_trainer_feature("Tyrant's Roar"):
+                return False
+            if _normalize_type_ace_type_name(move.type) != "dragon":
+                return False
+            if self._feature_scene_use_count(actor, "Tyrant's Roar") >= 2 and self._feature_scene_use_count(actor, "Tyrant’s Roar") >= 2:
+                return False
+            affected = []
+            for pid, target in self.pokemon.items():
+                if pid == actor_id or target.fainted or target.position is None:
+                    continue
+                if self._team_for(pid) == self._team_for(actor_id):
+                    continue
+                if targeting.chebyshev_distance(anchor.position, target.position) > 2:
+                    continue
+                if not target.has_status("Slowed"):
+                    target.statuses.append({"name": "Slowed", "remaining": 1})
+                for stat in ("atk", "def", "spatk", "spdef", "spd", "accuracy", "evasion"):
+                    if int(target.combat_stages.get(stat, 0) or 0) > 0:
+                        target.combat_stages[stat] = int(target.combat_stages.get(stat, 0) or 0) - 1
+                        break
+                affected.append(pid)
+            if not affected:
+                return False
+            self._record_feature_scene_use(actor, "Tyrant's Roar")
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": actor_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Tyrant's Roar",
+                    "effect": "burst_debuff",
+                    "move": move.name,
+                    "targets": affected,
+                    "description": "Tyrant's Roar slows nearby foes and strips a positive Combat Stage.",
+                    "target_hp": actor.hp,
+                }
+            )
+            return True
+
+        def _maybe_offer_fairy_lights_reaction(self, *, defender_id: Optional[str], attacker_id: Optional[str]) -> bool:
+            if not defender_id or not attacker_id:
+                return False
+            defender = self.pokemon.get(defender_id)
+            attacker = self.pokemon.get(attacker_id)
+            if defender is None or attacker is None or defender.fainted or attacker.fainted:
+                return False
+            entries = list(defender.get_temporary_effects("fairy_lights"))
+            if not entries or defender.position is None or attacker.position is None:
+                return False
+            if targeting.chebyshev_distance(defender.position, attacker.position) > 6:
+                return False
+            prompt = {
+                "actor_id": defender_id,
+                "target_id": attacker_id,
+                "label": "Fairy Lights?",
+                "detail": "Expend a Fairy Light to gain 1 Tick of Temporary HP or use Fairy Wind as a Free Action.",
+                "yes_label": "Use Fairy Light",
+                "no_label": "Skip",
+                "phase": "interrupt",
+                "optional": True,
+                "feature": "Fairy Lights",
+                "kind": "choice",
+                "options": [
+                    {"value": "temp_hp", "label": "Gain 1 Tick of Temporary HP"},
+                    {"value": "fairy_wind", "label": "Use Fairy Wind"},
+                ],
+            }
+            response = self.prompt_response(defender_id, prompt)
+            accepted = bool(response)
+            choice = ""
+            if isinstance(response, dict):
+                accepted = bool(response.get("accept", True))
+                choice = str(response.get("choice") or "").strip().lower()
+            elif isinstance(response, str):
+                choice = response.strip().lower()
+            if not accepted or not choice:
+                return False
+            used = entries[0]
+            if used in defender.temporary_effects:
+                defender.temporary_effects.remove(used)
+            if choice == "temp_hp":
+                gained = defender.add_temp_hp(defender.tick_value())
+                self.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": defender_id,
+                        "target": attacker_id,
+                        "trainer": defender.controller_id,
+                        "feature": "Fairy Lights",
+                        "effect": "temp_hp",
+                        "amount": gained,
+                        "remaining_lights": len(defender.get_temporary_effects("fairy_lights")),
+                        "target_hp": defender.hp,
+                    }
+                )
+                return True
+            fairy_wind = next((mv for mv in defender.spec.moves if str(mv.name or "").strip().lower() == "fairy wind"), None)
+            if fairy_wind is None:
+                fairy_wind = MoveSpec(
+                    name="Fairy Wind",
+                    type="Fairy",
+                    category="Special",
+                    db=4,
+                    ac=2,
+                    range_kind="Ranged",
+                    range_value=6,
+                    target_kind="Ranged",
+                    target_range=6,
+                    freq="At-Will",
+                )
+            self.resolve_move_targets(
+                attacker_id=defender_id,
+                move=copy.deepcopy(fairy_wind),
+                target_id=attacker_id,
+                target_position=attacker.position,
+            )
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": defender_id,
+                    "target": attacker_id,
+                    "trainer": defender.controller_id,
+                    "feature": "Fairy Lights",
+                    "effect": "fairy_wind",
+                    "remaining_lights": len(defender.get_temporary_effects("fairy_lights")),
+                    "target_hp": defender.hp,
+                }
+            )
+            return True
+
+        def _mold_the_earth_anchor(
+            self,
+            attacker: PokemonState,
+            target_id: Optional[str],
+            target_position: Optional[Tuple[int, int]],
+        ) -> Optional[Tuple[int, int]]:
+            if target_position is not None:
+                return (int(target_position[0]), int(target_position[1]))
+            if target_id:
+                target = self.pokemon.get(target_id)
+                if target is not None and target.position is not None:
+                    return target.position
+            return attacker.position
+
+        def _apply_mold_the_earth(
+            self,
+            *,
+            actor_id: str,
+            move: MoveSpec,
+            target_id: Optional[str] = None,
+            target_position: Optional[Tuple[int, int]] = None,
+        ) -> bool:
+            actor = self.pokemon.get(actor_id)
+            if actor is None or actor.fainted or actor.position is None or self.grid is None:
+                return False
+            if not actor.has_trainer_feature("Mold the Earth") or not actor.has_capability("Groundshaper"):
+                return False
+            if _normalize_type_ace_type_name(move.type) != "ground":
+                return False
+            if self._feature_scene_use_count(actor, "Mold the Earth") >= 2:
+                return False
+            anchor = self._mold_the_earth_anchor(actor, target_id, target_position)
+            if anchor is None or not self.grid.in_bounds(anchor):
+                return False
+            prompt = {
+                "actor_id": actor_id,
+                "target_id": target_id,
+                "label": "Mold the Earth?",
+                "detail": "Reshape the ground as a free action and leave Spikes in the affected squares.",
+                "yes_label": "Reshape",
+                "no_label": "Skip",
+                "phase": "action",
+                "optional": True,
+                "feature": "Mold the Earth",
+                "move": move.name,
+            }
+            response = self.prompt_response(actor_id, prompt)
+            if isinstance(response, dict):
+                if not bool(response.get("accept", True)):
+                    return False
+            elif response is False:
+                return False
+            area_kind = str(move.area_kind or "").strip().lower()
+            if area_kind == "closeblast":
+                area_kind = "blast"
+            changed_tiles: List[Tuple[int, int]] = []
+            if area_kind in {"burst", "blast", "cone", "line"}:
+                try:
+                    changed_tiles = list(targeting.affected_tiles(self.grid, actor.position, anchor, move))
+                except Exception:
+                    changed_tiles = []
+            else:
+                changed_tiles = [anchor]
+                changed_tiles.extend(
+                    [
+                        (anchor[0] + 1, anchor[1]),
+                        (anchor[0] - 1, anchor[1]),
+                        (anchor[0], anchor[1] + 1),
+                        (anchor[0], anchor[1] - 1),
+                    ]
+                )
+            valid_tiles: List[Tuple[int, int]] = []
+            for coord in changed_tiles:
+                if not self.grid.in_bounds(coord):
+                    continue
+                tile_info = self.grid.tiles.get(coord, {})
+                tile_meta = dict(tile_info) if isinstance(tile_info, dict) else {"type": tile_info}
+                tile_type = str(tile_meta.get("type", "")).strip().lower()
+                if coord in self.grid.blockers or any(token in tile_type for token in ("wall", "blocker", "blocking", "void")):
+                    continue
+                if "rough" not in tile_type and "slow" not in tile_type:
+                    tile_meta["type"] = "rough ground"
+                elif "rough" not in tile_type:
+                    tile_meta["type"] = f"{tile_type} rough".strip()
+                self.grid.tiles[coord] = tile_meta
+                self._place_hazard(coord, "spikes", 1, source_id=actor_id, allow_shell_game=False)
+                if coord not in valid_tiles:
+                    valid_tiles.append(coord)
+            if not valid_tiles:
+                return False
+            self._record_feature_scene_use(actor, "Mold the Earth")
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": actor_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Mold the Earth",
+                    "effect": "groundshaper",
+                    "move": move.name,
+                    "positions": [list(coord) for coord in valid_tiles],
+                    "description": "Mold the Earth reshapes the battlefield and creates Spikes in the disturbed ground.",
+                    "target_hp": actor.hp,
+                }
+            )
+            return True
+
+        def _maybe_offer_encore_performance(
+            self,
+            *,
+            actor_id: str,
+            move: MoveSpec,
+        ) -> None:
+            actor = self.pokemon.get(actor_id)
+            if actor is None or actor.fainted or not actor.has_trainer_feature("Encore Performance"):
+                return
+            if self._feature_scene_use_count(actor, "Encore Performance") >= 3:
+                return
+            if str(move.category or "").strip().lower() != "status":
+                return
+            if self._trickster_move_targets_foes(actor_id, move):
+                return
+            options = [{"value": "extra_standard", "label": "Gain a second Standard Action for an At-Will action"}]
+            for stat in ("atk", "def", "spatk", "spdef", "spd", "accuracy", "evasion"):
+                if actor.combat_stages.get(stat, 0) != 0:
+                    continue
+                options.append({"value": f"stat:{stat}", "label": f"+1 CS {stat.upper()}"})
+            if self._trickster_hazard_move(move):
+                options.append({"value": "hazard", "label": "Place 2 additional Hazard units"})
+            if self._trickster_weather_move(move):
+                options.append({"value": "weather", "label": "Weather lasts 2 additional turns"})
+            if targeting.normalized_target_kind(move) == "blessing":
+                options.append({"value": "blessing", "label": "Blessing gains 1 additional use"})
+            if len(options) <= 1:
+                return
+            prompt = {
+                "actor_id": actor_id,
+                "label": "Encore Performance?",
+                "detail": "Choose one Encore Performance rider for the triggering self/ally-targeting Status move.",
+                "yes_label": "Apply",
+                "no_label": "Skip",
+                "phase": "action",
+                "optional": True,
+                "feature": "Encore Performance",
+                "move": move.name,
+                "kind": "choice",
+                "options": options,
+            }
+            response = self.prompt_response(actor_id, prompt)
+            accepted = bool(response)
+            choice = ""
+            if isinstance(response, dict):
+                accepted = bool(response.get("accept", True))
+                choice = str(response.get("choice") or "").strip()
+            elif isinstance(response, str):
+                choice = response.strip()
+            if not accepted or not choice:
+                return
+            self._record_feature_scene_use(actor, "Encore Performance")
+            if choice == "extra_standard":
+                actor.add_temporary_effect(
+                    "extra_action",
+                    action=ActionType.STANDARD.value,
+                    round=self.round,
+                    source="Encore Performance",
+                )
+                actor.add_temporary_effect(
+                    "at_will_only",
+                    source="Encore Performance",
+                    expires_round=self.round,
+                )
+            elif choice.startswith("stat:"):
+                stat = choice.split(":", 1)[1]
+                before = actor.combat_stages.get(stat, 0)
+                after = max(-6, min(6, before + 1))
+                actor.combat_stages[stat] = after
+            elif choice == "hazard":
+                actor.add_temporary_effect("encore_performance_hazard", move=move.name, round=self.round, charges=1)
+            elif choice == "weather":
+                actor.add_temporary_effect("encore_performance_weather", move=move.name, round=self.round, charges=1)
+            elif choice == "blessing":
+                actor.add_temporary_effect("encore_performance_blessing", move=move.name, round=self.round, charges=1)
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": actor_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Encore Performance",
+                    "effect": choice,
+                    "move": move.name,
+                    "target_hp": actor.hp,
+                }
+            )
+
+        def _maybe_offer_mind_games(self, *, actor_id: str, target_id: str, move: MoveSpec) -> None:
+            actor = self.pokemon.get(actor_id)
+            target = self.pokemon.get(target_id)
+            if (
+                actor is None
+                or target is None
+                or actor.fainted
+                or target.fainted
+                or not actor.has_trainer_feature("Mind Games")
+                or not move_has_keyword(move, "social")
+            ):
+                return
+            if self._feature_scene_use_count(actor, f"Mind Games:{target_id}") >= 1:
+                return
+            prompt_options = [{"value": "", "label": "Only apply Vulnerable"}]
+            remapable = [
+                _normalize_trickster_condition(target._normalized_status_name(status))
+                for status in target.statuses
+            ]
+            remapable = [name for name in remapable if name in {"enraged", "suppressed", "infatuated", "confused"}]
+            if remapable:
+                for source in sorted(dict.fromkeys(remapable)):
+                    for dest in ("enraged", "suppressed", "infatuated", "confused"):
+                        if source == dest:
+                            continue
+                        prompt_options.append(
+                            {
+                                "value": f"{source}->{dest}",
+                                "label": f"{source.title()} to {dest.title()}",
+                            }
+                        )
+            prompt = {
+                "actor_id": actor_id,
+                "target_id": target_id,
+                "label": "Mind Games?",
+                "detail": "Make the foe Vulnerable for one full round, and optionally swap one listed volatile condition.",
+                "yes_label": "Apply",
+                "no_label": "Skip",
+                "phase": "action",
+                "optional": True,
+                "feature": "Mind Games",
+                "move": move.name,
+                "kind": "choice",
+                "options": prompt_options,
+            }
+            response = self.prompt_response(actor_id, prompt)
+            accepted = bool(response)
+            choice = ""
+            if isinstance(response, dict):
+                accepted = bool(response.get("accept", True))
+                choice = str(response.get("choice") or "").strip()
+            elif isinstance(response, str):
+                choice = response.strip()
+            if not accepted:
+                return
+            self._record_feature_scene_use(actor, f"Mind Games:{target_id}")
+            if not target.has_status("Vulnerable"):
+                target.statuses.append({"name": "Vulnerable", "remaining": 1})
+            if "->" in choice:
+                source_name, dest_name = choice.split("->", 1)
+                removed = target.remove_status_by_names({source_name})
+                if removed:
+                    applied_name = "Infatuated" if dest_name == "infatuated" else dest_name.title()
+                    extra = {"source": actor_id}
+                    if dest_name == "infatuated":
+                        extra["source_id"] = actor_id
+                    target.statuses.append({"name": applied_name, "remaining": 1, **extra})
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Mind Games",
+                    "effect": "vulnerable",
+                    "move": move.name,
+                    "choice": choice or None,
+                    "target_hp": target.hp,
+                }
+            )
+
+        def _maybe_offer_stacked_deck(self, *, actor_id: str, target_id: str, move: MoveSpec) -> None:
+            actor = self.pokemon.get(actor_id)
+            target = self.pokemon.get(target_id)
+            trainer = self.trainers.get(actor.controller_id) if actor is not None else None
+            if (
+                actor is None
+                or target is None
+                or trainer is None
+                or actor.fainted
+                or target.fainted
+                or not actor.has_trainer_feature("Stacked Deck")
+                or trainer.available_ap(self.round) < 1
+            ):
+                return
+            target_key = self._stacked_deck_target_key(target_id)
+            if self._feature_scene_use_count(actor, target_key) >= 1:
+                return
+            choices = self._available_stacked_deck_conditions(target)
+            if not choices:
+                return
+            prompt = {
+                "actor_id": actor_id,
+                "target_id": target_id,
+                "label": "Stacked Deck?",
+                "detail": "Spend 1 AP to attach an extra condition rider to this foe for the rest of the scene.",
+                "yes_label": "Spend 1 AP",
+                "no_label": "Skip",
+                "phase": "action",
+                "optional": True,
+                "feature": "Stacked Deck",
+                "move": move.name,
+                "ap_cost": 1,
+                "kind": "choice",
+                "options": [{"value": entry, "label": entry.title()} for entry in choices],
+            }
+            response = self.prompt_response(actor_id, prompt)
+            accepted = bool(response)
+            choice = ""
+            if isinstance(response, dict):
+                accepted = bool(response.get("accept", True))
+                choice = str(response.get("choice") or "").strip()
+            elif isinstance(response, str):
+                choice = response.strip()
+            if not accepted or not choice:
+                return
+            normalized = _normalize_trickster_condition(choice)
+            trainer.consume_ap(1)
+            self._record_feature_scene_use(actor, target_key)
+            if normalized in _TRICKSTER_STACKED_DECK_DAMAGE_CONDITIONS:
+                target.add_temporary_effect(
+                    "stacked_deck_bonus_damage",
+                    condition=normalized,
+                    source_id=actor_id,
+                    trainer_id=actor.controller_id,
+                )
+            elif normalized in _TRICKSTER_STACKED_DECK_SAVE_CONDITIONS:
+                target.add_temporary_effect(
+                    "stacked_deck_save_trap",
+                    condition=normalized,
+                    source_id=actor_id,
+                    trainer_id=actor.controller_id,
+                    charges=1,
+                )
+            elif normalized in _TRICKSTER_STACKED_DECK_ACCURACY_CONDITIONS:
+                target.add_temporary_effect(
+                    "stacked_deck_accuracy_evasion",
+                    condition=normalized,
+                    amount=2,
+                    source_id=actor_id,
+                    trainer_id=actor.controller_id,
+                )
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Stacked Deck",
+                    "effect": normalized,
+                    "move": move.name,
+                    "ap_spent": 1,
+                    "target_hp": target.hp,
+                }
+            )
+
+        def _impromptu_trick_options(self, *, actor_id: str, target_id: str) -> List[dict]:
+            actor = self.pokemon.get(actor_id)
+            if actor is None:
+                return []
+            options: List[dict] = []
+            for move in actor.spec.moves:
+                move_name = str(move.name or "").strip()
+                if not move_name:
+                    continue
+                freq = str(move.freq or "").strip().lower()
+                if move_has_keyword(move, "hazard"):
+                    options.append({"move": move_name, "label": f"{move_name} (Hazard)"})
+                    continue
+                if str(move.category or "").strip().lower() != "status":
+                    continue
+                if freq not in {"at-will", "at will", "eot"}:
+                    continue
+                probe = PokemonState.UseMoveAction(
+                    actor_id=actor_id,
+                    move_name=move_name,
+                    target_id=target_id,
+                    allow_reaction_declared=True,
+                )
+                probe.action_type = ActionType.FREE
+                try:
+                    probe.validate(self)
+                except Exception:
+                    continue
+                options.append({"move": move_name, "label": move_name})
+            return options
+
+        def _maybe_offer_impromptu_trick(self, *, actor_id: str, target_id: str) -> Optional[str]:
+            actor = self.pokemon.get(actor_id)
+            trainer = self.trainers.get(actor.controller_id) if actor is not None else None
+            if (
+                actor is None
+                or trainer is None
+                or not actor.has_trainer_feature("Impromptu Trick")
+                or trainer.available_ap(self.round) < 1
+            ):
+                return None
+            options = self._impromptu_trick_options(actor_id=actor_id, target_id=target_id)
+            if not options:
+                return None
+            prompt = {
+                "actor_id": actor_id,
+                "target_id": target_id,
+                "label": "Impromptu Trick?",
+                "detail": "Spend 1 AP to replace the Attack of Opportunity with a Hazard move or an At-Will/EOT Status move.",
+                "yes_label": "Spend 1 AP",
+                "no_label": "Use Struggle",
+                "phase": "interrupt",
+                "optional": True,
+                "feature": "Impromptu Trick",
+                "ap_cost": 1,
+                "kind": "choice",
+                "options": [{"value": entry["move"], "label": entry["label"]} for entry in options],
+            }
+            response = self.prompt_response(actor_id, prompt)
+            accepted = bool(response)
+            choice = ""
+            if isinstance(response, dict):
+                accepted = bool(response.get("accept", True))
+                choice = str(response.get("choice") or "").strip()
+            elif isinstance(response, str):
+                choice = response.strip()
+            if not accepted or not choice:
+                return None
+            trainer.consume_ap(1)
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Impromptu Trick",
+                    "effect": "replace_aoo",
+                    "move": choice,
+                    "ap_spent": 1,
+                    "target_hp": actor.hp,
+                }
+            )
+            return choice
+
+        def _best_disengage_destination(
+            self,
+            *,
+            actor_id: str,
+            threat_id: Optional[str],
+        ) -> Optional[Tuple[int, int]]:
+            actor = self.pokemon.get(actor_id)
+            if actor is None or actor.position is None or self.grid is None:
+                return None
+            threat = self.pokemon.get(threat_id) if threat_id else None
+            legal = {
+                coord
+                for coord in movement.neighboring_tiles(actor.position)
+                if self.grid.in_bounds(coord)
+            }
+            occupied = {
+                mon.position
+                for pid, mon in self.pokemon.items()
+                if pid != actor_id and mon.position is not None and mon.hp is not None and mon.hp > 0
+            }
+            candidates = []
+            for coord in legal:
+                if coord in occupied or coord in self.grid.blockers:
+                    continue
+                tile_info = self.grid.tiles.get(coord, {})
+                tile_type = str(tile_info.get("type", "")).strip().lower() if isinstance(tile_info, dict) else str(tile_info or "").strip().lower()
+                if "void" in tile_type or "wall" in tile_type or "blocker" in tile_type or "blocking" in tile_type:
+                    continue
+                candidates.append(coord)
+            if not candidates:
+                return None
+            if threat is None or threat.position is None:
+                return candidates[0]
+            return max(
+                candidates,
+                key=lambda coord: (
+                    targeting.chebyshev_distance(coord, threat.position),
+                    targeting.chebyshev_distance(actor.position, coord),
+                    coord[0],
+                    coord[1],
+                ),
+            )
+
+        def _maybe_trigger_escape_artist(
+            self,
+            *,
+            actor_id: str,
+            target_id: Optional[str],
+            move: MoveSpec,
+        ) -> bool:
+            actor = self.pokemon.get(actor_id)
+            trainer = self.trainers.get(actor.controller_id) if actor is not None else None
+            target = self.pokemon.get(target_id) if target_id else None
+            if (
+                actor is None
+                or trainer is None
+                or target is None
+                or not actor.has_trainer_feature("Escape Artist")
+                or trainer.available_ap(self.round) < 1
+                or self._feature_scene_use_count(actor, "Escape Artist") >= 1
+                or str(move.category or "").strip().lower() != "status"
+                or actor.position is None
+                or target.position is None
+                or self._combatant_distance(actor, target) != 1
+            ):
+                return False
+            prompt = {
+                "actor_id": actor_id,
+                "target_id": target_id,
+                "label": "Escape Artist?",
+                "detail": "Spend 1 AP so this adjacent foe does not get an Attack of Opportunity, then Disengage after the move resolves.",
+                "yes_label": "Spend 1 AP",
+                "no_label": "Skip",
+                "phase": "action",
+                "optional": True,
+                "feature": "Escape Artist",
+                "move": move.name,
+                "ap_cost": 1,
+            }
+            response = self.prompt_response(actor_id, prompt)
+            accepted = bool(response)
+            if isinstance(response, dict):
+                accepted = bool(response.get("accept", True))
+            if not accepted:
+                return False
+            trainer.consume_ap(1)
+            self._record_feature_scene_use(actor, "Escape Artist")
+            actor.add_temporary_effect("escape_artist_pending", target_id=target_id, round=self.round, move=move.name)
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Escape Artist",
+                    "effect": "no_aoo",
+                    "move": move.name,
+                    "ap_spent": 1,
+                    "target_hp": actor.hp,
+                }
+            )
+            return True
+
+        def _resolve_escape_artist_disengage(self, actor_id: str) -> None:
+            actor = self.pokemon.get(actor_id)
+            if actor is None or actor.fainted:
+                return
+            pending = next(
+                (
+                    entry
+                    for entry in actor.get_temporary_effects("escape_artist_pending")
+                    if int(entry.get("round", -1) if entry.get("round", -1) not in (None, "") else -1) == self.round
+                ),
+                None,
+            )
+            if pending is None:
+                return
+            if pending in actor.temporary_effects:
+                actor.temporary_effects.remove(pending)
+            destination = self._best_disengage_destination(actor_id=actor_id, threat_id=pending.get("target_id"))
+            if destination is None or actor.position is None or destination == actor.position:
+                return
+            origin = actor.position
+            actor.position = destination
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": actor_id,
+                    "target": pending.get("target_id"),
+                    "trainer": actor.controller_id,
+                    "feature": "Escape Artist",
+                    "effect": "disengage",
+                    "from": origin,
+                    "to": destination,
+                    "description": "Escape Artist repositions the user after the triggering Status move resolves.",
+                    "target_hp": actor.hp,
+                }
+            )
+
+        def _maybe_offer_flourish(
+            self,
+            *,
+            actor_id: str,
+            target_id: str,
+            move: MoveSpec,
+            did_crit: bool,
+        ) -> None:
+            actor = self.pokemon.get(actor_id)
+            target = self.pokemon.get(target_id)
+            if (
+                actor is None
+                or target is None
+                or not did_crit
+                or not actor.has_trainer_feature("Flourish")
+                or not self._trickster_status_move_qualifies(actor_id, move, target_id=target_id)
+            ):
+                return
+            options = [{"value": "temp_hp", "label": "Gain 1 Tick of Temporary HP"}]
+            if self._trickster_status_save_move(move):
+                options.append({"value": "save_penalty", "label": "Target gets -4 to its first Save Check"})
+            for stat in self._trickster_stage_drop_stats(move):
+                options.append({"value": f"stage:{stat}", "label": f"Lower {stat.upper()} by 1 additional CS"})
+            prompt = {
+                "actor_id": actor_id,
+                "target_id": target_id,
+                "label": "Flourish?",
+                "detail": "Choose a Flourish rider for this critical Status move.",
+                "yes_label": "Apply",
+                "no_label": "Skip",
+                "phase": "action",
+                "optional": True,
+                "feature": "Flourish",
+                "move": move.name,
+                "kind": "choice",
+                "options": options,
+            }
+            response = self.prompt_response(actor_id, prompt)
+            accepted = bool(response)
+            choice = ""
+            if isinstance(response, dict):
+                accepted = bool(response.get("accept", True))
+                choice = str(response.get("choice") or "").strip()
+            elif isinstance(response, str):
+                choice = response.strip()
+            if not accepted or not choice:
+                return
+            if choice == "temp_hp":
+                actor.add_temp_hp(actor.tick_value())
+            elif choice == "save_penalty":
+                target.add_temporary_effect(
+                    "save_penalty",
+                    amount=4,
+                    consume_on_save=True,
+                    charges=1,
+                    source="Flourish",
+                )
+            elif choice.startswith("stage:"):
+                actor.add_temporary_effect(
+                    "flourish_stage_bonus",
+                    move=move.name,
+                    stat=choice.split(":", 1)[1],
+                    round=self.round,
+                    charges=1,
+                )
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "trainer": actor.controller_id,
+                    "feature": "Flourish",
+                    "effect": choice,
+                    "move": move.name,
+                    "target_hp": actor.hp,
+                }
+            )
+
         def _maybe_offer_pre_damage_reactions(
             self,
             defender_id: Optional[str],
@@ -10504,6 +17895,7 @@ class PokemonState:
             move_category = str(incoming_move.category or "").strip().lower()
             if move_category == "status":
                 return
+            self._maybe_offer_fairy_lights_reaction(defender_id=defender_id, attacker_id=attacker_id)
             target_kind = targeting.normalized_target_kind(incoming_move)
             for move in defender.spec.moves:
                 move_name = str(move.name or "").strip()
@@ -10750,6 +18142,137 @@ class PokemonState:
             while defender.remove_temporary_effect("reaction_resist_step"):
                 continue
             return result
+
+        def _maybe_apply_lean_in(
+            self,
+            *,
+            attacker_id: str,
+            affected_ids: Sequence[str],
+            move: MoveSpec,
+        ) -> None:
+            area_kind = targeting.normalized_area_kind(move)
+            if area_kind not in {"burst", "blast", "cone", "line"}:
+                return
+            normalized_affected = {str(cid or "").strip() for cid in (affected_ids or []) if str(cid or "").strip()}
+            if len(normalized_affected) < 2:
+                return
+            for rider_id, mount_id in list((self.mounted_pairs or {}).items()):
+                rider = self.pokemon.get(rider_id)
+                mount = self.pokemon.get(mount_id)
+                if (
+                    rider is None
+                    or mount is None
+                    or rider.fainted
+                    or mount.fainted
+                    or not rider.active
+                    or not mount.active
+                    or not rider.has_trainer_feature("Lean In")
+                ):
+                    continue
+                if rider_id not in normalized_affected or mount_id not in normalized_affected:
+                    continue
+                if self._feature_scene_use_count(rider, "Lean In") >= 2:
+                    continue
+                prompt = {
+                    "actor_id": rider_id,
+                    "label": "Lean In?",
+                    "detail": "Lean In lets both rider and mount resist the area attack one step further.",
+                    "yes_label": "Lean In",
+                    "no_label": "Hold",
+                    "phase": "trigger",
+                    "optional": True,
+                    "feature": "Lean In",
+                    "attacker_id": attacker_id,
+                    "target_id": mount_id,
+                }
+                if not self.should_trigger_out_of_turn(rider_id, prompt):
+                    continue
+                self._record_feature_scene_use(rider, "Lean In")
+                rider.add_temporary_effect(
+                    "reaction_resist_step",
+                    category="all",
+                    move=str(move.name or ""),
+                    expires_round=self.round,
+                    source="Lean In",
+                )
+                mount.add_temporary_effect(
+                    "reaction_resist_step",
+                    category="all",
+                    move=str(move.name or ""),
+                    expires_round=self.round,
+                    source="Lean In",
+                )
+                self.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": rider_id,
+                        "target": mount_id,
+                        "trainer": rider.controller_id,
+                        "feature": "Lean In",
+                        "effect": "resist_step",
+                        "move": move.name,
+                        "amount": 1,
+                        "target_hp": mount.hp,
+                    }
+                )
+
+        def _maybe_apply_cavaliers_reprisal(
+            self,
+            *,
+            defender_id: Optional[str],
+            attacker_id: Optional[str],
+            move: MoveSpec,
+            hit: bool,
+            damage: int,
+        ) -> None:
+            if not defender_id or not attacker_id or not hit or damage <= 0:
+                return
+            rider_id = self._mounted_rider_id(defender_id)
+            if rider_id is None or rider_id == defender_id:
+                return
+            rider = self.pokemon.get(rider_id)
+            mount = self.pokemon.get(defender_id)
+            attacker = self.pokemon.get(attacker_id)
+            if rider is None or mount is None or attacker is None:
+                return
+            if rider.fainted or not rider.active or attacker.fainted or not attacker.active:
+                return
+            if not rider.has_trainer_feature("Cavalier's Reprisal"):
+                return
+            if self._combatant_distance(rider, attacker) > 1:
+                return
+            trainer = self.trainers.get(rider.controller_id)
+            if trainer is None or trainer.available_ap(self.round) < 1:
+                return
+            prompt = {
+                "actor_id": rider_id,
+                "label": "Cavalier's Reprisal?",
+                "detail": "Spend 1 AP to make a Struggle Attack against the adjacent foe that hit your mount.",
+                "yes_label": "Reprisal",
+                "no_label": "Hold",
+                "phase": "trigger",
+                "optional": True,
+                "feature": "Cavalier's Reprisal",
+                "attacker_id": attacker_id,
+                "target_id": defender_id,
+            }
+            if not self.should_trigger_out_of_turn(rider_id, prompt):
+                return
+            trainer.consume_ap(1)
+            if self._resolve_out_of_turn_move(rider_id, move_name="Struggle Attack", target_id=attacker_id):
+                self.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": rider_id,
+                        "target": attacker_id,
+                        "trainer": rider.controller_id,
+                        "feature": "Cavalier's Reprisal",
+                        "effect": "reprisal",
+                        "ap_remaining": trainer.ap,
+                        "move": move.name,
+                        "target_hp": attacker.hp,
+                    }
+                )
 
         def _reset_round_limited_move_usage(self) -> None:
             for actor_id, actor in self.pokemon.items():
@@ -11025,6 +18548,7 @@ class PokemonState:
         def advance_turn(self) -> Optional[InitiativeEntry]:
             if not self.initiative_order:
                 self.start_round()
+            self._sync_mounted_pairs()
             while self.initiative_order:
                 self._initiative_index += 1
                 if self._initiative_index >= len(self.initiative_order):
@@ -11052,6 +18576,30 @@ class PokemonState:
                 pokemon = self.pokemon.get(entry.actor_id)
                 if pokemon is None or not pokemon.active:
                     continue
+                skip_first_blood_turn = next(
+                    (
+                        effect
+                        for effect in pokemon.get_temporary_effects("first_blood_skip_turn")
+                        if int(effect.get("round", -1)) == self.round
+                    ),
+                    None,
+                )
+                if skip_first_blood_turn is not None:
+                    if skip_first_blood_turn in pokemon.temporary_effects:
+                        pokemon.temporary_effects.remove(skip_first_blood_turn)
+                    self.log_event(
+                        {
+                            "type": "trainer_feature",
+                            "actor": entry.actor_id,
+                            "trainer": pokemon.controller_id,
+                            "feature": "First Blood",
+                            "effect": "turn_consumed",
+                            "turn_window": "next_round",
+                            "description": "First Blood already spent this Pokemon's next turn.",
+                            "target_hp": pokemon.hp,
+                        }
+                    )
+                    continue
                 if pokemon.fainted:
                     if not self._bench_candidates(pokemon.controller_id):
                         continue
@@ -11060,7 +18608,11 @@ class PokemonState:
                     pokemon = self.pokemon.get(entry.actor_id)
                     if pokemon is None or pokemon.fainted or not pokemon.active:
                         continue
-                self.current_actor_id = entry.actor_id
+                resolved_actor_id = self._ride_as_one_second_slot_actor(entry.actor_id)
+                pokemon = self.pokemon.get(resolved_actor_id) if resolved_actor_id else None
+                if pokemon is None or pokemon.fainted or not pokemon.active:
+                    continue
+                self.current_actor_id = resolved_actor_id
                 pokemon.reset_actions()
                 focused_command_extra = next(
                     (
@@ -11337,6 +18889,7 @@ class PokemonState:
 
         def end_turn(self) -> None:
             ending_actor_id = self.current_actor_id
+            self._ride_as_one_finish_slot(ending_actor_id)
             self.phase_controller.end_turn()
             if ending_actor_id:
                 actor = self.pokemon.get(ending_actor_id)
@@ -11471,20 +19024,43 @@ class PokemonState:
                     return True
             return False
 
-        def _effective_move_frequency_raw(self, actor: PokemonState, move: MoveSpec) -> Optional[str]:
+        def _duelist_manual_ignore_status_active(
+            self,
+            actor: PokemonState,
+            *,
+            target_id: Optional[str] = None,
+            move: Optional[MoveSpec] = None,
+        ) -> bool:
+            if not actor.get_temporary_effects("duelist_manual_ignore_status"):
+                return False
+            if move is not None and (move.category or "").strip().lower() == "status":
+                return False
+            if target_id:
+                target = self.pokemon.get(target_id)
+                return bool(target is not None and self._is_duelist_tagged_for(target, actor))
+            return True
+
+        def _effective_move_frequency_raw(
+            self,
+            actor: PokemonState,
+            move: MoveSpec,
+            *,
+            target_id: Optional[str] = None,
+        ) -> Optional[str]:
             raw = move.freq
             if (move.category or "").strip().lower() == "status":
                 return raw
-            if actor.has_status("Suppressed") or self._has_choice_suppressed_item(actor):
+            ignore_status = self._duelist_manual_ignore_status_active(actor, target_id=target_id, move=move)
+            if (actor.has_status("Suppressed") and not ignore_status) or self._has_choice_suppressed_item(actor):
                 downgraded = self._frequency_step_down_value(raw)
                 if downgraded:
                     return downgraded
             return raw
 
         def _effective_move_frequency_definition(
-            self, actor: PokemonState, move: MoveSpec
+            self, actor: PokemonState, move: MoveSpec, *, target_id: Optional[str] = None
         ) -> Optional["frequency.FrequencyDefinition"]:
-            return self._frequency_definition_from_raw(self._effective_move_frequency_raw(actor, move))
+            return self._frequency_definition_from_raw(self._effective_move_frequency_raw(actor, move, target_id=target_id))
 
         def _frequency_step_up_value(self, raw: Optional[str]) -> Optional[str]:
             if not raw:
@@ -11527,11 +19103,11 @@ class PokemonState:
                     best = candidate
             return best[2] if best else None
 
-        def ensure_move_frequency_available(self, actor_id: str, move: MoveSpec) -> None:
+        def ensure_move_frequency_available(self, actor_id: str, move: MoveSpec, *, target_id: Optional[str] = None) -> None:
             actor = self.pokemon.get(actor_id)
             if actor is None:
                 return
-            definition = self._effective_move_frequency_definition(actor, move)
+            definition = self._effective_move_frequency_definition(actor, move, target_id=target_id)
             if definition is None or definition.limit is None:
                 return
             if definition.scope == "round" and int(getattr(self, "round", 0) or 0) <= 0:
@@ -11578,11 +19154,11 @@ class PokemonState:
                             f"{move.name} cannot be used on consecutive rounds while the user is Suppressed."
                         )
 
-        def record_move_frequency_usage(self, actor_id: str, move: MoveSpec) -> None:
+        def record_move_frequency_usage(self, actor_id: str, move: MoveSpec, *, target_id: Optional[str] = None) -> None:
             actor = self.pokemon.get(actor_id)
             if actor is None:
                 return
-            definition = self._effective_move_frequency_definition(actor, move)
+            definition = self._effective_move_frequency_definition(actor, move, target_id=target_id)
             if definition is None or definition.limit is None:
                 return
             if definition.scope == "round" and int(getattr(self, "round", 0) or 0) <= 0:
@@ -11633,6 +19209,170 @@ class PokemonState:
 
         def _food_buff_text(self, buff: dict) -> str:
             return str(buff.get("effect") or buff.get("name") or "").strip().lower()
+
+        def _chef_feature_sources(self, controller_id: str, feature_name: str) -> List[Tuple[str, PokemonState]]:
+            matches: List[Tuple[str, PokemonState]] = []
+            for pid, candidate in self.pokemon.items():
+                if candidate.controller_id != controller_id:
+                    continue
+                if not candidate.has_trainer_feature(feature_name):
+                    continue
+                matches.append((pid, candidate))
+            matches.sort(
+                key=lambda item: (
+                    0 if item[1].is_trainer_combatant() else 1,
+                    0 if item[1].active and not item[1].fainted else 1,
+                    item[0],
+                )
+            )
+            return matches
+
+        def _chef_taste_bonus_allowed(self, actor: PokemonState, taste: str) -> bool:
+            normalized = _normalize_chef_taste(taste)
+            if not normalized:
+                return False
+            stat = _CHEF_TASTE_STAT_MAP.get(normalized)
+            if not stat:
+                return False
+            profile = nature_profile(str(getattr(actor.spec, "nature", "") or "").strip())
+            if not isinstance(profile, dict):
+                return True
+            lowered = str(profile.get("lower") or "").strip().lower()
+            return lowered != stat
+
+        def _chef_taste_bonus_already_used(self, actor: PokemonState, instance_id: str) -> bool:
+            key = str(instance_id or "").strip()
+            if not key:
+                return False
+            for entry in actor.get_temporary_effects("accentuated_taste_used"):
+                if str(entry.get("instance_id") or "").strip() == key:
+                    return True
+            return False
+
+        def _apply_chef_taste_bonus(
+            self,
+            actor_id: str,
+            actor: PokemonState,
+            buff: dict,
+            events: List[dict],
+        ) -> None:
+            sources = self._chef_feature_sources(actor.controller_id, "Accentuated Taste")
+            if not sources:
+                return
+            source_id, source = sources[0]
+            taste = _normalize_chef_taste(buff.get("taste"))
+            if not taste or not self._chef_taste_bonus_allowed(actor, taste):
+                return
+            instance_id = str(buff.get("instance_id") or "").strip()
+            if instance_id and self._chef_taste_bonus_already_used(actor, instance_id):
+                return
+            if instance_id:
+                actor.add_temporary_effect(
+                    "accentuated_taste_used",
+                    instance_id=instance_id,
+                    taste=taste,
+                )
+            description = ""
+            if taste == "salty":
+                gained = actor.add_temp_hp(5)
+                description = "Accentuated Taste grants 5 temporary HP from a Salty snack."
+                events.append(
+                    {
+                        "type": "trainer_feature",
+                        "actor": source_id,
+                        "target": actor_id,
+                        "trainer": source.controller_id,
+                        "feature": "Accentuated Taste",
+                        "effect": "temp_hp",
+                        "taste": "salty",
+                        "amount": gained,
+                        "temp_hp": actor.temp_hp,
+                        "description": description,
+                        "target_hp": actor.hp,
+                    }
+                )
+                return
+            if taste == "spicy":
+                actor.add_temporary_effect("crit_range_bonus", bonus=1, source="Accentuated Taste")
+                description = "Accentuated Taste grants +1 critical range from a Spicy snack."
+            elif taste == "sour":
+                actor.add_temporary_effect("evasion_bonus", amount=1, scope="all", source="Accentuated Taste")
+                description = "Accentuated Taste grants +1 evasion against damaging attacks from a Sour snack."
+            elif taste == "dry":
+                actor.add_temporary_effect("effect_range_bonus", amount=1, source="Accentuated Taste")
+                description = "Accentuated Taste grants +1 effect range from a Dry snack."
+            elif taste == "bitter":
+                actor.add_temporary_effect("save_bonus", amount=1, source="Accentuated Taste")
+                description = "Accentuated Taste grants +1 to Save Checks from a Bitter snack."
+            elif taste == "sweet":
+                actor.add_temporary_effect("initiative_bonus", amount=5, source="Accentuated Taste")
+                description = "Accentuated Taste grants +5 initiative from a Sweet snack."
+            if description:
+                events.append(
+                    {
+                        "type": "trainer_feature",
+                        "actor": source_id,
+                        "target": actor_id,
+                        "trainer": source.controller_id,
+                        "feature": "Accentuated Taste",
+                        "effect": "taste_bonus",
+                        "taste": taste,
+                        "description": description,
+                        "target_hp": actor.hp,
+                    }
+                )
+
+        def _queue_chef_trade_reaction(self, consumer_id: str, buff: dict) -> None:
+            consumer = self.pokemon.get(consumer_id)
+            if consumer is None:
+                return
+            taste = _normalize_chef_taste(buff.get("taste"))
+            consumer_name = str(consumer.spec.name or consumer.spec.species or consumer_id)
+            for trainer_id, candidate in self.pokemon.items():
+                if (
+                    candidate.controller_id != consumer.controller_id
+                    or not candidate.is_trainer_combatant()
+                    or candidate.fainted
+                    or not candidate.active
+                ):
+                    continue
+                if candidate.has_trainer_feature("Hits the Spot"):
+                    candidate.add_temporary_effect(
+                        "hits_the_spot_ready",
+                        target_id=consumer_id,
+                        target_name=consumer_name,
+                        round=self.round,
+                    )
+                if taste and candidate.has_trainer_feature("Complex Aftertaste"):
+                    candidate.add_temporary_effect(
+                        "complex_aftertaste_ready",
+                        target_id=consumer_id,
+                        target_name=consumer_name,
+                        taste=taste,
+                        round=self.round,
+                        source_item=str(buff.get("item") or "").strip(),
+                        instance_id=str(buff.get("instance_id") or "").strip(),
+                    )
+
+        def _chef_aftertaste_buff(self, taste: str, *, source_item: str = "", instance_id: str = "") -> Optional[dict]:
+            normalized = _normalize_chef_taste(taste)
+            snack_name = _CHEF_TASTE_SNACK_NAMES.get(normalized)
+            if not snack_name:
+                return None
+            effect_text = _load_food_buff_items().get(snack_name.lower())
+            if not effect_text:
+                return None
+            payload = {
+                "name": effect_text,
+                "effect": effect_text,
+                "item": snack_name,
+                "taste": normalized,
+            }
+            if source_item:
+                payload["source_item"] = source_item
+            if instance_id:
+                payload["instance_id"] = instance_id
+            return payload
 
         def _consume_food_buff(
             self,
@@ -11751,6 +19491,8 @@ class PokemonState:
                             "target_hp": actor.hp,
                         }
                     )
+            self._apply_chef_taste_bonus(actor_id, actor, buff, events)
+            self._queue_chef_trade_reaction(actor_id, buff)
             return buff
 
         def _restore_scene_move(self, actor_id: str) -> Optional[str]:
@@ -12405,19 +20147,92 @@ class PokemonState:
         def _iter_held_items(
             self, actor: PokemonState
         ) -> List[Tuple[int, object, ItemEntry]]:
-            if not actor.spec.items or not isinstance(actor.spec.items, list):
-                return []
             if actor.get_temporary_effects("items_disabled"):
                 return []
             if actor.has_ability("Klutz") or actor.has_ability("Klutz [SwSh]"):
                 return []
             held: List[Tuple[int, object, ItemEntry]] = []
-            for idx, item in enumerate(actor.spec.items):
+            if actor.spec.items and isinstance(actor.spec.items, list):
+                for idx, item in enumerate(actor.spec.items):
+                    entry = _item_entry_for(item)
+                    if entry is None:
+                        continue
+                    held.append((idx, item, entry))
+            held = self._accessorize_filtered_held_items(actor, held)
+            held.extend(self._dress_to_impress_held_items(actor))
+            held.extend(self._dashing_makeover_held_items(actor))
+            return held
+
+        def _accessorize_filtered_held_items(
+            self,
+            actor: PokemonState,
+            held: List[Tuple[int, object, ItemEntry]],
+        ) -> List[Tuple[int, object, ItemEntry]]:
+            if not actor.is_trainer_combatant():
+                return held
+            max_accessories = 2 if actor.has_trainer_feature("Accessorize") else 1
+            accepted: List[Tuple[int, object, ItemEntry]] = []
+            accepted_accessories = 0
+            accessory_names: Set[str] = set()
+            accessory_effect_keys: Set[str] = set()
+            for row in held:
+                _idx, item, _entry = row
+                if not _is_accessory_slot_item(item):
+                    accepted.append(row)
+                    continue
+                if accepted_accessories >= max_accessories:
+                    continue
+                item_name = _item_name_text(item).strip().lower()
+                keys = _accessory_type_effect_keys(item)
+                if item_name in accessory_names or accessory_effect_keys.intersection(keys):
+                    continue
+                accepted.append(row)
+                accepted_accessories += 1
+                accessory_names.add(item_name)
+                accessory_effect_keys.update(keys)
+            return accepted
+
+        def _dress_to_impress_held_items(
+            self, actor: PokemonState
+        ) -> List[Tuple[int, object, ItemEntry]]:
+            held: List[Tuple[int, object, ItemEntry]] = []
+            for effect in list(actor.get_temporary_effects("dress_to_impress")):
+                expires_round = effect.get("expires_round")
+                if expires_round is not None and self.round > int(expires_round):
+                    if effect in actor.temporary_effects:
+                        actor.temporary_effects.remove(effect)
+                    continue
+                items = effect.get("items")
+                if not isinstance(items, list):
+                    continue
+                for slot_idx, item in enumerate(items[:2]):
+                    if not _item_name_text(item):
+                        continue
+                    entry = _item_entry_for(item)
+                    if entry is None:
+                        continue
+                    held.append((-1 - slot_idx, item, entry))
+            return held
+
+        def _dashing_makeover_held_items(
+            self, actor: PokemonState
+        ) -> List[Tuple[int, object, ItemEntry]]:
+            held: List[Tuple[int, object, ItemEntry]] = []
+            for effect in list(actor.get_temporary_effects("dashing_makeover_bound")):
+                item = effect.get("item")
+                if item is None:
+                    item_name = str(effect.get("item_name") or "").strip()
+                    item = {"name": item_name} if item_name else None
+                if item is None or not _item_name_text(item):
+                    continue
                 entry = _item_entry_for(item)
                 if entry is None:
                     continue
-                held.append((idx, item, entry))
+                held.append((-101 - len(held), item, entry))
             return held
+
+        def _active_held_item_objects(self, actor: PokemonState) -> List[object]:
+            return [item for _idx, item, _entry in self._iter_held_items(actor)]
 
         def _delivery_bird_item_index(
             self, actor: PokemonState, items: List[object]
@@ -12473,9 +20288,32 @@ class PokemonState:
             description: str,
             events: List[dict],
         ) -> None:
+            if item_index < 0:
+                slot_index = abs(item_index) - 1
+                for effect_entry in list(actor.get_temporary_effects("dress_to_impress")):
+                    items = effect_entry.get("items")
+                    if not isinstance(items, list) or slot_index >= len(items):
+                        continue
+                    consumed = items[slot_index]
+                    if _item_name_text(consumed).lower() != _item_name_text(item).lower():
+                        continue
+                    items[slot_index] = None
+                    actor.record_consumed_item("item", consumed)
+                    events.append(
+                        {
+                            "type": "item",
+                            "actor": actor_id,
+                            "item": _item_name_text(item),
+                            "effect": effect,
+                            "description": description,
+                            "target_hp": actor.hp,
+                        }
+                    )
+                    return
+                return
             if not isinstance(actor.spec.items, list):
                 return
-            if item_index < 0 or item_index >= len(actor.spec.items):
+            if item_index >= len(actor.spec.items):
                 return
             consumed = actor.spec.items.pop(item_index)
             actor.record_consumed_item("item", consumed)
@@ -12490,6 +20328,67 @@ class PokemonState:
                     "target_hp": actor.hp,
                 }
             )
+
+        def _maybe_style_is_eternal_prevent_item_loss(
+            self,
+            *,
+            target_id: Optional[str],
+            source_actor_id: Optional[str] = None,
+            item: object = None,
+            cause: str = "",
+            move_name: str = "",
+        ) -> bool:
+            if not target_id:
+                return False
+            target = self.pokemon.get(target_id)
+            if target is None or not target.has_trainer_feature("Style is Eternal"):
+                return False
+            trainer = self.trainers.get(target.controller_id)
+            if trainer is None or trainer.available_ap(self.round) < 1:
+                return False
+            if self._feature_scene_use_count(target, "Style is Eternal") >= 1:
+                return False
+            item_name = _item_name_text(item)
+            prompt = {
+                "actor_id": target_id,
+                "label": "Style is Eternal?",
+                "detail": f"Spend 1 AP to keep {item_name or 'the held item'} from being removed.",
+                "yes_label": "Keep Item",
+                "no_label": "Let It Go",
+                "phase": "interrupt",
+                "optional": True,
+                "feature": "Style is Eternal",
+                "trigger": cause or "item_loss",
+                "kind": "confirm",
+                "ap_cost": 1,
+                "item": item_name,
+                "move": str(move_name or "").strip(),
+                "source_actor_id": source_actor_id,
+            }
+            response = self.prompt_response(target_id, prompt)
+            accepted = bool(response)
+            if isinstance(response, dict):
+                accepted = bool(response.get("accept", True))
+            if not accepted:
+                return False
+            trainer.consume_ap(1)
+            self._record_feature_scene_use(target, "Style is Eternal")
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": target_id,
+                    "target": source_actor_id,
+                    "trainer": target.controller_id,
+                    "feature": "Style is Eternal",
+                    "effect": "retain_item",
+                    "cause": cause or "item_loss",
+                    "move": str(move_name or "").strip(),
+                    "item": item_name,
+                    "target_hp": target.hp,
+                    "description": "Style is Eternal keeps the Pokemon's held item from being removed.",
+                }
+            )
+            return True
 
         def _remove_statuses_by_set(
             self, target: PokemonState, names: Set[str], limit: Optional[int] = None
@@ -13130,16 +21029,55 @@ class PokemonState:
             if trainer_override_id:
                 trainer = self.trainers.get(trainer_override_id)
                 if trainer is not None:
-                    return max(base_rank, trainer.skill_rank(skill_name))
+                    total = max(base_rank, trainer.skill_rank(skill_name))
+                    if pokemon.get_temporary_effects("focused_training"):
+                        total += 2
+                    return total
             if not pokemon.is_trainer_combatant():
-                return base_rank
+                total = base_rank
+                if pokemon.get_temporary_effects("focused_training"):
+                    total += 2
+                return total
             trainer_id = pokemon.controller_id
             if actor_id and actor_id in self.trainers:
                 trainer_id = actor_id
             trainer = self.trainers.get(trainer_id)
             if trainer is None:
-                return base_rank
-            return max(base_rank, trainer.skill_rank(skill_name))
+                total = base_rank
+            else:
+                total = max(base_rank, trainer.skill_rank(skill_name))
+            if pokemon.get_temporary_effects("focused_training"):
+                total += 2
+            return total
+
+        def _active_training_effects(self, pokemon: PokemonState) -> List[str]:
+            active: List[str] = []
+            for kind in _TRAINING_EFFECT_KINDS:
+                if pokemon.get_temporary_effects(kind):
+                    active.append(kind)
+            return active
+
+        def _training_limit_for_actor(self, actor: PokemonState) -> int:
+            return 2 if actor.has_trainer_feature("Elite Trainer") else 1
+
+        def _apply_training_effect(
+            self,
+            *,
+            actor: PokemonState,
+            actor_id: str,
+            target: PokemonState,
+            effect_kind: str,
+            feature_name: str,
+        ) -> None:
+            active_training = self._active_training_effects(target)
+            different_training = [kind for kind in active_training if kind != effect_kind]
+            if len(different_training) >= self._training_limit_for_actor(actor):
+                raise ValueError(
+                    f"{target.spec.name or target.spec.species} already has the maximum number of Training effects."
+                )
+            while target.remove_temporary_effect(effect_kind):
+                continue
+            target.add_temporary_effect(effect_kind, source=feature_name, source_id=actor_id)
 
         def _terrain_skill_check_bonus(self, actor: PokemonState, skill_name: str) -> int:
             normalized_skill = str(skill_name or "").strip().lower()
@@ -13380,8 +21318,172 @@ class PokemonState:
                     count += int(entry.get("count", 1) or 1)
             return count
 
+        def _controller_feature_scene_use_count(self, controller_id: str, feature_name: str) -> int:
+            normalized_controller = str(controller_id or "").strip()
+            normalized_feature = str(feature_name or "").strip().lower()
+            count = 0
+            for mon in self.pokemon.values():
+                if str(mon.controller_id or "").strip() != normalized_controller:
+                    continue
+                for entry in mon.get_temporary_effects("feature_scene_use"):
+                    if str(entry.get("feature") or "").strip().lower() == normalized_feature:
+                        count += int(entry.get("count", 1) or 1)
+            return count
+
         def _record_feature_scene_use(self, actor: PokemonState, feature_name: str) -> None:
             actor.add_temporary_effect("feature_scene_use", feature=str(feature_name or "").strip().lower(), count=1)
+
+        def _feature_daily_use_count(self, actor: PokemonState, feature_name: str) -> int:
+            normalized = str(feature_name or "").strip().lower()
+            count = 0
+            for entry in actor.get_temporary_effects("feature_daily_use"):
+                if str(entry.get("feature") or "").strip().lower() == normalized:
+                    count += int(entry.get("count", 1) or 1)
+            return count
+
+        def _record_feature_daily_use(self, actor: PokemonState, feature_name: str) -> None:
+            actor.add_temporary_effect("feature_daily_use", feature=str(feature_name or "").strip().lower(), count=1)
+
+        def _surprise_used_on_target(self, actor: PokemonState, target_id: str) -> bool:
+            for entry in actor.get_temporary_effects("surprise_target_used"):
+                if str(entry.get("target") or "").strip() == str(target_id or "").strip():
+                    return True
+            return False
+
+        def _mark_surprise_used_on_target(self, actor: PokemonState, target_id: str) -> None:
+            actor.add_temporary_effect("surprise_target_used", target=str(target_id or "").strip())
+
+        def _normalize_surprise_discount_label(self, value: object) -> str:
+            text = str(value or "").strip().lower().replace("é", "e")
+            text = re.sub(r"\[[^\]]*\]", "", text)
+            text = re.sub(r"[^a-z0-9]+", " ", text).strip()
+            if text.endswith(" nets"):
+                text = text[:-1]
+            return text
+
+        def _surprise_attack_is_discounted(self, actor: PokemonState, move: MoveSpec) -> bool:
+            move_name = self._normalize_surprise_discount_label(move.name)
+            if move_name in {"struggle", "struggle attack"}:
+                return True
+            discount_sources = {"poke ball", "pokeball", "hand net", "weighted net", "glue cannon", "cap cannon"}
+            if any(token in move_name for token in discount_sources):
+                return True
+            for entry in actor.get_temporary_effects("weapon_move_granted"):
+                entry_move = self._normalize_surprise_discount_label(entry.get("name"))
+                if entry_move != move_name:
+                    continue
+                source_name = self._normalize_surprise_discount_label(entry.get("source"))
+                if any(token in source_name for token in discount_sources):
+                    return True
+            weapon = actor.equipped_weapon()
+            if weapon is None:
+                return False
+            requirements = _weapon_requirements_for_move(move)
+            if not requirements:
+                return False
+            weapon_tags = _weapon_tags(weapon)
+            if not any(req.issubset(weapon_tags) for req in requirements):
+                return False
+            weapon_name = self._normalize_surprise_discount_label(_item_name_text(weapon))
+            return any(token in weapon_name for token in discount_sources)
+
+        def _surprise_trigger_reason(self, attacker_id: str, target_id: str) -> Optional[str]:
+            attacker = self.pokemon.get(attacker_id)
+            defender = self.pokemon.get(target_id)
+            if attacker is None or defender is None or defender.fainted:
+                return None
+            if not self._has_taken_turn_this_round(target_id):
+                return "unanticipated"
+            if defender.has_status("Unaware") or defender.has_status("Surprised"):
+                return "unanticipated"
+            if defender.position is None:
+                return None
+            for pid, mon in self.pokemon.items():
+                if mon.fainted or not mon.active or mon.is_trainer_combatant():
+                    continue
+                if self._team_for(pid) != self._team_for(attacker_id):
+                    continue
+                if mon.position is None:
+                    continue
+                if not (mon.has_ability("Pack Hunt") or mon.has_ability("Teamwork")):
+                    continue
+                if targeting.chebyshev_distance(defender.position, mon.position) > 1:
+                    continue
+                return "pack_support"
+            return None
+
+        def _surprise_accuracy_sort_key(self, accuracy: Dict[str, object]) -> Tuple[int, int, int]:
+            return (
+                1 if accuracy.get("hit") else 0,
+                1 if accuracy.get("crit") else 0,
+                int(accuracy.get("roll") or 0),
+            )
+
+        def _maybe_apply_surprise(
+            self,
+            *,
+            attacker_id: str,
+            target_id: Optional[str],
+            move: MoveSpec,
+            force_hit: bool,
+        ) -> Tuple[Optional[Dict[str, object]], Dict[str, object]]:
+            attacker = self.pokemon.get(attacker_id)
+            defender = self.pokemon.get(target_id) if target_id else None
+            if attacker is None or defender is None:
+                return None, {}
+            if not attacker.is_trainer_combatant() or not attacker.has_trainer_feature("Surprise!"):
+                return None, {}
+            if self._team_for(attacker_id) == self._team_for(target_id):
+                return None, {}
+            if force_hit or move.ac is None:
+                return None, {}
+            if self._surprise_used_on_target(attacker, target_id):
+                return None, {}
+            trigger_reason = self._surprise_trigger_reason(attacker_id, target_id)
+            if not trigger_reason:
+                return None, {}
+            trainer = self.trainers.get(attacker.controller_id)
+            ap_cost = 1 if self._surprise_attack_is_discounted(attacker, move) else 2
+            if trainer is None or int(getattr(trainer, "ap", 0) or 0) < ap_cost:
+                return None, {}
+            prompt = {
+                "actor_id": attacker_id,
+                "label": "Surprise!?",
+                "detail": (
+                    f"Spend {ap_cost} AP to roll this attack twice and use the better result. "
+                    "If both attack rolls hit, the target is Flinched."
+                ),
+                "yes_label": f"Spend {ap_cost} AP",
+                "no_label": "Hold",
+                "phase": "free",
+                "optional": True,
+                "feature": "Surprise!",
+                "trigger": "attack",
+                "target_id": target_id,
+                "move": move.name,
+                "ap_cost": ap_cost,
+                "trigger_reason": trigger_reason,
+            }
+            response = self.prompt_response(attacker_id, prompt)
+            accepted = bool(response)
+            if isinstance(response, dict):
+                accepted = bool(response.get("accept", True))
+            if not accepted:
+                return None, {}
+            first_roll = calculations.attack_hits(self.rng, attacker, defender, move)
+            second_roll = calculations.attack_hits(self.rng, attacker, defender, move)
+            best_roll = first_roll
+            if self._surprise_accuracy_sort_key(second_roll) > self._surprise_accuracy_sort_key(first_roll):
+                best_roll = second_roll
+            trainer.consume_ap(ap_cost)
+            self._mark_surprise_used_on_target(attacker, target_id)
+            return dict(best_roll), {
+                "ap_cost": ap_cost,
+                "trigger_reason": trigger_reason,
+                "first_roll": int(first_roll.get("roll") or 0),
+                "second_roll": int(second_roll.get("roll") or 0),
+                "double_hit": bool(first_roll.get("hit") and second_roll.get("hit")),
+            }
 
         def _supported_target_orders_for(self, actor: PokemonState) -> List[str]:
             available: List[str] = []
@@ -13451,7 +21553,7 @@ class PokemonState:
             if not spec:
                 return False
             ap_cost = int(spec.get("ap_cost", 0) or 0)
-            if trainer.ap < ap_cost:
+            if trainer.available_ap(self.round) < ap_cost:
                 return False
             scene_limit = spec.get("scene_limit")
             if scene_limit is not None and self._feature_scene_use_count(actor, str(order_name or "")) >= int(scene_limit):
@@ -13501,6 +21603,624 @@ class PokemonState:
                 }
             )
 
+        def _cheered_sources(self, target: PokemonState) -> List[Tuple[str, dict]]:
+            sources: List[Tuple[str, dict]] = []
+            for entry in list(target.get_temporary_effects("cheered")):
+                source_id = str(entry.get("source_id") or "").strip()
+                if not source_id:
+                    continue
+                source = self.pokemon.get(source_id)
+                if source is None or source.fainted or not source.active:
+                    continue
+                sources.append((source_id, entry))
+            return sources
+
+        def _bring_it_on_feature_name(self, source: PokemonState) -> str:
+            if source.has_trainer_feature("Bring It On! [Playtest]"):
+                return "Bring It On! [Playtest]"
+            if source.has_trainer_feature("Bring It On!"):
+                return "Bring It On!"
+            return ""
+
+        def _bring_it_on_used(self, target: PokemonState, *, source_id: str, mode: str) -> bool:
+            normalized_mode = str(mode or "").strip().lower()
+            for entry in target.get_temporary_effects("bring_it_on_used"):
+                if str(entry.get("source_id") or "").strip() != source_id:
+                    continue
+                if str(entry.get("mode") or "").strip().lower() != normalized_mode:
+                    continue
+                return True
+            return False
+
+        def _mark_bring_it_on_used(self, target: PokemonState, *, source_id: str, mode: str) -> None:
+            target.add_temporary_effect(
+                "bring_it_on_used",
+                source_id=source_id,
+                mode=str(mode or "").strip().lower(),
+            )
+
+        def _charm_rank_for_combatant(self, combatant: PokemonState, *, actor_id: str) -> int:
+            return self._combatant_skill_rank(
+                combatant,
+                "charm",
+                actor_id=actor_id,
+                trainer_override_id=combatant.controller_id,
+            )
+
+        def _maybe_apply_bring_it_on_damage_reduction(
+            self,
+            *,
+            attacker_id: str,
+            defender_id: str,
+            move: MoveSpec,
+            defender: PokemonState,
+        ) -> int:
+            for source_id, _entry in self._cheered_sources(defender):
+                source = self.pokemon.get(source_id)
+                if source is None:
+                    continue
+                feature_name = self._bring_it_on_feature_name(source)
+                if not feature_name or self._bring_it_on_used(defender, source_id=source_id, mode="damage"):
+                    continue
+                prompt = {
+                    "feature": feature_name,
+                    "phase": "interrupt",
+                    "optional": True,
+                    "actor_id": source_id,
+                    "target_id": defender_id,
+                    "trigger": "damage",
+                    "move": move.name,
+                    "summary": "Grant a Cheered ally 5 Damage Reduction against the triggering damage?",
+                }
+                response = self.prompt_response(source_id, prompt)
+                should_apply = bool(response)
+                if isinstance(response, dict):
+                    should_apply = bool(response.get("accept", response.get("use", True)))
+                if not should_apply:
+                    continue
+                self._mark_bring_it_on_used(defender, source_id=source_id, mode="damage")
+                self.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": source_id,
+                        "target": defender_id,
+                        "trainer": source.controller_id,
+                        "feature": feature_name,
+                        "effect": "damage_reduction",
+                        "amount": 5,
+                        "move": move.name,
+                        "description": "Bring It On! grants 5 DR to a Cheered ally against the triggering damage.",
+                        "target_hp": defender.hp,
+                    }
+                )
+                return 5
+            return 0
+
+        def _maybe_apply_excited_damage_reduction(
+            self,
+            *,
+            attacker_id: str,
+            defender_id: str,
+            move: MoveSpec,
+            defender: PokemonState,
+        ) -> int:
+            if not defender.get_temporary_effects("excited"):
+                return 0
+            prompt = {
+                "feature": "Excited",
+                "phase": "interrupt",
+                "optional": True,
+                "actor_id": defender_id,
+                "target_id": defender_id,
+                "attacker_id": attacker_id,
+                "trigger": "damaging_attack",
+                "move": move.name,
+                "summary": "Spend Excited to gain +5 Damage Reduction against this attack?",
+            }
+            response = self.prompt_response(defender_id, prompt)
+            should_apply = bool(response)
+            if isinstance(response, dict):
+                should_apply = bool(response.get("accept", response.get("use", True)))
+            if not should_apply:
+                return 0
+            defender.remove_temporary_effect("excited")
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": defender_id,
+                    "target": attacker_id,
+                    "feature": "Excited",
+                    "effect": "damage_reduction",
+                    "amount": 5,
+                    "move": move.name,
+                    "description": "Excited is spent to gain 5 DR against the triggering damaging attack.",
+                    "target_hp": defender.hp,
+                }
+            )
+            return 5
+
+        def _maybe_apply_gleeful_interference(
+            self,
+            *,
+            attacker_id: str,
+            defender_id: str,
+            move: MoveSpec,
+            hit: bool,
+        ) -> None:
+            if not hit or (move.category or "").strip().lower() == "status":
+                return
+            attacker = self.pokemon.get(attacker_id)
+            defender = self.pokemon.get(defender_id)
+            if attacker is None or defender is None or not attacker.has_ability("Friend Guard"):
+                return
+            if self._team_for(attacker_id) == self._team_for(defender_id):
+                return
+            for source_id, source in self.pokemon.items():
+                if source.fainted or not source.active or not source.is_trainer_combatant():
+                    continue
+                if self._team_for(source_id) != self._team_for(attacker_id):
+                    continue
+                if not source.has_trainer_feature("Gleeful Interference"):
+                    continue
+                trainer = self.trainers.get(source.controller_id)
+                if trainer is None or trainer.available_ap(self.round) < 1:
+                    continue
+                prompt = {
+                    "feature": "Gleeful Interference",
+                    "phase": "interrupt",
+                    "optional": True,
+                    "actor_id": source_id,
+                    "target_id": defender_id,
+                    "attacker_id": attacker_id,
+                    "trigger": "friend_guard_damaging_hit",
+                    "move": move.name,
+                    "ap_cost": 1,
+                    "summary": "Spend 1 AP to give the hit foe -2 Accuracy for one full round?",
+                }
+                response = self.prompt_response(source_id, prompt)
+                should_apply = bool(response)
+                if isinstance(response, dict):
+                    should_apply = bool(response.get("accept", response.get("use", True)))
+                if not should_apply:
+                    continue
+                trainer.consume_ap(1)
+                defender.add_temporary_effect(
+                    "accuracy_penalty",
+                    amount=2,
+                    expires_round=self.round + 1,
+                    source="Gleeful Interference",
+                    source_id=source_id,
+                )
+                self.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": source_id,
+                        "target": defender_id,
+                        "trainer": source.controller_id,
+                        "feature": "Gleeful Interference",
+                        "effect": "accuracy_penalty",
+                        "amount": -2,
+                        "move": move.name,
+                        "source_attacker": attacker_id,
+                        "ap_remaining": trainer.available_ap(self.round),
+                        "description": "Gleeful Interference penalizes a foe hit by your Friend Guard Pokemon.",
+                        "target_hp": defender.hp,
+                    }
+                )
+                return
+
+        def _duelist_momentum(self, target: PokemonState) -> int:
+            entry = next(iter(target.get_temporary_effects("duelist_momentum")), None)
+            if not entry:
+                return 0
+            try:
+                return max(0, min(6, int(entry.get("amount", 0) or 0)))
+            except (TypeError, ValueError):
+                return 0
+
+        def _set_duelist_momentum(self, target: PokemonState, amount: int) -> int:
+            amount = max(0, min(6, int(amount or 0)))
+            entry = next(iter(target.get_temporary_effects("duelist_momentum")), None)
+            if entry is None:
+                target.add_temporary_effect("duelist_momentum", amount=amount)
+            else:
+                entry["amount"] = amount
+            return amount
+
+        def _spend_duelist_momentum(self, target: PokemonState, amount: int, *, source: str, source_id: str = "") -> int:
+            current = self._duelist_momentum(target)
+            spent = min(current, max(0, int(amount or 0)))
+            self._set_duelist_momentum(target, current - spent)
+            return spent
+
+        def _gain_duelist_momentum(
+            self,
+            target_id: str,
+            *,
+            amount: int = 1,
+            reason: str,
+            source_id: str = "",
+        ) -> int:
+            target = self.pokemon.get(target_id)
+            if target is None or target.fainted or target.is_trainer_combatant():
+                return 0
+            if not target.has_trainer_feature("Duelist"):
+                return 0
+            current = self._duelist_momentum(target)
+            if current >= 6:
+                if (
+                    (target.has_trainer_feature("Seize The Moment") or target.has_trainer_feature("Seize the Moment"))
+                    and self._feature_scene_use_count(target, "Seize The Moment") < 1
+                    and self._controller_feature_scene_use_count(target.controller_id, "Seize The Moment") < 2
+                    and not target.get_temporary_effects("seize_the_moment_ready")
+                ):
+                    target.add_temporary_effect(
+                        "seize_the_moment_ready",
+                        source="Seize The Moment",
+                        source_id=source_id,
+                        reason=reason,
+                        expires_round=self.round,
+                    )
+                    self.log_event(
+                        {
+                            "type": "trainer_feature",
+                            "actor": target_id,
+                            "target": source_id or None,
+                            "trainer": target.controller_id,
+                            "feature": "Seize The Moment",
+                            "effect": "trigger_ready",
+                            "momentum": current,
+                            "reason": reason,
+                            "target_hp": target.hp,
+                        }
+                    )
+                return current
+            updated = self._set_duelist_momentum(target, current + max(0, int(amount or 0)))
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": target_id,
+                    "target": source_id or None,
+                    "trainer": target.controller_id,
+                    "feature": "Duelist",
+                    "effect": "momentum_gain",
+                    "amount": updated - current,
+                    "momentum": updated,
+                    "reason": reason,
+                    "target_hp": target.hp,
+                }
+            )
+            return updated
+
+        def _is_duelist_tagged_for(self, target: PokemonState, source: PokemonState) -> bool:
+            source_controller = str(source.controller_id or "").strip()
+            for entry in target.get_temporary_effects("duelist_tag"):
+                if str(entry.get("source_controller") or "").strip() == source_controller:
+                    return True
+                source_id = str(entry.get("source_id") or "").strip()
+                source_actor = self.pokemon.get(source_id)
+                if source_actor is not None and str(source_actor.controller_id or "").strip() == source_controller:
+                    return True
+            return False
+
+        def _any_duelist_tag_for_controller(self, controller_id: str) -> bool:
+            controller = str(controller_id or "").strip()
+            if not controller:
+                return False
+            for mon in self.pokemon.values():
+                for entry in mon.get_temporary_effects("duelist_tag"):
+                    if str(entry.get("source_controller") or "").strip() == controller:
+                        return True
+                    source = self.pokemon.get(str(entry.get("source_id") or "").strip())
+                    if source is not None and str(source.controller_id or "").strip() == controller:
+                        return True
+            return False
+
+        def _focused_training_accuracy_bonus(self, attacker: PokemonState, defender: PokemonState) -> int:
+            if not attacker.get_temporary_effects("focused_training"):
+                return 0
+            if attacker.has_trainer_feature("Duelist") and self._any_duelist_tag_for_controller(attacker.controller_id):
+                if self._is_duelist_tagged_for(defender, attacker):
+                    return max(0, int(math.ceil(self._duelist_momentum(attacker) / 2.0)))
+                return 0
+            return 1
+
+        def _duelist_evasion_bonus(self, defender: PokemonState, attacker: PokemonState) -> int:
+            if not defender.get_temporary_effects("focused_training"):
+                return 0
+            if not defender.has_trainer_feature("Duelist"):
+                return 0
+            if not self._is_duelist_tagged_for(attacker, defender):
+                return 0
+            return max(0, int(math.ceil(self._duelist_momentum(defender) / 2.0)))
+
+        def _maybe_gain_directed_focus_momentum(
+            self,
+            target_id: str,
+            *,
+            reason: str,
+            source_id: str = "",
+        ) -> None:
+            target = self.pokemon.get(target_id)
+            if target is None or not target.has_trainer_feature("Directed Focus"):
+                return
+            if not (target.has_ability("Exploit") or target.has_ability("Tolerance")):
+                return
+            self._gain_duelist_momentum(target_id, reason=reason, source_id=source_id)
+
+        def _maybe_apply_type_methodology(
+            self,
+            *,
+            attacker_id: str,
+            defender_id: str,
+            result: dict,
+            move: MoveSpec,
+        ) -> dict:
+            attacker = self.pokemon.get(attacker_id)
+            defender = self.pokemon.get(defender_id)
+            if attacker is None or defender is None:
+                return result
+            type_multiplier = float(result.get("type_multiplier", 1.0) or 1.0)
+            if type_multiplier <= 0:
+                return result
+            actor_id = ""
+            beneficiary_id = ""
+            mode = ""
+            if (
+                attacker.has_trainer_feature("Type Methodology")
+                and attacker.has_ability("Exploit")
+                and type_multiplier < 1.0
+                and self._is_duelist_tagged_for(defender, attacker)
+            ):
+                beneficiary_id = attacker_id
+                actor_id = attacker_id
+                mode = "exploit"
+            elif (
+                defender.has_trainer_feature("Type Methodology")
+                and defender.has_ability("Tolerance")
+                and type_multiplier > 1.0
+                and self._is_duelist_tagged_for(attacker, defender)
+            ):
+                beneficiary_id = defender_id
+                actor_id = defender_id
+                mode = "tolerance"
+            if not beneficiary_id:
+                return result
+            beneficiary = self.pokemon[beneficiary_id]
+            if self._duelist_momentum(beneficiary) < 2:
+                return result
+            if self._feature_scene_use_count(beneficiary, "Type Methodology") >= 2:
+                return result
+            prompt = {
+                "feature": "Type Methodology",
+                "phase": "interrupt",
+                "optional": True,
+                "actor_id": actor_id,
+                "target_id": defender_id if mode == "exploit" else attacker_id,
+                "trigger": mode,
+                "move": move.name,
+                "momentum_cost": 2,
+                "summary": "Spend 2 Momentum to shift this tagged foe type matchup one step?",
+            }
+            response = self.prompt_response(actor_id, prompt)
+            should_apply = bool(response)
+            if isinstance(response, dict):
+                should_apply = bool(response.get("accept", response.get("use", True)))
+            if not should_apply:
+                return result
+            self._spend_duelist_momentum(beneficiary, 2, source="Type Methodology", source_id=actor_id)
+            self._record_feature_scene_use(beneficiary, "Type Methodology")
+            stage = self._type_stage_from_multiplier(type_multiplier)
+            shifted = self._multiplier_from_stage(stage + 1 if mode == "exploit" else stage - 1)
+            if shifted == type_multiplier:
+                return result
+            updated = dict(result)
+            pre_type = int(updated.get("pre_type_damage", updated.get("damage", 0) or 0) or 0)
+            updated["type_multiplier"] = shifted
+            updated["damage"] = int(math.floor(pre_type * shifted))
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": actor_id,
+                    "target": defender_id if mode == "exploit" else attacker_id,
+                    "trainer": beneficiary.controller_id,
+                    "feature": "Type Methodology",
+                    "effect": "type_multiplier_shift",
+                    "mode": mode,
+                    "from": type_multiplier,
+                    "to": shifted,
+                    "momentum": self._duelist_momentum(beneficiary),
+                    "move": move.name,
+                    "target_hp": defender.hp,
+                }
+            )
+            return updated
+
+        def _maybe_apply_bring_it_on_save_bonus(
+            self,
+            actor_id: str,
+            actor: PokemonState,
+            *,
+            status_name: str,
+        ) -> int:
+            for source_id, _entry in self._cheered_sources(actor):
+                source = self.pokemon.get(source_id)
+                if source is None:
+                    continue
+                feature_name = self._bring_it_on_feature_name(source)
+                if not feature_name or self._bring_it_on_used(actor, source_id=source_id, mode="save"):
+                    continue
+                prompt = {
+                    "feature": feature_name,
+                    "phase": "interrupt",
+                    "optional": True,
+                    "actor_id": source_id,
+                    "target_id": actor_id,
+                    "trigger": "save_check",
+                    "status": status_name,
+                    "summary": "Grant a Cheered ally +2 on this Save Check?",
+                }
+                response = self.prompt_response(source_id, prompt)
+                should_apply = bool(response)
+                if isinstance(response, dict):
+                    should_apply = bool(response.get("accept", response.get("use", True)))
+                if not should_apply:
+                    continue
+                self._mark_bring_it_on_used(actor, source_id=source_id, mode="save")
+                self.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": source_id,
+                        "target": actor_id,
+                        "trainer": source.controller_id,
+                        "feature": feature_name,
+                        "effect": "save_bonus",
+                        "amount": 2,
+                        "status": status_name,
+                        "description": "Bring It On! grants +2 to a Cheered ally's Save Check.",
+                        "target_hp": actor.hp,
+                    }
+                )
+                return 2
+            return 0
+
+        def _maybe_apply_bring_it_on_breather(
+            self,
+            actor_id: str,
+            actor: PokemonState,
+        ) -> int:
+            for source_id, _entry in self._cheered_sources(actor):
+                source = self.pokemon.get(source_id)
+                if source is None:
+                    continue
+                feature_name = self._bring_it_on_feature_name(source)
+                if not feature_name or self._bring_it_on_used(actor, source_id=source_id, mode="breather"):
+                    continue
+                prompt = {
+                    "feature": feature_name,
+                    "phase": "free",
+                    "optional": True,
+                    "actor_id": source_id,
+                    "target_id": actor_id,
+                    "trigger": "take_breather",
+                    "summary": "Grant a Cheered ally Temporary Hit Points after Take a Breather?",
+                }
+                response = self.prompt_response(source_id, prompt)
+                should_apply = bool(response)
+                if isinstance(response, dict):
+                    should_apply = bool(response.get("accept", response.get("use", True)))
+                if not should_apply:
+                    continue
+                amount = self._charm_rank_for_combatant(source, actor_id=source_id)
+                if amount <= 0:
+                    return 0
+                self._mark_bring_it_on_used(actor, source_id=source_id, mode="breather")
+                actor.temp_hp = max(int(actor.temp_hp or 0), amount)
+                self.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": source_id,
+                        "target": actor_id,
+                        "trainer": source.controller_id,
+                        "feature": feature_name,
+                        "effect": "temp_hp",
+                        "amount": amount,
+                        "description": "Bring It On! grants Temporary Hit Points after Take a Breather.",
+                        "target_hp": actor.hp,
+                    }
+                )
+                return amount
+            return 0
+
+        def _maybe_apply_inspirational_support(
+            self,
+            *,
+            actor_id: str,
+            target_id: str,
+            move: MoveSpec,
+            hit: bool,
+        ) -> None:
+            actor = self.pokemon.get(actor_id)
+            target = self.pokemon.get(target_id)
+            if actor is None or target is None or not hit:
+                return
+            if self._team_for(actor_id) != self._team_for(target_id):
+                return
+            if not actor.has_ability("Friend Guard"):
+                return
+            if not (
+                actor.has_trainer_feature("Inspirational Support")
+                or actor.has_trainer_feature("Inspirational Support [Playtest]")
+            ):
+                return
+            if (move.category or "").strip().lower() != "status":
+                return
+            self._apply_cheer_condition(
+                actor_id=actor_id,
+                target_id=target_id,
+                condition="cheered",
+                source_feature="Inspirational Support [Playtest]"
+                if actor.has_trainer_feature("Inspirational Support [Playtest]")
+                else "Inspirational Support",
+                expires_round=self.round + 1,
+            )
+
+        def _maybe_apply_keep_fighting(
+            self,
+            *,
+            target_id: str,
+        ) -> bool:
+            target = self.pokemon.get(target_id)
+            if target is None or not target.fainted:
+                return False
+            for source_id, source in self.pokemon.items():
+                if source.fainted or not source.active or self._team_for(source_id) != self._team_for(target_id):
+                    continue
+                feature_name = ""
+                if source.has_trainer_feature("Keep Fighting! [Playtest]"):
+                    feature_name = "Keep Fighting! [Playtest]"
+                elif source.has_trainer_feature("Keep Fighting!"):
+                    feature_name = "Keep Fighting!"
+                if not feature_name:
+                    continue
+                if self._feature_scene_use_count(source, feature_name) >= 2:
+                    continue
+                prompt = {
+                    "feature": feature_name,
+                    "phase": "interrupt",
+                    "optional": True,
+                    "actor_id": source_id,
+                    "target_id": target_id,
+                    "trigger": "reduced_to_zero",
+                    "summary": "Keep the ally at 1 HP and grant Temporary Hit Points?",
+                }
+                response = self.prompt_response(source_id, prompt)
+                should_apply = bool(response)
+                if isinstance(response, dict):
+                    should_apply = bool(response.get("accept", response.get("use", True)))
+                if not should_apply:
+                    continue
+                amount = self._charm_rank_for_combatant(source, actor_id=source_id) * 2
+                self._record_feature_scene_use(source, feature_name)
+                target.hp = 1
+                target.temp_hp = max(int(target.temp_hp or 0), amount)
+                target.pending_resolution = None
+                self.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": source_id,
+                        "target": target_id,
+                        "trainer": source.controller_id,
+                        "feature": feature_name,
+                        "effect": "prevent_faint",
+                        "amount": amount,
+                        "description": "Keep Fighting! leaves the target at 1 HP and grants Temporary Hit Points.",
+                        "target_hp": target.hp,
+                    }
+                )
+                return True
+            return False
+
         def _maybe_trigger_order_followups(
             self,
             *,
@@ -13526,7 +22246,7 @@ class PokemonState:
             target_count = len(unique_targets)
             if actor.has_trainer_feature("Cheerleader"):
                 ap_cost = 0 if target_count <= 1 else 1
-                if trainer.ap >= ap_cost:
+                if trainer.available_ap(self.round) >= ap_cost:
                     prompt = {
                         "feature": "Cheerleader",
                         "kind": "choice",
@@ -13551,7 +22271,7 @@ class PokemonState:
                         chosen = str(response.get("choice") or response.get("condition") or "").strip().lower()
                     if chosen in {"cheered", "excited", "motivated"}:
                         if ap_cost:
-                            trainer.ap -= ap_cost
+                            trainer.consume_ap(ap_cost)
                         for target_id in unique_targets:
                             self._apply_cheer_condition(
                                 actor_id=actor_id,
@@ -13563,7 +22283,7 @@ class PokemonState:
             cheers_feature_name = "Cheers [Playtest]" if actor.has_trainer_feature("Cheers [Playtest]") else ("Cheers" if actor.has_trainer_feature("Cheers") else "")
             if cheers_feature_name:
                 ap_cost = 0 if target_count <= 1 else 1
-                if trainer.ap >= ap_cost:
+                if trainer.available_ap(self.round) >= ap_cost:
                     prompt = {
                         "feature": cheers_feature_name,
                         "kind": "choice",
@@ -13584,7 +22304,7 @@ class PokemonState:
                         should_apply = bool(response.get("apply") or response.get("use") or response.get("choice"))
                     if should_apply:
                         if ap_cost:
-                            trainer.ap -= ap_cost
+                            trainer.consume_ap(ap_cost)
                         for target_id in unique_targets:
                             self._apply_cheer_condition(
                                 actor_id=actor_id,
@@ -13630,7 +22350,7 @@ class PokemonState:
                 raise ValueError(f"{order_name.title()} is not currently available.")
             ap_cost = int(spec.get("ap_cost", 0) or 0)
             if consume_costs and ap_cost:
-                trainer.ap -= ap_cost
+                trainer.consume_ap(ap_cost)
             if consume_costs and spec.get("scene_limit") is not None:
                 self._record_feature_scene_use(actor, normalized.title())
             self._clear_order_effects(target, normalized)
@@ -13644,6 +22364,12 @@ class PokemonState:
             elif normalized == "strike again!":
                 target.add_temporary_effect("strike_again_ready", source="strike again!", source_id=actor_id, expires_round=self.round)
                 target.add_temporary_effect("extra_action", action=ActionType.STANDARD.value, round=self.round, source="Strike Again!")
+            elif normalized in {"conqueror's march", "conquerors march"}:
+                if self._mounted_rider_id(target_id) != actor_id:
+                    raise ValueError("Conqueror's March requires your current mount.")
+                if not target.has_ability("Run Up"):
+                    raise ValueError("Conqueror's March requires a Pokemon with Run Up.")
+                target.add_temporary_effect("conquerors_march", source="Conqueror's March", source_id=actor_id, expires_round=self.round)
             elif normalized == "reckless advance":
                 target.add_temporary_effect("reckless_advance_bound", source="reckless advance", source_id=actor_id)
             elif normalized == "trick shot":
@@ -13705,6 +22431,11 @@ class PokemonState:
                 }
             )
             if trigger_followups:
+                self._maybe_gain_directed_focus_momentum(
+                    target_id,
+                    reason="orders",
+                    source_id=actor_id,
+                )
                 self._maybe_trigger_order_followups(
                     actor_id=actor_id,
                     target_ids=[target_id],
@@ -13782,8 +22513,8 @@ class PokemonState:
                         "target_hp": target.hp,
                     }
                 )
-            if "cure_statuses" in selections and trainer.ap >= 1 and can_cure:
-                trainer.ap -= 1
+            if "cure_statuses" in selections and trainer.available_ap(self.round) >= 1 and can_cure:
+                trainer.consume_ap(1)
                 removed = []
                 for names in ({"confusion", "confused"}, {"infatuated"}, {"rage", "enraged"}, {"suppressed"}):
                     removed_name = target.remove_status_by_names(names)
@@ -13863,7 +22594,7 @@ class PokemonState:
                 accepted = bool(response.get("accept", True))
             if not accepted:
                 return False
-            trainer.ap = max(0, int(getattr(trainer, "ap", 0) or 0) - 1)
+            trainer.consume_ap(1)
             while actor.remove_temporary_effect("press_on_active"):
                 continue
             actor.add_temporary_effect(
@@ -13899,7 +22630,7 @@ class PokemonState:
                 normalized_move = move_name.lower()
                 if not move_name or normalized_move in banned:
                     continue
-                if targeting.normalized_area_kind(move):
+                if self.move_requires_setup(move):
                     continue
                 candidate_targets: List[Tuple[Optional[str], Optional[Tuple[int, int]], str]] = []
                 target_kind = targeting.normalized_target_kind(move)
@@ -13933,6 +22664,182 @@ class PokemonState:
                         }
                     )
             return sorted(options, key=lambda entry: (entry["move"].lower(), str(entry.get("target_name") or "").lower()))
+
+        def _out_of_turn_move_options(
+            self,
+            actor_id: str,
+            *,
+            banned_moves: Optional[Set[str]] = None,
+        ) -> List[dict]:
+            actor = self.pokemon.get(actor_id)
+            if actor is None:
+                return []
+            banned = {str(name or "").strip().lower() for name in (banned_moves or set()) if str(name or "").strip()}
+            options: List[dict] = []
+            seen: Set[Tuple[str, str]] = set()
+            for move in actor.spec.moves:
+                move_name = str(move.name or "").strip()
+                normalized_move = move_name.lower()
+                if not move_name or normalized_move in banned:
+                    continue
+                candidate_targets: List[Tuple[Optional[str], Optional[Tuple[int, int]], str]] = []
+                target_kind = targeting.normalized_target_kind(move)
+                if not targeting.move_requires_target(move) or target_kind in {"self", "field"}:
+                    candidate_targets.append(
+                        (
+                            actor_id if target_kind == "self" else None,
+                            None,
+                            actor.spec.name or actor.spec.species or actor_id,
+                        )
+                    )
+                else:
+                    for pid, target in self.pokemon.items():
+                        if pid == actor_id and target_kind not in {"self", "ally"}:
+                            continue
+                        if not target.active or target.fainted:
+                            continue
+                        candidate_targets.append((pid, None, target.spec.name or target.spec.species or pid))
+                for target_id, target_position, target_label in candidate_targets:
+                    proxy = PokemonState.UseMoveAction(
+                        actor_id=actor_id,
+                        move_name=move_name,
+                        target_id=target_id,
+                        target_position=target_position,
+                        allow_reaction_declared=True,
+                    )
+                    proxy.action_type = ActionType.FREE
+                    try:
+                        proxy.validate(self)
+                    except Exception:
+                        continue
+                    key = (normalized_move, str(target_id or ""))
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                    options.append(
+                        {
+                            "move": move_name,
+                            "target_id": target_id,
+                            "target_name": target_label,
+                            "target_position": list(target_position) if target_position else None,
+                            "label": move_name if not target_id or target_id == actor_id else f"{move_name} -> {target_label}",
+                            "meta": f"{move.category} | DB {int(move.db or 0)}",
+                        }
+                    )
+            return sorted(options, key=lambda entry: (entry["move"].lower(), str(entry.get("target_name") or "").lower()))
+
+        def _first_blood_turn_window(self, actor_id: str) -> Optional[str]:
+            actor = self.pokemon.get(actor_id)
+            if actor is None or actor.fainted or not actor.active:
+                return None
+            if not actor.has_trainer_feature("First Blood"):
+                return None
+            if any(
+                int(entry.get("round", -1)) >= self.round
+                for entry in actor.get_temporary_effects("first_blood_skip_turn")
+            ):
+                return None
+            entry_index = self._initiative_index_for(actor_id)
+            if entry_index is not None and not self._has_taken_turn_this_round(actor_id):
+                if self._initiative_index < 0 or entry_index > self._initiative_index:
+                    return "current_round"
+            return "next_round"
+
+        def _consume_first_blood_turn(self, actor_id: str, window: str) -> bool:
+            actor = self.pokemon.get(actor_id)
+            if actor is None:
+                return False
+            normalized = str(window or "").strip().lower()
+            if normalized == "current_round":
+                entry_index = self._initiative_index_for(actor_id)
+                if entry_index is None:
+                    return False
+                self.initiative_order.pop(entry_index)
+                if entry_index <= self._initiative_index:
+                    self._initiative_index = max(-1, self._initiative_index - 1)
+                actor.add_temporary_effect("first_blood_turn_spent", round=self.round, window="current_round")
+                return True
+            if normalized == "next_round":
+                actor.add_temporary_effect("first_blood_skip_turn", round=self.round + 1)
+                actor.add_temporary_effect("first_blood_turn_spent", round=self.round, window="next_round")
+                return True
+            return False
+
+        def _maybe_trigger_first_blood(self, actor_id: str, *, trigger_feature: str) -> bool:
+            actor = self.pokemon.get(actor_id)
+            if actor is None or actor.fainted or not actor.active:
+                return False
+            if not any(int(entry.get("round", -1)) == self.round for entry in actor.get_temporary_effects("released_from_ball")):
+                return False
+            turn_window = self._first_blood_turn_window(actor_id)
+            if not turn_window:
+                return False
+            move_options = self._out_of_turn_move_options(actor_id)
+            if not move_options:
+                return False
+            prompt = {
+                "actor_id": actor_id,
+                "label": "First Blood?",
+                "detail": (
+                    "Use one legal move as an Interrupt as soon as this Pokemon is sent out. "
+                    f"This consumes its {'current' if turn_window == 'current_round' else 'next'} Pokemon turn."
+                ),
+                "yes_label": "Use Move",
+                "no_label": "Hold",
+                "phase": "interrupt",
+                "optional": True,
+                "feature": "First Blood",
+                "trigger": "send_out",
+                "trigger_feature": trigger_feature,
+                "kind": "choice",
+                "options": [
+                    {
+                        "value": f"{entry['move']}||{entry.get('target_id') or ''}",
+                        "label": entry["label"],
+                        "meta": entry["meta"],
+                    }
+                    for entry in move_options
+                ],
+            }
+            response = self.prompt_response(actor_id, prompt)
+            accepted = bool(response)
+            choice_value = ""
+            if isinstance(response, dict):
+                accepted = bool(response.get("accept", True))
+                choice_value = str(response.get("choice") or "").strip()
+            if not accepted:
+                return False
+            selected = move_options[0]
+            if choice_value:
+                for entry in move_options:
+                    candidate = f"{entry['move']}||{entry.get('target_id') or ''}"
+                    if candidate == choice_value:
+                        selected = entry
+                        break
+            if not self._consume_first_blood_turn(actor_id, turn_window):
+                return False
+            if not self._resolve_out_of_turn_move(
+                actor_id,
+                move_name=selected["move"],
+                target_id=selected.get("target_id"),
+            ):
+                return False
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": actor_id,
+                    "target": selected.get("target_id"),
+                    "trainer": actor.controller_id,
+                    "feature": "First Blood",
+                    "effect": "interrupt_move",
+                    "move": selected["move"],
+                    "turn_window": turn_window,
+                    "trigger_feature": trigger_feature,
+                    "description": "First Blood lets a newly sent-out Pokemon immediately use a move as an interrupt, spending its available Pokemon turn.",
+                    "target_hp": actor.hp,
+                }
+            )
+            return True
 
         def _maybe_apply_not_yet(
             self,
@@ -14108,7 +23015,7 @@ class PokemonState:
             accepted = self.should_trigger_out_of_turn(actor_id, prompt)
             if not accepted:
                 return False
-            trainer.ap = max(0, int(getattr(trainer, "ap", 0) or 0) - 1)
+            trainer.consume_ap(1)
             self._record_feature_scene_use(actor, "Coaching")
             normalized = maneuver_name.lower()
             skill_map = {
@@ -14325,7 +23232,7 @@ class PokemonState:
             if area_kind not in {"cone", "burst", "blast", "line"}:
                 return affected
             attacker = self.pokemon.get(attacker_id)
-            if attacker is None or attacker.fainted or attacker.has_capability("Mindlock"):
+            if attacker is None or attacker.fainted:
                 return affected
             source_team = self._team_for(attacker_id)
             allied_targets = [
@@ -14367,7 +23274,7 @@ class PokemonState:
             }
             if not self.should_trigger_out_of_turn(source_id, prompt):
                 return affected
-            trainer.ap = max(0, int(getattr(trainer, "ap", 0) or 0) - 1)
+            trainer.consume_ap(1)
             remaining: List[str] = []
             shifted_allies: List[str] = []
             for cid in affected:
@@ -14616,6 +23523,9 @@ class PokemonState:
                 return result
             if not defender.has_trainer_feature("Pain Resistance"):
                 return result
+            trainer = self.trainers.get(defender.controller_id)
+            if trainer is None or int(getattr(trainer, "ap", 0) or 0) < 1:
+                return result
             if int(defender.injuries or 0) < 1:
                 return result
             if self._feature_scene_use_count(defender, "Pain Resistance") >= 1:
@@ -14626,8 +23536,8 @@ class PokemonState:
             prompt = {
                 "actor_id": defender_id,
                 "label": "Pain Resistance?",
-                "detail": "Reduce this damage by your Tick Value times your injuries.",
-                "yes_label": "Use Pain Resistance",
+                "detail": "Spend 1 AP to reduce this damage by your Tick Value times your injuries.",
+                "yes_label": "Spend 1 AP",
                 "no_label": "Hold",
                 "phase": "interrupt",
                 "optional": True,
@@ -14635,12 +23545,14 @@ class PokemonState:
                 "move": move.name,
                 "attacker_id": attacker_id,
                 "target_id": defender_id,
+                "ap_cost": 1,
             }
             if not self.should_trigger_out_of_turn(defender_id, prompt):
                 return result
             reduction = max(0, defender.tick_value() * int(defender.injuries or 0))
             updated = dict(result)
             updated["damage"] = max(0, incoming_damage - reduction)
+            trainer.consume_ap(1)
             self._record_feature_scene_use(defender, "Pain Resistance")
             self.log_event(
                 {
@@ -14651,12 +23563,202 @@ class PokemonState:
                     "feature": "Pain Resistance",
                     "effect": "damage_reduction",
                     "amount": reduction,
+                    "ap_spent": 1,
                     "move": move.name,
                     "description": "Pain Resistance reduces the triggering damage by Tick Value x injuries.",
                     "target_hp": defender.hp,
                 }
             )
             return updated
+
+        def _resilience_used(self, target: PokemonState) -> bool:
+            return bool(target.get_temporary_effects("resilience_used"))
+
+        def _resilience_active_for_attack(
+            self,
+            target: PokemonState,
+            *,
+            attacker_id: str,
+            move: MoveSpec,
+        ) -> bool:
+            move_name = str(move.name or "").strip().lower()
+            for entry in list(target.get_temporary_effects("resilience_active")):
+                entry_attacker = str(entry.get("attacker_id") or "").strip()
+                entry_move = str(entry.get("move") or "").strip().lower()
+                if entry_attacker == str(attacker_id or "").strip() and entry_move == move_name:
+                    return True
+            return False
+
+        def _mark_resilience_active(
+            self,
+            target: PokemonState,
+            *,
+            attacker_id: str,
+            move: MoveSpec,
+        ) -> None:
+            target.add_temporary_effect(
+                "resilience_active",
+                attacker_id=str(attacker_id or "").strip(),
+                move=str(move.name or "").strip(),
+            )
+
+        def _clear_resilience_active(self, target: PokemonState) -> None:
+            while target.remove_temporary_effect("resilience_active"):
+                continue
+
+        def _maybe_apply_resilience_to_crit(
+            self,
+            defender_id: str,
+            attacker_id: str,
+            move: MoveSpec,
+            result: dict,
+        ) -> dict:
+            defender = self.pokemon.get(defender_id)
+            attacker = self.pokemon.get(attacker_id)
+            if defender is None:
+                return result
+            if not defender.has_trainer_feature("Resilience"):
+                return result
+            if not bool(result.get("crit")):
+                return result
+            if self._resilience_used(defender):
+                return result
+            trainer = self.trainers.get(defender.controller_id)
+            if trainer is None or int(getattr(trainer, "ap", 0) or 0) < 2:
+                return result
+            prompt = {
+                "actor_id": defender_id,
+                "label": "Resilience?",
+                "detail": "Spend 2 AP to treat this hit as a normal hit and prevent any Status Affliction from this attack.",
+                "yes_label": "Spend 2 AP",
+                "no_label": "Hold",
+                "phase": "interrupt",
+                "optional": True,
+                "feature": "Resilience",
+                "move": move.name,
+                "attacker_id": attacker_id,
+                "target_id": defender_id,
+                "trigger": "critical_hit",
+                "ap_cost": 2,
+            }
+            if not self.should_trigger_out_of_turn(defender_id, prompt):
+                return result
+            updated = dict(result)
+            crit_extra_roll = int(updated.get("crit_extra_roll", 0) or 0)
+            crit_roll_bonus = crit_extra_roll
+            if attacker is not None and attacker.has_ability("Sniper"):
+                crit_roll_bonus += crit_extra_roll
+            pre_type_damage = int(updated.get("pre_type_damage", updated.get("damage", 0) or 0) or 0)
+            pre_type_damage = max(0, pre_type_damage - crit_roll_bonus)
+            updated["crit"] = False
+            updated["critical"] = False
+            updated["crit_extra_roll"] = 0
+            updated["pre_type_damage"] = pre_type_damage
+            updated["damage_roll"] = max(0, int(updated.get("damage_roll", 0) or 0) - crit_roll_bonus)
+            type_multiplier = float(updated.get("type_multiplier", 1.0) or 1.0)
+            updated["damage"] = int(math.floor(pre_type_damage * type_multiplier))
+            trainer.consume_ap(2)
+            defender.add_temporary_effect("resilience_used", round=self.round)
+            self._mark_resilience_active(defender, attacker_id=attacker_id, move=move)
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": defender_id,
+                    "target": attacker_id,
+                    "trainer": defender.controller_id,
+                    "feature": "Resilience",
+                    "effect": "critical_negated",
+                    "ap_spent": 2,
+                    "move": move.name,
+                    "description": "Resilience turns the triggering critical hit into a normal hit and prevents status from that attack.",
+                    "target_hp": defender.hp,
+                }
+            )
+            return updated
+
+        def _maybe_apply_resilience_to_status(
+            self,
+            events: List[dict],
+            *,
+            attacker_id: str,
+            target_id: str,
+            move: MoveSpec,
+            target: PokemonState,
+            status: str,
+        ) -> bool:
+            if not target.has_trainer_feature("Resilience"):
+                return False
+            trainer = self.trainers.get(target.controller_id)
+            if trainer is None:
+                return False
+            context = self._resilience_context or {}
+            context_attacker = str(context.get("attacker_id") or "").strip()
+            context_target = str(context.get("target_id") or "").strip()
+            context_move = str(context.get("move_name") or "").strip().lower()
+            move_name = str(move.name or "").strip().lower()
+            if context_attacker != str(attacker_id or "").strip():
+                return False
+            if context_target != str(target_id or "").strip():
+                return False
+            if context_move != move_name:
+                return False
+            if self._resilience_active_for_attack(target, attacker_id=attacker_id, move=move):
+                events.append(
+                    {
+                        "type": "trainer_feature",
+                        "actor": target_id,
+                        "target": attacker_id,
+                        "trainer": target.controller_id,
+                        "feature": "Resilience",
+                        "move": move.name,
+                        "effect": "status_block",
+                        "status": status,
+                        "description": "Resilience prevents Status Afflictions from the triggering attack.",
+                        "target_hp": target.hp,
+                    }
+                )
+                return True
+            if self._resilience_used(target):
+                return False
+            if int(getattr(trainer, "ap", 0) or 0) < 2:
+                return False
+            prompt = {
+                "actor_id": target_id,
+                "label": "Resilience?",
+                "detail": "Spend 2 AP to prevent this Status Affliction and ignore critical damage from this attack.",
+                "yes_label": "Spend 2 AP",
+                "no_label": "Hold",
+                "phase": "interrupt",
+                "optional": True,
+                "feature": "Resilience",
+                "move": move.name,
+                "attacker_id": attacker_id,
+                "target_id": target_id,
+                "trigger": "status_affliction",
+                "status": status,
+                "ap_cost": 2,
+            }
+            if not self.should_trigger_out_of_turn(target_id, prompt):
+                return False
+            trainer.consume_ap(2)
+            target.add_temporary_effect("resilience_used", round=self.round)
+            self._mark_resilience_active(target, attacker_id=attacker_id, move=move)
+            events.append(
+                {
+                    "type": "trainer_feature",
+                    "actor": target_id,
+                    "target": attacker_id,
+                    "trainer": target.controller_id,
+                    "feature": "Resilience",
+                    "move": move.name,
+                    "effect": "status_block",
+                    "status": status,
+                    "ap_spent": 2,
+                    "description": "Resilience prevents the triggering Status Affliction and ignores critical damage from that attack.",
+                    "target_hp": target.hp,
+                }
+            )
+            return True
 
         def _consume_immutable_mind_block(self, defender: PokemonState, move: MoveSpec) -> bool:
             move_name = str(move.name or "").strip().lower()
@@ -14922,7 +24024,7 @@ class PokemonState:
             }
             if not self.should_trigger_out_of_turn(actor_id, prompt):
                 return False
-            trainer.ap = max(0, int(getattr(trainer, "ap", 0) or 0) - 1)
+            trainer.consume_ap(1)
             expires_round = self.round + 1
             actor.add_temporary_effect("flank_immunity", source="Quick Gymnastics", expires_round=expires_round)
             actor.add_temporary_effect("aoo_immunity", source="Quick Gymnastics", expires_round=expires_round)
@@ -14962,6 +24064,82 @@ class PokemonState:
                 replacements.append(pid)
             replacements.sort()
             return replacements
+
+        def _maybe_trigger_round_trip(
+            self,
+            actor_id: str,
+            *,
+            move_name: str,
+        ) -> bool:
+            actor = self.pokemon.get(actor_id)
+            if (
+                actor is None
+                or actor.fainted
+                or not actor.active
+                or actor.position is None
+                or not actor.has_trainer_feature("Round Trip")
+            ):
+                return False
+            trainer = self.trainers.get(actor.controller_id)
+            if trainer is None or int(getattr(trainer, "ap", 0) or 0) < 1:
+                return False
+            replacements = self._quick_switch_replacements(actor_id)
+            if not replacements:
+                return False
+            prompt = {
+                "actor_id": actor_id,
+                "label": "Round Trip?",
+                "detail": "Spend 1 AP to immediately switch to a benched ally after using this move, even if Trapped.",
+                "yes_label": "Use Round Trip",
+                "no_label": "Stay In",
+                "phase": "interrupt",
+                "optional": True,
+                "feature": "Round Trip",
+                "trigger": "move",
+                "move": move_name,
+                "ap_cost": 1,
+                "kind": "choice",
+                "options": [
+                    {
+                        "value": replacement_id,
+                        "label": self.pokemon[replacement_id].spec.name or self.pokemon[replacement_id].spec.species,
+                    }
+                    for replacement_id in replacements
+                ],
+            }
+            response = self.prompt_response(actor_id, prompt)
+            if not response:
+                return False
+            choice_id = replacements[0]
+            if isinstance(response, dict):
+                if not bool(response.get("accept", True)):
+                    return False
+                choice_value = str(response.get("choice") or "").strip()
+                if choice_value in replacements:
+                    choice_id = choice_value
+            trainer.consume_ap(1)
+            self._apply_switch(
+                outgoing_id=actor_id,
+                replacement_id=choice_id,
+                initiator_id=trainer.identifier,
+                apply_tag_in=True,
+                allow_replacement_turn=True,
+                allow_immediate=True,
+                allow_quick_switch_triggers=False,
+            )
+            self.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": actor_id,
+                    "target": choice_id,
+                    "trainer": trainer.identifier,
+                    "feature": "Round Trip",
+                    "effect": "switch",
+                    "move": move_name,
+                    "ap_cost": 1,
+                }
+            )
+            return True
 
         def _handle_quick_switch_faint_trigger(
             self,
@@ -15040,7 +24218,7 @@ class PokemonState:
                 choice_value = str(response.get("choice") or "").strip()
                 if choice_value in replacements:
                     choice_id = choice_value
-            trainer.ap = max(0, int(getattr(trainer, "ap", 0) or 0) - 2)
+            trainer.consume_ap(2)
             self._apply_switch(
                 outgoing_id=actor_id,
                 replacement_id=choice_id,
@@ -15065,6 +24243,71 @@ class PokemonState:
                 }
             )
             return True
+
+        def _maybe_trigger_emergency_release_interrupt(self, trigger_actor_id: Optional[str]) -> bool:
+            trigger_team = self._team_for(trigger_actor_id or "")
+            triggered = False
+            for actor_id, actor in self.pokemon.items():
+                if actor_id == trigger_actor_id:
+                    continue
+                if not actor.active or actor.fainted or not actor.is_trainer_combatant():
+                    continue
+                if not actor.has_trainer_feature("Emergency Release"):
+                    continue
+                if not self.is_player_controlled(actor_id):
+                    continue
+                if trigger_team and self._team_for(actor_id) == trigger_team:
+                    continue
+                trainer = self.trainers.get(actor.controller_id)
+                if trainer is None or int(getattr(trainer, "ap", 0) or 0) < 2:
+                    continue
+                if not actor.has_action_available(ActionType.SHIFT):
+                    continue
+                replacements = self._emergency_release_replacements(actor_id)
+                if not replacements:
+                    continue
+                prompt = {
+                    "actor_id": actor_id,
+                    "label": "Emergency Release?",
+                    "detail": "Spend 2 AP and your Shift Action to release a benched Pokemon as an interrupt.",
+                    "yes_label": "Release",
+                    "no_label": "Hold",
+                    "phase": "interrupt",
+                    "optional": True,
+                    "feature": "Emergency Release",
+                    "trigger_actor": trigger_actor_id,
+                    "ap_cost": 2,
+                    "kind": "choice",
+                    "options": [
+                        {
+                            "value": replacement_id,
+                            "label": self.pokemon[replacement_id].spec.name or self.pokemon[replacement_id].spec.species,
+                        }
+                        for replacement_id in replacements
+                    ],
+                }
+                response = self.prompt_response(actor_id, prompt)
+                if not response:
+                    continue
+                choice_id = replacements[0]
+                if isinstance(response, dict):
+                    if not bool(response.get("accept", True)):
+                        continue
+                    choice_value = str(response.get("choice") or "").strip()
+                    if choice_value in replacements:
+                        choice_id = choice_value
+                trainer.consume_ap(2)
+                actor.mark_action(ActionType.SHIFT, "Emergency Release")
+                self._apply_release(
+                    trainer_actor_id=actor_id,
+                    replacement_id=choice_id,
+                    initiator_id=trainer.identifier,
+                    allow_replacement_turn=True,
+                    allow_immediate=True,
+                    feature_name="Emergency Release",
+                )
+                triggered = True
+            return triggered
 
         def _best_deadly_gambit_move(
             self,
@@ -15649,6 +24892,349 @@ class PokemonState:
             controller = str(actor.controller_id or "").strip().lower()
             return "wild" in tokens or "wild" in team or controller == "wild"
 
+        def _capture_specialist_skill_rank(self, actor: PokemonState) -> int:
+            return max(
+                self._combatant_skill_rank(actor, skill, trainer_override_id=actor.controller_id)
+                for skill in _CAPTURE_SKILL_NAMES
+            )
+
+        def _trainer_level_for_capture(self, actor: PokemonState) -> int:
+            trainer = self.trainers.get(actor.controller_id)
+            for source in (
+                getattr(trainer, "trainer_class", {}) if trainer is not None else {},
+                getattr(actor.spec, "trainer_features", []) or [],
+            ):
+                if isinstance(source, dict):
+                    for key in ("level", "trainer_level"):
+                        try:
+                            value = int(source.get(key, 0) or 0)
+                        except (TypeError, ValueError):
+                            value = 0
+                        if value > 0:
+                            return value
+                if isinstance(source, list):
+                    for entry in source:
+                        if not isinstance(entry, dict):
+                            continue
+                        for key in ("level", "trainer_level"):
+                            try:
+                                value = int(entry.get(key, 0) or 0)
+                            except (TypeError, ValueError):
+                                value = 0
+                            if value > 0:
+                                return value
+            return max(0, int(getattr(actor.spec, "level", 0) or 0))
+
+        def _capture_evolution_modifier(self, target: PokemonState) -> Tuple[int, str]:
+            joined = " ".join(str(tag or "").strip().lower() for tag in target.spec.tags or [])
+            if "two evolutions remaining" in joined or "basic stage" in joined or "stage 1 of 3" in joined:
+                return 10, "two evolutions remaining"
+            if "no evolutions remaining" in joined or "final evolution" in joined or "fully evolved" in joined:
+                return -10, "no evolutions remaining"
+            return 0, "one evolution remaining"
+
+        def _capture_status_modifier(self, target: PokemonState) -> Tuple[int, List[str]]:
+            modifier = 0
+            reasons: List[str] = []
+            persistent_seen = 0
+            volatile_seen = 0
+            for status in target.statuses:
+                normalized = target._normalized_status_name(status)
+                if normalized in _PERSISTENT_CAPTURE_STATUSES:
+                    persistent_seen += 1
+                elif normalized in _VOLATILE_STATUS_NAMES:
+                    volatile_seen += 1
+            if persistent_seen:
+                modifier += 10 * persistent_seen
+                reasons.append("persistent status")
+            if volatile_seen:
+                modifier += 5 * volatile_seen
+                reasons.append("volatile status")
+            injuries = max(0, int(target.injuries or 0))
+            if injuries:
+                modifier += 5 * injuries
+                reasons.append("injuries")
+            if target.has_status("Stuck"):
+                modifier += 10
+                reasons.append("stuck")
+            if target.has_status("Slowed") or target.has_status("Slow"):
+                modifier += 5
+                reasons.append("slow")
+            return modifier, reasons
+
+        def calculate_capture_rate(self, target_id: str, *, hp_override: Optional[int] = None) -> Dict[str, object]:
+            target = self.pokemon.get(target_id)
+            if target is None:
+                return {"rate": 0, "reasons": ["missing target"], "blocked": True}
+            max_hp = max(1, int(target.max_hp_with_injuries()))
+            current_hp = int(hp_override if hp_override is not None else (target.hp or 0))
+            rate = 100 - (2 * int(target.spec.level or 0))
+            reasons = [f"level {target.spec.level}"]
+            if current_hp <= 0:
+                return {"rate": rate, "reasons": reasons + ["0 HP cannot be captured"], "blocked": True}
+            hp_ratio = current_hp / max_hp
+            if current_hp == 1:
+                rate += 30
+                reasons.append("1 HP")
+            elif hp_ratio <= 0.25:
+                rate += 15
+                reasons.append("25% HP or lower")
+            elif hp_ratio <= 0.50:
+                reasons.append("50% HP or lower")
+            elif hp_ratio <= 0.75:
+                rate -= 15
+                reasons.append("75% HP or lower")
+            else:
+                rate -= 30
+                reasons.append("above 75% HP")
+            evo_mod, evo_reason = self._capture_evolution_modifier(target)
+            rate += evo_mod
+            reasons.append(evo_reason)
+            tags = {str(tag or "").strip().lower() for tag in target.spec.tags or []}
+            if "shiny" in tags:
+                rate -= 10
+                reasons.append("shiny")
+            if "legendary" in tags:
+                rate -= 30
+                reasons.append("legendary")
+            status_mod, status_reasons = self._capture_status_modifier(target)
+            rate += status_mod
+            reasons.extend(status_reasons)
+            return {"rate": rate, "reasons": reasons, "blocked": False}
+
+        def _capture_snare_applies(self, target: PokemonState) -> bool:
+            status_text = " ".join(
+                str(status.get("name") if isinstance(status, dict) else status or "").strip().lower()
+                for status in target.statuses
+            )
+            snare_tokens = ("bait", "distracted", "hand net", "weighted net", "netted", "lasso", "glue cannon")
+            if "stuck" in status_text or any(token in status_text for token in snare_tokens):
+                return True
+            for effect in target.temporary_effects:
+                if not isinstance(effect, dict):
+                    continue
+                text = " ".join(str(value or "").strip().lower() for value in effect.values())
+                if any(token in text for token in snare_tokens):
+                    return True
+            return False
+
+        def _capture_ball_accuracy(self, actor: PokemonState, target: PokemonState) -> Dict[str, object]:
+            roll = self.rng.randint(1, 20)
+            evasion = calculations.evasion_value(target, "Status")
+            accuracy_bonus = 1 if actor.get_temporary_effects("focused_training") else 0
+            if actor.has_trainer_feature("Tools of the Trade"):
+                accuracy_bonus += 2
+            accuracy_stage = calculations.accuracy_stage_value(
+                actor.combat_stages.get("accuracy", 0) + actor.spec.accuracy_cs + accuracy_bonus
+            )
+            needed = max(2, 6 + evasion - accuracy_stage)
+            hit = roll == 20 or (roll != 1 and roll >= needed)
+            return {
+                "hit": hit,
+                "crit": roll == 20,
+                "roll": roll,
+                "needed": needed,
+                "accuracy_bonus": accuracy_bonus,
+                "tools_of_the_trade": actor.has_trainer_feature("Tools of the Trade"),
+            }
+
+        def _apply_curve_ball_damage(self, actor_id: str, target_id: str) -> Optional[dict]:
+            actor = self.pokemon.get(actor_id)
+            target = self.pokemon.get(target_id)
+            if actor is None or target is None or not actor.has_trainer_feature("Curve Ball"):
+                return None
+            struggle = MoveSpec(name="Curve Ball Struggle", type="Normal", category="Physical", db=4, ac=None)
+            result = resolve_move_action(
+                self.rng,
+                actor,
+                target,
+                struggle,
+                self.effective_weather(),
+                self.terrain or {},
+                force_hit=True,
+            )
+            before_hp = target.hp or 0
+            damage = self._apply_damage_with_injury_rules(
+                target_id,
+                int(result.get("damage", 0) or 0),
+                attacker_id=actor_id,
+                move=struggle,
+            )
+            return {
+                "type": "trainer_feature",
+                "actor": actor_id,
+                "target": target_id,
+                "trainer": actor.controller_id,
+                "feature": "Curve Ball",
+                "effect": "struggle_damage",
+                "damage": damage,
+                "target_hp_before": before_hp,
+                "target_hp": target.hp,
+                "description": "Curve Ball deals Struggle damage before the Poke Ball capture function resolves.",
+            }
+
+        def _grant_catch_combo_ready(self, attacker_id: Optional[str], target_id: Optional[str]) -> None:
+            if not attacker_id or not target_id:
+                return
+            attacker = self.pokemon.get(attacker_id)
+            target = self.pokemon.get(target_id)
+            if attacker is None or target is None:
+                return
+            if attacker.is_trainer_combatant() or not target.fainted or not self._is_wild_combatant(target_id):
+                return
+            for pid, candidate in self.pokemon.items():
+                if candidate.controller_id != attacker.controller_id:
+                    continue
+                if not candidate.is_trainer_combatant() or not candidate.active or candidate.fainted:
+                    continue
+                if not candidate.has_trainer_feature("Catch Combo"):
+                    continue
+                if self._feature_scene_use_count(candidate, "Catch Combo") >= 1:
+                    continue
+                candidate.add_temporary_effect(
+                    "catch_combo_ready",
+                    target=target_id,
+                    attacker=attacker_id,
+                    expires_round=self.round + 1,
+                )
+                self.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": pid,
+                        "target": target_id,
+                        "trainer": candidate.controller_id,
+                        "feature": "Catch Combo",
+                        "effect": "ready",
+                        "description": "Catch Combo is ready after your Pokemon fainted a wild Pokemon.",
+                        "target_hp": target.hp,
+                    }
+                )
+
+        def resolve_capture_attempt_event(self, event: dict) -> None:
+            actor_id = str(event.get("actor") or "").strip()
+            target_id = str(event.get("target") or "").strip()
+            actor = self.pokemon.get(actor_id)
+            target = self.pokemon.get(target_id)
+            if actor is None or target is None:
+                return
+            accuracy = self._capture_ball_accuracy(actor, target)
+            self.log_event(
+                {
+                    "type": "item",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "item": event.get("item"),
+                    "effect": "capture_accuracy",
+                    **accuracy,
+                    "description": "The Poke Ball hits the target." if accuracy.get("hit") else "The Poke Ball misses and lands harmlessly.",
+                    "target_hp": target.hp,
+                }
+            )
+            if not accuracy.get("hit"):
+                return
+            curve_event = self._apply_curve_ball_damage(actor_id, target_id)
+            if curve_event is not None:
+                self.log_event(curve_event)
+            catch_combo = bool(event.get("catch_combo"))
+            rate_info = self.calculate_capture_rate(target_id, hp_override=1 if catch_combo else None)
+            capture_rate = int(rate_info.get("rate", 0) or 0)
+            multiplier = float(event.get("multiplier", 1.0) or 1.0)
+            adjusted_rate = int(math.floor(capture_rate * multiplier))
+            roll_modifier = int(event.get("base_modifier", 0) or 0) - self._trainer_level_for_capture(actor)
+            reasons = list(event.get("reasons", []) or []) + list(rate_info.get("reasons", []) or [])
+            if accuracy.get("crit"):
+                roll_modifier -= 10
+                reasons.append("natural 20 accuracy")
+            if actor.has_trainer_feature("Snare") and self._capture_snare_applies(target):
+                roll_modifier -= 10
+                reasons.append("snare")
+            for entry in list(target.get_temporary_effects("capture_roll_modifier")):
+                try:
+                    amount = int(entry.get("amount", 0) or 0)
+                except (TypeError, ValueError):
+                    amount = 0
+                if not amount:
+                    continue
+                roll_modifier += amount
+                reasons.append(str(entry.get("source") or "capture tool").strip() or "capture tool")
+            for entry in list(target.get_temporary_effects("capture_tool_trap")):
+                try:
+                    amount = int(entry.get("capture_roll_modifier", 0) or 0)
+                except (TypeError, ValueError):
+                    amount = 0
+                if not amount:
+                    continue
+                roll_modifier += amount
+                reasons.append(str(entry.get("tool") or entry.get("source") or "capture tool").strip() or "capture tool")
+            for entry in list(actor.get_temporary_effects("next_capture_roll_modifier")):
+                try:
+                    amount = int(entry.get("amount", 0) or 0)
+                except (TypeError, ValueError):
+                    amount = 0
+                roll_modifier += amount
+                reasons.append(str(entry.get("source") or "capture modifier").strip() or "capture modifier")
+                if entry in actor.temporary_effects:
+                    actor.temporary_effects.remove(entry)
+                break
+            natural_roll = self.rng.randint(1, 100)
+            digit_swap = None
+            if actor.get_temporary_effects("gotta_catch_em_all_ready"):
+                actor.remove_temporary_effect("gotta_catch_em_all_ready")
+                if natural_roll != 1:
+                    tens, ones = divmod(natural_roll, 10)
+                    swapped = ones * 10 + tens
+                    if swapped == 0:
+                        swapped = 100
+                    if swapped < natural_roll:
+                        digit_swap = {"from": natural_roll, "to": swapped}
+                        natural_roll = swapped
+                        reasons.append("gotta catch 'em all")
+            final_roll = natural_roll + roll_modifier
+            blocked = bool(rate_info.get("blocked")) and not catch_combo
+            auto_success = bool(event.get("auto_success"))
+            success = bool(auto_success or natural_roll == 100 or (not blocked and final_roll <= adjusted_rate))
+            if success:
+                target.active = False
+                target.add_temporary_effect("captured", source=event.get("item"), trainer_id=actor.controller_id)
+                if actor.has_trainer_feature("Captured Momentum"):
+                    actor.add_temporary_effect(
+                        "captured_momentum_ready",
+                        target=target_id,
+                        source="Captured Momentum",
+                        expires_round=self.round + 1,
+                    )
+            elif actor.has_trainer_feature("Devitalizing Throw"):
+                actor.add_temporary_effect(
+                    "devitalizing_throw_ready",
+                    target=target_id,
+                    item=event.get("item"),
+                    source="Devitalizing Throw",
+                    expires_round=self.round + 1,
+                )
+            self.log_event(
+                {
+                    "type": "item",
+                    "actor": actor_id,
+                    "target": target_id,
+                    "item": event.get("item"),
+                    "effect": "capture_roll",
+                    "roll": natural_roll,
+                    "natural_roll": natural_roll,
+                    "roll_modifier": roll_modifier,
+                    "final_roll": final_roll,
+                    "capture_rate": capture_rate,
+                    "adjusted_capture_rate": adjusted_rate,
+                    "multiplier": multiplier,
+                    "success": success,
+                    "result": "captured" if success else "escaped",
+                    "auto_success": auto_success,
+                    "digit_swap": digit_swap,
+                    "reasons": reasons,
+                    "description": f"{target.spec.species} was captured." if success else f"{target.spec.species} escaped from the Poke Ball.",
+                    "target_hp": target.hp,
+                }
+            )
+
         def _maybe_apply_false_strike(
             self,
             attacker_id: str,
@@ -15663,6 +25249,9 @@ class PokemonState:
                 return False
             if not self._is_wild_combatant(target_id):
                 return False
+            if self._feature_scene_use_count(attacker, "False Strike") >= 2:
+                return False
+            self._record_feature_scene_use(attacker, "False Strike")
             self.log_event(
                 {
                     "type": "trainer_feature",
@@ -15672,6 +25261,7 @@ class PokemonState:
                     "feature": "False Strike",
                     "effect": "leave_at_one_hp",
                     "move": str((move.name if move is not None else "") or "").strip() or None,
+                    "scene_uses": self._feature_scene_use_count(attacker, "False Strike"),
                     "description": "False Strike leaves a fainted wild target at 1 HP instead.",
                     "target_hp": 1,
                 }
@@ -15691,22 +25281,27 @@ class PokemonState:
                 return False
             if not actor.has_trainer_feature("Perseverance"):
                 return False
+            trainer = self.trainers.get(actor.controller_id)
+            if trainer is None or int(getattr(trainer, "ap", 0) or 0) < 1:
+                return False
             if self._feature_scene_use_count(actor, "Perseverance") >= 1:
                 return False
             prompt = {
                 "actor_id": actor_id,
                 "label": "Perseverance?",
-                "detail": "Prevent the triggering injury gain for this Pokemon.",
-                "yes_label": "Use Perseverance",
+                "detail": "Spend 1 AP to prevent the triggering injury gain for this Pokemon.",
+                "yes_label": "Spend 1 AP",
                 "no_label": "Hold",
                 "phase": "interrupt",
                 "optional": True,
                 "feature": "Perseverance",
                 "injuries_gained": injuries_gained,
                 "target_id": actor_id,
+                "ap_cost": 1,
             }
             if not self.should_trigger_out_of_turn(actor_id, prompt):
                 return False
+            trainer.consume_ap(1)
             self._record_feature_scene_use(actor, "Perseverance")
             self.log_event(
                 {
@@ -15717,6 +25312,7 @@ class PokemonState:
                     "feature": "Perseverance",
                     "effect": "injury_prevented",
                     "injuries_gained": injuries_gained,
+                    "ap_spent": 1,
                     "description": "Perseverance prevents the triggering injury gain.",
                     "target_hp": actor.hp,
                 }
@@ -16089,6 +25685,49 @@ class PokemonState:
                         isinstance(entry, dict)
                         and str(entry.get("kind") or "").strip().lower() == "feature_bound"
                         and str(entry.get("feature") or "").strip().lower() == "tough as schist"
+                    )
+                ]
+            return released
+
+        def _current_dashing_makeover_binding(self, source_id: str, trainer_id: Optional[str]) -> Optional[dict]:
+            source_key = str(source_id or "").strip()
+            trainer_key = str(trainer_id or "").strip()
+            for pid, mon in self.pokemon.items():
+                for entry in list(mon.get_temporary_effects("dashing_makeover_bound")):
+                    if str(entry.get("source_id") or "").strip() != source_key:
+                        continue
+                    if trainer_key and str(entry.get("trainer_id") or "").strip() != trainer_key:
+                        continue
+                    item = entry.get("item")
+                    return {
+                        "target_id": pid,
+                        "item": copy.deepcopy(item),
+                        "item_name": str(entry.get("item_name") or _item_name_text(item)).strip(),
+                    }
+            return None
+
+        def _clear_dashing_makeover_binding(self, source_id: str, trainer_id: Optional[str]) -> Optional[dict]:
+            source_key = str(source_id or "").strip()
+            trainer_key = str(trainer_id or "").strip()
+            released = self._current_dashing_makeover_binding(source_key, trainer_key)
+            for mon in self.pokemon.values():
+                mon.temporary_effects = [
+                    entry for entry in mon.temporary_effects
+                    if not (
+                        isinstance(entry, dict)
+                        and str(entry.get("kind") or "").strip().lower() == "dashing_makeover_bound"
+                        and str(entry.get("source_id") or "").strip() == source_key
+                        and (not trainer_key or str(entry.get("trainer_id") or "").strip() == trainer_key)
+                    )
+                ]
+            actor = self.pokemon.get(source_key)
+            if actor is not None:
+                actor.temporary_effects = [
+                    entry for entry in actor.temporary_effects
+                    if not (
+                        isinstance(entry, dict)
+                        and str(entry.get("kind") or "").strip().lower() == "feature_bound"
+                        and str(entry.get("feature") or "").strip().lower() == "dashing makeover"
                     )
                 ]
             return released
@@ -16523,13 +26162,20 @@ class PokemonState:
             for payload in events[before_events:]:
                 self.log_event(payload)
 
-        def _rock_type_linked_rank(self, actor: Optional[PokemonState]) -> int:
+        def _type_linked_rank(self, actor: Optional[PokemonState], type_name: object) -> int:
             if actor is None:
                 return 0
+            normalized = _normalize_type_ace_type_name(type_name)
+            skills = _TYPE_LINKED_SKILL_OPTIONS.get(normalized)
+            if not skills:
+                return 0
             return max(
-                self._combatant_skill_rank(actor, "combat", trainer_override_id=actor.controller_id),
-                self._combatant_skill_rank(actor, "survival", trainer_override_id=actor.controller_id),
+                self._combatant_skill_rank(actor, skills[0], trainer_override_id=actor.controller_id),
+                self._combatant_skill_rank(actor, skills[1], trainer_override_id=actor.controller_id),
             )
+
+        def _rock_type_linked_rank(self, actor: Optional[PokemonState]) -> int:
+            return self._type_linked_rank(actor, "rock")
 
         def _adjacent_hazard_tiles(self, center: Optional[Tuple[int, int]]) -> List[Tuple[int, int]]:
             if self.grid is None or center is None:
@@ -17387,6 +27033,32 @@ class PokemonState:
                 return False
             return True
 
+        def build_struggle_move(
+            self,
+            attacker_id: str,
+            attacker: Optional[PokemonState] = None,
+            *,
+            move_type: str = "Normal",
+            category: str = "Physical",
+        ) -> MoveSpec:
+            attacker = attacker or self.pokemon.get(attacker_id)
+            combat_rank = self._combatant_skill_rank(attacker, "combat", actor_id=attacker_id) if attacker is not None else 0
+            ac = 3 if combat_rank >= 4 else 4
+            db = 5 if combat_rank >= 4 else 4
+            return MoveSpec(
+                name="Struggle",
+                type=move_type,
+                category=category,
+                db=db,
+                ac=ac,
+                range_kind="Melee",
+                range_value=1,
+                target_kind="Melee",
+                target_range=1,
+                freq="At-Will",
+                range_text="Melee, 1 Target",
+            )
+
         def _perform_attack_of_opportunity(self, attacker_id: str, target_id: str, reason: str) -> None:
             attacker = self.pokemon.get(attacker_id)
             defender = self.pokemon.get(target_id)
@@ -17402,22 +27074,26 @@ class PokemonState:
                 return
             coached = self._maybe_apply_coaching(attacker_id, "Attack of Opportunity", target_id=target_id)
             self._mark_aoo_used(attacker_id)
-            combat_rank = self._combatant_skill_rank(attacker, "combat", actor_id=attacker_id)
-            ac = 3 if combat_rank >= 4 else 4
-            db = 5 if combat_rank >= 4 else 4
-            struggle = MoveSpec(
-                name="Struggle",
-                type="Normal",
-                category="Physical",
-                db=db,
-                ac=ac,
-                range_kind="Melee",
-                range_value=1,
-                target_kind="Melee",
-                target_range=1,
-                freq="At-Will",
-                range_text="Melee, 1 Target",
-            )
+            replacement_move = self._maybe_offer_impromptu_trick(actor_id=attacker_id, target_id=target_id)
+            if replacement_move:
+                resolved = self._resolve_out_of_turn_move(
+                    attacker_id,
+                    move_name=replacement_move,
+                    target_id=target_id,
+                )
+                self.log_event(
+                    {
+                        "type": "attack_of_opportunity",
+                        "actor": attacker_id,
+                        "target": target_id,
+                        "reason": reason,
+                        "replacement_move": replacement_move,
+                        "resolved": resolved,
+                        "target_hp": defender.hp,
+                    }
+                )
+                return
+            struggle = self.build_struggle_move(attacker_id, attacker)
             result = resolve_move_action(
                 rng=self.rng,
                 attacker=attacker,
@@ -18070,6 +27746,60 @@ class PokemonState:
                     return True
             return False
     
+        def _apply_baton_pass_transfer(
+            self,
+            source_id: str,
+            recipient_id: str,
+            *,
+            swap_positions: bool,
+            event_type: str,
+            source_name: str,
+            description: str,
+            trainer_id: Optional[str] = None,
+            feature_name: Optional[str] = None,
+        ) -> bool:
+            source = self.pokemon.get(source_id)
+            recipient = self.pokemon.get(recipient_id)
+            if source is None or recipient is None:
+                return False
+            for stat in source.combat_stages:
+                recipient.set_effective_combat_stage(stat, source.effective_combat_stage(stat))
+            source.reset_combat_stages_to_default()
+            transferred_statuses: List[dict | str] = []
+            remaining_statuses: List[dict | str] = []
+            for status in source.statuses:
+                status_name = source._normalized_status_name(status)
+                if status_name in _COAT_STATUS_NAMES:
+                    transferred_statuses.append(status)
+                else:
+                    remaining_statuses.append(status)
+            source.statuses = remaining_statuses
+            for status in transferred_statuses:
+                if recipient.has_status(source._normalized_status_name(status)):
+                    continue
+                if isinstance(status, dict):
+                    recipient.statuses.append(copy.deepcopy(status))
+                else:
+                    recipient.statuses.append(status)
+            if swap_positions and source.position is not None and recipient.position is not None:
+                source.position, recipient.position = recipient.position, source.position
+            payload = {
+                "type": event_type,
+                "actor": source_id,
+                "target": recipient_id,
+                "effect": "baton_pass",
+                "description": description,
+                "target_hp": recipient.hp,
+            }
+            if event_type == "move":
+                payload["move"] = source_name
+            else:
+                payload["feature"] = feature_name or source_name
+                if trainer_id:
+                    payload["trainer"] = trainer_id
+            self.log_event(payload)
+            return True
+
         def _execute_baton_pass(self, attacker_id: str, replacement_id: Optional[str]) -> None:
             attacker = self.pokemon.get(attacker_id)
             if attacker is None:
@@ -18104,37 +27834,13 @@ class PokemonState:
                     }
                 )
                 return
-            replacement.combat_stages = dict(attacker.combat_stages)
-            for stat in attacker.combat_stages:
-                attacker.combat_stages[stat] = 0
-            transferred_statuses: List[dict | str] = []
-            remaining_statuses: List[dict | str] = []
-            for status in attacker.statuses:
-                status_name = attacker._normalized_status_name(status)
-                if status_name in _COAT_STATUS_NAMES:
-                    transferred_statuses.append(status)
-                else:
-                    remaining_statuses.append(status)
-            attacker.statuses = remaining_statuses
-            for status in transferred_statuses:
-                if replacement.has_status(attacker._normalized_status_name(status)):
-                    continue
-                if isinstance(status, dict):
-                    replacement.statuses.append(copy.deepcopy(status))
-                else:
-                    replacement.statuses.append(status)
-            if attacker.position is not None and replacement.position is not None:
-                attacker.position, replacement.position = replacement.position, attacker.position
-            self.log_event(
-                {
-                    "type": "move",
-                    "actor": attacker_id,
-                    "target": replacement_id,
-                    "move": "Baton Pass",
-                    "effect": "baton_pass",
-                    "description": "Baton Pass transfers combat stages and coats, swapping positions with the recipient.",
-                    "target_hp": replacement.hp,
-                }
+            self._apply_baton_pass_transfer(
+                attacker_id,
+                replacement_id,
+                swap_positions=True,
+                event_type="move",
+                source_name="Baton Pass",
+                description="Baton Pass transfers combat stages and coats, swapping positions with the recipient.",
             )
     
         def _execute_parting_shot(self, attacker_id: str) -> Optional[str]:
@@ -18240,22 +27946,7 @@ class PokemonState:
                 return
             coached = self._maybe_apply_coaching(attacker_id, "Attack of Opportunity", target_id=target_id)
             self._mark_aoo_used(attacker_id)
-            combat_rank = self._combatant_skill_rank(attacker, "combat", actor_id=attacker_id)
-            ac = 3 if combat_rank >= 4 else 4
-            db = 5 if combat_rank >= 4 else 4
-            struggle = MoveSpec(
-                name="Struggle",
-                type="Normal",
-                category="Physical",
-                db=db,
-                ac=ac,
-                range_kind="Melee",
-                range_value=1,
-                target_kind="Melee",
-                target_range=1,
-                freq="At-Will",
-                range_text="Melee, 1 Target",
-            )
+            struggle = self.build_struggle_move(attacker_id, attacker)
             result = resolve_move_action(
                 rng=self.rng,
                 attacker=attacker,
@@ -18354,6 +28045,20 @@ class PokemonState:
                 if self._combatant_distance(mover, opponent, position_left=destination) == 1:
                     continue
                 self._perform_attack_of_opportunity(opponent_id, mover_id, "shift")
+            mark = self._close_quarters_mark_source(mover)
+            if mark is None:
+                return
+            source_id = str(mark.get("source_id") or "").strip()
+            if not source_id or source_id == mover_id:
+                return
+            source = self.pokemon.get(source_id)
+            if source is None or source.fainted or source.position is None:
+                return
+            if targeting.chebyshev_distance(origin, source.position) != 1:
+                return
+            if self._combatant_distance(source, mover, position_right=destination) == 1:
+                return
+            self._perform_attack_of_opportunity(source_id, mover_id, "shift")
     
         def _trigger_attack_of_opportunity_on_stand(self, actor_id: str) -> None:
             actor = self.pokemon.get(actor_id)
@@ -18853,6 +28558,8 @@ class PokemonState:
             for payload in status_events:
                 self.log_event(payload)
             self.log_event({"type": "maneuver", "actor": actor_id, "target": target_id, "effect": effect_name, "result": "success" if contest["attacker_wins"] else "fail", "attacker_total": contest["attacker_total"], "defender_total": contest["defender_total"], "target_hp": target.hp})
+            if contest["attacker_wins"] and effect_name in {"hinder", "blind", "low_blow"}:
+                self._apply_attack_mastery_tick(actor_id, target_id, source=effect_name)
 
         def resolve_grapple_action(
             self,
@@ -18902,19 +28609,7 @@ class PokemonState:
                 return
     
             if kind == "attack":
-                struggle = MoveSpec(
-                    name="Struggle",
-                    type="Normal",
-                    category="Physical",
-                    db=4,
-                    ac=None,
-                    range_kind="Melee",
-                    range_value=1,
-                    target_kind="Melee",
-                    target_range=1,
-                    freq="At-Will",
-                    range_text="Melee, 1 Target",
-                )
+                struggle = self.build_struggle_move(actor_id, actor)
                 result = resolve_move_action(
                     rng=self.rng,
                     attacker=actor,
@@ -19081,6 +28776,7 @@ class PokemonState:
                     "phase": "trigger",
                     "optional": True,
                     "feature": "Staying Power",
+                    "reset_combat_stages_option": True,
                 }
                 response = self.prompt_response(actor_id, prompt)
                 staying_power_active = bool(response)
@@ -19105,8 +28801,7 @@ class PokemonState:
                     shifted = True
             actor.temp_hp = 0
             if reset_combat_stages:
-                for stat in actor.combat_stages:
-                    actor.combat_stages[stat] = 0
+                actor.reset_combat_stages_to_default()
             actor.clear_volatile_statuses()
             if actor.has_ability("Natural Cure"):
                 cured = self._remove_statuses_by_set(actor, _STATUS_CONDITIONS_TO_CURE)
@@ -19130,10 +28825,10 @@ class PokemonState:
             ]
             curses_cleared = self._remove_breather_curses(actor_id)
             shrug_off_removed = 0
-            if actor.has_trainer_feature("Shrug Off") and self._feature_scene_use_count(actor, "Shrug Off") < 1:
+            if actor.has_trainer_feature("Shrug Off") and self._feature_daily_use_count(actor, "Shrug Off") < 1:
                 shrug_off_removed = self._apply_shrug_off(actor, source="Shrug Off")
                 if shrug_off_removed:
-                    self._record_feature_scene_use(actor, "Shrug Off")
+                    self._record_feature_daily_use(actor, "Shrug Off")
             if not staying_power_active and not actor.has_status("tripped"):
                 actor.statuses.append({"name": "Tripped"})
             if not staying_power_active and not actor.has_status("vulnerable"):
@@ -19151,6 +28846,7 @@ class PokemonState:
                     "shrug_off_removed": shrug_off_removed,
                 }
             )
+            self._maybe_apply_bring_it_on_breather(actor_id, actor)
             self._maybe_apply_stamina(actor_id, reasons=["take_breather"])
 
         def _apply_shrug_off(self, actor: PokemonState, *, source: str) -> int:
@@ -19426,6 +29122,17 @@ class PokemonState:
             actor = self.pokemon.get(action.actor_id)
             if actor is None:
                 return
+            supreme_ready = actor.get_temporary_effects("signature_supreme_concentration_ready")
+            if supreme_ready:
+                allowed_supreme = False
+                if isinstance(action, UseMoveAction):
+                    try:
+                        action_move = action._resolve_move(self, actor)
+                        allowed_supreme = _signature_mod_key(_signature_entry_for_move(actor, action_move)) == "supremeconcentration"
+                    except Exception:
+                        allowed_supreme = False
+                if not allowed_supreme:
+                    raise ValueError("Supreme Concentration only allows the Signature Technique move through this status skip.")
             if not actor.has_action_available(action.action_type):
                 if not self._consume_extra_action(actor, action.action_type):
                     action_label = action.action_type.value.capitalize()
@@ -19587,6 +29294,10 @@ class PokemonState:
                         continue
                 if has_ability_exact(pokemon, "Early Bird [Errata]"):
                     initiative_bonus += max(0, speed // 2)
+                if pokemon.get_temporary_effects("agility_training"):
+                    initiative_bonus += 4
+                    if self._rider_agility_training_doubled(actor_id):
+                        initiative_bonus += 4
                 initiative_bonus += pokemon.hardened_initiative_bonus(self)
                 total = speed + trainer_mod + tailwind_bonus + initiative_bonus
                 roll = 0
@@ -19642,6 +29353,8 @@ class PokemonState:
             replacement_id: str,
             *,
             initiator_id: str,
+            target_position: Optional[Tuple[int, int]] = None,
+            apply_tag_in: bool = False,
             allow_replacement_turn: bool,
             allow_immediate: bool,
             allow_quick_switch_triggers: bool = True,
@@ -19653,6 +29366,11 @@ class PokemonState:
             if outgoing.hp is not None and outgoing.hp > 0:
                 self._attempt_pursuit_interrupt(outgoing_id)
             origin = outgoing.position
+            resolved_position = self._resolve_switch_position(
+                outgoing_id=outgoing_id,
+                replacement_id=replacement_id,
+                target_position=target_position,
+            )
             restore_on_switch(outgoing)
             if outgoing.has_ability("Natural Cure"):
                 cured = self._remove_statuses_by_set(outgoing, _STATUS_CONDITIONS_TO_CURE)
@@ -19685,8 +29403,21 @@ class PokemonState:
                             "target_hp": outgoing.hp,
                         }
                     )
+            if apply_tag_in and outgoing.has_trainer_feature("Tag In"):
+                self._apply_baton_pass_transfer(
+                    outgoing_id,
+                    replacement_id,
+                    swap_positions=False,
+                    event_type="trainer_feature",
+                    source_name="Tag In",
+                    feature_name="Tag In",
+                    trainer_id=outgoing.controller_id,
+                    description="Tag In treats the recalled Pokemon as if it had used Baton Pass on the replacement.",
+                )
             outgoing.active = False
             outgoing.position = None
+            while outgoing.remove_temporary_effect("duelist_momentum"):
+                continue
             outgoing.clear_volatile_statuses()
             outgoing.remove_status_by_names({"wondered", "wonder room"})
             outgoing.temporary_effects = [
@@ -19701,8 +29432,10 @@ class PokemonState:
                 and entry.get("kind") != "perish_song"
             ]
             replacement.active = True
-            replacement.position = origin
+            replacement.position = resolved_position
             replacement.add_temporary_effect("joined_round", round=self.round)
+            replacement.add_temporary_effect("released_from_ball", round=self.round, expires_round=self.round)
+            self._sync_mounted_pairs()
             self._apply_send_out_trainer_feature_effects(replacement_id)
             if self._room_effect_active("Wonder Room") and not replacement.has_status("Wondered"):
                 replacement.statuses.append({"name": "Wondered", "remaining": 5})
@@ -19712,7 +29445,8 @@ class PokemonState:
                     "actor": initiator_id,
                     "outgoing": outgoing_id,
                     "target": replacement_id,
-                    "position": origin,
+                    "position": resolved_position,
+                    "target_position": resolved_position,
                 }
             )
             self._trigger_intimidate(replacement_id)
@@ -19747,6 +29481,7 @@ class PokemonState:
                 self._insert_replacement_initiative(
                     replacement_id, allow_immediate=allow_immediate
                 )
+            self._maybe_trigger_first_blood(replacement_id, trigger_feature="Switch")
             if allow_quick_switch_triggers:
                 for pid, mon in self.pokemon.items():
                     if pid == replacement_id or mon.fainted or not mon.active:
@@ -20943,6 +30678,7 @@ class PokemonState:
             if move_name == "baton pass":
                 self._execute_baton_pass(attacker_id, target_id)
                 return
+            self._maybe_offer_encore_performance(actor_id=attacker_id, move=move)
             if (
                 attacker.has_status("Powdered")
                 and (move.type or "").strip().lower() == "fire"
@@ -21028,8 +30764,14 @@ class PokemonState:
                         }
                     )
                 return
+            escape_artist_active = self._maybe_trigger_escape_artist(
+                actor_id=attacker_id,
+                target_id=target_id,
+                move=move,
+            )
             self._trigger_attack_of_opportunity_on_maneuver(attacker_id, target_id, move_name)
-            self._trigger_attack_of_opportunity_on_ranged(attacker_id, move, declared_target_id)
+            if not escape_artist_active:
+                self._trigger_attack_of_opportunity_on_ranged(attacker_id, move, declared_target_id)
             if attacker.fainted:
                 return
             if move_name in {"push", "trip", "disarm", "grapple", "dirty trick", "hinder", "blind", "low blow"}:
@@ -21124,6 +30866,7 @@ class PokemonState:
                     )
                 return
             move_name = (move.name or "").strip().lower()
+            self._maybe_prepare_stat_maneuver_move(attacker_id, move, target_id)
             dust_cloud_errata = has_ability_exact(attacker, "Dust Cloud [Errata]")
             if (
                 (
@@ -21263,6 +31006,80 @@ class PokemonState:
                     )
                 )
                 affected = (prioritized + remaining)[:3] if remaining or prioritized else affected
+            attack_maneuver = self._consume_stat_maneuver_ready(attacker, "attack")
+            if attack_maneuver and attacker.position is not None and target_id and target_id in self.pokemon:
+                mode = str(attack_maneuver.get("mode") or "").strip().lower()
+                target_state = self.pokemon.get(target_id)
+                if target_state is not None and target_state.position is not None:
+                    if mode == "three_targets":
+                        prioritized = [target_id] if target_id else []
+                        candidates: List[str] = []
+                        for cid, state in self.pokemon.items():
+                            if cid == attacker_id or cid == target_id or state.position is None:
+                                continue
+                            if state.hp is None or state.hp <= 0 or state.fainted:
+                                continue
+                            if self._team_for(cid) == self._team_for(attacker_id):
+                                continue
+                            if self._combatant_distance(attacker, state) > 1:
+                                continue
+                            candidates.append(cid)
+                        candidates.sort(key=lambda cid: (self._combatant_distance(attacker, self.pokemon[cid]), cid))
+                        affected = list(dict.fromkeys((prioritized + candidates)[:3]))
+                        self.log_event(
+                            {
+                                "type": "trainer_feature",
+                                "actor": attacker_id,
+                                "target": target_id,
+                                "trainer": attacker.controller_id,
+                                "feature": attack_maneuver.get("feature") or "Stat Maneuver",
+                                "effect": "three_targets",
+                                "move": move.name,
+                                "targets": list(affected),
+                                "description": "Stat Maneuver expands the melee attack to hit up to three targets.",
+                                "target_hp": attacker.hp,
+                            }
+                        )
+                    elif mode == "pass":
+                        line = self._line_cells(attacker.position, target_state.position)[1:5]
+                        occupied_hostiles: List[str] = []
+                        for coord in line:
+                            for cid, state in self.pokemon.items():
+                                if cid == attacker_id or state.position != coord:
+                                    continue
+                                if state.hp is None or state.hp <= 0 or state.fainted:
+                                    continue
+                                if self._team_for(cid) == self._team_for(attacker_id):
+                                    continue
+                                if cid not in occupied_hostiles:
+                                    occupied_hostiles.append(cid)
+                        landing = attacker.position
+                        for coord in line:
+                            if self.grid is not None and not self.grid.in_bounds(coord):
+                                break
+                            if self.grid is not None and coord in self.grid.blockers:
+                                break
+                            if self._position_can_fit(attacker_id, coord, exclude_id=attacker_id):
+                                landing = coord
+                        if landing != attacker.position:
+                            origin = attacker.position
+                            attacker.position = landing
+                            self.log_event(
+                                {
+                                    "type": "trainer_feature",
+                                    "actor": attacker_id,
+                                    "target": target_id,
+                                    "trainer": attacker.controller_id,
+                                    "feature": attack_maneuver.get("feature") or "Stat Maneuver",
+                                    "effect": "pass_shift",
+                                    "move": move.name,
+                                    "from": origin,
+                                    "to": landing,
+                                    "description": "Stat Maneuver turns the attack into a short Pass.",
+                                    "target_hp": attacker.hp,
+                                }
+                            )
+                        affected = occupied_hostiles or ([target_id] if target_id else [])
             allow_self = self._move_allows_self_target(move)
             fallback: Optional[str] = None
             if not affected:
@@ -21271,6 +31088,50 @@ class PokemonState:
                 fallback = attacker_id
             if fallback:
                 affected = [fallback]
+            self._maybe_apply_lean_in(
+                attacker_id=attacker_id,
+                affected_ids=affected,
+                move=move,
+            )
+            signature_entry = _signature_entry_for_move(attacker, move)
+            signature_mod = _signature_mod_key(signature_entry)
+            if signature_mod in {"scattershot", "doublecurse"} and attacker.position is not None:
+                max_targets = 3 if signature_mod == "scattershot" else 2
+                actor_team = self._team_for(attacker_id)
+                candidates: List[str] = []
+                for cid, state in self.pokemon.items():
+                    if cid == attacker_id or cid in affected:
+                        continue
+                    if state.hp is None or state.hp <= 0 or state.fainted or state.position is None:
+                        continue
+                    if actor_team and self._team_for(cid) == actor_team:
+                        continue
+                    if not targeting.is_target_in_range(
+                        attacker.position,
+                        state.position,
+                        move,
+                        attacker_size=getattr(attacker.spec, "size", ""),
+                        target_size=getattr(state.spec, "size", ""),
+                        grid=self.grid,
+                    ):
+                        continue
+                    if self.grid is not None and not self.has_line_of_sight_from(
+                        attacker.position,
+                        state.position,
+                        exclude_ids={attacker_id, cid},
+                    ):
+                        continue
+                    candidates.append(cid)
+                candidates.sort(
+                    key=lambda cid: (
+                        self._combatant_distance(attacker, self.pokemon[cid]),
+                        cid,
+                    )
+                )
+                for cid in candidates:
+                    if len(affected) >= max_targets:
+                        break
+                    affected.append(cid)
             if not allow_self and attacker_id in affected:
                 affected = [cid for cid in affected if cid != attacker_id]
             if area_kind and tiles and affected:
@@ -21338,6 +31199,9 @@ class PokemonState:
             rock_move_attempted = str(move.type or "").strip().lower() == "rock" and str(move.category or "").strip().lower() != "status"
             rock_move_any_hit = False
             rock_move_any_attempt = False
+            dark_move_attempted = str(move.type or "").strip().lower() == "dark" and str(move.category or "").strip().lower() != "status"
+            dark_move_any_hit = False
+            dark_move_any_attempt = False
             bigger_and_boulder_applied: Set[str] = set()
             gravel_critical_triggered: Set[str] = set()
             high_horsepower_smite = False
@@ -21437,8 +31301,14 @@ class PokemonState:
             sonic_courtship_active = bool(attacker.get_temporary_effects("sonic_courtship_active"))
             for cid in affected:
                 rock_move_any_attempt = rock_move_any_attempt or rock_move_attempted
+                dark_move_any_attempt = dark_move_any_attempt or dark_move_attempted
                 defender_state = self.pokemon[cid]
                 defender_id = cid
+                self._resilience_context = {
+                    "attacker_id": attacker_id,
+                    "target_id": defender_id,
+                    "move_name": str(move.name or "").strip().lower(),
+                }
                 if self._maybe_trigger_dive(
                     defender_id,
                     attacker_id,
@@ -22829,6 +32699,19 @@ class PokemonState:
                     and attacker.get_temporary_effects("trick_shot_bound")
                 ):
                     crit_effects.append({"bonus": 3, "source": "Trick Shot"})
+                if (
+                    (move.category or "").strip().lower() != "status"
+                    and targeting.normalized_target_kind(effective_move) == "melee"
+                ):
+                    for entry in list(attacker.get_temporary_effects("stat_stratagem")):
+                        if str(entry.get("stat") or "").strip().lower() != "atk":
+                            continue
+                        crit_effects.append(
+                            {
+                                "bonus": min(3, max(0, int(attacker.combat_stages.get("atk", 0) or 0))),
+                                "source": str(entry.get("source") or "Attack Stratagem"),
+                            }
+                        )
                 if attacker.has_trainer_feature("Bad Mood"):
                     persistent_status = False
                     volatile_status = False
@@ -23281,21 +33164,27 @@ class PokemonState:
                                 if entry in attacker.temporary_effects:
                                     attacker.temporary_effects.remove(entry)
                     evasion_bonus = 0
+                    ignore_non_stat_evasion = bool(attacker.get_temporary_effects("ignore_non_stat_evasion")) or self._trickster_can_ignore_non_stat_evasion(
+                        attacker_id,
+                        effective_move,
+                        target_id=cid,
+                    )
                     ignore_weather_cloak = bool(attacker.get_temporary_effects("ignore_weather_cloak"))
-                    for entry in list(defender_state.get_temporary_effects("evasion_bonus")):
-                        expires_round = entry.get("expires_round")
-                        if expires_round is not None and self.round > int(expires_round):
-                            if entry in defender_state.temporary_effects:
-                                defender_state.temporary_effects.remove(entry)
-                            continue
-                        if ignore_weather_cloak:
-                            source_name = str(entry.get("source") or "").strip().lower()
-                            if source_name in {"sand veil", "sand veil [errata]", "snow cloak"}:
+                    if not ignore_non_stat_evasion:
+                        for entry in list(defender_state.get_temporary_effects("evasion_bonus")):
+                            expires_round = entry.get("expires_round")
+                            if expires_round is not None and self.round > int(expires_round):
+                                if entry in defender_state.temporary_effects:
+                                    defender_state.temporary_effects.remove(entry)
                                 continue
-                        try:
-                            evasion_bonus = max(evasion_bonus, int(entry.get("amount", 0) or 0))
-                        except (TypeError, ValueError):
-                            continue
+                            if ignore_weather_cloak:
+                                source_name = str(entry.get("source") or "").strip().lower()
+                                if source_name in {"sand veil", "sand veil [errata]", "snow cloak"}:
+                                    continue
+                            try:
+                                evasion_bonus = max(evasion_bonus, int(entry.get("amount", 0) or 0))
+                            except (TypeError, ValueError):
+                                continue
                     if evasion_bonus:
                         accuracy_adjust -= evasion_bonus
                         for entry in list(defender_state.get_temporary_effects("evasion_bonus")):
@@ -23313,10 +33202,12 @@ class PokemonState:
                             else:
                                 if entry in defender_state.temporary_effects:
                                     defender_state.temporary_effects.remove(entry)
-                    if move_has_keyword(effective_move, "social"):
+                    if move_has_keyword(effective_move, "social") and not ignore_non_stat_evasion:
                         social_evasion_bonus = defender_state.social_evasion_bonus(self)
                         if social_evasion_bonus:
                             accuracy_adjust -= social_evasion_bonus
+                    accuracy_adjust += self._stacked_deck_evasion_penalty(defender_state)
+                    accuracy_adjust -= self._stacked_deck_accuracy_penalty(attacker)
                 if (move.category or "").lower() != "status":
                     attacker_double = attacker.get_temporary_effects("double_team")
                     if attacker_double:
@@ -23539,6 +33430,15 @@ class PokemonState:
                         force_hit = False
                     if move_name == "octolock":
                         force_hit = True
+                surprise_accuracy = None
+                surprise_data: Dict[str, object] = {}
+                if cid is not None:
+                    surprise_accuracy, surprise_data = self._maybe_apply_surprise(
+                        attacker_id=attacker_id,
+                        target_id=cid,
+                        move=effective_move,
+                        force_hit=force_hit,
+                    )
                 weather_for_action = self.effective_weather_for_actor(attacker)
                 for entry in list(attacker.get_temporary_effects("heliovolt_active")):
                     expires_round = entry.get("expires_round")
@@ -23597,13 +33497,66 @@ class PokemonState:
                     terrain=self.terrain,
                     context=context,
                     force_hit=force_hit,
+                    accuracy_override=surprise_accuracy,
                     ignore_defender_abilities=attacker.has_ability("Mold Breaker")
                     and attacker_id != cid,
                     present_roll_override=present_roll_override,
                 )
+                result = self._maybe_apply_defensive_stat_maneuver(
+                    defender_id=cid,
+                    attacker_id=attacker_id,
+                    move=effective_move,
+                    result=dict(result),
+                )
                 if temporary_vulnerable:
                     defender_state.remove_status_by_names({"vulnerable"})
                 result = dict(result)
+                if attacker.get_temporary_effects("duelist_manual_single_target_attack"):
+                    result["duelist_manual_single_target"] = True
+                    while attacker.remove_temporary_effect("duelist_manual_single_target_attack"):
+                        continue
+                    while attacker.remove_temporary_effect("duelist_manual_single_target"):
+                        continue
+                if attacker.get_temporary_effects("seize_the_moment_attack"):
+                    if result.get("hit"):
+                        already_critical = bool(result.get("crit"))
+                        result["crit"] = True
+                        self.log_event(
+                            {
+                                "type": "trainer_feature",
+                                "actor": attacker_id,
+                                "target": cid,
+                                "trainer": attacker.controller_id,
+                                "feature": "Seize The Moment",
+                                "effect": "forced_critical",
+                                "move": effective_move.name,
+                                "target_hp": defender_state.hp,
+                            }
+                        )
+                        if already_critical:
+                            before_hp = int(attacker.hp or 0)
+                            heal_amount = max(1, int(math.floor(attacker.max_hp() / 2)))
+                            attacker.heal(heal_amount)
+                            healed = max(0, int(attacker.hp or 0) - before_hp)
+                            if healed:
+                                self.log_event(
+                                    {
+                                        "type": "trainer_feature",
+                                        "actor": attacker_id,
+                                        "target": cid,
+                                        "trainer": attacker.controller_id,
+                                        "feature": "Seize The Moment",
+                                        "effect": "critical_heal",
+                                        "amount": healed,
+                                        "move": effective_move.name,
+                                        "target_hp": attacker.hp,
+                                    }
+                                )
+                    else:
+                        result["seize_the_moment_smite_miss"] = True
+                        has_smite = True
+                    while attacker.remove_temporary_effect("seize_the_moment_attack"):
+                        continue
                 if move_name == "present" and attacker.has_ability("Giver"):
                     attacker.temporary_effects = [
                         entry for entry in attacker.temporary_effects if entry.get("kind") != "giver_state"
@@ -23687,6 +33640,29 @@ class PokemonState:
                             "description": "Flustering Charisma applies -2 to volatile-status save checks for 1 full round.",
                             "target_hp": defender_state.hp,
                         }
+                    )
+                if result.get("hit") and cid is not None:
+                    if _normalize_type_ace_type_name(effective_move.type) == "fighting" or (
+                        move_name in {"grapple", "trip", "push"}
+                        and "fighting" in {_normalize_type_ace_type_name(token) for token in attacker.spec.types}
+                    ):
+                        self._apply_close_quarters_mark(source_id=attacker_id, target_id=cid)
+                    self._maybe_trigger_tyrants_roar(actor_id=attacker_id, move=effective_move, anchor_id=cid)
+                    self._maybe_offer_flourish(
+                        actor_id=attacker_id,
+                        target_id=cid,
+                        move=effective_move,
+                        did_crit=bool(result.get("crit")),
+                    )
+                    self._maybe_offer_mind_games(
+                        actor_id=attacker_id,
+                        target_id=cid,
+                        move=effective_move,
+                    )
+                    self._maybe_offer_stacked_deck(
+                        actor_id=attacker_id,
+                        target_id=cid,
+                        move=effective_move,
                     )
                 self._apply_powerful_motivator(
                     attacker_id=attacker_id,
@@ -24292,6 +34268,8 @@ class PokemonState:
                 if hit:
                     if rock_move_attempted:
                         rock_move_any_hit = True
+                    if dark_move_attempted:
+                        dark_move_any_hit = True
                     target_kind = targeting.normalized_target_kind(effective_move)
                     if result is None:
                         result = {}
@@ -24415,6 +34393,12 @@ class PokemonState:
                             break
                         if result is None:
                             result = {}
+                        result = self._maybe_apply_type_methodology(
+                            attacker_id=attacker_id,
+                            defender_id=defender_id,
+                            result=result,
+                            move=effective_move,
+                        )
                         super_effective_ctx = AbilityHookContext(
                             battle=self,
                             attacker_id=attacker_id,
@@ -24530,6 +34514,12 @@ class PokemonState:
                             ignore_defender_abilities=attacker.has_ability("Mold Breaker")
                             and attacker_id != defender_id,
                         )
+                        result = self._maybe_apply_resilience_to_crit(
+                            defender_id,
+                            attacker_id,
+                            effective_move,
+                            result,
+                        )
                         result = self._maybe_apply_mettle(
                             defender_id,
                             attacker_id,
@@ -24587,31 +34577,15 @@ class PokemonState:
                                     "target_hp": defender.hp,
                                 }
                             )
-                    if (
-                        defender is not None
-                        and defender_id is not None
-                        and (move.category or "").strip().lower() == "physical"
-                        and incoming_damage > 0
-                    ):
-                        reflect_entry = next(
-                            (
-                                entry
-                                for entry in defender.statuses
-                                if defender._normalized_status_name(entry) == "reflect"
-                            ),
-                            None,
+                    if defender is not None and defender_id is not None:
+                        result = self._apply_blessing_screen_reduction(
+                            attacker_id=attacker_id,
+                            defender_id=defender_id,
+                            defender=defender,
+                            move=move,
+                            result=result,
                         )
-                        if reflect_entry is not None:
-                            reduced = int(math.floor(incoming_damage * 0.5))
-                            if reduced != incoming_damage:
-                                incoming_damage = max(0, reduced)
-                                result["damage"] = incoming_damage
-                            if isinstance(reflect_entry, dict):
-                                charges = int(reflect_entry.get("charges", 0) or 0)
-                                if charges:
-                                    reflect_entry["charges"] = charges - 1
-                                    if reflect_entry["charges"] <= 0:
-                                        defender.statuses.remove(reflect_entry)
+                        incoming_damage = int(result.get("damage", 0) or 0)
                     if strike_hits:
                         strike_damage = int(result.get("damage", 0) or 0)
                         result["strike_damage_per_hit"] = strike_damage
@@ -24823,6 +34797,22 @@ class PokemonState:
                             reduction = max(reduction, amount)
                             if entry.get("consume", True) and entry in defender.temporary_effects:
                                 defender.temporary_effects.remove(entry)
+                        bring_it_on_reduction = self._maybe_apply_bring_it_on_damage_reduction(
+                            attacker_id=attacker_id,
+                            defender_id=defender_id,
+                            move=move,
+                            defender=defender,
+                        )
+                        if bring_it_on_reduction > 0:
+                            reduction = max(reduction, bring_it_on_reduction)
+                        excited_reduction = self._maybe_apply_excited_damage_reduction(
+                            attacker_id=attacker_id,
+                            defender_id=defender_id,
+                            move=move,
+                            defender=defender,
+                        )
+                        if excited_reduction > 0:
+                            reduction = max(reduction, excited_reduction)
                         if reduction:
                             if dr_ignore_amount:
                                 reduction = max(0, reduction - int(dr_ignore_amount))
@@ -25005,6 +34995,71 @@ class PokemonState:
                                         "target_hp": defender.hp,
                                     }
                                 )
+                    if hit and attacker.has_trainer_feature("Firebrand"):
+                        move_type_name = str(effective_move.type or "").strip().lower()
+                        if move_type_name == "fire" and not defender.has_status("Burned"):
+                            firebrand_roll = int(result.get("roll") or 0)
+                            if firebrand_roll >= 19:
+                                self._apply_status(
+                                    events,
+                                    attacker_id=attacker_id,
+                                    target_id=defender_id,
+                                    move=move,
+                                    target=defender,
+                                    status="Burned",
+                                    effect="firebrand",
+                                    description="Firebrand burns targets on 19+ with Fire-Type moves.",
+                                    roll=firebrand_roll,
+                                )
+                                for payload in events[-1:]:
+                                    self.log_event(payload)
+                                self.log_event(
+                                    {
+                                        "type": "trainer_feature",
+                                        "actor": attacker_id,
+                                        "target": defender_id,
+                                        "trainer": attacker.controller_id,
+                                        "feature": "Firebrand",
+                                        "effect": "burn_roll",
+                                        "move": move.name,
+                                        "roll": firebrand_roll,
+                                        "description": "Firebrand triggers a burn roll on Fire-Type moves.",
+                                        "target_hp": defender.hp,
+                                    }
+                                )
+                    if hit and surprise_data:
+                        if bool(surprise_data.get("double_hit")):
+                            self._apply_status(
+                                events,
+                                attacker_id=attacker_id,
+                                target_id=defender_id,
+                                move=move,
+                                target=defender,
+                                status="Flinch",
+                                effect="surprise",
+                                description="Surprise! flinches the target when both attack rolls hit.",
+                                remaining=1,
+                            )
+                            for payload in events[-1:]:
+                                self.log_event(payload)
+                        self.log_event(
+                            {
+                                "type": "trainer_feature",
+                                "actor": attacker_id,
+                                "target": defender_id,
+                                "trainer": attacker.controller_id,
+                                "feature": "Surprise!",
+                                "effect": "accuracy_roll",
+                                "move": move.name,
+                                "ap_spent": int(surprise_data.get("ap_cost", 0) or 0),
+                                "trigger_reason": surprise_data.get("trigger_reason"),
+                                "first_roll": surprise_data.get("first_roll"),
+                                "second_roll": surprise_data.get("second_roll"),
+                                "double_hit": bool(surprise_data.get("double_hit")),
+                                "description": "Surprise! rolls the attack twice and uses the better result.",
+                                "target_hp": defender.hp,
+                            }
+                        )
                     if hit and attacker.has_trainer_feature("Corrosive Blight"):
                         move_type_name = str(effective_move.type or "").strip().lower()
                         move_category = str(effective_move.category or "").strip().lower()
@@ -25116,6 +35171,13 @@ class PokemonState:
                             defender_id,
                             attacker_id,
                             effective_move,
+                            hit=True,
+                            damage=damage,
+                        )
+                        self._maybe_apply_cavaliers_reprisal(
+                            defender_id=defender_id,
+                            attacker_id=attacker_id,
+                            move=effective_move,
                             hit=True,
                             damage=damage,
                         )
@@ -25335,6 +35397,58 @@ class PokemonState:
                             move=effective_move,
                         ):
                             bigger_and_boulder_applied.add(defender_id)
+                    if hit and defender is not None and defender_id is not None:
+                        if result.get("duelist_manual_single_target"):
+                            if not defender.has_status("Vulnerable"):
+                                defender.statuses.append({"name": "Vulnerable", "remaining": 1})
+                            self._set_initiative_zero_until_next_turn(
+                                defender_id,
+                                source="Duelist's Manual",
+                                source_id=attacker_id,
+                                trainer_id=attacker.controller_id,
+                            )
+                            self.log_event(
+                                {
+                                    "type": "trainer_feature",
+                                    "actor": attacker_id,
+                                    "target": defender_id,
+                                    "trainer": attacker.controller_id,
+                                    "feature": "Duelist's Manual",
+                                    "effect": "vulnerable_initiative_zero",
+                                    "move": effective_move.name,
+                                    "target_hp": defender.hp,
+                                }
+                            )
+                        if self._is_duelist_tagged_for(defender, attacker):
+                            self._gain_duelist_momentum(attacker_id, reason="hit_tagged_foe", source_id=defender_id)
+                        final_type_multiplier = float(result.get("type_multiplier", 1.0) or 1.0)
+                        if final_type_multiplier > 1.0:
+                            self._maybe_gain_directed_focus_momentum(
+                                attacker_id,
+                                reason="deal_super_effective_damage",
+                                source_id=defender_id,
+                            )
+                            self._maybe_gain_directed_focus_momentum(
+                                defender_id,
+                                reason="take_super_effective_damage",
+                                source_id=attacker_id,
+                            )
+                        self._maybe_apply_gleeful_interference(
+                            attacker_id=attacker_id,
+                            defender_id=defender_id,
+                            move=effective_move,
+                            hit=hit,
+                        )
+                        self._maybe_apply_inspirational_support(
+                            actor_id=attacker_id,
+                            target_id=defender_id,
+                            move=effective_move,
+                            hit=hit,
+                        )
+                    if defender is not None and defender_id is not None and defender.fainted:
+                        self._maybe_apply_keep_fighting(target_id=defender_id)
+                    if defender is not None and defender_id is not None and defender.fainted:
+                        self._grant_catch_combo_ready(attacker_id, defender_id)
                     if defender is not None and defender_id is not None and defender.fainted:
                         self._handle_quick_switch_faint_trigger(defender_id, attacker_id=attacker_id)
                     defender_item_events = self.item_system.apply_defender_item_triggers(
@@ -25409,30 +35523,37 @@ class PokemonState:
                                         events.append(payload)
                                         self.log_event(payload)
                                     else:
-                                        stolen = defender_items.pop(item_index)
-                                        attacker_items = (
-                                            attacker.spec.items
-                                            if isinstance(attacker.spec.items, list)
-                                            else []
-                                        )
-                                        if not isinstance(attacker.spec.items, list):
-                                            attacker.spec.items = attacker_items
-                                        attacker_items.insert(0, stolen)
-                                        attacker._sync_source_items()
-                                        defender._sync_source_items()
-                                        payload = {
-                                            "type": "ability",
-                                            "actor": attacker_id,
-                                            "target": defender_id,
-                                            "ability": "Magician",
-                                            "move": move.name,
-                                            "effect": "steal",
-                                            "item": _item_name_text(stolen),
-                                            "description": "Magician steals the target's held item.",
-                                            "target_hp": defender.hp,
-                                        }
-                                        events.append(payload)
-                                        self.log_event(payload)
+                                        if not self._maybe_style_is_eternal_prevent_item_loss(
+                                            target_id=defender_id,
+                                            source_actor_id=attacker_id,
+                                            item=candidate,
+                                            cause="item_theft",
+                                            move_name=move.name,
+                                        ):
+                                            stolen = defender_items.pop(item_index)
+                                            attacker_items = (
+                                                attacker.spec.items
+                                                if isinstance(attacker.spec.items, list)
+                                                else []
+                                            )
+                                            if not isinstance(attacker.spec.items, list):
+                                                attacker.spec.items = attacker_items
+                                            attacker_items.insert(0, stolen)
+                                            attacker._sync_source_items()
+                                            defender._sync_source_items()
+                                            payload = {
+                                                "type": "ability",
+                                                "actor": attacker_id,
+                                                "target": defender_id,
+                                                "ability": "Magician",
+                                                "move": move.name,
+                                                "effect": "steal",
+                                                "item": _item_name_text(stolen),
+                                                "description": "Magician steals the target's held item.",
+                                                "target_hp": defender.hp,
+                                            }
+                                            events.append(payload)
+                                            self.log_event(payload)
                             if attacker.has_ability("Klutz [SwSh]") and target_kind == "melee":
                                 defender_items = (
                                     defender.spec.items if isinstance(defender.spec.items, list) else []
@@ -25455,21 +35576,28 @@ class PokemonState:
                                         events.append(payload)
                                         self.log_event(payload)
                                     else:
-                                        dropped = defender_items.pop(item_index)
-                                        defender._sync_source_items()
-                                        payload = {
-                                            "type": "ability",
-                                            "actor": attacker_id,
-                                            "target": defender_id,
-                                            "ability": "Klutz [SwSh]",
-                                            "move": move.name,
-                                            "effect": "knock_down",
-                                            "item": _item_name_text(dropped),
-                                            "description": "Klutz knocks the target's item to the ground.",
-                                            "target_hp": defender.hp,
-                                        }
-                                        events.append(payload)
-                                        self.log_event(payload)
+                                        if not self._maybe_style_is_eternal_prevent_item_loss(
+                                            target_id=defender_id,
+                                            source_actor_id=attacker_id,
+                                            item=candidate,
+                                            cause="item_loss",
+                                            move_name=move.name,
+                                        ):
+                                            dropped = defender_items.pop(item_index)
+                                            defender._sync_source_items()
+                                            payload = {
+                                                "type": "ability",
+                                                "actor": attacker_id,
+                                                "target": defender_id,
+                                                "ability": "Klutz [SwSh]",
+                                                "move": move.name,
+                                                "effect": "knock_down",
+                                                "item": _item_name_text(dropped),
+                                                "description": "Klutz knocks the target's item to the ground.",
+                                                "target_hp": defender.hp,
+                                            }
+                                            events.append(payload)
+                                            self.log_event(payload)
                 post_events = handle_move_specials(
                     battle=self,
                     attacker_id=attacker_id,
@@ -25766,6 +35894,133 @@ class PokemonState:
                             }
                         )
                         self.log_event(events[-1])
+                if signature_mod and defender is not None and defender_id is not None:
+                    if signature_mod == "shockandawe" and self._team_for(defender_id) != self._team_for(attacker_id):
+                        defender.add_temporary_effect(
+                            "save_penalty",
+                            amount=2,
+                            expires_round=self.round + 1,
+                            source="Signature Technique: Shock and Awe",
+                            source_id=attacker_id,
+                        )
+                        defender.add_temporary_effect(
+                            "evasion_bonus",
+                            amount=-1,
+                            expires_round=self.round + 1,
+                            source="Signature Technique: Shock and Awe",
+                            source_id=attacker_id,
+                        )
+                        self.log_event(
+                            {
+                                "type": "trainer_feature",
+                                "actor": attacker_id,
+                                "target": defender_id,
+                                "trainer": attacker.controller_id,
+                                "feature": "Signature Technique",
+                                "effect": "shock_and_awe",
+                                "move": move.name,
+                                "save_penalty": -2,
+                                "evasion_penalty": -1,
+                                "description": "Shock and Awe penalizes the targeted foe until the user's next turn ends.",
+                                "target_hp": defender.hp,
+                            }
+                        )
+                    elif signature_mod == "guardingstrike" and hit:
+                        attacker.add_temporary_effect(
+                            "damage_reduction",
+                            amount=5,
+                            expires_round=self.round + 1,
+                            consume=False,
+                            source="Signature Technique: Guarding Strike",
+                            source_id=attacker_id,
+                            against_target=defender_id,
+                        )
+                        self.log_event(
+                            {
+                                "type": "trainer_feature",
+                                "actor": attacker_id,
+                                "target": defender_id,
+                                "trainer": attacker.controller_id,
+                                "feature": "Signature Technique",
+                                "effect": "guarding_strike",
+                                "move": move.name,
+                                "amount": 5,
+                                "description": "Guarding Strike grants +5 Damage Reduction against the target.",
+                                "target_hp": attacker.hp,
+                            }
+                        )
+                    elif signature_mod == "unbalancingblow":
+                        if not defender.has_status("Vulnerable"):
+                            defender.statuses.append(
+                                {
+                                    "name": "Vulnerable",
+                                    "remaining": 1,
+                                    "source": "Signature Technique: Unbalancing Blow",
+                                }
+                            )
+                        self.log_event(
+                            {
+                                "type": "trainer_feature",
+                                "actor": attacker_id,
+                                "target": defender_id,
+                                "trainer": attacker.controller_id,
+                                "feature": "Signature Technique",
+                                "effect": "unbalancing_blow",
+                                "move": move.name,
+                                "description": "Unbalancing Blow makes the target Vulnerable for one full round or until hit by a damaging attack.",
+                                "target_hp": defender.hp,
+                            }
+                        )
+                    elif signature_mod == "reliableattack" and not hit:
+                        restored = self._restore_move_frequency_usage(attacker_id, move)
+                        self.log_event(
+                            {
+                                "type": "trainer_feature",
+                                "actor": attacker_id,
+                                "target": defender_id,
+                                "trainer": attacker.controller_id,
+                                "feature": "Signature Technique",
+                                "effect": "reliable_attack",
+                                "move": move.name,
+                                "frequency_restored": restored,
+                                "description": "Reliable Attack refunds the missed move's frequency and makes an immediate Struggle attack.",
+                                "target_hp": defender.hp,
+                            }
+                        )
+                        if not attacker.fainted and defender.hp is not None and defender.hp > 0:
+                            struggle = self.build_struggle_move(attacker_id, attacker)
+                            struggle_result = resolve_move_action(
+                                rng=self.rng,
+                                attacker=attacker,
+                                defender=defender,
+                                move=struggle,
+                                weather=self.effective_weather(),
+                                terrain=self.terrain,
+                                force_hit=False,
+                                ignore_defender_abilities=attacker.has_ability("Mold Breaker"),
+                            )
+                            struggle_damage = 0
+                            if struggle_result.get("hit"):
+                                before_hp = defender.hp or 0
+                                defender.apply_damage(int(struggle_result.get("damage", 0) or 0))
+                                struggle_damage = max(0, before_hp - (defender.hp or 0))
+                                if struggle_damage > 0:
+                                    self.damage_received_this_round[defender_id] = (
+                                        self.damage_received_this_round.get(defender_id, 0) + struggle_damage
+                                    )
+                                    self._record_damage_exchange(attacker_id, defender_id)
+                            struggle_event = {
+                                **dict(struggle_result),
+                                "type": "move",
+                                "actor": attacker_id,
+                                "target": defender_id,
+                                "move": "Struggle",
+                                "effect": "reliable_attack_follow_up",
+                                "damage": struggle_damage,
+                                "target_hp": defender.hp,
+                            }
+                            events.append(struggle_event)
+                            self.log_event(struggle_event)
                 move_event = {
                     **result,
                     "type": "move",
@@ -25827,6 +36082,8 @@ class PokemonState:
                             )
                     self._grant_trickster_ready(attacker_id, defender_id, trigger="status_move")
                 if hit and defender_id is not None:
+                    if move_name in {"push", "disarm"}:
+                        self._apply_attack_mastery_tick(attacker_id, defender_id, source=move_name)
                     self._grant_play_them_like_a_fiddle_ready(attacker_id, defender_id, move.name or "")
                     self._grant_psychic_resonance_ready(attacker_id, defender_id, move)
                     if (
@@ -25979,13 +36236,6 @@ class PokemonState:
                             effect="recoil",
                             description=f"{move.name} deals recoil damage.",
                         )
-                if move_name == "struggle" and attacker.hp is not None:
-                    self._apply_struggle_recoil(
-                        events,
-                        attacker_id=attacker_id,
-                        move=effective_move,
-                        attacker=attacker,
-                    )
                 if (
                     not self_destruct_done
                     and move_name in {"explosion", "self-destruct", "misty explosion"}
@@ -26014,6 +36264,11 @@ class PokemonState:
                         }
                         events.append(payload)
                         self.log_event(payload)
+            for cid in affected:
+                target = self.pokemon.get(cid)
+                if target is not None:
+                    self._clear_resilience_active(target)
+            self._resilience_context = None
             if rock_move_attempted and rock_move_any_attempt and not rock_move_any_hit:
                 self._maybe_trigger_gravel_before_me_from_move(
                     attacker_id,
@@ -26021,6 +36276,18 @@ class PokemonState:
                     move=move,
                     source_id=declared_target_id,
                 )
+            if dark_move_attempted and dark_move_any_attempt and not dark_move_any_hit and attacker.has_trainer_feature("Clever Ruse"):
+                if not any(
+                    str(entry.get("feature") or "").strip().lower() == "clever ruse"
+                    and int(entry.get("round", -1) or -1) == self.round
+                    for entry in attacker.get_temporary_effects("feature_round_marker")
+                ):
+                    attacker.add_temporary_effect(
+                        "clever_ruse_ready",
+                        round=self.round,
+                        expires_round=self.round,
+                        move=move.name,
+                    )
             if attacker.get_temporary_effects("strike_again_ready"):
                 attacker.remove_temporary_effect("strike_again_ready")
             if (move.category or "").strip().lower() != "status":
@@ -26066,6 +36333,7 @@ class PokemonState:
                     except Exception:
                         pass
                     mon.remove_temporary_effect("dancer_copy")
+            self._resolve_escape_artist_disengage(attacker_id)
             end_events = handle_move_specials(
                 battle=self,
                 attacker_id=attacker_id,
@@ -26115,6 +36383,33 @@ class PokemonState:
                 if entry_move and entry_move != move_name:
                     continue
                 attacker.remove_temporary_effect("psionic_screech_pending")
+            if _signature_mod_key(_signature_entry_for_move(attacker, move)) == "burstofmotivation":
+                raised: Dict[str, int] = {}
+                for stat, value in list(attacker.combat_stages.items()):
+                    try:
+                        current = int(value or 0)
+                    except (TypeError, ValueError):
+                        continue
+                    if current >= 0:
+                        continue
+                    after = min(0, current + 2)
+                    if after != current:
+                        attacker.combat_stages[stat] = after
+                        raised[stat] = after - current
+                if raised:
+                    self.log_event(
+                        {
+                            "type": "trainer_feature",
+                            "actor": attacker_id,
+                            "trainer": attacker.controller_id,
+                            "feature": "Signature Technique",
+                            "effect": "burst_of_motivation",
+                            "move": move.name,
+                            "stats": raised,
+                            "description": "Burst of Motivation raises negative Combat Stages by up to +2 without exceeding +0.",
+                            "target_hp": attacker.hp,
+                        }
+                    )
             if str(move.type or "").strip().lower() == "fire":
                 melt_coords: Set[Tuple[int, int]] = set()
                 if attacker.position is not None:
@@ -26127,6 +36422,12 @@ class PokemonState:
                         melt_coords.add(defender_state.position)
                 for coord in melt_coords:
                     self._melt_frozen_domain(coord, move_name=str(move.name or "").strip())
+            self._apply_mold_the_earth(
+                actor_id=attacker_id,
+                move=move,
+                target_id=target_id,
+                target_position=target_position,
+            )
             return events
 
         def _sync_defeatist_errata_threshold(self, actor_id: str) -> List[dict]:
@@ -26385,6 +36686,7 @@ class PokemonState:
             layers: int = 1,
             *,
             source_id: Optional[str] = None,
+            allow_shell_game: bool = True,
         ) -> None:
             if self.grid is None:
                 return
@@ -26392,29 +36694,52 @@ class PokemonState:
             tile_meta = dict(tile_info) if isinstance(tile_info, dict) else {"type": tile_info}
             hazards = self._normalize_hazard_layers(tile_meta.get("hazards"))
             current = hazards.get(hazard, 0)
-            hazards[hazard] = max(0, current + layers)
+            effective_layers = int(layers or 0)
+            source = self.pokemon.get(source_id) if source_id else None
+            if source is not None:
+                for entry in list(source.get_temporary_effects("encore_performance_hazard")):
+                    if int(entry.get("round", -1) if entry.get("round", -1) not in (None, "") else -1) != self.round:
+                        continue
+                    requested_move = str(entry.get("move") or "").strip().lower()
+                    if requested_move and requested_move != str(hazard or "").strip().lower() and requested_move not in str(entry.get("move") or "").strip().lower():
+                        pass
+                    effective_layers += 2
+                    charges = int(entry.get("charges", 1) or 1) - 1
+                    if charges <= 0:
+                        if entry in source.temporary_effects:
+                            source.temporary_effects.remove(entry)
+                    else:
+                        entry["charges"] = charges
+                    break
+            hazards[hazard] = max(0, current + effective_layers)
             tile_meta["hazards"] = hazards
             if source_id:
                 hazard_sources = dict(tile_meta.get("hazard_sources") or {})
                 hazard_sources[str(hazard or "").strip().lower()] = str(source_id)
                 tile_meta["hazard_sources"] = hazard_sources
             self.grid.tiles[coord] = tile_meta
+            if allow_shell_game and source_id:
+                self._maybe_offer_shell_game(actor_id=source_id, just_placed_hazard=str(hazard or "").strip().lower())
 
-        def _consume_hazard_layer(
+        def _consume_hazard_layers(
             self,
             coord: Tuple[int, int],
             hazard: str,
-        ) -> bool:
+            layers: int,
+        ) -> int:
             if self.grid is None:
-                return False
+                return 0
+            normalized = str(hazard or "").strip().lower()
             tile_info = self.grid.tiles.get(coord, {})
             tile_meta = dict(tile_info) if isinstance(tile_info, dict) else {"type": tile_info}
             hazards = self._normalize_hazard_layers(tile_meta.get("hazards"))
-            normalized = str(hazard or "").strip().lower()
             current = int(hazards.get(normalized, 0) or 0)
-            if current <= 0:
-                return False
-            remaining = current - 1
+            remove_count = max(0, int(layers or 0))
+            if remove_count <= 0:
+                return current
+            if remove_count > current:
+                raise ValueError("Cannot remove more hazard layers than are present.")
+            remaining = current - remove_count
             if remaining > 0:
                 hazards[normalized] = remaining
             else:
@@ -26425,8 +36750,25 @@ class PokemonState:
                     tile_meta["hazard_sources"] = hazard_sources
                 elif "hazard_sources" in tile_meta:
                     tile_meta.pop("hazard_sources", None)
-            tile_meta["hazards"] = hazards
+            if hazards:
+                tile_meta["hazards"] = hazards
+            elif "hazards" in tile_meta:
+                tile_meta.pop("hazards", None)
             self.grid.tiles[coord] = tile_meta
+            return remaining
+
+        def _consume_hazard_layer(
+            self,
+            coord: Tuple[int, int],
+            hazard: str,
+        ) -> bool:
+            normalized = str(hazard or "").strip().lower()
+            tile_info = self.grid.tiles.get(coord, {})
+            tile_meta = dict(tile_info) if isinstance(tile_info, dict) else {"type": tile_info}
+            hazards = self._normalize_hazard_layers(tile_meta.get("hazards"))
+            if int(hazards.get(normalized, 0) or 0) <= 0:
+                return False
+            self._consume_hazard_layers(coord, normalized, 1)
             return True
 
         def _tough_as_schist_hazard_choices(self, target_id: str) -> List[dict]:
@@ -27059,6 +37401,96 @@ class PokemonState:
                     target.statuses.remove(guard_entry)
                 return remaining
             return None
+
+        def _consume_blessing_charges(
+            self,
+            target: PokemonState,
+            status_name: str,
+        ) -> Optional[int]:
+            if target is None:
+                return None
+            normalized = status_name.strip().lower()
+            for entry in list(target.statuses):
+                if target._normalized_status_name(entry) != normalized:
+                    continue
+                status_entry = (
+                    entry
+                    if isinstance(entry, dict)
+                    else target._upgrade_status_entry(entry, canonical_name=status_name)
+                )
+                counter_defaults = {
+                    "reflect": ("charges", 2),
+                    "light screen": ("charges", 2),
+                    "aurora veil": ("charges", 2),
+                    "lucky chant": ("charges", 3),
+                }
+                counter_key, default_counter = counter_defaults.get(normalized, ("remaining", 0))
+                if "charges" in status_entry:
+                    counter_key = "charges"
+                elif "remaining" in status_entry:
+                    counter_key = "remaining"
+                default_amount = int(status_entry.get(counter_key, default_counter) or default_counter)
+                remaining = max(0, default_amount - 1)
+                status_entry[counter_key] = remaining
+                if remaining <= 0 and status_entry in target.statuses:
+                    target.statuses.remove(status_entry)
+                return remaining
+            return None
+
+        def _apply_blessing_screen_reduction(
+            self,
+            *,
+            attacker_id: Optional[str],
+            defender_id: Optional[str],
+            defender: Optional[PokemonState],
+            move: MoveSpec,
+            result: dict,
+        ) -> dict:
+            if defender is None or defender_id is None:
+                return result
+            move_name = str(move.name or "").strip().lower()
+            if move_name in {"brick break", "psychic fangs"}:
+                return result
+            move_category = str(move.category or "").strip().lower()
+            if move_category == "status":
+                return result
+            incoming_damage = int(result.get("damage", 0) or 0)
+            if incoming_damage <= 0:
+                return result
+            type_multiplier = float(result.get("type_multiplier", 1.0) or 1.0)
+            if type_multiplier <= 0:
+                return result
+            screen_order: List[str] = []
+            if move_category == "physical":
+                screen_order.append("Reflect")
+            elif move_category == "special":
+                screen_order.append("Light Screen")
+            screen_order.append("Aurora Veil")
+            pre_type_damage = float(result.get("pre_type_damage", incoming_damage) or incoming_damage)
+            for status_name in screen_order:
+                if not defender.has_status(status_name):
+                    continue
+                stage = self._type_stage_from_multiplier(type_multiplier)
+                reduced_multiplier = self._multiplier_from_stage(stage - 1)
+                if reduced_multiplier == type_multiplier:
+                    continue
+                result["type_multiplier"] = reduced_multiplier
+                result["damage"] = int(math.floor(pre_type_damage * reduced_multiplier))
+                self._consume_blessing_charges(defender, status_name)
+                self.log_event(
+                    {
+                        "type": "status",
+                        "actor": defender_id,
+                        "target": attacker_id,
+                        "status": status_name,
+                        "move": move.name,
+                        "effect": "blessing_resist",
+                        "description": f"{status_name} resists the triggering attack by one step.",
+                        "target_hp": defender.hp,
+                    }
+                )
+                break
+            return result
     
         def _apply_safeguard_blessing(self, trainer_id: str) -> List[str]:
             blessed: List[str] = []
@@ -27124,7 +37556,11 @@ class PokemonState:
 
             status_key = status.strip().lower()
             attacker = self.pokemon.get(attacker_id)
-            abilities_suppressed = self.abilities_suppressed_for(target_id)
+            ignores_defensive_abilities = bool(
+                attacker is not None and attacker.get_temporary_effects("ignore_defensive_abilities")
+            )
+            ignores_blessings = bool(attacker is not None and attacker.get_temporary_effects("ignore_blessings"))
+            abilities_suppressed = self.abilities_suppressed_for(target_id) or ignores_defensive_abilities
             if not abilities_suppressed and target.has_ability("Own Tempo") and status_key in {"confused", "confusion"}:
                 events.append(
                     {
@@ -27265,10 +37701,13 @@ class PokemonState:
                 and target.has_ability("Keen Eye")
             ):
                 remaining = int(remaining) + 2
-            infiltrator_active = (
+            infiltrator_active = bool(
                 attacker is not None
                 and attacker_id != target_id
-                and attacker.has_ability("Infiltrator")
+                and (
+                    attacker.has_ability("Infiltrator")
+                    or attacker.get_temporary_effects("ignore_substitute")
+                )
             )
             if (
                 target_id != attacker_id
@@ -27468,7 +37907,7 @@ class PokemonState:
                     }
                 )
                 return
-            guard_remaining = None if infiltrator_active else self._consume_safeguard(target)
+            guard_remaining = None if infiltrator_active or ignores_blessings else self._consume_safeguard(target)
             if guard_remaining is not None:
                 event = {
                     "type": "status",
@@ -27546,6 +37985,26 @@ class PokemonState:
                 events.append(event)
                 return
             if (
+                status_key in {"tripped", "trip"}
+                and target.has_trainer_feature("Insectoid Utility")
+                and target.has_capability("Wallclimber")
+            ):
+                events.append(
+                    {
+                        "type": "trainer_feature",
+                        "actor": target_id,
+                        "target": attacker_id,
+                        "trainer": target.controller_id,
+                        "feature": "Insectoid Utility",
+                        "move": move.name,
+                        "effect": "status_block",
+                        "status": status,
+                        "description": "Insectoid Utility's Wallclimber upgrade prevents Trip effects.",
+                        "target_hp": target.hp,
+                    }
+                )
+                return
+            if (
                 not abilities_suppressed
                 and attacker is not None
                 and status_key in {"poison", "poisoned"}
@@ -27593,7 +38052,43 @@ class PokemonState:
                     }
                 )
                 return
+            if self._maybe_apply_resilience_to_status(
+                events,
+                attacker_id=attacker_id,
+                target_id=target_id,
+                move=move,
+                target=target,
+                status=status,
+            ):
+                return
             if target.has_status(status):
+                if (
+                    attacker is not None
+                    and status_key in {"paralyze", "paralyzed", "paralysis"}
+                    and _normalize_type_ace_type_name(move.type) == "electric"
+                    and str(move.category or "").strip().lower() != "status"
+                    and attacker.has_trainer_feature("Lockdown")
+                ):
+                    if not target.has_status("Stuck"):
+                        target.statuses.append({"name": "Stuck", "remaining": 1})
+                    target.add_temporary_effect(
+                        "at_will_only",
+                        source="Lockdown",
+                        expires_round=self.round + 1,
+                    )
+                    events.append(
+                        {
+                            "type": "trainer_feature",
+                            "actor": attacker_id,
+                            "target": target_id,
+                            "trainer": attacker.controller_id,
+                            "feature": "Lockdown",
+                            "move": move.name,
+                            "effect": "lockdown",
+                            "description": "Lockdown upgrades repeated paralysis into Stuck and At-Will-only.",
+                            "target_hp": target.hp,
+                        }
+                    )
                 return
             applied_remaining = remaining
             if (
@@ -27648,6 +38143,70 @@ class PokemonState:
             if applied_remaining is not None:
                 event["remaining"] = applied_remaining
             events.append(event)
+            if (
+                attacker is not None
+                and status_key in {"poison", "poisoned", "badly poisoned"}
+                and attacker.has_trainer_feature("Potent Venom")
+                and "poison" in {_normalize_type_ace_type_name(token) for token in attacker.spec.types}
+            ):
+                prompt = {
+                    "actor_id": attacker_id,
+                    "target_id": target_id,
+                    "label": "Potent Venom: Choose Stat",
+                    "detail": "Choose the combat stat Potent Venom lowers.",
+                    "yes_label": "Apply",
+                    "no_label": "Skip",
+                    "phase": "action",
+                    "optional": True,
+                    "feature": "Potent Venom",
+                    "kind": "choice",
+                    "options": [
+                        {"value": "atk", "label": "Attack"},
+                        {"value": "def", "label": "Defense"},
+                        {"value": "spatk", "label": "Special Attack"},
+                        {"value": "spdef", "label": "Special Defense"},
+                        {"value": "spd", "label": "Speed"},
+                    ],
+                }
+                response = self.prompt_response(attacker_id, prompt)
+                chosen_stat = "spdef"
+                if isinstance(response, dict):
+                    chosen_stat = str(response.get("choice") or "spdef").strip().lower()
+                elif isinstance(response, str):
+                    chosen_stat = response.strip().lower()
+                chosen_stat = chosen_stat if chosen_stat in {"atk", "def", "spatk", "spdef", "spd"} else "spdef"
+                while target.remove_temporary_effect("potent_venom_poison_override"):
+                    continue
+                target.add_temporary_effect(
+                    "potent_venom_poison_override",
+                    source="Potent Venom",
+                    source_id=attacker_id,
+                    trainer_id=attacker.controller_id,
+                    stat=chosen_stat,
+                )
+                current = int(target.combat_stages.get(chosen_stat, 0) or 0)
+                target.combat_stages[chosen_stat] = max(-6, current - 2)
+                target.add_temporary_effect(
+                    "potent_venom_bonus_damage",
+                    source="Potent Venom",
+                    source_id=attacker_id,
+                    trainer_id=attacker.controller_id,
+                    amount=self._type_linked_rank(attacker, "poison"),
+                )
+                events.append(
+                    {
+                        "type": "trainer_feature",
+                        "actor": attacker_id,
+                        "target": target_id,
+                        "trainer": attacker.controller_id,
+                        "feature": "Potent Venom",
+                        "move": move.name,
+                        "effect": "poison_stage_drop",
+                        "stat": chosen_stat,
+                        "description": "Potent Venom lowers the chosen combat stat and increases poison tick damage.",
+                        "target_hp": target.hp,
+                    }
+                )
             if (
                 not abilities_suppressed
                 and attacker is not None
@@ -27798,12 +38357,19 @@ class PokemonState:
             move_name = (move.name or "").strip().lower()
             status_key = move_name
             attacker = self.pokemon.get(attacker_id)
-            infiltrator_active = (
+            infiltrator_active = bool(
                 attacker is not None
                 and attacker_id != target_id
-                and attacker.has_ability("Infiltrator")
+                and (
+                    attacker.has_ability("Infiltrator")
+                    or attacker.get_temporary_effects("ignore_substitute")
+                )
             )
-            abilities_suppressed = self.abilities_suppressed_for(target_id)
+            ignores_defensive_abilities = bool(
+                attacker is not None and attacker.get_temporary_effects("ignore_defensive_abilities")
+            )
+            ignores_blessings = bool(attacker is not None and attacker.get_temporary_effects("ignore_blessings"))
+            abilities_suppressed = self.abilities_suppressed_for(target_id) or ignores_defensive_abilities
             if (
                 target_id != attacker_id
                 and target.has_status("Substitute")
@@ -27883,6 +38449,22 @@ class PokemonState:
                     }
                 )
                 return
+            if delta < 0 and attacker is not None:
+                for entry in list(attacker.get_temporary_effects("flourish_stage_bonus")):
+                    if int(entry.get("round", -1) or -1) != self.round:
+                        continue
+                    if str(entry.get("move") or "").strip().lower() not in {"", move_name}:
+                        continue
+                    if str(entry.get("stat") or "").strip().lower() != stat:
+                        continue
+                    delta -= 1
+                    charges = int(entry.get("charges", 1) or 1) - 1
+                    if charges <= 0:
+                        if entry in attacker.temporary_effects:
+                            attacker.temporary_effects.remove(entry)
+                    else:
+                        entry["charges"] = charges
+                    break
             if not abilities_suppressed and target.has_ability("Contrary"):
                 delta = -delta
                 events.append(
@@ -27898,7 +38480,7 @@ class PokemonState:
                         "target_hp": target.hp,
                     }
                 )
-            if delta < 0 and target.has_status("Mist") and not infiltrator_active:
+            if delta < 0 and target.has_status("Mist") and not infiltrator_active and not ignores_blessings:
                 mist_entry = None
                 for status_entry in list(target.statuses):
                     if target._normalized_status_name(status_entry) != "mist":
@@ -28579,33 +39161,6 @@ class PokemonState:
             events.append(payload)
             self.log_event(payload)
 
-        def _apply_struggle_recoil(
-            self,
-            events: List[dict],
-            *,
-            attacker_id: str,
-            move: MoveSpec,
-            attacker: PokemonState,
-        ) -> None:
-            max_hp = attacker.max_hp()
-            if max_hp <= 0:
-                return
-            loss = max(1, int(math.ceil(max_hp * 0.25)))
-            attacker.apply_damage(loss)
-            payload = {
-                "type": "recoil",
-                "actor": attacker_id,
-                "move": move.name,
-                "effect": "struggle_recoil",
-                "description": "Struggle damages the user for 1/4 of its max HP.",
-                "amount": loss,
-                "fraction": "1/4 max HP",
-                "target_hp": attacker.hp,
-                "attacker_hp": attacker.hp,
-            }
-            events.append(payload)
-            self.log_event(payload)
-
         def _apply_terrain(
             self,
             events: List[dict],
@@ -28687,6 +39242,20 @@ class PokemonState:
                 return False
             kind = str(instruction.get("kind", "")).lower()
             if kind == "push":
+                if target.has_trainer_feature("Insectoid Utility") and target.has_capability("Wallclimber"):
+                    self.log_event(
+                        {
+                            "type": "trainer_feature",
+                            "actor": target_id,
+                            "target": attacker_id,
+                            "trainer": target.controller_id,
+                            "feature": "Insectoid Utility",
+                            "effect": "forced_movement_block",
+                            "description": "Insectoid Utility's Wallclimber upgrade prevents push effects.",
+                            "target_hp": target.hp,
+                        }
+                    )
+                    return False
                 for entry in list(target.get_temporary_effects("push_immunity")):
                     expires_round = entry.get("expires_round")
                     if expires_round is not None and self.round > int(expires_round):
@@ -29122,6 +39691,7 @@ class GridState:
     height: int
     blockers: Set[Tuple[int, int]] = field(default_factory=set)
     tiles: Dict[Tuple[int, int], Dict[str, object]] = field(default_factory=dict)
+    map: Dict[str, object] = field(default_factory=dict)
 
     def in_bounds(self, coord: Tuple[int, int]) -> bool:
         x, y = coord
@@ -29166,6 +39736,8 @@ QuickWitMoveAction = PokemonState.QuickWitMoveAction
 EnchantingGazeAction = PokemonState.EnchantingGazeAction
 TricksterFollowUpAction = PokemonState.TricksterFollowUpAction
 DirtyFightingFollowUpAction = PokemonState.DirtyFightingFollowUpAction
+SleightAction = PokemonState.SleightAction
+ShellGameAction = PokemonState.ShellGameAction
 WeaponFinesseFollowUpAction = PokemonState.WeaponFinesseFollowUpAction
 PlayThemLikeAFiddleFollowUpAction = PokemonState.PlayThemLikeAFiddleFollowUpAction
 PsychicResonanceFollowUpAction = PokemonState.PsychicResonanceFollowUpAction
@@ -29174,9 +39746,66 @@ GhostStepAction = PokemonState.GhostStepAction
 ShrugOffAction = PokemonState.ShrugOffAction
 ShockingSpeedAction = PokemonState.ShockingSpeedAction
 BrutalTrainingAction = PokemonState.BrutalTrainingAction
+AgilityTrainingAction = PokemonState.AgilityTrainingAction
+FocusedTrainingAction = PokemonState.FocusedTrainingAction
+InspiredTrainingAction = PokemonState.InspiredTrainingAction
+ExpendMomentumAction = PokemonState.ExpendMomentumAction
+EffectiveMethodsAction = PokemonState.EffectiveMethodsAction
+DuelistAction = PokemonState.DuelistAction
+DuelistsManualAction = PokemonState.DuelistsManualAction
+SeizeTheMomentAction = PokemonState.SeizeTheMomentAction
+AceTrainerAction = PokemonState.AceTrainerAction
+SignatureTechniqueAction = PokemonState.SignatureTechniqueAction
 QuickHealingAction = PokemonState.QuickHealingAction
 PressAction = PokemonState.PressAction
+MotivatedAction = PokemonState.MotivatedAction
 SavageStrikeAction = PokemonState.SavageStrikeAction
+CheerBrigadeAction = PokemonState.CheerBrigadeAction
+CheerleaderPlaytestAction = PokemonState.CheerleaderPlaytestAction
+RammingSpeedAction = PokemonState.RammingSpeedAction
+HitsTheSpotAction = PokemonState.HitsTheSpotAction
+ComplexAftertasteAction = PokemonState.ComplexAftertasteAction
+CulinaryAppreciationAction = PokemonState.CulinaryAppreciationAction
+TypeAceAction = PokemonState.TypeAceAction
+TypeRefreshAction = PokemonState.TypeRefreshAction
+MoveSyncAction = PokemonState.MoveSyncAction
+ExtraOrdinaryAction = PokemonState.ExtraOrdinaryAction
+CleverRuseAction = PokemonState.CleverRuseAction
+FairyLightsAction = PokemonState.FairyLightsAction
+CloseQuartersMasteryAction = PokemonState.CloseQuartersMasteryAction
+CelerityAction = PokemonState.CelerityAction
+FoilingFoliageAction = PokemonState.FoilingFoliageAction
+FloodAction = PokemonState.FloodAction
+MountPokemonAction = PokemonState.MountPokemonAction
+DismountPokemonAction = PokemonState.DismountPokemonAction
+RideAsOneSwapTurnAction = PokemonState.RideAsOneSwapTurnAction
+ConquerorsMarchAction = PokemonState.ConquerorsMarchAction
+VimAndVigorAction = PokemonState.VimAndVigorAction
+StatEmbodimentAction = PokemonState.StatEmbodimentAction
+AttackEmbodimentAction = PokemonState.AttackEmbodimentAction
+DefenseEmbodimentAction = PokemonState.DefenseEmbodimentAction
+SpecialAttackEmbodimentAction = PokemonState.SpecialAttackEmbodimentAction
+SpecialDefenseEmbodimentAction = PokemonState.SpecialDefenseEmbodimentAction
+SpeedEmbodimentAction = PokemonState.SpeedEmbodimentAction
+StatTrainingAction = PokemonState.StatTrainingAction
+AttackTrainingAction = PokemonState.AttackTrainingAction
+DefenseTrainingAction = PokemonState.DefenseTrainingAction
+SpecialAttackTrainingAction = PokemonState.SpecialAttackTrainingAction
+SpecialDefenseTrainingAction = PokemonState.SpecialDefenseTrainingAction
+SpeedTrainingAction = PokemonState.SpeedTrainingAction
+StatStratagemAction = PokemonState.StatStratagemAction
+AttackStratagemAction = PokemonState.AttackStratagemAction
+DefenseStratagemAction = PokemonState.DefenseStratagemAction
+SpecialAttackStratagemAction = PokemonState.SpecialAttackStratagemAction
+SpecialDefenseStratagemAction = PokemonState.SpecialDefenseStratagemAction
+SpeedStratagemAction = PokemonState.SpeedStratagemAction
+VersatileWardrobeAction = PokemonState.VersatileWardrobeAction
+WardrobeSwapAction = PokemonState.WardrobeSwapAction
+DressToImpressAction = PokemonState.DressToImpressAction
+DashingMakeoverAction = PokemonState.DashingMakeoverAction
+ReleaseDashingMakeoverAction = PokemonState.ReleaseDashingMakeoverAction
+MomentOfActionAction = PokemonState.MomentOfActionAction
+GoFightWinAction = PokemonState.GoFightWinAction
 FocusedCommandAction = PokemonState.FocusedCommandAction
 CommandersVoiceAction = PokemonState.CommandersVoiceAction
 TargetOrderAction = PokemonState.TargetOrderAction
@@ -29204,6 +39833,14 @@ NaturalFighterAction = PokemonState.NaturalFighterAction
 TrapperAction = PokemonState.TrapperAction
 WildernessGuideAction = PokemonState.WildernessGuideAction
 QuickSwitchAction = PokemonState.QuickSwitchAction
+EmergencyReleaseAction = PokemonState.EmergencyReleaseAction
+BounceShotAction = PokemonState.BounceShotAction
+FastPitchAction = PokemonState.FastPitchAction
+GottaCatchEmAllAction = PokemonState.GottaCatchEmAllAction
+CapturedMomentumAction = PokemonState.CapturedMomentumAction
+DevitalizingThrowAction = PokemonState.DevitalizingThrowAction
+CatchComboAction = PokemonState.CatchComboAction
+RelentlessPursuitAction = PokemonState.RelentlessPursuitAction
 CreativeAction = PokemonState.CreativeAction
 PickupItemAction = PokemonState.PickupItemAction
 EquipWeaponAction = PokemonState.EquipWeaponAction
@@ -29221,6 +39858,8 @@ TRAINER_FEATURE_ACTION_REGISTRY = {
     "enchanting_gaze": EnchantingGazeAction,
     "trickster_follow_up": TricksterFollowUpAction,
     "dirty_fighting_follow_up": DirtyFightingFollowUpAction,
+    "sleight": SleightAction,
+    "shell_game": ShellGameAction,
     "weapon_finesse_follow_up": WeaponFinesseFollowUpAction,
     "play_them_like_a_fiddle_follow_up": PlayThemLikeAFiddleFollowUpAction,
     "psychic_resonance_follow_up": PsychicResonanceFollowUpAction,
@@ -29228,10 +39867,70 @@ TRAINER_FEATURE_ACTION_REGISTRY = {
     "ghost_step": GhostStepAction,
     "shrug_off": ShrugOffAction,
     "shocking_speed": ShockingSpeedAction,
+    "ace_trainer": AceTrainerAction,
+    "signature_technique": SignatureTechniqueAction,
+    "agility_training": AgilityTrainingAction,
     "brutal_training": BrutalTrainingAction,
+    "focused_training": FocusedTrainingAction,
+    "inspired_training": InspiredTrainingAction,
+    "duelist": DuelistAction,
+    "expend_momentum": ExpendMomentumAction,
+    "effective_methods": EffectiveMethodsAction,
+    "duelists_manual": DuelistsManualAction,
+    "duelist_manual": DuelistsManualAction,
+    "seize_the_moment": SeizeTheMomentAction,
     "quick_healing": QuickHealingAction,
     "press": PressAction,
+    "motivated": MotivatedAction,
     "savage_strike": SavageStrikeAction,
+    "cheer_brigade": CheerBrigadeAction,
+    "cheerleader_playtest": CheerleaderPlaytestAction,
+    "ramming_speed": RammingSpeedAction,
+    "hits_the_spot": HitsTheSpotAction,
+    "complex_aftertaste": ComplexAftertasteAction,
+    "culinary_appreciation": CulinaryAppreciationAction,
+    "type_ace": TypeAceAction,
+    "type_refresh": TypeRefreshAction,
+    "move_sync": MoveSyncAction,
+    "extra_ordinary": ExtraOrdinaryAction,
+    "clever_ruse": CleverRuseAction,
+    "fairy_lights": FairyLightsAction,
+    "close_quarters_mastery": CloseQuartersMasteryAction,
+    "celerity": CelerityAction,
+    "foiling_foliage": FoilingFoliageAction,
+    "flood": FloodAction,
+    "mount_pokemon": MountPokemonAction,
+    "dismount_pokemon": DismountPokemonAction,
+    "ride_as_one_swap_turn": RideAsOneSwapTurnAction,
+    "conquerors_march": ConquerorsMarchAction,
+    "vim_and_vigor": VimAndVigorAction,
+    "stat_embodiment": StatEmbodimentAction,
+    "attack_embodiment": AttackEmbodimentAction,
+    "defense_embodiment": DefenseEmbodimentAction,
+    "special_attack_embodiment": SpecialAttackEmbodimentAction,
+    "special_defense_embodiment": SpecialDefenseEmbodimentAction,
+    "speed_embodiment": SpeedEmbodimentAction,
+    "stat_training": StatTrainingAction,
+    "attack_training": AttackTrainingAction,
+    "defense_training": DefenseTrainingAction,
+    "special_attack_training": SpecialAttackTrainingAction,
+    "special_defense_training": SpecialDefenseTrainingAction,
+    "speed_training": SpeedTrainingAction,
+    "stat_stratagem": StatStratagemAction,
+    "attack_stratagem": AttackStratagemAction,
+    "defense_stratagem": DefenseStratagemAction,
+    "special_attack_stratagem": SpecialAttackStratagemAction,
+    "special_defense_stratagem": SpecialDefenseStratagemAction,
+    "speed_stratagem": SpeedStratagemAction,
+    "versatile_wardrobe": VersatileWardrobeAction,
+    "wardrobe_swap": WardrobeSwapAction,
+    "dress_to_impress": DressToImpressAction,
+    "dashing_makeover": DashingMakeoverAction,
+    "release_dashing_makeover": ReleaseDashingMakeoverAction,
+    "moment_of_action": MomentOfActionAction,
+    "moment_of_action_playtest": MomentOfActionAction,
+    "go_fight_win": GoFightWinAction,
+    "go_fight_win_playtest": GoFightWinAction,
     "focused_command": FocusedCommandAction,
     "commanders_voice": CommandersVoiceAction,
     "commander's_voice": CommandersVoiceAction,
@@ -29263,6 +39962,14 @@ TRAINER_FEATURE_ACTION_REGISTRY = {
     "trapper": TrapperAction,
     "wilderness_guide": WildernessGuideAction,
     "quick_switch": QuickSwitchAction,
+    "emergency_release": EmergencyReleaseAction,
+    "bounce_shot": BounceShotAction,
+    "fast_pitch": FastPitchAction,
+    "gotta_catch_em_all": GottaCatchEmAllAction,
+    "captured_momentum": CapturedMomentumAction,
+    "devitalizing_throw": DevitalizingThrowAction,
+    "catch_combo": CatchComboAction,
+    "relentless_pursuit": RelentlessPursuitAction,
 }
 
 

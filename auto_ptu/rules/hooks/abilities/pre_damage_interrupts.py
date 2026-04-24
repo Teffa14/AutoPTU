@@ -680,18 +680,7 @@ def _quick_draw_interrupt(ctx: AbilityHookContext) -> None:
         chosen = move
         break
     if chosen is None:
-        chosen = MoveSpec(
-            name="Struggle",
-            type="Normal",
-            category="Physical",
-            db=4,
-            ac=4,
-            range_kind="Melee",
-            range_value=1,
-            target_kind="Melee",
-            target_range=1,
-            freq="At-Will",
-        )
+        chosen = ctx.battle.build_struggle_move(ctx.defender_id, ctx.defender)
     ctx.events.append(
         {
             "type": "ability",

@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AutoPTU Terrain Mapper</title>
+    <link rel="stylesheet" href="terrain-mapper.css?v=20260404c" />
+  </head>
+  <body class="terrain-mapper-page">
+    <header class="tm-topbar">
+      <div>
+        <div class="tm-kicker">AutoPTU</div>
+        <h1>Terrain Mapper</h1>
+        <p class="tm-topbar-copy">Load a map, line the grid up, click examples, review the unsure tiles, then export a battle section.</p>
+      </div>
+      <div class="tm-actions">
+        <button id="new-atlas" type="button">New Atlas</button>
+        <button id="load-battle" type="button">Load Battle Grid</button>
+        <button id="run-prediction" type="button">Fill Map And Review</button>
+        <button id="save-map" type="button">Save Atlas</button>
+        <button id="save-map-as" type="button">Save Atlas Copy As...</button>
+        <button id="apply-battle" type="button">Apply Active Segment</button>
+      </div>
+    </header>
+
+    <main class="tm-layout">
+      <section class="tm-workspace">
+        <section class="tm-canvas-panel">
+          <div class="tm-panel-head">
+            <div>
+              <div class="tm-title">Atlas Workspace</div>
+              <div id="map-summary" class="tm-meta">Start by loading a map. Then line the grid up and teach a few example tiles.</div>
+            </div>
+            <div id="prediction-summary" class="tm-badge-row"></div>
+          </div>
+          <div id="action-status" class="tm-status" hidden></div>
+          <div class="tm-inline-tools">
+            <label class="tm-check tm-inline-check">
+              <input id="show-labels" type="checkbox" />
+              Show tile text labels
+            </label>
+          </div>
+
+          <div class="tm-stage-wrap">
+            <div id="stage-scroller" class="tm-stage-scroller">
+              <div id="tm-stage" class="tm-stage">
+                <img id="atlas-image" class="tm-atlas-image" alt="Terrain atlas" />
+                <div id="tm-grid" class="tm-grid"></div>
+                <div id="tm-segments" class="tm-segments"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="tm-review-panel">
+          <div class="tm-panel-head compact">
+            <div>
+              <div class="tm-title">Review Queue</div>
+              <div class="tm-meta">Medium confidence tiles are marked for review. Low confidence tiles should be answered by you.</div>
+            </div>
+          </div>
+          <div id="ask-panel" class="tm-ask-panel" hidden>
+            <div class="tm-review-name">Low-Confidence Question</div>
+            <div id="ask-summary" class="tm-review-meta">No active question.</div>
+            <div class="tm-actions">
+              <button id="ask-accept" type="button">Accept Current Labels</button>
+              <button id="ask-skip" type="button">Skip For Now</button>
+            </div>
+          </div>
+          <div id="prediction-review-banner" class="tm-ask-panel tm-review-banner" hidden>
+            <div class="tm-review-name">Prediction Finished</div>
+            <div id="prediction-review-summary" class="tm-review-meta">No review summary yet.</div>
+          </div>
+          <div id="review-list" class="tm-review-list"></div>
+        </section>
+      </section>
+
+      <aside class="tm-sidebar">
+        <section class="tm-panel">
+          <div class="tm-title">Quick Start</div>
+          <div id="next-step-title" class="tm-guide-title">Step 1: Load a map</div>
+          <div id="next-step-body" class="tm-info">Open a saved atlas or import a new image. Keep going one step at a time.</div>
+        </section>
+
+        <section class="tm-panel">
+          <div class="tm-title">Saved Atlases</div>
+          <div class="tm-meta">Click one to open it.</div>
+          <div id="map-library" class="tm-library"></div>
+        </section>
+
+        <section class="tm-panel">
+          <div class="tm-title">Step 1: Profile</div>
+          <div class="tm-meta">Use a profile when maps share the same tileset or art style.</div>
+          <div class="tm-fields">
+            <label>
+              Existing Profile
+              <select id="profile-select">
+                <option value="">No profile selected</option>
+              </select>
+            </label>
+            <label>
+              New Profile Name
+              <input id="profile-name" type="text" placeholder="forest-tileset-a" />
+            </label>
+            <label>
+              Category
+              <input id="profile-category" type="text" placeholder="forest / ruins / custom A" />
+            </label>
+            <label>
+              Tags
+              <input id="profile-tags" type="text" placeholder="forest, starter, custom" />
+            </label>
+            <button id="save-profile" type="button">Save Profile</button>
+          </div>
+          <div id="profile-meta" class="tm-info">Profiles remember what you already taught the mapper.</div>
+        </section>
+
+        <section class="tm-panel">
+          <div class="tm-title">Step 2: Atlas Setup</div>
+          <div class="tm-meta">Import the image, then line the grid up with the art.</div>
+          <div class="tm-fields">
+            <label>
+              Atlas Name
+              <input id="map-name" type="text" placeholder="Blackleaf Forest" />
+            </label>
+            <label class="tm-file-btn">
+              Import Atlas Image
+              <input id="image-file" type="file" accept="image/*" multiple />
+            </label>
+            <label>
+              Tags
+              <input id="map-tags" type="text" placeholder="forest, outdoor, chapter-2" />
+            </label>
+            <label>
+              Grid Columns
+              <input id="grid-width" type="number" min="1" max="128" value="15" />
+            </label>
+            <label>
+              Grid Rows
+              <input id="grid-height" type="number" min="1" max="128" value="10" />
+            </label>
+            <label>
+              Offset X
+              <input id="offset-x" type="number" value="0" />
+            </label>
+            <label>
+              Offset Y
+              <input id="offset-y" type="number" value="0" />
+            </label>
+            <label>
+              Tile Width
+              <input id="tile-width" type="number" min="1" value="52" />
+            </label>
+            <label>
+              Tile Height
+              <input id="tile-height" type="number" min="1" value="52" />
+            </label>
+            <label>
+              Image Scale
+              <input id="view-zoom" type="number" min="0.25" max="4" step="0.05" value="1" />
+            </label>
+            <div class="tm-actions stacked">
+              <button id="fit-grid" type="button">Fit Grid To Image</button>
+              <button id="reset-view" type="button">Reset Image Scale</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="tm-panel">
+          <div class="tm-title">Step 3: Teach Tiles</div>
+          <div class="tm-chip-row">
+            <button class="tm-chip active" data-editor-mode="inspect" type="button">Inspect</button>
+            <button class="tm-chip" data-editor-mode="teach" type="button">Teach</button>
+            <button class="tm-chip" data-editor-mode="clear" type="button">Erase</button>
+          </div>
+          <div id="editor-mode-help" class="tm-info">Pick a preset, switch to Teach, then click or drag across tiles that match it.</div>
+          <div class="tm-subtitle">Quick Picks</div>
+          <div id="preset-summary" class="tm-meta">These are the fastest common tile types.</div>
+          <div id="preset-palette" class="tm-preset-grid"></div>
+          <div class="tm-fields">
+            <label>
+              Surface
+              <select id="label-surface"></select>
+            </label>
+            <label>
+              Structure
+              <select id="label-structure"></select>
+            </label>
+            <label>
+              Prop / Furniture
+              <select id="label-prop"></select>
+            </label>
+            <label>
+              Elevation
+              <select id="label-height"></select>
+            </label>
+            <label>
+              Quick Hazard
+              <select id="label-hazard"></select>
+            </label>
+            <label>
+              Movement
+              <select id="label-movement"></select>
+            </label>
+            <label>
+              Vision / Line Of Sight
+              <select id="label-visibility"></select>
+            </label>
+            <label>
+              Cover
+              <select id="label-cover"></select>
+            </label>
+            <label class="tm-check">
+              <input id="label-standable" type="checkbox" />
+              Can units stand on this tile
+            </label>
+            <div class="tm-actions stacked">
+              <button id="apply-labels" type="button">Apply Labels To Selected Tile</button>
+              <button id="confirm-tile" type="button">Confirm Selected Tile</button>
+              <button id="clear-tile" type="button">Clear Selected Tile</button>
+            </div>
+          </div>
+          <div class="tm-info">Keep the PTU rule meaning exact. Quick Picks are shortcuts, but you can still set the precise Surface, Structure, Prop, Elevation, Hazard, Movement, LOS, and Cover for each tile.</div>
+          <details class="tm-disclosure">
+            <summary>Advanced PTU Tile Rules</summary>
+            <div class="tm-meta">Only use this when you need exact hazard, trap, barrier, or Frozen Domain data.</div>
+            <div class="tm-fields">
+              <div class="tm-terrain-grid">
+                <label>Spikes Layers<input id="hazard-spikes" type="number" min="0" max="6" value="0" /></label>
+                <label>Toxic Spikes Layers<input id="hazard-toxic-spikes" type="number" min="0" max="6" value="0" /></label>
+                <label>Sticky Web Layers<input id="hazard-sticky-web" type="number" min="0" max="6" value="0" /></label>
+                <label>Stealth Rock Layers<input id="hazard-stealth-rock" type="number" min="0" max="6" value="0" /></label>
+                <label>Fairy Stealth Rock Layers<input id="hazard-stealth-rock-fairy" type="number" min="0" max="6" value="0" /></label>
+                <label>Fire Hazards Layers<input id="hazard-fire-hazards" type="number" min="0" max="6" value="0" /></label>
+              </div>
+              <div class="tm-terrain-grid">
+                <label>Dust Trap Layers<input id="trap-dust" type="number" min="0" max="6" value="0" /></label>
+                <label>Tangle Trap Layers<input id="trap-tangle" type="number" min="0" max="6" value="0" /></label>
+                <label>Slick Trap Layers<input id="trap-slick" type="number" min="0" max="6" value="0" /></label>
+                <label>Abrasion Trap Layers<input id="trap-abrasion" type="number" min="0" max="6" value="0" /></label>
+                <label>Generic Trap Layers<input id="trap-generic" type="number" min="0" max="6" value="0" /></label>
+              </div>
+              <div class="tm-terrain-grid">
+                <label>Barrier Segments<input id="barrier-count" type="number" min="0" max="12" value="0" /></label>
+                <label>Barrier Source Name<input id="barrier-source-name" type="text" placeholder="Barrier" /></label>
+                <label>Barrier Move Name<input id="barrier-move-name" type="text" placeholder="Barrier" /></label>
+                <label>Frozen Domain Tiles<input id="frozen-count" type="number" min="0" max="12" value="0" /></label>
+                <label>Frozen Domain Source Name<input id="frozen-source-name" type="text" placeholder="Frozen Domain" /></label>
+                <label>Frozen Domain DC<input id="frozen-dc" type="number" min="1" max="20" value="4" /></label>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="tm-panel">
+          <div class="tm-title">Step 4: Fill And Review</div>
+          <div class="tm-meta">When you have taught enough examples, use Fill Map And Review.</div>
+          <details class="tm-disclosure">
+            <summary>Advanced Prediction Settings</summary>
+          <div class="tm-fields">
+            <label>
+              High Confidence
+              <input id="high-confidence" type="number" min="0.5" max="1" step="0.01" value="0.82" />
+            </label>
+            <label>
+              Medium Confidence
+              <input id="medium-confidence" type="number" min="0.2" max="0.99" step="0.01" value="0.58" />
+            </label>
+            <div class="tm-actions stacked">
+              <button id="mark-selected-reviewed" type="button">Mark Selected Reviewed</button>
+              <button id="export-json" type="button">Export AutoPTUWeb JSON</button>
+              <button id="export-json-as" type="button">Export AutoPTUWeb JSON As...</button>
+              <label class="tm-file-btn">
+                Import JSON
+                <input id="import-json" type="file" accept="application/json" multiple />
+              </label>
+            </div>
+          </div>
+          <div id="prediction-stats" class="tm-info">High confidence autofills. Medium confidence is queued for review. Low confidence asks back to you. Export emits the plain battle grid JSON AutoPTUWeb consumes.</div>
+          </details>
+        </section>
+
+        <section class="tm-panel">
+          <div class="tm-title">Step 5: Export A Battle Section</div>
+          <div class="tm-meta">Choose a rectangle from the atlas, then apply or export just that part.</div>
+          <div class="tm-fields">
+            <label>
+              Segment Name
+              <input id="segment-name" type="text" placeholder="North Clearing" />
+            </label>
+            <label>
+              Start Row
+              <input id="segment-row" type="number" min="0" value="0" />
+            </label>
+            <label>
+              Start Col
+              <input id="segment-col" type="number" min="0" value="0" />
+            </label>
+            <label>
+              Width
+              <input id="segment-width" type="number" min="1" value="9" />
+            </label>
+            <label>
+              Height
+              <input id="segment-height" type="number" min="1" value="7" />
+            </label>
+            <div class="tm-actions stacked">
+              <button id="toggle-segment-draw" type="button">Draw Segment On Atlas</button>
+              <button id="segment-from-selected" type="button">Use Selected Tile As Origin</button>
+              <button id="add-segment" type="button">Save Segment</button>
+            </div>
+          </div>
+          <div id="segment-preview-info" class="tm-info">No active segment. Export will use the full atlas.</div>
+          <canvas id="segment-preview" class="tm-segment-preview" width="256" height="256"></canvas>
+          <div id="segment-list" class="tm-library"></div>
+        </section>
+
+        <section class="tm-panel">
+          <div class="tm-title">Tile Detail</div>
+          <pre id="tile-info" class="tm-info">No tile selected.</pre>
+        </section>
+      </aside>
+    </main>
+
+    <a id="download-link" hidden></a>
+    <canvas id="analysis-canvas" hidden></canvas>
+    <script src="terrain-mapper.js?v=20260404c"></script>
+  </body>
+</html>

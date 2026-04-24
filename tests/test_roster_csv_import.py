@@ -677,9 +677,9 @@ foe,Abra,30,Psychic Navigator,
 
 
 def test_roster_csv_poke_edge_choice_columns_reach_specs_and_snapshot():
-    csv_text = """side,species,level,move1,move2,ability1,poke_edge1,poke_edge2,poke_edge3,poke_edge_accuracy_training,poke_edge_advanced_connection,poke_edge_underdog_evolution,poke_edge_underdog_moves
-player,Lucario,30,Aura Sphere,Quick Attack,Inner Focus,Accuracy Training,Advanced Connection,Underdog's Lessons,Aura Sphere,Inner Focus,Lucario,Extreme Speed;Bone Rush
-foe,Abra,30,Confusion,,,Psychic Navigator,,,,
+    csv_text = """side,species,level,move1,move2,ability1,poke_edge1,poke_edge2,poke_edge3,poke_edge_accuracy_training,poke_edge_advanced_connection,poke_edge_underdog_evolution,poke_edge_underdog_moves,signature_technique_move,signature_technique_modification
+player,Lucario,30,Aura Sphere,Quick Attack,Inner Focus,Accuracy Training,Advanced Connection,Underdog's Lessons,Aura Sphere,Inner Focus,Lucario,Extreme Speed;Bone Rush,Aura Sphere,Shock and Awe
+foe,Abra,30,Confusion,,,Psychic Navigator,,,,,
 """
     spec = campaign_from_roster_csv(csv_text=csv_text, default_level=30)
     lucario_spec = spec.players[0]
@@ -688,6 +688,8 @@ foe,Abra,30,Confusion,,,Psychic Navigator,,,,
     assert lucario_spec.poke_edge_choices["advanced_connection"] == ["Inner Focus"]
     assert lucario_spec.poke_edge_choices["underdog_lessons"]["evolution"] == "Lucario"
     assert lucario_spec.poke_edge_choices["underdog_lessons"]["moves"] == ["Extreme Speed", "Bone Rush"]
+    assert lucario_spec.poke_edge_choices["signature_technique"]["move"] == "Aura Sphere"
+    assert lucario_spec.poke_edge_choices["signature_technique"]["modification_key"] == "shockandawe"
 
     facade = EngineFacade()
     snapshot = facade.start_encounter(roster_csv=csv_text, team_size=1, active_slots=1, seed=93)
@@ -697,6 +699,8 @@ foe,Abra,30,Confusion,,,Psychic Navigator,,,,
     assert lucario["poke_edge_choices"]["advanced_connection"] == ["Inner Focus"]
     assert lucario["poke_edge_choices"]["underdog_lessons"]["evolution"] == "Lucario"
     assert lucario["poke_edge_choices"]["underdog_lessons"]["moves"] == ["Extreme Speed", "Bone Rush"]
+    assert lucario["poke_edge_choices"]["signature_technique"]["move"] == "Aura Sphere"
+    assert lucario["poke_edge_choices"]["signature_technique"]["modification_key"] == "shockandawe"
 
 
 def test_roster_csv_post_nature_stat_mode_matches_final_battle_stats():

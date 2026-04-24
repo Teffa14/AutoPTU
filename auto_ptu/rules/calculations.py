@@ -44,6 +44,13 @@ _STAT_ACE_VALUE_ALIASES = {
     "spd": "spd",
 }
 
+
+def _active_item_objects(pokemon: "PokemonState") -> List[object]:
+    battle = getattr(pokemon, "battle", None)
+    if battle is not None and hasattr(battle, "_active_held_item_objects"):
+        return list(battle._active_held_item_objects(pokemon))
+    return list(getattr(pokemon.spec, "items", []) or [])
+
 WEATHER_DB_MODIFIERS: Dict[str, Dict[str, int]] = {
     "rain": {"electric": 1, "water": 1, "fire": -1},
     "storm": {"electric": 1, "water": 1, "fire": -1},
@@ -112,7 +119,7 @@ def _temporary_stat_modifier(pokemon: PokemonState, stat: str) -> int:
         from .battle_state import _item_entry_for
         from .item_effects import parse_item_effects
 
-        for item in getattr(pokemon.spec, "items", []) or []:
+        for item in _active_item_objects(pokemon):
             entry = _item_entry_for(item)
             if entry is None:
                 continue
@@ -187,7 +194,7 @@ def _temporary_stat_scalar(pokemon: PokemonState, stat: str) -> float:
         from .battle_state import _item_entry_for
         from .item_effects import parse_item_effects
 
-        for item in getattr(pokemon.spec, "items", []) or []:
+        for item in _active_item_objects(pokemon):
             entry = _item_entry_for(item)
             if entry is None:
                 continue
@@ -223,7 +230,7 @@ def _post_stage_stat_bonus(pokemon: PokemonState, stat: str) -> int:
         from .battle_state import _item_entry_for
         from .item_effects import parse_item_effects
 
-        for item in getattr(pokemon.spec, "items", []) or []:
+        for item in _active_item_objects(pokemon):
             entry = _item_entry_for(item)
             if entry is None:
                 continue
@@ -270,6 +277,12 @@ def _temporary_accuracy_bonus(
     attacker: PokemonState, defender: PokemonState, move: MoveSpec
 ) -> int:
     bonus = 0
+    if attacker.get_temporary_effects("focused_training"):
+        battle = getattr(attacker, "battle", None)
+        if battle is not None and hasattr(battle, "_focused_training_accuracy_bonus"):
+            bonus += int(battle._focused_training_accuracy_bonus(attacker, defender) or 0)
+        else:
+            bonus += 1
     if attacker.has_ability("Compound Eyes"):
         bonus += 3
     if attacker.has_ability("Keen Eye"):
@@ -344,6 +357,10 @@ def defender_gender(attacker: PokemonState, defender: PokemonState) -> bool:
 
 def _temporary_evasion_bonus(pokemon: PokemonState, category: str) -> int:
     bonus = 0
+    if pokemon.get_temporary_effects("inspired_training"):
+        bonus += 1
+    if category.lower() == "status" and pokemon.has_trainer_feature("Insectoid Utility") and pokemon.has_capability("Sky"):
+        bonus += 1
     normalized = category.lower()
     for entry in pokemon.get_temporary_effects("evasion_bonus"):
         scope = str(entry.get("scope") or "").strip().lower()
@@ -365,11 +382,11 @@ def offensive_stat(
     category = category.lower()
     if category == "physical":
         base = pokemon.spec.atk
-        stage = pokemon.combat_stages["atk"]
+        stage = pokemon.effective_combat_stage("atk")
         modifier_stat = "atk"
         if pokemon.has_status("Power Shift") or pokemon.has_status("Power Trick"):
             base = pokemon.spec.defense
-            stage = pokemon.combat_stages["def"]
+            stage = pokemon.effective_combat_stage("def")
             modifier_stat = "def"
         if modifier_stat == "def" and has_ability_exact(pokemon, "Heavy Metal [Errata]"):
             base += 2
@@ -379,11 +396,11 @@ def offensive_stat(
             base += _errata_attack_bonus(pokemon)
     else:
         base = pokemon.spec.spatk
-        stage = pokemon.combat_stages["spatk"]
+        stage = pokemon.effective_combat_stage("spatk")
         modifier_stat = "spatk"
         if pokemon.has_status("Power Shift"):
             base = pokemon.spec.spdef
-            stage = pokemon.combat_stages["spdef"]
+            stage = pokemon.effective_combat_stage("spdef")
             modifier_stat = "spdef"
         if has_ability_exact(pokemon, "Flare Boost") and (
             pokemon.has_status("Burned") or pokemon.has_status("Burn")
@@ -407,15 +424,15 @@ def defensive_stat(
     if category == "physical":
         if wonder_room_active:
             base = pokemon.spec.spdef
-            stage = pokemon.combat_stages["spdef"]
+            stage = pokemon.effective_combat_stage("spdef")
             modifier_stat = "spdef"
         else:
             base = pokemon.spec.defense
-            stage = pokemon.combat_stages["def"]
+            stage = pokemon.effective_combat_stage("def")
             modifier_stat = "def"
         if pokemon.has_status("Power Shift") or pokemon.has_status("Power Trick"):
             base = pokemon.spec.atk
-            stage = pokemon.combat_stages["atk"]
+            stage = pokemon.effective_combat_stage("atk")
             modifier_stat = "atk"
         if modifier_stat == "def" and has_ability_exact(pokemon, "Heavy Metal [Errata]"):
             base += 2
@@ -430,24 +447,27 @@ def defensive_stat(
     else:
         if wonder_room_active:
             base = pokemon.spec.defense
-            stage = pokemon.combat_stages["def"]
+            stage = pokemon.effective_combat_stage("def")
             modifier_stat = "def"
         else:
             base = pokemon.spec.spdef
-            stage = pokemon.combat_stages["spdef"]
+            stage = pokemon.effective_combat_stage("spdef")
             modifier_stat = "spdef"
         if pokemon.has_status("Power Shift"):
             base = pokemon.spec.spatk
-            stage = pokemon.combat_stages["spatk"]
+            stage = pokemon.effective_combat_stage("spatk")
             modifier_stat = "spatk"
         if modifier_stat == "def" and has_ability_exact(pokemon, "Heavy Metal [Errata]"):
             base += 2
         base = max(1, base + _trainer_stat_ace_bonus(pokemon, modifier_stat) + _temporary_stat_modifier(pokemon, modifier_stat))
         base = int(math.floor(base * _temporary_stat_scalar(pokemon, modifier_stat)))
         if (
-            pokemon.has_status("Poisoned")
-            or pokemon.has_status("Badly Poisoned")
-            or pokemon.has_status("Poison")
+            (
+                pokemon.has_status("Poisoned")
+                or pokemon.has_status("Badly Poisoned")
+                or pokemon.has_status("Poison")
+            )
+            and not pokemon.get_temporary_effects("potent_venom_poison_override")
         ):
             stage -= 2
     if ignore_positive_stage and stage > 0:
@@ -457,7 +477,7 @@ def defensive_stat(
 
 def speed_stat(pokemon: PokemonState) -> int:
     base = pokemon.spec.spd
-    stage = pokemon.combat_stages.get("spd", 0)
+    stage = pokemon.effective_combat_stage("spd")
     quick_feet_active = pokemon.has_ability("Quick Feet") and any(
         pokemon.has_status(name)
         for name in ("Poisoned", "Badly Poisoned", "Burned", "Paralyzed", "Frozen", "Sleep", "Asleep")
@@ -555,7 +575,11 @@ def evasion_value(pokemon: PokemonState, category: str, *, ignore_non_stat: bool
 
 
 def evasion_value_for_attack(attacker: PokemonState, defender: PokemonState, category: str) -> int:
-    return evasion_value(defender, category, ignore_non_stat=attacker.has_ability("Keen Eye"))
+    value = evasion_value(defender, category, ignore_non_stat=attacker.has_ability("Keen Eye"))
+    battle = getattr(defender, "battle", None)
+    if battle is not None and hasattr(battle, "_duelist_evasion_bonus"):
+        value += int(battle._duelist_evasion_bonus(defender, attacker) or 0)
+    return value
 
 
 def attack_hits(
@@ -565,7 +589,9 @@ def attack_hits(
     move: MoveSpec,
 ) -> Dict[str, object]:
     move_name = (move.name or "").strip().lower()
-    roll = rng.randint(1, 20)
+    roll = 11 if attacker.get_temporary_effects("duelist_roll11") else rng.randint(1, 20)
+    if attacker.get_temporary_effects("duelist_roll11"):
+        attacker.remove_temporary_effect("duelist_roll11")
     def _apply_merciless(result: Dict[str, object]) -> Dict[str, object]:
         if (
             result.get("hit")
@@ -598,7 +624,7 @@ def attack_hits(
             and getattr(defender, "has_trainer_feature", None)
             and defender.has_trainer_feature("Blur")
         ):
-            evasion = int(math.floor(evasion_value(defender, move.category) / 2))
+            evasion = int(math.floor(evasion_value_for_attack(attacker, defender, move.category) / 2))
             accuracy_bonus = _temporary_accuracy_bonus(attacker, defender, move)
             accuracy_stage = accuracy_stage_value(
                 attacker.combat_stages.get("accuracy", 0)
@@ -640,7 +666,7 @@ def attack_hits(
         return _apply_merciless(
             {"hit": True, "crit": roll >= (move.crit_range or 20), "roll": roll, "needed": 1}
         )
-    evasion = 0 if melee_no_guard else evasion_value(defender, move.category)
+    evasion = 0 if melee_no_guard else evasion_value_for_attack(attacker, defender, move.category)
     accuracy_bonus = _temporary_accuracy_bonus(attacker, defender, move)
     accuracy_stage = accuracy_stage_value(
         attacker.combat_stages.get("accuracy", 0) + attacker.spec.accuracy_cs + accuracy_bonus
@@ -676,12 +702,33 @@ def attack_hits(
 
 def hit_probability(attacker: PokemonState, defender: PokemonState, move: MoveSpec) -> float:
     if move.ac is None:
+        if defender.has_ability("Blur") or (
+            getattr(defender, "is_trainer_combatant", None)
+            and defender.is_trainer_combatant()
+            and getattr(defender, "has_trainer_feature", None)
+            and defender.has_trainer_feature("Blur")
+        ):
+            evasion = int(math.floor(evasion_value_for_attack(attacker, defender, move.category) / 2))
+            accuracy_bonus = _temporary_accuracy_bonus(attacker, defender, move)
+            accuracy_stage = accuracy_stage_value(
+                attacker.combat_stages.get("accuracy", 0)
+                + attacker.spec.accuracy_cs
+                + accuracy_bonus
+            )
+            needed = max(2, 2 + evasion - accuracy_stage)
+            if needed <= 2:
+                return 0.95
+            if needed > 20:
+                return 1.0 / 20.0
+            success_faces = max(0, 21 - needed)
+            probability = success_faces / 20.0
+            return max(0.0, min(0.95, probability))
         return 1.0
     melee_no_guard = (
         targeting.normalized_target_kind(move) == "melee"
         and (attacker.has_ability("No Guard") or defender.has_ability("No Guard"))
     )
-    evasion = 0 if melee_no_guard else evasion_value(defender, move.category)
+    evasion = 0 if melee_no_guard else evasion_value_for_attack(attacker, defender, move.category)
     accuracy_bonus = _temporary_accuracy_bonus(attacker, defender, move)
     accuracy_stage = accuracy_stage_value(
         attacker.combat_stages.get("accuracy", 0) + attacker.spec.accuracy_cs + accuracy_bonus
@@ -808,6 +855,7 @@ def resolve_move_action(
     *,
     context: AttackContext | None = None,
     force_hit: bool = False,
+    accuracy_override: Dict[str, object] | None = None,
     ignore_defender_abilities: bool = False,
     present_roll_override: int | None = None,
 ) -> Dict[str, object]:
@@ -836,7 +884,9 @@ def resolve_move_action(
                         next_value = values[0]
             if next_value is not None and 1 <= int(next_value) <= 6:
                 present_roll = rng.randint(1, 6)
-    if force_hit:
+    if accuracy_override is not None:
+        accuracy = dict(accuracy_override)
+    elif force_hit:
         accuracy = {"hit": True, "crit": False, "roll": None}
         if move.ac is not None:
             accuracy["needed"] = move.ac

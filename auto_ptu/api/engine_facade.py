@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import io
 import json
 import os
@@ -8,7 +9,7 @@ import random
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Tuple
+from typing import Any, Collection, Dict, Iterable, List, Optional, Tuple
 
 from ..data_loader import default_campaign, load_builtin_campaign, load_campaign
 from ..data_models import GridSpec, MatchPlan, MatchupSpec, MoveSpec, TrainerSideSpec
@@ -31,6 +32,7 @@ from ..rules import (
     GridState,
     InterceptAction,
     ManipulateAction,
+    MotivatedAction,
     PickupItemAction,
     TrainerState,
     TrainerSwitchAction,
@@ -50,7 +52,17 @@ from ..rules import (
 )
 from ..rules import movement, targeting
 from ..rules import ai_hybrid
-from ..rules.battle_state import SUPPORTED_TARGET_ORDER_SPECS, _item_entry_for, _load_maneuver_moves, _weapon_tags
+from ..rules.battle_state import (
+    SUPPORTED_TARGET_ORDER_SPECS,
+    _dashing_makeover_item_options_for_target,
+    _item_entry_for,
+    _item_name_text,
+    _is_capture_ball_name,
+    _load_maneuver_moves,
+    _signature_technique_options_for_target,
+    _wardrobe_slots,
+    _weapon_tags,
+)
 from ..rules.calculations import defensive_stat, offensive_stat, speed_stat
 from ..rules.item_effects import parse_item_effects
 from ..gameplay import BattleRecord, TextBattleSession, ai_learning_status, ai_model_status, ai_record_battle_outcome
@@ -132,9 +144,50 @@ def _trainer_feature_names(state: PokemonState) -> List[str]:
     return names
 
 
+def _trainer_feature_payloads(state: PokemonState, feature_names: Collection[str]) -> List[dict]:
+    wanted = {str(name or "").strip().lower() for name in feature_names if str(name or "").strip()}
+    payloads: List[dict] = []
+    for entry in getattr(state.spec, "trainer_features", []) or []:
+        if isinstance(entry, str):
+            payload = {"name": entry.strip()}
+        elif isinstance(entry, dict):
+            payload = dict(entry)
+            payload["name"] = str(entry.get("name") or entry.get("feature_id") or entry.get("id") or "").strip()
+        else:
+            continue
+        normalized = str(payload.get("name") or "").strip().lower()
+        if normalized and normalized in wanted:
+            payloads.append(payload)
+    return payloads
+
+
+def _normalize_named_entries(entries: Any) -> List[dict]:
+    normalized: List[dict] = []
+    for entry in list(entries or []):
+        if isinstance(entry, str):
+            name = entry.strip()
+            if name:
+                normalized.append({"name": name})
+            continue
+        if not isinstance(entry, dict):
+            continue
+        name = str(entry.get("name") or entry.get("feature_id") or entry.get("id") or "").strip()
+        if not name:
+            continue
+        payload = dict(entry)
+        payload["name"] = name
+        normalized.append(payload)
+    return normalized
+
+
 def _item_stat_label(stat: object) -> str:
     key = str(stat or "").strip().lower()
     return _STAT_LABELS.get(key, str(stat or "").strip() or "?")
+
+
+def _type_label(type_name: object) -> str:
+    value = str(type_name or "").strip().lower()
+    return value.title() if value else "?"
 
 
 def _append_unique_line(lines: List[str], text: str) -> None:
@@ -447,6 +500,18 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
                     "dirty_trick": dirty_trick,
                 }
             )
+    sleight_options = []
+    if state.has_trainer_feature("Sleight"):
+        for entry in battle._out_of_turn_move_options(actor_id):
+            move_name = str(entry.get("move") or "").strip()
+            if not move_name:
+                continue
+            move = next((mv for mv in state.spec.moves if str(mv.name or "").strip() == move_name), None)
+            if move is None or str(move.category or "").strip().lower() != "status":
+                continue
+            sleight_options.append(entry)
+    shell_game_options = battle._shell_game_hazard_options(actor_id) if state.has_trainer_feature("Shell Game") else []
+    shell_game_uses_left = max(0, 2 - battle._feature_scene_use_count(state, "Shell Game"))
     dirty_fighting_options = []
     for target_id in sorted(
         {
@@ -494,6 +559,52 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
     quick_switch_replacements = [
         {"target": replacement_id, "target_name": _combatant_name(replacement_id)}
         for replacement_id in battle._quick_switch_replacements(actor_id)
+    ]
+    quick_switch_ap_cost = 1 if state.has_trainer_feature("Juggler") else 2
+    emergency_release_targets = [
+        {"target": replacement_id, "target_name": _combatant_name(replacement_id)}
+        for replacement_id in battle._emergency_release_replacements(actor_id)
+    ]
+    bounce_shot_targets = list(emergency_release_targets)
+    capture_ball_items = [
+        {"index": idx, "item": _item_name_text(item)}
+        for idx, item in enumerate(state.spec.items if isinstance(state.spec.items, list) else [])
+        if _is_capture_ball_name(_item_name_text(item))
+    ]
+    capture_targets = [
+        {"target": pid, "target_name": _combatant_name(pid)}
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and mon.active
+        and not mon.fainted
+        and battle._team_for(pid) != battle._team_for(actor_id)
+    ]
+    captured_momentum_targets = [
+        {"target": pid, "target_name": _combatant_name(pid)}
+        for pid, mon in battle.pokemon.items()
+        if battle._team_for(pid) == battle._team_for(actor_id)
+        and mon.active
+        and not mon.fainted
+    ]
+    captured_momentum_ready = bool(state.get_temporary_effects("captured_momentum_ready"))
+    devitalizing_throw_ready = bool(state.get_temporary_effects("devitalizing_throw_ready"))
+    catch_combo_ready = bool(state.get_temporary_effects("catch_combo_ready"))
+    relentless_pursuit_pokemon = [
+        {"target": pid, "target_name": _combatant_name(pid)}
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and mon.active
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+    ]
+    relentless_pursuit_targets = [
+        {"target": pid, "target_name": _combatant_name(pid)}
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) != battle._team_for(actor_id)
+        and mon.active
+        and not mon.fainted
     ]
     ambient_aura_blessing = next(iter(state.get_temporary_effects("ambient_aura_blessing")), None)
     ambient_aura_barrier_targets = [
@@ -649,8 +760,179 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
         and battle._team_for(pid) == battle._team_for(actor_id)
         and mon.active
         and not mon.fainted
+        and not mon.is_trainer_combatant()
     ]
+    training_targets = [dict(entry) for entry in brutal_training_targets]
+    trained_stat_options = [
+        {"value": "atk", "label": "Attack"},
+        {"value": "def", "label": "Defense"},
+        {"value": "spatk", "label": "Special Attack"},
+        {"value": "spdef", "label": "Special Defense"},
+        {"value": "spd", "label": "Speed"},
+    ]
+    stat_training_moves = {
+        "atk": [{"move": "Swords Dance"}, {"move": "Rage"}],
+        "def": [{"move": "Iron Defense"}, {"move": "Reflect"}],
+        "spatk": [{"move": "Nasty Plot"}, {"move": "Hidden Power"}],
+        "spdef": [{"move": "Amnesia"}, {"move": "Light Screen"}],
+        "spd": [{"move": "Agility"}, {"move": "After You"}],
+    }
+    stat_training_feature_names = [
+        "Stat Training",
+        "Attack Training",
+        "Defense Training",
+        "Special Attack Training",
+        "Special Defense Training",
+        "Speed Training",
+    ]
+    stat_feature_to_key = {
+        "stat training": "",
+        "attack training": "atk",
+        "defense training": "def",
+        "special attack training": "spatk",
+        "special defense training": "spdef",
+        "speed training": "spd",
+        "stat stratagem": "",
+        "attack stratagem": "atk",
+        "defense stratagem": "def",
+        "special attack stratagem": "spatk",
+        "special defense stratagem": "spdef",
+        "speed stratagem": "spd",
+    }
+    stat_training_options = []
+    for feature in _trainer_feature_payloads(state, stat_training_feature_names):
+        feature_name = str(feature.get("name") or "").strip()
+        stat_key = str(feature.get("chosen_stat") or stat_feature_to_key.get(feature_name.lower(), "")).strip().lower()
+        if not stat_key:
+            continue
+        move_options = stat_training_moves.get(stat_key, [])
+        for entry in training_targets:
+            target = battle.pokemon.get(str(entry.get("target") or ""))
+            if target is None:
+                continue
+            legal_moves = [
+                option["move"]
+                for option in move_options
+                if all(str(move.name or "").strip().lower() != str(option["move"]).strip().lower() for move in target.spec.moves)
+            ]
+            if not legal_moves:
+                continue
+            stat_training_options.append(
+                {
+                    "feature": feature_name,
+                    "stat": stat_key,
+                    "stat_label": _item_stat_label(stat_key),
+                    "target": entry["target"],
+                    "target_name": entry["target_name"],
+                    "moves": [{"move": move_name, "move_name": move_name} for move_name in legal_moves],
+                }
+            )
+    stat_training_ready = bool(stat_training_options)
+    stat_stratagem_feature_names = [
+        "Stat Stratagem",
+        "Attack Stratagem",
+        "Defense Stratagem",
+        "Special Attack Stratagem",
+        "Special Defense Stratagem",
+        "Speed Stratagem",
+    ]
+    stat_stratagem_options = []
+    if trainer_ap >= 2:
+        for feature in _trainer_feature_payloads(state, stat_stratagem_feature_names):
+            feature_name = str(feature.get("name") or "").strip()
+            stat_key = str(feature.get("chosen_stat") or stat_feature_to_key.get(feature_name.lower(), "")).strip().lower()
+            if not stat_key:
+                continue
+            for entry in training_targets:
+                stat_stratagem_options.append(
+                    {
+                        "feature": feature_name,
+                        "stat": stat_key,
+                        "stat_label": _item_stat_label(stat_key),
+                        "target": entry["target"],
+                        "target_name": entry["target_name"],
+                    }
+                )
+    stat_stratagem_ready = bool(stat_stratagem_options)
+    ace_trainer_ready = bool(state.has_trainer_feature("Ace Trainer") and trainer is not None and trainer.ap >= 1 and training_targets)
+    champ_in_the_making = bool(state.has_trainer_feature("Champ in the Making"))
+    agility_training_ready = bool(state.has_trainer_feature("Agility Training") and training_targets)
     brutal_training_ready = bool(state.has_trainer_feature("Brutal Training") and brutal_training_targets)
+    focused_training_ready = bool(state.has_trainer_feature("Focused Training") and training_targets)
+    inspired_training_ready = bool(state.has_trainer_feature("Inspired Training") and training_targets)
+    duelist_targets = [
+        {"target": pid, "target_name": _combatant_name(pid)}
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and mon.active
+        and not mon.fainted
+        and battle._team_for(pid) != battle._team_for(actor_id)
+    ]
+    duelist_ready = bool(state.has_trainer_feature("Duelist") and duelist_targets)
+    effective_methods_targets = [
+        {
+            "target": pid,
+            "target_name": _combatant_name(pid),
+            "tutor_points": int(getattr(mon.spec, "tutor_points", 0) or 0),
+        }
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+        and int(getattr(mon.spec, "tutor_points", 0) or 0) >= 2
+        and not bool((getattr(mon.spec, "poke_edge_choices", {}) or {}).get("effective_methods"))
+    ]
+    effective_methods_ready = bool(state.has_trainer_feature("Effective Methods") and effective_methods_targets)
+    expend_momentum_targets = []
+    for pid, mon in battle.pokemon.items():
+        if pid == actor_id or battle._team_for(pid) != battle._team_for(actor_id):
+            continue
+        if mon.fainted or mon.is_trainer_combatant() or not mon.get_temporary_effects("focused_training"):
+            continue
+        momentum = battle._duelist_momentum(mon)
+        if momentum <= 0:
+            continue
+        usage = battle.frequency_usage.get(pid, {})
+        eot_moves = [
+            {"move": move.name, "move_name": move.name}
+            for move in mon.spec.moves
+            if str(move.freq or "").strip().lower() == "eot" and usage.get(move.name, 0) > 0
+        ]
+        scene_moves = [
+            {"move": move.name, "move_name": move.name}
+            for move in mon.spec.moves
+            if str(move.freq or "").strip().lower().startswith("scene") and usage.get(move.name, 0) > 0
+        ]
+        expend_momentum_targets.append(
+            {
+                "target": pid,
+                "target_name": _combatant_name(pid),
+                "momentum": momentum,
+                "eot_moves": eot_moves,
+                "scene_moves": scene_moves,
+            }
+        )
+    expend_momentum_ready = bool(state.has_trainer_feature("Expend Momentum") and expend_momentum_targets)
+    duelists_manual_targets = [
+        dict(entry)
+        for entry in expend_momentum_targets
+        if int(entry.get("momentum", 0) or 0) >= 1
+    ]
+    duelists_manual_ready = bool(
+        (state.has_trainer_feature("Duelist's Manual") or state.has_trainer_feature("Duelist’s Manual"))
+        and trainer_ap >= 2
+        and duelists_manual_targets
+    )
+    seize_the_moment_targets = []
+    if state.has_trainer_feature("Seize The Moment") or state.has_trainer_feature("Seize the Moment"):
+        ready = bool(state.get_temporary_effects("seize_the_moment_ready"))
+        if ready:
+            moves = [{"move": move.name, "move_name": move.name} for move in state.spec.moves if str(move.name or "").strip()]
+            for pid, mon in battle.pokemon.items():
+                if pid != actor_id and mon.active and not mon.fainted and battle._is_duelist_tagged_for(mon, state):
+                    seize_the_moment_targets.append({"target": pid, "target_name": _combatant_name(pid), "moves": moves})
+    seize_the_moment_ready = bool(seize_the_moment_targets)
     taskmaster_ready = bool(state.has_trainer_feature("Taskmaster") and state.has_trainer_feature("Brutal Training") and brutal_training_targets)
     press_targets = [
         {"target": pid, "target_name": _combatant_name(pid)}
@@ -659,6 +941,7 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
         and battle._team_for(pid) == battle._team_for(actor_id)
         and mon.active
         and not mon.fainted
+        and not mon.is_trainer_combatant()
     ]
     press_ready = bool(state.has_trainer_feature("Press") and press_targets)
     focused_command_targets = [
@@ -782,9 +1065,11 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
             "hardened": bool(mon.is_hardened()),
         }
         for pid, mon in battle.pokemon.items()
-        if battle._team_for(pid) == battle._team_for(actor_id)
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
         and mon.active
         and not mon.fainted
+        and not mon.is_trainer_combatant()
         and mon.is_hardened()
         and int(mon.injuries or 0) > 0
     ]
@@ -798,15 +1083,577 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
         for pid, mon in battle.pokemon.items()
         if pid != actor_id
         and battle._team_for(pid) == battle._team_for(actor_id)
-        and mon.active
         and not mon.fainted
+        and not mon.is_trainer_combatant()
         and int(getattr(mon.spec, "tutor_points", 0) or 0) >= 2
+        and not mon.has_ability("Cruelty")
     ]
     savage_strike_ready = bool(state.has_trainer_feature("Savage Strike") and savage_strike_targets)
+    signature_technique_targets = []
+    if state.has_trainer_feature("Signature Technique"):
+        for pid, mon in battle.pokemon.items():
+            if pid == actor_id:
+                continue
+            if battle._team_for(pid) != battle._team_for(actor_id):
+                continue
+            if mon.fainted or mon.is_trainer_combatant():
+                continue
+            existing_signature = (getattr(mon.spec, "poke_edge_choices", {}) or {}).get("signature_technique")
+            replacing = bool(existing_signature)
+            available_tp = int(getattr(mon.spec, "tutor_points", 0) or 0) + (1 if replacing else 0)
+            if available_tp < 2:
+                continue
+            move_options = _signature_technique_options_for_target(state, mon)
+            if not move_options:
+                continue
+            signature_technique_targets.append(
+                {
+                    "target": pid,
+                    "target_name": _combatant_name(pid),
+                    "tutor_points": int(getattr(mon.spec, "tutor_points", 0) or 0),
+                    "replacement_refund": 1 if replacing else 0,
+                    "current": existing_signature if isinstance(existing_signature, dict) else None,
+                    "moves": move_options,
+                }
+            )
+    signature_technique_ready = bool(state.has_trainer_feature("Signature Technique") and signature_technique_targets)
+    cheerleader_playtest_targets = [
+        {
+            "target": pid,
+            "target_name": _combatant_name(pid),
+            "tutor_points": int(getattr(mon.spec, "tutor_points", 0) or 0),
+        }
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+        and int(getattr(mon.spec, "tutor_points", 0) or 0) >= 2
+        and not mon.has_ability("Friend Guard")
+    ]
+    cheerleader_playtest_ready = bool(
+        state.has_trainer_feature("Cheerleader [Playtest]") and cheerleader_playtest_targets
+    )
+    cheer_brigade_targets = [
+        {
+            "target": pid,
+            "target_name": _combatant_name(pid),
+            "tutor_points": int(getattr(mon.spec, "tutor_points", 0) or 0),
+        }
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+        and int(getattr(mon.spec, "tutor_points", 0) or 0) >= 2
+        and not mon.has_ability("Friend Guard")
+    ]
+    cheer_brigade_ready = bool(state.has_trainer_feature("Cheer Brigade") and cheer_brigade_targets)
+    mounted_partner_id = battle._mounted_partner_id(actor_id) if hasattr(battle, "_mounted_partner_id") else None
+    mounted_mount_id = battle._mounted_mount_id(actor_id) if hasattr(battle, "_mounted_mount_id") else None
+    mounted_rider_id = battle._mounted_rider_id(actor_id) if hasattr(battle, "_mounted_rider_id") else None
+    mount_targets = [
+        {
+            "target": pid,
+            "target_name": _combatant_name(pid),
+        }
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and mon.active
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+        and state.position is not None
+        and mon.position is not None
+        and battle._combatant_distance(state, mon) <= 1
+        and not battle._is_mounted_actor(actor_id)
+        and not battle._is_mounted_actor(pid)
+    ] if hasattr(battle, "_is_mounted_actor") else []
+    dismount_positions = [
+        {"tile": [coord[0], coord[1]], "x": coord[0], "y": coord[1]}
+        for coord in (battle._mounted_dismount_positions(actor_id) if hasattr(battle, "_mounted_dismount_positions") else [])
+    ]
+    ride_as_one_swap_ready = bool(
+        state.has_trainer_feature("Ride as One")
+        and hasattr(battle, "_ride_as_one_slot_swap_available")
+        and battle._ride_as_one_slot_swap_available(actor_id)
+    )
+    conquerors_march_ready = bool(
+        state.has_trainer_feature("Conqueror's March")
+        and mounted_mount_id
+        and (mount_state := battle.pokemon.get(mounted_mount_id)) is not None
+        and mount_state.active
+        and not mount_state.fainted
+        and mount_state.has_ability("Run Up")
+    )
+    ramming_speed_targets = [
+        {
+            "target": pid,
+            "target_name": _combatant_name(pid),
+            "tutor_points": int(getattr(mon.spec, "tutor_points", 0) or 0),
+        }
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+        and int(getattr(mon.spec, "tutor_points", 0) or 0) >= 2
+        and not mon.has_ability("Run Up")
+        and not bool((getattr(mon.spec, "poke_edge_choices", {}) or {}).get("ramming_speed"))
+    ]
+    ramming_speed_ready = bool(state.has_trainer_feature("Ramming Speed") and ramming_speed_targets)
+    vim_and_vigor_targets = [
+        {
+            "target": pid,
+            "target_name": _combatant_name(pid),
+            "tutor_points": int(getattr(mon.spec, "tutor_points", 0) or 0),
+        }
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+        and int(getattr(mon.spec, "tutor_points", 0) or 0) >= 2
+        and not mon.has_ability("Vigor")
+        and not bool((getattr(mon.spec, "poke_edge_choices", {}) or {}).get("vim_and_vigor"))
+    ]
+    vim_and_vigor_ready = bool(state.has_trainer_feature("Vim and Vigor") and vim_and_vigor_targets)
+    type_ace_options = []
+    for feature in _trainer_feature_payloads(state, ["Type Ace"]):
+        chosen_type = str(feature.get("chosen_type") or "").strip().lower()
+        if not chosen_type:
+            continue
+        for pid, mon in battle.pokemon.items():
+            if pid == actor_id or battle._team_for(pid) != battle._team_for(actor_id):
+                continue
+            if mon.fainted or mon.is_trainer_combatant():
+                continue
+            if int(getattr(mon.spec, "tutor_points", 0) or 0) < 2:
+                continue
+            if bool((getattr(mon.spec, "poke_edge_choices", {}) or {}).get("type_ace")):
+                continue
+            ability_options = [
+                {"mode": "strategist", "label": f"{_type_label(chosen_type)} Strategist"},
+                {"mode": "last_chance", "label": _type_label(chosen_type) + " Surge"},
+            ]
+            type_ace_options.append(
+                {
+                    "feature": "Type Ace",
+                    "chosen_type": chosen_type,
+                    "type_label": _type_label(chosen_type),
+                    "target": pid,
+                    "target_name": _combatant_name(pid),
+                    "tutor_points": int(getattr(mon.spec, "tutor_points", 0) or 0),
+                    "ability_options": ability_options,
+                }
+            )
+    type_ace_ready = bool(type_ace_options)
+    type_refresh_options = []
+    if trainer_ap >= 2:
+        for feature in _trainer_feature_payloads(state, ["Type Refresh"]):
+            chosen_type = str(feature.get("chosen_type") or "").strip().lower()
+            if not chosen_type:
+                continue
+            for pid, mon in battle.pokemon.items():
+                if pid == actor_id or battle._team_for(pid) != battle._team_for(actor_id):
+                    continue
+                if mon.fainted or mon.is_trainer_combatant():
+                    continue
+                if battle._feature_scene_use_count(mon, "Type Refresh") >= 1:
+                    continue
+                usage = battle.frequency_usage.get(pid, {})
+                scene_moves = []
+                eot_moves = []
+                for move in mon.spec.moves:
+                    if str(move.type or "").strip().lower() != chosen_type:
+                        continue
+                    if int(usage.get(move.name, 0) or 0) <= 0:
+                        continue
+                    definition = battle._effective_move_frequency_definition(mon, move)
+                    if definition is None:
+                        definition = battle._frequency_definition(move)
+                    if definition is None:
+                        continue
+                    freq = str(definition.raw or "").strip().lower()
+                    if freq == "eot":
+                        eot_moves.append({"move": move.name, "move_name": move.name})
+                    elif freq.startswith("scene"):
+                        scene_moves.append({"move": move.name, "move_name": move.name})
+                if not scene_moves and not eot_moves:
+                    continue
+                type_refresh_options.append(
+                    {
+                        "feature": "Type Refresh",
+                        "chosen_type": chosen_type,
+                        "type_label": _type_label(chosen_type),
+                        "target": pid,
+                        "target_name": _combatant_name(pid),
+                        "scene_moves": scene_moves,
+                        "eot_moves": eot_moves,
+                    }
+                )
+    type_refresh_ready = bool(type_refresh_options)
+    move_sync_options = []
+    for feature in _trainer_feature_payloads(state, ["Move Sync"]):
+        chosen_type = str(feature.get("chosen_type") or "").strip().lower()
+        if not chosen_type:
+            continue
+        for pid, mon in battle.pokemon.items():
+            if pid == actor_id or battle._team_for(pid) != battle._team_for(actor_id):
+                continue
+            if mon.fainted or mon.is_trainer_combatant():
+                continue
+            if int(getattr(mon.spec, "tutor_points", 0) or 0) < 1:
+                continue
+            move_options = [
+                {
+                    "move": move.name,
+                    "move_name": move.name,
+                    "current_type": str(move.type or "").strip(),
+                }
+                for move in mon.spec.moves
+                if str(move.name or "").strip()
+            ]
+            if not move_options:
+                continue
+            move_sync_options.append(
+                {
+                    "feature": "Move Sync",
+                    "chosen_type": chosen_type,
+                    "type_label": _type_label(chosen_type),
+                    "target": pid,
+                    "target_name": _combatant_name(pid),
+                    "tutor_points": int(getattr(mon.spec, "tutor_points", 0) or 0),
+                    "moves": move_options,
+                }
+            )
+    move_sync_ready = bool(move_sync_options)
+    extra_ordinary_targets = [
+        {
+            "target": pid,
+            "target_name": _combatant_name(pid),
+        }
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+        and "normal" in {str(token or "").strip().lower() for token in mon.spec.types}
+        and not bool((getattr(mon.spec, "poke_edge_choices", {}) or {}).get("extra_ordinary"))
+        and (
+            mon.has_ability("Last Chance")
+            or str((mon.ability_metadata("Type Strategist") or {}).get("chosen_type") or "").strip().lower() == "normal"
+        )
+        and not (
+            mon.has_ability("Last Chance")
+            and str((mon.ability_metadata("Type Strategist") or {}).get("chosen_type") or "").strip().lower() == "normal"
+        )
+    ]
+    extra_ordinary_ready = bool(state.has_trainer_feature("Extra Ordinary") and extra_ordinary_targets)
+    culinary_appreciation_targets = [
+        {
+            "target": pid,
+            "target_name": _combatant_name(pid),
+            "tutor_points": int(getattr(mon.spec, "tutor_points", 0) or 0),
+        }
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+        and int(getattr(mon.spec, "tutor_points", 0) or 0) >= 2
+        and not bool((getattr(mon.spec, "poke_edge_choices", {}) or {}).get("culinary_appreciation"))
+        and not mon.has_ability("Gluttony")
+    ]
+    culinary_appreciation_ready = bool(state.has_trainer_feature("Culinary Appreciation") and culinary_appreciation_targets)
+    hits_the_spot_targets = []
+    for entry in reversed(list(state.get_temporary_effects("hits_the_spot_ready"))):
+        target_id = str(entry.get("target_id") or "").strip()
+        if not target_id:
+            continue
+        target = battle.pokemon.get(target_id)
+        if target is None or target.fainted or target.controller_id != state.controller_id:
+            continue
+        if any(existing.get("target") == target_id for existing in hits_the_spot_targets):
+            continue
+        hits_the_spot_targets.append(
+            {
+                "target": target_id,
+                "target_name": str(entry.get("target_name") or _combatant_name(target_id)).strip() or _combatant_name(target_id),
+            }
+        )
+    hits_the_spot_ready = bool(state.has_trainer_feature("Hits the Spot") and trainer_ap >= 1 and hits_the_spot_targets)
+    complex_aftertaste_targets = []
+    for entry in reversed(list(state.get_temporary_effects("complex_aftertaste_ready"))):
+        target_id = str(entry.get("target_id") or "").strip()
+        if not target_id:
+            continue
+        target = battle.pokemon.get(target_id)
+        if target is None or target.fainted or target.controller_id != state.controller_id:
+            continue
+        taste = str(entry.get("taste") or "").strip().lower()
+        key = (target_id, taste, str(entry.get("instance_id") or "").strip())
+        if any(
+            existing.get("target") == target_id
+            and str(existing.get("taste") or "").strip().lower() == taste
+            and str(existing.get("instance_id") or "").strip() == key[2]
+            for existing in complex_aftertaste_targets
+        ):
+            continue
+        complex_aftertaste_targets.append(
+            {
+                "target": target_id,
+                "target_name": str(entry.get("target_name") or _combatant_name(target_id)).strip() or _combatant_name(target_id),
+                "taste": taste,
+                "taste_label": taste.title() if taste else "",
+                "source_item": str(entry.get("source_item") or "").strip(),
+                "instance_id": str(entry.get("instance_id") or "").strip(),
+            }
+        )
+    complex_aftertaste_ready = bool(state.has_trainer_feature("Complex Aftertaste") and trainer_ap >= 1 and complex_aftertaste_targets)
+    close_quarters_mastery_targets = [
+        {
+            "target": pid,
+            "target_name": _combatant_name(pid),
+        }
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+        and mon.active
+    ]
+    close_quarters_mastery_ready = bool(state.has_trainer_feature("Close Quarters Mastery") and close_quarters_mastery_targets)
+    celerity_targets = [
+        {
+            "target": pid,
+            "target_name": _combatant_name(pid),
+            "initiative_bonus": int(battle._type_linked_rank(state, "flying") or 0),
+        }
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+        and mon.active
+        and (
+            "flying" in {str(token or "").strip().lower() for token in mon.spec.types}
+            or bool(mon.movement_speed("sky") or mon.movement_speed("levitate"))
+        )
+    ]
+    celerity_ready = bool(state.has_trainer_feature("Celerity") and celerity_targets)
+    foiling_foliage_options = []
+    for pid, mon in battle.pokemon.items():
+        if pid == actor_id or battle._team_for(pid) != battle._team_for(actor_id):
+            continue
+        if mon.fainted or mon.is_trainer_combatant():
+            continue
+        move_options = [
+            {"move": move.name, "move_name": move.name}
+            for move in mon.spec.moves
+            if str(move.type or "").strip().lower() == "grass" and str(move.category or "").strip().lower() == "status"
+        ]
+        if not move_options:
+            continue
+        foiling_foliage_options.append(
+            {
+                "target": pid,
+                "target_name": _combatant_name(pid),
+                "moves": move_options,
+                "current_move": str(((getattr(mon.spec, "poke_edge_choices", {}) or {}).get("foiling_foliage") or {}).get("move") or ""),
+            }
+        )
+    foiling_foliage_ready = bool(state.has_trainer_feature("Foiling Foliage") and foiling_foliage_options)
+    clever_ruse_options = []
+    if state.has_trainer_feature("Clever Ruse") and not state.is_trainer_combatant() and not state.fainted and state.active:
+        choice_pool = [
+            ("evasion", "Gain +4 Evasion for 1 full round"),
+            ("ignore_evasion", "Ignore Evasion from Stats until end of next turn"),
+        ]
+        if battle._best_disengage_destination(actor_id=actor_id, threat_id=None) is not None:
+            choice_pool.append(("disengage", "Immediately Disengage"))
+        for idx, (first_value, first_label) in enumerate(choice_pool):
+            for second_value, second_label in choice_pool[idx + 1:]:
+                clever_ruse_options.append(
+                    {
+                        "value": f"{first_value},{second_value}",
+                        "label": f"{first_label} + {second_label}",
+                        "choices": [first_value, second_value],
+                    }
+                )
+    clever_ruse_triggered = bool(state.get_temporary_effects("clever_ruse_ready"))
+    clever_ruse_ready = bool(
+        clever_ruse_options
+        and (
+            clever_ruse_triggered
+            or not any(int(entry.get("round", -1) or -1) == battle.round for entry in state.get_temporary_effects("feature_round_marker") if str(entry.get("feature") or "").strip().lower() == "clever ruse")
+        )
+    )
+    fairy_lights_count = len(state.get_temporary_effects("fairy_lights")) if not state.is_trainer_combatant() else 0
+    fairy_lights_positions = [
+        [int(coord[0]), int(coord[1])]
+        for coord in (
+            entry.get("coord")
+            for entry in state.get_temporary_effects("fairy_lights")
+            if isinstance(entry.get("coord"), (list, tuple)) and len(entry.get("coord")) >= 2
+        )
+    ] if not state.is_trainer_combatant() else []
+    fairy_lights_destination_options = []
+    if (
+        not state.is_trainer_combatant()
+        and not state.fainted
+        and state.active
+        and state.position is not None
+        and battle.grid is not None
+    ):
+        for x in range(int(battle.grid.width or 0)):
+            for y in range(int(battle.grid.height or 0)):
+                coord = (x, y)
+                if targeting.chebyshev_distance(state.position, coord) > 6:
+                    continue
+                tile_info = battle.grid.tiles.get(coord, {})
+                tile_type = str(tile_info.get("type", "") if isinstance(tile_info, dict) else tile_info).strip().lower()
+                if coord in battle.grid.blockers or any(token in tile_type for token in ("wall", "blocker", "blocking", "void")):
+                    continue
+                fairy_lights_destination_options.append({"coord": [x, y], "label": f"({x}, {y})"})
+    fairy_lights_ready = bool(
+        state.has_trainer_feature("Fairy Lights")
+        and not state.is_trainer_combatant()
+        and not state.fainted
+        and state.active
+        and "fairy" in {str(token or "").strip().lower() for token in state.spec.types}
+    )
+    flood_options = []
+    if state.has_trainer_feature("Flood!") and not state.is_trainer_combatant() and not state.fainted and state.active:
+        for move in state.spec.moves:
+            if str(move.type or "").strip().lower() != "water" or str(move.category or "").strip().lower() == "status":
+                continue
+            flood_options.append({"move": move.name, "move_name": move.name, "mode": "line", "mode_label": "Line 4"})
+            flood_options.append({"move": move.name, "move_name": move.name, "mode": "close_blast", "mode_label": "Close Blast 2"})
+    flood_ready = bool(flood_options)
+    versatile_wardrobe_targets = [
+        {
+            "target": pid,
+            "target_name": _combatant_name(pid),
+            "tutor_points": int(getattr(mon.spec, "tutor_points", 0) or 0),
+        }
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+        and int(getattr(mon.spec, "tutor_points", 0) or 0) >= 2
+        and not mon.is_chic()
+    ]
+    versatile_wardrobe_ready = bool(state.has_trainer_feature("Versatile Wardrobe") and versatile_wardrobe_targets)
+    wardrobe_slots = _wardrobe_slots(state.spec)
+    wardrobe_active_items = [
+        {"index": idx, "item": _item_name_text(item)}
+        for idx, item in enumerate(state.spec.items if isinstance(state.spec.items, list) else [])
+        if _item_name_text(item)
+    ]
+    wardrobe_stored_items = [
+        {"index": idx, "item": _item_name_text(item)}
+        for idx, item in enumerate(wardrobe_slots)
+        if _item_name_text(item)
+    ]
+    wardrobe_swap_ready = bool(state.is_chic() and wardrobe_active_items and wardrobe_stored_items)
+    dress_to_impress_targets = [
+        {
+            "target": pid,
+            "target_name": _combatant_name(pid),
+            "items": [_item_name_text(item) for item in _wardrobe_slots(mon.spec) if _item_name_text(item)],
+        }
+        for pid, mon in battle.pokemon.items()
+        if pid != actor_id
+        and battle._team_for(pid) == battle._team_for(actor_id)
+        and mon.active
+        and not mon.fainted
+        and not mon.is_trainer_combatant()
+        and mon.is_chic()
+        and any(_item_name_text(item) for item in _wardrobe_slots(mon.spec))
+        and battle._feature_scene_use_count(mon, f"Dress to Impress:{pid}") < 1
+    ]
+    dress_to_impress_ready = bool(
+        state.has_trainer_feature("Dress to Impress")
+        and battle._feature_scene_use_count(state, "Dress to Impress") < 2
+        and dress_to_impress_targets
+    )
+    dashing_makeover_bound = battle._current_dashing_makeover_binding(actor_id, state.controller_id)
+    dashing_makeover_targets = []
+    if state.has_trainer_feature("Dashing Makeover") and not dashing_makeover_bound:
+        for pid, mon in battle.pokemon.items():
+            if battle._team_for(pid) != battle._team_for(actor_id):
+                continue
+            if mon.fainted:
+                continue
+            item_options = _dashing_makeover_item_options_for_target(mon)
+            if not item_options:
+                continue
+            dashing_makeover_targets.append(
+                {
+                    "target": pid,
+                    "target_name": _combatant_name(pid),
+                    "is_trainer": mon.is_trainer_combatant(),
+                    "items": item_options,
+                }
+            )
+    dashing_makeover_ready = bool(
+        state.has_trainer_feature("Dashing Makeover")
+        and trainer_ap >= 2
+        and not dashing_makeover_bound
+        and dashing_makeover_targets
+    )
+    moment_of_action_targets = [
+        {
+            "target": trainer_id,
+            "target_name": str(getattr(target_trainer, "name", "") or trainer_id),
+            "team": str(getattr(target_trainer, "team", "") or ""),
+        }
+        for trainer_id, target_trainer in battle.trainers.items()
+        if target_trainer is not None
+        and (
+            not battle._team_for(actor_id)
+            or str(getattr(target_trainer, "team", "") or "").strip().lower() == battle._team_for(actor_id)
+        )
+    ]
+    moment_of_action_ready = bool(
+        (
+            state.has_trainer_feature("Moment of Action")
+            or state.has_trainer_feature("Moment of Action [Playtest]")
+        )
+        and state.is_trainer_combatant()
+        and bool(moment_of_action_targets)
+    )
+    go_fight_win_feature_name = (
+        "Go, Fight, Win!" if state.has_trainer_feature("Go, Fight, Win!")
+        else (
+            "Go, Fight, Win! [Playtest]" if state.has_trainer_feature("Go, Fight, Win! [Playtest]")
+            else ""
+        )
+    )
+    go_fight_win_cheers = []
+    if go_fight_win_feature_name:
+        for value, label in (
+            ("show_your_best", "Show Your Best!"),
+            ("dont_stop_now", "Don't Stop Now!"),
+            ("i_believe_in_you", "I Believe In You!"),
+        ):
+            scene_key = f"go, fight, win!:{label.lower()}"
+            if battle._feature_scene_use_count(state, scene_key) >= 1:
+                continue
+            cheer_entry = {"value": value, "label": label}
+            if value == "show_your_best":
+                cheer_entry["stats"] = [
+                    {"value": "def", "label": "Defense"},
+                    {"value": "spdef", "label": "Special Defense"},
+                ]
+            go_fight_win_cheers.append(cheer_entry)
+    go_fight_win_ready = bool(go_fight_win_feature_name and go_fight_win_cheers)
     shrug_off_ready = bool(
         state.has_trainer_feature("Shrug Off")
         and int(state.injuries or 0) > 0
-        and battle._feature_scene_use_count(state, "Shrug Off") < 1
+        and battle._feature_daily_use_count(state, "Shrug Off") < 1
     )
     shocking_speed_move_options = [
         {"move": str(move.name or "").strip(), "move_name": str(move.name or "").strip()}
@@ -845,8 +1692,33 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
         "boo_uses_left": max(0, 3 - boo_uses),
         "staying_power_ready": staying_power_ready,
         "staying_power_uses_left": max(0, 1 - staying_power_uses),
+        "ace_trainer_ready": ace_trainer_ready,
+        "ace_trainer_targets": training_targets,
+        "ace_trainer_stat_options": trained_stat_options,
+        "ace_trainer_stat_count": 2 if champ_in_the_making else 1,
+        "agility_training_ready": agility_training_ready,
+        "agility_training_targets": training_targets,
         "brutal_training_ready": brutal_training_ready,
         "brutal_training_targets": brutal_training_targets,
+        "focused_training_ready": focused_training_ready,
+        "focused_training_targets": training_targets,
+        "inspired_training_ready": inspired_training_ready,
+        "inspired_training_targets": training_targets,
+        "stat_training_ready": stat_training_ready,
+        "stat_training_options": stat_training_options,
+        "stat_stratagem_ready": stat_stratagem_ready,
+        "stat_stratagem_options": stat_stratagem_options,
+        "duelist_ready": duelist_ready,
+        "duelist_targets": duelist_targets,
+        "effective_methods_ready": effective_methods_ready,
+        "effective_methods_targets": effective_methods_targets,
+        "expend_momentum_ready": expend_momentum_ready,
+        "expend_momentum_targets": expend_momentum_targets,
+        "duelists_manual_ready": duelists_manual_ready,
+        "duelists_manual_ap_ready": trainer_ap >= 2,
+        "duelists_manual_targets": duelists_manual_targets,
+        "seize_the_moment_ready": seize_the_moment_ready,
+        "seize_the_moment_targets": seize_the_moment_targets,
         "taskmaster_ready": taskmaster_ready,
         "press_ready": press_ready,
         "press_targets": press_targets,
@@ -868,12 +1740,115 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
         "tip_the_scales_targets": tip_the_scales_targets,
         "complex_orders_ready": complex_orders_ready,
         "complex_orders_orders": commanders_voice_orders,
+        "moment_of_action_ready": moment_of_action_ready,
+        "moment_of_action_targets": moment_of_action_targets,
+        "go_fight_win_ready": go_fight_win_ready,
+        "go_fight_win_cheers": go_fight_win_cheers,
         "quick_healing_ready": quick_healing_ready,
         "quick_healing_targets": quick_healing_targets,
         "savage_strike_ready": savage_strike_ready,
         "savage_strike_targets": savage_strike_targets,
+        "signature_technique_ready": signature_technique_ready,
+        "signature_technique_targets": signature_technique_targets,
+        "cheer_brigade_ready": cheer_brigade_ready,
+        "cheer_brigade_targets": cheer_brigade_targets,
+        "mounted_partner_id": mounted_partner_id,
+        "mounted_mount_id": mounted_mount_id,
+        "mounted_rider_id": mounted_rider_id,
+        "mount_ready": bool(mount_targets),
+        "mount_targets": mount_targets,
+        "dismount_ready": bool(mounted_mount_id and dismount_positions),
+        "dismount_positions": dismount_positions,
+        "ride_as_one_swap_ready": ride_as_one_swap_ready,
+        "conquerors_march_ready": conquerors_march_ready,
+        "conquerors_march_target": mounted_mount_id,
+        "ramming_speed_ready": ramming_speed_ready,
+        "ramming_speed_targets": ramming_speed_targets,
+        "type_ace_ready": type_ace_ready,
+        "type_ace_options": type_ace_options,
+        "type_refresh_ready": type_refresh_ready,
+        "type_refresh_options": type_refresh_options,
+        "move_sync_ready": move_sync_ready,
+        "move_sync_options": move_sync_options,
+        "extra_ordinary_ready": extra_ordinary_ready,
+        "extra_ordinary_targets": extra_ordinary_targets,
+        "culinary_appreciation_ready": culinary_appreciation_ready,
+        "culinary_appreciation_targets": culinary_appreciation_targets,
+        "hits_the_spot_ready": hits_the_spot_ready,
+        "hits_the_spot_targets": hits_the_spot_targets,
+        "complex_aftertaste_ready": complex_aftertaste_ready,
+        "complex_aftertaste_targets": complex_aftertaste_targets,
+        "close_quarters_mastery_ready": close_quarters_mastery_ready,
+        "close_quarters_mastery_targets": close_quarters_mastery_targets,
+        "celerity_ready": celerity_ready,
+        "celerity_targets": celerity_targets,
+        "foiling_foliage_ready": foiling_foliage_ready,
+        "foiling_foliage_options": foiling_foliage_options,
+        "clever_ruse_ready": clever_ruse_ready,
+        "clever_ruse_triggered": clever_ruse_triggered,
+        "clever_ruse_options": clever_ruse_options,
+        "fairy_lights_ready": fairy_lights_ready,
+        "fairy_lights_count": fairy_lights_count,
+        "fairy_lights_positions": fairy_lights_positions,
+        "fairy_lights_destination_options": fairy_lights_destination_options,
+        "flood_ready": flood_ready,
+        "flood_options": flood_options,
+        "cheerleader_playtest_ready": cheerleader_playtest_ready,
+        "cheerleader_playtest_targets": cheerleader_playtest_targets,
+        "vim_and_vigor_ready": vim_and_vigor_ready,
+        "vim_and_vigor_targets": vim_and_vigor_targets,
+        "versatile_wardrobe_ready": versatile_wardrobe_ready,
+        "versatile_wardrobe_targets": versatile_wardrobe_targets,
+        "wardrobe_swap_ready": wardrobe_swap_ready,
+        "wardrobe_swap_active_items": wardrobe_active_items,
+        "wardrobe_swap_stored_items": wardrobe_stored_items,
+        "dress_to_impress_ready": dress_to_impress_ready,
+        "dress_to_impress_targets": dress_to_impress_targets,
+        "dress_to_impress_uses_left": max(0, 2 - battle._feature_scene_use_count(state, "Dress to Impress")),
+        "dashing_makeover_ready": dashing_makeover_ready,
+        "dashing_makeover_ap_ready": trainer_ap >= 2,
+        "dashing_makeover_targets": dashing_makeover_targets,
+        "dashing_makeover_release_ready": bool(dashing_makeover_bound),
+        "dashing_makeover_bound": dashing_makeover_bound,
+        "emergency_release_ready": bool(state.has_trainer_feature("Emergency Release") and emergency_release_targets and trainer_ap >= 2),
+        "emergency_release_ap_ready": trainer_ap >= 2,
+        "emergency_release_targets": emergency_release_targets,
+        "bounce_shot_ready": bool(state.has_trainer_feature("Bounce Shot") and bounce_shot_targets),
+        "bounce_shot_targets": bounce_shot_targets,
+        "capture_ball_items": capture_ball_items,
+        "capture_targets": capture_targets,
+        "fast_pitch_ready": bool(state.has_trainer_feature("Fast Pitch") and capture_ball_items and capture_targets and trainer_ap >= 1),
+        "fast_pitch_ap_ready": trainer_ap >= 1,
+        "gotta_catch_em_all_ready": bool(
+            state.has_trainer_feature("Gotta Catch 'Em All")
+            and battle._feature_scene_use_count(state, "Gotta Catch 'Em All") < 3
+            and not state.get_temporary_effects("gotta_catch_em_all_ready")
+        ),
+        "gotta_catch_em_all_uses_left": max(0, 3 - battle._feature_scene_use_count(state, "Gotta Catch 'Em All")),
+        "gotta_catch_em_all_primed": bool(state.get_temporary_effects("gotta_catch_em_all_ready")),
+        "captured_momentum_ready": captured_momentum_ready,
+        "captured_momentum_targets": captured_momentum_targets,
+        "devitalizing_throw_ready": devitalizing_throw_ready,
+        "devitalizing_throw_stat_options": [
+            {"value": "atk", "label": "Attack"},
+            {"value": "def", "label": "Defense"},
+            {"value": "spatk", "label": "Special Attack"},
+            {"value": "spdef", "label": "Special Defense"},
+            {"value": "spd", "label": "Speed"},
+        ],
+        "catch_combo_ready": catch_combo_ready,
+        "catch_combo_uses_left": max(0, 1 - battle._feature_scene_use_count(state, "Catch Combo")),
+        "relentless_pursuit_ready": bool(
+            state.has_trainer_feature("Relentless Pursuit")
+            and trainer_ap >= 2
+            and relentless_pursuit_pokemon
+            and relentless_pursuit_targets
+        ),
+        "relentless_pursuit_ap_ready": trainer_ap >= 2,
+        "relentless_pursuit_pokemon": relentless_pursuit_pokemon,
+        "relentless_pursuit_targets": relentless_pursuit_targets,
         "shrug_off_ready": shrug_off_ready,
-        "shrug_off_uses_left": max(0, 1 - battle._feature_scene_use_count(state, "Shrug Off")),
+        "shrug_off_uses_left": max(0, 1 - battle._feature_daily_use_count(state, "Shrug Off")),
         "shocking_speed_ready": shocking_speed_ready,
         "shocking_speed_uses_left": max(0, 2 - battle._feature_scene_use_count(state, "Shocking Speed")),
         "shocking_speed_moves": shocking_speed_move_options,
@@ -948,7 +1923,8 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
         "trapper_uses_left": max(0, 2 - trapper_uses),
         "wilderness_guide_ready": bool(terrain_label) and wilderness_guide_uses < 3,
         "wilderness_guide_uses_left": max(0, 3 - wilderness_guide_uses),
-        "quick_switch_ap_ready": trainer_ap >= 2,
+        "quick_switch_ap_cost": quick_switch_ap_cost,
+        "quick_switch_ap_ready": trainer_ap >= quick_switch_ap_cost,
         "quick_switch_replacements": quick_switch_replacements,
         "quick_wit_uses": quick_wit_uses,
         "quick_wit_uses_left": max(0, 3 - quick_wit_uses),
@@ -959,6 +1935,11 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
         "enchanting_gaze_anchor_options": enchanting_gaze_anchor_options,
         "trickster_targets": sorted({entry["target"] for entry in trickster_ready if entry["target"]}),
         "trickster_options": trickster_ready,
+        "sleight_ready": bool(state.has_trainer_feature("Sleight") and sleight_options),
+        "sleight_options": sleight_options,
+        "shell_game_ready": bool(state.has_trainer_feature("Shell Game") and shell_game_uses_left > 0 and shell_game_options),
+        "shell_game_options": shell_game_options,
+        "shell_game_uses_left": shell_game_uses_left,
         "dirty_fighting_ap_ready": trainer_ap >= 1,
         "dirty_fighting_targets": sorted({entry["target"] for entry in dirty_fighting_options if entry["target"]}),
         "dirty_fighting_options": dirty_fighting_options,
@@ -1080,7 +2061,7 @@ def _combatant_markers(battle: BattleState) -> Dict[str, str]:
 def _display_combatant_name(state: PokemonState) -> str:
     raw = str(state.spec.name or state.spec.species or "").strip()
     species = str(state.spec.species or raw).strip()
-    if raw.count(":") >= 2 and species:
+    if ":" in raw and species:
         return species
     return raw or species
 
@@ -1151,6 +2132,7 @@ def _move_target_ids(battle: BattleState, actor_id: str) -> Dict[str, List[Optio
     actor = battle.pokemon.get(actor_id)
     if actor is None or actor.position is None:
         return {}
+    actor._sync_parfumier_moves()
     opponent_ids = _opponent_ids(battle, actor_id)
     ally_ids = _ally_ids(battle, actor_id)
     targets: Dict[str, List[Optional[str]]] = {}
@@ -1357,6 +2339,8 @@ def _core_action_hints(battle: BattleState, actor_id: str, state: PokemonState) 
         "can_take_breather": False,
         "can_trade_standard_shift": False,
         "can_trade_standard_swift": False,
+        "motivated_ready": False,
+        "motivated_stat_options": [],
         "delay_options": [],
         "switch_replacements": [],
         "weapon_options": [],
@@ -1374,6 +2358,23 @@ def _core_action_hints(battle: BattleState, actor_id: str, state: PokemonState) 
             hints[key] = True
         except Exception:
             hints[key] = False
+    motivated_stats = []
+    for stat, label in (
+        ("atk", "Attack"),
+        ("def", "Defense"),
+        ("spatk", "Special Attack"),
+        ("spdef", "Special Defense"),
+        ("spd", "Speed"),
+        ("accuracy", "Accuracy"),
+        ("evasion", "Evasion"),
+    ):
+        try:
+            MotivatedAction(actor_id=actor_id, stat=stat).validate(battle)
+        except Exception:
+            continue
+        motivated_stats.append({"value": stat, "label": label})
+    hints["motivated_stat_options"] = motivated_stats
+    hints["motivated_ready"] = bool(motivated_stats)
     if battle.current_actor_id == actor_id:
         entry = battle.current_initiative_entry()
         current_total = int(getattr(entry, "total", 0) or 0) if entry is not None else None
@@ -1477,6 +2478,8 @@ def _trainer_turn_context(battle: BattleState, trainer_id: str) -> Dict[str, Any
         "id": trainer.identifier,
         "name": trainer.name or trainer.identifier,
         "team": trainer.team or trainer.identifier,
+        "throw_origin": list(trainer.position) if getattr(trainer, "position", None) is not None else None,
+        "throw_range": max(1, 4 + int((trainer.skills or {}).get("athletics", 0) or 0)),
         "actions_taken": {k.value: v for k, v in trainer.actions_taken.items()},
         "switch_options": switch_options,
     }
@@ -1687,6 +2690,7 @@ class EngineFacade:
         deployment_overrides: Optional[dict] = None,
         item_choice_overrides: Optional[dict] = None,
         ability_choice_overrides: Optional[dict] = None,
+        grid: Optional[dict] = None,
         side_count: int = 2,
         battle_royale: bool = False,
         circle_interval: int = 3,
@@ -1748,8 +2752,10 @@ class EngineFacade:
             )
             planner = AutoMatchPlanner(campaign_spec, seed=seed)
             plan = planner.create_plan(team_size=team_size)
-        if random_battle and not battle_royale:
+        if random_battle and not battle_royale and not isinstance(grid, dict):
             plan.grid = self._random_grid_spec(plan.grid)
+        if isinstance(grid, dict) and grid:
+            plan.grid = GridSpec.from_dict(dict(grid))
         if active_slots is not None:
             plan.active_slots = max(1, int(active_slots))
         if isinstance(side_names, dict) and side_names:
@@ -1785,16 +2791,103 @@ class EngineFacade:
                 if team:
                     trainer.team = str(team)
                 if isinstance(trainer_profile, dict):
+                    def _derive_hobbyist_feature_names(payload: dict[str, Any]) -> list[str]:
+                        derived: list[str] = []
+                        granted = payload.get("hobbyist_granted_features")
+                        if isinstance(granted, list):
+                            derived.extend(str(name).strip() for name in granted if str(name).strip())
+                        if derived:
+                            return derived
+                        look_and_learn = payload.get("look_and_learn_features")
+                        if isinstance(look_and_learn, dict):
+                            for key in ("scene", "ap"):
+                                name = str(look_and_learn.get(key) or "").strip()
+                                if name:
+                                    derived.append(name)
+                        dilettante_picks = payload.get("dilettante_picks")
+                        if isinstance(dilettante_picks, list):
+                            for pick in dilettante_picks:
+                                if not isinstance(pick, dict):
+                                    continue
+                                name = str(pick.get("feature") or "").strip()
+                                if name:
+                                    derived.append(name)
+                        return derived
+
+                    def _derive_hobbyist_edge_names(payload: dict[str, Any]) -> list[str]:
+                        derived: list[str] = []
+                        granted = payload.get("hobbyist_granted_edges")
+                        if isinstance(granted, list):
+                            derived.extend(str(name).strip() for name in granted if str(name).strip())
+                        if derived:
+                            return derived
+                        dilettante_picks = payload.get("dilettante_picks")
+                        if isinstance(dilettante_picks, list):
+                            for pick in dilettante_picks:
+                                if not isinstance(pick, dict):
+                                    continue
+                                name = str(pick.get("edge") or "").strip()
+                                if name:
+                                    derived.append(name)
+                        return derived
+
                     class_id = str(trainer_profile.get("class_id") or "")
                     class_name = str(trainer_profile.get("class_name") or class_id)
+                    mentor_skills = trainer_profile.get("mentor_skills")
                     if class_id or class_name:
                         trainer.trainer_class = {"id": class_id, "name": class_name}
+                    if isinstance(mentor_skills, list):
+                        trainer.trainer_class["mentor_skills"] = [
+                            str(name).strip()
+                            for name in mentor_skills
+                            if str(name).strip()
+                        ]
+                    feature_entries: list[dict] = []
                     features = trainer_profile.get("features")
                     if isinstance(features, list):
-                        trainer.features = [{"name": str(name)} for name in features if str(name).strip()]
+                        feature_entries.extend(_normalize_named_entries(features))
+                    capture_techniques = trainer_profile.get("capture_techniques")
+                    if isinstance(capture_techniques, list):
+                        for entry in capture_techniques:
+                            label = str(entry).strip()
+                            if not label or label.lower().startswith("capture skills"):
+                                continue
+                            feature_entries.append({"name": label})
+                    commander_orders = trainer_profile.get("commander_orders")
+                    if isinstance(commander_orders, list):
+                        feature_entries.extend(_normalize_named_entries(commander_orders))
+                    elif isinstance(commander_orders, str) and commander_orders.strip():
+                        feature_entries.append({"name": commander_orders.strip()})
+                    feature_entries.extend(_normalize_named_entries(_derive_hobbyist_feature_names(trainer_profile)))
+                    if feature_entries:
+                        seen_features: set[str] = set()
+                        merged_features = []
+                        for feature_entry in feature_entries:
+                            feature_name = str(feature_entry.get("feature_id") or feature_entry.get("id") or feature_entry.get("name") or "").strip()
+                            key = feature_name.lower()
+                            if key in seen_features:
+                                continue
+                            seen_features.add(key)
+                            merged_features.append(dict(feature_entry))
+                        trainer.features = merged_features
+                    edge_names: list[str] = []
                     edges = trainer_profile.get("edges")
                     if isinstance(edges, list):
-                        trainer.edges = [{"name": str(name)} for name in edges if str(name).strip()]
+                        edge_names.extend(str(name).strip() for name in edges if str(name).strip())
+                    hobbyist_skill_edges = trainer_profile.get("hobbyist_skill_edges")
+                    if isinstance(hobbyist_skill_edges, list):
+                        edge_names.extend(str(name).strip() for name in hobbyist_skill_edges if str(name).strip())
+                    edge_names.extend(_derive_hobbyist_edge_names(trainer_profile))
+                    if edge_names:
+                        seen_edges: set[str] = set()
+                        merged_edges = []
+                        for edge_name in edge_names:
+                            key = edge_name.lower()
+                            if key in seen_edges:
+                                continue
+                            seen_edges.add(key)
+                            merged_edges.append({"name": edge_name})
+                        trainer.edges = merged_edges
             except Exception:
                 pass
         battle.out_of_turn_prompt = self._out_of_turn_prompt
@@ -1901,6 +2994,7 @@ class EngineFacade:
                     height=plan.grid.height,
                     blockers=set(plan.grid.blockers),
                     tiles=grid_tiles,
+                    map=dict(getattr(plan.grid, "map", {}) or {}),
                 )
                 origin = side.start_positions[0] if side.start_positions else self._default_origin_for_side(side, grid)
                 throw_range = max(1, 4 + int((side.skills or {}).get("athletics", 0) or 0))
@@ -2450,11 +3544,16 @@ class EngineFacade:
         occupants: Dict[str, str] = {}
         for cid in ordered:
             state = battle.pokemon[cid]
+            state._sync_parfumier_moves()
             trainer = battle.trainers.get(state.controller_id)
             trainer_label = trainer.name if trainer and trainer.name else state.controller_id
             team = (trainer.team or trainer.identifier) if trainer else state.controller_id
             pos = state.position
-            footprint_tiles = sorted(state.footprint_tiles(battle.grid))
+            footprint_tiles = sorted(
+                tile
+                for tile in state.footprint_tiles(battle.grid)
+                if battle.grid is None or battle.grid.in_bounds(tile)
+            )
             if state.active and footprint_tiles:
                 for tile in footprint_tiles:
                     occupants[f"{tile[0]},{tile[1]}"] = cid
@@ -2508,6 +3607,7 @@ class EngineFacade:
                 held_items.append(
                     {
                         "name": name,
+                        "taste": str(raw.get("taste") or "") if isinstance(raw, dict) else "",
                         "equipped": equipped,
                         "visible_on_token": visible_on_token,
                         "kind": str(raw.get("kind") or "") if isinstance(raw, dict) else "",
@@ -2556,6 +3656,9 @@ class EngineFacade:
                     "injuries": state.injuries,
                     "statuses": _status_labels(state),
                     "position": list(pos) if pos else None,
+                    "mounted_partner_id": battle._mounted_partner_id(cid) if hasattr(battle, "_mounted_partner_id") else None,
+                    "mounted_rider_id": battle._mounted_rider_id(cid) if hasattr(battle, "_mounted_rider_id") else None,
+                    "mounted_mount_id": battle._mounted_mount_id(cid) if hasattr(battle, "_mounted_mount_id") else None,
                     "size": str(getattr(state.spec, "size", "") or ""),
                     "footprint_side": state.footprint_side(),
                     "footprint_tiles": [list(tile) for tile in footprint_tiles],
@@ -2706,14 +3809,21 @@ class EngineFacade:
                     barriers = meta.get("barriers")
                     frozen_domain = meta.get("frozen_domain")
                     trap_sources = meta.get("trap_sources")
+                    height_value = meta.get("height")
+                    difficult_value = bool(meta.get("difficult")) if "difficult" in meta else None
+                    obstacle_value = bool(meta.get("obstacle")) if "obstacle" in meta else None
                 else:
                     tile_type = str(meta or "").lower()
-                tiles.append([coord[0], coord[1], tile_type, hazards, traps, barriers, frozen_domain, trap_sources])
+                    height_value = None
+                    difficult_value = None
+                    obstacle_value = None
+                tiles.append([coord[0], coord[1], tile_type, hazards, traps, barriers, frozen_domain, trap_sources, height_value, difficult_value, obstacle_value])
             grid_payload = {
                 "width": battle.grid.width,
                 "height": battle.grid.height,
                 "blockers": [list(coord) for coord in battle.grid.blockers],
                 "tiles": tiles,
+                "map": copy.deepcopy(getattr(battle.grid, "map", {}) or {}),
             }
         current = battle.current_actor_id
         current_pos = battle.pokemon[current].position if current and current in battle.pokemon else None
@@ -2833,6 +3943,7 @@ class EngineFacade:
             "current_actor_is_player": bool(current and battle.is_player_controlled(current)),
             "current_pos": list(current_pos) if current_pos else None,
             "grid": grid_payload,
+            "map": copy.deepcopy(getattr(battle.grid, "map", {}) or {}) if battle.grid is not None else {},
             "seed": self.plan.seed if self.plan is not None else None,
             "battle_over": battle_over,
             "winner_team": winner_team,
@@ -2864,6 +3975,123 @@ class EngineFacade:
             "ai_learning": ai_learning_status(battle),
             "battle_log_path": self._battle_log_path,
         }
+
+    def _serialize_grid_payload(self, grid: Optional[GridState]) -> Optional[dict]:
+        if grid is None:
+            return None
+        tiles = []
+        for coord, meta in grid.tiles.items():
+            tile_type = ""
+            hazards = None
+            traps = None
+            barriers = None
+            frozen_domain = None
+            trap_sources = None
+            height_value = None
+            difficult_value = None
+            obstacle_value = None
+            if isinstance(meta, dict):
+                tile_type = str(meta.get("type", "")).lower()
+                hazards = meta.get("hazards")
+                traps = meta.get("traps")
+                barriers = meta.get("barriers")
+                frozen_domain = meta.get("frozen_domain")
+                trap_sources = meta.get("trap_sources")
+                height_value = meta.get("height")
+                difficult_value = bool(meta.get("difficult")) if "difficult" in meta else None
+                obstacle_value = bool(meta.get("obstacle")) if "obstacle" in meta else None
+            else:
+                tile_type = str(meta or "").lower()
+            tiles.append([coord[0], coord[1], tile_type, hazards, traps, barriers, frozen_domain, trap_sources, height_value, difficult_value, obstacle_value])
+        return {
+            "width": grid.width,
+            "height": grid.height,
+            "blockers": [list(coord) for coord in grid.blockers],
+            "tiles": tiles,
+            "map": copy.deepcopy(getattr(grid, "map", {}) or {}),
+        }
+
+    def _grid_state_from_payload(self, payload: Dict[str, Any]) -> GridState:
+        width = int(payload.get("width", 15) or 15)
+        height = int(payload.get("height", 10) or 10)
+        blockers = {tuple(int(v) for v in coord[:2]) for coord in (payload.get("blockers") or []) if isinstance(coord, (list, tuple)) and len(coord) >= 2}
+        tiles: Dict[Tuple[int, int], Dict[str, object]] = {}
+        raw_tiles = payload.get("tiles") or []
+        if isinstance(raw_tiles, list):
+            for entry in raw_tiles:
+                if isinstance(entry, (list, tuple)) and len(entry) >= 3:
+                    x = int(entry[0])
+                    y = int(entry[1])
+                    meta: Dict[str, object] = {"type": str(entry[2] or "").strip().lower()}
+                    if len(entry) > 3 and entry[3]:
+                        meta["hazards"] = dict(entry[3] or {})
+                    if len(entry) > 4 and entry[4]:
+                        meta["traps"] = dict(entry[4] or {})
+                    if len(entry) > 5 and entry[5]:
+                        meta["barriers"] = list(entry[5] or [])
+                    if len(entry) > 6 and entry[6]:
+                        meta["frozen_domain"] = list(entry[6] or [])
+                    if len(entry) > 7 and entry[7]:
+                        meta["trap_sources"] = dict(entry[7] or {})
+                    if len(entry) > 8 and entry[8] not in (None, ""):
+                        meta["height"] = int(entry[8])
+                    if len(entry) > 9 and entry[9] is not None:
+                        meta["difficult"] = bool(entry[9])
+                    if len(entry) > 10 and entry[10] is not None:
+                        meta["obstacle"] = bool(entry[10])
+                    if meta.get("obstacle"):
+                        blockers.add((x, y))
+                    if any(value not in (None, "", [], {}, False) for value in meta.values()):
+                        tiles[(x, y)] = meta
+                elif isinstance(entry, dict):
+                    x = int(entry.get("x", 0))
+                    y = int(entry.get("y", 0))
+                    meta = dict(entry.get("meta", {}) or {})
+                    if "type" in entry and "type" not in meta:
+                        meta["type"] = str(entry.get("type") or "").strip().lower()
+                    if meta.get("obstacle"):
+                        blockers.add((x, y))
+                    if any(value not in (None, "", [], {}, False) for value in meta.values()):
+                        tiles[(x, y)] = meta
+        return GridState(
+            width=width,
+            height=height,
+            blockers=blockers,
+            tiles=tiles,
+            map=dict(payload.get("map", {}) or {}),
+        )
+
+    def _validate_active_positions_against_grid(self, grid: GridState) -> None:
+        battle = self.battle
+        if battle is None:
+            return
+        for actor in battle.pokemon.values():
+            if not actor.active or actor.fainted or actor.position is None:
+                continue
+            for tile in actor.footprint_tiles(grid):
+                if not grid.in_bounds(tile):
+                    raise ValueError(f"{actor.spec.name or actor.spec.species} would be outside the battlefield on the new map.")
+                if tile in grid.blockers:
+                    raise ValueError(f"{actor.spec.name or actor.spec.species} would overlap blocking terrain on the new map.")
+
+    def load_battle_grid_for_mapper(self) -> dict:
+        battle = self.battle
+        if battle is None or battle.grid is None:
+            raise ValueError("No active battle grid to load.")
+        return {
+            "status": "ok",
+            "grid": self._serialize_grid_payload(battle.grid),
+        }
+
+    def apply_terrain_layout(self, payload: Dict[str, Any]) -> dict:
+        battle = self.battle
+        if battle is None:
+            raise ValueError("No active battle to apply terrain to.")
+        grid_payload = payload.get("grid") if isinstance(payload.get("grid"), dict) else payload
+        grid_state = self._grid_state_from_payload(dict(grid_payload or {}))
+        self._validate_active_positions_against_grid(grid_state)
+        battle.grid = grid_state
+        return self.snapshot()
 
     def export_battle_log(self) -> dict:
         battle = self.battle
@@ -3313,16 +4541,33 @@ class EngineFacade:
             replacement_id = payload.get("replacement_id") or payload.get("target_id")
             if not replacement_id:
                 raise ValueError("Switch requires a replacement.")
-            return SwitchAction(actor_id=actor_id, replacement_id=str(replacement_id))
+            dest = payload.get("target_position") or payload.get("destination") or payload.get("dest")
+            target_position = None
+            if isinstance(dest, (list, tuple)) and len(dest) >= 2:
+                target_position = (int(dest[0]), int(dest[1]))
+            elif payload.get("x") is not None and payload.get("y") is not None:
+                target_position = (int(payload.get("x")), int(payload.get("y")))
+            return SwitchAction(
+                actor_id=actor_id,
+                replacement_id=str(replacement_id),
+                target_position=target_position,
+            )
         if action_type == "trainer_switch":
             outgoing_id = payload.get("outgoing_id")
             replacement_id = payload.get("replacement_id") or payload.get("target_id")
             if not outgoing_id or not replacement_id:
                 raise ValueError("Trainer Switch requires outgoing and replacement combatants.")
+            dest = payload.get("target_position") or payload.get("destination") or payload.get("dest")
+            target_position = None
+            if isinstance(dest, (list, tuple)) and len(dest) >= 2:
+                target_position = (int(dest[0]), int(dest[1]))
+            elif payload.get("x") is not None and payload.get("y") is not None:
+                target_position = (int(payload.get("x")), int(payload.get("y")))
             return TrainerSwitchAction(
                 actor_id=str(actor_id),
                 outgoing_id=str(outgoing_id),
                 replacement_id=str(replacement_id),
+                target_position=target_position,
                 forced=bool(payload.get("forced")),
             )
         if action_type == "sprint":
@@ -3434,16 +4679,18 @@ class EngineFacade:
                 raise ValueError("Trainer feature action key is required.")
             kwargs = dict(payload.get("params") or {})
             kwargs.setdefault("actor_id", actor_id)
-            for key in ("move_name", "target_id", "target_ids", "target_orders", "assignments", "target_position", "target_positions", "barrier_tiles", "trick", "anchor_id", "maneuver_kind", "maneuver", "chosen_move", "chosen_ability", "ally_id", "mode", "destination", "suggestion_text", "primary_target_id", "primary_id", "secondary_target_id", "secondary_id", "lift_option", "order_name", "primary_order_name", "secondary_order_name", "first_order_name", "second_order_name", "first_target_id", "second_target_id"):
-                if key in payload and key not in kwargs:
-                    kwargs[key] = payload.get(key)
+            for key, value in payload.items():
+                if key in {"type", "actor_id", "action_key", "feature_action", "params"} or key in kwargs:
+                    continue
+                kwargs[key] = value
             return create_trainer_feature_action(action_key, **kwargs)
         if action_type in {"quick_wit_manipulate", "quick_wit_move", "enchanting_gaze", "trickster_follow_up", "dirty_fighting_follow_up", "weapon_finesse_follow_up", "play_them_like_a_fiddle_follow_up", "psychic_resonance_follow_up", "flight", "telepath", "thought_detection", "suggestion", "quick_switch", "mindbreak", "arctic_zeal", "polar_vortex", "psionic_overload_follow_up", "force_of_will_follow_up", "trapper", "psionic_sponge", "frozen_domain"}:
             kwargs = dict(payload.get("params") or {})
             kwargs.setdefault("actor_id", actor_id)
-            for key in ("move_name", "target_id", "target_position", "target_positions", "barrier_tiles", "trick", "anchor_id", "maneuver_kind", "maneuver", "chosen_move", "chosen_ability", "suggestion_text", "ally_id", "mode", "destination"):
-                if key in payload and key not in kwargs:
-                    kwargs[key] = payload.get(key)
+            for key, value in payload.items():
+                if key in {"type", "actor_id", "params"} or key in kwargs:
+                    continue
+                kwargs[key] = value
             return create_trainer_feature_action(action_type, **kwargs)
         raise ValueError(f"Unsupported action type: {action_type}")
 
@@ -3530,6 +4777,7 @@ class EngineFacade:
             height=grid_spec.height,
             blockers=set(grid_spec.blockers),
             tiles=tiles,
+            map=dict(getattr(grid_spec, "map", {}) or {}),
         )
         sides = matchup.sides_or_default()
         trainers: Dict[str, TrainerState] = {}
@@ -3540,9 +4788,11 @@ class EngineFacade:
         for side in sides:
             trainer_id = side.identifier or f"trainer-{len(trainers) + 1}"
             controller_kind = "ai" if self.mode == "ai" else side.controller
+            base = self._default_origin_for_side(side, grid_state)
             trainer = TrainerState(
                 identifier=trainer_id,
                 name=side.name,
+                position=base,
                 initiative_modifier=side.initiative_modifier,
                 speed=side.speed,
                 skills=dict(side.skills),
@@ -3559,7 +4809,6 @@ class EngineFacade:
                 feature_resources=dict(side.feature_resources),
             )
             trainers[trainer_id] = trainer
-            base = self._default_origin_for_side(side, grid_state)
             positions = list(side.start_positions)
             active_limit = max(1, int(plan.active_slots))
             active_count = min(len(side.pokemon), active_limit)
@@ -3759,96 +5008,327 @@ class EngineFacade:
         self._last_random_terrain = name
         return {"name": name, "remaining": rng.randint(3, 6)}
 
-    def _random_grid_spec(self, base_grid: GridSpec) -> GridSpec:
-        rng = random.Random()
-        width = rng.randint(10, 14)
-        height = rng.randint(8, 12)
+    @staticmethod
+    def _stable_seed_value(value: object) -> int:
+        text = str(value or "").strip()
+        if not text:
+            return 0
+        try:
+            return int(text)
+        except (TypeError, ValueError):
+            digest = hashlib.sha256(text.encode("utf-8")).hexdigest()
+            return int(digest[:16], 16)
+
+    @staticmethod
+    def _tile_type_tokens(value: object) -> List[str]:
+        text = str(value or "").strip().lower()
+        if not text:
+            return []
+        return [token for token in text.replace(",", " ").split() if token]
+
+    @classmethod
+    def _compose_tile_type(
+        cls,
+        existing: object,
+        *,
+        terrain_type: Optional[str] = None,
+        obstacle: Optional[bool] = None,
+        difficult: Optional[bool] = None,
+    ) -> str:
+        existing_tokens = cls._tile_type_tokens(existing)
+        tokens = [token for token in existing_tokens if token not in {"blocker", "blocking", "wall", "difficult", "rough"}]
+        if terrain_type is not None:
+            terrain = str(terrain_type or "").strip().lower()
+            tokens = [terrain] if terrain else []
+        if difficult is None:
+            difficult = any(token in {"difficult", "rough"} for token in existing_tokens)
+        if obstacle is None:
+            obstacle = any(token in {"blocker", "blocking", "wall"} for token in existing_tokens)
+        if difficult:
+            tokens.append("difficult")
+        if obstacle:
+            tokens.append("blocker")
+        return " ".join(dict.fromkeys(tokens))
+
+    @staticmethod
+    def _clear_reserved_area(
+        blockers: List[Tuple[int, int]],
+        tiles: Dict[Tuple[int, int], Dict[str, object]],
+        reserved: set[Tuple[int, int]],
+    ) -> None:
+        reserved_blockers = set(reserved)
+        blockers[:] = [coord for coord in blockers if coord not in reserved_blockers]
+        for coord in reserved:
+            meta = dict(tiles.get(coord, {}) or {})
+            meta.pop("hazards", None)
+            meta.pop("traps", None)
+            meta.pop("barriers", None)
+            meta.pop("frozen_domain", None)
+            if "type" in meta:
+                clean_type = " ".join(
+                    token
+                    for token in str(meta.get("type") or "").split()
+                    if token not in {"blocker", "blocking", "wall", "difficult", "rough"}
+                ).strip()
+                if clean_type:
+                    meta["type"] = clean_type
+                else:
+                    meta.pop("type", None)
+            if meta:
+                tiles[coord] = meta
+            else:
+                tiles.pop(coord, None)
+
+    def _generate_seeded_grid_spec(
+        self,
+        base_grid: GridSpec,
+        *,
+        seed: object,
+        theme: str = "",
+        tileset: str = "",
+        occupied: Optional[set[Tuple[int, int]]] = None,
+    ) -> GridSpec:
+        seed_value = self._stable_seed_value(seed)
+        rng = random.Random(seed_value)
+        width = int(getattr(base_grid, "width", 15) or 15)
+        height = int(getattr(base_grid, "height", 10) or 10)
         blockers: List[Tuple[int, int]] = []
         tiles: Dict[Tuple[int, int], Dict[str, object]] = {}
+        occupied = set(occupied or set())
+        reserved = set(occupied)
+        for ox, oy in list(occupied):
+            for dx in (-1, 0, 1):
+                for dy in (-1, 0, 1):
+                    nx = ox + dx
+                    ny = oy + dy
+                    if 0 <= nx < width and 0 <= ny < height:
+                        reserved.add((nx, ny))
+        active_theme = str(theme or tileset or "").strip().lower()
+        base_type_map = {
+            "forest": "forest",
+            "grassy": "grass",
+            "grass": "grass",
+            "coast": "water",
+            "water": "water",
+            "cave": "cave",
+            "urban": "urban",
+            "desert": "sand",
+            "sand": "sand",
+            "psychic": "psychic",
+            "ice": "ice",
+            "snow": "ice",
+            "volcanic": "rock",
+            "rock": "rock",
+            "ruins": "rock",
+        }
+        accent_type_map = {
+            "forest": "water",
+            "grassy": "water",
+            "grass": "water",
+            "coast": "sand",
+            "water": "sand",
+            "cave": "rock difficult",
+            "urban": "urban difficult",
+            "desert": "rock",
+            "sand": "rock",
+            "psychic": "psychic difficult",
+            "ice": "water",
+            "snow": "water",
+            "volcanic": "rock difficult",
+            "rock": "sand",
+            "ruins": "sand",
+        }
+        base_type = base_type_map.get(active_theme, "")
+        accent_type = accent_type_map.get(active_theme, "difficult")
+
+        def in_bounds(coord: Tuple[int, int]) -> bool:
+            return 0 <= coord[0] < width and 0 <= coord[1] < height
 
         def is_reserved(coord: Tuple[int, int]) -> bool:
             x, y = coord
+            if coord in reserved:
+                return True
             if x <= 1 and y <= 1:
                 return True
             if x >= width - 2 and y >= height - 2:
                 return True
             return False
 
-        def place_blockers() -> None:
-            target = max(6, int(width * height * 0.08))
-            attempts = 0
-            while len(blockers) < target and attempts < target * 20:
-                attempts += 1
-                coord = (rng.randrange(0, width), rng.randrange(0, height))
-                if coord in blockers or is_reserved(coord):
-                    continue
-                blockers.append(coord)
-
-        def seed_patch(tile_type: str, size: int) -> None:
+        def flood_patch(tile_type: str, size: int, *, avoid_reserved: bool = True) -> None:
             if size <= 0:
                 return
-            start = (rng.randrange(0, width), rng.randrange(0, height))
+            attempts = 0
+            start = None
+            while attempts < 60 and start is None:
+                attempts += 1
+                candidate = (rng.randrange(0, width), rng.randrange(0, height))
+                if avoid_reserved and is_reserved(candidate):
+                    continue
+                if candidate in blockers:
+                    continue
+                start = candidate
+            if start is None:
+                return
             frontier = [start]
             seen = {start}
             while frontier and size > 0:
                 coord = frontier.pop(0)
-                if coord in blockers:
+                if coord in blockers or (avoid_reserved and is_reserved(coord)):
                     continue
-                tiles.setdefault(coord, {})["type"] = tile_type
+                meta = dict(tiles.get(coord, {}) or {})
+                meta["type"] = self._compose_tile_type(meta.get("type"), terrain_type=tile_type)
+                if rng.random() < 0.35:
+                    meta["height"] = max(0, int(meta.get("height", 0) or 0) + 1)
+                tiles[coord] = meta
                 size -= 1
                 x, y = coord
-                neighbors = [
-                    (x + 1, y),
-                    (x - 1, y),
-                    (x, y + 1),
-                    (x, y - 1),
-                ]
+                neighbors = [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]
                 rng.shuffle(neighbors)
                 for nxt in neighbors:
-                    if nxt in seen:
+                    if nxt in seen or not in_bounds(nxt):
                         continue
-                    nx, ny = nxt
-                    if 0 <= nx < width and 0 <= ny < height:
-                        seen.add(nxt)
-                        frontier.append(nxt)
+                    seen.add(nxt)
+                    frontier.append(nxt)
 
-        def place_hazards() -> None:
-            hazard_names = ["spikes", "toxic_spikes", "sticky_web", "stealth_rock", "fire_hazards"]
-            trap_names = ["trap"]
-            target = rng.randint(3, 6)
+        def paint_obstacle_clusters(target: int) -> None:
             attempts = 0
-            while target > 0 and attempts < 120:
+            while len(blockers) < target and attempts < target * 30:
                 attempts += 1
                 coord = (rng.randrange(0, width), rng.randrange(0, height))
-                if coord in blockers:
+                if coord in blockers or is_reserved(coord):
                     continue
-                if is_reserved(coord) and rng.random() < 0.7:
+                cluster = [coord]
+                if rng.random() < 0.45:
+                    x, y = coord
+                    neighbor = (x + rng.choice([-1, 1]), y + rng.choice([-1, 0, 1]))
+                    if in_bounds(neighbor) and not is_reserved(neighbor):
+                        cluster.append(neighbor)
+                valid = [tile for tile in cluster if tile not in blockers and not is_reserved(tile)]
+                for tile in valid:
+                    blockers.append(tile)
+                    meta = dict(tiles.get(tile, {}) or {})
+                    meta["type"] = self._compose_tile_type(meta.get("type"), obstacle=True)
+                    meta["obstacle"] = True
+                    meta["height"] = max(1, int(meta.get("height", 0) or 0) + 1)
+                    tiles[tile] = meta
+
+        def place_hazards(target: int) -> None:
+            hazard_names = ["spikes", "toxic_spikes", "sticky_web", "stealth_rock", "fire_hazards"]
+            attempts = 0
+            while target > 0 and attempts < 160:
+                attempts += 1
+                coord = (rng.randrange(0, width), rng.randrange(0, height))
+                if is_reserved(coord) or coord in blockers:
                     continue
-                tile = tiles.setdefault(coord, {})
-                if rng.random() < 0.75:
-                    hazard = rng.choice(hazard_names)
-                    layers = 1 + (1 if rng.random() < 0.35 else 0)
-                    hazard_map = dict(tile.get("hazards") or {})
-                    hazard_map[hazard] = max(layers, int(hazard_map.get(hazard, 0) or 0))
-                    tile["hazards"] = hazard_map
-                else:
-                    trap = rng.choice(trap_names)
-                    trap_map = dict(tile.get("traps") or {})
-                    trap_map[trap] = max(1, int(trap_map.get(trap, 0) or 0))
-                    tile["traps"] = trap_map
+                meta = dict(tiles.get(coord, {}) or {})
+                hazard_name = rng.choice(hazard_names)
+                hazards = dict(meta.get("hazards") or {})
+                hazards[hazard_name] = max(1, int(hazards.get(hazard_name, 0) or 0) + (1 if rng.random() < 0.25 else 0))
+                meta["hazards"] = hazards
+                tiles[coord] = meta
                 target -= 1
 
-        place_blockers()
-        for _ in range(rng.randint(2, 3)):
-            seed_patch("water", rng.randint(4, 8))
-        for _ in range(rng.randint(2, 3)):
-            seed_patch("difficult", rng.randint(4, 7))
-        place_hazards()
+        def paint_linear_feature(tile_type: str, thickness: int, *, orientation: str) -> set[Tuple[int, int]]:
+            painted: set[Tuple[int, int]] = set()
+            if orientation == "vertical":
+                center = rng.randrange(max(2, width // 4), min(width - 2, width - max(2, width // 4)))
+                for x in range(center - thickness // 2, center + thickness // 2 + 1):
+                    for y in range(0, height):
+                        coord = (x, y)
+                        if not in_bounds(coord) or is_reserved(coord):
+                            continue
+                        meta = dict(tiles.get(coord, {}) or {})
+                        meta["type"] = self._compose_tile_type(meta.get("type"), terrain_type=tile_type)
+                        tiles[coord] = meta
+                        painted.add(coord)
+            else:
+                center = rng.randrange(max(2, height // 4), min(height - 2, height - max(2, height // 4)))
+                for y in range(center - thickness // 2, center + thickness // 2 + 1):
+                    for x in range(0, width):
+                        coord = (x, y)
+                        if not in_bounds(coord) or is_reserved(coord):
+                            continue
+                        meta = dict(tiles.get(coord, {}) or {})
+                        meta["type"] = self._compose_tile_type(meta.get("type"), terrain_type=tile_type)
+                        tiles[coord] = meta
+                        painted.add(coord)
+            return painted
 
+        def paint_ring(coords: set[Tuple[int, int]], tile_type: str) -> None:
+            if not coords:
+                return
+            for x, y in list(coords):
+                for nxt in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+                    if not in_bounds(nxt) or is_reserved(nxt) or nxt in blockers or nxt in coords:
+                        continue
+                    meta = dict(tiles.get(nxt, {}) or {})
+                    existing_type = str(meta.get("type") or "")
+                    if "water" in existing_type.split():
+                        continue
+                    meta["type"] = self._compose_tile_type(meta.get("type"), terrain_type=tile_type)
+                    tiles[nxt] = meta
+
+        def generate_water_coast_map() -> None:
+            orientation = "vertical" if width >= height else "horizontal"
+            main_water = paint_linear_feature("water", max(2, min(4, width // 5 if orientation == "vertical" else height // 5)), orientation=orientation)
+            if rng.random() < 0.65:
+                branch_orientation = "horizontal" if orientation == "vertical" else "vertical"
+                branch = paint_linear_feature("water", 2, orientation=branch_orientation)
+                main_water.update(branch)
+            paint_ring(main_water, "sand")
+            for _ in range(max(1, width // 6)):
+                flood_patch("sand", rng.randint(3, 6))
+            paint_obstacle_clusters(max(2, int(width * height * 0.025)))
+            place_hazards(max(1, int(width * height * 0.01)))
+
+        def generate_grassy_map() -> None:
+            for _ in range(max(3, int((width * height) * 0.02))):
+                flood_patch("grass", rng.randint(4, 8))
+            for _ in range(max(2, int((width * height) * 0.012))):
+                flood_patch("forest", rng.randint(3, 6))
+            for _ in range(max(1, int((width * height) * 0.008))):
+                flood_patch("water", rng.randint(2, 4))
+            paint_obstacle_clusters(max(3, int(width * height * 0.04)))
+            place_hazards(max(2, int(width * height * 0.012)))
+
+        if active_theme in {"water", "coast"}:
+            generate_water_coast_map()
+        elif active_theme in {"grass", "grassy", "forest"} and str(tileset or "").strip().lower() == "gen4-outside":
+            generate_grassy_map()
+        else:
+            if base_type:
+                for _ in range(max(2, int((width * height) * 0.018))):
+                    flood_patch(base_type, rng.randint(3, 7))
+            for _ in range(max(2, int((width * height) * 0.012))):
+                flood_patch(accent_type, rng.randint(3, 6))
+            for _ in range(max(1, int((width * height) * 0.008))):
+                flood_patch(f"{base_type} difficult" if base_type else "difficult", rng.randint(2, 5))
+            paint_obstacle_clusters(max(4, int(width * height * 0.05)))
+            place_hazards(max(2, int(width * height * 0.018)))
+        self._clear_reserved_area(blockers, tiles, reserved)
+        map_meta = {
+            "name": f"{(tileset or theme or 'Field').strip().title()} Seed {seed}",
+            "seed": str(seed),
+            "theme": active_theme or "default",
+            "tileset": str(tileset or theme or "default").strip().lower(),
+            "generated": True,
+        }
         return GridSpec(
             width=width,
             height=height,
             scale=float(getattr(base_grid, "scale", 1.0)),
-            blockers=blockers,
+            blockers=sorted(set(blockers)),
             tiles=tiles,
+            map=map_meta,
         )
+
+    def _random_grid_spec(self, base_grid: GridSpec) -> GridSpec:
+        rng = random.Random()
+        randomized_base = GridSpec(
+            width=rng.randint(10, 14),
+            height=rng.randint(8, 12),
+            scale=float(getattr(base_grid, "scale", 1.0)),
+        )
+        theme = rng.choice(["grassy", "water", "cave", "urban", "desert", "psychic", "ice", "forest"])
+        seed = rng.randint(1, 999999)
+        return self._generate_seeded_grid_spec(randomized_base, seed=seed, theme=theme, tileset=theme)

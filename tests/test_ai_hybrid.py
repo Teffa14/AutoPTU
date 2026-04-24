@@ -3,7 +3,7 @@ import unittest
 
 from auto_ptu.data_models import MoveSpec, PokemonSpec
 from auto_ptu.ai import aai_port
-from auto_ptu.rules import BattleState, GridState, PokemonState, ShiftAction, UseMoveAction
+from auto_ptu.rules import BattleState, DisengageAction, GridState, PokemonState, ShiftAction, UseMoveAction
 from auto_ptu.rules.battle_state import _load_maneuver_moves
 from auto_ptu.rules import ai_hybrid, ai
 
@@ -242,6 +242,69 @@ class HybridAITests(unittest.TestCase):
         self.assertEqual(action.move_name, "Agility")
         self.assertEqual(info.get("reason"), "pre_engage_setup")
 
+    def test_prefers_highest_expected_damage_move_as_baseline(self) -> None:
+        weak = MoveSpec(
+            name="Scratch",
+            type="Normal",
+            category="Physical",
+            db=2,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+        )
+        strong = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=8,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+        )
+        actor = PokemonState(spec=_make_mon("Actor", atk=12, moves=[weak, strong]), controller_id="a", position=(1, 1))
+        foe = PokemonState(spec=_make_mon("Foe", defense=12, moves=[weak]), controller_id="b", position=(1, 2))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=6, height=6),
+            rng=random.Random(46),
+        )
+        battle.start_round()
+        action, info = ai_hybrid.choose_action(battle, "a-1")
+        self.assertIsInstance(action, UseMoveAction)
+        assert isinstance(action, UseMoveAction)
+        self.assertEqual(action.move_name, "Slash")
+        self.assertEqual(info.get("reason"), "attack_in_range")
+
+    def test_shift_scoring_penalizes_recent_position_loops(self) -> None:
+        move = MoveSpec(
+            name="Punch",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+        )
+        actor = PokemonState(spec=_make_mon("Actor", moves=[move]), controller_id="a", position=(5, 5))
+        foe = PokemonState(spec=_make_mon("Foe", moves=[move]), controller_id="b", position=(8, 5))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=10, height=10),
+            rng=random.Random(31),
+        )
+        battle.start_round()
+        battle.log_event({"type": "shift", "actor": "a-1", "from": [4, 5], "to": [5, 5], "round": 1})
+        battle.log_event({"type": "shift", "actor": "a-1", "from": [5, 5], "to": [4, 5], "round": 2})
+        loop_score = ai_hybrid.score_action(battle, "a-1", ShiftAction(actor_id="a-1", destination=(4, 5)))
+        progress_score = ai_hybrid.score_action(battle, "a-1", ShiftAction(actor_id="a-1", destination=(6, 5)))
+        self.assertLess(loop_score, progress_score)
+
     def test_does_not_treat_self_debuff_status_as_setup(self) -> None:
         bad_setup = MoveSpec(
             name="Tail Whip",
@@ -270,6 +333,307 @@ class HybridAITests(unittest.TestCase):
         self.assertFalse(any(isinstance(candidate, UseMoveAction) and candidate.move_name == "Tail Whip" for candidate in ai_hybrid.generate_candidates(battle, "a-1")))
         if isinstance(action, UseMoveAction):
             self.assertNotEqual(action.move_name, "Tail Whip")
+
+    def test_prefers_accuracy_pressure_setup_when_followup_exists(self) -> None:
+        sand_attack = MoveSpec(
+            name="Sand Attack",
+            type="Ground",
+            category="Status",
+            db=0,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            effects_text="Lower the target's Accuracy by 1 Combat Stage.",
+        )
+        weak_hit = MoveSpec(
+            name="Scratch",
+            type="Normal",
+            category="Physical",
+            db=2,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+        )
+        finisher = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=8,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+        )
+        actor = PokemonState(spec=_make_mon("Actor", atk=12, moves=[sand_attack, weak_hit, finisher]), controller_id="a", position=(1, 1))
+        foe = PokemonState(spec=_make_mon("Foe", atk=18, defense=35, moves=[finisher]), controller_id="b", position=(1, 2))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=6, height=6),
+            rng=random.Random(41),
+        )
+        battle.start_round()
+        action, info = ai_hybrid.choose_action(battle, "a-1")
+        self.assertIsInstance(action, UseMoveAction)
+        assert isinstance(action, UseMoveAction)
+        self.assertEqual(action.move_name, "Sand Attack")
+
+    def test_strong_damage_baseline_blocks_setup_choice(self) -> None:
+        sand_attack = MoveSpec(
+            name="Sand Attack",
+            type="Ground",
+            category="Status",
+            db=0,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            effects_text="Lower the target's Accuracy by 1 Combat Stage.",
+        )
+        slash = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=8,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+        )
+        actor = PokemonState(spec=_make_mon("Actor", atk=14, moves=[sand_attack, slash]), controller_id="a", position=(1, 1))
+        foe = PokemonState(spec=_make_mon("Foe", defense=8, moves=[slash]), controller_id="b", position=(1, 2))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=6, height=6),
+            rng=random.Random(47),
+        )
+        battle.start_round()
+        action, info = ai_hybrid.choose_action(battle, "a-1")
+        self.assertIsInstance(action, UseMoveAction)
+        assert isinstance(action, UseMoveAction)
+        self.assertEqual(action.move_name, "Slash")
+        self.assertEqual(info.get("reason"), "attack_in_range")
+
+    def test_knock_off_scores_above_peer_damage_when_target_has_item(self) -> None:
+        knock_off = MoveSpec(
+            name="Knock Off",
+            type="Dark",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            effects_text="If the target is hit, remove one of its held items.",
+        )
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+        )
+        actor = PokemonState(spec=_make_mon("Actor", atk=12, moves=[knock_off, tackle]), controller_id="a", position=(2, 2))
+        foe_spec = _make_mon("Foe", defense=12, moves=[tackle])
+        foe_spec.items = [{"name": "Oran Berry"}]
+        foe = PokemonState(spec=foe_spec, controller_id="b", position=(2, 3))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=6, height=6),
+            rng=random.Random(42),
+        )
+        battle.start_round()
+        knock_action = UseMoveAction(actor_id="a-1", move_name="Knock Off", target_id="b-1")
+        tackle_action = UseMoveAction(actor_id="a-1", move_name="Tackle", target_id="b-1")
+        self.assertGreater(ai_hybrid.score_action(battle, "a-1", knock_action), ai_hybrid.score_action(battle, "a-1", tackle_action))
+
+    def test_knock_off_can_beat_higher_raw_damage_when_item_value_is_high(self) -> None:
+        knock_off = MoveSpec(
+            name="Knock Off",
+            type="Dark",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            effects_text="If the target is hit, remove one of its held items.",
+        )
+        slash = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=8,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+        )
+        actor = PokemonState(spec=_make_mon("Actor", atk=12, moves=[knock_off, slash]), controller_id="a", position=(2, 2))
+        foe_spec = _make_mon("Foe", defense=12, moves=[slash])
+        foe_spec.items = [{"name": "Leftovers"}]
+        foe = PokemonState(spec=foe_spec, controller_id="b", position=(2, 3))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=6, height=6),
+            rng=random.Random(60),
+        )
+        battle.start_round()
+        action, info = ai_hybrid.choose_action(battle, "a-1")
+        self.assertIsInstance(action, UseMoveAction)
+        assert isinstance(action, UseMoveAction)
+        self.assertEqual(action.move_name, "Knock Off")
+        self.assertEqual(info.get("reason"), "item_denial")
+
+    def test_hidden_simulation_outcome_tracks_item_removal(self) -> None:
+        knock_off = MoveSpec(
+            name="Knock Off",
+            type="Dark",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            effects_text="If the target is hit, remove one of its held items.",
+        )
+        actor = PokemonState(spec=_make_mon("Actor", atk=12, moves=[knock_off]), controller_id="a", position=(2, 2))
+        foe_spec = _make_mon("Foe", defense=12, moves=[])
+        foe_spec.items = [{"name": "Oran Berry"}]
+        foe = PokemonState(spec=foe_spec, controller_id="b", position=(2, 3))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=6, height=6),
+            rng=random.Random(48),
+        )
+        battle.start_round()
+        action = UseMoveAction(actor_id="a-1", move_name="Knock Off", target_id="b-1")
+        outcome = ai_hybrid._simulated_action_outcome(battle, "a-1", action)
+        self.assertGreaterEqual(float(outcome.get("damage", 0.0) or 0.0), 0.0)
+        self.assertGreater(float(outcome.get("item_removed", 0.0) or 0.0), 0.0)
+
+    def test_damage_followup_scores_higher_after_accuracy_drop_combo(self) -> None:
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+        )
+        actor = PokemonState(spec=_make_mon("Actor", atk=12, moves=[tackle]), controller_id="a", position=(3, 3))
+        foe = PokemonState(spec=_make_mon("Foe", defense=12, moves=[tackle]), controller_id="b", position=(3, 4))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=7, height=7),
+            rng=random.Random(43),
+        )
+        battle.start_round()
+        action = UseMoveAction(actor_id="a-1", move_name="Tackle", target_id="b-1")
+        base_score = ai_hybrid.score_action(battle, "a-1", action)
+        battle.pokemon["b-1"].combat_stages["accuracy"] = -2
+        combo_score = ai_hybrid.score_action(battle, "a-1", action)
+        self.assertGreater(combo_score, base_score)
+
+    def test_accuracy_pressure_intent_biases_followup_attack_next_turn(self) -> None:
+        sand_attack = MoveSpec(
+            name="Sand Attack",
+            type="Ground",
+            category="Status",
+            db=0,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            effects_text="Lower the target's Accuracy by 1 Combat Stage.",
+        )
+        slash = MoveSpec(
+            name="Slash",
+            type="Normal",
+            category="Physical",
+            db=8,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+        )
+        actor = PokemonState(spec=_make_mon("Actor", atk=12, moves=[sand_attack, slash]), controller_id="a", position=(1, 1))
+        foe = PokemonState(spec=_make_mon("Foe", atk=18, defense=14, moves=[slash]), controller_id="b", position=(1, 2))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=6, height=6),
+            rng=random.Random(44),
+        )
+        battle.start_round()
+        ai_hybrid.observe_action(battle, "a-1", UseMoveAction(actor_id="a-1", move_name="Sand Attack", target_id="b-1"))
+        battle.pokemon["b-1"].combat_stages["accuracy"] = -1
+        slash_action = UseMoveAction(actor_id="a-1", move_name="Slash", target_id="b-1")
+        sand_action = UseMoveAction(actor_id="a-1", move_name="Sand Attack", target_id="b-1")
+        self.assertGreater(ai_hybrid.score_action(battle, "a-1", slash_action), ai_hybrid.score_action(battle, "a-1", sand_action))
+
+    def test_self_setup_intent_biases_payoff_attack_next_turn(self) -> None:
+        agility = MoveSpec(
+            name="Agility",
+            type="Psychic",
+            category="Status",
+            db=0,
+            ac=2,
+            range_kind="Self",
+            range_value=0,
+            target_kind="Self",
+            target_range=0,
+            effects_text="Raise the user's Speed Combat Stages by +2.",
+        )
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+        )
+        actor = PokemonState(spec=_make_mon("Actor", atk=12, moves=[agility, tackle]), controller_id="a", position=(2, 2))
+        foe = PokemonState(spec=_make_mon("Foe", defense=12, moves=[tackle]), controller_id="b", position=(2, 3))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=6, height=6),
+            rng=random.Random(45),
+        )
+        battle.start_round()
+        ai_hybrid.observe_action(battle, "a-1", UseMoveAction(actor_id="a-1", move_name="Agility", target_id="a-1"))
+        tackle_action = UseMoveAction(actor_id="a-1", move_name="Tackle", target_id="b-1")
+        agility_action = UseMoveAction(actor_id="a-1", move_name="Agility", target_id="a-1")
+        self.assertGreater(ai_hybrid.score_action(battle, "a-1", tackle_action), ai_hybrid.score_action(battle, "a-1", agility_action))
 
     def test_generate_candidates_skips_harmful_friendly_fire_move(self) -> None:
         smog = MoveSpec(
@@ -337,6 +701,41 @@ class HybridAITests(unittest.TestCase):
         self.assertIsInstance(action, UseMoveAction)
         assert isinstance(action, UseMoveAction)
         self.assertEqual(action.move_name, "Tackle")
+
+    def test_struggle_scores_below_real_attack_when_available(self) -> None:
+        struggle = MoveSpec(
+            name="Struggle",
+            type="Typeless",
+            category="Physical",
+            db=4,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+        )
+        tackle = MoveSpec(
+            name="Tackle",
+            type="Normal",
+            category="Physical",
+            db=4,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+        )
+        actor = PokemonState(spec=_make_mon("Actor", moves=[struggle, tackle]), controller_id="a", position=(2, 2))
+        foe = PokemonState(spec=_make_mon("Foe", moves=[tackle]), controller_id="b", position=(2, 3))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=6, height=6),
+            rng=random.Random(25),
+        )
+        battle.start_round()
+        struggle_action = UseMoveAction(actor_id="a-1", move_name="Struggle", target_id="b-1")
+        tackle_action = UseMoveAction(actor_id="a-1", move_name="Tackle", target_id="b-1")
+        self.assertLess(
+            ai_hybrid.score_action(battle, "a-1", struggle_action),
+            ai_hybrid.score_action(battle, "a-1", tackle_action),
+        )
 
     def test_stale_prefers_non_struggle_damaging_move(self) -> None:
         struggle = MoveSpec(
@@ -467,6 +866,231 @@ class HybridAITests(unittest.TestCase):
         assert isinstance(action, UseMoveAction)
         self.assertEqual(action.move_name, "Tackle")
         self.assertNotEqual(info.get("reason"), "stale_switch")
+
+    def test_repeated_zero_damage_same_target_penalizes_attack_score(self) -> None:
+        poison_sting = MoveSpec(
+            name="Poison Sting",
+            type="Poison",
+            category="Physical",
+            db=2,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            effects_text="Poison Sting poisons on a high roll.",
+        )
+        sand_attack = MoveSpec(
+            name="Sand Attack",
+            type="Ground",
+            category="Status",
+            db=0,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            effects_text="Lower the target's Accuracy by 1 Combat Stage.",
+        )
+        actor = PokemonState(spec=_make_mon("Gligar", atk=10, moves=[poison_sting, sand_attack]), controller_id="a", position=(2, 2))
+        foe = PokemonState(spec=_make_mon("Shuckle", defense=30, moves=[]), controller_id="b", position=(2, 3))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=6, height=6),
+            rng=random.Random(58),
+        )
+        battle.start_round()
+        action = UseMoveAction(actor_id="a-1", move_name="Poison Sting", target_id="b-1")
+        baseline = ai_hybrid.score_action(battle, "a-1", action)
+        battle.log.append({"type": "move", "actor": "a-1", "move": "Poison Sting", "target": "b-1", "damage": 0})
+        battle.log.append({"type": "move", "actor": "a-1", "move": "Poison Sting", "target": "b-1", "damage": 0})
+        penalized = ai_hybrid.score_action(battle, "a-1", action)
+        self.assertLess(penalized, baseline - 3.0)
+
+    def test_repeated_zero_damage_same_target_prefers_status_over_loop(self) -> None:
+        poison_sting = MoveSpec(
+            name="Poison Sting",
+            type="Poison",
+            category="Physical",
+            db=2,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            effects_text="Poison Sting poisons on a high roll.",
+        )
+        sand_attack = MoveSpec(
+            name="Sand Attack",
+            type="Ground",
+            category="Status",
+            db=0,
+            ac=2,
+            range_kind="Melee",
+            range_value=1,
+            target_kind="Melee",
+            target_range=1,
+            effects_text="Lower the target's Accuracy by 1 Combat Stage.",
+        )
+        actor = PokemonState(spec=_make_mon("Gligar", atk=10, moves=[poison_sting, sand_attack]), controller_id="a", position=(2, 2))
+        foe = PokemonState(spec=_make_mon("Shuckle", defense=30, moves=[]), controller_id="b", position=(2, 3))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=6, height=6),
+            rng=random.Random(59),
+        )
+        battle.start_round()
+        battle.log.append({"type": "move", "actor": "a-1", "move": "Poison Sting", "target": "b-1", "damage": 0})
+        battle.log.append({"type": "move", "actor": "a-1", "move": "Poison Sting", "target": "b-1", "damage": 0})
+        action, info = ai_hybrid.choose_action(battle, "a-1")
+        self.assertIsInstance(action, UseMoveAction)
+        assert isinstance(action, UseMoveAction)
+        self.assertEqual(action.move_name, "Sand Attack")
+        self.assertIn(info.get("reason"), {"stale_setup", "weak_damage_setup", "status_value"})
+
+    def test_withdraw_is_penalized_when_withdrawn_is_already_active(self) -> None:
+        withdraw = MoveSpec(
+            name="Withdraw",
+            type="Water",
+            category="Status",
+            db=0,
+            ac=2,
+            range_kind="Self",
+            range_value=0,
+            target_kind="Self",
+            target_range=0,
+            effects_text="Withdraw raises Defense by +1 CS. Withdrawn grants damage reduction and blocks movement.",
+        )
+        ember = MoveSpec(
+            name="Ember",
+            type="Fire",
+            category="Special",
+            db=5,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+        )
+        actor = PokemonState(spec=_make_mon("Torkoal", defense=10, moves=[withdraw, ember]), controller_id="a", position=(2, 2))
+        foe = PokemonState(spec=_make_mon("Foe", defense=7, moves=[ember]), controller_id="b", position=(2, 4))
+        actor.statuses.append({"name": "Withdrawn"})
+        actor.combat_stages["def"] = 2
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=8, height=8),
+            rng=random.Random(61),
+        )
+        battle.start_round()
+        withdraw_action = UseMoveAction(actor_id="a-1", move_name="Withdraw", target_id="a-1")
+        ember_action = UseMoveAction(actor_id="a-1", move_name="Ember", target_id="b-1")
+        self.assertLess(ai_hybrid.score_action(battle, "a-1", withdraw_action), ai_hybrid.score_action(battle, "a-1", ember_action))
+
+    def test_repeated_low_impact_damage_same_target_is_penalized(self) -> None:
+        ember = MoveSpec(
+            name="Ember",
+            type="Fire",
+            category="Special",
+            db=5,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+        )
+        actor = PokemonState(spec=_make_mon("Actor", atk=9, moves=[ember]), controller_id="a", position=(2, 2))
+        foe = PokemonState(spec=_make_mon("Torkoal", hp=58, defense=10, moves=[]), controller_id="b", position=(2, 4))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=8, height=8),
+            rng=random.Random(62),
+        )
+        battle.start_round()
+        action = UseMoveAction(actor_id="a-1", move_name="Ember", target_id="b-1")
+        baseline = ai_hybrid.score_action(battle, "a-1", action)
+        battle.log.append({"type": "move", "actor": "a-1", "move": "Ember", "target": "b-1", "damage": 4})
+        battle.log.append({"type": "move", "actor": "a-1", "move": "Ember", "target": "b-1", "damage": 6})
+        penalized = ai_hybrid.score_action(battle, "a-1", action)
+        self.assertLess(penalized, baseline - 2.5)
+
+    def test_disengage_is_penalized_when_foe_keeps_ranged_pressure(self) -> None:
+        thunder_shock = MoveSpec(
+            name="Thunder Shock",
+            type="Electric",
+            category="Special",
+            db=4,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+        )
+        rock_throw = MoveSpec(
+            name="Rock Throw",
+            type="Rock",
+            category="Physical",
+            db=6,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+        )
+        actor = PokemonState(spec=_make_mon("Pikachu", atk=8, moves=[thunder_shock]), controller_id="a", position=(2, 2))
+        foe = PokemonState(spec=_make_mon("Cranidos", atk=12, moves=[rock_throw]), controller_id="b", position=(2, 3))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=7, height=7),
+            rng=random.Random(63),
+        )
+        battle.start_round()
+        attack_action = UseMoveAction(actor_id="a-1", move_name="Thunder Shock", target_id="b-1")
+        disengage_action = DisengageAction(actor_id="a-1", destination=(1, 2))
+        self.assertGreater(
+            ai_hybrid.score_action(battle, "a-1", attack_action),
+            ai_hybrid.score_action(battle, "a-1", disengage_action),
+        )
+
+    def test_choose_action_does_not_prefer_disengage_when_destination_stays_threatened(self) -> None:
+        thunder_shock = MoveSpec(
+            name="Thunder Shock",
+            type="Electric",
+            category="Special",
+            db=1,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+        )
+        stone_edge = MoveSpec(
+            name="Stone Edge",
+            type="Rock",
+            category="Physical",
+            db=10,
+            ac=2,
+            range_kind="Ranged",
+            range_value=6,
+            target_kind="Ranged",
+            target_range=6,
+        )
+        actor = PokemonState(spec=_make_mon("Pikachu", atk=6, moves=[thunder_shock]), controller_id="a", position=(2, 2))
+        foe = PokemonState(spec=_make_mon("Cranidos", atk=15, moves=[stone_edge]), controller_id="b", position=(2, 3))
+        battle = BattleState(
+            trainers={},
+            pokemon={"a-1": actor, "b-1": foe},
+            grid=GridState(width=7, height=7),
+            rng=random.Random(64),
+        )
+        battle.start_round()
+
+        action, _info = ai_hybrid.choose_action(battle, "a-1")
+        self.assertFalse(isinstance(action, DisengageAction))
 
     def test_reaction_only_move_is_not_used_proactively(self) -> None:
         counter = MoveSpec(

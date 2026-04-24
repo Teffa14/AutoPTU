@@ -1044,19 +1044,7 @@ def _combo_striker_followup(ctx: AbilityHookContext) -> None:
         return
     target_id = ctx.defender_id
     target_pos = ctx.defender.position if ctx.defender else None
-    struggle = MoveSpec(
-        name="Struggle",
-        type="Normal",
-        category="Physical",
-        db=4,
-        ac=4,
-        range_kind="Melee",
-        range_value=1,
-        target_kind="Melee",
-        target_range=1,
-        freq="At-Will",
-        range_text="Melee, 1 Target",
-    )
+    struggle = ctx.battle.build_struggle_move(ctx.attacker_id, ctx.attacker)
     ctx.events.append(
         {
             "type": "ability",
