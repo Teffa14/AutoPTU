@@ -129,10 +129,12 @@ def legal_shift_tiles(
     weather = battle.effective_weather_for_actor(actor) if hasattr(battle, "effective_weather_for_actor") else battle.weather
     land_limit = max(0, actor.movement_speed("overland", weather=weather) - penalty)
     swim_limit = max(0, actor.movement_speed("swim", weather=weather) - penalty)
+    sky_limit = max(0, actor.movement_speed("sky", weather=weather) - penalty)
     if actor.has_temporary_effect("sprint"):
         multiplier = 2.0 if actor.has_temporary_effect("coaching_sprint") else 1.5
         land_limit = int(math.ceil(land_limit * multiplier))
         swim_limit = int(math.ceil(swim_limit * multiplier))
+        sky_limit = int(math.ceil(sky_limit * multiplier))
     fly = actor.can_fly()
     swim = actor.can_swim()
     burrow = actor.can_burrow()
@@ -157,11 +159,14 @@ def legal_shift_tiles(
             if "void" in tile_type:
                 continue
             is_water = "water" in tile_type
-            limit = land_limit
-            if is_water and not fly:
-                if not swim:
-                    continue
-                limit = swim_limit
+            if fly:
+                limit = sky_limit
+            else:
+                limit = land_limit
+                if is_water:
+                    if not swim:
+                        continue
+                    limit = swim_limit
             if limit <= 0:
                 continue
             step_cost = 1

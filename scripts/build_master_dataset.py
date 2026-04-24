@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REPORTS = ROOT / "reports"
 FILES = ROOT / "files"
 STATIC = ROOT / "auto_ptu" / "api" / "static"
+STATIC_CHARACTER = STATIC / "AutoPTUCharacter"
 DATA = ROOT / "auto_ptu" / "data" / "compiled"
 
 CHARACTER_CREATION = REPORTS / "character_creation.json"
@@ -36,9 +37,11 @@ RULEBOOK_PATHS = [
 OUT_REPORT = REPORTS / "master_dataset.json"
 OUT_STATIC = STATIC / "master_dataset.json"
 OUT_STATIC_EMBED = STATIC / "master_dataset.embed.js"
+OUT_STATIC_CHARACTER = STATIC_CHARACTER / "master_dataset.json"
 
 REPORTS.mkdir(parents=True, exist_ok=True)
 STATIC.mkdir(parents=True, exist_ok=True)
+STATIC_CHARACTER.mkdir(parents=True, exist_ok=True)
 
 
 def _read_json(path: Path, default):
@@ -1064,8 +1067,10 @@ def main():
         },
     }
 
-    OUT_REPORT.write_text(json.dumps(dataset, indent=2, ensure_ascii=False), encoding="utf-8")
-    OUT_STATIC.write_text(json.dumps(dataset, indent=2, ensure_ascii=False), encoding="utf-8")
+    json_text = json.dumps(dataset, indent=2, ensure_ascii=False)
+    OUT_REPORT.write_text(json_text, encoding="utf-8")
+    OUT_STATIC.write_text(json_text, encoding="utf-8")
+    OUT_STATIC_CHARACTER.write_text(json_text, encoding="utf-8")
     OUT_STATIC_EMBED.write_text(
         "window.__AUTO_PTU_MASTER_DATA = " + json.dumps(dataset, indent=2, ensure_ascii=False) + ";\n",
         encoding="utf-8",
