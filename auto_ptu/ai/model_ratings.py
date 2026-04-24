@@ -73,10 +73,11 @@ def record_result(
             return payload
         first = ensure_entry(payload, winner_model_id)
         second = ensure_entry(payload, loser_model_id)
-        rated_a, rated_b = store.env.rate_1vs1(
+        rated_a, rated_b = trueskill.rate_1vs1(
             trueskill.Rating(mu=float(first["mu"]), sigma=float(first["sigma"])),
             trueskill.Rating(mu=float(second["mu"]), sigma=float(second["sigma"])),
             drawn=True,
+            env=store.env,
         )
         _write_rating(first, rated_a, draw=True)
         _write_rating(second, rated_b, draw=True)
@@ -86,9 +87,10 @@ def record_result(
         return payload
     winner = ensure_entry(payload, winner_model_id)
     loser = ensure_entry(payload, loser_model_id)
-    rated_winner, rated_loser = store.env.rate_1vs1(
+    rated_winner, rated_loser = trueskill.rate_1vs1(
         trueskill.Rating(mu=float(winner["mu"]), sigma=float(winner["sigma"])),
         trueskill.Rating(mu=float(loser["mu"]), sigma=float(loser["sigma"])),
+        env=store.env,
     )
     _write_rating(winner, rated_winner, win=True)
     _write_rating(loser, rated_loser, loss=True)
@@ -128,4 +130,3 @@ def _write_rating(entry: Dict[str, Any], rating: trueskill.Rating, *, win: bool 
         entry["losses"] = int(entry.get("losses") or 0) + 1
     if draw:
         entry["draws"] = int(entry.get("draws") or 0) + 1
-

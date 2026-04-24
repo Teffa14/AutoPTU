@@ -18,6 +18,7 @@ Copy-Item (Join-Path $staticDir "app.js") (Join-Path $appDir "app.js") -Force
 Copy-Item (Join-Path $staticDir "character_creation.json") (Join-Path $appDir "character_creation.json") -Force
 Copy-Item (Join-Path $staticDir "master_dataset.embed.js") (Join-Path $appDir "master_dataset.embed.js") -Force
 Copy-Item (Join-Path $staticDir "pokedex_learnset.embed.js") (Join-Path $appDir "pokedex_learnset.embed.js") -Force
+Copy-Item (Join-Path $staticDir "pokemon_move_sources.embed.js") (Join-Path $appDir "pokemon_move_sources.embed.js") -Force
 Copy-Item (Join-Path $staticDir "design-system") (Join-Path $appDir "design-system") -Recurse -Force
 Copy-Item (Join-Path $staticDir "vendor") (Join-Path $appDir "vendor") -Recurse -Force
 Copy-Item (Join-Path $staticDir "logic") (Join-Path $appDir "logic") -Recurse -Force
