@@ -19,11 +19,21 @@ __pycache__/
 /archive/
 /build_new/
 /dist_new/
+/dist_fresh/
+/dist_fresh_*/
 /test-results/
 /build_logs/
 /check here for issues/
 /reports/battle_logs/
+/reports/terrain_maps/
+/reports/simulations/
+/reports/launch.err.log
+/reports/launch.out.log
+/reports/roleplay_events.sqlite3
+/reports/ai_models/model_*.json
 /tmp_autoptu_*.png
+/tmp_map_builder_debug.png
+/tmp_ptu_maps/
 /tmpcx1zo4kv/
 /.coverage
 .coverage*
@@ -31,6 +41,13 @@ htmlcov/
 .ipynb_checkpoints/
 SESSION_LOG.md
 builder_startup_trace.log
+*.tmp
+*.bak
+*.orig
+*.rej
+tmp_*.png
+tmp_*.log
+tmp_*.html
 tmp_*.json
 tmp_*.js
 tmp_*.txt
@@ -38,6 +55,7 @@ tmp_*.py
 tmp_*.spec.js
 _tmp_*.py
 _tmp_*.txt
+/AutoPTUTerrainMapper.spec
 7z-extra.7z
 Generation 9 Pack v3.3.4.rar
 Foundry/ptr2e-Stable.zip

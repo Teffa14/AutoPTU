@@ -33,5 +33,17 @@ Thanks for helping turn Auto PTU into a fully playable PTU 1.05 experience! This
 2. If you advanced a milestone, mark it `[done]` or `[in progress]` in `ROADMAP.md`.
 3. Expand any relevant design doc sections so future contributors understand the new system without reading the entire diff.
 
+## 6. Keep the repo clean
+
+1. Treat generated output as disposable. Build folders, one-off screenshots, temporary maps, simulation batches, and local reports should never be mixed into source changes unless the file is a deliberate checked-in fixture.
+2. Keep scratch work in ignored `tmp_*` or `_tmp_*` files only. If a helper script becomes useful to other contributors, move it into `scripts/` and document what it generates.
+3. Respect repository line endings. Python, JS, CSS, HTML, JSON, and Markdown stay LF; Windows launcher scripts stay CRLF. The repo-level `.editorconfig` and `.gitattributes` exist to stop accidental whole-file churn.
+4. Separate source changes from generated refreshes. If you regenerate a coverage report, dataset, or asset bundle, do it in a dedicated follow-up commit so reviewers can tell code changes from output changes.
+5. Before opening a PR or handing work off, run the smallest meaningful validation set and note it explicitly. At minimum:
+   `python -m pytest tests/test_trainer_passive_perks.py tests/test_web_regressions.py -q`
+   `node --check auto_ptu/api/static/app.js`
+6. Use `python scripts/validate_repo.py` as the default validation entrypoint. For wider refactors, run `python scripts/validate_repo.py --full`.
+
+
 Following these steps leaves breadcrumbs for future teammates (and our future selves). When in doubt, over-communicate in the docs before touching code.
 
