@@ -1,6 +1,17 @@
-# Out-Of-Combat Architecture (Draft)
+# Campaign and Out-Of-Combat Architecture
 
-This document defines the target architecture for out-of-combat systems, roleplay tooling, and VTT features. It is intentionally modular and aligns with `ARCHITECTURE_POLICY.md`.
+This document records the implemented campaign-table foundation and the remaining out-of-combat roadmap. It is intentionally modular and aligns with `ARCHITECTURE_POLICY.md`.
+
+## Implemented Foundation (July 2026)
+
+- `auto_ptu/rules/campaign_state.py` owns serializable participants, scenes, clocks, quests, factions, chat, journals, safety state, and campaign time.
+- `auto_ptu/rules/campaign_commands.py` is the permission and deterministic dice boundary. It accepts explicit commands and emits ordered campaign events.
+- `auto_ptu/api/campaign_service.py` authenticates table participants, persists snapshots plus append-only events, and restores campaigns after restart.
+- `auto_ptu/api/campaign_api.py` exposes create, join, state, command, and event endpoints under `/api/campaigns`.
+- `/campaign` is a role-aware table workspace for GM, player, and spectator play. It polls persistent state so several browser clients can share the same table.
+- Combat scenes can link to the tactical board. The battle board's command service stages, validates, reorders, removes, and resolves existing engine actions, and owns explicit out-of-turn reaction windows.
+
+Campaign command permissions are authoritative on the server. The current tactical battle remains one local server-owned encounter; its role selector is a table control, not yet a campaign-authenticated remote-player ownership boundary.
 
 **Guiding Principles**
 - No monoliths. Each system is a small, focused module with clear contracts.
@@ -37,7 +48,9 @@ This document defines the target architecture for out-of-combat systems, rolepla
 - Maps, tokens, and shared board state.
 - Real-time collaboration and permissions.
 
-## Module Layout (Proposed)
+## Module Layout
+
+The campaign modules above are implemented. The focused overworld and richer VTT modules below remain the proposed expansion layout.
 
 **Rules**
 - `auto_ptu/rules/overworld/`
@@ -104,9 +117,10 @@ This document defines the target architecture for out-of-combat systems, rolepla
 ## Persistence Strategy
 
 **Event log first**
-- All actions become events.
-- Snapshotting for performance.
-- Event schema versioned.
+- Every campaign command becomes an ordered event.
+- SQLite snapshots provide fast restart recovery.
+- Campaign indexes and serialized collections use stable ordering.
+- Event schema versioning remains required before external migrations are supported.
 
 ## Permissions
 
@@ -122,9 +136,14 @@ Core rules:
 
 ## Migration Plan
 
-Phase 0
-- Define contracts and event schemas.
-- Implement basic persistence and event broadcast.
+Phase 0 — complete
+- Define campaign contracts and event schemas.
+- Implement persistence, token roles, polling, chat/dice, scenes, clocks, quests, factions, journals, safety tools, and combat links.
+
+Battle command phase — complete
+- Dry-run and stage existing engine actions without mutating authoritative battle state.
+- Reorder, cancel, resolve-next, and resolve-all declarations.
+- Open, collect, pass, stack, and resolve explicit out-of-turn reaction windows.
 
 Phase 1
 - Travel, downtime, social checks.
@@ -142,3 +161,5 @@ Phase 3
 - Do we store NPCs as Characters or separate type?
 - Is party inventory centralized or per character?
 - How do we handle homebrew rule packs for out-of-combat?
+- Should live multi-client updates remain polling-based or move to WebSockets?
+- How should campaign participant tokens map to tactical combatant ownership?

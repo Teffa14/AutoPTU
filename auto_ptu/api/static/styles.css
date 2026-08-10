@@ -4184,6 +4184,7 @@
   color: #deebff;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
   line-height: 1.45;
+  pointer-events: none;
 }
 
 .tooltip-title {

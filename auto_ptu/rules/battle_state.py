@@ -1400,6 +1400,30 @@ def _trainer_feature_type_entries(actor: "PokemonState", feature_name: str) -> L
     return entries
 
 
+_CHRONICLER_ARCHIVE_KIND_ALIASES: Dict[str, str] = {
+    "profile": "profile",
+    "profile album": "profile",
+    "technique": "technique",
+    "technique album": "technique",
+    "travel": "travel",
+    "travel album": "travel",
+}
+_CHRONICLER_TRAVEL_ABILITY_ALIASES: Dict[str, str] = {
+    "keen eye": "Keen Eye",
+    "keeneye": "Keen Eye",
+    "perception": "Perception",
+}
+_CHRONICLER_SOCIAL_SKILLS: Set[str] = {"charm", "command", "guile", "intimidate", "intuition"}
+
+
+def _normalize_chronicler_archive_kind(value: object) -> str:
+    return _CHRONICLER_ARCHIVE_KIND_ALIASES.get(str(value or "").strip().lower(), "")
+
+
+def _normalize_chronicler_record_name(value: object) -> str:
+    return re.sub(r"\s+", " ", str(value or "").strip())
+
+
 def _type_ace_last_chance_ability(type_name: object) -> str:
     return _TYPE_ACE_LAST_CHANCE_ABILITIES.get(_normalize_type_ace_type_name(type_name), "")
 
@@ -10046,6 +10070,320 @@ class PokemonState:
             return "Move Sync"
 
 
+    class ChroniclerRecordAction(TrainerFeatureAction):
+        """Add a named Chronicler record directly into one selected archive."""
+
+        feature_name = "Chronicler"
+
+        def __init__(self, actor_id: str, archive: str, record_name: str, record_kind: str = "") -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.SWIFT)
+            self.archive = _normalize_chronicler_archive_kind(archive)
+            self.record_name = _normalize_chronicler_record_name(record_name)
+            self.record_kind = str(record_kind or "").strip().lower()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_ap(battle, 1)
+            if not self.archive:
+                raise ValueError("Chronicler requires a valid archive.")
+            if not self.record_name:
+                raise ValueError("Chronicler requires a record name.")
+            metadata = battle._chronicler_metadata(trainer.identifier)
+            if self.archive not in metadata.get("archives", set()):
+                raise ValueError("That archive has not been unlocked.")
+            records = metadata.get("records", {}).get(self.archive, []) or []
+            if self.record_name.lower() in {str(entry).strip().lower() for entry in records}:
+                raise ValueError("That record is already in the selected archive.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.spend_ap(battle, 1)
+            trainer_class = dict(getattr(trainer, "trainer_class", {}) or {})
+            records = trainer_class.get("chronicler_records")
+            if not isinstance(records, dict):
+                records = {"profile": [], "technique": [], "travel": []}
+            archive_records = list(records.get(self.archive, []) or [])
+            archive_records.append(self.record_name)
+            records[self.archive] = archive_records
+            trainer_class["chronicler_records"] = records
+            archives = {
+                _normalize_chronicler_archive_kind(value)
+                for value in (trainer_class.get("chronicler_archives", []) or [])
+            }
+            archives.discard("")
+            archives.add(self.archive)
+            trainer_class["chronicler_archives"] = sorted(archives)
+            trainer.trainer_class = trainer_class
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "trainer": trainer.identifier,
+                    "feature": "Chronicler",
+                    "effect": "record_added",
+                    "archive": self.archive,
+                    "record": self.record_name,
+                    "record_kind": self.record_kind,
+                    "ap_spent": 1,
+                    "target_hp": actor.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Chronicler"
+
+
+    class TargetedProfilingAction(TrainerFeatureAction):
+        """Grant Mold Breaker-like targeting and +2 Accuracy versus profile archive targets."""
+
+        feature_name = "Targeted Profiling"
+
+        def __init__(self, actor_id: str, target_id: str) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.STANDARD)
+            self.target_id = str(target_id or "").strip()
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_ap(battle, 2)
+            if not battle._chronicler_metadata(trainer.identifier).get("records", {}).get("profile"):
+                raise ValueError("Targeted Profiling requires at least one Profile Archive record.")
+            target = battle.pokemon.get(self.target_id)
+            if target is None or target.fainted or target.is_trainer_combatant():
+                raise ValueError("Targeted Profiling requires a conscious allied Pokemon target.")
+            if target.controller_id != actor.controller_id:
+                raise ValueError("Targeted Profiling only targets your own Pokemon.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.spend_ap(battle, 2)
+            target = battle.pokemon[self.target_id]
+            target.add_temporary_effect(
+                "targeted_profiling",
+                source_controller=trainer.identifier,
+                expires_round=battle.round + 1,
+            )
+            battle.log_event(
+                {
+                    "type": "trainer_feature",
+                    "actor": self.actor_id,
+                    "target": self.target_id,
+                    "trainer": trainer.identifier,
+                    "feature": "Targeted Profiling",
+                    "effect": "profile_lock",
+                    "ap_spent": 2,
+                    "target_hp": target.hp,
+                }
+            )
+
+        def describe_action(self) -> str:
+            return "Targeted Profiling"
+
+
+    class CinematicAnalysisAction(TrainerFeatureAction):
+        """Resolve the combat-relevant Chronicler analysis modes."""
+
+        feature_name = "Cinematic Analysis"
+
+        def __init__(
+            self,
+            actor_id: str,
+            mode: str,
+            target_id: str = "",
+            move_name: str = "",
+            social_skill: str = "",
+            move_target_id: str = "",
+        ) -> None:
+            super().__init__(actor_id=actor_id, action_type=ActionType.FREE)
+            self.mode = str(mode or "").strip().lower()
+            self.target_id = str(target_id or "").strip()
+            self.move_name = str(move_name or "").strip()
+            self.social_skill = str(social_skill or "").strip().lower()
+            self.move_target_id = str(move_target_id or "").strip()
+
+        def _can_learn_archived_move(self, target: "PokemonState", move_name: str) -> bool:
+            move_key = str(move_name or "").strip().lower()
+            if not move_key:
+                return False
+            known = {str(move.name or "").strip().lower() for move in target.spec.moves}
+            if move_key in known:
+                return True
+            learnset = getattr(target.spec, "learnset", []) or []
+            for entry in learnset:
+                if isinstance(entry, dict) and str(entry.get("move") or "").strip().lower() == move_key:
+                    return True
+            source_data = dict(getattr(target.spec, "move_sources", {}) or {})
+            if move_key in {str(key).strip().lower() for key in source_data.keys()}:
+                return True
+            compact_key = re.sub(r"[^a-z0-9]+", "", move_key)
+            return compact_key in {re.sub(r"[^a-z0-9]+", "", str(key).strip().lower()) for key in source_data.keys()}
+
+        def validate(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            if battle._feature_daily_use_count(actor, "Cinematic Analysis") >= 3:
+                raise ValueError("Cinematic Analysis has no daily uses remaining.")
+            scene_key = f"Cinematic Analysis:{self.mode}"
+            if battle._feature_scene_use_count(actor, scene_key) >= 1:
+                raise ValueError("That Cinematic Analysis mode has already been used this scene.")
+            if self.mode == "recreation":
+                if not self.move_name:
+                    raise ValueError("Recreation requires an archived move.")
+                if not battle._chronicler_technique_matches(trainer.identifier, self.move_name):
+                    raise ValueError("That move is not in the Technique Archive.")
+                move_daily_key = f"Cinematic Analysis:Recreation:{self.move_name.strip().lower()}"
+                if battle._feature_daily_use_count(actor, move_daily_key) >= 1:
+                    raise ValueError("That archived move has already been recreated today.")
+                target = battle.pokemon.get(self.target_id)
+                if target is None or target.fainted or target.is_trainer_combatant():
+                    raise ValueError("Recreation requires a conscious allied Pokemon target.")
+                if target.controller_id != actor.controller_id:
+                    raise ValueError("Recreation only targets your own Pokemon.")
+                if not self._can_learn_archived_move(target, self.move_name):
+                    raise ValueError("That Pokemon cannot legally learn the chosen archived move.")
+                move_cache = {str(move.name or "").strip().lower(): move for move in _load_move_specs()}
+                if str(self.move_name or "").strip().lower() not in move_cache:
+                    raise ValueError("Unknown move for Recreation.")
+                return
+            if self.mode == "character_study":
+                if self.social_skill not in _CHRONICLER_SOCIAL_SKILLS:
+                    raise ValueError("Character Study requires a social skill.")
+                target = battle.pokemon.get(self.target_id)
+                if target is None or target.fainted or not target.active:
+                    raise ValueError("Character Study requires an active target.")
+                if battle._team_for(self.actor_id) == battle._team_for(self.target_id):
+                    raise ValueError("Character Study targets a foe.")
+                if not battle._chronicler_profile_matches(trainer.identifier, target):
+                    raise ValueError("Character Study requires a Profile Archive subject.")
+                if battle._combatant_skill_rank(actor, "perception", trainer_override_id=trainer.identifier) <= 0:
+                    raise ValueError("Character Study requires a usable Perception rank.")
+                return
+            if self.mode == "situational_awareness":
+                if not battle._chronicler_travel_active(trainer.identifier):
+                    raise ValueError("Situational Awareness requires the current location in the Travel Archive.")
+                target = battle.pokemon.get(self.target_id)
+                if target is None or target.fainted or target.is_trainer_combatant():
+                    raise ValueError("Situational Awareness requires a conscious allied Pokemon target.")
+                if target.controller_id != actor.controller_id:
+                    raise ValueError("Situational Awareness only targets your own Pokemon.")
+                turn_window = battle._situational_awareness_turn_window(self.target_id)
+                if not turn_window:
+                    raise ValueError("That Pokemon has no next turn available to convert into an interrupt.")
+                if not self.move_name:
+                    raise ValueError("Situational Awareness requires a move to use as the interrupt action.")
+                move_options = battle._out_of_turn_move_options(self.target_id)
+                normalized_choice = str(self.move_name or "").strip().lower()
+                selected = None
+                for entry in move_options:
+                    if str(entry.get("move") or "").strip().lower() != normalized_choice:
+                        continue
+                    entry_target = str(entry.get("target_id") or "").strip()
+                    if entry_target == str(self.move_target_id or "").strip():
+                        selected = entry
+                        break
+                if selected is None:
+                    raise ValueError("Situational Awareness requires a legal interrupt move choice.")
+                return
+            raise ValueError("Unsupported Cinematic Analysis mode.")
+
+        def resolve(self, battle: "BattleState") -> None:
+            actor, trainer = self.validate_feature_owner(battle)
+            if self.mode == "recreation":
+                target = battle.pokemon[self.target_id]
+                move_cache = {str(move.name or "").strip().lower(): move for move in _load_move_specs()}
+                move_spec = copy.deepcopy(move_cache[str(self.move_name or "").strip().lower()])
+                appended = False
+                if not any(str(move.name or "").strip().lower() == str(move_spec.name or "").strip().lower() for move in target.spec.moves):
+                    target.spec.moves.append(copy.deepcopy(move_spec))
+                    appended = True
+                target.add_temporary_effect(
+                    "cinematic_analysis_move_granted",
+                    name=move_spec.name,
+                    appended=appended,
+                    expires_round=battle.round,
+                    source="Cinematic Analysis",
+                )
+                battle._record_feature_scene_use(actor, f"Cinematic Analysis:{self.mode}")
+                battle._record_feature_daily_use(actor, "Cinematic Analysis")
+                battle._record_feature_daily_use(actor, f"Cinematic Analysis:Recreation:{self.move_name.strip().lower()}")
+                battle.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": self.actor_id,
+                        "target": self.target_id,
+                        "trainer": actor.controller_id,
+                        "feature": "Cinematic Analysis",
+                        "effect": "recreation",
+                        "move": move_spec.name,
+                        "target_hp": target.hp,
+                    }
+                )
+                return
+            if self.mode == "character_study":
+                target = battle.pokemon[self.target_id]
+                actor.add_temporary_effect(
+                    "character_study_ready",
+                    target_id=self.target_id,
+                    social_skill=self.social_skill,
+                    source="Cinematic Analysis",
+                )
+                battle._record_feature_scene_use(actor, f"Cinematic Analysis:{self.mode}")
+                battle._record_feature_daily_use(actor, "Cinematic Analysis")
+                battle.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": self.actor_id,
+                        "target": self.target_id,
+                        "trainer": trainer.identifier,
+                        "feature": "Cinematic Analysis",
+                        "effect": "character_study",
+                        "social_skill": self.social_skill,
+                        "substituted_skill": "perception",
+                        "target_hp": target.hp,
+                    }
+                )
+                return
+            if self.mode == "situational_awareness":
+                target = battle.pokemon[self.target_id]
+                move_options = battle._out_of_turn_move_options(self.target_id)
+                selected = None
+                normalized_choice = str(self.move_name or "").strip().lower()
+                for entry in move_options:
+                    if str(entry.get("move") or "").strip().lower() != normalized_choice:
+                        continue
+                    if str(entry.get("target_id") or "").strip() == str(self.move_target_id or "").strip():
+                        selected = entry
+                        break
+                if selected is None:
+                    raise ValueError("Situational Awareness requires a legal interrupt move choice.")
+                turn_window = battle._situational_awareness_turn_window(self.target_id)
+                if not turn_window or not battle._consume_situational_awareness_turn(self.target_id, turn_window):
+                    raise ValueError("Situational Awareness could not reserve the ally's next turn.")
+                resolved = battle._resolve_out_of_turn_move(
+                    self.target_id,
+                    move_name=str(selected.get("move") or self.move_name),
+                    target_id=str(selected.get("target_id") or "").strip() or None,
+                )
+                if not resolved:
+                    raise ValueError("Situational Awareness could not resolve the chosen interrupt action.")
+                battle._record_feature_scene_use(actor, f"Cinematic Analysis:{self.mode}")
+                battle._record_feature_daily_use(actor, "Cinematic Analysis")
+                battle.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": self.actor_id,
+                        "target": self.target_id,
+                        "trainer": trainer.identifier,
+                        "feature": "Cinematic Analysis",
+                        "effect": "situational_awareness",
+                        "move": str(selected.get("move") or self.move_name),
+                        "move_target": str(selected.get("target_id") or "").strip() or None,
+                        "turn_window": turn_window,
+                        "description": "Situational Awareness lets an ally spend its next turn as an interrupt action.",
+                        "target_hp": target.hp,
+                    }
+                )
+                return
+            raise ValueError("Unsupported Cinematic Analysis mode.")
+
+        def describe_action(self) -> str:
+            return "Cinematic Analysis"
+
+
     class ExtraOrdinaryAction(TrainerFeatureAction):
         """Grant the missing normal Type Ace ability to a qualifying allied Pokemon."""
 
@@ -14812,6 +15150,7 @@ class PokemonState:
             self._sync_static_trainer_feature_abilities_to_pokemon()
             self._sync_poke_edges_to_pokemon()
             self._sync_persistent_trainer_feature_ability_grants_to_pokemon()
+            self._sync_chronicler_travel_archive_effects_to_pokemon()
             register_all_hooks()
             initialize_move_specials()
             if not self.extension_packs:
@@ -16541,7 +16880,7 @@ class PokemonState:
                     context={},
                     force_hit=bool(result.get("hit")),
                     accuracy_override=int(result.get("roll", 0) or 0) if result.get("hit") else None,
-                    ignore_defender_abilities=attacker.has_ability("Mold Breaker") and attacker_id != defender_id,
+                    ignore_defender_abilities=self._attacker_ignores_defender_abilities(attacker, defender),
                 )
             finally:
                 defender.combat_stages[stat] = original_stage
@@ -18600,6 +18939,31 @@ class PokemonState:
                         }
                     )
                     continue
+                skip_situational_awareness_turn = next(
+                    (
+                        effect
+                        for effect in pokemon.get_temporary_effects("situational_awareness_skip_turn")
+                        if int(effect.get("round", -1)) == self.round
+                    ),
+                    None,
+                )
+                if skip_situational_awareness_turn is not None:
+                    if skip_situational_awareness_turn in pokemon.temporary_effects:
+                        pokemon.temporary_effects.remove(skip_situational_awareness_turn)
+                    self.log_event(
+                        {
+                            "type": "trainer_feature",
+                            "actor": entry.actor_id,
+                            "trainer": pokemon.controller_id,
+                            "feature": "Cinematic Analysis",
+                            "effect": "turn_consumed",
+                            "mode": "situational_awareness",
+                            "turn_window": "next_round",
+                            "description": "Situational Awareness already spent this Pokemon's next turn.",
+                            "target_hp": pokemon.hp,
+                        }
+                    )
+                    continue
                 if pokemon.fainted:
                     if not self._bench_candidates(pokemon.controller_id):
                         continue
@@ -18896,6 +19260,18 @@ class PokemonState:
                 if actor is not None:
                     while actor.remove_temporary_effect("mobilize_ready"):
                         pass
+                    for entry in list(actor.get_temporary_effects("cinematic_analysis_move_granted")):
+                        if not bool(entry.get("appended")):
+                            if entry in actor.temporary_effects:
+                                actor.temporary_effects.remove(entry)
+                            continue
+                        move_name = str(entry.get("name") or "").strip().lower()
+                        if move_name:
+                            actor.spec.moves = [
+                                move for move in actor.spec.moves if str(move.name or "").strip().lower() != move_name
+                            ]
+                        if entry in actor.temporary_effects:
+                            actor.temporary_effects.remove(entry)
 
         def queue_action(self, action: Action) -> None:
             self.action_resolver.queue_action(action)
@@ -19153,6 +19529,36 @@ class PokemonState:
                         raise ValueError(
                             f"{move.name} cannot be used on consecutive rounds while the user is Suppressed."
                         )
+
+        def move_frequency_available(self, actor_id: str, move: MoveSpec, *, target_id: Optional[str] = None) -> bool:
+            """Return whether frequency rules currently allow this move without mutating battle state."""
+            actor = self.pokemon.get(actor_id)
+            if actor is None:
+                return False
+            definition = self._effective_move_frequency_definition(actor, move, target_id=target_id)
+            if definition is not None and definition.limit is not None:
+                if definition.scope == "round" and int(getattr(self, "round", 0) or 0) <= 0:
+                    has_metronome = any(
+                        str(_item_name_text(item) or "").strip().lower() == "metronome"
+                        for _idx, item, _entry in self._iter_held_items(actor)
+                    )
+                    if has_metronome:
+                        return True
+                usage = self.frequency_usage.get(actor_id, {}).get(move.name, 0)
+                if usage >= definition.limit:
+                    return False
+            if self._has_choice_suppressed_item(actor) and (move.category or "").strip().lower() != "status":
+                for entry in list(actor.get_temporary_effects("suppressed_repeat_lock")):
+                    if str(entry.get("move") or "").strip().lower() != str(move.name or "").strip().lower():
+                        continue
+                    try:
+                        round_value = entry.get("round", -999)
+                        locked_round = int(-999 if round_value is None else round_value)
+                    except (TypeError, ValueError):
+                        locked_round = -999
+                    if locked_round == self.round - 1:
+                        return False
+            return True
 
         def record_move_frequency_usage(self, actor_id: str, move: MoveSpec, *, target_id: Optional[str] = None) -> None:
             actor = self.pokemon.get(actor_id)
@@ -21174,6 +21580,23 @@ class PokemonState:
                 ),
                 default=0,
             )
+            character_study_entry = None
+            if attacker_id and defender_id:
+                character_study_entry = self._consume_character_study(
+                    attacker,
+                    defender_id,
+                    attacker_skills,
+                )
+            if character_study_entry is not None:
+                attacker_rank = max(
+                    attacker_rank,
+                    self._combatant_skill_rank(
+                        attacker,
+                        "perception",
+                        actor_id=attacker_id,
+                        trainer_override_id=attacker_trainer_override_id,
+                    ),
+                )
             defender_rank = max(
                 (
                     self._combatant_skill_rank(
@@ -21230,6 +21653,21 @@ class PokemonState:
                 total_attacker += max(self._terrain_skill_check_bonus(attacker, skill) for skill in attacker_skills)
             if defender_skills:
                 total_defender += max(self._terrain_skill_check_bonus(defender, skill) for skill in defender_skills)
+            if character_study_entry is not None:
+                self.log_event(
+                    {
+                        "type": "trainer_feature",
+                        "actor": attacker_id,
+                        "target": defender_id,
+                        "trainer": attacker.controller_id,
+                        "feature": "Cinematic Analysis",
+                        "effect": "character_study_substitution",
+                        "social_skill": str(character_study_entry.get("social_skill") or "").strip().lower(),
+                        "substituted_skill": "perception",
+                        "description": "Character Study substitutes Perception for the chosen social skill check.",
+                        "target_hp": defender.hp,
+                    }
+                )
             return {
                 "attacker_roll": roll_attacker,
                 "defender_roll": roll_defender,
@@ -21933,6 +22371,161 @@ class PokemonState:
             if not self._is_duelist_tagged_for(attacker, defender):
                 return 0
             return max(0, int(math.ceil(self._duelist_momentum(defender) / 2.0)))
+
+        def _chronicler_metadata(self, trainer_id: str) -> Dict[str, object]:
+            trainer = self.trainers.get(str(trainer_id or "").strip())
+            trainer_class = getattr(trainer, "trainer_class", {}) if trainer is not None else {}
+            if not isinstance(trainer_class, dict):
+                return {"archives": set(), "records": {"profile": [], "technique": [], "travel": []}, "travel_ability": ""}
+            archives: Set[str] = set()
+            for entry in trainer_class.get("chronicler_archives", []) or []:
+                normalized = _normalize_chronicler_archive_kind(entry)
+                if normalized:
+                    archives.add(normalized)
+            raw_records = trainer_class.get("chronicler_records", {})
+            records: Dict[str, List[str]] = {"profile": [], "technique": [], "travel": []}
+            if isinstance(raw_records, dict):
+                for kind in ("profile", "technique", "travel"):
+                    seen: Set[str] = set()
+                    for entry in raw_records.get(kind, []) or []:
+                        label = _normalize_chronicler_record_name(entry)
+                        key = label.lower()
+                        if not key or key in seen:
+                            continue
+                        seen.add(key)
+                        records[kind].append(label)
+            travel_ability = _CHRONICLER_TRAVEL_ABILITY_ALIASES.get(
+                str(trainer_class.get("chronicler_travel_ability") or "").strip().lower(),
+                "",
+            )
+            return {"archives": archives, "records": records, "travel_ability": travel_ability}
+
+        def _chronicler_current_locations(self) -> Set[str]:
+            labels: Set[str] = set()
+            terrain_name = _normalize_chronicler_record_name((self.terrain or {}).get("name"))
+            if terrain_name:
+                labels.add(terrain_name.lower())
+            battle_context = _normalize_chronicler_record_name(getattr(self, "battle_context", ""))
+            if battle_context:
+                labels.add(battle_context.lower())
+            return labels
+
+        def _chronicler_profile_matches(self, trainer_id: str, target: Optional[PokemonState]) -> bool:
+            if target is None:
+                return False
+            metadata = self._chronicler_metadata(trainer_id)
+            if "profile" not in metadata.get("archives", set()):
+                return False
+            record_keys = {str(entry or "").strip().lower() for entry in metadata.get("records", {}).get("profile", []) or []}
+            if not record_keys:
+                return False
+            candidates = {
+                str(target.spec.name or "").strip().lower(),
+                str(target.spec.species or "").strip().lower(),
+            }
+            trainer = self.trainers.get(target.controller_id)
+            if trainer is not None:
+                candidates.add(str(trainer.name or "").strip().lower())
+            return any(candidate and candidate in record_keys for candidate in candidates)
+
+        def _chronicler_technique_matches(self, trainer_id: str, move_name: object) -> bool:
+            metadata = self._chronicler_metadata(trainer_id)
+            if "technique" not in metadata.get("archives", set()):
+                return False
+            move_key = str(move_name or "").strip().lower()
+            if not move_key:
+                return False
+            record_keys = {str(entry or "").strip().lower() for entry in metadata.get("records", {}).get("technique", []) or []}
+            return move_key in record_keys
+
+        def _chronicler_travel_active(self, trainer_id: str) -> bool:
+            metadata = self._chronicler_metadata(trainer_id)
+            if "travel" not in metadata.get("archives", set()):
+                return False
+            travel_records = {str(entry or "").strip().lower() for entry in metadata.get("records", {}).get("travel", []) or []}
+            if not travel_records:
+                return False
+            current = self._chronicler_current_locations()
+            return bool(current & travel_records)
+
+        def _chronicler_accuracy_bonus(self, attacker: PokemonState, defender: PokemonState) -> int:
+            bonus = 0
+            for entry in list(attacker.get_temporary_effects("targeted_profiling")):
+                expires_round = entry.get("expires_round")
+                if expires_round is not None and self.round > int(expires_round):
+                    if entry in attacker.temporary_effects:
+                        attacker.temporary_effects.remove(entry)
+                    continue
+                source_controller = str(entry.get("source_controller") or attacker.controller_id).strip()
+                if self._chronicler_profile_matches(source_controller, defender):
+                    bonus += 2
+            return bonus
+
+        def _chronicler_evasion_bonus(self, defender: PokemonState, move: MoveSpec) -> int:
+            if self._chronicler_technique_matches(defender.controller_id, move.name):
+                return 2
+            return 0
+
+        def _attacker_ignores_defender_abilities(self, attacker: PokemonState, defender: PokemonState) -> bool:
+            if attacker is defender:
+                return False
+            if attacker.has_ability("Mold Breaker"):
+                return True
+            for entry in list(attacker.get_temporary_effects("targeted_profiling")):
+                expires_round = entry.get("expires_round")
+                if expires_round is not None and self.round > int(expires_round):
+                    if entry in attacker.temporary_effects:
+                        attacker.temporary_effects.remove(entry)
+                    continue
+                source_controller = str(entry.get("source_controller") or attacker.controller_id).strip()
+                if self._chronicler_profile_matches(source_controller, defender):
+                    return True
+            return False
+
+        def _sync_chronicler_travel_archive_effects_to_pokemon(self) -> None:
+            for mon in self.pokemon.values():
+                while mon.remove_temporary_effect("observation_party_granted"):
+                    continue
+                trainer = self.trainers.get(mon.controller_id)
+                if trainer is None or not trainer.has_trainer_feature("Observation Party"):
+                    continue
+                metadata = self._chronicler_metadata(mon.controller_id)
+                ability_name = str(metadata.get("travel_ability") or "").strip()
+                if not ability_name or not self._chronicler_travel_active(mon.controller_id):
+                    continue
+                if mon.has_ability(ability_name):
+                    continue
+                mon.add_temporary_effect(
+                    "ability_granted",
+                    ability=ability_name,
+                    source="Observation Party",
+                )
+                mon.add_temporary_effect(
+                    "observation_party_granted",
+                    ability=ability_name,
+                    source="Observation Party",
+                )
+
+        def _consume_character_study(
+            self,
+            attacker: PokemonState,
+            defender_id: Optional[str],
+            attacker_skills: Sequence[str],
+        ) -> Optional[dict]:
+            normalized_skills = {str(skill or "").strip().lower() for skill in attacker_skills}
+            if not normalized_skills:
+                return None
+            for entry in list(attacker.get_temporary_effects("character_study_ready")):
+                target_id = str(entry.get("target_id") or "").strip()
+                if target_id and target_id != str(defender_id or "").strip():
+                    continue
+                social_skill = str(entry.get("social_skill") or "").strip().lower()
+                if social_skill not in normalized_skills:
+                    continue
+                if entry in attacker.temporary_effects:
+                    attacker.temporary_effects.remove(entry)
+                return dict(entry)
+            return None
 
         def _maybe_gain_directed_focus_momentum(
             self,
@@ -22745,6 +23338,21 @@ class PokemonState:
                     return "current_round"
             return "next_round"
 
+        def _situational_awareness_turn_window(self, actor_id: str) -> Optional[str]:
+            actor = self.pokemon.get(actor_id)
+            if actor is None or actor.fainted or not actor.active:
+                return None
+            if any(
+                int(entry.get("round", -1)) >= self.round
+                for entry in actor.get_temporary_effects("situational_awareness_skip_turn")
+            ):
+                return None
+            entry_index = self._initiative_index_for(actor_id)
+            if entry_index is not None and not self._has_taken_turn_this_round(actor_id):
+                if self._initiative_index < 0 or entry_index > self._initiative_index:
+                    return "current_round"
+            return "next_round"
+
         def _consume_first_blood_turn(self, actor_id: str, window: str) -> bool:
             actor = self.pokemon.get(actor_id)
             if actor is None:
@@ -22762,6 +23370,26 @@ class PokemonState:
             if normalized == "next_round":
                 actor.add_temporary_effect("first_blood_skip_turn", round=self.round + 1)
                 actor.add_temporary_effect("first_blood_turn_spent", round=self.round, window="next_round")
+                return True
+            return False
+
+        def _consume_situational_awareness_turn(self, actor_id: str, window: str) -> bool:
+            actor = self.pokemon.get(actor_id)
+            if actor is None:
+                return False
+            normalized = str(window or "").strip().lower()
+            if normalized == "current_round":
+                entry_index = self._initiative_index_for(actor_id)
+                if entry_index is None:
+                    return False
+                self.initiative_order.pop(entry_index)
+                if entry_index <= self._initiative_index:
+                    self._initiative_index = max(-1, self._initiative_index - 1)
+                actor.add_temporary_effect("situational_awareness_turn_spent", round=self.round, window="current_round")
+                return True
+            if normalized == "next_round":
+                actor.add_temporary_effect("situational_awareness_skip_turn", round=self.round + 1)
+                actor.add_temporary_effect("situational_awareness_turn_spent", round=self.round, window="next_round")
                 return True
             return False
 
@@ -27102,7 +27730,7 @@ class PokemonState:
                 weather=self.effective_weather(),
                 terrain=self.terrain,
                 force_hit=coached,
-                ignore_defender_abilities=attacker.has_ability("Mold Breaker"),
+                ignore_defender_abilities=self._attacker_ignores_defender_abilities(attacker, defender),
             )
             result = dict(result)
             damage = 0
@@ -28618,7 +29246,7 @@ class PokemonState:
                     weather=self.effective_weather(),
                     terrain=self.terrain,
                     force_hit=True,
-                    ignore_defender_abilities=actor.has_ability("Mold Breaker"),
+                    ignore_defender_abilities=self._attacker_ignores_defender_abilities(actor, defender),
                 )
                 result = dict(result)
                 damage = 0
@@ -29990,7 +30618,7 @@ class PokemonState:
                                 move=move,
                                 weather=self.effective_weather(),
                                 terrain=self.terrain,
-                                ignore_defender_abilities=actor.has_ability("Mold Breaker"),
+                                ignore_defender_abilities=self._attacker_ignores_defender_abilities(actor, defender_state),
                             )
                             result = dict(result)
                             damage = 0
@@ -30739,7 +31367,7 @@ class PokemonState:
                         weather=self.effective_weather(),
                         terrain=self.terrain,
                         force_hit=True,
-                        ignore_defender_abilities=attacker.has_ability("Mold Breaker"),
+                        ignore_defender_abilities=self._attacker_ignores_defender_abilities(attacker, defender),
                     )
                     before_hp = target_state.hp or 0
                     target_state.apply_damage(blast_result.get("damage", 0))
@@ -33498,7 +34126,7 @@ class PokemonState:
                     context=context,
                     force_hit=force_hit,
                     accuracy_override=surprise_accuracy,
-                    ignore_defender_abilities=attacker.has_ability("Mold Breaker")
+                    ignore_defender_abilities=self._attacker_ignores_defender_abilities(attacker, defender_state)
                     and attacker_id != cid,
                     present_roll_override=present_roll_override,
                 )
@@ -34221,7 +34849,7 @@ class PokemonState:
                             terrain=self.terrain,
                             context=context,
                             force_hit=True,
-                            ignore_defender_abilities=attacker.has_ability("Mold Breaker")
+                            ignore_defender_abilities=self._attacker_ignores_defender_abilities(attacker, defender_state)
                             and attacker_id != defender_id,
                         )
                         pre_type_damage = smite_result.get("pre_type_damage")
@@ -34511,7 +35139,7 @@ class PokemonState:
                             effective_move,
                             result,
                             context=context,
-                            ignore_defender_abilities=attacker.has_ability("Mold Breaker")
+                            ignore_defender_abilities=self._attacker_ignores_defender_abilities(attacker, defender_state)
                             and attacker_id != defender_id,
                         )
                         result = self._maybe_apply_resilience_to_crit(
@@ -35997,7 +36625,7 @@ class PokemonState:
                                 weather=self.effective_weather(),
                                 terrain=self.terrain,
                                 force_hit=False,
-                                ignore_defender_abilities=attacker.has_ability("Mold Breaker"),
+                                ignore_defender_abilities=self._attacker_ignores_defender_abilities(attacker, defender_state),
                             )
                             struggle_damage = 0
                             if struggle_result.get("hit"):
@@ -39769,6 +40397,9 @@ CulinaryAppreciationAction = PokemonState.CulinaryAppreciationAction
 TypeAceAction = PokemonState.TypeAceAction
 TypeRefreshAction = PokemonState.TypeRefreshAction
 MoveSyncAction = PokemonState.MoveSyncAction
+ChroniclerRecordAction = PokemonState.ChroniclerRecordAction
+TargetedProfilingAction = PokemonState.TargetedProfilingAction
+CinematicAnalysisAction = PokemonState.CinematicAnalysisAction
 ExtraOrdinaryAction = PokemonState.ExtraOrdinaryAction
 CleverRuseAction = PokemonState.CleverRuseAction
 FairyLightsAction = PokemonState.FairyLightsAction
@@ -39889,6 +40520,9 @@ TRAINER_FEATURE_ACTION_REGISTRY = {
     "hits_the_spot": HitsTheSpotAction,
     "complex_aftertaste": ComplexAftertasteAction,
     "culinary_appreciation": CulinaryAppreciationAction,
+    "chronicler_record": ChroniclerRecordAction,
+    "targeted_profiling": TargetedProfilingAction,
+    "cinematic_analysis": CinematicAnalysisAction,
     "type_ace": TypeAceAction,
     "type_refresh": TypeRefreshAction,
     "move_sync": MoveSyncAction,
@@ -39981,7 +40615,3 @@ def create_trainer_feature_action(action_key: str, /, **kwargs) -> Action:
     if key in {"battle_conductor", "scheme_twist", "tip_the_scales"}:
         kwargs.setdefault("mode", key)
     return action_cls(**kwargs)
-
-
-
-

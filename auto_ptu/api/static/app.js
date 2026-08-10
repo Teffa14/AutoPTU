@@ -68,10 +68,50 @@ const logClearButton = document.getElementById("log-clear");
 const selectedTileInfoEl = battleElements.selectedTileInfoEl || document.getElementById("selected-tile-info");
 const topbarEl = battleElements.topbarEl || document.querySelector(".topbar");
 const topbarCollapseToggle = document.getElementById("topbar-collapse-toggle");
+const playGuideDialog = document.getElementById("play-guide");
+const playGuideToggle = document.getElementById("play-guide-toggle");
+const battleGuideInlineButton = document.getElementById("battle-guide-inline");
+const battleControlHintEl = document.getElementById("battle-control-hint");
+const actionDockEl = document.getElementById("action-dock");
+const actionDockCloseButton = document.getElementById("action-dock-close");
+const turnControllerEl = document.getElementById("turn-controller");
+const turnControllerCollapseButton = document.getElementById("turn-controller-collapse");
+const turnControllerSprite = document.getElementById("turn-controller-sprite");
+const turnControllerEyebrow = document.getElementById("turn-controller-eyebrow");
+const turnControllerName = document.getElementById("turn-controller-name");
+const turnControllerStatus = document.getElementById("turn-controller-status");
+const turnQuickMovesEl = document.getElementById("turn-quick-moves");
+const turnMoveButton = document.getElementById("turn-move");
+const turnActionsButton = document.getElementById("turn-actions");
+const turnPlanButton = document.getElementById("turn-plan");
+const turnAgentButton = document.getElementById("turn-agent");
+const turnUndoButton = document.getElementById("turn-undo");
+const turnEndButton = document.getElementById("turn-end");
+let battleAgentBusy = false;
 const speedButtons = Array.from(document.querySelectorAll(".speed-btn"));
 const promptOverlay = document.getElementById("prompt-overlay");
 const promptListEl = document.getElementById("prompt-list");
 const promptResolveButton = document.getElementById("prompt-resolve");
+const commandCenterEl = document.getElementById("command-center");
+const commandQueueEl = document.getElementById("command-queue");
+const commandQueueModeToggle = document.getElementById("command-queue-mode");
+const battleRoleSelect = document.getElementById("battle-role");
+const commandResolveNextButton = document.getElementById("command-resolve-next");
+const commandResolveAllButton = document.getElementById("command-resolve-all");
+const commandClearButton = document.getElementById("command-clear");
+const interruptTriggerInput = document.getElementById("interrupt-trigger");
+const interruptOpenButton = document.getElementById("interrupt-open");
+const interruptResolveButton = document.getElementById("interrupt-resolve");
+const interruptCloseButton = document.getElementById("interrupt-close");
+const interruptWindowEl = document.getElementById("interrupt-window");
+const reactionRegistryPanel = document.getElementById("reaction-registry-panel");
+const reactionRegistryCount = document.getElementById("reaction-registry-count");
+const reactionRegistryEl = document.getElementById("reaction-registry");
+const reactionNameInput = document.getElementById("reaction-name");
+const reactionSourceSelect = document.getElementById("reaction-source");
+const reactionActorSelect = document.getElementById("reaction-actor");
+const reactionEventInput = document.getElementById("reaction-event");
+const reactionRegisterButton = document.getElementById("reaction-register");
 const hideFaintedToggle = document.getElementById("hide-fainted");
 const autoCriesToggle = document.getElementById("auto-cries");
 const stepByStepStartToggle = document.getElementById("step-by-step-start");
@@ -108,6 +148,7 @@ const charSnapshotsPanel = document.getElementById("char-snapshots-panel");
 const charGuidedToggleBtn = document.getElementById("char-guided-toggle");
 const charSaveLocalBtn = document.getElementById("char-save-local");
 const charLoadLocalBtn = document.getElementById("char-load-local");
+const charSaveCampaignBtn = document.getElementById("char-save-campaign");
 const runtimeErrorEl = document.createElement("div");
 runtimeErrorEl.id = "runtime-errors";
 document.body.appendChild(runtimeErrorEl);
@@ -363,6 +404,12 @@ const ABILITY_BLINK_MS = 520;
 const TOOLTIP_HIDE_DELAY_MS = 140;
 
 let state = null;
+let turnControllerCollapsed = false;
+try {
+  turnControllerCollapsed = localStorage.getItem("autoptu_turn_controller_collapsed") === "1";
+} catch (_error) {
+  turnControllerCollapsed = false;
+}
 let aiModelsCache = null;
 let preferredAiModelId = "";
 let selectedId = null;
@@ -487,6 +534,208 @@ function clearArmedTileAction() {
   trapperDraftTiles = [];
   psionicOverloadBarrierTiles = [];
   trapperPaintActive = false;
+}
+
+function openPlayGuide() {
+  if (!playGuideDialog) return;
+  if (typeof playGuideDialog.showModal === "function") {
+    if (!playGuideDialog.open) playGuideDialog.showModal();
+  } else {
+    playGuideDialog.setAttribute("open", "");
+  }
+}
+
+function cancelBattleTargeting() {
+  const hadTargeting = !!(
+    armedMove ||
+    armedTileAction ||
+    selectedTileKey ||
+    frozenDomainDraftTiles.length ||
+    trapperDraftTiles.length ||
+    psionicOverloadBarrierTiles.length
+  );
+  if (!hadTargeting) return false;
+  armedMove = null;
+  selectedTileKey = null;
+  clearArmedTileAction();
+  hideTooltip();
+  render();
+  notifyUI("info", "Targeting cancelled.", 1300);
+  return true;
+}
+
+function renderBattleControlHint() {
+  if (!battleControlHintEl) return;
+  let step = "1";
+  let title = "Start a battle";
+  let detail = "Then select the current actor, choose an action, and click a highlighted target.";
+  let mode = "";
+  const center = state?.command_center || {};
+  const pendingPrompts = Array.isArray(state?.pending_prompts) ? state.pending_prompts : [];
+  if (state?.status === "ok") {
+    step = "2";
+    title = "Select the current actor";
+    detail = "Click the active unit on the battlefield or in the Combat HUD.";
+    if (pendingPrompts.length || state?.prompt) {
+      step = "!";
+      title = "Resolve the rules prompt";
+      detail = "Choose the required option before another action can resolve.";
+      mode = "is-prompt";
+    } else if (center.interrupt_window) {
+      step = "!";
+      title = "Reaction window open";
+      detail = "Eligible players Stack or Pass; the GM resolves or closes the window.";
+      mode = "is-prompt";
+    } else if (armedMove) {
+      step = "3";
+      title = `Target ${armedMove}`;
+      detail = "Click a highlighted unit or tile. Press Escape to cancel.";
+      mode = "is-targeting";
+    } else if (armedTileAction) {
+      const actionName = String(armedTileAction).replaceAll("_", " ");
+      step = "3";
+      title = `Place ${actionName}`;
+      detail = "Choose the highlighted tile or tiles. Press Escape to cancel.";
+      mode = "is-targeting";
+    } else if (!viewerCanActAsCurrent()) {
+      step = "AI";
+      title = "Opponent acting";
+      detail = state.mode === "ai" ? "Press Space to step the AI, or enable Auto." : "The AI resolves its turn; use T to follow the current actor.";
+    } else if (selectedId === state.current_actor_id) {
+      step = commandQueueModeToggle?.checked ? "P" : "3";
+      title = commandQueueModeToggle?.checked ? "Planning is on" : "Choose an action";
+      detail = commandQueueModeToggle?.checked
+        ? "Moves, maneuvers, items, features, and movement are added to the declaration stack. Press N to resolve next."
+        : "Use the Current Actor controls, or click a highlighted empty tile to Shift.";
+      mode = commandQueueModeToggle?.checked ? "is-planning" : "";
+    } else if (selectedId) {
+      step = "2";
+      title = "Inspecting another combatant";
+      detail = "Select the current actor to take a turn; inspected units remain available for rules reference.";
+    }
+  }
+  battleControlHintEl.className = `battle-control-hint ${mode}`.trim();
+  const stepEl = battleControlHintEl.querySelector(".control-step");
+  const titleEl = battleControlHintEl.querySelector("strong");
+  const detailEl = battleControlHintEl.querySelector("strong + span");
+  if (stepEl) stepEl.textContent = step;
+  if (titleEl) titleEl.textContent = title;
+  if (detailEl) detailEl.textContent = detail;
+}
+
+function closeActionDock() {
+  document.body.classList.remove("action-dock-overlay-open");
+  turnActionsButton?.setAttribute("aria-pressed", "false");
+}
+
+function combatantStatusLabel(combatant) {
+  const raw = combatant?.statuses ?? combatant?.status ?? [];
+  if (Array.isArray(raw)) {
+    const labels = raw.map((entry) => String(entry?.name || entry || "").trim()).filter(Boolean);
+    return labels.length ? labels.slice(0, 2).join(", ") : "Ready";
+  }
+  if (raw && typeof raw === "object") {
+    const labels = Object.entries(raw).filter(([, value]) => !!value).map(([key]) => key.replaceAll("_", " "));
+    return labels.length ? labels.slice(0, 2).join(", ") : "Ready";
+  }
+  return String(raw || "Ready");
+}
+
+function renderTurnController(lifecycle = null) {
+  if (!turnControllerEl) return;
+  const hasBattle = !!state && state.status === "ok";
+  turnControllerEl.classList.toggle("hidden", !hasBattle);
+  document.body.classList.toggle("battle-has-turn-controller", hasBattle);
+  if (!hasBattle) {
+    closeActionDock();
+    return;
+  }
+
+  const combatant = (state.combatants || []).find((entry) => entry.id === state.current_actor_id) || null;
+  const trainer = (state.trainers || []).find((entry) => entry.id === state.current_actor_id) || state.trainer_turn || null;
+  const actor = combatant || trainer || {};
+  const authenticatedGm = !!state?.battle_identity?.bound && currentBattleRole() === "gm";
+  const viewerOwnsTurn = viewerCanActAsCurrent();
+  const canAct = viewerOwnsTurn && !lifecycle?.promptLocked;
+  const teamVisual = getTeamVisual(combatant ? teamKeyForCombatant(combatant) : normalizeTeamLabel(actor?.team || "player"));
+  turnControllerEl.style.setProperty("--turn-primary", teamVisual.primary);
+  turnControllerEl.style.setProperty("--turn-secondary", teamVisual.secondary);
+  turnControllerEl.classList.toggle("turn-controller-collapsed", turnControllerCollapsed);
+  turnControllerEl.classList.toggle("is-opponent-turn", !viewerOwnsTurn);
+  turnControllerEl.classList.toggle("is-targeting", !!armedMove || !!armedTileAction);
+  turnControllerCollapseButton?.setAttribute("aria-expanded", String(!turnControllerCollapsed));
+  turnControllerCollapseButton?.setAttribute("title", turnControllerCollapsed ? "Expand turn controls" : "Fold turn controls");
+  const collapseGlyph = turnControllerCollapseButton?.querySelector("span[aria-hidden]");
+  if (collapseGlyph) collapseGlyph.textContent = turnControllerCollapsed ? "⌃" : "⌄";
+
+  const actorName = String(actor.name || actor.species || state.current_actor_id || "Current actor");
+  turnControllerName.textContent = actorName;
+  turnControllerEyebrow.textContent = viewerOwnsTurn ? (trainer && !combatant ? "Your Trainer turn" : "Your turn") : "AI-controlled turn";
+  if (combatant) {
+    const hp = Number(combatant.hp || 0);
+    const maxHp = Number(combatant.max_hp || 0);
+    turnControllerStatus.textContent = `HP ${hp}/${maxHp} · ${combatantStatusLabel(combatant)}`;
+    const spriteUrl = String(combatant.sprite_url || "");
+    if (turnControllerSprite.dataset.spriteUrl !== spriteUrl) {
+      turnControllerSprite.innerHTML = "";
+      turnControllerSprite.dataset.spriteUrl = spriteUrl;
+      if (spriteUrl) attachTurnSprite(turnControllerSprite, spriteUrl, actorName);
+    }
+    turnControllerSprite.classList.toggle("hidden", !spriteUrl);
+  } else {
+    turnControllerStatus.textContent = trainer ? "Trainer actions available" : "Choose an action";
+    turnControllerSprite.innerHTML = "";
+    turnControllerSprite.dataset.spriteUrl = "";
+    turnControllerSprite.classList.add("hidden");
+  }
+
+  turnQuickMovesEl.innerHTML = "";
+  const moves = Array.isArray(combatant?.moves) ? combatant.moves.slice(0, 4) : [];
+  moves.forEach((move) => {
+    const targets = (state.move_targets && state.move_targets[move.name]) || [];
+    const button = document.createElement("button");
+    const moveType = String(move.type || "normal").toLowerCase().replace(/[^a-z]/g, "");
+    button.type = "button";
+    button.className = `turn-quick-move type-${moveType}${armedMove === move.name ? " active" : ""}`;
+    button.disabled = !canAct || !targets.length;
+    button.innerHTML = `<span>${escapeHtml(move.name)}</span><small>${escapeHtml(move.type || "Move")}</small>`;
+    button.addEventListener("click", () => {
+      if (button.disabled) return;
+      selectedId = state.current_actor_id;
+      armedMove = armedMove === move.name ? null : move.name;
+      clearArmedTileAction();
+      closeActionDock();
+      render();
+    });
+    turnQuickMovesEl.appendChild(button);
+  });
+  if (!moves.length) {
+    const note = document.createElement("span");
+    note.className = "turn-quick-empty";
+    note.textContent = trainer ? "Open Actions for trainer features and items." : "Select Actions to see every legal option.";
+    turnQuickMovesEl.appendChild(note);
+  }
+
+  const hasShift = Array.isArray(state.legal_shifts) && state.legal_shifts.length > 1;
+  turnMoveButton.disabled = !canAct || !combatant || !hasShift;
+  turnMoveButton.classList.toggle("active", armedTileAction === "shift");
+  turnActionsButton.disabled = !canAct;
+  turnActionsButton.setAttribute("aria-pressed", String(document.body.classList.contains("action-dock-overlay-open")));
+  turnPlanButton.disabled = !canAct || !!commandQueueModeToggle?.disabled;
+  turnPlanButton.classList.toggle("active", !!commandQueueModeToggle?.checked);
+  turnPlanButton.setAttribute("aria-pressed", String(!!commandQueueModeToggle?.checked));
+  const hasCampaignAgents = !!campaignBattleSession();
+  turnAgentButton?.classList.toggle("hidden", !hasCampaignAgents);
+  if (turnAgentButton) {
+    const battleFinished = !!state?.battle_over || !!state?.winner_team;
+    const ownHumanTurn = viewerOwnsTurn && String(state?.battle_identity?.controller || "human") !== "ai" && !authenticatedGm;
+    turnAgentButton.disabled = !hasCampaignAgents || ownHumanTurn || battleAgentBusy || !!lifecycle?.promptLocked || battleFinished;
+    turnAgentButton.title = authenticatedGm
+      ? "Let the AI controller assigned to the active seat choose a legal action"
+      : "Ask your assigned campaign agent to choose a legal action";
+  }
+  turnUndoButton.disabled = lifecycle ? !lifecycle.canUndo : false;
+  turnEndButton.disabled = lifecycle ? !lifecycle.canEndTurn : !canAct;
 }
 
 function frozenDomainDraftKeySet() {
@@ -622,6 +871,11 @@ let characterState = {
   training_type: "",
   capture_techniques: [],
   commander_orders: [],
+  chronicler_archives: [],
+  chronicler_records: { profile: [], technique: [], travel: [] },
+  chronicler_travel_ability: "",
+  fashionista_skills: [],
+  researcher_fields: [],
   hobbyist_skill_edges: [],
   look_and_learn_features: {},
   dilettante_picks: [],
@@ -885,13 +1139,21 @@ if (moveTooltip) {
 }
 
 async function api(path, options = {}) {
+  let campaignSession = null;
+  try {
+    campaignSession = JSON.parse(localStorage.getItem("autoptu_campaign_session") || "null");
+  } catch {
+    campaignSession = null;
+  }
+  const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+  if (campaignSession?.participantToken) headers.Authorization = `Bearer ${campaignSession.participantToken}`;
   const response = await fetch(path, {
-    headers: { "Content-Type": "application/json" },
     ...options,
+    headers,
   });
   if (!response.ok) {
-    const text = await response.text();
-    throw new Error(text || response.statusText);
+    const payload = await response.json().catch(() => null);
+    throw new Error(payload?.detail || response.statusText);
   }
   return response.json();
 }
@@ -1327,6 +1589,215 @@ function _renderCommanderOrdersPanel(parent) {
     list.appendChild(row);
   });
   panel.appendChild(list);
+  parent.appendChild(panel);
+}
+
+const CHRONICLER_ARCHIVE_OPTIONS = ["Profile Album", "Technique Album", "Travel Album"];
+
+function _normalizeChroniclerArchiveName(value) {
+  const key = _normalizeMatchKey(value);
+  if (key === "profile album") return "Profile Album";
+  if (key === "technique album") return "Technique Album";
+  if (key === "travel album") return "Travel Album";
+  return "";
+}
+
+function _chroniclerArchiveKey(name) {
+  const key = _normalizeMatchKey(name);
+  if (key === "profile album") return "profile";
+  if (key === "technique album") return "technique";
+  if (key === "travel album") return "travel";
+  return "";
+}
+
+function _chroniclerArchiveSlots() {
+  if (!_hasFeature("Chronicler")) return 0;
+  let slots = 1;
+  Array.from(characterState.features || []).forEach((name) => {
+    if (_normalizeMatchKey(name).startsWith("archival training")) slots += 1;
+  });
+  return slots;
+}
+
+function _sanitizeChroniclerArchives() {
+  const slots = _chroniclerArchiveSlots();
+  const selected = (Array.isArray(characterState.chronicler_archives) ? characterState.chronicler_archives : [])
+    .map((name) => _normalizeChroniclerArchiveName(name))
+    .filter(Boolean)
+    .filter((name, idx, list) => list.indexOf(name) === idx)
+    .slice(0, Math.max(0, slots));
+  characterState.chronicler_archives = selected;
+  return selected;
+}
+
+function _normalizedChroniclerRecords() {
+  const raw = characterState.chronicler_records && typeof characterState.chronicler_records === "object" ? characterState.chronicler_records : {};
+  const normalized = { profile: [], technique: [], travel: [] };
+  ["profile", "technique", "travel"].forEach((kind) => {
+    normalized[kind] = (Array.isArray(raw[kind]) ? raw[kind] : [])
+      .map((name) => String(name || "").trim())
+      .filter(Boolean)
+      .filter((name, idx, list) => list.findIndex((other) => _normalizeMatchKey(other) === _normalizeMatchKey(name)) === idx);
+  });
+  characterState.chronicler_records = normalized;
+  return normalized;
+}
+
+function _sanitizeChroniclerTravelAbility() {
+  const selected = String(characterState.chronicler_travel_ability || "").trim();
+  characterState.chronicler_travel_ability =
+    _normalizeMatchKey(selected) === "perception" ? "Perception" : _normalizeMatchKey(selected) === "keen eye" ? "Keen Eye" : "";
+  return characterState.chronicler_travel_ability;
+}
+
+function _renderChroniclerPanel(parent) {
+  const slots = _chroniclerArchiveSlots();
+  const selected = _sanitizeChroniclerArchives();
+  const records = _normalizedChroniclerRecords();
+  const travelAbility = _sanitizeChroniclerTravelAbility();
+  if (!slots && !selected.length && !records.profile.length && !records.technique.length && !records.travel.length) return;
+  const panel = document.createElement("div");
+  panel.className = "char-selected-panel";
+  const title = document.createElement("div");
+  title.className = "char-selected-title";
+  title.textContent = `Chronicler Archives (${selected.length}/${slots})`;
+  panel.appendChild(title);
+  const meta = document.createElement("div");
+  meta.className = "char-feature-meta";
+  meta.textContent = "Chronicler grants one Archive. Archival Training grants one additional Archive each rank. Records feed Targeted Profiling, Technique defenses, Travel effects, and Archive Tutor.";
+  panel.appendChild(meta);
+  panel.appendChild(createSelectedPanel("Selected Archives", selected, (name) => {
+    characterState.chronicler_archives = selected.filter((entry) => entry !== name);
+    const kind = _chroniclerArchiveKey(name);
+    if (kind) characterState.chronicler_records[kind] = [];
+    if (kind === "travel") characterState.chronicler_travel_ability = "";
+    saveCharacterToStorage();
+    renderCharacterFeatures();
+  }));
+  const archiveList = document.createElement("div");
+  archiveList.className = "char-list-panel";
+  CHRONICLER_ARCHIVE_OPTIONS.forEach((name) => {
+    const row = document.createElement("div");
+    row.className = "char-row";
+    const body = document.createElement("div");
+    body.className = "char-row-main";
+    const label = document.createElement("div");
+    label.className = "char-row-title";
+    label.textContent = name;
+    const detail = document.createElement("div");
+    detail.className = "char-row-meta";
+    detail.textContent =
+      name === "Profile Album"
+        ? "+2 social checks against archived Pokemon/Trainers; enables Targeted Profiling."
+        : name === "Technique Album"
+          ? "+2 Evasion against archived Moves; enables Archive Tutor and Recreation."
+          : "Choose Keen Eye or Perception for Travel benefits; Observation Party shares it with your Pokemon in archived locations.";
+    body.appendChild(label);
+    body.appendChild(detail);
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "char-mini-button";
+    add.textContent = selected.includes(name) ? "Selected" : "Select";
+    add.disabled = selected.includes(name) || selected.length >= slots;
+    add.addEventListener("click", () => {
+      characterState.chronicler_archives = [...selected, name];
+      saveCharacterToStorage();
+      renderCharacterFeatures();
+    });
+    row.appendChild(body);
+    row.appendChild(add);
+    archiveList.appendChild(row);
+  });
+  panel.appendChild(archiveList);
+  if (selected.includes("Travel Album")) {
+    const row = document.createElement("div");
+    row.className = "char-row";
+    const body = document.createElement("div");
+    body.className = "char-row-main";
+    const label = document.createElement("div");
+    label.className = "char-row-title";
+    label.textContent = "Travel Archive Ability";
+    const detail = document.createElement("div");
+    detail.className = "char-row-meta";
+    detail.textContent = "Choose Keen Eye or Perception for Travel Archive benefits.";
+    body.appendChild(label);
+    body.appendChild(detail);
+    const select = document.createElement("select");
+    select.className = "char-select";
+    [["", "Select"], ["Keen Eye", "Keen Eye"], ["Perception", "Perception"]].forEach(([value, labelText]) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = labelText;
+      select.appendChild(option);
+    });
+    select.value = travelAbility;
+    select.addEventListener("change", () => {
+      characterState.chronicler_travel_ability = select.value;
+      saveCharacterToStorage();
+    });
+    row.appendChild(body);
+    row.appendChild(select);
+    panel.appendChild(row);
+  }
+  const addRecordButton = (archiveName, titleText, helpText, onSelect) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "char-mini-button";
+    btn.textContent = `Add ${archiveName} Record`;
+    btn.addEventListener("click", () => onSelect());
+    return btn;
+  };
+  selected.forEach((archiveName) => {
+    const kind = _chroniclerArchiveKey(archiveName);
+    if (!kind) return;
+    const recordPanel = document.createElement("div");
+    recordPanel.className = "char-selected-panel";
+    const recordTitle = document.createElement("div");
+    recordTitle.className = "char-selected-title";
+    recordTitle.textContent = `${archiveName} Records (${records[kind].length})`;
+    recordPanel.appendChild(recordTitle);
+    recordPanel.appendChild(createSelectedPanel(`${archiveName} Records`, records[kind], (name) => {
+      characterState.chronicler_records[kind] = records[kind].filter((entry) => _normalizeMatchKey(entry) !== _normalizeMatchKey(name));
+      saveCharacterToStorage();
+      renderCharacterFeatures();
+    }));
+    const actions = document.createElement("div");
+    actions.className = "char-action-row";
+    if (kind === "technique") {
+      actions.appendChild(
+        addRecordButton("Technique", "Technique Record", "", () => {
+          openListPicker({
+            title: "Technique Archive Record",
+            helpText: "Pick a move to store in your Technique Archive.",
+            items: _pokemonMoveCatalog().map((entry) => ({
+              name: entry.name,
+              meta: [entry.type || "", entry.category || "", entry.damage_base ? `DB ${entry.damage_base}` : "Status"].filter(Boolean).join(" | "),
+              hint: _eli5MoveSummary(entry),
+            })),
+            onSelect: (name) => {
+              characterState.chronicler_records.technique = [...records.technique, name];
+              saveCharacterToStorage();
+              renderCharacterFeatures();
+            },
+          });
+        })
+      );
+    } else {
+      actions.appendChild(
+        addRecordButton(archiveName.replace(" Album", ""), archiveName, "", () => {
+          const promptLabel = kind === "profile" ? "Enter a Pokemon or Trainer name to record." : "Enter a location name to record.";
+          const value = prompt(promptLabel, "");
+          const name = String(value || "").trim();
+          if (!name) return;
+          characterState.chronicler_records[kind] = [...records[kind], name];
+          saveCharacterToStorage();
+          renderCharacterFeatures();
+        })
+      );
+    }
+    recordPanel.appendChild(actions);
+    panel.appendChild(recordPanel);
+  });
   parent.appendChild(panel);
 }
 
@@ -1816,6 +2287,233 @@ function _renderMentorSkillsPanel(parent) {
     add.disabled = alreadySelected || selected.length >= slots || (!available && !characterState.override_prereqs);
     add.addEventListener("click", () => {
       characterState.mentor_skills = [..._sanitizeMentorSkills(), name];
+      saveCharacterToStorage();
+      renderCharacterFeatures();
+    });
+    row.appendChild(body);
+    row.appendChild(add);
+    list.appendChild(row);
+  });
+  panel.appendChild(list);
+  parent.appendChild(panel);
+}
+
+const FASHIONISTA_SKILL_OPTIONS = [
+  { skill: "Charm", label: "Charm" },
+  { skill: "Command", label: "Command" },
+  { skill: "Guile", label: "Guile" },
+  { skill: "Intimidate", label: "Intimidate" },
+  { skill: "Intuition", label: "Intuition" },
+];
+
+function _fashionistaSkillSelections() {
+  return (Array.isArray(characterState.fashionista_skills) ? characterState.fashionista_skills : [])
+    .map((entry) => String(entry || "").trim())
+    .map((entry) => {
+      const option = FASHIONISTA_SKILL_OPTIONS.find(
+        (item) => _normalizeMatchKey(item.label) === _normalizeMatchKey(entry) || _normalizeMatchKey(item.skill) === _normalizeMatchKey(entry)
+      );
+      return option?.skill || entry;
+    })
+    .filter(Boolean)
+    .slice(0, 2);
+}
+
+function _fashionistaSkillSlots() {
+  return _hasFeature("Fashionista") ? 2 : 0;
+}
+
+function _sanitizeFashionistaSkills() {
+  const slots = _fashionistaSkillSlots();
+  const seen = new Set();
+  const selected = _fashionistaSkillSelections().filter((skill) => {
+    const key = _normalizeMatchKey(skill);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  }).slice(0, Math.max(0, slots));
+  if (selected.join("\n") !== (characterState.fashionista_skills || []).join("\n")) {
+    characterState.fashionista_skills = selected;
+  }
+  return selected;
+}
+
+function _fashionistaSkillAvailable(skill) {
+  const rank = _findSkillRank(skill);
+  const rules = characterData?.skill_rules || { ranks: [] };
+  return _rankIndex(rank, rules) >= _rankIndex("Novice", rules);
+}
+
+function _renderFashionistaSkillsPanel(parent) {
+  const slots = _fashionistaSkillSlots();
+  const selected = _sanitizeFashionistaSkills();
+  if (!slots && !selected.length) return;
+  const panel = document.createElement("div");
+  panel.className = "char-selected-panel";
+  const title = document.createElement("div");
+  title.className = "char-selected-title";
+  title.textContent = `Fashionista Skills (${selected.length}/${slots})`;
+  panel.appendChild(title);
+  const meta = document.createElement("div");
+  meta.className = "char-feature-meta";
+  meta.textContent = "When you take Fashionista, choose two of Charm, Command, Guile, Intimidate, or Intuition at Novice or higher. These are your Fashionista Skills.";
+  panel.appendChild(meta);
+  panel.appendChild(createSelectedPanel("Selected Fashionista Skills", selected, (name) => {
+    characterState.fashionista_skills = selected.filter((entry) => entry !== name);
+    saveCharacterToStorage();
+    renderCharacterFeatures();
+  }));
+  const list = document.createElement("div");
+  list.className = "char-list-panel";
+  FASHIONISTA_SKILL_OPTIONS.forEach((option) => {
+    const name = option.skill;
+    const row = document.createElement("div");
+    row.className = "char-row";
+    const body = document.createElement("div");
+    body.className = "char-row-main";
+    const label = document.createElement("div");
+    label.className = "char-row-title";
+    label.textContent = option.label;
+    const detail = document.createElement("div");
+    detail.className = "char-row-meta";
+    const rank = _findSkillRank(name);
+    const available = _fashionistaSkillAvailable(name);
+    detail.textContent = available ? `Current rank: ${rank}` : `Requires Novice or higher. Current rank: ${rank}`;
+    body.appendChild(label);
+    body.appendChild(detail);
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "char-mini-button";
+    const alreadySelected = selected.some((entry) => _normalizeMatchKey(entry) === _normalizeMatchKey(name));
+    add.textContent = alreadySelected ? "Selected" : "Select";
+    add.disabled = alreadySelected || selected.length >= slots || (!available && !characterState.override_prereqs);
+    add.addEventListener("click", () => {
+      characterState.fashionista_skills = [..._sanitizeFashionistaSkills(), name];
+      saveCharacterToStorage();
+      renderCharacterFeatures();
+    });
+    row.appendChild(body);
+    row.appendChild(add);
+    list.appendChild(row);
+  });
+  panel.appendChild(list);
+  parent.appendChild(panel);
+}
+
+function _researcherFieldOptions() {
+  const options = [];
+  const seen = new Set();
+  (characterData.features || []).forEach((entry) => {
+    extractFeatureTags(entry).forEach((tag) => {
+      if (!/researcher field$/i.test(String(tag || "").trim())) return;
+      const field = String(tag || "").replace(/\s*Researcher Field\s*$/i, "").trim();
+      if (!field) return;
+      const key = _normalizeMatchKey(field);
+      if (seen.has(key)) return;
+      seen.add(key);
+      options.push({ field, label: field, tag: `${field} Researcher Field` });
+    });
+  });
+  return options.sort((a, b) => a.label.localeCompare(b.label));
+}
+
+function _researcherFieldSelections() {
+  const options = _researcherFieldOptions();
+  return (Array.isArray(characterState.researcher_fields) ? characterState.researcher_fields : [])
+    .map((entry) => String(entry || "").trim())
+    .map((entry) => {
+      const option = options.find(
+        (item) =>
+          _normalizeMatchKey(item.field) === _normalizeMatchKey(entry) ||
+          _normalizeMatchKey(item.tag) === _normalizeMatchKey(entry)
+      );
+      return option?.field || entry;
+    })
+    .filter(Boolean)
+    .slice(0, _researcherFieldSlots());
+}
+
+function _researcherFieldSlots() {
+  if (!_hasFeature("Researcher")) return 0;
+  return Math.min(2, _researcherFieldOptions().length || 0);
+}
+
+function _sanitizeResearcherFields() {
+  const slots = _researcherFieldSlots();
+  const seen = new Set();
+  const selected = _researcherFieldSelections().filter((field) => {
+    const key = _normalizeMatchKey(field);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  }).slice(0, Math.max(0, slots));
+  if (selected.join("\n") !== (characterState.researcher_fields || []).join("\n")) {
+    characterState.researcher_fields = selected;
+  }
+  return selected;
+}
+
+function _researcherFieldRequirement(node) {
+  const tag = extractFeatureTags(node).find((entry) => /researcher field$/i.test(String(entry || "").trim()));
+  if (!tag) return null;
+  const field = String(tag || "").replace(/\s*Researcher Field\s*$/i, "").trim();
+  if (!field) return null;
+  const selected = _sanitizeResearcherFields();
+  const hasField = selected.some((entry) => _normalizeMatchKey(entry) === _normalizeMatchKey(field));
+  if (hasField) return null;
+  return field;
+}
+
+function _renderResearcherFieldsPanel(parent) {
+  const slots = _researcherFieldSlots();
+  const selected = _sanitizeResearcherFields();
+  const options = _researcherFieldOptions();
+  if (!slots && !selected.length && !options.length) return;
+  const panel = document.createElement("div");
+  panel.className = "char-selected-panel";
+  const title = document.createElement("div");
+  title.className = "char-selected-title";
+  title.textContent = `Researcher Fields (${selected.length}/${slots})`;
+  panel.appendChild(title);
+  const meta = document.createElement("div");
+  meta.className = "char-feature-meta";
+  meta.textContent =
+    "Choose your Researcher Fields of Study. Features tagged with a Researcher Field are only available when that field is selected.";
+  panel.appendChild(meta);
+  if (_hasFeature("Researcher") && options.length < 2) {
+    const note = document.createElement("div");
+    note.className = "char-feature-meta";
+    note.textContent = "The current dataset only exposes one Researcher Field, so only that field can be selected here.";
+    panel.appendChild(note);
+  }
+  panel.appendChild(createSelectedPanel("Selected Researcher Fields", selected, (name) => {
+    characterState.researcher_fields = selected.filter((entry) => entry !== name);
+    saveCharacterToStorage();
+    renderCharacterFeatures();
+  }));
+  const list = document.createElement("div");
+  list.className = "char-list-panel";
+  options.forEach((option) => {
+    const row = document.createElement("div");
+    row.className = "char-row";
+    const body = document.createElement("div");
+    body.className = "char-row-main";
+    const label = document.createElement("div");
+    label.className = "char-row-title";
+    label.textContent = option.label;
+    const detail = document.createElement("div");
+    detail.className = "char-row-meta";
+    detail.textContent = option.tag;
+    body.appendChild(label);
+    body.appendChild(detail);
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "char-mini-button";
+    const alreadySelected = selected.some((entry) => _normalizeMatchKey(entry) === _normalizeMatchKey(option.field));
+    add.textContent = alreadySelected ? "Selected" : "Select";
+    add.disabled = alreadySelected || selected.length >= slots || !_hasFeature("Researcher");
+    add.addEventListener("click", () => {
+      characterState.researcher_fields = [..._sanitizeResearcherFields(), option.field];
       saveCharacterToStorage();
       renderCharacterFeatures();
     });
@@ -3626,6 +4324,13 @@ function _trainerCsvRowsFromPayload(payload) {
     ["features", _trainerCsvListValue(raw.features)],
     ["capture_techniques", _trainerCsvListValue(raw.capture_techniques)],
     ["commander_orders", _trainerCsvListValue(raw.commander_orders)],
+    ["chronicler_archives", _trainerCsvListValue(raw.chronicler_archives)],
+    ["chronicler_profile_records", _trainerCsvListValue(raw.chronicler_records?.profile)],
+    ["chronicler_technique_records", _trainerCsvListValue(raw.chronicler_records?.technique)],
+    ["chronicler_travel_records", _trainerCsvListValue(raw.chronicler_records?.travel)],
+    ["chronicler_travel_ability", String(raw.chronicler_travel_ability || "").trim()],
+    ["fashionista_skills", _trainerCsvListValue(raw.fashionista_skills)],
+    ["researcher_fields", _trainerCsvListValue(raw.researcher_fields)],
     ["hobbyist_skill_edges", _trainerCsvListValue(raw.hobbyist_skill_edges)],
     ["look_and_learn_features", _trainerCsvListValue(raw.look_and_learn_features ? [raw.look_and_learn_features.scene, raw.look_and_learn_features.ap] : [])],
     ["dilettante_features", _trainerCsvListValue((raw.dilettante_picks || []).map((entry) => entry.feature))],
@@ -3683,6 +4388,15 @@ function _applyTrainerCsvToPayload(csvText, existingPayload = null) {
     features: Array.isArray(base.features) ? base.features.slice() : [],
     capture_techniques: Array.isArray(base.capture_techniques) ? base.capture_techniques.slice() : [],
     commander_orders: Array.isArray(base.commander_orders) ? base.commander_orders.slice() : [],
+    chronicler_archives: Array.isArray(base.chronicler_archives) ? base.chronicler_archives.slice() : [],
+    chronicler_records: base.chronicler_records && typeof base.chronicler_records === "object" ? {
+      profile: Array.isArray(base.chronicler_records.profile) ? base.chronicler_records.profile.slice() : [],
+      technique: Array.isArray(base.chronicler_records.technique) ? base.chronicler_records.technique.slice() : [],
+      travel: Array.isArray(base.chronicler_records.travel) ? base.chronicler_records.travel.slice() : [],
+    } : { profile: [], technique: [], travel: [] },
+    chronicler_travel_ability: String(base.chronicler_travel_ability || "").trim(),
+    fashionista_skills: Array.isArray(base.fashionista_skills) ? base.fashionista_skills.slice() : [],
+    researcher_fields: Array.isArray(base.researcher_fields) ? base.researcher_fields.slice() : [],
     hobbyist_skill_edges: Array.isArray(base.hobbyist_skill_edges) ? base.hobbyist_skill_edges.slice() : [],
     look_and_learn_features: base.look_and_learn_features && typeof base.look_and_learn_features === "object" ? { ...base.look_and_learn_features } : {},
     dilettante_picks: Array.isArray(base.dilettante_picks) ? base.dilettante_picks.slice() : [],
@@ -3711,6 +4425,34 @@ function _applyTrainerCsvToPayload(csvText, existingPayload = null) {
     }
     if (field === "commander_orders") {
       patch.commander_orders = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      continue;
+    }
+    if (field === "chronicler_archives") {
+      patch.chronicler_archives = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      continue;
+    }
+    if (field === "chronicler_profile_records") {
+      patch.chronicler_records.profile = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      continue;
+    }
+    if (field === "chronicler_technique_records") {
+      patch.chronicler_records.technique = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      continue;
+    }
+    if (field === "chronicler_travel_records") {
+      patch.chronicler_records.travel = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      continue;
+    }
+    if (field === "chronicler_travel_ability") {
+      patch.chronicler_travel_ability = value;
+      continue;
+    }
+    if (field === "fashionista_skills") {
+      patch.fashionista_skills = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
+      continue;
+    }
+    if (field === "researcher_fields") {
+      patch.researcher_fields = value ? value.split(/\s*;\s*/).filter(Boolean) : [];
       continue;
     }
     if (field === "hobbyist_skill_edges") {
@@ -3761,6 +4503,11 @@ function _downloadTournamentSubmissionPack() {
     features: _featurePayloadList(),
     capture_techniques: _captureTechniqueSelections(),
     commander_orders: _commanderOrderSelections(),
+    chronicler_archives: _sanitizeChroniclerArchives(),
+    chronicler_records: _normalizedChroniclerRecords(),
+    chronicler_travel_ability: _sanitizeChroniclerTravelAbility(),
+    fashionista_skills: _sanitizeFashionistaSkills(),
+    researcher_fields: _sanitizeResearcherFields(),
     hobbyist_skill_edges: _hobbyistSkillEdgeSelections(),
     look_and_learn_features: _lookAndLearnSelections(),
     dilettante_picks: _dilettantePicks(),
@@ -5014,6 +5761,28 @@ function bindLogTooltips() {
 
 async function startBattle() {
   if (jsStatusEl) jsStatusEl.textContent = "JS: start click";
+  const boundSession = campaignBattleSession();
+  if (boundSession) {
+    const payload = { campaign_id: boundSession.campaignId };
+    lastBattlePayload = { ...payload };
+    state = await api("/api/battle/new", { method: "POST", body: JSON.stringify(payload) });
+    selectedId = state.current_actor_id || null;
+    applyTopbarCollapsed(true);
+    armedMove = null;
+    clearArmedTileAction();
+    viewManuallyAdjusted = false;
+    lastGridSize = null;
+    lastProcessedLogSize = null;
+    lastProcessedLogToken = "";
+    lastBattleResultToken = "";
+    logClearOffset = 0;
+    fxQueue = Promise.resolve();
+    closeBattleResultModal();
+    hideTooltip();
+    render();
+    notifyUI("ok", "Campaign encounter loaded from the party's persistent Pokemon.", 2800);
+    return;
+  }
   if (selectedRosterId && !battleRosterCsvText) {
     try {
       await ensureSelectedRosterStaged({ skipSave: true });
@@ -5138,6 +5907,7 @@ async function startBattle() {
     body: JSON.stringify(payload),
   });
   selectedId = state.current_actor_id || null;
+  applyTopbarCollapsed(true);
   armedMove = null;
   clearArmedTileAction();
   viewManuallyAdjusted = false;
@@ -5174,6 +5944,7 @@ async function stopBattle() {
     );
   });
   state = null;
+  applyTopbarCollapsed(false);
   selectedId = null;
   armedMove = null;
   clearArmedTileAction();
@@ -5534,12 +6305,21 @@ async function importTerrainJsonFiles(files) {
 }
 
 async function commitAction(payload) {
+  if (commandQueueModeToggle?.checked) {
+    await stageBattleCommand(payload);
+    armedMove = null;
+    clearArmedTileAction();
+    closeActionDock();
+    render();
+    return;
+  }
   state = await api("/api/action", {
     method: "POST",
     body: JSON.stringify(payload),
   });
   armedMove = null;
   clearArmedTileAction();
+  closeActionDock();
   gimmickState = {
     mega_evolve: false,
     dynamax: false,
@@ -5551,10 +6331,382 @@ async function commitAction(payload) {
 }
 
 async function endTurn() {
+  if (commandQueueModeToggle?.checked) {
+    await stageBattleCommand({ type: "end_turn", actor_id: state?.current_actor_id });
+    closeActionDock();
+    render();
+    return;
+  }
   state = await api("/api/end_turn", { method: "POST" });
   armedMove = null;
   clearArmedTileAction();
+  closeActionDock();
   render();
+}
+
+function campaignBattleSession() {
+  try {
+    const session = JSON.parse(localStorage.getItem("autoptu_campaign_session") || "null");
+    if (!session?.campaignId || !session?.participantToken) return null;
+    return session;
+  } catch (_error) {
+    return null;
+  }
+}
+
+async function campaignAgentBattleStep() {
+  const session = campaignBattleSession();
+  if (!session || battleAgentBusy) return;
+  battleAgentBusy = true;
+  if (turnAgentButton) {
+    turnAgentButton.disabled = true;
+    turnAgentButton.classList.add("is-thinking");
+    turnAgentButton.innerHTML = '<span aria-hidden="true">✦</span> Thinking…';
+  }
+  try {
+    const response = await fetch(`/api/campaigns/${encodeURIComponent(session.campaignId)}/agents/battle/step`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.participantToken}`,
+      },
+      body: JSON.stringify({}),
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.detail || `Agent action failed (${response.status})`);
+    state = payload.battle;
+    armedMove = null;
+    clearArmedTileAction();
+    closeActionDock();
+    const decision = payload.decision || {};
+    const detail = decision.move ? `${decision.action}: ${decision.move}` : decision.action || "action";
+    notifyUI("ok", `${payload.agent?.name || "Party agent"} chose ${detail}.`, 2600);
+    render();
+  } finally {
+    battleAgentBusy = false;
+    if (turnAgentButton) {
+      turnAgentButton.classList.remove("is-thinking");
+      turnAgentButton.innerHTML = '<span aria-hidden="true">✦</span> Agent Act';
+    }
+    renderTurnController(applyBattleLifecycleControls());
+  }
+}
+
+function currentBattleRole() {
+  if (state?.battle_identity?.bound) return String(state.battle_identity.role || "spectator").toLowerCase();
+  return String(battleRoleSelect?.value || "player").toLowerCase();
+}
+
+function viewerCanActAsCurrent() {
+  if (!state?.battle_identity?.bound) return !!state?.current_actor_is_player;
+  if (currentBattleRole() === "gm") return true;
+  const actorId = String(state?.current_actor_id || "");
+  const owned = new Set([
+    ...(state.battle_identity.owned_actor_ids || []),
+    ...(state.battle_identity.owned_trainer_ids || []),
+  ].map(String));
+  return !!actorId && owned.has(actorId);
+}
+
+function commandCombatantName(actorId) {
+  const combatant = findCombatantByRef(actorId);
+  if (combatant) return combatant.name || combatant.species || actorId;
+  const trainer = findTrainerByRef(actorId);
+  return trainer?.name || actorId || "Current actor";
+}
+
+function mergeCommandCenter(center) {
+  if (!state || typeof state !== "object") return;
+  state.command_center = center || { queue: [], interrupt_window: null, paused: false };
+}
+
+async function stageBattleCommand(action) {
+  const center = await api("/api/battle/commands", {
+    method: "POST",
+    body: JSON.stringify({ role: currentBattleRole(), action }),
+  });
+  mergeCommandCenter(center);
+  notifyUI("ok", "Action added to the declaration stack.", 1400);
+}
+
+async function removeBattleCommand(commandId) {
+  const center = await api(`/api/battle/commands/${encodeURIComponent(commandId)}?role=${encodeURIComponent(currentBattleRole())}`, {
+    method: "DELETE",
+  });
+  mergeCommandCenter(center);
+  renderCommandCenter();
+}
+
+async function reorderBattleCommand(commandId, index) {
+  const center = await api(`/api/battle/commands/${encodeURIComponent(commandId)}`, {
+    method: "PATCH",
+    body: JSON.stringify({ role: currentBattleRole(), index }),
+  });
+  mergeCommandCenter(center);
+  renderCommandCenter();
+}
+
+async function clearBattleCommands() {
+  const center = await api(`/api/battle/commands?role=${encodeURIComponent(currentBattleRole())}`, { method: "DELETE" });
+  mergeCommandCenter(center);
+  renderCommandCenter();
+}
+
+async function resolveBattleCommands(mode) {
+  state = await api("/api/battle/commands/resolve", {
+    method: "POST",
+    body: JSON.stringify({ role: currentBattleRole(), mode }),
+  });
+  armedMove = null;
+  clearArmedTileAction();
+  render();
+}
+
+async function openInterruptWindow() {
+  const center = await api("/api/battle/commands/interrupt/open", {
+    method: "POST",
+    body: JSON.stringify({
+      role: currentBattleRole(),
+      trigger: String(interruptTriggerInput?.value || "GM reaction window").trim(),
+    }),
+  });
+  mergeCommandCenter(center);
+  renderCommandCenter();
+}
+
+async function respondToInterrupt(actorId, option, passed = false) {
+  const payload = { role: currentBattleRole(), actor_id: actorId, pass: !!passed };
+  if (option && !passed) {
+    payload.move = option.move;
+    payload.target_id = option.target_id || null;
+  }
+  const center = await api("/api/battle/commands/interrupt/respond", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+  mergeCommandCenter(center);
+  renderCommandCenter();
+}
+
+async function resolveInterruptStack() {
+  state = await api("/api/battle/commands/interrupt/resolve", {
+    method: "POST",
+    body: JSON.stringify({ role: currentBattleRole() }),
+  });
+  render();
+}
+
+async function closeInterruptWindow() {
+  const center = await api("/api/battle/commands/interrupt/close", {
+    method: "POST",
+    body: JSON.stringify({ role: currentBattleRole() }),
+  });
+  mergeCommandCenter(center);
+  renderCommandCenter();
+}
+
+async function registerAutomaticReaction() {
+  const name = String(reactionNameInput?.value || "").trim();
+  const actorId = String(reactionActorSelect?.value || "").trim();
+  const eventType = String(reactionEventInput?.value || "").trim().toLowerCase();
+  if (!name || !actorId || !eventType) {
+    throw new Error("Choose a name, reacting actor, and battle event type.");
+  }
+  const center = await api("/api/battle/commands/reactions", {
+    method: "POST",
+    body: JSON.stringify({
+      role: currentBattleRole(),
+      name,
+      source_kind: String(reactionSourceSelect?.value || "custom"),
+      actor_ids: [actorId],
+      trigger_types: [eventType],
+      once_per_round: true,
+    }),
+  });
+  mergeCommandCenter(center);
+  if (reactionNameInput) reactionNameInput.value = "";
+  if (reactionEventInput) reactionEventInput.value = "";
+  if (reactionRegistryPanel) reactionRegistryPanel.open = true;
+  renderCommandCenter();
+  notifyUI("ok", "Automatic reaction registered.", 1800);
+}
+
+async function removeAutomaticReaction(reactionId) {
+  const center = await api(`/api/battle/commands/reactions/${encodeURIComponent(reactionId)}?role=${encodeURIComponent(currentBattleRole())}`, {
+    method: "DELETE",
+  });
+  mergeCommandCenter(center);
+  renderCommandCenter();
+}
+
+function renderReactionRegistry(center, hasBattle, role) {
+  if (!reactionRegistryEl) return;
+  const registry = Array.isArray(center.reaction_registry) ? center.reaction_registry : [];
+  if (reactionRegistryCount) reactionRegistryCount.textContent = String(registry.length);
+  if (reactionRegisterButton) reactionRegisterButton.disabled = !hasBattle || role !== "gm";
+  [reactionNameInput, reactionSourceSelect, reactionActorSelect, reactionEventInput].forEach((element) => {
+    if (element) element.disabled = !hasBattle || role !== "gm";
+  });
+  if (reactionActorSelect) {
+    const previous = reactionActorSelect.value;
+    const actors = [
+      ...(state?.combatants || []).map((entry) => ({ id: entry.id, name: entry.name || entry.species || entry.id })),
+      ...(state?.trainers || []).map((entry) => ({ id: entry.id, name: entry.name || entry.id })),
+    ];
+    reactionActorSelect.innerHTML = "";
+    actors.forEach((entry) => {
+      const option = document.createElement("option");
+      option.value = entry.id;
+      option.textContent = entry.name;
+      reactionActorSelect.appendChild(option);
+    });
+    if (actors.some((entry) => entry.id === previous)) reactionActorSelect.value = previous;
+  }
+  reactionRegistryEl.innerHTML = "";
+  if (!registry.length) {
+    const empty = document.createElement("div");
+    empty.className = "command-empty";
+    empty.textContent = hasBattle ? "No automatic reactions registered." : "Start a battle to register reactions.";
+    reactionRegistryEl.appendChild(empty);
+    return;
+  }
+  registry.forEach((reaction) => {
+    const row = document.createElement("div");
+    row.className = "reaction-registry-row";
+    const copy = document.createElement("div");
+    copy.className = "command-copy";
+    const title = document.createElement("strong");
+    title.textContent = String(reaction.name || "Reaction");
+    const meta = document.createElement("span");
+    const actorNames = (reaction.actor_ids || []).map(commandCombatantName).join(", ");
+    meta.textContent = `${String(reaction.source_kind || "custom").toUpperCase()} · ${actorNames} · ${(reaction.trigger_types || []).join(", ")}`;
+    copy.append(title, meta);
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.textContent = "Remove";
+    remove.disabled = role !== "gm";
+    remove.addEventListener("click", () => removeAutomaticReaction(reaction.id).catch(alertError));
+    row.append(copy, remove);
+    reactionRegistryEl.appendChild(row);
+  });
+}
+
+function renderCommandCenter() {
+  if (!commandCenterEl || !commandQueueEl) return;
+  const center = state?.command_center || { queue: [], interrupt_window: null, paused: false };
+  const queue = Array.isArray(center.queue) ? center.queue : [];
+  const hasBattle = state?.status === "ok";
+  const role = currentBattleRole();
+  if (battleRoleSelect) {
+    if (state?.battle_identity?.bound) battleRoleSelect.value = ["gm", "player", "spectator"].includes(role) ? role : "spectator";
+    battleRoleSelect.disabled = !!state?.battle_identity?.bound;
+    battleRoleSelect.title = state?.battle_identity?.bound ? "Role is authenticated by the campaign participant token." : "Standalone battle role";
+  }
+  const canMutate = hasBattle && role !== "spectator";
+  if (commandQueueModeToggle) commandQueueModeToggle.disabled = !canMutate;
+  if (commandResolveNextButton) commandResolveNextButton.disabled = !canMutate || !queue.length || !!center.paused || !!center.interrupt_window;
+  if (commandResolveAllButton) commandResolveAllButton.disabled = !canMutate || !queue.length || !!center.paused || !!center.interrupt_window;
+  if (commandClearButton) commandClearButton.disabled = !canMutate || !queue.length;
+  if (interruptOpenButton) interruptOpenButton.disabled = !hasBattle || role !== "gm" || !!center.interrupt_window;
+  if (interruptResolveButton) interruptResolveButton.disabled = !hasBattle || role !== "gm" || !center.interrupt_window;
+  if (interruptCloseButton) interruptCloseButton.disabled = !hasBattle || role !== "gm" || !center.interrupt_window;
+  commandCenterEl.classList.toggle("is-paused", !!center.paused);
+  commandQueueEl.innerHTML = "";
+  if (!queue.length) {
+    const empty = document.createElement("div");
+    empty.className = "command-empty";
+    empty.textContent = hasBattle
+      ? "Turn on Plan actions, then use any move, item, maneuver, feature, or movement control."
+      : "Start a battle to build a declaration stack.";
+    commandQueueEl.appendChild(empty);
+  } else {
+    queue.forEach((command, index) => {
+      const row = document.createElement("div");
+      row.className = `command-row command-${String(command.status || "ready")}`;
+      const order = document.createElement("span");
+      order.className = "command-order";
+      order.textContent = String(index + 1);
+      const copy = document.createElement("div");
+      copy.className = "command-copy";
+      const title = document.createElement("strong");
+      title.textContent = String(command.label || command.payload?.type || "Action");
+      const meta = document.createElement("span");
+      meta.textContent = `${String(command.action_type || "action").toUpperCase()} · ${commandCombatantName(command.actor_id)}`;
+      copy.append(title, meta);
+      if (command.error) {
+        const error = document.createElement("span");
+        error.className = "command-error";
+        error.textContent = command.error;
+        copy.appendChild(error);
+      }
+      const tools = document.createElement("div");
+      tools.className = "command-row-tools";
+      [["↑", index - 1], ["↓", index + 1]].forEach(([label, nextIndex]) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = label;
+        button.disabled = nextIndex < 0 || nextIndex >= queue.length || !canMutate;
+        button.addEventListener("click", () => reorderBattleCommand(command.id, nextIndex).catch(alertError));
+        tools.appendChild(button);
+      });
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.textContent = "×";
+      remove.title = "Remove queued action";
+      remove.disabled = !canMutate;
+      remove.addEventListener("click", () => removeBattleCommand(command.id).catch(alertError));
+      tools.appendChild(remove);
+      row.append(order, copy, tools);
+      commandQueueEl.appendChild(row);
+    });
+  }
+  renderReactionRegistry(center, hasBattle, role);
+  renderInterruptWindow(center.interrupt_window);
+}
+
+function renderInterruptWindow(windowState) {
+  if (!interruptWindowEl) return;
+  interruptWindowEl.innerHTML = "";
+  interruptWindowEl.classList.toggle("hidden", !windowState);
+  if (!windowState) return;
+  const heading = document.createElement("div");
+  heading.className = "interrupt-heading";
+  heading.innerHTML = `<strong>${escapeHtml(windowState.trigger || "Reaction window")}</strong><span>${escapeHtml(windowState.status || "collecting")}</span>`;
+  interruptWindowEl.appendChild(heading);
+  (windowState.responses || []).forEach((response) => {
+    const chip = document.createElement("div");
+    chip.className = `interrupt-response response-${response.status || "stacked"}`;
+    chip.textContent = response.passed
+      ? `${commandCombatantName(response.actor_id)} passes`
+      : `${commandCombatantName(response.actor_id)} · ${response.label || response.move} · ${response.status}`;
+    interruptWindowEl.appendChild(chip);
+  });
+  (windowState.pending_actor_ids || []).forEach((actorId) => {
+    const row = document.createElement("div");
+    row.className = "interrupt-response-form";
+    const label = document.createElement("span");
+    label.textContent = commandCombatantName(actorId);
+    const select = document.createElement("select");
+    const options = Array.isArray(windowState.options?.[actorId]) ? windowState.options[actorId] : [];
+    options.forEach((option, index) => {
+      const node = document.createElement("option");
+      node.value = String(index);
+      node.textContent = option.label || option.move;
+      select.appendChild(node);
+    });
+    const stack = document.createElement("button");
+    stack.type = "button";
+    stack.textContent = "Stack";
+    stack.disabled = currentBattleRole() === "spectator" || !options.length;
+    stack.addEventListener("click", () => respondToInterrupt(actorId, options[Number(select.value || 0)], false).catch(alertError));
+    const pass = document.createElement("button");
+    pass.type = "button";
+    pass.textContent = "Pass";
+    pass.disabled = currentBattleRole() === "spectator";
+    pass.addEventListener("click", () => respondToInterrupt(actorId, null, true).catch(alertError));
+    row.append(label, select, stack, pass);
+    interruptWindowEl.appendChild(row);
+  });
 }
 
 async function aiStep(silent = false) {
@@ -5623,7 +6775,8 @@ function toggleAuto() {
   if (autoTimer) {
     clearInterval(autoTimer);
     autoTimer = null;
-    applyBattleLifecycleControls();
+    const lifecycle = applyBattleLifecycleControls();
+    renderTurnController(lifecycle);
     return;
   }
   const interval = Math.max(250, Number(autoIntervalInput.value || 1000));
@@ -6239,6 +7392,26 @@ function maybeShowBattleResultModal() {
   if (battleResultModal) {
     const actions = battleResultModal.querySelector(".char-action-row");
     if (actions) {
+      const session = campaignBattleSession();
+      if (session && state?.battle_identity?.bound) {
+        const returnToAdventure = document.createElement("button");
+        returnToAdventure.type = "button";
+        returnToAdventure.textContent = state.winner_team === "players" ? "Record victory & return" : "Return to adventure";
+        returnToAdventure.addEventListener("click", async () => {
+          try {
+            if (state.winner_team === "players") {
+              await api(`/api/campaigns/${encodeURIComponent(session.campaignId)}/battle/complete`, {
+                method: "POST",
+                body: JSON.stringify({}),
+              });
+            }
+            location.href = "/campaign";
+          } catch (error) {
+            alertError(error);
+          }
+        });
+        actions.appendChild(returnToAdventure);
+      }
       const clear = document.createElement("button");
       clear.type = "button";
       clear.textContent = "Clear Battle";
@@ -6260,6 +7433,9 @@ function applyBattleLifecycleControls() {
         canUndo: !!state && state.status === "ok",
         autoActive: !!autoTimer,
       };
+  if (lifecycle.hasBattle && state?.battle_identity?.bound && !lifecycle.promptLocked) {
+    lifecycle.canEndTurn = viewerCanActAsCurrent() && !state?.battle_over && !state?.winner_team;
+  }
   if (window.PTUBattleUI?.applyLifecycleControls) {
     window.PTUBattleUI.applyLifecycleControls(
       { startButton, endTurnButton, aiStepButton, aiAutoButton, undoButton },
@@ -6415,6 +7591,8 @@ async function applyAiModelSettings() {
 }
 
 function render() {
+  document.body.classList.toggle("battle-running", state?.status === "ok");
+  renderBattleControlHint();
   renderSideNameEditor();
   if (deferredBattlePanelsTimer && (!state || state.status !== "ok")) {
     clearTimeout(deferredBattlePanelsTimer);
@@ -6447,7 +7625,7 @@ function render() {
       mapSeedEl.textContent = "Seed: -";
     }
     syncSpectatorStateChips();
-    applyBattleLifecycleControls();
+    renderTurnController(applyBattleLifecycleControls());
     lastTurnActorId = null;
     lastCinematicActorId = null;
     cinematicCameraBusy = false;
@@ -6459,6 +7637,7 @@ function render() {
     syncStatusTabs();
     renderCombatants();
     renderPartyBar();
+    renderCommandCenter();
     return;
   }
   if (autoTimer && state.mode !== "ai") {
@@ -6467,6 +7646,10 @@ function render() {
     applyBattleLifecycleControls();
   }
   const lifecycle = applyBattleLifecycleControls();
+  // Result controls are critical navigation. Show them before rebuilding the
+  // tactical grid or scheduling cinematics so a finished campaign encounter
+  // can always return to the adventure immediately.
+  maybeShowBattleResultModal();
   updateCinematicPerfLabel();
   if (lifecycle.promptLocked) {
     notifyUI("warn", lifecycle.reason || "Resolve pending prompts before continuing.", 2200);
@@ -6511,10 +7694,11 @@ function render() {
   renderTurnOrder();
   syncStatusTabs();
   renderMoves();
+  renderTurnController(lifecycle);
   renderLog();
   renderPrompts();
+  renderCommandCenter();
   processMoveAnimations();
-  maybeShowBattleResultModal();
   lastRenderedPositions = captureCombatantPositions();
   if (deferNonCriticalBattleUi) {
     if (deferredBattlePanelsTimer) clearTimeout(deferredBattlePanelsTimer);
@@ -6735,7 +7919,8 @@ function renderGrid() {
       if (legalShift.has(key)) {
         cell.classList.add("legal");
       }
-      if (((armedTileAction === "jump" || armedTileAction === "jump_long") && legalLongJump.has(key))
+      if ((armedTileAction === "shift" && legalShift.has(key))
+        || ((armedTileAction === "jump" || armedTileAction === "jump_long") && legalLongJump.has(key))
         || (armedTileAction === "jump_high" && legalHighJump.has(key))
         || (armedTileAction === "frozen_domain" && legalFrozenDomain.has(key))
         || (armedTileAction === "trapper" && legalTrapper.has(key))
@@ -11834,6 +13019,152 @@ function renderTrainerFeatureActions(moveListEl, combatant, canAct) {
     );
   }
 
+  if (features.has("chronicler")) {
+    addTrainerFeatureButton(
+      list,
+      `Chronicler${trainerAp ? ` (${trainerAp} AP)` : ""}`,
+      canAct && !!hints.chronicler_record_ready && Array.isArray(hints.chronicler_record_options) && hints.chronicler_record_options.length > 0,
+      () => {
+        const options = (hints.chronicler_record_options || []).map((entry, index) => ({
+          value: String(index),
+          label: entry.label || `${entry.archive}: ${entry.record_name}`,
+        }));
+        pickTrainerFeatureOption("Chronicler Record", options, (choiceValue) => {
+          const entry = (hints.chronicler_record_options || [])[Number(choiceValue || 0)] || {};
+          commitAction({
+            type: "trainer_feature",
+            action_key: "chronicler_record",
+            actor_id: combatant.id,
+            archive: entry.archive,
+            record_name: entry.record_name,
+            record_kind: entry.record_kind,
+          }).catch(alertError);
+        }, "Record a seen Pokemon, Trainer, Move, or current location into one unlocked archive.");
+      },
+      "Spend 1 AP to add a visible subject directly into one unlocked archive."
+    );
+  }
+
+  if (features.has("targeted profiling")) {
+    addTrainerFeatureButton(
+      list,
+      `Targeted Profiling${trainerAp ? ` (${trainerAp} AP)` : ""}`,
+      canAct && !!hints.targeted_profiling_ready && Array.isArray(hints.targeted_profiling_targets) && hints.targeted_profiling_targets.length > 0,
+      () => {
+        pickTrainerFeatureOption(
+          "Targeted Profiling",
+          (hints.targeted_profiling_targets || []).map((entry) => ({
+            value: entry.target,
+            label: entry.target_name || entry.target,
+          })),
+          (targetId) => {
+            commitAction({
+              type: "trainer_feature",
+              action_key: "targeted_profiling",
+              actor_id: combatant.id,
+              target_id: targetId,
+            }).catch(alertError);
+          },
+          "Choose an allied Pokemon to gain Mold Breaker-style pressure and +2 Accuracy versus Profile Archive targets."
+        );
+      },
+      "Spend 2 AP to boost one allied Pokemon against Profile Archive targets until the end of your next turn."
+    );
+  }
+
+  if (features.has("cinematic analysis")) {
+    addTrainerFeatureButton(
+      list,
+      "Cinematic Analysis",
+      canAct && !!hints.cinematic_analysis_ready,
+      () => {
+        const recreationOptions = Array.isArray(hints.cinematic_analysis_recreation_options)
+          ? hints.cinematic_analysis_recreation_options
+          : [];
+        const characterStudyOptions = Array.isArray(hints.cinematic_analysis_character_study_options)
+          ? hints.cinematic_analysis_character_study_options
+          : [];
+        const situationalOptions = Array.isArray(hints.cinematic_analysis_situational_awareness_options)
+          ? hints.cinematic_analysis_situational_awareness_options
+          : [];
+        const modeOptions = [];
+        if (recreationOptions.length) modeOptions.push({ value: "recreation", label: "Recreation" });
+        if (characterStudyOptions.length) modeOptions.push({ value: "character_study", label: "Character Study" });
+        if (situationalOptions.length) modeOptions.push({ value: "situational_awareness", label: "Situational Awareness" });
+        pickTrainerFeatureOption("Cinematic Analysis Mode", modeOptions, (modeValue) => {
+          const mode = String(modeValue || "").trim().toLowerCase();
+          if (mode === "recreation") {
+            pickTrainerFeatureOption(
+              "Cinematic Analysis",
+              recreationOptions.map((entry, index) => ({
+                value: String(index),
+                label: entry.label || `${entry.target_name || entry.target}: ${entry.move}`,
+              })),
+              (choiceValue) => {
+                const entry = recreationOptions[Number(choiceValue || 0)] || {};
+                commitAction({
+                  type: "trainer_feature",
+                  action_key: "cinematic_analysis",
+                  actor_id: combatant.id,
+                  mode: "recreation",
+                  target_id: entry.target,
+                  move_name: entry.move,
+                }).catch(alertError);
+              },
+              "Recreation grants one archived Technique move to the chosen allied Pokemon for this turn."
+            );
+            return;
+          }
+          if (mode === "character_study") {
+            pickTrainerFeatureOption(
+              "Character Study",
+              characterStudyOptions.map((entry, index) => ({
+                value: String(index),
+                label: entry.label || `${entry.target_name || entry.target}: ${entry.social_skill} -> Perception`,
+              })),
+              (choiceValue) => {
+                const entry = characterStudyOptions[Number(choiceValue || 0)] || {};
+                commitAction({
+                  type: "trainer_feature",
+                  action_key: "cinematic_analysis",
+                  actor_id: combatant.id,
+                  mode: "character_study",
+                  target_id: entry.target,
+                  social_skill: entry.social_skill,
+                }).catch(alertError);
+              },
+              "Character Study prepares a Perception-for-social-skill substitution against the archived target."
+            );
+            return;
+          }
+          if (mode === "situational_awareness") {
+            pickTrainerFeatureOption(
+              "Situational Awareness",
+              situationalOptions.map((entry, index) => ({
+                value: String(index),
+                label: entry.label || `${entry.target_name || entry.target}: ${entry.move}`,
+              })),
+              (choiceValue) => {
+                const entry = situationalOptions[Number(choiceValue || 0)] || {};
+                commitAction({
+                  type: "trainer_feature",
+                  action_key: "cinematic_analysis",
+                  actor_id: combatant.id,
+                  mode: "situational_awareness",
+                  target_id: entry.target,
+                  move_name: entry.move,
+                  move_target_id: entry.move_target_id,
+                }).catch(alertError);
+              },
+              "Situational Awareness lets the chosen ally spend its next turn immediately as an interrupt move."
+            );
+          }
+        }, "Choose one unused Cinematic Analysis mode for this scene.");
+      },
+      "Each Cinematic Analysis mode is once per scene, up to three uses per day total."
+    );
+  }
+
   if (features.has("type ace")) {
     addTrainerFeatureButton(
       list,
@@ -13983,12 +15314,12 @@ function renderTrainerTurnActions(moveListEl) {
   const switchBtn = document.createElement("button");
   switchBtn.className = "item-button";
   switchBtn.textContent = "Trainer Switch";
-  if (!state?.current_actor_is_player || !switchOptions.length) {
+  if (!viewerCanActAsCurrent() || !switchOptions.length) {
     switchBtn.classList.add("inactive");
     switchBtn.setAttribute("aria-disabled", "true");
   }
   switchBtn.addEventListener("click", () => {
-    if (!state?.current_actor_is_player || !switchOptions.length) return;
+    if (!viewerCanActAsCurrent() || !switchOptions.length) return;
     pickTrainerFeatureOption(
       "Trainer Switch",
       switchOptions.map((entry) => ({
@@ -14025,7 +15356,7 @@ function renderMoves() {
   if (!combatant) {
     return;
   }
-  const canAct = !!state.current_actor_is_player && selectedId === state.current_actor_id;
+  const canAct = viewerCanActAsCurrent() && selectedId === state.current_actor_id;
   if (selectedId && selectedId !== lastItemActorId) {
     itemTargetId = selectedId;
     lastItemActorId = selectedId;
@@ -14789,6 +16120,8 @@ function _resetScenarioBuildState() {
   characterState.hobbyist_skill_edges = [];
   characterState.look_and_learn_features = {};
   characterState.dilettante_picks = [];
+  characterState.fashionista_skills = [];
+  characterState.researcher_fields = [];
   characterState.mentor_skills = [];
   characterState.feature_order = [];
   characterState.edge_order = [];
@@ -16127,6 +17460,8 @@ function randomLegalBuild() {
   characterState.hobbyist_skill_edges = [];
   characterState.look_and_learn_features = {};
   characterState.dilettante_picks = [];
+  characterState.fashionista_skills = [];
+  characterState.researcher_fields = [];
   characterState.mentor_skills = [];
   characterState.extras = [];
   characterState.feature_order = [];
@@ -17429,6 +18764,8 @@ function renderCharacterFeatures() {
     characterState.hobbyist_skill_edges = [];
     characterState.look_and_learn_features = {};
     characterState.dilettante_picks = [];
+    characterState.fashionista_skills = [];
+    characterState.researcher_fields = [];
     characterState.mentor_skills = [];
     characterState.feature_details = {};
     saveCharacterToStorage();
@@ -17468,6 +18805,9 @@ function renderCharacterFeatures() {
   );
   _renderCaptureTechniquePanel(charContentEl);
   _renderCommanderOrdersPanel(charContentEl);
+  _renderChroniclerPanel(charContentEl);
+  _renderFashionistaSkillsPanel(charContentEl);
+  _renderResearcherFieldsPanel(charContentEl);
   _renderLookAndLearnPanel(charContentEl);
   _renderDilettantePanel(charContentEl);
   _renderMentorSkillsPanel(charContentEl);
@@ -17705,7 +19045,7 @@ function renderCharacterFeatures() {
           if (characterState.feature_tag_filter && !nodeTags.includes(characterState.feature_tag_filter)) return;
           const searchText = `${node.name} ${node.tags || ""} ${node.prerequisites || ""} ${node.effects || ""}`.toLowerCase();
           if (query && !searchText.includes(query)) return;
-          const statusInfo = prereqStatus(node.prerequisites, "feature");
+          const statusInfo = prereqStatus(node.prerequisites, "feature", node);
           const allowed =
             (statusInfo.status === "available" && characterState.feature_filter_available) ||
             (statusInfo.status === "close" && characterState.feature_filter_close) ||
@@ -17726,7 +19066,7 @@ function renderCharacterFeatures() {
               return;
             }
             if (checkbox.checked && !isFeatureAllowed(node, characterState.override_prereqs)) {
-              alert(buildPrereqDetail(node.prerequisites || ""));
+              alert(buildFeatureRequirementDetail(node));
               checkbox.checked = false;
               return;
             }
@@ -17857,7 +19197,7 @@ function renderCharacterFeatures() {
       if (characterState.feature_class_filter && !classLabels.includes(characterState.feature_class_filter)) return;
       const tags = extractFeatureTags(entry);
       if (characterState.feature_tag_filter && !tags.includes(characterState.feature_tag_filter)) return;
-      const statusInfo = prereqStatus(entry.prerequisites, "feature");
+      const statusInfo = prereqStatus(entry.prerequisites, "feature", entry);
       const statusFilter = characterState.feature_status_filter || "all";
       if (
         statusFilter !== "all" &&
@@ -17895,7 +19235,7 @@ function renderCharacterFeatures() {
       }
     });
     const renderEntry = (entry) => {
-      const statusInfo = prereqStatus(entry.prerequisites, "feature");
+      const statusInfo = prereqStatus(entry.prerequisites, "feature", entry);
       const row = document.createElement("label");
       row.className = `char-feature-row status-${statusInfo.status}`;
       if (_isRelatedPrereq(entry.prerequisites)) {
@@ -17913,7 +19253,7 @@ function renderCharacterFeatures() {
           return;
         }
         if (checkbox.checked && !isFeatureAllowed(entry, characterState.override_prereqs)) {
-          alert(buildPrereqDetail(entry.prerequisites || ""));
+          alert(buildFeatureRequirementDetail(entry));
           checkbox.checked = false;
           return;
         }
@@ -20261,6 +21601,15 @@ function renderCharacterPokemonTeam() {
       eggTutor.addEventListener("click", () => _applyMentorTeachMove(build, "egg_tutor"));
       mentorButtons.appendChild(eggTutor);
     }
+    if (_hasFeature("Archive Tutor") && _sanitizeChroniclerArchives().includes("Technique Album")) {
+      const archiveTutor = document.createElement("button");
+      archiveTutor.type = "button";
+      archiveTutor.className = "char-mini-button";
+      archiveTutor.textContent = "Archive Tutor (-2 TP)";
+      archiveTutor.disabled = Number(build.tutor_points || 0) < 2 || !_normalizedChroniclerRecords().technique.length;
+      archiveTutor.addEventListener("click", () => _applyArchiveTutor(build));
+      mentorButtons.appendChild(archiveTutor);
+    }
     if (_hasFeature("Lessons")) {
       MENTOR_LESSONS.forEach((lesson) => {
         const btn = document.createElement("button");
@@ -21323,11 +22672,27 @@ function _prereqBreakdown(prereq) {
 }
 
 function buildPrereqDetail(prereq) {
-  if (!prereq) return "Prerequisites: none.";
+  return buildFeatureRequirementDetail({ prerequisites: prereq || "" });
+}
+
+function buildFeatureRequirementDetail(node) {
+  const prereq = node?.prerequisites || "";
+  const manualMissing = _featureManualBlocks(node);
+  if (!prereq && !manualMissing.length) return "Prerequisites: none.";
   const info = getPrereqEvaluation(prereq);
-  if (info.ok) return "Prerequisites: met.";
-  if (!info.missing.length) return "Prerequisites: check required.";
-  return `Missing: ${info.missing.join(", ")}`;
+  const missing = [...info.missing, ...manualMissing];
+  if (info.ok && !manualMissing.length) return "Prerequisites: met.";
+  if (!missing.length) return "Prerequisites: check required.";
+  return `Missing: ${missing.join(", ")}`;
+}
+
+function _featureManualBlocks(node) {
+  const missing = [];
+  const researcherField = _researcherFieldRequirement(node);
+  if (researcherField) {
+    missing.push(`Researcher Field ${researcherField}`);
+  }
+  return missing;
 }
 
 function isFeatureAllowed(node, override) {
@@ -21337,7 +22702,8 @@ function isFeatureAllowed(node, override) {
   if (!prereq) return true;
   const info = getPrereqEvaluation(prereq);
   if (info.hasManual) return false;
-  return info.ok;
+  if (!info.ok) return false;
+  return _featureManualBlocks(node).length === 0;
 }
 
 function isEdgeAllowed(entry, override) {
@@ -21350,15 +22716,21 @@ function isEdgeAllowed(entry, override) {
   return info.ok;
 }
 
-function prereqStatus(prereq, type = "feature") {
+function prereqStatus(prereq, type = "feature", node = null) {
+  const manualMissing = type === "feature" ? _featureManualBlocks(node) : [];
   if (!prereq) {
+    if (manualMissing.length) {
+      return { status: "blocked", missing: manualMissing, impossible: true, tree: null };
+    }
     return { status: "available", missing: [], impossible: false, tree: null };
   }
   if (characterState.override_prereqs) {
     return { status: "available", missing: [], impossible: false, tree: null };
   }
   const info = getPrereqEvaluation(prereq);
-  if (info.hasManual) return { status: "blocked", missing: info.missing, impossible: true, tree: info.tree };
+  if (info.hasManual || manualMissing.length) {
+    return { status: "blocked", missing: [...info.missing, ...manualMissing], impossible: true, tree: info.tree };
+  }
   if (info.ok) return { status: "available", missing: [], impossible: false, tree: info.tree };
   if (info.missing.length <= 1) return { status: "close", missing: info.missing, impossible: false, tree: info.tree };
   return { status: "unavailable", missing: info.missing, impossible: false, tree: info.tree };
@@ -24496,6 +25868,19 @@ function _ensureMentorApplications(build) {
   return build.mentor_applications;
 }
 
+function _normalizeChroniclerApplications(value) {
+  const raw = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+  return {
+    archive_tutor_moves: Array.isArray(raw.archive_tutor_moves) ? raw.archive_tutor_moves.map((name) => String(name || "").trim()).filter(Boolean) : [],
+  };
+}
+
+function _ensureChroniclerApplications(build) {
+  if (!build || typeof build !== "object") return _normalizeChroniclerApplications({});
+  build.chronicler_applications = _normalizeChroniclerApplications(build.chronicler_applications);
+  return build.chronicler_applications;
+}
+
 function _mentorApplicationMoveSet(build, kind = "") {
   const apps = _normalizeMentorApplications(build?.mentor_applications);
   const names = [];
@@ -24627,6 +26012,66 @@ function _mentorMoveOptionsForBuild(build, mode) {
       };
     })
     .sort((a, b) => a.sortWeight - b.sortWeight || a.name.localeCompare(b.name));
+}
+
+function _archiveTutorMoveOptionsForBuild(build) {
+  const speciesEntry = _getPokemonSpeciesEntry(build.species || build.name || "");
+  const learnset = speciesEntry ? _getLearnsetForSpecies(speciesEntry.name) : [];
+  const sourceData = speciesEntry ? _getMoveSourcesForSpecies(speciesEntry.name) : null;
+  const currentMoves = new Set((Array.isArray(build?.moves) ? build.moves : []).map((name) => _normalizeMoveKey(name)));
+  const archivedMoves = new Set((_normalizedChroniclerRecords().technique || []).map((name) => _normalizeSearchText(name)).filter(Boolean));
+  const levelUpMoves = new Set();
+  (learnset || []).forEach((entry) => {
+    const key = _normalizeSearchText(entry.move);
+    if (!key) return;
+    if (Number(entry.level || 0) > 0) levelUpMoves.add(key);
+  });
+  const tutorMoves = sourceData ? _moveSourceNameSet(sourceData, "tutor") : new Set();
+  const tmMoves = sourceData ? _moveSourceNameSet(sourceData, "tm") : new Set();
+  return _pokemonMoveCatalog()
+    .slice()
+    .map((entry) => {
+      const key = _normalizeSearchText(entry.name);
+      const archived = archivedMoves.has(key);
+      const legal = archived && (levelUpMoves.has(key) || tutorMoves.has(key) || tmMoves.has(key));
+      return {
+        name: entry.name,
+        meta: [
+          entry.type || "",
+          entry.category || "",
+          entry.damage_base ? `DB ${entry.damage_base}` : "Status",
+          archived ? "Technique Archive record" : "Not archived",
+          levelUpMoves.has(key) ? "Level Up" : "",
+          tutorMoves.has(key) ? "Tutor" : "",
+          tmMoves.has(key) ? "TM" : "",
+          !legal && (learnset.length || sourceData) ? "Not legal for Archive Tutor" : "",
+        ].filter(Boolean).join(" | "),
+        hint: _eli5MoveSummary(entry),
+        sortWeight: currentMoves.has(_normalizeMoveKey(entry.name)) ? 1 : legal ? 0 : 2,
+        disabled: currentMoves.has(_normalizeMoveKey(entry.name)) || ((learnset.length || sourceData) && !legal && !characterState.override_prereqs),
+      };
+    })
+    .sort((a, b) => a.sortWeight - b.sortWeight || a.name.localeCompare(b.name));
+}
+
+function _applyArchiveTutor(build) {
+  if (Number(build.tutor_points || 0) < 2) {
+    alert("Archive Tutor requires 2 Tutor Points.");
+    return;
+  }
+  openListPicker({
+    title: "Archive Tutor",
+    helpText: "Pick a Technique Archive record that this Pokemon can learn by Level Up, TM, or Tutor.",
+    items: _archiveTutorMoveOptionsForBuild(build),
+    onSelect: (name) => {
+      build.tutor_points = Math.max(0, Number(build.tutor_points || 0) - 2);
+      _addBuildMove(build, name, "tutor");
+      const apps = _ensureChroniclerApplications(build);
+      apps.archive_tutor_moves.push(name);
+      saveCharacterToStorage();
+      renderCharacterPokemonTeam();
+    },
+  });
 }
 
 function _applyMentorTeachMove(build, mode) {
@@ -25024,6 +26469,7 @@ function _normalizePokemonBuild(build) {
   normalized.stat_mode = _normalizePokemonStatMode(raw.stat_mode);
   normalized.tutor_points = _normalizeInteger(raw.tutor_points, 0, 0);
   normalized.mentor_applications = _normalizeMentorApplications(raw.mentor_applications);
+  normalized.chronicler_applications = _normalizeChroniclerApplications(raw.chronicler_applications);
   normalized.stats = _normalizedRosterStats(raw.stats);
   normalized.stat_points = _normalizePokemonStatPointsShape(raw.stat_points || {});
   return normalized;
@@ -26275,6 +27721,8 @@ function _renderBuilderPanel(container) {
     characterState.hobbyist_skill_edges = [];
     characterState.look_and_learn_features = {};
     characterState.dilettante_picks = [];
+    characterState.fashionista_skills = [];
+    characterState.researcher_fields = [];
     characterState.mentor_skills = [];
     characterState.feature_order = [];
     characterState.edge_order = [];
@@ -26363,7 +27811,7 @@ function _renderCloseUnlocks(container) {
   list.className = "char-pill-list";
   const entries = [];
   (characterData?.features || []).forEach((entry) => {
-    const statusInfo = prereqStatus(entry.prerequisites || "", "feature");
+    const statusInfo = prereqStatus(entry.prerequisites || "", "feature", entry);
     if (statusInfo.status === "close") entries.push({ ...entry, kind: "feature" });
   });
   (characterData?.edges_catalog || []).forEach((entry) => {
@@ -26422,7 +27870,7 @@ function suggestEntries(entries, selectedSet) {
   const scored = entries
     .filter((entry) => !selectedSet.has(entry.name))
     .map((entry) => {
-      const statusInfo = prereqStatus(entry.prerequisites || "");
+      const statusInfo = prereqStatus(entry.prerequisites || "", "feature", entry);
       const base =
         statusInfo.status === "available"
           ? 3
@@ -26775,7 +28223,12 @@ function renderCharacterSummary() {
     features: Array.from(characterState.features).sort(),
     capture_techniques: _captureTechniqueSelections(),
     commander_orders: _commanderOrderSelections(),
-    hobbyist_skill_edges: _hobbyistSkillEdgeSelections(),
+    chronicler_archives: _sanitizeChroniclerArchives(),
+      chronicler_records: _normalizedChroniclerRecords(),
+      chronicler_travel_ability: _sanitizeChroniclerTravelAbility(),
+      fashionista_skills: _sanitizeFashionistaSkills(),
+      researcher_fields: _sanitizeResearcherFields(),
+      hobbyist_skill_edges: _hobbyistSkillEdgeSelections(),
     look_and_learn_features: _lookAndLearnSelections(),
     dilettante_picks: _dilettantePicks(),
     mentor_skills: _mentorSkillSelections(),
@@ -27307,6 +28760,15 @@ function renderCharacterSummary() {
       }
       if (Array.isArray(parsed.capture_techniques)) characterState.capture_techniques = parsed.capture_techniques.map(_captureTechniqueCanonicalName).filter(Boolean);
       if (Array.isArray(parsed.commander_orders)) characterState.commander_orders = parsed.commander_orders.slice();
+      if (Array.isArray(parsed.chronicler_archives)) characterState.chronicler_archives = parsed.chronicler_archives.slice();
+      if (parsed.chronicler_records && typeof parsed.chronicler_records === "object") characterState.chronicler_records = {
+        profile: Array.isArray(parsed.chronicler_records.profile) ? parsed.chronicler_records.profile.slice() : [],
+        technique: Array.isArray(parsed.chronicler_records.technique) ? parsed.chronicler_records.technique.slice() : [],
+        travel: Array.isArray(parsed.chronicler_records.travel) ? parsed.chronicler_records.travel.slice() : [],
+      };
+      if (parsed.chronicler_travel_ability) characterState.chronicler_travel_ability = String(parsed.chronicler_travel_ability);
+      if (Array.isArray(parsed.fashionista_skills)) characterState.fashionista_skills = parsed.fashionista_skills.slice();
+      if (Array.isArray(parsed.researcher_fields)) characterState.researcher_fields = parsed.researcher_fields.slice();
       if (Array.isArray(parsed.hobbyist_skill_edges)) characterState.hobbyist_skill_edges = parsed.hobbyist_skill_edges.slice();
       if (parsed.look_and_learn_features && typeof parsed.look_and_learn_features === "object") characterState.look_and_learn_features = { ...parsed.look_and_learn_features };
       if (Array.isArray(parsed.dilettante_picks)) characterState.dilettante_picks = parsed.dilettante_picks.slice();
@@ -27423,6 +28885,11 @@ function saveCharacterToStorage() {
       features: _featurePayloadList(),
       capture_techniques: _captureTechniqueSelections(),
       commander_orders: _commanderOrderSelections(),
+      chronicler_archives: _sanitizeChroniclerArchives(),
+      chronicler_records: _normalizedChroniclerRecords(),
+      chronicler_travel_ability: _sanitizeChroniclerTravelAbility(),
+      fashionista_skills: _sanitizeFashionistaSkills(),
+      researcher_fields: _sanitizeResearcherFields(),
       hobbyist_skill_edges: _hobbyistSkillEdgeSelections(),
       look_and_learn_features: _lookAndLearnSelections(),
       dilettante_picks: _dilettantePicks(),
@@ -27499,6 +28966,20 @@ function saveCharacterToStorage() {
   }
 }
 
+async function syncCharacterToCampaign() {
+  saveCharacterToStorage();
+  const session = campaignBattleSession();
+  if (!session) throw new Error("Open or join a campaign first, then return to the Trainer builder.");
+  const sheet = JSON.parse(localStorage.getItem("autoptu_character") || "null");
+  if (!sheet) throw new Error("Save a valid Trainer build before syncing it.");
+  const result = await api(`/api/campaigns/${encodeURIComponent(session.campaignId)}/command`, {
+    method: "POST",
+    body: JSON.stringify({ type: "builder.sync", payload: { sheet } }),
+  });
+  notifyUI("ok", `Synced ${sheet.profile?.name || "Trainer"} and ${(sheet.pokemon_builds || []).length} Pokemon to the campaign.`, 3200);
+  return result;
+}
+
 function setCharacterFromPayload(parsed) {
   if (!parsed || typeof parsed !== "object") return;
   if (parsed.profile) characterState.profile = { ...characterState.profile, ...parsed.profile };
@@ -27523,6 +29004,15 @@ function setCharacterFromPayload(parsed) {
   }
   if (Array.isArray(parsed.capture_techniques)) characterState.capture_techniques = parsed.capture_techniques.map(_captureTechniqueCanonicalName).filter(Boolean);
   if (Array.isArray(parsed.commander_orders)) characterState.commander_orders = parsed.commander_orders.slice();
+  if (Array.isArray(parsed.chronicler_archives)) characterState.chronicler_archives = parsed.chronicler_archives.slice();
+  if (parsed.chronicler_records && typeof parsed.chronicler_records === "object") characterState.chronicler_records = {
+    profile: Array.isArray(parsed.chronicler_records.profile) ? parsed.chronicler_records.profile.slice() : [],
+    technique: Array.isArray(parsed.chronicler_records.technique) ? parsed.chronicler_records.technique.slice() : [],
+    travel: Array.isArray(parsed.chronicler_records.travel) ? parsed.chronicler_records.travel.slice() : [],
+  };
+  if (parsed.chronicler_travel_ability) characterState.chronicler_travel_ability = String(parsed.chronicler_travel_ability);
+  if (Array.isArray(parsed.fashionista_skills)) characterState.fashionista_skills = parsed.fashionista_skills.slice();
+  if (Array.isArray(parsed.researcher_fields)) characterState.researcher_fields = parsed.researcher_fields.slice();
   if (Array.isArray(parsed.hobbyist_skill_edges)) characterState.hobbyist_skill_edges = parsed.hobbyist_skill_edges.slice();
   if (parsed.look_and_learn_features && typeof parsed.look_and_learn_features === "object") characterState.look_and_learn_features = { ...parsed.look_and_learn_features };
   if (Array.isArray(parsed.dilettante_picks)) characterState.dilettante_picks = parsed.dilettante_picks.slice();
@@ -27677,6 +29167,15 @@ function loadCharacterFromStorage() {
     }
     if (Array.isArray(parsed.capture_techniques)) characterState.capture_techniques = parsed.capture_techniques.map(_captureTechniqueCanonicalName).filter(Boolean);
     if (Array.isArray(parsed.commander_orders)) characterState.commander_orders = parsed.commander_orders.slice();
+    if (Array.isArray(parsed.chronicler_archives)) characterState.chronicler_archives = parsed.chronicler_archives.slice();
+    if (parsed.chronicler_records && typeof parsed.chronicler_records === "object") characterState.chronicler_records = {
+      profile: Array.isArray(parsed.chronicler_records.profile) ? parsed.chronicler_records.profile.slice() : [],
+      technique: Array.isArray(parsed.chronicler_records.technique) ? parsed.chronicler_records.technique.slice() : [],
+      travel: Array.isArray(parsed.chronicler_records.travel) ? parsed.chronicler_records.travel.slice() : [],
+    };
+    if (parsed.chronicler_travel_ability) characterState.chronicler_travel_ability = String(parsed.chronicler_travel_ability);
+    if (Array.isArray(parsed.fashionista_skills)) characterState.fashionista_skills = parsed.fashionista_skills.slice();
+    if (Array.isArray(parsed.researcher_fields)) characterState.researcher_fields = parsed.researcher_fields.slice();
     if (Array.isArray(parsed.hobbyist_skill_edges)) characterState.hobbyist_skill_edges = parsed.hobbyist_skill_edges.slice();
     if (parsed.look_and_learn_features && typeof parsed.look_and_learn_features === "object") characterState.look_and_learn_features = { ...parsed.look_and_learn_features };
     if (Array.isArray(parsed.dilettante_picks)) characterState.dilettante_picks = parsed.dilettante_picks.slice();
@@ -27861,6 +29360,14 @@ function extractTrainerProfile(payload) {
     features: Array.isArray(payload.features) ? payload.features : [],
     capture_techniques: Array.isArray(payload.capture_techniques) ? payload.capture_techniques : [],
     commander_orders: Array.isArray(payload.commander_orders) ? payload.commander_orders : [],
+    chronicler_archives: Array.isArray(payload.chronicler_archives) ? payload.chronicler_archives : [],
+    chronicler_records:
+      payload.chronicler_records && typeof payload.chronicler_records === "object"
+        ? payload.chronicler_records
+        : { profile: [], technique: [], travel: [] },
+    chronicler_travel_ability: String(payload.chronicler_travel_ability || ""),
+    fashionista_skills: Array.isArray(payload.fashionista_skills) ? payload.fashionista_skills : [],
+    researcher_fields: Array.isArray(payload.researcher_fields) ? payload.researcher_fields : [],
     hobbyist_granted_features: Array.from(new Set(hobbyistGrantedFeatures)),
     hobbyist_skill_edges: Array.isArray(payload.hobbyist_skill_edges) ? payload.hobbyist_skill_edges : [],
     hobbyist_granted_edges: Array.from(new Set(hobbyistGrantedEdges)),
@@ -27912,10 +29419,17 @@ function renderTrainerDetails() {
   const featureCount = trainerProfile.features?.length || 0;
   const captureTechniqueCount = trainerProfile.capture_techniques?.length || 0;
   const commanderOrdersCount = trainerProfile.commander_orders?.length || 0;
+  const chroniclerArchiveCount = trainerProfile.chronicler_archives?.length || 0;
+  const chroniclerRecordCount =
+    (trainerProfile.chronicler_records?.profile?.length || 0) +
+    (trainerProfile.chronicler_records?.technique?.length || 0) +
+    (trainerProfile.chronicler_records?.travel?.length || 0);
   const hobbyistGrantCount =
     (trainerProfile.hobbyist_granted_features?.length || 0) +
     (trainerProfile.hobbyist_skill_edges?.length || 0) +
     (trainerProfile.hobbyist_granted_edges?.length || 0);
+  const fashionistaSkillList = Array.isArray(trainerProfile.fashionista_skills) ? trainerProfile.fashionista_skills.filter(Boolean) : [];
+  const researcherFieldList = Array.isArray(trainerProfile.researcher_fields) ? trainerProfile.researcher_fields.filter(Boolean) : [];
   const mentorSkillList = Array.isArray(trainerProfile.mentor_skills) ? trainerProfile.mentor_skills.filter(Boolean) : [];
   const pokemonStatNotes = Array.isArray(trainerProfile.pokemon_stat_relation_exceptions)
     ? trainerProfile.pokemon_stat_relation_exceptions.map((entry) => `${entry.stat}: ${entry.source}`).filter(Boolean)
@@ -27936,10 +29450,12 @@ function renderTrainerDetails() {
     <div class="details-row">Class: ${escapeHtml(classLabel)}</div>
     <div class="details-row">Region: ${escapeHtml(trainerProfile.region || "-")}</div>
     <div class="details-row">Concept: ${escapeHtml(trainerProfile.concept || "-")}</div>
+    <div class="details-row">Fashionista Skills: ${escapeHtml(fashionistaSkillList.length ? fashionistaSkillList.join(", ") : "-")}</div>
+    <div class="details-row">Researcher Fields: ${escapeHtml(researcherFieldList.length ? researcherFieldList.join(", ") : "-")}</div>
     <div class="details-row">Mentor Skills: ${escapeHtml(mentorSkillList.length ? mentorSkillList.join(", ") : "-")}</div>
     <div class="details-row">Pokemon Stat Exceptions: ${escapeHtml(pokemonStatNotes.length ? pokemonStatNotes.join(", ") : "-")}</div>
     <div class="details-row">Stats: ${escapeHtml(statsLine)}</div>
-    <div class="details-row">Features: ${escapeHtml(featureCount)} | Capture Techniques: ${escapeHtml(captureTechniqueCount)} | Commander Orders: ${escapeHtml(commanderOrdersCount)} | Hobbyist Grants: ${escapeHtml(hobbyistGrantCount)}</div>
+    <div class="details-row">Features: ${escapeHtml(featureCount)} | Capture Techniques: ${escapeHtml(captureTechniqueCount)} | Commander Orders: ${escapeHtml(commanderOrdersCount)} | Chronicler: ${escapeHtml(`${chroniclerArchiveCount} archives / ${chroniclerRecordCount} records`)} | Hobbyist Grants: ${escapeHtml(hobbyistGrantCount)}</div>
     <div class="details-row">Edges: ${escapeHtml(edgeCount)}</div>
   `;
 }
@@ -28790,7 +30306,7 @@ function onGridClick(x, y, occupantId, options = {}) {
     return;
   }
   const clickedKey = `${x},${y}`;
-  if (!state.current_actor_is_player) {
+  if (!viewerCanActAsCurrent()) {
     selectedTileKey = clickedKey;
     if (occupantId) {
       selectedId = occupantId;
@@ -28973,6 +30489,47 @@ function alertError(err) {
   showRuntimeError(message);
   notifyUI("error", message, 4500);
 }
+
+turnControllerCollapseButton?.addEventListener("click", () => {
+  turnControllerCollapsed = !turnControllerCollapsed;
+  try {
+    localStorage.setItem("autoptu_turn_controller_collapsed", turnControllerCollapsed ? "1" : "0");
+  } catch (_error) {
+    // The controller remains usable when storage is unavailable.
+  }
+  renderTurnController(applyBattleLifecycleControls());
+});
+turnMoveButton?.addEventListener("click", () => {
+  if (turnMoveButton.disabled || !state?.current_actor_id) return;
+  selectedId = state.current_actor_id;
+  armedMove = null;
+  armedTileAction = armedTileAction === "shift" ? null : "shift";
+  closeActionDock();
+  render();
+});
+turnActionsButton?.addEventListener("click", () => {
+  if (turnActionsButton.disabled || !state?.current_actor_id) return;
+  const willOpen = !document.body.classList.contains("action-dock-overlay-open");
+  if (willOpen) selectedId = state.current_actor_id;
+  document.body.classList.toggle("action-dock-overlay-open", willOpen);
+  render();
+  if (willOpen) actionDockEl?.focus({ preventScroll: true });
+});
+actionDockCloseButton?.addEventListener("click", closeActionDock);
+turnPlanButton?.addEventListener("click", () => {
+  if (turnPlanButton.disabled || !commandQueueModeToggle) return;
+  commandQueueModeToggle.checked = !commandQueueModeToggle.checked;
+  commandQueueModeToggle.dispatchEvent(new Event("change", { bubbles: true }));
+});
+turnAgentButton?.addEventListener("click", () => {
+  if (!turnAgentButton.disabled) campaignAgentBattleStep().catch(alertError);
+});
+turnUndoButton?.addEventListener("click", () => {
+  if (!turnUndoButton.disabled) undoStep().catch(alertError);
+});
+turnEndButton?.addEventListener("click", () => {
+  if (!turnEndButton.disabled) endTurn().catch(alertError);
+});
 
 startButton?.addEventListener("click", () => {
   const hasBattle = !!state && state.status === "ok";
@@ -29199,6 +30756,7 @@ charLoadLocalBtn?.addEventListener("click", () => {
   loadCharacterFromStorage();
   renderCharacterStep();
 });
+charSaveCampaignBtn?.addEventListener("click", () => syncCharacterToCampaign().catch(alertError));
 charUndoBtn?.addEventListener("click", () => undoCharacterStep());
 charRedoBtn?.addEventListener("click", () => redoCharacterStep());
 charSnapshotBtn?.addEventListener("click", () => takeSnapshot());
@@ -29291,17 +30849,47 @@ document.addEventListener("keydown", (event) => {
   if (window.DSUI?.isTypingContext ? window.DSUI.isTypingContext(event) : event.target && ["INPUT", "SELECT", "TEXTAREA"].includes(event.target.tagName)) {
     return;
   }
+  if (document.querySelector("dialog[open]")) return;
+  if (event.key === "?") {
+    event.preventDefault();
+    openPlayGuide();
+    return;
+  }
+  if (event.key === "Escape") {
+    if (document.body.classList.contains("action-dock-overlay-open")) {
+      event.preventDefault();
+      closeActionDock();
+      return;
+    }
+    if (cancelBattleTargeting()) event.preventDefault();
+    return;
+  }
+  if (event.repeat) return;
   if (event.code === "Space") {
     event.preventDefault();
     if (state?.mode === "ai") {
       aiStep().catch(() => {});
     }
-  } else if (event.code === "Enter") {
+  } else if (event.code === "KeyE") {
     event.preventDefault();
-    if (state?.current_actor_is_player) {
+    if (viewerCanActAsCurrent()) {
       endTurn().catch(() => {});
     }
-  } else if (event.code === "KeyR") {
+  } else if (event.code === "KeyP") {
+    if (commandQueueModeToggle && !commandQueueModeToggle.disabled) {
+      event.preventDefault();
+      commandQueueModeToggle.checked = !commandQueueModeToggle.checked;
+      commandQueueModeToggle.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  } else if (event.code === "KeyN") {
+    if (event.shiftKey && commandResolveAllButton && !commandResolveAllButton.disabled) {
+      event.preventDefault();
+      resolveBattleCommands("all").catch(alertError);
+    } else if (!event.shiftKey && commandResolveNextButton && !commandResolveNextButton.disabled) {
+      event.preventDefault();
+      resolveBattleCommands("next").catch(alertError);
+    }
+  } else if (event.code === "KeyR" && event.shiftKey) {
     event.preventDefault();
     if (lastBattlePayload) {
       api("/api/battle/new", {
@@ -29581,9 +31169,9 @@ function applyTopbarCollapsed(collapsed) {
   const isCollapsed = !!collapsed;
   document.body.classList.toggle("topbar-collapsed", isCollapsed);
   if (topbarCollapseToggle) {
-    topbarCollapseToggle.textContent = isCollapsed ? "Expand Bar" : "Collapse Bar";
+    topbarCollapseToggle.textContent = isCollapsed ? "Show Setup" : "Focus Board";
     topbarCollapseToggle.setAttribute("aria-expanded", isCollapsed ? "false" : "true");
-    topbarCollapseToggle.setAttribute("title", isCollapsed ? "Expand the battle control bar" : "Collapse the battle control bar");
+    topbarCollapseToggle.setAttribute("title", isCollapsed ? "Show scenario, camera, and AI setup" : "Keep only live battle controls visible");
   }
 }
 
@@ -29773,6 +31361,28 @@ logClearButton?.addEventListener("click", () => {
   logClearOffset = (state?.log || []).length;
   renderLog();
 });
+battleRoleSelect?.addEventListener("change", () => renderCommandCenter());
+commandQueueModeToggle?.addEventListener("change", () => {
+  renderCommandCenter();
+  renderBattleControlHint();
+  renderTurnController(applyBattleLifecycleControls());
+  notifyUI(
+    "info",
+    commandQueueModeToggle.checked
+      ? "Planning is on: battle controls now add declarations to the stack."
+      : "Planning is off: battle controls resolve immediately.",
+    2200,
+  );
+});
+playGuideToggle?.addEventListener("click", openPlayGuide);
+battleGuideInlineButton?.addEventListener("click", openPlayGuide);
+commandResolveNextButton?.addEventListener("click", () => resolveBattleCommands("next").catch(alertError));
+commandResolveAllButton?.addEventListener("click", () => resolveBattleCommands("all").catch(alertError));
+commandClearButton?.addEventListener("click", () => clearBattleCommands().catch(alertError));
+interruptOpenButton?.addEventListener("click", () => openInterruptWindow().catch(alertError));
+interruptResolveButton?.addEventListener("click", () => resolveInterruptStack().catch(alertError));
+interruptCloseButton?.addEventListener("click", () => closeInterruptWindow().catch(alertError));
+reactionRegisterButton?.addEventListener("click", () => registerAutomaticReaction().catch(alertError));
 topbarCollapseToggle?.addEventListener("click", () => {
   applyTopbarCollapsed(!document.body.classList.contains("topbar-collapsed"));
   scheduleResponsiveBattleMetrics(true);
@@ -29838,10 +31448,3 @@ if (isBattleUI) {
 if (topbarEl) {
   topbarEl.classList.toggle("scrolled", window.scrollY > 4);
 }
-
-
-
-
-
-
-

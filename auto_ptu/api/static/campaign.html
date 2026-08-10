@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AutoPTU — The Adventure</title>
+    <link rel="stylesheet" href="design-system/tokens.css" />
+    <link rel="stylesheet" href="design-system/components.css" />
+    <link rel="stylesheet" href="campaign.css?v=20260717d" />
+  </head>
+  <body class="campaign-ui">
+    <header class="campaign-topbar">
+      <a class="campaign-brand" href="/campaign"><span>AutoPTU</span><strong>The Adventure</strong></a>
+      <nav aria-label="Game workspaces">
+        <a class="active" href="/campaign">Adventure</a>
+        <a href="/">Battle</a>
+        <a href="/create">Trainers</a>
+        <a href="/terrain-mapper">World</a>
+        <button id="campaign-guide-open" type="button">How to Play</button>
+      </nav>
+      <div id="connection-state" class="connection-state">Local world</div>
+    </header>
+
+    <dialog id="campaign-guide" class="campaign-guide" aria-labelledby="campaign-guide-title">
+      <form method="dialog">
+        <header><div><div class="card-kicker">Adventure guide</div><h2 id="campaign-guide-title">Play, don’t administer</h2></div><button value="close" aria-label="Close guide">Close</button></header>
+        <ol>
+          <li><strong>Choose what you do.</strong><span>Use the choice cards or describe any action in your own words.</span></li>
+          <li><strong>Move through the scene.</strong><span>Select your Trainer or Pokémon above the scene floor, then click or drag to a numbered glowing destination within its Speed. Select gold markers to inspect, talk, enter, shop, or uncover clues. Dark tiles are unknown; dim tiles are places you remember.</span></li>
+          <li><strong>Let the party answer.</strong><span>Play a party round and the local AI GM plus every Trainer will take a real turn.</span></li>
+          <li><strong>Roll when it matters.</strong><span>Checks, clocks, quests, factions, and journals update the persistent campaign.</span></li>
+          <li><strong>Continue the adventure.</strong><span>The next chapter opens when the party is ready, with consequences carried forward.</span></li>
+          <li><strong>Fight on the tactical board.</strong><span>Combat uses the full PTU engine; an Ollama player can control the active side.</span></li>
+        </ol>
+        <p class="guide-note">Safety first: anyone can pause the table. The GM resumes after the group checks in.</p>
+      </form>
+    </dialog>
+
+    <main>
+      <section id="campaign-gate" class="campaign-gate">
+        <div class="gate-hero">
+          <div class="eyebrow">A local, living PTU campaign</div>
+          <h1>Step into a Pokémon adventure.</h1>
+          <p>Choose what your Trainer does, travel with a persistent party, and let a local AI Game Master bring the region to life. Rules, clocks, quests, and battles run underneath the story.</p>
+          <div class="hero-route"><span>Meet</span><i>→</i><span>Explore</span><i>→</i><span>Battle</span><i>→</i><span>Change the world</span></div>
+        </div>
+
+        <section class="starter-adventure" aria-labelledby="starter-adventure-title">
+          <div class="starter-art" aria-hidden="true"><span class="starter-orb starter-orb-one"></span><span class="starter-orb starter-orb-two"></span><span class="starter-pokeball"></span></div>
+          <div class="starter-copy">
+            <div class="card-kicker">Ready-to-play adventure</div>
+            <h2 id="starter-adventure-title">Prism League: A Trainer's Journey</h2>
+            <p>Play The Prism Trail as a real Trainer while a local AI Game Master runs the living world: choose a starter, meet a persistent cast, earn three badges, face your rival, and challenge the League.</p>
+            <div class="starter-features" aria-label="Included campaign content"><span>AI Game Master</span><span>3 companions</span><span>14 chapters</span><span>7 tactical battles</span></div>
+          </div>
+          <form id="campaign-starter-form" class="starter-launch">
+            <label>Your Trainer name<input name="player_name" required value="Avery" maxlength="60" /></label>
+            <label>Play style<select name="play_mode"><option value="solo">Trainer · AI Game Master</option><option value="director">Director · human Game Master</option></select></label>
+            <button id="campaign-starter" type="submit"><span>Begin adventure</span><small>No setup required</small></button>
+          </form>
+        </section>
+
+        <details class="gate-existing">
+          <summary>Host or join another campaign</summary>
+          <div class="gate-actions">
+            <form id="campaign-create-form" class="gate-card">
+              <div class="card-kicker">New world</div><h2>Create a campaign</h2>
+              <label>Campaign name<input name="name" required value="New PTU Campaign" maxlength="80" /></label>
+              <label>Your name<input name="gm_name" required value="Game Master" maxlength="60" /></label>
+              <button type="submit">Create campaign</button>
+            </form>
+            <form id="campaign-join-form" class="gate-card">
+              <div class="card-kicker">Join friends</div><h2>Enter a campaign</h2>
+              <label>Campaign<select id="join-campaign-id" name="campaign_id" required><option value="">Choose campaign</option></select></label>
+              <label>Invite code<input name="invite_code" required maxlength="12" autocomplete="off" /></label>
+              <label>Display name<input name="name" required maxlength="60" /></label>
+              <label>Role<select name="role"><option value="player">Player</option><option value="spectator">Spectator</option></select></label>
+              <button type="submit">Join adventure</button>
+            </form>
+          </div>
+        </details>
+        <section class="recent-tables"><div class="section-heading"><div><span>Saved adventures</span><h2>Continue the story</h2></div></div><div id="campaign-list" class="campaign-list"></div></section>
+      </section>
+
+      <section id="campaign-workspace" class="campaign-workspace hidden">
+        <div id="safety-banner" class="safety-banner hidden"><strong>Adventure paused</strong><span id="safety-message"></span><button id="safety-resume" type="button">Resume</button></div>
+        <header class="workspace-heading game-header">
+          <div class="campaign-title-lockup"><div class="eyebrow" id="campaign-system">Pokemon Tabletop United 1.05</div><h1 id="campaign-name">Campaign</h1></div>
+          <div class="chapter-progress" aria-label="Adventure progress"><span id="chapter-label">Chapter 1 of 3</span><div class="chapter-track"><i id="chapter-progress-fill"></i></div></div>
+          <div class="workspace-meta"><span id="viewer-role" class="role-badge">Player</span><span id="campaign-time" class="time-badge">Day 1, Morning</span><span id="campaign-invite" class="invite-badge hidden"></span><button id="campaign-leave" type="button">Exit</button></div>
+        </header>
+
+        <nav class="scene-journey" aria-label="Adventure chapters"><div id="scene-list" class="scene-list"></div></nav>
+
+        <div class="campaign-layout game-layout">
+          <aside class="campaign-rail party-rail">
+            <div class="section-heading"><div><span>Your party</span><h2>Trainers & companions</h2></div><i class="party-online-dot" title="Party connected"></i></div>
+            <div id="participant-list" class="participant-list"></div>
+            <section id="agent-party" class="agent-party">
+              <header><div><span>AI Game Master & companions</span><strong id="agent-ollama-state">Checking Ollama…</strong></div><i id="agent-live-light"></i></header>
+              <div class="agent-models"><label>GM<select id="agent-gm-model"><option value="gpt-oss:20b">gpt-oss:20b</option></select></label><label>Players<select id="agent-player-model"><option value="qwen2.5:3b">qwen2.5:3b</option></select></label></div>
+              <button id="agent-round" class="agent-round-button" type="button"><span>Play party round</span><small>GM + every Trainer acts</small></button>
+              <div class="agent-controls"><button id="agent-step-gm" type="button">GM turn</button><button id="agent-autoplay" type="button" aria-pressed="false">Autoplay</button></div>
+              <div id="agent-turn-log" class="agent-turn-log">The party is waiting for the story to begin.</div>
+            </section>
+            <button id="safety-pause" class="safety-button" type="button">Pause / check in</button>
+          </aside>
+
+          <section class="story-stage adventure-stage">
+            <div class="scene-atmosphere" aria-hidden="true"><i></i><i></i><i></i></div>
+            <header class="scene-heading"><div><span id="scene-kind" class="scene-kind">No active scene</span><h2 id="scene-title">The adventure awaits</h2><p id="scene-location"></p></div><div id="scene-danger" class="scene-danger">Story scene</div></header>
+            <div id="scene-summary" class="scene-summary">Choose how your Trainer enters the story.</div>
+            <div id="active-objective" class="active-objective"><span>Current objective</span><strong>Follow the story</strong></div>
+            <section id="starter-choice-panel" class="starter-choice-panel hidden"><header><span>Your first real choice</span><h3>Which Pokémon chooses you back?</h3></header><div id="starter-choice-list" class="starter-choice-list"></div></section>
+            <div id="story-feed" class="story-feed"></div>
+            <section class="choice-deck" aria-labelledby="choice-title">
+              <header><div><span>Your move</span><h3 id="choice-title">What do you do?</h3></div><small>Each choice uses the real PTU campaign rules.</small></header>
+              <div id="scene-choices" class="scene-choices"></div>
+            </section>
+            <form id="chat-form" class="chat-composer">
+              <select id="acting-seat" aria-label="Acting character" class="hidden"></select>
+              <select name="kind" aria-label="Message voice"><option value="in_character">In character</option><option value="out_of_character">Out of character</option><option value="narration">Narration</option></select>
+              <textarea name="text" required placeholder="Describe what your Trainer says or does…" maxlength="2000"></textarea>
+              <button type="submit">Act</button>
+            </form>
+            <footer class="adventure-footer"><button id="campaign-continue" class="continue-button" type="button"><span>Continue adventure</span><small>Advance when the party is ready</small></button><a id="open-battle-link" class="battle-launch" href="/"><span>Enter tactical battle</span><small>The encounter is ready</small></a></footer>
+          </section>
+
+          <aside class="campaign-tools adventure-hud">
+            <details class="tool-card world-card" open>
+              <summary><span>World</span><strong id="world-location">Current location</strong></summary>
+              <div class="world-status"><span id="world-weather">Clear · Daylight</span><span id="world-progress">No badges yet</span></div>
+              <div id="campaign-world-map" class="campaign-world-map" aria-label="Revealed campaign map"></div>
+              <p id="map-help" class="map-help">Click a connected place, or drag your party marker onto it.</p>
+              <div id="travel-options" class="travel-options"></div>
+              <div id="inventory-list" class="inventory-list"></div>
+            </details>
+            <details id="exploration-card" class="tool-card exploration-card" open>
+              <summary><span>Scene floor</span><strong id="exploration-name">Current area</strong></summary>
+              <div class="exploration-toolbar">
+                <div id="exploration-token-picker" class="exploration-token-picker" aria-label="Exploration tokens"></div>
+                <div id="exploration-gm-controls" class="exploration-gm-controls hidden">
+                  <button type="button" data-exploration-visibility="reveal_all">Reveal area</button>
+                  <button type="button" data-exploration-visibility="restore_fog">Restore fog</button>
+                </div>
+              </div>
+              <div id="exploration-board" class="exploration-board" aria-label="Current scene exploration grid"></div>
+              <section id="exploration-interaction-panel" class="exploration-interaction-panel" aria-live="polite"></section>
+              <p id="exploration-help" class="exploration-help">Select one of your tokens, then click or drag to any glowing destination.</p>
+            </details>
+            <details class="tool-card action-card" open>
+              <summary><span>Things you can do here</span><strong>Travel, recover, shop & craft</strong></summary>
+              <div id="world-actions" class="world-actions"></div>
+            </details>
+            <details class="tool-card npc-card" open>
+              <summary><span>People nearby</span><strong>Talk in character</strong></summary>
+              <div id="npc-list" class="npc-list"></div>
+              <div id="dialogue-feed" class="dialogue-feed"></div>
+              <form id="npc-talk-form" class="compact-form"><select name="npc_id" required></select><textarea name="text" required placeholder="Ask, confess, challenge, or listen…"></textarea><button type="submit">Speak</button></form>
+            </details>
+            <section class="tool-card roll-card"><div class="tool-heading"><span>Trainer action</span><strong>Make a check</strong></div><form id="roll-form"><input name="label" value="Skill Check" maxlength="80" /><div class="form-row"><input name="expression" value="2d6" aria-label="Dice expression" /><button type="submit">Roll</button></div></form><div id="last-roll" class="last-roll">No check rolled yet.</div></section>
+            <section class="tool-card"><div class="tool-heading"><span>Danger</span><strong>What is closing in</strong></div><div id="clock-list" class="clock-list"></div></section>
+            <section class="tool-card"><div class="tool-heading"><span>Quest log</span><strong>Your promises</strong></div><div id="quest-list" class="quest-list"></div></section>
+            <details class="tool-card journal-drawer"><summary><span>Field journal</span><strong>Clues & memories</strong></summary><div id="journal-list" class="journal-list"></div><form id="journal-form" class="compact-form"><input name="title" placeholder="Note title" /><textarea name="text" required placeholder="Clues, plans, NPC details…"></textarea><div class="form-row"><select name="visibility"><option value="table">Table</option><option value="private">Private</option><option value="gm">GM only</option></select><button type="submit">Save note</button></div></form></details>
+            <details id="director-tools" class="tool-card director-tools">
+              <summary><span>Advanced</span><strong>Director tools</strong></summary>
+              <div class="director-tool-body">
+                <label>Spotlight<select id="spotlight-select"><option value="">Open table</option></select></label>
+                <button id="scene-new-toggle" type="button">+ Create scene</button>
+                <form id="scene-create-form" class="compact-form hidden"><input name="title" required placeholder="Scene title" maxlength="90" /><div class="form-row"><select name="kind"><option>roleplay</option><option>exploration</option><option>travel</option><option>combat</option><option>downtime</option></select><input name="location" placeholder="Location" maxlength="90" /></div><textarea name="summary" placeholder="Opening situation"></textarea><button type="submit">Open scene</button></form>
+                <form id="clock-create-form" class="compact-form"><div class="form-row"><input name="name" placeholder="New clock" /><input name="segments" type="number" min="2" max="20" value="6" /></div><button type="submit">Add clock</button></form>
+                <form id="quest-create-form" class="compact-form"><input name="name" placeholder="Quest name" /><textarea name="objectives" placeholder="One objective per line"></textarea><input name="reward" placeholder="Reward" /><button type="submit">Add quest</button></form>
+                <div id="faction-list" class="faction-list"></div>
+                <form id="faction-form" class="compact-form"><div class="form-row"><input name="name" placeholder="Faction" /><input name="delta" type="number" value="1" min="-10" max="10" /></div><button type="submit">Adjust faction</button></form>
+                <form id="time-form" class="compact-form"><div class="form-row"><input name="label" placeholder="Day 2, Evening" /><button type="submit">Set time</button></div></form>
+              </div>
+            </details>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <div id="agent-thinking" class="agent-thinking hidden" role="status"><i></i><div><strong>The party is thinking…</strong><span id="agent-thinking-detail">Ollama is choosing a legal action.</span></div></div>
+    <div id="campaign-toast" class="campaign-toast hidden" role="status"></div>
+    <script src="campaign.js?v=20260717d"></script>
+  </body>
+</html>

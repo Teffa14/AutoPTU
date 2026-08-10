@@ -277,8 +277,8 @@ def _temporary_accuracy_bonus(
     attacker: PokemonState, defender: PokemonState, move: MoveSpec
 ) -> int:
     bonus = 0
+    battle = getattr(attacker, "battle", None)
     if attacker.get_temporary_effects("focused_training"):
-        battle = getattr(attacker, "battle", None)
         if battle is not None and hasattr(battle, "_focused_training_accuracy_bonus"):
             bonus += int(battle._focused_training_accuracy_bonus(attacker, defender) or 0)
         else:
@@ -338,6 +338,8 @@ def _temporary_accuracy_bonus(
             continue
         if evasion_value(defender, move.category) < evasion_value(attacker, move.category):
             bonus += amount
+    if battle is not None and hasattr(battle, "_chronicler_accuracy_bonus"):
+        bonus += int(battle._chronicler_accuracy_bonus(attacker, defender) or 0)
     return bonus
 
 
@@ -625,6 +627,9 @@ def attack_hits(
             and defender.has_trainer_feature("Blur")
         ):
             evasion = int(math.floor(evasion_value_for_attack(attacker, defender, move.category) / 2))
+            battle = getattr(defender, "battle", None)
+            if battle is not None and hasattr(battle, "_chronicler_evasion_bonus"):
+                evasion += int(battle._chronicler_evasion_bonus(defender, move) or 0)
             accuracy_bonus = _temporary_accuracy_bonus(attacker, defender, move)
             accuracy_stage = accuracy_stage_value(
                 attacker.combat_stages.get("accuracy", 0)
@@ -667,6 +672,9 @@ def attack_hits(
             {"hit": True, "crit": roll >= (move.crit_range or 20), "roll": roll, "needed": 1}
         )
     evasion = 0 if melee_no_guard else evasion_value_for_attack(attacker, defender, move.category)
+    battle = getattr(defender, "battle", None)
+    if battle is not None and hasattr(battle, "_chronicler_evasion_bonus"):
+        evasion += int(battle._chronicler_evasion_bonus(defender, move) or 0)
     accuracy_bonus = _temporary_accuracy_bonus(attacker, defender, move)
     accuracy_stage = accuracy_stage_value(
         attacker.combat_stages.get("accuracy", 0) + attacker.spec.accuracy_cs + accuracy_bonus
@@ -709,6 +717,9 @@ def hit_probability(attacker: PokemonState, defender: PokemonState, move: MoveSp
             and defender.has_trainer_feature("Blur")
         ):
             evasion = int(math.floor(evasion_value_for_attack(attacker, defender, move.category) / 2))
+            battle = getattr(defender, "battle", None)
+            if battle is not None and hasattr(battle, "_chronicler_evasion_bonus"):
+                evasion += int(battle._chronicler_evasion_bonus(defender, move) or 0)
             accuracy_bonus = _temporary_accuracy_bonus(attacker, defender, move)
             accuracy_stage = accuracy_stage_value(
                 attacker.combat_stages.get("accuracy", 0)
@@ -729,6 +740,9 @@ def hit_probability(attacker: PokemonState, defender: PokemonState, move: MoveSp
         and (attacker.has_ability("No Guard") or defender.has_ability("No Guard"))
     )
     evasion = 0 if melee_no_guard else evasion_value_for_attack(attacker, defender, move.category)
+    battle = getattr(defender, "battle", None)
+    if battle is not None and hasattr(battle, "_chronicler_evasion_bonus"):
+        evasion += int(battle._chronicler_evasion_bonus(defender, move) or 0)
     accuracy_bonus = _temporary_accuracy_bonus(attacker, defender, move)
     accuracy_stage = accuracy_stage_value(
         attacker.combat_stages.get("accuracy", 0) + attacker.spec.accuracy_cs + accuracy_bonus

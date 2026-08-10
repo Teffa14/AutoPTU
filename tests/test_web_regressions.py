@@ -266,6 +266,54 @@ def test_engine_facade_preserves_mentor_skills_on_trainer_class_metadata():
     assert trainer.trainer_class["mentor_skills"] == ["Charm", "Intuition"]
 
 
+def test_engine_facade_preserves_fashionista_skills_on_trainer_class_metadata():
+    facade = EngineFacade()
+    facade.start_encounter(
+        random_battle=True,
+        team_size=1,
+        active_slots=1,
+        min_level=20,
+        max_level=20,
+        seed=817,
+        trainer_profile={
+            "profile": {"name": "Fashionista"},
+            "class_id": "class:Fashionista",
+            "class_name": "Fashionista",
+            "features": ["Fashionista", "Versatile Wardrobe"],
+            "fashionista_skills": ["Charm", "Guile"],
+        },
+    )
+
+    trainer = next(iter(facade.battle.trainers.values()))
+    assert trainer.trainer_class["id"] == "class:Fashionista"
+    assert trainer.trainer_class["name"] == "Fashionista"
+    assert trainer.trainer_class["fashionista_skills"] == ["Charm", "Guile"]
+
+
+def test_engine_facade_preserves_researcher_fields_on_trainer_class_metadata():
+    facade = EngineFacade()
+    facade.start_encounter(
+        random_battle=True,
+        team_size=1,
+        active_slots=1,
+        min_level=20,
+        max_level=20,
+        seed=818,
+        trainer_profile={
+            "profile": {"name": "Researcher"},
+            "class_id": "class:Researcher",
+            "class_name": "Researcher",
+            "features": ["Researcher", "Engineer"],
+            "researcher_fields": ["Engineer"],
+        },
+    )
+
+    trainer = next(iter(facade.battle.trainers.values()))
+    assert trainer.trainer_class["id"] == "class:Researcher"
+    assert trainer.trainer_class["name"] == "Researcher"
+    assert trainer.trainer_class["researcher_fields"] == ["Engineer"]
+
+
 def test_engine_facade_preserves_feature_object_payloads_for_stat_ace():
     facade = EngineFacade()
     facade.start_encounter(
@@ -379,6 +427,78 @@ def test_engine_facade_snapshot_exposes_type_ace_generic_hints():
     assert hints["type_refresh_options"][0]["scene_moves"][0]["move_name"] == "Surf"
     assert hints["move_sync_ready"] is True
     assert hints["move_sync_options"][0]["type_label"] == "Electric"
+
+
+def test_engine_facade_snapshot_exposes_chronicler_hints():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={
+            "player": TrainerState(
+                identifier="player",
+                name="Player",
+                controller_kind="player",
+                team="players",
+                ap=3,
+                trainer_class={
+                    "chronicler_archives": ["Profile Album", "Technique Album", "Travel Album"],
+                    "chronicler_records": {"profile": ["Target"], "technique": ["Thunderbolt"], "travel": ["forest"]},
+                },
+            ),
+            "foe": TrainerState(identifier="foe", name="Foe", controller_kind="ai", team="foes"),
+        },
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+            "player-2": PokemonState(spec=_spec("Ally", [_move("Tackle")]), controller_id="player", position=(1, 2), active=True),
+            "foe-1": PokemonState(spec=_spec("Target", [_move("Thunderbolt")]), controller_id="foe", position=(1, 3), active=True),
+        },
+        grid=GridState(width=5, height=5),
+        rng=random.Random(11),
+        terrain={"name": "Forest"},
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    battle.pokemon["player-1"].spec.trainer_features = [
+        {"name": "Chronicler"},
+        {"name": "Targeted Profiling"},
+        {"name": "Cinematic Analysis"},
+    ]
+    facade.battle = battle
+
+    payload = facade.snapshot()
+    entry = next(item for item in payload["combatants"] if item["id"] == "player-1")
+    hints = entry["trainer_action_hints"]
+    assert hints["chronicler_record_ready"] is True
+    assert any(option["archive"] == "profile" for option in hints["chronicler_record_options"])
+    assert hints["targeted_profiling_ready"] is True
+    assert any(option["target"] == "player-2" for option in hints["targeted_profiling_targets"])
+    assert hints["cinematic_analysis_ready"] is True
+    assert any(option["move"] == "Thunderbolt" for option in hints["cinematic_analysis_recreation_options"])
+    assert any(option["social_skill"] == "Charm" for option in hints["cinematic_analysis_character_study_options"])
+    assert any(option["move"] == "Tackle" for option in hints["cinematic_analysis_situational_awareness_options"])
+
+
+def test_engine_facade_build_action_supports_chronicler_actions():
+    facade = EngineFacade()
+    battle = BattleState(
+        trainers={"player": TrainerState(identifier="player", name="Player", controller_kind="player", team="players")},
+        pokemon={
+            "player-1": PokemonState(spec=_spec("Trainer", [_move("Tackle")]), controller_id="player", position=(1, 1), active=True),
+        },
+        grid=GridState(width=4, height=4),
+    )
+    battle.pokemon["player-1"].spec.tags = ["trainer"]
+    facade.battle = battle
+    action = facade._build_action(
+        battle,
+        {
+            "type": "trainer_feature",
+            "actor_id": "player-1",
+            "action_key": "chronicler_record",
+            "archive": "Technique Album",
+            "record_name": "Thunderbolt",
+            "record_kind": "move",
+        },
+    )
+    assert action.__class__.__name__ == "ChroniclerRecordAction"
 
 
 def test_engine_facade_snapshot_exposes_type_ace_branch_hints():
@@ -3397,3 +3517,69 @@ def test_engine_facade_snapshot_exposes_chef_hints_and_item_taste():
     assert hints["complex_aftertaste_ready"] is True
     assert hints["complex_aftertaste_targets"][0]["taste"] == "sweet"
     assert ally["items"][0]["taste"] == "sweet"
+
+
+def test_battle_ui_exposes_self_teaching_controls_and_safe_shortcuts():
+    root = Path(__file__).resolve().parents[1]
+    html = (root / "auto_ptu" / "api" / "static" / "index.html").read_text(encoding="utf-8")
+    script = (root / "auto_ptu" / "api" / "static" / "app.js").read_text(encoding="utf-8")
+
+    assert 'id="play-guide"' in html
+    assert 'id="battle-control-hint"' in html
+    assert 'id="battle-guide-inline"' in html
+    assert 'id="turn-controller"' in html
+    assert 'id="turn-controller-collapse"' in html
+    assert 'id="turn-move"' in html
+    assert 'id="turn-actions"' in html
+    assert 'id="turn-plan"' in html
+    assert 'id="turn-agent"' in html
+    assert 'id="turn-undo"' in html
+    assert 'id="turn-end"' in html
+    assert "function cancelBattleTargeting()" in script
+    assert "function renderTurnController(" in script
+    assert "function campaignAgentBattleStep()" in script
+    assert 'agents/battle/step' in script
+    assert 'armedTileAction = armedTileAction === "shift" ? null : "shift"' in script
+    assert 'event.code === "KeyE"' in script
+    assert 'event.code === "KeyP"' in script
+    assert 'event.code === "KeyN"' in script
+    assert 'event.code === "KeyR" && event.shiftKey' in script
+    assert 'event.code === "Enter"' not in script[script.index('document.addEventListener("keydown", (event) => {') :]
+
+
+def test_campaign_ui_exposes_first_session_guide():
+    root = Path(__file__).resolve().parents[1]
+    html = (root / "auto_ptu" / "api" / "static" / "campaign.html").read_text(encoding="utf-8")
+    script = (root / "auto_ptu" / "api" / "static" / "campaign.js").read_text(encoding="utf-8")
+
+    assert 'id="campaign-guide-open"' in html
+    assert 'id="campaign-guide"' in html
+    assert 'id="campaign-starter-form"' in html
+    assert 'id="campaign-starter"' in html
+    assert 'name="play_mode"' in html
+    assert "Trainer · AI Game Master" in html
+    assert 'id="agent-party"' in html
+    assert 'id="agent-round"' in html
+    assert 'id="agent-autoplay"' in html
+    assert 'id="scene-choices"' in html
+    assert 'id="campaign-continue"' in html
+    assert 'id="campaign-world-map"' in html
+    assert 'id="exploration-board"' in html
+    assert 'id="exploration-token-picker"' in html
+    assert "Play, don’t administer" in html
+    assert "The Prism Trail" in html
+    assert "guide.showModal" in script
+    assert 'api("/api/campaigns/starter"' in script
+    assert "/agents/advance" in script
+    assert "function isAgentHost()" in script
+    assert "discovered_point_ids" in script
+    assert "async function runAgentRound(" in script
+    assert "async function autoplayLoop(" in script
+    assert "async function travelTo(" in script
+    assert "function renderExploration(" in script
+    assert 'command("exploration.token.move"' in script
+    assert 'command("exploration.point.visibility"' in script
+    assert 'command("scene.visibility"' in script
+    assert 'data-party-token="true"' in script
+    assert "autoptu_campaign_agent_models" in script
+    assert 'addEventListener("change", rememberAgentModels)' in script

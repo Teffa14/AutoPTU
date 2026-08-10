@@ -125,6 +125,219 @@ def _advance_to_end_phase(battle: BattleState) -> None:
         battle.advance_phase()
 
 
+class TestChronicler(unittest.TestCase):
+    def test_targeted_profiling_grants_accuracy_and_mold_breaker_style_ignore(self) -> None:
+        player = TrainerState(
+            identifier="player",
+            name="Player",
+            controller_kind="player",
+            team="players",
+            ap=4,
+            features=[{"name": "Chronicler"}, {"name": "Targeted Profiling"}],
+            trainer_class={
+                "chronicler_archives": ["Profile Album"],
+                "chronicler_records": {"profile": ["FoeMon"]},
+            },
+        )
+        foe = TrainerState(identifier="foe", name="Foe", controller_kind="ai", team="foes")
+        battle = BattleState(
+            trainers={"player": player, "foe": foe},
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Trainer", tags=["trainer"]), controller_id="player", position=(1, 1)),
+                "player-2": PokemonState(spec=_mon("AllyMon"), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("FoeMon"), controller_id="foe", position=(1, 3)),
+            },
+            grid=GridState(width=6, height=6),
+            rng=random.Random(7),
+        )
+        action = create_trainer_feature_action("targeted_profiling", actor_id="player-1", target_id="player-2")
+        action.resolve(battle)
+        ally = battle.pokemon["player-2"]
+        foe_mon = battle.pokemon["foe-1"]
+        self.assertEqual(battle._chronicler_accuracy_bonus(ally, foe_mon), 2)
+        self.assertTrue(battle._attacker_ignores_defender_abilities(ally, foe_mon))
+
+    def test_chronicler_record_action_updates_trainer_archive(self) -> None:
+        player = TrainerState(
+            identifier="player",
+            name="Player",
+            controller_kind="player",
+            team="players",
+            ap=3,
+            features=[{"name": "Chronicler"}],
+            trainer_class={"chronicler_archives": ["Technique Album"], "chronicler_records": {"technique": []}},
+        )
+        battle = BattleState(
+            trainers={"player": player},
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Trainer", tags=["trainer"]), controller_id="player", position=(1, 1)),
+            },
+            grid=GridState(width=4, height=4),
+            rng=random.Random(3),
+        )
+        action = create_trainer_feature_action(
+            "chronicler_record",
+            actor_id="player-1",
+            archive="Technique Album",
+            record_name="Thunderbolt",
+            record_kind="move",
+        )
+        action.resolve(battle)
+        assert "Thunderbolt" in battle.trainers["player"].trainer_class["chronicler_records"]["technique"]
+        assert battle.trainers["player"].ap == 2
+
+    def test_observation_party_grants_travel_archive_ability_in_matching_location(self) -> None:
+        player = TrainerState(
+            identifier="player",
+            name="Player",
+            controller_kind="player",
+            team="players",
+            features=[{"name": "Observation Party"}],
+            trainer_class={
+                "chronicler_archives": ["Travel Album"],
+                "chronicler_records": {"travel": ["forest"]},
+                "chronicler_travel_ability": "Keen Eye",
+            },
+        )
+        battle = BattleState(
+            trainers={"player": player},
+            pokemon={
+                "player-1": PokemonState(spec=_mon("ScoutMon"), controller_id="player", position=(1, 1)),
+            },
+            grid=GridState(width=4, height=4),
+            rng=random.Random(1),
+            terrain={"name": "Forest"},
+        )
+        self.assertTrue(battle.pokemon["player-1"].has_ability("Keen Eye"))
+
+    def test_cinematic_analysis_recreation_grants_move_for_turn_only(self) -> None:
+        player = TrainerState(
+            identifier="player",
+            name="Player",
+            controller_kind="player",
+            team="players",
+            features=[{"name": "Cinematic Analysis"}],
+            trainer_class={
+                "chronicler_archives": ["Technique Album"],
+                "chronicler_records": {"technique": ["Thunderbolt"]},
+            },
+        )
+        ally_spec = _mon("AllyMon")
+        ally_spec.learnset = [{"move": "Thunderbolt", "level": 20}]
+        battle = BattleState(
+            trainers={"player": player},
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Trainer", tags=["trainer"]), controller_id="player", position=(1, 1)),
+                "player-2": PokemonState(spec=ally_spec, controller_id="player", position=(1, 2)),
+            },
+            grid=GridState(width=4, height=4),
+            rng=random.Random(5),
+        )
+        battle.current_actor_id = "player-2"
+        action = create_trainer_feature_action(
+            "cinematic_analysis",
+            actor_id="player-1",
+            mode="recreation",
+            target_id="player-2",
+            move_name="Thunderbolt",
+        )
+        action.resolve(battle)
+        self.assertTrue(any(str(move.name).lower() == "thunderbolt" for move in battle.pokemon["player-2"].spec.moves))
+        battle.end_turn()
+        self.assertFalse(any(str(move.name).lower() == "thunderbolt" for move in battle.pokemon["player-2"].spec.moves))
+
+    def test_cinematic_analysis_character_study_substitutes_perception(self) -> None:
+        player = TrainerState(
+            identifier="player",
+            name="Player",
+            controller_kind="player",
+            team="players",
+            skills={"perception": 6, "charm": 0},
+            features=[{"name": "Cinematic Analysis"}],
+            trainer_class={
+                "chronicler_archives": ["Profile Album"],
+                "chronicler_records": {"profile": ["FoeMon"]},
+            },
+        )
+        foe = TrainerState(
+            identifier="foe",
+            name="Foe",
+            controller_kind="ai",
+            team="foes",
+            skills={"guile": 2},
+        )
+        battle = BattleState(
+            trainers={"player": player, "foe": foe},
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Trainer", tags=["trainer"]), controller_id="player", position=(1, 1)),
+                "foe-1": PokemonState(spec=_mon("FoeMon"), controller_id="foe", position=(1, 2)),
+            },
+            grid=GridState(width=4, height=4),
+            rng=_FixedRng([5, 5]),
+        )
+        create_trainer_feature_action(
+            "cinematic_analysis",
+            actor_id="player-1",
+            mode="character_study",
+            target_id="foe-1",
+            social_skill="Charm",
+        ).resolve(battle)
+        result = battle._skill_contest(
+            battle.pokemon["player-1"],
+            battle.pokemon["foe-1"],
+            ["charm"],
+            ["guile"],
+            attacker_id="player-1",
+            defender_id="foe-1",
+            attacker_trainer_override_id="player",
+            defender_trainer_override_id="foe",
+        )
+        self.assertEqual(result["attacker_rank"], 6)
+        self.assertFalse(battle.pokemon["player-1"].get_temporary_effects("character_study_ready"))
+
+    def test_cinematic_analysis_situational_awareness_interrupts_and_spends_turn(self) -> None:
+        player = TrainerState(
+            identifier="player",
+            name="Player",
+            controller_kind="player",
+            team="players",
+            features=[{"name": "Cinematic Analysis"}],
+            trainer_class={
+                "chronicler_archives": ["Travel Album"],
+                "chronicler_records": {"travel": ["forest"]},
+            },
+        )
+        foe = TrainerState(identifier="foe", name="Foe", controller_kind="ai", team="foes")
+        battle = BattleState(
+            trainers={"player": player, "foe": foe},
+            pokemon={
+                "player-1": PokemonState(spec=_mon("Trainer", tags=["trainer"]), controller_id="player", position=(1, 1)),
+                "player-2": PokemonState(spec=_mon("AllyMon"), controller_id="player", position=(1, 2)),
+                "foe-1": PokemonState(spec=_mon("FoeMon"), controller_id="foe", position=(1, 3)),
+            },
+            grid=GridState(width=5, height=5),
+            rng=_FixedRng([20, 20]),
+            terrain={"name": "Forest"},
+            round=1,
+        )
+        battle.initiative_order = [
+            InitiativeEntry(actor_id="foe-1", trainer_id="foe", speed=10, trainer_modifier=0, roll=10, total=20),
+            InitiativeEntry(actor_id="player-2", trainer_id="player", speed=5, trainer_modifier=0, roll=5, total=10),
+        ]
+        battle._initiative_index = 0
+        battle.current_actor_id = "foe-1"
+        create_trainer_feature_action(
+            "cinematic_analysis",
+            actor_id="player-1",
+            mode="situational_awareness",
+            target_id="player-2",
+            move_name="Tackle",
+            move_target_id="foe-1",
+        ).resolve(battle)
+        self.assertLess(battle.pokemon["foe-1"].hp, battle.pokemon["foe-1"].max_hp_with_injuries())
+        self.assertFalse(any(entry.actor_id == "player-2" for entry in battle.initiative_order))
+
+
 class TrainerPassivePerkTests(unittest.TestCase):
     def test_basic_martial_arts_intimidating_presence_and_leader_grant_moves(self) -> None:
         battle = BattleState(

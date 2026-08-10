@@ -8,12 +8,18 @@ from typing import Any, Dict, Optional
 import tkinter as tk
 from tkinter import filedialog
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Header, HTTPException
 from fastapi.responses import FileResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from .engine_facade import EngineFacade
 from .roleplay_api import router as roleplay_router
+from .campaign_api import SERVICE as campaign_service, router as campaign_router
+from .campaign_agents import CampaignAgentRuntime
+from .campaign_agent_api import build_campaign_agent_router
+from .battle_commands import BattleCommandService
+from .battle_command_api import build_battle_command_router
+from .campaign_battle_access import CampaignBattleAccess
 from .terrain_mapper_store import TerrainMapperStore
 from ..config import IMPLEMENTATION_DIR, REPORTS_DIR
 from ..gameplay import list_ai_models, select_ai_model, branch_ai_model, update_ai_model_settings
@@ -31,7 +37,13 @@ from ..pokeapi_assets import (
 
 app = FastAPI(title="AutoPTU API")
 engine = EngineFacade()
+battle_commands = BattleCommandService(engine)
+battle_access = CampaignBattleAccess(campaign_service)
+campaign_agents = CampaignAgentRuntime(campaign_service=campaign_service, engine=engine, command_service=battle_commands)
 app.include_router(roleplay_router)
+app.include_router(campaign_router)
+app.include_router(build_battle_command_router(battle_commands, battle_access))
+app.include_router(build_campaign_agent_router(campaign_agents, battle_access))
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 GEN9_UI_DIR = IMPLEMENTATION_DIR / "Generation 9 Pack v3.3.4" / "Graphics" / "UI"
@@ -245,11 +257,48 @@ def _resolve_move_anim_file(move_name: str) -> Optional[str]:
     return None
 
 
+def _bearer(authorization: Optional[str]) -> str:
+    value = str(authorization or "").strip()
+    return value[7:].strip() if value.lower().startswith("bearer ") else value
+
+
+def _authorize_battle(
+    authorization: Optional[str],
+    *,
+    actor_id: str = "",
+    gm: bool = False,
+    legacy_role: str = "player",
+) -> str:
+    return battle_access.authorize(
+        _bearer(authorization),
+        actor_id=actor_id or None,
+        gm=gm,
+        legacy_role=legacy_role,
+    )
+
+
 @app.post("/api/battle/new")
-def battle_new(payload: Dict[str, Any]) -> dict:
+def battle_new(payload: Dict[str, Any], authorization: Optional[str] = Header(default=None)) -> dict:
     try:
-        return engine.start_encounter(
+        battle_payload = None
+        campaign_id = str(payload.get("campaign_id") or "").strip()
+        if campaign_id:
+            setup = campaign_service.battle_setup(campaign_id, _bearer(authorization))
+            battle_access.bind(setup)
+            battle_payload = dict(setup["battle"])
+            payload = {**payload, "seed": setup["seed"], "ai_mode": "player", "active_slots": battle_payload["active_slots"]}
+            state = campaign_service.require_campaign(campaign_id)
+            scene = state.active_scene()
+            if scene is not None and not scene.battle_id:
+                authority = state.participants.get(state.gm_id)
+                if authority is None:
+                    raise PermissionError("The campaign has no authoritative GM seat.")
+                campaign_service.command(campaign_id, authority.token, {"type": "battle.link", "payload": {"battle_id": f"{campaign_id}:{scene.id}"}})
+        else:
+            battle_access.clear()
+        snapshot = engine.start_encounter(
             campaign=payload.get("campaign"),
+            battle_payload=battle_payload,
             team_size=int(payload.get("team_size", 1)),
             matchup_index=int(payload.get("matchup_index", 0)),
             seed=payload.get("seed"),
@@ -271,13 +320,52 @@ def battle_new(payload: Dict[str, Any]) -> dict:
             battle_royale=bool(payload.get("battle_royale", False)),
             circle_interval=int(payload.get("circle_interval", 3)),
         )
+        result = battle_commands.decorate(snapshot)
+        result["battle_identity"] = battle_access.identity(_bearer(authorization)) if battle_access.bound else battle_access.identity("")
+        return result
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
 
 @app.get("/api/state")
-def get_state() -> dict:
-    return engine.snapshot()
+def get_state(authorization: Optional[str] = Header(default=None)) -> dict:
+    try:
+        result = battle_commands.decorate(engine.snapshot())
+        result["battle_identity"] = battle_access.identity(_bearer(authorization)) if battle_access.bound else battle_access.identity("")
+        return result
+    except Exception as exc:
+        raise HTTPException(status_code=403, detail=str(exc))
+
+
+@app.post("/api/campaigns/{campaign_id}/battle/complete")
+def campaign_battle_complete(campaign_id: str, authorization: Optional[str] = Header(default=None)) -> dict:
+    try:
+        if not battle_access.bound or battle_access.campaign_id != campaign_id:
+            raise ValueError("The tactical board is not bound to that campaign.")
+        token = _bearer(authorization)
+        identity = battle_access.identity(token)
+        state = campaign_service.require_campaign(campaign_id)
+        agent_host_id = str(state.world.get("agent_host_participant_id") or "")
+        if identity.get("role") != "gm" and identity.get("participant_id") != agent_host_id:
+            raise PermissionError("Only the campaign host can finalize this encounter.")
+        if engine.battle is None or engine.session is None:
+            raise ValueError("No active tactical encounter.")
+        if not engine.session._battle_finished(engine.battle):
+            raise ValueError("Finish the encounter before applying campaign progression.")
+        alive_teams = sorted(engine.session._alive_teams(engine.battle))
+        if len(alive_teams) != 1:
+            raise ValueError("The encounter has no single winning team.")
+        result = campaign_service.complete_battle(
+            campaign_id,
+            token,
+            winner_team=alive_teams[0],
+        )
+        result["winner_team"] = alive_teams[0]
+        return result
+    except PermissionError as exc:
+        raise HTTPException(status_code=403, detail=str(exc))
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
 
 
 @app.get("/api/battle/log/export")
@@ -286,9 +374,12 @@ def export_battle_log() -> dict:
 
 
 @app.post("/api/battle/clear")
-def clear_battle() -> dict:
+def clear_battle(authorization: Optional[str] = Header(default=None)) -> dict:
     try:
-        return engine.clear_battle()
+        _authorize_battle(authorization, gm=True, legacy_role="gm")
+        result = engine.clear_battle()
+        battle_access.clear()
+        return result
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
@@ -608,33 +699,45 @@ def terrain_map_image(filename: str) -> FileResponse:
 
 
 @app.post("/api/battle/stop")
-def stop_battle() -> dict:
+def stop_battle(authorization: Optional[str] = Header(default=None)) -> dict:
     try:
-        return engine.stop_battle()
+        _authorize_battle(authorization, gm=True, legacy_role="gm")
+        result = battle_commands.decorate(engine.stop_battle())
+        battle_access.clear()
+        return result
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
 
 @app.post("/api/action")
-def post_action(payload: Dict[str, Any]) -> dict:
+def post_action(payload: Dict[str, Any], authorization: Optional[str] = Header(default=None)) -> dict:
     try:
-        return engine.commit_action(payload)
+        actor_id = str(payload.get("actor_id") or getattr(engine.battle, "current_actor_id", "") or "")
+        _authorize_battle(authorization, actor_id=actor_id, legacy_role=str(payload.get("role") or "player"))
+        result = battle_commands.after_resolution(engine.commit_action(payload))
+        result["battle_identity"] = battle_access.identity(_bearer(authorization)) if battle_access.bound else battle_access.identity("")
+        return result
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
 
 @app.post("/api/end_turn")
-def end_turn() -> dict:
+def end_turn(authorization: Optional[str] = Header(default=None)) -> dict:
     try:
-        return engine.commit_action({"type": "end_turn"})
+        actor_id = str(getattr(engine.battle, "current_actor_id", "") or "")
+        _authorize_battle(authorization, actor_id=actor_id)
+        result = battle_commands.after_resolution(engine.commit_action({"type": "end_turn"}))
+        result["battle_identity"] = battle_access.identity(_bearer(authorization)) if battle_access.bound else battle_access.identity("")
+        return result
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
 
 @app.post("/api/ai/step")
-def ai_step() -> dict:
+def ai_step(authorization: Optional[str] = Header(default=None)) -> dict:
     try:
-        return engine.ai_step()
+        _authorize_battle(authorization, gm=True, legacy_role="gm")
+        return battle_commands.after_resolution(engine.ai_step())
     except ValueError as exc:
         if str(exc) == "Not in AI vs AI mode.":
             snapshot = engine.snapshot()
@@ -686,19 +789,21 @@ def ai_models_settings(payload: Dict[str, Any]) -> dict:
 
 
 @app.post("/api/undo")
-def undo() -> dict:
+def undo(authorization: Optional[str] = Header(default=None)) -> dict:
     try:
-        return engine.undo()
+        _authorize_battle(authorization, gm=True, legacy_role="gm")
+        return battle_commands.decorate(engine.undo())
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc))
 
 
 @app.post("/api/prompts/resolve")
-def resolve_prompts(payload: Dict[str, Any]) -> dict:
+def resolve_prompts(payload: Dict[str, Any], authorization: Optional[str] = Header(default=None)) -> dict:
+    _authorize_battle(authorization, gm=True, legacy_role="gm")
     answers = payload.get("answers", {})
     if not isinstance(answers, dict):
         raise HTTPException(status_code=400, detail="answers must be an object")
-    return engine.resolve_prompts(answers)
+    return battle_commands.after_resolution(engine.resolve_prompts(answers))
 
 
 @app.post("/api/sprites/download_all")
@@ -886,6 +991,11 @@ def index() -> FileResponse:
 @app.get("/create")
 def create() -> FileResponse:
     return FileResponse(STATIC_DIR / "create.html", headers={"Cache-Control": "no-store"})
+
+
+@app.get("/campaign")
+def campaign() -> FileResponse:
+    return FileResponse(STATIC_DIR / "campaign.html", headers={"Cache-Control": "no-store"})
 
 
 @app.get("/terrain-mapper")

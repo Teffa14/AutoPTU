@@ -162,3 +162,23 @@ Perf handling:
 - The battlefield now sizes from the actual viewport instead of a fixed tile model.
 - Grid tiles, tokens, HP overlays, hazard markers, badges, and panel chrome scale with the available stage area.
 - Topbar collapse/expand triggers a layout refresh so the battlefield can reclaim vertical space on smaller windows.
+
+## Campaign Table
+
+- Open `/campaign` and press **Begin adventure** for the populated, six-chapter Prism Trail. The player-facing screen leads with chapter progress, current fiction, objective, three contextual choices, party cards, and a large Continue/Enter Battle control; administrative creation forms are folded away.
+- The starter party includes a persistent local Ollama GM and three player agents with distinct personas and Pokémon companions. **Play party round**, individual **Let act** buttons, GM turn, and Autoplay all submit through the same campaign command boundary as a person. Model selections persist through battle navigation and deterministic fallback remains playable when Ollama is offline or returns an invalid decision.
+- GM tools cover scenes, spotlight, clocks, quests, faction standing, campaign time, safety resume, tactical battle links, and are kept in a collapsed Director tools drawer.
+- Players can speak in or out of character, make deterministic checks, keep private/table notes, and pause the table for a check-in. Spectators are read-only.
+- Scene floors expose numbered multi-tile destinations within the selected Trainer or Pokemon's Speed. Click or drag once; the server resolves the deterministic path while enforcing walls, occupancy, ownership, scene readiness, and fog-frontier privacy.
+- Gold scene markers open a contextual interaction panel. Players can investigate only when an owned token is in range; the GM independently controls marker visibility and lock state. Authored results and seeded checks enter the shared story feed only after interaction.
+- Campaign state is snapshot-backed and evented, so tables survive server restarts. WebSocket events invalidate each participant's role-redacted snapshot immediately; no shared privileged snapshot is broadcast.
+
+## Battle Command Center
+
+- Enable `Plan actions` to stage any payload already supported by the battle engine, including movement, moves, items, maneuvers, trainer features, creative actions, and End Turn.
+- Every declaration is dry-run against a deterministic battle clone. The queue can be reordered, removed, cleared, resolved one at a time, or resolved as a batch.
+- The GM can open a named reaction window. Eligible combatants may stack an out-of-turn move or pass; the GM resolves the stack last-in, first-out.
+- `Focus Board` hides scenario/camera setup while keeping live battle controls available. Current-actor actions now live beside the combatant roster instead of below Setup.
+- Campaign battles add **Agent Act** to the foldable turn controller. It asks a companion agent to choose from the engine's exact legal moves, targets, shifts, or End Turn and commits the result through the real battle engine.
+- `How to Play` and the battlefield instruction banner explain the active control state. Shortcuts are `?` guide, `E` end turn, `P` planning, `N` resolve next, `Shift+N` resolve all, `Escape` cancel targeting, `C`/`T` camera focus, and `Shift+R` restart.
+- Shortcuts are ignored while typing in an input, select, or textarea. Plain Enter and plain `R` no longer trigger destructive battle actions.

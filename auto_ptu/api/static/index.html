@@ -8,16 +8,36 @@
     <link rel="stylesheet" href="design-system/components.css" />
     <link rel="stylesheet" href="design-system/layout.css" />
     <link rel="stylesheet" href="styles.css?v=20260404m" />
-    <link rel="stylesheet" href="battle.css?v=20260404m" />
+    <link rel="stylesheet" href="battle.css?v=20260713c" />
   </head>
   <body class="battle-ui">
     <div id="move-tooltip" class="move-tooltip hidden"></div>
+    <dialog id="play-guide" class="play-guide-dialog" aria-labelledby="play-guide-title">
+      <form method="dialog" class="play-guide-card">
+        <header><div><span class="guide-kicker">Quick start</span><h2 id="play-guide-title">How to play AutoPTU</h2></div><button value="close" aria-label="Close guide">Close</button></header>
+        <div class="play-guide-grid">
+          <section><span>1</span><div><h3>Build the party</h3><p>Open <a href="/create">Characters</a> to create trainers and Pokémon. Export or save the roster when it is ready.</p></div></section>
+          <section><span>2</span><div><h3>Start the campaign</h3><p>The GM opens <a href="/campaign">Campaign</a>, creates a table, and shares the invite code. Players join with the Player role.</p></div></section>
+          <section><span>3</span><div><h3>Run the story</h3><p>Create scenes, set spotlight, speak in character, make checks, tick clocks, update quests, and use Pause / check in whenever needed.</p></div></section>
+          <section><span>4</span><div><h3>Enter battle</h3><p>Choose a battle setup and press Start Battle. Select the current actor, choose an action, then click a highlighted unit or tile. Press E to end the turn.</p></div></section>
+          <section><span>5</span><div><h3>Plan and interrupt</h3><p>Press P to queue declarations. Use N to resolve the next declaration. The GM can open a reaction window so players can Stack or Pass.</p></div></section>
+          <section><span>?</span><div><h3>Help at any time</h3><p>Press ? for this guide. Press Escape to cancel targeting, C to center the selected actor, and T to center the current actor.</p></div></section>
+        </div>
+        <div class="shortcut-strip"><kbd>?</kbd> Guide <kbd>E</kbd> End turn <kbd>P</kbd> Plan <kbd>N</kbd> Resolve <kbd>Esc</kbd> Cancel <kbd>Shift+R</kbd> Restart</div>
+      </form>
+    </dialog>
     <header class="topbar ds-topbar">
       <div id="topbar-shell" class="topbar-shell">
         <div class="toolbar ds-toolbar battle-utility-row">
           <div class="utility-group utility-group-brand utility-group-brand-only">
             <span class="utility-group-title">AutoPTU</span>
             <div class="brand ds-brand">AutoPTU Tactical Board</div>
+            <nav class="product-nav" aria-label="Game workspaces">
+              <a href="/campaign">Campaign</a>
+              <a href="/create">Characters</a>
+              <a href="/terrain-mapper">Maps</a>
+              <button id="play-guide-toggle" type="button">How to Play</button>
+            </nav>
           </div>
           <div class="utility-group utility-group-primary">
             <span class="utility-group-title">Battle</span>
@@ -69,7 +89,7 @@
             <button id="cinematic-export" type="button">Export Replay</button>
           </div>
           <div class="utility-group utility-group-collapse">
-            <button id="topbar-collapse-toggle" type="button" aria-expanded="true" aria-controls="topbar-shell">Collapse Bar</button>
+            <button id="topbar-collapse-toggle" type="button" aria-expanded="true" aria-controls="topbar-shell" title="Keep only live battle controls visible">Focus Board</button>
           </div>
           <div class="utility-group utility-group-state">
             <span class="utility-group-title">Live</span>
@@ -176,6 +196,9 @@
               <button id="zoom-fit">Fit</button>
             </div>
           </div>
+          <div id="battle-control-hint" class="battle-control-hint" role="status" aria-live="polite">
+            <span class="control-step">1</span><strong>Start a battle</strong><span>Then select the current actor, choose an action, and click a highlighted target.</span><button id="battle-guide-inline" type="button">Controls</button>
+          </div>
           <div class="battlefield-stage">
             <div class="grid-stage">
               <div class="grid-wrap">
@@ -194,6 +217,67 @@
             <span id="sidebar-terrain-info" class="field-pill ds-pill light">Terrain: -</span>
             <span id="sidebar-weather-info" class="field-pill ds-pill light">Weather: -</span>
           </div>
+          <section id="command-center" class="command-center" aria-label="Battle command center">
+            <div class="command-center-head">
+              <div>
+                <div class="command-kicker">Command center</div>
+                <div class="command-title">Declare, stack, resolve</div>
+              </div>
+              <label class="command-role-field">
+                Role
+                <select id="battle-role">
+                  <option value="player" selected>Player</option>
+                  <option value="gm">GM</option>
+                  <option value="spectator">Spectator</option>
+                </select>
+              </label>
+            </div>
+            <div class="command-toolbar">
+              <label class="command-plan-toggle"><input id="command-queue-mode" type="checkbox" /> Plan actions</label>
+              <button id="command-resolve-next" type="button">Resolve next</button>
+              <button id="command-resolve-all" type="button">Resolve all</button>
+              <button id="command-clear" type="button">Clear</button>
+            </div>
+            <div id="command-queue" class="command-queue">
+              <div class="command-empty">Turn on Plan actions, then use any move, item, maneuver, feature, or movement control.</div>
+            </div>
+            <div class="interrupt-builder">
+              <input id="interrupt-trigger" type="text" placeholder="Reaction trigger (GM)" maxlength="120" />
+              <button id="interrupt-open" type="button">Open reaction</button>
+              <button id="interrupt-resolve" type="button">Resolve stack</button>
+              <button id="interrupt-close" type="button">Close</button>
+            </div>
+            <details id="reaction-registry-panel" class="reaction-registry-panel">
+              <summary>Automatic reactions <span id="reaction-registry-count">0</span></summary>
+              <div class="reaction-registry-builder">
+                <input id="reaction-name" type="text" placeholder="Reaction name" maxlength="80" />
+                <select id="reaction-source" aria-label="Reaction source">
+                  <option value="ability">Ability</option>
+                  <option value="feature">Feature</option>
+                  <option value="item">Item</option>
+                  <option value="move">Move</option>
+                  <option value="custom">Custom rule</option>
+                </select>
+                <select id="reaction-actor" aria-label="Reacting actor"></select>
+                <input id="reaction-event" type="text" list="reaction-event-types" placeholder="Event type, e.g. damage" maxlength="60" />
+                <datalist id="reaction-event-types">
+                  <option value="damage"></option>
+                  <option value="move"></option>
+                  <option value="hit"></option>
+                  <option value="miss"></option>
+                  <option value="status"></option>
+                  <option value="weather_changed"></option>
+                  <option value="faint"></option>
+                  <option value="round_start"></option>
+                </datalist>
+                <button id="reaction-register" type="button">Register</button>
+              </div>
+              <div id="reaction-registry" class="reaction-registry-list">
+                <div class="command-empty">No automatic reactions registered.</div>
+              </div>
+            </details>
+            <div id="interrupt-window" class="interrupt-window hidden"></div>
+          </section>
           <div id="turn-order-bar" class="turn-order-bar turn-order-strip" aria-label="Initiative order"></div>
           <div class="log-filters">
             <label><input type="checkbox" id="log-actions" checked />Actions</label>
@@ -212,18 +296,29 @@
         <div class="panel-head ds-panel-head">
           <div class="panel-title ds-panel-title">Combat HUD</div>
         </div>
-        <div class="combatant-hud-controls">
-          <div class="status-tabs ds-tab-list" data-tablist>
-            <button class="status-tab ds-tab" aria-selected="true" data-team-filter="all">All</button>
-            <button class="status-tab ds-tab" aria-selected="false" data-team-filter="player">Player</button>
-            <button class="status-tab ds-tab" aria-selected="false" data-team-filter="foe">Foe</button>
+        <div class="combat-hud-body">
+          <div class="combatant-roster-column">
+            <div class="combatant-hud-controls">
+              <div class="status-tabs ds-tab-list" data-tablist>
+                <button class="status-tab ds-tab" aria-selected="true" data-team-filter="all">All</button>
+                <button class="status-tab ds-tab" aria-selected="false" data-team-filter="player">Player</button>
+                <button class="status-tab ds-tab" aria-selected="false" data-team-filter="foe">Foe</button>
+              </div>
+              <label class="toggle-row">
+                <input id="hide-fainted" type="checkbox" />
+                Hide fainted
+              </label>
+            </div>
+            <div id="combatant-list" class="combatant-list"></div>
           </div>
-          <label class="toggle-row">
-            <input id="hide-fainted" type="checkbox" />
-            Hide fainted
-          </label>
+          <section id="action-dock" class="action-dock" aria-label="Current actor controls" tabindex="-1">
+            <div class="action-dock-head"><span>Current actor</span><small>Every legal PTU control appears here</small><button id="action-dock-close" type="button" aria-label="Close action controls">Close</button></div>
+            <div class="action-shortcuts" aria-label="Battle keyboard shortcuts"><kbd>E</kbd> End <kbd>P</kbd> Plan <kbd>N</kbd> Resolve <kbd>Esc</kbd> Cancel</div>
+            <div id="combatant-details" class="combatant-details">Select a unit.</div>
+            <div id="party-bar" class="party-bar"></div>
+            <div id="move-list" class="move-list"></div>
+          </section>
         </div>
-        <div id="combatant-list" class="combatant-list"></div>
       </section>
       </section>
       <section class="panel battle-admin-panel ds-panel battle-setup-panel">
@@ -334,14 +429,29 @@
               </div>
             </div>
           </div>
-          <div class="legacy-hud-cache" aria-hidden="true">
-            <div id="combatant-details" class="combatant-details">Select a unit.</div>
-            <div id="party-bar" class="party-bar"></div>
-            <div id="move-list" class="move-list"></div>
-          </div>
         </div>
       </section>
     </main>
+    <section id="turn-controller" class="turn-controller hidden" aria-label="Live turn controls">
+      <button id="turn-controller-collapse" class="turn-controller-collapse" type="button" aria-expanded="true" aria-controls="turn-controller-body" title="Fold turn controls">
+        <span aria-hidden="true">⌄</span><span class="sr-only">Fold turn controls</span>
+      </button>
+      <div id="turn-controller-body" class="turn-controller-body">
+        <div class="turn-identity">
+          <div id="turn-controller-sprite" class="turn-sprite-stage" aria-hidden="true"></div>
+          <div class="turn-copy"><span id="turn-controller-eyebrow">Your turn</span><strong id="turn-controller-name">Choose an actor</strong><small id="turn-controller-status">Start a battle to play</small></div>
+        </div>
+        <div id="turn-quick-moves" class="turn-quick-moves" aria-label="Quick moves"></div>
+        <div class="turn-controller-actions">
+          <button id="turn-move" class="turn-control-move" type="button"><span aria-hidden="true">✦</span> Move</button>
+          <button id="turn-actions" type="button"><span aria-hidden="true">⚡</span> Actions</button>
+          <button id="turn-plan" type="button" aria-pressed="false"><span aria-hidden="true">☰</span> Plan</button>
+          <button id="turn-agent" class="turn-control-agent hidden" type="button"><span aria-hidden="true">✦</span> Agent Act</button>
+          <button id="turn-undo" type="button"><span aria-hidden="true">↶</span> Undo</button>
+          <button id="turn-end" class="turn-control-end" type="button"><span>End Turn</span><small>E</small></button>
+        </div>
+      </div>
+    </section>
     <div id="prompt-overlay" class="prompt-overlay hidden">
       <div class="prompt-card">
         <h2>Optional Triggers</h2>
@@ -357,6 +467,6 @@
     <script src="logic/character_state.js"></script>
     <script src="ui/battle_ui.js"></script>
     <script src="ui/builder_ui.js"></script>
-    <script src="app.js?v=20260404m"></script>
+    <script src="app.js?v=20260717a"></script>
   </body>
 </html>

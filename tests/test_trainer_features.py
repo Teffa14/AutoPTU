@@ -180,6 +180,21 @@ class TrainerFeatureTests(unittest.TestCase):
         self.assertEqual(2, side.evasion_spec)
         self.assertEqual(3, side.evasion_spd)
 
+    def test_trainer_side_parses_character_builder_skill_rank_labels(self) -> None:
+        side = TrainerSideSpec.from_dict(
+            {
+                "identifier": "builder-trainer",
+                "name": "Builder Trainer",
+                "skills": {
+                    "Combat": "Untrained",
+                    "Perception": "Adept",
+                    "Focus": "Master",
+                },
+            }
+        )
+
+        self.assertEqual({"combat": 2, "perception": 4, "focus": 6}, side.skills)
+
     def test_action_condition_move_name_filters_feature(self) -> None:
         feature = {
             "feature_id": "trigger-by-move",

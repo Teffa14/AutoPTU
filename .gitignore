@@ -30,7 +30,10 @@ __pycache__/
 /reports/launch.err.log
 /reports/launch.out.log
 /reports/roleplay_events.sqlite3
+/reports/campaign_events.sqlite3
 /reports/ai_models/model_*.json
+/portable_data/
+/browser_lock.txt
 /tmp_autoptu_*.png
 /tmp_map_builder_debug.png
 /tmp_ptu_maps/

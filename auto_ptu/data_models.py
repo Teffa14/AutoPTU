@@ -38,6 +38,24 @@ def _opt_int(value: Any) -> Optional[int]:
             return None
 
 
+_PTU_SKILL_RANK_DICE = {
+    "pathetic": 1,
+    "untrained": 2,
+    "novice": 3,
+    "adept": 4,
+    "expert": 5,
+    "master": 6,
+}
+
+
+def _skill_rank_value(value: Any) -> int:
+    """Accept builder rank labels and tactical numeric dice ranks."""
+    label = str(value or "").strip().lower()
+    if label in _PTU_SKILL_RANK_DICE:
+        return _PTU_SKILL_RANK_DICE[label]
+    return _int_field(value, 0)
+
+
 @dataclass
 class MoveSpec:
     name: str
@@ -494,7 +512,7 @@ class TrainerSideSpec:
             start_positions=positions,
             initiative_modifier=int(data.get("initiative_modifier", data.get("initiative", 0))),
             speed=int(speed_value) if speed_value is not None else None,
-            skills={str(key).lower(): int(value) for key, value in raw_skills.items() if key is not None},
+            skills={str(key).lower(): _skill_rank_value(value) for key, value in raw_skills.items() if key is not None},
             save_bonus=int(data.get("save_bonus", data.get("trainer_save_bonus", 0)) or 0),
             evasion_phys=int(data.get("evasion_phys", data.get("trainer_evasion_phys", 0)) or 0),
             evasion_spec=int(data.get("evasion_spec", data.get("trainer_evasion_spec", 0)) or 0),

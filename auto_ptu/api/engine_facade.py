@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any, Collection, Dict, Iterable, List, Optional, Tuple
 
 from ..data_loader import default_campaign, load_builtin_campaign, load_campaign
-from ..data_models import GridSpec, MatchPlan, MatchupSpec, MoveSpec, TrainerSideSpec
+from ..data_models import CampaignSpec, GridSpec, MatchPlan, MatchupSpec, MoveSpec, TrainerSideSpec
 from ..matchmaker import AutoMatchPlanner
 from ..csv_repository import PTUCsvRepository
 from ..random_campaign import CsvRandomCampaignBuilder
@@ -1481,6 +1481,125 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
                         "choices": [first_value, second_value],
                     }
                 )
+    chronicler_metadata = battle._chronicler_metadata(state.controller_id) if hasattr(battle, "_chronicler_metadata") else {"archives": set(), "records": {"profile": [], "technique": [], "travel": []}, "travel_ability": ""}
+    chronicler_archives = sorted(chronicler_metadata.get("archives", set()))
+    chronicler_records = chronicler_metadata.get("records", {}) if isinstance(chronicler_metadata, dict) else {}
+    chronicler_record_options = []
+    if state.has_trainer_feature("Chronicler"):
+        for target_id, target in battle.pokemon.items():
+            if target.fainted or not target.active:
+                continue
+            if target.is_trainer_combatant():
+                chronicler_record_options.append({
+                    "archive": "profile",
+                    "record_kind": "trainer",
+                    "record_name": _combatant_name(target_id),
+                    "label": f"Profile: {_combatant_name(target_id)}",
+                })
+            else:
+                chronicler_record_options.append({
+                    "archive": "profile",
+                    "record_kind": "pokemon",
+                    "record_name": str(target.spec.species or target.spec.name or _combatant_name(target_id)).strip(),
+                    "label": f"Profile: {str(target.spec.species or target.spec.name or _combatant_name(target_id)).strip()}",
+                })
+        seen_moves = set()
+        for target_id in battle.pokemon:
+            for move_name in battle._moves_used_this_scene(target_id):
+                key = str(move_name or "").strip().lower()
+                if not key or key in seen_moves:
+                    continue
+                seen_moves.add(key)
+                chronicler_record_options.append({
+                    "archive": "technique",
+                    "record_kind": "move",
+                    "record_name": move_name,
+                    "label": f"Technique: {move_name}",
+                })
+        current_locations = sorted(battle._chronicler_current_locations()) if hasattr(battle, "_chronicler_current_locations") else []
+        for location_name in current_locations:
+            chronicler_record_options.append({
+                "archive": "travel",
+                "record_kind": "location",
+                "record_name": location_name,
+                "label": f"Travel: {location_name}",
+            })
+    targeted_profiling_targets = [
+        {"target": pid, "target_name": _combatant_name(pid)}
+        for pid, mon in battle.pokemon.items()
+        if mon.controller_id == state.controller_id and not mon.fainted and mon.active and not mon.is_trainer_combatant()
+    ]
+    targeted_profiling_ready = bool(
+        state.has_trainer_feature("Targeted Profiling")
+        and trainer_ap >= 2
+        and targeted_profiling_targets
+        and (chronicler_records.get("profile") or [])
+    )
+    cinematic_analysis_recreation_options = []
+    cinematic_analysis_character_study_options = []
+    cinematic_analysis_situational_awareness_options = []
+    if state.has_trainer_feature("Cinematic Analysis"):
+        archived_moves = [str(name).strip() for name in chronicler_records.get("technique", []) or [] if str(name).strip()]
+        for pid, mon in battle.pokemon.items():
+            if mon.controller_id != state.controller_id or mon.fainted or mon.is_trainer_combatant():
+                continue
+            for move_name in archived_moves:
+                cinematic_analysis_recreation_options.append(
+                    {
+                        "target": pid,
+                        "target_name": _combatant_name(pid),
+                        "move": move_name,
+                        "label": f"{_combatant_name(pid)}: {move_name}",
+                    }
+                )
+            archived_profiles = {str(name).strip().lower() for name in chronicler_records.get("profile", []) or [] if str(name).strip()}
+            if archived_profiles:
+                social_skills = ["Charm", "Command", "Guile", "Intimidate"]
+                for pid, mon in battle.pokemon.items():
+                    if mon.fainted or not mon.active or battle._team_for(pid) == battle._team_for(actor_id):
+                        continue
+                    candidate_keys = {
+                        str(mon.spec.name or "").strip().lower(),
+                        str(mon.spec.species or "").strip().lower(),
+                    }
+                    trainer_state = battle.trainers.get(mon.controller_id)
+                    if trainer_state is not None:
+                        candidate_keys.add(str(trainer_state.name or "").strip().lower())
+                    if not (candidate_keys & archived_profiles):
+                        continue
+                    for skill_name in social_skills:
+                        cinematic_analysis_character_study_options.append(
+                            {
+                                "target": pid,
+                                "target_name": _combatant_name(pid),
+                                "social_skill": skill_name,
+                                "label": f"{_combatant_name(pid)}: {skill_name} -> Perception",
+                            }
+                        )
+        if hasattr(battle, "_chronicler_travel_active") and battle._chronicler_travel_active(state.controller_id):
+            for pid, mon in battle.pokemon.items():
+                if mon.controller_id != state.controller_id or mon.fainted or mon.is_trainer_combatant():
+                    continue
+                turn_window = battle._situational_awareness_turn_window(pid) if hasattr(battle, "_situational_awareness_turn_window") else None
+                if not turn_window:
+                    continue
+                for entry in battle._out_of_turn_move_options(pid):
+                    cinematic_analysis_situational_awareness_options.append(
+                        {
+                            "target": pid,
+                            "target_name": _combatant_name(pid),
+                            "move": str(entry.get("move") or "").strip(),
+                            "move_target_id": str(entry.get("target_id") or "").strip() or None,
+                            "move_target_name": entry.get("target_name"),
+                            "turn_window": turn_window,
+                            "label": f"{_combatant_name(pid)} [{turn_window.replace('_', ' ')}]: {entry.get('label') or entry.get('move')}",
+                        }
+                    )
+    cinematic_analysis_ready = bool(
+        cinematic_analysis_recreation_options
+        or cinematic_analysis_character_study_options
+        or cinematic_analysis_situational_awareness_options
+    )
     clever_ruse_triggered = bool(state.get_temporary_effects("clever_ruse_ready"))
     clever_ruse_ready = bool(
         clever_ruse_options
@@ -1764,6 +1883,16 @@ def _trainer_action_hints(battle: BattleState, actor_id: str, state: PokemonStat
         "conquerors_march_target": mounted_mount_id,
         "ramming_speed_ready": ramming_speed_ready,
         "ramming_speed_targets": ramming_speed_targets,
+        "chronicler_archives": chronicler_archives,
+        "chronicler_records": chronicler_records,
+        "chronicler_record_ready": bool(state.has_trainer_feature("Chronicler") and trainer_ap >= 1 and chronicler_record_options),
+        "chronicler_record_options": chronicler_record_options,
+        "targeted_profiling_ready": targeted_profiling_ready,
+        "targeted_profiling_targets": targeted_profiling_targets,
+        "cinematic_analysis_ready": cinematic_analysis_ready,
+        "cinematic_analysis_recreation_options": cinematic_analysis_recreation_options,
+        "cinematic_analysis_character_study_options": cinematic_analysis_character_study_options,
+        "cinematic_analysis_situational_awareness_options": cinematic_analysis_situational_awareness_options,
         "type_ace_ready": type_ace_ready,
         "type_ace_options": type_ace_options,
         "type_refresh_ready": type_refresh_ready,
@@ -2140,6 +2269,10 @@ def _move_target_ids(battle: BattleState, actor_id: str) -> Dict[str, List[Optio
         move_name = str(move.name or "").strip()
         if not move_name:
             continue
+        action_type = BattleState.ActionType.SWIFT if move_name.lower() == "bestow" else BattleState.ActionType.STANDARD
+        if not actor.has_action_available(action_type):
+            targets[move_name] = []
+            continue
         target_kind = targeting.normalized_target_kind(move)
         requires_target = targeting.move_requires_target(move)
         candidate_ids: List[Optional[str]] = []
@@ -2153,6 +2286,8 @@ def _move_target_ids(battle: BattleState, actor_id: str) -> Dict[str, List[Optio
             candidate_ids = opponent_ids or ([] if requires_target else [None])
         accepted: List[Optional[str]] = []
         for target_id in candidate_ids:
+            if not battle.move_frequency_available(actor_id, move, target_id=target_id):
+                continue
             if target_id is None:
                 accepted.append(None)
                 continue
@@ -2171,7 +2306,7 @@ def _move_target_ids(battle: BattleState, actor_id: str) -> Dict[str, List[Optio
             if battle.grid and not battle.has_line_of_sight(actor_id, target.position, target_id):
                 continue
             accepted.append(target_id)
-        if not accepted and not requires_target:
+        if not accepted and not requires_target and battle.move_frequency_available(actor_id, move, target_id=None):
             accepted.append(None)
         targets[move_name] = accepted
     return targets
@@ -2673,6 +2808,8 @@ class EngineFacade:
         self,
         *,
         campaign: Optional[str] = None,
+        campaign_payload: Optional[dict] = None,
+        battle_payload: Optional[dict] = None,
         team_size: int = 1,
         matchup_index: int = 0,
         seed: Optional[int] = None,
@@ -2697,7 +2834,37 @@ class EngineFacade:
     ) -> dict:
         self.mode = ai_mode
         source = "builtin:demo"
-        if roster_csv:
+        if isinstance(battle_payload, dict) and battle_payload:
+            raw_sides = [entry for entry in battle_payload.get("sides", []) if isinstance(entry, dict)]
+            sides = [TrainerSideSpec.from_dict(entry) for entry in raw_sides]
+            if len(sides) < 2 or any(not side.pokemon for side in sides):
+                raise ValueError("Campaign battle payload needs at least two populated trainer sides.")
+            first_team = str(sides[0].team or sides[0].controller)
+            foe_side = next(
+                (side for side in sides[1:] if str(side.team or side.controller) != first_team),
+                sides[-1],
+            )
+            plan = MatchPlan(
+                matchups=[MatchupSpec(
+                    you=sides[0].pokemon[0],
+                    foe=foe_side.pokemon[0],
+                    label=str(battle_payload.get("name") or "Campaign Battle"),
+                    sides=sides,
+                )],
+                weather=str(battle_payload.get("weather") or "Clear"),
+                grid=GridSpec.from_dict(dict(battle_payload.get("grid") or {})),
+                battle_context=str(battle_payload.get("battle_context") or "full_contact"),
+                active_slots=max(1, int(battle_payload.get("active_slots") or 1)),
+                description=str(battle_payload.get("description") or "Persistent campaign encounter"),
+                seed=seed,
+            )
+            source = "campaign-battle"
+        elif isinstance(campaign_payload, dict) and campaign_payload:
+            campaign_spec = CampaignSpec.from_dict(dict(campaign_payload))
+            planner = AutoMatchPlanner(campaign_spec, seed=seed)
+            plan = planner.create_plan(team_size=max(1, int(team_size)))
+            source = "campaign-payload"
+        elif roster_csv:
             plan = match_plan_from_roster_csv(
                 csv_text=roster_csv,
                 csv_root=csv_root,
@@ -2753,7 +2920,7 @@ class EngineFacade:
             planner = AutoMatchPlanner(campaign_spec, seed=seed)
             plan = planner.create_plan(team_size=team_size)
         if random_battle and not battle_royale and not isinstance(grid, dict):
-            plan.grid = self._random_grid_spec(plan.grid)
+            plan.grid = self._random_grid_spec(plan.grid, seed=seed if seed is not None else plan.seed)
         if isinstance(grid, dict) and grid:
             plan.grid = GridSpec.from_dict(dict(grid))
         if active_slots is not None:
@@ -2773,7 +2940,7 @@ class EngineFacade:
         if isinstance(side_names, dict) and side_names:
             self._apply_side_names_to_battle(battle, side_names)
         if random_battle:
-            battle.terrain = self._random_field_terrain()
+            battle.terrain = self._random_field_terrain(seed=seed if seed is not None else plan.seed)
         if trainer_profile and battle.trainers:
             try:
                 trainer = next(iter(battle.trainers.values()))
@@ -2833,15 +3000,48 @@ class EngineFacade:
 
                     class_id = str(trainer_profile.get("class_id") or "")
                     class_name = str(trainer_profile.get("class_name") or class_id)
+                    fashionista_skills = trainer_profile.get("fashionista_skills")
+                    researcher_fields = trainer_profile.get("researcher_fields")
                     mentor_skills = trainer_profile.get("mentor_skills")
                     if class_id or class_name:
                         trainer.trainer_class = {"id": class_id, "name": class_name}
+                    if isinstance(fashionista_skills, list):
+                        trainer.trainer_class["fashionista_skills"] = [
+                            str(name).strip()
+                            for name in fashionista_skills
+                            if str(name).strip()
+                        ]
+                    if isinstance(researcher_fields, list):
+                        trainer.trainer_class["researcher_fields"] = [
+                            str(name).strip()
+                            for name in researcher_fields
+                            if str(name).strip()
+                        ]
                     if isinstance(mentor_skills, list):
                         trainer.trainer_class["mentor_skills"] = [
                             str(name).strip()
                             for name in mentor_skills
                             if str(name).strip()
                         ]
+                    chronicler_archives = trainer_profile.get("chronicler_archives")
+                    if isinstance(chronicler_archives, list):
+                        trainer.trainer_class["chronicler_archives"] = [
+                            str(name).strip()
+                            for name in chronicler_archives
+                            if str(name).strip()
+                        ]
+                    chronicler_records = trainer_profile.get("chronicler_records")
+                    if isinstance(chronicler_records, dict):
+                        normalized_records = {}
+                        for kind in ("profile", "technique", "travel"):
+                            values = chronicler_records.get(kind)
+                            if isinstance(values, list):
+                                normalized_records[kind] = [str(name).strip() for name in values if str(name).strip()]
+                        if normalized_records:
+                            trainer.trainer_class["chronicler_records"] = normalized_records
+                    chronicler_travel_ability = str(trainer_profile.get("chronicler_travel_ability") or "").strip()
+                    if chronicler_travel_ability:
+                        trainer.trainer_class["chronicler_travel_ability"] = chronicler_travel_ability
                     feature_entries: list[dict] = []
                     features = trainer_profile.get("features")
                     if isinstance(features, list):
@@ -3835,15 +4035,16 @@ class EngineFacade:
         legal_trapper_tiles: List[List[int]] = []
         legal_trapper_anchors: List[List[int]] = []
         if current and current in battle.pokemon:
-            for coord in movement.legal_shift_tiles(battle, current):
-                legal_shifts.append([coord[0], coord[1]])
-            for coord in movement.legal_long_jump_tiles(battle, current):
-                payload = [coord[0], coord[1]]
-                legal_jumps.append(payload)
-                legal_long_jumps.append(payload)
-            for coord in movement.legal_high_jump_tiles(battle, current):
-                legal_high_jumps.append([coord[0], coord[1]])
             actor = battle.pokemon.get(current)
+            if actor is not None and actor.has_action_available(BattleState.ActionType.SHIFT):
+                for coord in sorted(movement.legal_shift_tiles(battle, current)):
+                    legal_shifts.append([coord[0], coord[1]])
+                for coord in sorted(movement.legal_long_jump_tiles(battle, current)):
+                    payload = [coord[0], coord[1]]
+                    legal_jumps.append(payload)
+                    legal_long_jumps.append(payload)
+                for coord in sorted(movement.legal_high_jump_tiles(battle, current)):
+                    legal_high_jumps.append([coord[0], coord[1]])
             if actor is not None and actor.position is not None and actor.has_trainer_feature("Trapper") and battle.grid is not None:
                 for x in range(battle.grid.width):
                     for y in range(battle.grid.height):
@@ -4389,7 +4590,10 @@ class EngineFacade:
         battle = self.battle
         if battle is None:
             return []
-        clone = copy.deepcopy(battle)
+        # BattleState owns controller back-references and may hold prompt callbacks
+        # that close over API services.  Use the purpose-built deterministic clone
+        # instead of asking deepcopy to traverse those runtime objects.
+        clone = self._clone_battle_for_history(battle)
         prompts: List[dict] = []
 
         def prompt_callback(prompt_payload: dict) -> bool:
@@ -4762,6 +4966,11 @@ class EngineFacade:
         index: int,
     ) -> BattleState:
         grid_spec = plan.grid
+        # Ability backfills are content generation and must share the encounter
+        # seed. An unseeded repository changed legal actions and opening logs
+        # between otherwise identical starts.
+        self._ability_repo = PTUCsvRepository(rng=random.Random(self._stable_seed_value(plan.seed)))
+        self._ability_repo_checked = True
         tiles: Dict[Tuple[int, int], Dict[str, object]] = {}
         for coord, metadata in grid_spec.tiles.items():
             if isinstance(metadata, dict):
@@ -4989,8 +5198,8 @@ class EngineFacade:
         patched.abilities = list(probe.abilities)
         return patched
 
-    def _random_field_terrain(self) -> Optional[dict]:
-        rng = random.Random()
+    def _random_field_terrain(self, *, seed: object = None) -> Optional[dict]:
+        rng = random.Random(self._stable_seed_value(seed))
         choices = [
             "Grassy Terrain",
             "Electric Terrain",
@@ -5322,8 +5531,8 @@ class EngineFacade:
             map=map_meta,
         )
 
-    def _random_grid_spec(self, base_grid: GridSpec) -> GridSpec:
-        rng = random.Random()
+    def _random_grid_spec(self, base_grid: GridSpec, *, seed: object = None) -> GridSpec:
+        rng = random.Random(self._stable_seed_value(seed))
         randomized_base = GridSpec(
             width=rng.randint(10, 14),
             height=rng.randint(8, 12),
