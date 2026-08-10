@@ -2733,6 +2733,8 @@ class EngineFacade:
         override = str(os.environ.get("AUTOPTU_BATTLE_LOG_DIR") or "").strip()
         if override:
             path = Path(override).expanduser()
+        elif str(os.environ.get("AUTO_PTU_REPORTS_DIR") or "").strip():
+            path = Path(str(os.environ["AUTO_PTU_REPORTS_DIR"])).expanduser() / "battle_logs"
         else:
             path = Path.cwd() / "reports" / "battle_logs"
         path.mkdir(parents=True, exist_ok=True)

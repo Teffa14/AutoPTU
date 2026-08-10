@@ -4,7 +4,7 @@ import hashlib
 import json
 import random
 from copy import deepcopy
-from typing import Any, Dict, Iterable
+from typing import Any, Dict, Iterable, Sequence
 
 from ..api.engine_facade import EngineFacade
 from ..csv_repository import PTUCsvRepository
@@ -21,7 +21,7 @@ _VOLATILE_KEYS = {
 }
 
 
-def simulate_battle(spec: BattleSpec, *, max_steps: int = 120) -> BattleTranscript:
+def simulate_battle(spec: BattleSpec, *, max_steps: int = 36) -> BattleTranscript:
     """Resolve one match with a fresh, isolated AutoPTU engine instance."""
     repo = PTUCsvRepository(rng=random.Random(spec.seed))
     builder = CsvRandomCampaignBuilder(repo=repo, seed=spec.seed)
@@ -135,6 +135,146 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 120) -> BattleTranscri
         final_state=final_state,
         sha256=digest,
     )
+
+
+def simulate_calendar_summaries(specs: Sequence[BattleSpec]) -> list[BattleTranscript]:
+    """Resolve non-broadcast fixtures from PTU builds without producing a replay.
+
+    A season only presents one match in the arena. The rest still use legal PTU
+    levels, stats, moves and a seeded form modifier, but avoid constructing five
+    additional tactical engines that the player will never watch.
+    """
+    if not specs:
+        return []
+    repo = PTUCsvRepository(rng=random.Random(0))
+    transcripts: list[BattleTranscript] = []
+    for spec in specs:
+        builder = CsvRandomCampaignBuilder(repo=repo, seed=spec.seed)
+        home_species = list(spec.home_team_species or [spec.home_species])
+        away_species = list(spec.away_team_species or [spec.away_species])
+        home_levels = list(spec.home_team_levels or [spec.level for _ in home_species])
+        away_levels = list(spec.away_team_levels or [spec.level for _ in away_species])
+        home_moves = list(spec.home_team_moves or [[] for _ in home_species])
+        home_natures = list(spec.home_team_natures or ["" for _ in home_species])
+        home_abilities = list(spec.home_team_abilities or [[] for _ in home_species])
+        level_cap = LEVEL_CAPS.get(spec.league, 100)
+        home_team = [
+            _build_species(
+                repo,
+                builder,
+                species,
+                min(level_cap, max(1, home_levels[min(index, len(home_levels) - 1)] + spec.home_level_bonus)),
+                taught_moves=home_moves[index] if index < len(home_moves) else [],
+                nature=home_natures[index] if index < len(home_natures) else "",
+                abilities=home_abilities[index] if index < len(home_abilities) else [],
+            )
+            for index, species in enumerate(home_species)
+        ]
+        away_team = [
+            _build_species(
+                repo,
+                builder,
+                species,
+                min(level_cap, max(1, away_levels[min(index, len(away_levels) - 1)] + spec.away_level_bonus)),
+            )
+            for index, species in enumerate(away_species)
+        ]
+        home_power = sum(_calendar_power(pokemon) for pokemon in home_team)
+        away_power = sum(_calendar_power(pokemon) for pokemon in away_team)
+        form = (hashlib.sha256(f"{spec.seed}:calendar-form".encode("utf-8")).digest()[0] % 7) - 3
+        home_score = home_power + form
+        away_score = away_power - form
+        winner_team = "career-home" if home_score > away_score else "career-away" if away_score > home_score else None
+        winner_label = spec.home_club if winner_team == "career-home" else spec.away_club if winner_team == "career-away" else None
+        event = {
+            "type": "calendar_summary",
+            "method": "ptu_build_strength",
+            "home_power": home_power,
+            "away_power": away_power,
+            "seeded_form": form,
+            "winner_team": winner_team,
+        }
+        initial_state = {
+            "round": 0,
+            "battle_over": False,
+            "combatants": _summary_combatants(spec, home_team, away_team),
+        }
+        final_state = {
+            "round": 0,
+            "battle_over": True,
+            "winner_team": winner_team,
+            "winner_label": winner_label,
+            "combatants": initial_state["combatants"],
+        }
+        digest_payload = {
+            "spec": _canonical_value({key: value for key, value in spec.__dict__.items() if key != "id"}),
+            "winner_team": winner_team,
+            "events": [event],
+            "initial_state": initial_state,
+            "final_state": final_state,
+        }
+        digest = hashlib.sha256(
+            json.dumps(digest_payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        ).hexdigest()
+        transcripts.append(
+            BattleTranscript(
+                battle_id=spec.id,
+                spec=spec,
+                winner_team=winner_team,
+                winner_label=winner_label,
+                rounds=0,
+                events=[event],
+                initial_state=initial_state,
+                final_state=final_state,
+                sha256=digest,
+                engine_version="ptu-1.05-calendar-summary",
+            )
+        )
+    return transcripts
+
+
+def _calendar_power(pokemon: Any) -> int:
+    best_db = max((int(move.db or 0) for move in pokemon.moves), default=0)
+    return (
+        int(pokemon.hp_stat) * 2
+        + int(pokemon.atk)
+        + int(pokemon.defense)
+        + int(pokemon.spatk)
+        + int(pokemon.spdef)
+        + int(pokemon.spd)
+        + best_db * 2
+    )
+
+
+def _summary_combatants(spec: BattleSpec, home_team: Sequence[Any], away_team: Sequence[Any]) -> list[dict]:
+    combatants: list[dict] = []
+    for team_id, members in (("career-home", home_team), ("career-away", away_team)):
+        for index, pokemon in enumerate(members):
+            combatants.append({
+                "id": f"{team_id}-{index + 1}",
+                "name": pokemon.species,
+                "species": pokemon.species,
+                "team": team_id,
+                "level": pokemon.level,
+                "hp": pokemon.hp_stat,
+                "max_hp": pokemon.hp_stat,
+                "active": index == 0,
+                "stats": {
+                    "atk": pokemon.atk,
+                    "def": pokemon.defense,
+                    "spatk": pokemon.spatk,
+                    "spdef": pokemon.spdef,
+                    "spd": pokemon.spd,
+                },
+                "moves": [{"name": move.name, "type": move.type, "category": move.category, "db": move.db} for move in pokemon.moves[:4]],
+                "nature": pokemon.nature,
+                "abilities": [entry.get("name", "") if isinstance(entry, dict) else str(entry) for entry in pokemon.abilities],
+                "statuses": [],
+                "size": pokemon.size,
+                "footprint_side": 1,
+                "position": [2, 4] if team_id == "career-home" else [12, 4],
+            })
+    return combatants
 
 
 def _adjudicate_turn_limit(snapshot: Dict[str, Any]) -> tuple[str | None, Dict[str, int]]:

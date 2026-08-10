@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm --prefix career_web ci && npm --prefix career_web run build",
+  "outputDirectory": "auto_ptu/api/static/career",
+  "env": {
+    "AUTO_PTU_RUNTIME_ROOT": "/tmp",
+    "AUTO_PTU_REPORTS_DIR": "/tmp/autoptu/reports",
+    "AUTOPTU_BATTLE_LOG_DIR": "/tmp/autoptu/reports/battle_logs",
+    "AUTO_PTU_SPRITE_DIR": "/tmp/autoptu/sprites",
+    "AUTO_PTU_POKEAPI_CACHE": "/tmp/autoptu/pokeapi",
+    "CAREER_BATTLE_EXECUTION": "inline"
+  },
+  "rewrites": [
+    { "source": "/career-game/assets/:path*", "destination": "/assets/:path*" },
+    { "source": "/career-game/:path*", "destination": "/index.html" },
+    { "source": "/career-game", "destination": "/index.html" },
+    { "source": "/", "destination": "/index.html" }
+  ]
+}

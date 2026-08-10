@@ -8,6 +8,7 @@ from .catalogs import EVENT_DOMAINS, NPC_ARCHETYPES, REGIONS, RISK_TIERS, TRANSP
 from .class_adapters import selected_class_effects
 from .content_compiler import AUTHORIAL_VARIANTS
 from .models import CareerDecision, CareerDecisionOption, CareerRun
+from .relationships import refresh_relationship_effects
 from .ptu_builds import choose_legal_taught_move
 from .roster import capture_species, grant_partner_levels, teach_partner_move
 
@@ -281,12 +282,14 @@ def _apply_reward(run: CareerRun, reward: Dict[str, Any], source: str) -> Dict[s
         name = str(reward.get("name") or "League staff")
         amount = int(reward.get("amount") or 0)
         run.relationships[name] = run.relationships.get(name, 0) + amount
+        effects = refresh_relationship_effects(run)
         run.timeline.append({
             "type": "relationship.changed", "season": run.season_number, "age": run.age,
             "name": name, "amount": amount, "value": run.relationships[name],
+            "active_effects": dict(effects),
             "label": f"Relationship with {name} changed by {amount:+d}.",
         })
-        return {"type": "relationship", "name": name, "amount": amount}
+        return {"type": "relationship", "name": name, "amount": amount, "active_effects": dict(effects)}
     if reward_type == "item":
         item = str(reward.get("item") or "Supplies")
         quantity = max(1, int(reward.get("quantity") or 1))

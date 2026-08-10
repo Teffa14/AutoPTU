@@ -275,6 +275,9 @@ def test_decisions_grant_pokemon_items_moves_and_relationships() -> None:
     relationship_option = next(option for option in breeding_decision.options if any(reward["type"] == "relationship" for reward in option.rewards))
     capture_run, _ = engine.advance_season(capture_run, option_id=relationship_option.id)
     assert capture_run.relationships
+    assert capture_run.relationship_effects["home_level_bonus"] >= 1
+    completed = next(entry for entry in capture_run.timeline if entry["type"] == "season.completed")
+    assert completed["relationship_effects"]["recovery_applied"] >= 1
 
     item_run = engine.new_run(
         player_id="rewards-item", name="Ari", region="kanto", starter="Rattata",
@@ -343,7 +346,7 @@ def test_active_legacy_run_records_version_migration_before_new_mechanics() -> N
         "season": 1,
         "age": 12,
         "from": "career-0.1.0",
-        "to": "career-0.5.0",
+        "to": "career-0.6.0",
     }
 
 
@@ -367,8 +370,62 @@ def test_decision_endpoint_is_revisioned_and_idempotent(tmp_path: Path) -> None:
     second = service.decide("trainer-1", run_id, {"expected_revision": 0, "option_id": option_id}, "season-1")
     assert first == second
     assert first["run"]["revision"] == 1
+    assert first["run"]["season"]["status"] == "battle"
+    assert len(first["battle_ids"]) == 6
     with pytest.raises(RuntimeError, match="Revision conflict"):
-        service.decide("trainer-1", run_id, {"expected_revision": 0, "option_id": first["run"]["season"]["decision"]["options"][0]["id"]}, "season-2")
+        service.decide("trainer-1", run_id, {"expected_revision": 0, "option_id": option_id}, "season-2")
+
+
+def test_decision_prepares_immediately_and_featured_battle_finishes_the_season(tmp_path: Path) -> None:
+    calls: list[str] = []
+
+    def counted_battle(spec: BattleSpec) -> BattleTranscript:
+        calls.append(spec.id)
+        return fake_battle(spec)
+
+    service = CareerService(store=CareerStore(tmp_path), engine=CareerEngine(counted_battle))
+    created = service.create_run(
+        "trainer-fast",
+        {"name": "Ari", "region": "kanto", "starter": "Rattata", "classes": ["Ace Trainer"], "seed": 55},
+    )
+    option_id = created["season"]["decision"]["options"][0]["id"]
+    prepared = service.decide(
+        "trainer-fast",
+        created["id"],
+        {"expected_revision": created["revision"], "option_id": option_id},
+        "fast-season-1",
+    )
+    assert calls == []
+    assert prepared["run"]["season"]["status"] == "battle"
+    featured = prepared["battle_ids"][-1]
+    transcript = service.battle("trainer-fast", created["id"], featured)
+    assert transcript["battle_id"] == featured
+    assert calls == [featured]
+    finished = service.get_run("trainer-fast", created["id"])
+    assert finished["season_number"] == 2
+    completed = next(entry for entry in finished["timeline"] if entry["type"] == "season.completed")
+    assert len(completed["battle_hashes"]) == 6
+    assert sum(1 for entry in completed["battle_hashes"] if entry["id"] == featured) == 1
+
+
+def test_relationships_change_battle_recovery_and_contract_security() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="trainer-network", name="Ari", region="kanto", starter="Rattata",
+        classes=["Ace Trainer"], seed=88,
+    )
+    contact = "Mara Vale · owner · Kanto"
+    run.relationships[contact] = 6
+    run.health = 50
+    run.league = "regular"
+    engine.ensure_roster(run)
+    assert run.relationship_effects["home_level_bonus"] == 2
+    assert all(spec.home_level_bonus >= 2 for spec in engine._schedule(run))
+    outcome = engine._apply_health_and_contract(run, wins=0, losses=10)
+    assert run.contract is not None
+    assert outcome["contract_guard_used"] is True
+    assert run.relationships[contact] == 4
+    assert run.health > 45
 
 
 def test_lineup_endpoint_is_revisioned_and_persisted(tmp_path: Path) -> None:

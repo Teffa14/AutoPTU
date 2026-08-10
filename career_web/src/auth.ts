@@ -31,6 +31,16 @@ export async function signInWithEmail(email: string): Promise<void> {
 
 export async function signInWithProvider(provider: "google" | "discord"): Promise<void> {
   if (!supabase) throw new Error("Supabase Auth is not configured in this build.");
-  const { error } = await supabase.auth.signInWithOAuth({ provider, options: { redirectTo: window.location.origin + "/career-game/" } });
+  const { data: current } = await supabase.auth.getUser();
+  const options = { redirectTo: window.location.origin + "/career-game/" };
+  const { error } = current.user?.is_anonymous
+    ? await supabase.auth.linkIdentity({ provider, options })
+    : await supabase.auth.signInWithOAuth({ provider, options });
+  if (error) throw error;
+}
+
+export async function signOut(): Promise<void> {
+  if (!supabase) return;
+  const { error } = await supabase.auth.signOut();
   if (error) throw error;
 }

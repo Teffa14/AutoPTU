@@ -5,6 +5,7 @@ import { navigate } from "../App";
 import { decisionPresentation, effectLabel, effectRule, riskLabel, transparencyLabel } from "../decisionPresentation";
 import { t } from "../i18n";
 import type { CareerRun, DecisionOption, DecisionReward, Locale } from "../types";
+import { BattlePreparing } from "./BattlePreparing";
 import { PokemonSprite } from "./PokemonSprite";
 
 interface Props { run: CareerRun; locale: Locale; onRun: (run: CareerRun) => void }
@@ -16,7 +17,8 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   const [selectedId, setSelectedId] = useState("");
   const [confirmRetire, setConfirmRetire] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
-  const [roulette, setRoulette] = useState<"idle" | "spinning" | "success" | "failure">("idle");
+  const [roulette, setRoulette] = useState<"idle" | "spinning" | "settling" | "success" | "failure">("idle");
+  const [fieldTransition, setFieldTransition] = useState(false);
   const decision = run.season?.decision;
   const presentation = useMemo(
     () => decision ? decisionPresentation(decision, run, locale) : null,
@@ -31,6 +33,11 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
     .filter((pokemon) => pokemon !== undefined);
 
   useEffect(() => setSelectedId(""), [decision?.id]);
+  useEffect(() => {
+    if (busy || roulette !== "idle" || run.season?.status !== "battle") return;
+    const featured = run.season.battle_ids.at(-1);
+    if (featured) navigate(`battle/${run.id}/${featured}`);
+  }, [busy, roulette, run.id, run.season?.battle_ids, run.season?.status]);
 
   async function decide() {
     if (!selectedId) return;
@@ -39,15 +46,27 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
     setError("");
     if (isGamble) setRoulette("spinning");
     try {
-      const result = await careerApi.decide(run, selectedId);
+      const pending = careerApi.decide(run, selectedId);
+      if (isGamble) {
+        await new Promise((resolve) => window.setTimeout(resolve, 520));
+        setRoulette("settling");
+        await new Promise((resolve) => window.setTimeout(resolve, 130));
+        setRoulette("idle");
+        if (finalDecision) setFieldTransition(true);
+      } else if (finalDecision) {
+        await new Promise((resolve) => window.setTimeout(resolve, 120));
+        setFieldTransition(true);
+      }
+      const result = await pending;
       onRun(result.run);
       if (isGamble) {
         setRoulette(gambleSucceeded(result.run) ? "success" : "failure");
-        await new Promise((resolve) => window.setTimeout(resolve, 1800));
+        await new Promise((resolve) => window.setTimeout(resolve, 650));
       }
       const featured = result.battle_ids.at(-1);
       if (featured) navigate(`battle/${run.id}/${featured}`);
     } catch (reason) {
+      setFieldTransition(false);
       setError(reason instanceof Error ? reason.message : String(reason));
     } finally { setBusy(false); setRoulette("idle"); }
   }
@@ -80,6 +99,13 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
     </section>
   );
 
+  if (fieldTransition) return (
+    <>
+      <BattlePreparing run={run} locale={locale} />
+      {roulette === "success" || roulette === "failure" ? <RouletteOverlay state={roulette} locale={locale} option={selected} /> : null}
+    </>
+  );
+
   return (
     <section className="season-scene">
       <div className="season-sky" aria-hidden="true" />
@@ -97,6 +123,12 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
         ))}
       </div>
       <div className="active-class-effect">{run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b> · {locale === "es" ? entry.description_es : entry.description_en}</span>)}</div>
+      {run.relationship_effects?.best_contact ? (
+        <div className="relationship-edge" aria-label={locale === "es" ? "Beneficios de relaciones" : "Relationship benefits"}>
+          <span><b>{run.relationship_effects.best_contact.split(" · ")[0]}</b>{locale === "es" ? " está de tu lado" : " has your back"}</span>
+          <small>+{run.relationship_effects.home_level_bonus ?? 0} LV {locale === "es" ? "de preparación" : "preparation"} · +{run.relationship_effects.season_recovery ?? 0} {locale === "es" ? "salud por temporada" : "health each season"}{run.relationship_effects.contract_guard ? ` · ${locale === "es" ? "protege un contrato" : "protects one contract"}` : ""}</small>
+        </div>
+      ) : null}
 
       <div className="season-stage">
         <aside className="partner-stand squad-stand">
@@ -173,9 +205,9 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
 
 function signed(value: number): string { return value > 0 ? `+${value}` : String(value); }
 
-function RouletteOverlay({ state, locale, option }: { state: "spinning" | "success" | "failure"; locale: Locale; option?: DecisionOption }) {
+function RouletteOverlay({ state, locale, option }: { state: "spinning" | "settling" | "success" | "failure"; locale: Locale; option?: DecisionOption }) {
   const reward = rewardSentence(option?.gamble?.success_rewards ?? [], locale);
-  return <div className={`roulette-overlay ${state}`} role="status" aria-live="assertive"><div className="roulette-wheel" aria-hidden="true"><i>?</i><i>★</i><i>×</i><i>★</i></div><section><span>{locale === "es" ? "RULETA DE APUESTA" : "GAMBLE WHEEL"}</span><h2>{state === "spinning" ? (locale === "es" ? "Girando…" : "Spinning…") : state === "success" ? (locale === "es" ? "¡ÉXITO!" : "SUCCESS!") : (locale === "es" ? "NO SALIÓ" : "NO WIN")}</h2><p>{state === "spinning" ? (locale === "es" ? "La elección ya está comprometida." : "The choice is committed.") : state === "success" ? reward : (locale === "es" ? "Se aplican las consecuencias indicadas; el premio no se entrega." : "The stated consequences apply; the prize is not granted.")}</p></section></div>;
+  return <div className={`roulette-overlay ${state}`} role="status" aria-live="assertive"><div className="roulette-wheel" aria-hidden="true"><i>?</i><i>★</i><i>×</i><i>★</i></div><section><span>{locale === "es" ? "RULETA DE APUESTA" : "GAMBLE WHEEL"}</span><h2>{state === "spinning" ? (locale === "es" ? "Girando…" : "Spinning…") : state === "settling" ? (locale === "es" ? "Cerrando jugada" : "Locking result") : state === "success" ? (locale === "es" ? "¡ÉXITO!" : "SUCCESS!") : (locale === "es" ? "NO SALIÓ" : "NO WIN")}</h2><p>{state === "spinning" ? (locale === "es" ? "La elección ya está comprometida." : "The choice is committed.") : state === "settling" ? (locale === "es" ? "La rueda ya se detuvo; preparando el campo." : "The wheel has stopped; preparing the field.") : state === "success" ? reward : (locale === "es" ? "Se aplican las consecuencias indicadas; el premio no se entrega." : "The stated consequences apply; the prize is not granted.")}</p></section></div>;
 }
 
 function gambleSucceeded(run: CareerRun): boolean {

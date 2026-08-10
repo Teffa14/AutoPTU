@@ -32,7 +32,11 @@ def _pick_existing_path(*candidates: Path | None) -> Path:
 
 
 FILES_DIR = _pick_existing_path(_env_path("AUTO_PTU_FILES_DIR"), RUNTIME_ROOT / "files", PROJECT_ROOT / "files")
-REPORTS_DIR = _pick_existing_path(_env_path("AUTO_PTU_REPORTS_DIR"), RUNTIME_ROOT / "reports", PROJECT_ROOT / "reports")
+# Writable runtime overrides must win even before their directory exists. Serverless
+# filesystems expose the bundled project tree as an existing but read-only path.
+REPORTS_DIR = _env_path("AUTO_PTU_REPORTS_DIR") or _pick_existing_path(
+    RUNTIME_ROOT / "reports", PROJECT_ROOT / "reports"
+)
 IMPLEMENTATION_DIR = _pick_existing_path(
     _env_path("AUTO_PTU_IMPLEMENTATION_DIR"),
     RUNTIME_ROOT / "IMPLEMENTATION FILES",

@@ -6,8 +6,8 @@ import os
 from typing import Any, Dict, List, Optional
 
 
-CURRENT_CAREER_VERSION = "career-0.5.0"
-CURRENT_NARRATIVE_VERSION = "career-hooks-0.4.0"
+CURRENT_CAREER_VERSION = "career-0.6.0"
+CURRENT_NARRATIVE_VERSION = "career-hooks-0.5.0"
 
 
 def utc_now() -> str:
@@ -211,6 +211,7 @@ class CareerRun:
     pokemon: List[CareerPokemon] = field(default_factory=list)
     active_roster: List[str] = field(default_factory=list)
     relationships: Dict[str, int] = field(default_factory=dict)
+    relationship_effects: Dict[str, Any] = field(default_factory=dict)
     inventory: Dict[str, int] = field(default_factory=dict)
     totals: Dict[str, int] = field(default_factory=lambda: {"wins": 0, "losses": 0, "draws": 0, "titles": 0})
     achievements: List[str] = field(default_factory=list)

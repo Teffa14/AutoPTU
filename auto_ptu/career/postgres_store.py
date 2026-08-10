@@ -17,7 +17,12 @@ class PostgresCareerStore:
     """Authoritative production store. The browser never writes scores or run state."""
 
     def __init__(self, database_url: Optional[str] = None) -> None:
-        self.database_url = database_url or os.environ.get("DATABASE_URL", "")
+        self.database_url = (
+            database_url
+            or os.environ.get("DATABASE_URL", "")
+            or os.environ.get("POSTGRES_URL_NON_POOLING", "")
+            or os.environ.get("POSTGRES_URL", "")
+        )
         if not self.database_url:
             raise ValueError("DATABASE_URL is required for PostgresCareerStore.")
         import psycopg
@@ -326,7 +331,10 @@ class PostgresCareerStore:
 
 
 def career_store_from_environment():
-    if os.environ.get("DATABASE_URL", "").strip():
+    if any(
+        os.environ.get(name, "").strip()
+        for name in ("DATABASE_URL", "POSTGRES_URL", "POSTGRES_URL_NON_POOLING")
+    ):
         return PostgresCareerStore()
     from .store import CareerStore
 

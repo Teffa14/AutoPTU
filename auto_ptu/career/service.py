@@ -1,14 +1,16 @@
 from __future__ import annotations
 
+import os
 from dataclasses import asdict
 from datetime import date
 from typing import Dict, Optional
 
 from .catalogs import REGIONS, region_catalog
 from .class_adapters import compile_class_adapters
+from .battle import simulate_calendar_summaries
 from .content_compiler import validate_compiled_content
 from .engine import CareerEngine
-from .models import CURRENT_CAREER_VERSION, CareerRun
+from .models import CURRENT_CAREER_VERSION, BattleTranscript, CareerRun
 from .postgres_store import career_store_from_environment
 from .store import CareerStore
 
@@ -19,7 +21,7 @@ class CareerService:
         battle_runner = getattr(self.store, "run_battle", None)
         if engine is not None:
             self.engine = engine
-        elif battle_runner is not None:
+        elif battle_runner is not None and os.environ.get("CAREER_BATTLE_EXECUTION", "inline").lower() == "queue":
             self.engine = CareerEngine(battle_runner=battle_runner)
         else:
             self.engine = CareerEngine()
@@ -108,13 +110,9 @@ class CareerService:
         expected = int(payload.get("expected_revision", -1))
         if expected != run.revision:
             raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
-        run, transcripts = self.engine.advance_season(run, option_id=str(payload.get("option_id") or ""))
-        for transcript in transcripts:
-            self.store.save_battle(transcript)
+        run, specs = self.engine.prepare_season(run, option_id=str(payload.get("option_id") or ""))
         self.store.save_run(run)
-        if run.status == "retired" and hasattr(self.store, "finalize_ranked"):
-            self.store.finalize_ranked(run)
-        response = {"run": run.to_dict(), "battle_ids": [entry.battle_id for entry in transcripts]}
+        response = {"run": run.to_dict(), "battle_ids": [entry.id for entry in specs]}
         self.store.record_idempotency(run_id, idempotency_key, response)
         return response
 
@@ -127,7 +125,36 @@ class CareerService:
         return run.to_dict()
 
     def battle(self, player_id: str, run_id: str, battle_id: str) -> dict:
-        self._owned_run(player_id, run_id)
+        run = self._owned_run(player_id, run_id)
+        if run.season is not None and run.season.status == "battle":
+            specs = list(run.season.battles)
+            requested = next((entry for entry in specs if entry.id == battle_id), None)
+            if requested is None:
+                raise PermissionError("Battle does not belong to the prepared career calendar.")
+            existing: Dict[str, dict] = {}
+            for spec in specs:
+                try:
+                    existing[spec.id] = self.store.load_battle(spec.id)
+                except KeyError:
+                    pass
+            generated = []
+            if battle_id not in existing:
+                featured = self.engine.battle_runner(requested)
+                self.store.save_battle(featured)
+                generated.append(featured)
+            missing_summaries = [entry for entry in specs if entry.id != battle_id and entry.id not in existing]
+            for summary in simulate_calendar_summaries(missing_summaries):
+                self.store.save_battle(summary)
+                generated.append(summary)
+            transcripts = [
+                BattleTranscript.from_dict(existing[spec.id]) if spec.id in existing
+                else next(entry for entry in generated if entry.battle_id == spec.id)
+                for spec in specs
+            ]
+            run, _ = self.engine.resolve_prepared_season(run, transcripts)
+            self.store.save_run(run)
+            if run.status == "retired" and hasattr(self.store, "finalize_ranked"):
+                self.store.finalize_ranked(run)
         transcript = self.store.load_battle(battle_id)
         if str(transcript.get("spec", {}).get("id") or "") != battle_id or not battle_id.startswith(f"{run_id}-"):
             raise PermissionError("Battle does not belong to this career.")

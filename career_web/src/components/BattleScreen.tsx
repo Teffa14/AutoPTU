@@ -4,15 +4,16 @@ import { careerApi } from "../api";
 import { navigate } from "../App";
 import { battleCommentary, deriveBattleView, eventTitle, playbackEventIndexes, statLabel, statusLabel } from "../battlePresentation";
 import { t } from "../i18n";
-import type { BattleCombatant, BattleTranscript, Locale } from "../types";
+import type { BattleCombatant, BattleTranscript, CareerRun, Locale } from "../types";
 import { BattleArena } from "./BattleArena";
+import { BattlePreparing } from "./BattlePreparing";
 import { PokemonSprite } from "./PokemonSprite";
 
-export default function BattleScreen({ runId, battleId, locale }: { runId: string; battleId: string; locale: Locale }) {
+export default function BattleScreen({ runId, battleId, locale, run, onRun }: { runId: string; battleId: string; locale: Locale; run?: CareerRun | null; onRun: (run: CareerRun) => void }) {
   const copy = t(locale);
   const [transcript, setTranscript] = useState<BattleTranscript | null>(null);
   const [stepIndex, setStepIndex] = useState(0);
-  const [speed, setSpeed] = useState(1);
+  const [speed, setSpeed] = useState(2);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -21,6 +22,7 @@ export default function BattleScreen({ runId, battleId, locale }: { runId: strin
       if (!active) return;
       setTranscript(value);
       setStepIndex(0);
+      careerApi.run(runId).then(onRun).catch(() => undefined);
     }).catch((reason: Error) => active && setError(reason.message));
     return () => { active = false; };
   }, [runId, battleId]);
@@ -32,19 +34,19 @@ export default function BattleScreen({ runId, battleId, locale }: { runId: strin
 
   useEffect(() => {
     if (!transcript || complete) return;
-    const delay = view?.event?.type === "round_start" ? 1050 : 1450;
+    const delay = view?.event?.type === "round_start" ? 520 : 620;
     const timer = window.setTimeout(() => setStepIndex((current) => current + 1), delay / speed);
     return () => window.clearTimeout(timer);
   }, [complete, speed, transcript, view?.event?.type, stepIndex]);
 
   useEffect(() => {
     if (!complete) return;
-    const timer = window.setTimeout(() => navigate(`run/${runId}`), 7000);
+    const timer = window.setTimeout(() => navigate(`run/${runId}`), 2500);
     return () => window.clearTimeout(timer);
   }, [complete, runId]);
 
   if (error) return <section className="battle-error"><h1>{locale === "es" ? "No se pudo abrir el combate" : "Battle unavailable"}</h1><p>{error}</p><button onClick={() => navigate(`run/${runId}`)}>{copy.back}</button></section>;
-  if (!transcript || !view) return <div className="scene-loading">{locale === "es" ? "Preparando el estadio…" : "Preparing the stadium…"}</div>;
+  if (!transcript || !view) return <BattlePreparing run={run} locale={locale} />;
 
   const homeTeam = view.combatants.filter((entry) => entry.team === "career-home");
   const awayTeam = view.combatants.filter((entry) => entry.team === "career-away");

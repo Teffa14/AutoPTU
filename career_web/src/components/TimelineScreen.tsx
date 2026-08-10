@@ -94,6 +94,9 @@ function eventKind(entry: Record<string, unknown>, locale: Locale): string {
     "pokemon.move_learned": ["movimiento", "move learned"],
     "item.acquired": ["objeto", "item"],
     "relationship.changed": ["relación", "relationship"],
+    "relationship.effect_applied": ["red de apoyo", "support network"],
+    "relationship.contract_saved": ["contrato", "contract"],
+    "season.schedule_ready": ["calendario", "schedule"],
     "roster.lineup_changed": ["alineación", "lineup"],
     "season.completed": ["temporada", "season"],
     "career.retired": ["retiro", "retirement"],
@@ -125,6 +128,9 @@ function eventTitle(entry: Record<string, unknown>, locale: Locale): string {
   if (type === "pokemon.move_learned") return locale === "es" ? `${String(entry.species)} aprendió ${String(entry.move)}` : `${String(entry.species)} learned ${String(entry.move)}`;
   if (type === "item.acquired") return locale === "es" ? `Conseguiste ${String(entry.quantity)} × ${String(entry.item)}` : `Received ${String(entry.quantity)} × ${String(entry.item)}`;
   if (type === "relationship.changed") return locale === "es" ? `El vínculo con ${String(entry.name).split(" · ")[0]} cambió ${signed(Number(entry.amount ?? 0))}` : `Bond with ${String(entry.name).split(" · ")[0]} changed ${signed(Number(entry.amount ?? 0))}`;
+  if (type === "relationship.effect_applied") return locale === "es" ? `La red aportó +${String(entry.home_level_bonus ?? 0)} LV y +${String(entry.recovery_applied ?? 0)} salud` : `The network supplied +${String(entry.home_level_bonus ?? 0)} LV and +${String(entry.recovery_applied ?? 0)} health`;
+  if (type === "relationship.contract_saved") return locale === "es" ? `${String(entry.name).split(" · ")[0]} protegió el contrato` : `${String(entry.name).split(" · ")[0]} protected the contract`;
+  if (type === "season.schedule_ready") return locale === "es" ? "El equipo salió al campo" : "The team entered the field";
   if (type === "roster.lineup_changed") return locale === "es" ? "Se registraron los seis titulares" : "The starting six were registered";
   if (type === "career.retired") return locale === "es" ? "La carrera quedó cerrada" : "The career came to an end";
   if (type === "career.version_migrated") return locale === "es" ? "Las reglas de carrera se actualizaron" : "Career rules were updated";

@@ -101,6 +101,14 @@ export interface CareerRun {
   scouting: number;
   finances: number;
   relationships: Record<string, number>;
+  relationship_effects: {
+    best_contact?: string;
+    best_value?: number;
+    active_contacts?: number;
+    home_level_bonus?: number;
+    season_recovery?: number;
+    contract_guard?: boolean;
+  };
   inventory: Record<string, number>;
   status: "active" | "retired";
   revision: number;

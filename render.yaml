@@ -13,6 +13,8 @@ services:
         sync: false
       - key: DATABASE_URL
         sync: false
+      - key: CAREER_BATTLE_EXECUTION
+        value: queue
       - key: OLLAMA_URL
         fromService:
           type: pserv

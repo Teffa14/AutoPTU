@@ -33,6 +33,7 @@ from .roster import (
     progress_after_season,
     set_active_roster,
 )
+from .relationships import calculate_relationship_effects, refresh_relationship_effects
 
 
 BattleRunner = Callable[[BattleSpec], BattleTranscript]
@@ -117,6 +118,7 @@ class CareerEngine:
             }
         )
         initialize_roster(run, stable_seed(run.seed, "academy-intake"))
+        refresh_relationship_effects(run)
         run.season = self._open_season(run)
         return run
 
@@ -125,6 +127,10 @@ class CareerEngine:
         current = selected_class_effects(run.build.classes)
         if run.class_effects != current:
             run.class_effects = current
+            changed = True
+        relationship_effects = calculate_relationship_effects(run.relationships)
+        if run.relationship_effects != relationship_effects:
+            run.relationship_effects = relationship_effects
             changed = True
         return changed
 
@@ -146,9 +152,11 @@ class CareerEngine:
         run.updated_at = utc_now()
         return run
 
-    def advance_season(self, run: CareerRun, *, option_id: str) -> tuple[CareerRun, List[BattleTranscript]]:
+    def prepare_season(self, run: CareerRun, *, option_id: str) -> tuple[CareerRun, List[BattleSpec]]:
         if run.status != "active" or run.season is None:
             raise ValueError("This career cannot advance.")
+        if run.season.status == "battle":
+            raise ValueError("This season is already waiting for its featured battle.")
         self.ensure_roster(run)
         decision = run.season.decision
         if decision is None:
@@ -179,7 +187,35 @@ class CareerEngine:
             run.updated_at = utc_now()
             return run, []
         specs = self._schedule(run)
-        transcripts = [self.battle_runner(spec) for spec in specs]
+        run.season.status = "battle"
+        run.season.decision = None
+        run.season.battles = specs
+        run.season.battle_ids = [entry.id for entry in specs]
+        run.timeline.append({
+            "type": "season.schedule_ready",
+            "season": run.season_number,
+            "age": run.age,
+            "battle_ids": list(run.season.battle_ids),
+            "featured_battle_id": next((entry.id for entry in specs if entry.featured), specs[-1].id),
+            "label": "The calendar is locked and the featured match is ready for broadcast.",
+        })
+        run.revision += 1
+        run.updated_at = utc_now()
+        return run, specs
+
+    def resolve_prepared_season(
+        self,
+        run: CareerRun,
+        transcripts: List[BattleTranscript],
+    ) -> tuple[CareerRun, List[BattleTranscript]]:
+        if run.status != "active" or run.season is None or run.season.status != "battle":
+            raise ValueError("This season has no prepared calendar to resolve.")
+        expected_ids = [entry.id for entry in run.season.battles]
+        by_id = {entry.battle_id: entry for entry in transcripts}
+        if set(by_id) != set(expected_ids):
+            missing = sorted(set(expected_ids) - set(by_id))
+            raise ValueError(f"The prepared calendar is incomplete: {', '.join(missing)}")
+        transcripts = [by_id[battle_id] for battle_id in expected_ids]
         wins = sum(1 for transcript in transcripts if transcript.winner_team == "career-home")
         losses = sum(1 for transcript in transcripts if transcript.winner_team == "career-away")
         draws = len(transcripts) - wins - losses
@@ -188,13 +224,13 @@ class CareerEngine:
         season.wins = wins
         season.losses = losses
         season.draws = draws
-        season.battles = specs
+        specs = list(season.battles)
         season.battle_ids = [entry.battle_id for entry in transcripts]
         run.totals["wins"] += wins
         run.totals["losses"] += losses
         run.totals["draws"] += draws
         outcome = self._apply_competitive_progression(run, season)
-        self._apply_health_and_contract(run, wins=wins, losses=losses)
+        relationship_outcome = self._apply_health_and_contract(run, wins=wins, losses=losses)
         roster_outcome = progress_after_season(run, specs, transcripts)
         class_outcome = self._apply_class_progression(run)
         run.timeline.append(
@@ -205,8 +241,8 @@ class CareerEngine:
                 "league": season.league,
                 "club": season.club_name,
                 "record": f"{wins}-{losses}-{draws}",
-                "decision": option.label,
-                "decision_effects": decision_result,
+                "decision": str(season.decision_history[-1].get("label") or "") if season.decision_history else "",
+                "decision_effects": dict(season.decision_history[-1].get("effects") or {}) if season.decision_history else {},
                 "decisions": list(season.decision_history),
                 "battle_hashes": [
                     {"id": transcript.battle_id, "sha256": transcript.sha256}
@@ -216,6 +252,7 @@ class CareerEngine:
                 "lineup": list(run.active_roster),
                 **roster_outcome,
                 "class_effects": class_outcome,
+                "relationship_effects": relationship_outcome,
                 **outcome,
             }
         )
@@ -228,6 +265,14 @@ class CareerEngine:
         run.season = self._open_season(run)
         run.updated_at = utc_now()
         return run, transcripts
+
+    def advance_season(self, run: CareerRun, *, option_id: str) -> tuple[CareerRun, List[BattleTranscript]]:
+        """Compatibility path for simulations and tests that resolve a season at once."""
+        run, specs = self.prepare_season(run, option_id=option_id)
+        if not specs:
+            return run, []
+        transcripts = [self.battle_runner(spec) for spec in specs]
+        return self.resolve_prepared_season(run, transcripts)
 
     def retire(self, run: CareerRun, reason: str = "voluntary") -> CareerRun:
         if run.status == "retired":
@@ -312,6 +357,8 @@ class CareerEngine:
         class_effects = selected_class_effects(run.build.classes)
         home_bonus += int(class_effects["battle"].get("home_level_bonus", 0))
         away_bonus += int(class_effects["battle"].get("away_level_bonus", 0))
+        relationship_effects = refresh_relationship_effects(run)
+        home_bonus += int(relationship_effects.get("home_level_bonus", 0))
         league_floor = league.min_level + min(15, max(0, run.season_number - 1))
         competitive_level = min(career_level_cap(run), max(league_floor, round(sum(entry.level for entry in lineup) / len(lineup))))
         specs = []
@@ -428,13 +475,31 @@ class CareerEngine:
             run.contract.salary = 120 * LEAGUES[run.league].weight + max(0, run.reputation * 5)
         return {"title": title, "promoted": promotion, "relegated": relegation}
 
-    def _apply_health_and_contract(self, run: CareerRun, *, wins: int, losses: int) -> None:
+    def _apply_health_and_contract(self, run: CareerRun, *, wins: int, losses: int) -> dict:
+        relationship_effects = refresh_relationship_effects(run)
         age_strain = max(0, run.age - 28) // 4
         result_strain = max(0, losses - wins) // 2
-        run.health = max(0, min(100, run.health - age_strain - result_strain + (1 if wins > losses else 0)))
+        recovery = int(relationship_effects.get("season_recovery", 0))
+        run.health = max(0, min(100, run.health - age_strain - result_strain + (1 if wins > losses else 0) + recovery))
+        guard_used = False
         if losses > wins * 2 and run.league != "junior":
-            run.seasons_without_contract += 1
-            run.contract = None
+            if relationship_effects.get("contract_guard") and relationship_effects.get("best_contact"):
+                contact = str(relationship_effects["best_contact"])
+                run.relationships[contact] = max(0, int(run.relationships.get(contact, 0)) - 2)
+                relationship_effects = refresh_relationship_effects(run)
+                guard_used = True
+                run.seasons_without_contract = 0
+                run.timeline.append({
+                    "type": "relationship.contract_saved",
+                    "season": run.season_number,
+                    "age": run.age,
+                    "name": contact,
+                    "cost": 2,
+                    "label": f"{contact} used their influence to protect the club contract.",
+                })
+            else:
+                run.seasons_without_contract += 1
+                run.contract = None
         else:
             run.seasons_without_contract = 0
             region = REGIONS[run.build.region]
@@ -448,6 +513,19 @@ class CareerEngine:
                 seasons_remaining=1,
                 loan_slots=1 + int(run.league in {"regular", "elite"}),
             )
+        outcome = {
+            **relationship_effects,
+            "recovery_applied": recovery,
+            "contract_guard_used": guard_used,
+        }
+        run.timeline.append({
+            "type": "relationship.effect_applied",
+            "season": run.season_number,
+            "age": run.age,
+            **outcome,
+            "label": "Career contacts contributed preparation, recovery, and contract support.",
+        })
+        return outcome
 
     @staticmethod
     def _forced_retirement_reason(run: CareerRun) -> str:

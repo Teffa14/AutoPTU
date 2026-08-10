@@ -70,3 +70,5 @@ repos/*.zip
 IMPLEMENTATION FILES/*.zip
 IMPLEMENTATION FILES/*.rar
 
+.vercel
+.env*.local

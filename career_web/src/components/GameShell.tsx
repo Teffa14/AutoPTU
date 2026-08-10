@@ -1,5 +1,6 @@
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { navigate } from "../App";
+import { signInWithProvider, signOut, supabase } from "../auth";
 import { t } from "../i18n";
 import type { CareerRun, Locale } from "../types";
 
@@ -31,6 +32,7 @@ export function GameShell({ children, run, locale, path, displaySeason, homePath
         </button>
         <div className="header-meta">
           {seasonNumber ? <span className="save-light"><i /> season {seasonNumber}</span> : <span>PTU 1.05</span>}
+          <GoogleAccount locale={locale} />
           <button className="locale-toggle" onClick={() => onLocale(locale === "es" ? "en" : "es")}>{locale.toUpperCase()}</button>
         </div>
       </header>
@@ -45,4 +47,24 @@ export function GameShell({ children, run, locale, path, displaySeason, homePath
       ) : null}
     </div>
   );
+}
+
+function GoogleAccount({ locale }: { locale: Locale }) {
+  const [label, setLabel] = useState("");
+  useEffect(() => {
+    const client = supabase;
+    if (!client) return;
+    let active = true;
+    const update = () => client.auth.getUser().then(({ data }) => {
+      if (!active) return;
+      setLabel(data.user && !data.user.is_anonymous ? String(data.user.email ?? data.user.user_metadata?.name ?? "Google") : "");
+    });
+    void update();
+    const { data } = client.auth.onAuthStateChange(() => { void update(); });
+    return () => { active = false; data.subscription.unsubscribe(); };
+  }, []);
+  if (!supabase) return null;
+  return label
+    ? <button className="account-chip" title={label} onClick={() => { void signOut(); }}>{label.split("@")[0]} <small>{locale === "es" ? "salir" : "sign out"}</small></button>
+    : <button className="account-chip google" onClick={() => { void signInWithProvider("google"); }}>G <small>{locale === "es" ? "Entrar" : "Sign in"}</small></button>;
 }
