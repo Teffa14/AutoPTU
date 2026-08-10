@@ -23,7 +23,7 @@ export function ShareScreen({ shareId, locale }: { shareId: string; locale: Loca
       <div className="shared-score"><b>{String(summary.score ?? 0)}</b><span>competitive score</span></div>
       <div className="record-ribbon"><span>{totals.wins ?? 0} W</span><span>{totals.losses ?? 0} L</span><span>{totals.titles ?? 0} titles</span></div>
       {achievements.length ? <ul>{achievements.map((entry) => <li key={entry}>{entry}</li>)}</ul> : null}
-      <small>{payload.has_replay ? "VERIFIED REPLAY ATTACHED" : "CAREER CARD ONLY"}</small>
+      <small>{locale === "es" ? "RESUMEN DE CARRERA VERIFICADO" : "VERIFIED CAREER SUMMARY"}</small>
     </section>
   );
 }

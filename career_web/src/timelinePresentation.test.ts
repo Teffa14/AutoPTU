@@ -1,23 +1,24 @@
 import { describe, expect, it } from "vitest";
 
-import { timelineReplaySeasons } from "./components/TimelineScreen";
-import type { CareerRun } from "./types";
+import { timelineSeasonDecisions } from "./components/TimelineScreen";
 
-describe("timeline replay archive", () => {
-  it("restores every season from the persisted career timeline", () => {
-    const run = {
-      id: "run-1",
-      season_number: 3,
-      timeline: [
-        { type: "career.started", season: 1 },
-        { type: "season.completed", season: 1, club: "Pallet Juniors", battle_ids: ["run-1-s1-m1", "run-1-s1-m2"] },
-        { type: "season.completed", season: 2, club: "Cerulean Rookies", battle_ids: ["run-1-s2-m1"] },
+describe("timeline season decisions", () => {
+  it("reads the complete decision ledger for an advanced season", () => {
+    expect(timelineSeasonDecisions({
+      type: "season.completed",
+      decisions: [
+        { label: "Protect the partner", effects: { health: 2 } },
+        { label: "Scout the rival", effects: { scouting: 2, finances: -1 } },
       ],
-    } as unknown as CareerRun;
+    })).toEqual([
+      { label: "Protect the partner", effects: { health: 2 } },
+      { label: "Scout the rival", effects: { scouting: 2, finances: -1 } },
+    ]);
+  });
 
-    expect(timelineReplaySeasons(run)).toEqual([
-      { season: 1, club: "Pallet Juniors", battleIds: ["run-1-s1-m1", "run-1-s1-m2"] },
-      { season: 2, club: "Cerulean Rookies", battleIds: ["run-1-s2-m1"] },
+  it("keeps old careers readable from their single saved decision", () => {
+    expect(timelineSeasonDecisions({ decision: "Train carefully", decision_effects: { development: 2 } })).toEqual([
+      { label: "Train carefully", effects: { development: 2 } },
     ]);
   });
 });

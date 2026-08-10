@@ -183,6 +183,10 @@ def test_advanced_mode_requires_three_season_decisions() -> None:
     run, transcripts = engine.advance_season(run, option_id=run.season.decision.options[0].id)
     assert len(transcripts) == 6
     assert run.season_number == 2
+    completed = next(entry for entry in run.timeline if entry["type"] == "season.completed")
+    assert len(completed["decisions"]) == 3
+    assert len(completed["battle_hashes"]) == 6
+    assert "battle_ids" not in completed
 
 
 def test_career_attributes_change_schedule_preparation_transparently() -> None:
@@ -292,10 +296,11 @@ def test_sharing_requires_retirement_and_is_explicit(tmp_path: Path) -> None:
     card_only = service.share("trainer-1", run["id"], {"include_replay": False})
     shared = service.share("trainer-1", run["id"], {"include_replay": True})
     assert shared["published"] is True
-    assert shared["include_replay"] is True
+    assert shared["include_replay"] is False
     assert card_only["share_id"] != shared["share_id"]
     assert service.public_share(card_only["share_id"])["has_replay"] is False
     assert (tmp_path / "meta" / f"{shared['share_id']}.json").exists()
     public = service.public_share(shared["share_id"])
+    assert public["has_replay"] is False
     assert public["summary"]["trainer"] == "Ari"
     assert "timeline" not in public

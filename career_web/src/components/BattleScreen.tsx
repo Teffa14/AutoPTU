@@ -4,7 +4,6 @@ import { careerApi } from "../api";
 import { navigate } from "../App";
 import { battleCommentary, deriveBattleView, eventTitle, playbackEventIndexes, statLabel, statusLabel } from "../battlePresentation";
 import { t } from "../i18n";
-import { saveReplay } from "../replayStore";
 import type { BattleCombatant, BattleTranscript, Locale } from "../types";
 import { BattleArena } from "./BattleArena";
 
@@ -17,11 +16,10 @@ export default function BattleScreen({ runId, battleId, locale }: { runId: strin
 
   useEffect(() => {
     let active = true;
-    careerApi.battle(runId, battleId).then(async (value) => {
+    careerApi.battle(runId, battleId).then((value) => {
       if (!active) return;
       setTranscript(value);
       setStepIndex(0);
-      await saveReplay(value);
     }).catch((reason: Error) => active && setError(reason.message));
     return () => { active = false; };
   }, [runId, battleId]);
@@ -44,8 +42,8 @@ export default function BattleScreen({ runId, battleId, locale }: { runId: strin
     return () => window.clearTimeout(timer);
   }, [complete, runId]);
 
-  if (error) return <section className="battle-error"><h1>{locale === "es" ? "No se pudo abrir la repetición" : "Replay unavailable"}</h1><p>{error}</p><button onClick={() => navigate(`run/${runId}`)}>{copy.back}</button></section>;
-  if (!transcript || !view) return <div className="scene-loading">{locale === "es" ? "Abriendo la retransmisión…" : "Opening stadium feed…"}</div>;
+  if (error) return <section className="battle-error"><h1>{locale === "es" ? "No se pudo abrir el combate" : "Battle unavailable"}</h1><p>{error}</p><button onClick={() => navigate(`run/${runId}`)}>{copy.back}</button></section>;
+  if (!transcript || !view) return <div className="scene-loading">{locale === "es" ? "Preparando el estadio…" : "Preparing the stadium…"}</div>;
 
   const home = view.combatants.find((entry) => entry.team === "career-home") ?? view.combatants[0];
   const away = view.combatants.find((entry) => entry.team === "career-away") ?? view.combatants[1];

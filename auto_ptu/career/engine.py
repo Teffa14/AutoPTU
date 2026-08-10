@@ -108,6 +108,9 @@ class CareerEngine:
                 "type": "career.started",
                 "season": 1,
                 "age": 12,
+                "trainer": run.build.name,
+                "club": club,
+                "starter": canonical_starter,
                 "label": f"{run.build.name} joined {club} with {canonical_starter}.",
             }
         )
@@ -196,7 +199,11 @@ class CareerEngine:
                 "record": f"{wins}-{losses}-{draws}",
                 "decision": option.label,
                 "decision_effects": decision_result,
-                "battle_ids": list(season.battle_ids),
+                "decisions": list(season.decision_history),
+                "battle_hashes": [
+                    {"id": transcript.battle_id, "sha256": transcript.sha256}
+                    for transcript in transcripts
+                ],
                 "score_delta": season.score_delta,
                 "lineup": list(run.active_roster),
                 **roster_outcome,

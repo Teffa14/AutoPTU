@@ -38,7 +38,6 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
     try {
       const result = await careerApi.decide(run, selectedId);
       onRun(result.run);
-      sessionStorage.setItem(`career-battles:${run.id}`, JSON.stringify(result.battle_ids));
       const featured = result.battle_ids.at(-1);
       if (featured) navigate(`battle/${run.id}/${featured}`);
     } catch (reason) {
@@ -53,9 +52,9 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
     finally { setBusy(false); }
   }
 
-  async function share(includeReplay: boolean) {
+  async function share() {
     setBusy(true);
-    try { setShareUrl((await careerApi.share(run.id, includeReplay)).url); }
+    try { setShareUrl((await careerApi.share(run.id)).url); }
     catch (reason) { setError(reason instanceof Error ? reason.message : String(reason)); }
     finally { setBusy(false); }
   }
@@ -68,7 +67,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
       <div className="record-ribbon"><span>{run.totals.wins} W</span><span>{run.totals.losses} L</span><span>{run.totals.titles} titles</span></div>
       <div className="retirement-roster"><span><b>{run.summary?.pokemon_owned ?? run.pokemon.length}</b> Pokémon</span><span><b>{run.summary?.evolutions ?? 0}</b> {locale === "es" ? "evoluciones" : "evolutions"}</span></div>
       <button className="primary-action" onClick={() => navigate(`timeline/${run.id}`)}>{copy.timeline}</button>
-      <div className="share-actions"><button onClick={() => share(false)} disabled={busy}>{locale === "es" ? "Compartir tarjeta" : "Share card"}</button><button onClick={() => share(true)} disabled={busy}>{locale === "es" ? "Compartir con replay" : "Share with replay"}</button></div>
+      <div className="share-actions"><button onClick={share} disabled={busy}>{locale === "es" ? "Compartir resumen" : "Share summary"}</button></div>
       {shareUrl ? <output className="share-url"><a href={`${window.location.origin}${shareUrl}`} target="_blank" rel="noreferrer">{window.location.origin}{shareUrl}</a></output> : null}
       {error ? <p className="form-error" role="alert">{error}</p> : null}
     </section>

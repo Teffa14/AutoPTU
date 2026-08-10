@@ -156,7 +156,7 @@ class CareerService:
         run = self._owned_run(player_id, run_id)
         if run.status != "retired":
             raise ValueError("Only a retired career can be shared.")
-        return self.store.create_share(run, bool(payload.get("include_replay")))
+        return self.store.create_share(run, False)
 
     def public_share(self, share_id: str) -> dict:
         return self.store.load_share(share_id)

@@ -35,9 +35,9 @@ export const careerApi = {
   ),
   battle: (runId: string, battleId: string) => request<BattleTranscript>(`/api/v1/runs/${encodeURIComponent(runId)}/battles/${encodeURIComponent(battleId)}`),
   retire: (runId: string) => request<CareerRun>(`/api/v1/runs/${encodeURIComponent(runId)}/retire`, { method: "POST", body: JSON.stringify({ reason: "voluntary" }) }),
-  share: (runId: string, includeReplay: boolean) => request<{ url: string; include_replay: boolean }>(
+  share: (runId: string) => request<{ url: string; include_replay: boolean }>(
     `/api/v1/runs/${encodeURIComponent(runId)}/shares`,
-    { method: "POST", body: JSON.stringify({ include_replay: includeReplay }) },
+    { method: "POST", body: JSON.stringify({ include_replay: false }) },
   ),
   publicShare: (shareId: string) => request<{ share_id: string; summary: Record<string, unknown>; has_replay: boolean }>(`/api/v1/shares/${encodeURIComponent(shareId)}`),
   daily: (day: string) => request<Record<string, unknown>>(`/api/v1/daily/${day}`),

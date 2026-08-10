@@ -73,7 +73,7 @@ try {
   if ((await metrics(page)).canvasCount !== 0) throw new Error("Pixi canvas remained mounted after leaving battle.");
   await page.locator(".season-footer .text-action").click();
   await page.locator(".retire-confirm button").first().click();
-  await page.getByRole("button", { name: /Compartir tarjeta|Share card/ }).click();
+  await page.getByRole("button", { name: /Compartir resumen|Share summary/ }).click();
   const publicUrl = await page.locator(".share-url").textContent();
   if (!publicUrl) throw new Error("Explicit share action did not create a public URL.");
   const publicPage = await desktop.newPage();

@@ -1,71 +1,85 @@
-import { navigate } from "../App";
+import { effectLabel } from "../decisionPresentation";
 import type { CareerRun, Locale } from "../types";
 
-interface ReplaySeason {
-  season: number;
-  club: string;
-  battleIds: string[];
+interface TimelineDecision {
+  label: string;
+  effects: Record<string, unknown>;
 }
 
-export function timelineReplaySeasons(run: CareerRun): ReplaySeason[] {
-  const archived = run.timeline.flatMap((entry) => {
-    const battleIds = Array.isArray(entry.battle_ids)
-      ? entry.battle_ids.filter((battleId): battleId is string => typeof battleId === "string" && battleId.length > 0)
-      : [];
-    if (!battleIds.length) return [];
-    return [{
-      season: Number(entry.season ?? 0),
-      club: String(entry.club ?? entry.label ?? "League fixture"),
-      battleIds,
-    }];
-  });
-
-  if (archived.length) return archived;
-  try {
-    const cached = JSON.parse(sessionStorage.getItem(`career-battles:${run.id}`) || "[]") as unknown;
-    if (!Array.isArray(cached)) return [];
-    const battleIds = cached.filter((battleId): battleId is string => typeof battleId === "string" && battleId.length > 0);
-    return battleIds.length ? [{
-      season: Math.max(1, run.season_number - 1),
-      club: run.contract?.club_name ?? "League fixture",
-      battleIds,
-    }] : [];
-  } catch {
-    return [];
+export function timelineSeasonDecisions(entry: Record<string, unknown>): TimelineDecision[] {
+  if (Array.isArray(entry.decisions)) {
+    return entry.decisions.flatMap((value) => {
+      const decision = asRecord(value);
+      const label = String(decision.label ?? "").trim();
+      return label ? [{ label, effects: asRecord(decision.effects) }] : [];
+    });
   }
+  const label = String(entry.decision ?? "").trim();
+  return label ? [{ label, effects: asRecord(entry.decision_effects) }] : [];
 }
 
 export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale }) {
-  const replaySeasons = timelineReplaySeasons(run);
   return (
     <section className="timeline-scene">
-      <header><p className="eyebrow">{run.build.name} · career archive</p><h1>{locale === "es" ? "Cada temporada dejó una marca" : "Every season left a mark"}</h1></header>
+      <header className="career-book-cover">
+        <p className="eyebrow">{run.build.name} · {locale === "es" ? "libro de carrera" : "career book"}</p>
+        <h1>{locale === "es" ? "Lo que decidió. Lo que consiguió." : "What they chose. What they achieved."}</h1>
+        <p>{locale === "es" ? "Una historia compacta de temporadas, decisiones, capturas y evolución." : "A compact history of seasons, decisions, captures and growth."}</p>
+      </header>
+
+      {run.status === "retired" ? <FinalCareerSheet run={run} locale={locale} /> : null}
+
       <div className="timeline-track">
-        {run.timeline.map((entry, index) => (
-          <article key={`${String(entry.type)}-${index}`}>
-            <div className="timeline-age"><b>{String(entry.age ?? run.age)}</b><small>{locale === "es" ? "años" : "years"}</small></div>
-            <div><span>{eventKind(entry, locale)}</span><h2>{eventTitle(entry, locale)}</h2>
-              {entry.record ? <p>{String(entry.league)} · {String(entry.record)} · score {Number(entry.score_delta ?? 0) >= 0 ? "+" : ""}{String(entry.score_delta)}</p> : null}</div>
-          </article>
-        ))}
-      </div>
-      {replaySeasons.length ? (
-        <section className="replay-archive" aria-labelledby="replay-archive-title">
-          <h2 id="replay-archive-title">{locale === "es" ? "Archivo completo de combates" : "Complete battle archive"}</h2>
-          {replaySeasons.map((season) => (
-            <div className="replay-season" key={`${season.season}-${season.battleIds[0]}`}>
-              <header><b>{locale === "es" ? `Temporada ${season.season}` : `Season ${season.season}`}</b><span>{season.club}</span></header>
-              <div className="replay-shelf">
-                {season.battleIds.map((battleId, index) => (
-                  <button key={battleId} onClick={() => navigate(`battle/${run.id}/${battleId}`)}>
-                    {locale === "es" ? `Partido ${index + 1}` : `Match ${index + 1}`}<small>{battleId.slice(-8)}</small>
-                  </button>
-                ))}
+        {run.timeline.map((entry, index) => {
+          const decisions = timelineSeasonDecisions(entry);
+          const pokemonUsed = Array.isArray(entry.pokemon_used) ? entry.pokemon_used.map(String) : [];
+          return (
+            <article className={`timeline-entry type-${String(entry.type).replaceAll(".", "-")}`} key={`${String(entry.type)}-${index}`}>
+              <div className="timeline-age"><b>{String(entry.age ?? run.age)}</b><small>{locale === "es" ? "años" : "years"}</small></div>
+              <div className="timeline-entry-copy">
+                <span>{eventKind(entry, locale)}</span>
+                <h2>{eventTitle(entry, locale)}</h2>
+                {entry.record ? <p className="season-record">{String(entry.league)} · {String(entry.record)} · score {signed(Number(entry.score_delta ?? 0))}</p> : null}
+                {decisions.length ? (
+                  <div className="decision-ledger">
+                    <b>{locale === "es" ? (decisions.length > 1 ? "Decisiones" : "Decisión") : (decisions.length > 1 ? "Decisions" : "Decision")}</b>
+                    {decisions.map((decision, decisionIndex) => (
+                      <div key={`${decision.label}-${decisionIndex}`}>
+                        <strong>{decision.label}</strong>
+                        <small>{effectSummary(decision.effects, locale)}</small>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+                {pokemonUsed.length ? <p className="pokemon-used"><b>{locale === "es" ? "Jugaron" : "Played"}</b>{pokemonUsed.map((species) => <span key={species}>{species}</span>)}</p> : null}
               </div>
-            </div>
-          ))}
-        </section>
-      ) : null}
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function FinalCareerSheet({ run, locale }: { run: CareerRun; locale: Locale }) {
+  const summary = run.summary;
+  const evolutions = run.pokemon.reduce((total, pokemon) => total + pokemon.evolution_history.length, 0);
+  const clubs = Array.from(new Set(run.timeline.filter((entry) => entry.type === "season.completed").map((entry) => String(entry.club ?? "")).filter(Boolean)));
+  return (
+    <section className="final-career-sheet" aria-labelledby="final-career-title">
+      <header><div><p className="eyebrow">{locale === "es" ? "Registro final" : "Final record"}</p><h2 id="final-career-title">{locale === "es" ? "La carrera en números" : "The career in numbers"}</h2></div><strong>{run.score}<small>score</small></strong></header>
+      <div className="final-stat-grid">
+        <span><b>{summary?.seasons ?? run.season_number - 1}</b>{locale === "es" ? "temporadas" : "seasons"}</span>
+        <span><b>{run.totals.wins}–{run.totals.losses}–{run.totals.draws}</b>W–L–D</span>
+        <span><b>{run.totals.titles}</b>{locale === "es" ? "títulos" : "titles"}</span>
+        <span><b>{summary?.highest_league ?? run.league}</b>{locale === "es" ? "máxima liga" : "highest league"}</span>
+        <span><b>{summary?.final_age ?? run.age}</b>{locale === "es" ? "edad final" : "final age"}</span>
+        <span><b>{run.pokemon.length}</b>{locale === "es" ? "Pokémon" : "Pokémon"}</span>
+        <span><b>{evolutions}</b>{locale === "es" ? "evoluciones" : "evolutions"}</span>
+        <span><b>{run.build.starter}</b>{locale === "es" ? "compañero final" : "final partner"}</span>
+      </div>
+      {clubs.length ? <p className="club-history"><b>{locale === "es" ? "Clubes" : "Clubs"}</b>{clubs.join(" · ")}</p> : null}
+      <div className="final-achievements"><b>{locale === "es" ? "Logros" : "Achievements"}</b>{run.achievements.length ? run.achievements.map((achievement) => <span key={achievement}>{achievement}</span>) : <small>{locale === "es" ? "Sin títulos registrados." : "No recorded titles."}</small>}</div>
     </section>
   );
 }
@@ -79,12 +93,21 @@ function eventKind(entry: Record<string, unknown>, locale: Locale): string {
     "roster.lineup_changed": ["alineación", "lineup"],
     "season.completed": ["temporada", "season"],
     "career.retired": ["retiro", "retirement"],
+    "career.version_migrated": ["actualización", "update"],
   };
   return labels[type]?.[locale === "es" ? 0 : 1] ?? type.replace(".", " / ");
 }
 
 function eventTitle(entry: Record<string, unknown>, locale: Locale): string {
   const type = String(entry.type ?? "");
+  if (type === "career.started") {
+    const structured = entry.trainer && entry.club && entry.starter
+      ? { trainer: String(entry.trainer), club: String(entry.club), starter: String(entry.starter) }
+      : parseLegacyStart(String(entry.label ?? ""));
+    if (structured) return locale === "es"
+      ? `${structured.trainer} empezó en ${structured.club} junto a ${structured.starter}`
+      : `${structured.trainer} joined ${structured.club} with ${structured.starter}`;
+  }
   if (type === "pokemon.captured" && Array.isArray(entry.species)) {
     const names = entry.species.map(String).join(", ");
     return locale === "es" ? `Se sumaron ${names}` : `Caught ${names}`;
@@ -95,5 +118,23 @@ function eventTitle(entry: Record<string, unknown>, locale: Locale): string {
       : `${String(entry.from)} evolved into ${String(entry.to)} at level ${String(entry.level)}`;
   }
   if (type === "roster.lineup_changed") return locale === "es" ? "Se registraron los seis titulares" : "The starting six were registered";
+  if (type === "career.retired") return locale === "es" ? "La carrera quedó cerrada" : "The career came to an end";
+  if (type === "career.version_migrated") return locale === "es" ? "Las reglas de carrera se actualizaron" : "Career rules were updated";
   return String(entry.label ?? entry.club ?? entry.reason ?? (locale === "es" ? "Temporada registrada" : "Season recorded"));
+}
+
+function effectSummary(effects: Record<string, unknown>, locale: Locale): string {
+  const pieces = Object.entries(effects).flatMap(([key, value]) => {
+    if (key === "gamble_success") return [value ? (locale === "es" ? "La apuesta salió bien" : "The gamble succeeded") : (locale === "es" ? "La apuesta falló" : "The gamble failed")];
+    if (typeof value !== "number") return [];
+    return [`${effectLabel(key, locale)} ${signed(value)}`];
+  });
+  return pieces.join(" · ") || (locale === "es" ? "Sin cambios directos" : "No direct changes");
+}
+
+function signed(value: number): string { return `${value >= 0 ? "+" : ""}${value}`; }
+function asRecord(value: unknown): Record<string, unknown> { return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {}; }
+function parseLegacyStart(label: string): { trainer: string; club: string; starter: string } | null {
+  const match = label.match(/^(.+) joined (.+) with (.+)\.$/);
+  return match ? { trainer: match[1], club: match[2], starter: match[3] } : null;
 }
