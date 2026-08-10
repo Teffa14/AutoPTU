@@ -25,7 +25,7 @@ export function App() {
   const [path, setPath] = useState(currentPath);
   const [locale, setLocale] = useState<Locale>(() => (localStorage.getItem("career-locale") === "en" ? "en" : "es"));
   const [run, setRun] = useState<CareerRun | null>(null);
-  const [error, setError] = useState("");
+  const [runLoadError, setRunLoadError] = useState("");
 
   useEffect(() => {
     const update = () => setPath(currentPath());
@@ -43,16 +43,30 @@ export function App() {
   const shareMatch = path.match(/^share\/([^/]+)/);
   const requestedRunId = runMatch?.[1] ?? battleMatch?.[1];
   useEffect(() => {
-    if (!requestedRunId || run?.id === requestedRunId) return;
+    if (!requestedRunId) {
+      setRunLoadError("");
+      return;
+    }
+    if (run?.id === requestedRunId) {
+      setRunLoadError("");
+      return;
+    }
     let active = true;
+    setRunLoadError("");
     careerApi.run(requestedRunId).then((value) => {
-      if (active) setRun(value);
+      if (active) {
+        setRun(value);
+      }
     }).catch((reason: Error) => {
-      if (active) setError(reason.message);
+      if (active) {
+        setRunLoadError(reason.message);
+      }
     });
     return () => { active = false; };
   }, [requestedRunId, run?.id]);
 
+  const routeRun = requestedRunId && run?.id === requestedRunId ? run : null;
+  const battleSeason = Number(battleMatch?.[2].match(/-s(\d+)-m\d+$/)?.[1] ?? 0) || undefined;
   let screen;
   if (shareMatch) {
     screen = <ShareScreen shareId={shareMatch[1]} locale={locale} />;
@@ -62,22 +76,45 @@ export function App() {
         <BattleScreen runId={battleMatch[1]} battleId={battleMatch[2]} locale={locale} />
       </Suspense>
     );
-  } else if (path.startsWith("profile/") && run) {
-    screen = <ProfileScreen run={run} locale={locale} />;
-  } else if (path.startsWith("timeline/") && run) {
-    screen = <TimelineScreen run={run} locale={locale} />;
+  } else if (runMatch && !routeRun) {
+    screen = runLoadError ? (
+      <section className="battle-error" role="alert">
+        <h1>{locale === "es" ? "No se pudo abrir esta carrera" : "This career could not be opened"}</h1>
+        <p>{localizeApiError(runLoadError, locale)}</p>
+        <button onClick={() => navigate(run ? `run/${run.id}` : "")}>{run ? (locale === "es" ? "Volver a mi carrera" : "Back to my career") : (locale === "es" ? "Volver al inicio" : "Back to start")}</button>
+      </section>
+    ) : <div className="scene-loading">{locale === "es" ? "Cargando carrera…" : "Loading career…"}</div>;
+  } else if (path.startsWith("profile/") && routeRun) {
+    screen = <ProfileScreen run={routeRun} locale={locale} />;
+  } else if (path.startsWith("timeline/") && routeRun) {
+    screen = <TimelineScreen run={routeRun} locale={locale} />;
   } else if (path === "daily" || path.startsWith("leaderboard")) {
-    screen = <DailyScreen locale={locale} />;
-  } else if (path.startsWith("run/") && run) {
-    screen = <SeasonScreen run={run} locale={locale} onRun={setRun} />;
+    screen = <DailyScreen locale={locale} onRun={setRun} />;
+  } else if (path.startsWith("run/") && routeRun) {
+    screen = <SeasonScreen run={routeRun} locale={locale} onRun={setRun} />;
   } else {
     screen = <CreateScreen locale={locale} onCreated={(value) => { setRun(value); localStorage.setItem("career-last-run", value.id); navigate(`run/${value.id}`); }} />;
   }
 
+  const shellRun = shareMatch || path === "" ? null : requestedRunId ? routeRun : run;
+
   return (
-    <GameShell run={run} locale={locale} path={path} onLocale={setLocale}>
-      {error ? <div className="error-banner" role="alert">{error}<button onClick={() => setError("")}>×</button></div> : null}
+    <GameShell
+      run={shellRun}
+      locale={locale}
+      path={path}
+      displaySeason={battleSeason}
+      homePath={battleMatch ? `run/${battleMatch[1]}` : undefined}
+      onLocale={setLocale}
+    >
       {screen}
     </GameShell>
   );
+}
+
+function localizeApiError(message: string, locale: Locale): string {
+  if (locale !== "es") return message;
+  if (message.includes("belongs to another account")) return "Esta carrera pertenece a otra cuenta.";
+  if (message.includes("Career run not found")) return "No encontramos esa carrera.";
+  return message;
 }

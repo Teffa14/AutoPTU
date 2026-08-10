@@ -254,7 +254,7 @@ class PostgresCareerStore:
             connection.commit()
 
     def create_share(self, run: CareerRun, include_replay: bool) -> dict:
-        share_id = f"share-{run.id[:16]}"
+        share_id = f"share-{uuid.uuid4().hex[:20]}"
         replay_path = self._upload_shared_replay(run, share_id) if include_replay else None
         summary = {
             "trainer": run.build.name,

@@ -71,7 +71,7 @@ export function CreateScreen({ locale, onCreated }: Props) {
           <div className="form-row final-row">
             <label><span>{locale === "es" ? "Clase PTU" : "PTU class"}</span><select value={trainerClass} onChange={(event) => setTrainerClass(event.target.value)}>{catalog.classes.map((entry) => <option key={entry.id} value={entry.name}>{entry.name}</option>)}</select></label>
             <div className="mode-switch" role="group" aria-label="Career mode">
-              {(["simple", "advanced"] as CareerMode[]).map((entry) => <button type="button" key={entry} className={mode === entry ? "active" : ""} onClick={() => setMode(entry)}><b>{entry}</b><small>{entry === "simple" ? "15–20 min" : "30–45 min"}</small></button>)}
+              {(["simple", "advanced"] as CareerMode[]).map((entry) => <button type="button" key={entry} className={mode === entry ? "active" : ""} aria-pressed={mode === entry} onClick={() => setMode(entry)}><b>{entry}</b><small>{entry === "simple" ? "15–20 min" : "30–45 min"}</small></button>)}
             </div>
           </div>
           <div className="registration-footer"><span><b>10</b> Poké Balls</span><span><b>{catalog.decision_signature_count.toLocaleString()}</b> decision contexts</span><button className="primary-action" disabled={busy}>{busy ? "Signing…" : copy.start}</button></div>

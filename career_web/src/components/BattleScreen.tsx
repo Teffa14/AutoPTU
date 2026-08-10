@@ -86,9 +86,9 @@ export default function BattleScreen({ runId, battleId, locale }: { runId: strin
         <blockquote key={rawEventIndex}>{commentary}</blockquote>
         <div className="playback-controls">
           <span>{Math.min(stepIndex + 1, steps.length + 1)}/{steps.length + 1}</span>
-          <button className={speed === 1 ? "active" : ""} onClick={() => setSpeed(1)}>1×</button>
-          <button className={speed === 2 ? "active" : ""} onClick={() => setSpeed(2)}>2×</button>
-          <button onClick={() => setStepIndex(steps.length)}>{copy.skip}</button>
+          <button className={speed === 1 ? "active" : ""} aria-pressed={speed === 1} disabled={complete} onClick={() => setSpeed(1)}>1×</button>
+          <button className={speed === 2 ? "active" : ""} aria-pressed={speed === 2} disabled={complete} onClick={() => setSpeed(2)}>2×</button>
+          <button disabled={complete} onClick={() => setStepIndex(steps.length)}>{copy.skip}</button>
         </div>
       </div>
       <footer className="verification-stamp"><span>✓ {locale === "es" ? "Simulado con reglas PTU 1.05" : "Simulated with PTU 1.05 rules"}</span><b>{locale === "es" ? "Resultado verificado" : "Verified result"}</b></footer>

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { navigate } from "../App";
 import { careerApi } from "../api";
 import { signInWithEmail, signInWithProvider, supabase } from "../auth";
-import type { CareerCatalog, Locale } from "../types";
+import type { CareerCatalog, CareerRun, Locale } from "../types";
 
-export function DailyScreen({ locale }: { locale: Locale }) {
+export function DailyScreen({ locale, onRun }: { locale: Locale; onRun: (run: CareerRun) => void }) {
   const day = new Date().toISOString().slice(0, 10);
   const [challenge, setChallenge] = useState<Record<string, unknown> | null>(null);
   const [board, setBoard] = useState<Record<string, unknown> | null>(null);
@@ -33,8 +33,9 @@ export function DailyScreen({ locale }: { locale: Locale }) {
       const result = await careerApi.dailyAttempt(day, {
         mode, starter, name: "Ranked Trainer", classes: ["Ace Trainer"], locale,
       });
+      onRun(result.run);
       navigate(`run/${result.run.id}`);
-    } catch (reason) { setError(reason instanceof Error ? reason.message : String(reason)); }
+    } catch (reason) { setError(localizedError(reason instanceof Error ? reason.message : String(reason), locale)); }
     finally { setBusy(false); }
   }
 
@@ -48,7 +49,7 @@ export function DailyScreen({ locale }: { locale: Locale }) {
   return (
     <section className="daily-scene">
       <header><p className="eyebrow">UTC · {day}</p><h1>{locale === "es" ? "Todos reciben la misma llamada" : "Everyone gets the same call"}</h1><p>{region.toUpperCase()} · seed committed · best of three</p></header>
-      <div className="daily-mode">{["simple", "advanced"].map((entry) => <button key={entry} className={mode === entry ? "active" : ""} onClick={() => setMode(entry)}>{entry}</button>)}</div>
+      <div className="daily-mode">{["simple", "advanced"].map((entry) => <button key={entry} className={mode === entry ? "active" : ""} aria-pressed={mode === entry} onClick={() => setMode(entry)}>{entry}</button>)}</div>
       <aside className="ranked-entry">
         <div><span>{locale === "es" ? "Entrada ranked" : "Ranked entry"}</span><b>{starter ?? "—"}</b><small>{locale === "es" ? "Tres intentos por modo · se conserva el mejor" : "Three attempts per mode · best result kept"}</small></div>
         {supabase ? <div className="auth-actions"><button onClick={() => signInWithProvider("google")}>Google</button><button onClick={() => signInWithProvider("discord")}>Discord</button><input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="email@trainer.club" /><button onClick={emailOtp} disabled={!email || busy}>OTP</button></div> : <small>Local development identity</small>}
@@ -60,4 +61,10 @@ export function DailyScreen({ locale }: { locale: Locale }) {
       </div>
     </section>
   );
+}
+
+function localizedError(message: string, locale: Locale): string {
+  if (locale === "es" && message.includes("All three ranked attempts")) return "Los tres intentos ranked de este modo ya están comprometidos.";
+  if (locale === "es" && message.includes("permanent account is required")) return "Necesitas una cuenta permanente para jugar el reto diario ranked.";
+  return message;
 }

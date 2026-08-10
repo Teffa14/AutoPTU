@@ -1,8 +1,42 @@
 import { navigate } from "../App";
 import type { CareerRun, Locale } from "../types";
 
+interface ReplaySeason {
+  season: number;
+  club: string;
+  battleIds: string[];
+}
+
+export function timelineReplaySeasons(run: CareerRun): ReplaySeason[] {
+  const archived = run.timeline.flatMap((entry) => {
+    const battleIds = Array.isArray(entry.battle_ids)
+      ? entry.battle_ids.filter((battleId): battleId is string => typeof battleId === "string" && battleId.length > 0)
+      : [];
+    if (!battleIds.length) return [];
+    return [{
+      season: Number(entry.season ?? 0),
+      club: String(entry.club ?? entry.label ?? "League fixture"),
+      battleIds,
+    }];
+  });
+
+  if (archived.length) return archived;
+  try {
+    const cached = JSON.parse(sessionStorage.getItem(`career-battles:${run.id}`) || "[]") as unknown;
+    if (!Array.isArray(cached)) return [];
+    const battleIds = cached.filter((battleId): battleId is string => typeof battleId === "string" && battleId.length > 0);
+    return battleIds.length ? [{
+      season: Math.max(1, run.season_number - 1),
+      club: run.contract?.club_name ?? "League fixture",
+      battleIds,
+    }] : [];
+  } catch {
+    return [];
+  }
+}
+
 export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale }) {
-  const battles = JSON.parse(sessionStorage.getItem(`career-battles:${run.id}`) || "[]") as string[];
+  const replaySeasons = timelineReplaySeasons(run);
   return (
     <section className="timeline-scene">
       <header><p className="eyebrow">{run.build.name} · career archive</p><h1>{locale === "es" ? "Cada temporada dejó una marca" : "Every season left a mark"}</h1></header>
@@ -15,7 +49,23 @@ export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale
           </article>
         ))}
       </div>
-      {battles.length ? <div className="replay-shelf"><h2>{locale === "es" ? "Replays de la última temporada" : "Latest season replays"}</h2>{battles.map((battleId, index) => <button key={battleId} onClick={() => navigate(`battle/${run.id}/${battleId}`)}>Match {index + 1}<small>{battleId.slice(-8)}</small></button>)}</div> : null}
+      {replaySeasons.length ? (
+        <section className="replay-archive" aria-labelledby="replay-archive-title">
+          <h2 id="replay-archive-title">{locale === "es" ? "Archivo completo de combates" : "Complete battle archive"}</h2>
+          {replaySeasons.map((season) => (
+            <div className="replay-season" key={`${season.season}-${season.battleIds[0]}`}>
+              <header><b>{locale === "es" ? `Temporada ${season.season}` : `Season ${season.season}`}</b><span>{season.club}</span></header>
+              <div className="replay-shelf">
+                {season.battleIds.map((battleId, index) => (
+                  <button key={battleId} onClick={() => navigate(`battle/${run.id}/${battleId}`)}>
+                    {locale === "es" ? `Partido ${index + 1}` : `Match ${index + 1}`}<small>{battleId.slice(-8)}</small>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      ) : null}
     </section>
   );
 }

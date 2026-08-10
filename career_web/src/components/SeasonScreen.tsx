@@ -22,6 +22,9 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
     [decision, locale, run],
   );
   const selected = presentation?.options.find((option) => option.id === selectedId);
+  const finalDecision = Boolean(run.season && run.season.decisions_completed + 1 >= run.season.decisions_required);
+  const decisionNumber = (run.season?.decisions_completed ?? 0) + 1;
+  const decisionTotal = run.season?.decisions_required ?? 1;
 
   useEffect(() => setSelectedId(""), [decision?.id]);
 
@@ -62,7 +65,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
       <div className="record-ribbon"><span>{run.totals.wins} W</span><span>{run.totals.losses} L</span><span>{run.totals.titles} titles</span></div>
       <button className="primary-action" onClick={() => navigate(`timeline/${run.id}`)}>{copy.timeline}</button>
       <div className="share-actions"><button onClick={() => share(false)} disabled={busy}>{locale === "es" ? "Compartir tarjeta" : "Share card"}</button><button onClick={() => share(true)} disabled={busy}>{locale === "es" ? "Compartir con replay" : "Share with replay"}</button></div>
-      {shareUrl ? <output className="share-url">{window.location.origin}{shareUrl}</output> : null}
+      {shareUrl ? <output className="share-url"><a href={`${window.location.origin}${shareUrl}`} target="_blank" rel="noreferrer">{window.location.origin}{shareUrl}</a></output> : null}
       {error ? <p className="form-error" role="alert">{error}</p> : null}
     </section>
   );
@@ -128,16 +131,18 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
                 ) : <p>{locale === "es" ? "No hay tirada oculta para este resultado." : "There is no hidden roll for this outcome."}</p>}
               </div>
               <button className="primary-action" onClick={decide} disabled={busy}>
-                {locale === "es" ? "Confirmar y jugar la temporada" : "Confirm and play the season"}
+                {finalDecision
+                  ? (locale === "es" ? "Confirmar y jugar la temporada" : "Confirm and play the season")
+                  : (locale === "es" ? `Confirmar decisión ${decisionNumber} de ${decisionTotal}` : `Confirm decision ${decisionNumber} of ${decisionTotal}`)}
               </button>
             </section>
           ) : <p className="choice-help">{locale === "es" ? "Elige una opción para ver exactamente qué puede cambiar antes de confirmarla." : "Choose an option to see exactly what can change before confirming it."}</p>}
 
-          {busy ? <div className="simulating" role="status"><i /><div><b>{locale === "es" ? "Jugando el calendario PTU" : "Playing the PTU schedule"}</b><span>{locale === "es" ? "6 combates · stats reales · resultado verificado" : "6 battles · real stats · verified result"}</span></div></div> : null}
+          {busy && selectedId ? <div className="simulating" role="status"><i /><div><b>{finalDecision ? (locale === "es" ? "Jugando el calendario PTU" : "Playing the PTU schedule") : (locale === "es" ? "Registrando la decisión" : "Recording the decision")}</b><span>{finalDecision ? (locale === "es" ? "6 combates · stats reales · resultado verificado" : "6 battles · real stats · verified result") : (locale === "es" ? `Quedan ${Math.max(0, decisionTotal - decisionNumber)} decisiones antes del calendario` : `${Math.max(0, decisionTotal - decisionNumber)} decisions remain before the schedule`)}</span></div></div> : null}
           {error ? <p className="form-error" role="alert">{error}</p> : null}
         </article>
       </div>
-      <footer className="season-footer"><span>{run.totals.wins}–{run.totals.losses}–{run.totals.draws} career</span>{confirmRetire ? <span className="retire-confirm">{locale === "es" ? "¿Cerrar la carrera aquí?" : "End the career here?"}<button onClick={retire} disabled={busy}>{copy.retire}</button><button onClick={() => setConfirmRetire(false)}>Cancel</button></span> : <button className="text-action" onClick={() => setConfirmRetire(true)}>{copy.retire}</button>}</footer>
+      <footer className="season-footer"><span>{run.totals.wins}–{run.totals.losses}–{run.totals.draws} career</span>{confirmRetire ? <span className="retire-confirm" role="dialog" aria-label={locale === "es" ? "Confirmar retiro" : "Confirm retirement"}>{locale === "es" ? "¿Cerrar la carrera aquí?" : "End the career here?"}<button onClick={retire} disabled={busy}>{copy.retire}</button><button onClick={() => setConfirmRetire(false)}>{locale === "es" ? "Cancelar" : "Cancel"}</button></span> : <button className="text-action" onClick={() => setConfirmRetire(true)}>{copy.retire}</button>}</footer>
     </section>
   );
 }

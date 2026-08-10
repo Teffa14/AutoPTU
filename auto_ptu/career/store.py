@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import threading
+import uuid
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -106,7 +107,7 @@ class CareerStore:
         return sorted(entries, key=lambda entry: (-entry.score, entry.completed_at, entry.player_id))
 
     def create_share(self, run: CareerRun, include_replay: bool) -> dict:
-        share_id = f"share-{run.id[:16]}"
+        share_id = f"share-{uuid.uuid4().hex[:20]}"
         public_summary = {
             "trainer": run.build.name,
             "region": run.build.region,

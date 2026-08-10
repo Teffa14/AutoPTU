@@ -190,9 +190,12 @@ def test_sharing_requires_retirement_and_is_explicit(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match="retired"):
         service.share("trainer-1", run["id"], {"include_replay": False})
     service.retire("trainer-1", run["id"], {"reason": "voluntary"})
+    card_only = service.share("trainer-1", run["id"], {"include_replay": False})
     shared = service.share("trainer-1", run["id"], {"include_replay": True})
     assert shared["published"] is True
     assert shared["include_replay"] is True
+    assert card_only["share_id"] != shared["share_id"]
+    assert service.public_share(card_only["share_id"])["has_replay"] is False
     assert (tmp_path / "meta" / f"{shared['share_id']}.json").exists()
     public = service.public_share(shared["share_id"])
     assert public["summary"]["trainer"] == "Ari"

@@ -49,6 +49,7 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
         let sprite: Sprite | undefined;
         try {
           const sheet = await loadPokemonTexture(combatant.species);
+          if (cancelled || appRef.current !== app) return;
           const frameSize = Math.min(sheet.width, sheet.height);
           const texture = new Texture({ source: sheet.source, frame: new Rectangle(0, 0, frameSize, frameSize) });
           sprite = new Sprite(texture);
@@ -57,8 +58,10 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
           sprite.scale.set(home ? scale : -scale, scale);
           container.addChild(sprite);
         } catch {
+          if (cancelled || appRef.current !== app) return;
           container.addChild(new Graphics().circle(0, 0, 42).fill({ color: home ? 0xffc86a : 0xff715b }));
         }
+        if (cancelled || appRef.current !== app) return;
         const plate = new Graphics().roundRect(-58, 52, 116, 24, 7).fill({ color: 0x07100e, alpha: 0.86 }).stroke({ color: home ? 0xe8b85a : 0xff8066, width: 1, alpha: 0.7 });
         const label = new Text({ text: combatant.species, style: new TextStyle({ fill: 0xfff1c9, fontFamily: "Arial", fontSize: 14, fontWeight: "700" }) });
         label.anchor.set(0.5, 0);
