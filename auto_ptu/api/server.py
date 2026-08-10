@@ -997,6 +997,14 @@ app.mount(
     StaticFiles(directory=CAREER_STATIC_DIR / "assets", check_dir=False),
     name="career-assets",
 )
+# Vercel's static rewrite strips the /career-game prefix before handing the
+# request to FastAPI. Keep the canonical mount above for local/Render hosting
+# and expose the rewritten path from the same immutable build directory.
+app.mount(
+    "/assets",
+    StaticFiles(directory=CAREER_STATIC_DIR / "assets", check_dir=False),
+    name="career-assets-vercel",
+)
 
 
 @app.get("/career-game")
