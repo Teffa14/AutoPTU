@@ -5,8 +5,12 @@ import json
 import re
 import threading
 from typing import Any, Dict, Optional
-import tkinter as tk
-from tkinter import filedialog
+try:  # Desktop-only helpers are unavailable in the Render container.
+    import tkinter as tk
+    from tkinter import filedialog
+except ImportError:  # pragma: no cover - exercised by the Linux production image
+    tk = None
+    filedialog = None
 
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.responses import FileResponse, RedirectResponse, Response
@@ -20,6 +24,7 @@ from .campaign_agent_api import build_campaign_agent_router
 from .battle_commands import BattleCommandService
 from .battle_command_api import build_battle_command_router
 from .campaign_battle_access import CampaignBattleAccess
+from .career_api import router as career_router
 from .terrain_mapper_store import TerrainMapperStore
 from ..config import IMPLEMENTATION_DIR, REPORTS_DIR
 from ..gameplay import list_ai_models, select_ai_model, branch_ai_model, update_ai_model_settings
@@ -44,6 +49,7 @@ app.include_router(roleplay_router)
 app.include_router(campaign_router)
 app.include_router(build_battle_command_router(battle_commands, battle_access))
 app.include_router(build_campaign_agent_router(campaign_agents, battle_access))
+app.include_router(career_router)
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 GEN9_UI_DIR = IMPLEMENTATION_DIR / "Generation 9 Pack v3.3.4" / "Graphics" / "UI"
@@ -70,6 +76,8 @@ SAVED_ROSTERS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def _choose_save_json_path(initial_filename: str, title: str) -> Optional[Path]:
+    if tk is None or filedialog is None:
+        return None
     root = tk.Tk()
     root.withdraw()
     root.attributes("-topmost", True)
@@ -981,6 +989,25 @@ def get_gen9_move_anim_file(filename: str) -> FileResponse:
         raise HTTPException(status_code=404, detail="Move animation asset not found")
     media = "image/png" if target.suffix.lower() == ".png" else "application/octet-stream"
     return FileResponse(target, media_type=media)
+
+
+CAREER_STATIC_DIR = STATIC_DIR / "career"
+app.mount(
+    "/career-game/assets",
+    StaticFiles(directory=CAREER_STATIC_DIR / "assets", check_dir=False),
+    name="career-assets",
+)
+
+
+@app.get("/career-game")
+@app.get("/career-game/")
+@app.get("/career-game/{path:path}")
+def career_game(path: str = "") -> FileResponse:
+    """Serve the Career SPA while keeping every scene on an exclusive URL."""
+    entrypoint = CAREER_STATIC_DIR / "index.html"
+    if not entrypoint.exists():
+        raise HTTPException(status_code=503, detail="Career client has not been built")
+    return FileResponse(entrypoint, headers={"Cache-Control": "no-store"})
 
 
 @app.get("/")

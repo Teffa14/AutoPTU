@@ -1,0 +1,116 @@
+:root {
+  color-scheme: dark;
+  --night: #07100e;
+  --ink: #0d1b17;
+  --field: #173c31;
+  --field-light: #286c50;
+  --paper: #f4e7c5;
+  --paper-ink: #251f18;
+  --gold: #e8b85a;
+  --coral: #ff6b4a;
+  --mint: #74d59c;
+  --fog: #9bb0a6;
+  --line: rgba(244, 231, 197, 0.18);
+  font-family: "Barlow Condensed", system-ui, sans-serif;
+  font-synthesis: none;
+  background: var(--night);
+  color: var(--paper);
+}
+* { box-sizing: border-box; }
+html { background: var(--night); scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; min-height: 100dvh; overflow-x: hidden; }
+button, input, select { font: inherit; }
+button { color: inherit; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.skip-link { position: fixed; z-index: 100; left: 1rem; top: -4rem; background: var(--paper); color: var(--ink); padding: .7rem 1rem; }
+.skip-link:focus { top: 1rem; }
+.game-shell { min-height: 100dvh; padding-bottom: 5.4rem; background: radial-gradient(circle at 70% 0%, rgba(40,108,80,.2), transparent 40%), var(--night); }
+.game-shell.is-battle { padding-bottom: 0; }
+.game-header { height: 3.75rem; display: flex; align-items: center; justify-content: space-between; padding: 0 1rem; border-bottom: 1px solid var(--line); position: relative; z-index: 30; background: rgba(7,16,14,.92); backdrop-filter: blur(14px); }
+.wordmark { border: 0; background: none; font-family: "IBM Plex Mono", monospace; font-weight: 600; letter-spacing: -.06em; cursor: pointer; }
+.wordmark span { background: var(--gold); color: var(--ink); padding: .15rem .35rem; margin-right: .2rem; border-radius: .2rem; font-size: .7em; letter-spacing: 0; }
+.wordmark b { color: var(--mint); font-weight: 600; }
+.header-meta { display: flex; align-items: center; gap: .8rem; color: var(--fog); font: 600 .72rem "IBM Plex Mono", monospace; text-transform: uppercase; }
+.save-light { display: none; }
+.save-light i { display: inline-block; width: .45rem; height: .45rem; border-radius: 50%; background: var(--mint); box-shadow: 0 0 10px var(--mint); margin-right: .35rem; }
+.locale-toggle { border: 1px solid var(--line); background: transparent; padding: .35rem .48rem; border-radius: .25rem; cursor: pointer; }
+.game-nav { position: fixed; z-index: 40; inset: auto 0 0; height: 4.8rem; display: grid; grid-template-columns: repeat(4,1fr); background: rgba(8,18,15,.96); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); backdrop-filter: blur(18px); }
+.game-nav button { border: 0; background: none; color: #83988f; display: grid; place-content: center; gap: .15rem; cursor: pointer; text-transform: uppercase; font-size: .72rem; letter-spacing: .07em; }
+.game-nav button b { font: 1.15rem "IBM Plex Mono", monospace; }
+.game-nav button.active { color: var(--paper); background: linear-gradient(180deg, rgba(232,184,90,.12), transparent); }
+.game-nav button.active::before { content: ""; position: absolute; top: 0; width: 2.5rem; height: 2px; background: var(--gold); }
+.eyebrow { color: var(--gold); font: 600 .7rem "IBM Plex Mono", monospace; letter-spacing: .12em; text-transform: uppercase; }
+.primary-action { border: 0; background: var(--coral); color: #180c08; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: .85rem 1.25rem; box-shadow: .28rem .28rem 0 #5f281b; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+.primary-action:active { transform: translate(.2rem,.2rem); box-shadow: .08rem .08rem 0 #5f281b; }
+.primary-action:disabled { opacity: .55; cursor: wait; }
+.text-action { border: 0; background: none; color: #c6a99d; text-decoration: underline; cursor: pointer; }
+.form-error, .error-banner { color: #ffd5cb; background: #54251e; border-left: 3px solid var(--coral); padding: .7rem 1rem; }
+.error-banner { position: fixed; z-index: 90; top: 4rem; left: 1rem; right: 1rem; display:flex; justify-content:space-between; }
+.error-banner button { background:none; border:0; cursor:pointer; }
+
+/* Creation: a stamped league registration book, not a SaaS form. */
+.creation-scene { position: relative; min-height: calc(100dvh - 3.75rem); padding: 2.5rem 1rem 3rem; overflow: hidden; }
+.creation-atmosphere { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 20% 20%, rgba(255,107,74,.2), transparent 28%), radial-gradient(circle at 80% 40%, rgba(116,213,156,.14), transparent 28%); opacity:.8; }
+.creation-atmosphere span { position:absolute; width:1px; height:65%; background:linear-gradient(transparent,rgba(232,184,90,.5),transparent); transform:rotate(25deg); left:25%; top:-10%; }
+.creation-atmosphere span:nth-child(2){left:65%;top:10%;}.creation-atmosphere span:nth-child(3){left:88%;top:-25%;}
+.creation-copy { position: relative; max-width: 62rem; margin: 0 auto 2rem; }
+.creation-copy h1 { font: 400 clamp(2.45rem, 10vw, 6.5rem)/.9 "Bowlby One SC", sans-serif; letter-spacing: -.055em; max-width: 11ch; margin: .5rem 0 1rem; text-wrap: balance; }
+.creation-copy > p:last-child { color: #b7c7bf; font-size: 1.2rem; max-width: 35rem; }
+.registration-book { position: relative; background: var(--paper); color: var(--paper-ink); border-radius: .35rem 1.3rem 1.3rem .35rem; padding: 1.25rem 1.1rem 1.3rem 1.6rem; max-width: 68rem; margin: auto; box-shadow: 1rem 1.4rem 0 rgba(0,0,0,.24), inset 0 0 0 1px rgba(37,31,24,.14); }
+.registration-book::after { content:"LEAGUE ENTRY / 001"; position:absolute; right:1.2rem; top:1rem; color:rgba(37,31,24,.36); font:600 .58rem "IBM Plex Mono",monospace; letter-spacing:.08em; }
+.book-spine { position:absolute; left:.48rem; top:.5rem; bottom:.5rem; width:.35rem; border-left:1px solid #bda979; border-right:1px solid #bda979; }
+.form-row { display:grid; gap:.8rem; margin-bottom:1rem; }
+.registration-book label > span, .starter-field legend { display:block; font:600 .66rem "IBM Plex Mono",monospace; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.4rem; }
+.registration-book input[type="text"], .registration-book input:not([type]), .registration-book select { width:100%; border:0; border-bottom:2px solid #6f624e; color:var(--paper-ink); background:rgba(255,255,255,.18); padding:.7rem .45rem; border-radius:0; }
+.starter-field { border:0; padding:0; margin:1.4rem 0; }
+.starter-strip { display:flex; overflow-x:auto; gap:.65rem; padding:.4rem .1rem 1rem; scroll-snap-type:x mandatory; }
+.starter-card { flex:0 0 8.1rem; width:8.1rem; min-width:8.1rem; max-width:8.1rem; overflow:hidden; scroll-snap-align:start; border:1px solid #c4b58e; background:#e9dbb8; padding:.5rem; min-height:9.5rem; cursor:pointer; transition:transform .2s,background .2s; }
+.starter-card input { position:absolute; opacity:0; }
+.pokemon-sprite{display:inline-block;overflow:hidden;line-height:0}.pokemon-sprite img{height:100%;width:auto;max-width:none;image-rendering:pixelated}.starter-sprite{display:block;width:5rem;height:5rem;margin-inline:auto}.starter-sprite img{filter:drop-shadow(0 .35rem .25rem rgba(38,30,19,.2))}
+.starter-card b,.starter-card small { display:block; }.starter-card small{color:#746753;font-size:.72rem;}
+.starter-card.selected { background:#f7b56c; border:2px solid #4d3521; transform:translateY(-.25rem) rotate(-1deg); }
+.mode-switch { display:grid; grid-template-columns:1fr 1fr; gap:.45rem; }
+.mode-switch button { border:1px solid #9d8c65; background:transparent; color:var(--paper-ink); text-align:left; padding:.55rem; cursor:pointer; text-transform:capitalize; }
+.mode-switch button small{display:block;color:#746753}.mode-switch button.active{background:var(--field);color:var(--paper)}
+.registration-footer { display:flex; flex-wrap:wrap; align-items:center; gap:.8rem; border-top:1px dashed #a39471; padding-top:1rem; }
+.registration-footer span { font:.7rem "IBM Plex Mono",monospace; }.registration-footer span b{font-size:1rem}.registration-footer .primary-action{margin-left:auto;}
+.ticket-loader,.scene-loading { min-height:45dvh; display:grid; place-items:center; color:var(--gold); font:600 .8rem "IBM Plex Mono",monospace; text-transform:uppercase; letter-spacing:.1em; }
+
+/* Season: a stadium tunnel with one physical decision ticket. */
+.season-scene { min-height:calc(100dvh - 8.55rem); position:relative; background:linear-gradient(180deg,#183a31 0 34%,#0b1714 34%); }
+.season-sky { position:absolute; inset:0 0 auto; height:34%; background:repeating-linear-gradient(105deg,transparent 0 8%,rgba(244,231,197,.035) 8% 8.5%),radial-gradient(circle at 50% 100%,rgba(232,184,90,.2),transparent 48%); }
+.season-scoreboard { position:relative; z-index:1; display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; padding:1.25rem 1rem; }
+.season-scoreboard span,.season-scoreboard small,.season-scoreboard b{display:block}.season-scoreboard>div:first-child>span{color:var(--gold);font:600 .66rem "IBM Plex Mono",monospace;text-transform:uppercase}.season-scoreboard>div:first-child>b{font-size:1.7rem}.season-scoreboard small{color:#a9bbb3}
+.scoreboard-metrics{display:grid;gap:.4rem;text-align:right}.scoreboard-metrics span{font-size:.72rem;color:#a9bbb3}.scoreboard-metrics b{font:600 1.1rem "IBM Plex Mono",monospace;color:var(--paper)}
+.scoreboard-metrics i{display:block;width:7rem;height:.25rem;background:linear-gradient(90deg,var(--mint) var(--meter),rgba(255,255,255,.1) 0);margin:0 0 .2rem auto;}
+.season-stage { position:relative; z-index:2; padding:0 1rem 1rem; display:grid; gap:1rem; }
+.partner-stand { text-align:center; padding:1rem; }.sprite-halo{width:10rem;height:10rem;margin:auto;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,rgba(232,184,90,.34),transparent 65%);}.partner-sprite{width:9rem;height:9rem}.partner-sprite img{filter:drop-shadow(0 1rem .5rem rgba(0,0,0,.4))}.partner-stand p{color:var(--gold);font:.62rem "IBM Plex Mono",monospace;text-transform:uppercase;margin:0}.partner-stand h2{margin:.2rem 0;font:400 1.6rem "Bowlby One SC",sans-serif}.partner-stand>span{font-size:.8rem;color:#96aaa1}
+.decision-ticket { position:relative; background:var(--paper); color:var(--paper-ink); padding:1.3rem 1rem 1.15rem; box-shadow:.6rem .7rem 0 rgba(0,0,0,.28); }
+.ticket-notch{position:absolute;width:1.25rem;height:1.25rem;background:#0b1714;border-radius:50%;right:-.62rem}.ticket-notch.top{top:22%}.ticket-notch.bottom{bottom:22%}
+.decision-ticket h1{font:400 clamp(1.8rem,7vw,3.5rem)/1 "Bowlby One SC",sans-serif;letter-spacing:-.045em;margin:.55rem 0}.decision-body{font-size:1.1rem;line-height:1.45;max-width:48rem}
+.decision-options{display:grid;gap:.55rem;margin-top:1rem}.decision-options button{border:1px solid #b8a77e;background:rgba(255,255,255,.22);color:var(--paper-ink);padding:.75rem;text-align:left;cursor:pointer;transition:transform .2s,background .2s}.decision-options button:hover{background:#f7d79a;transform:translateX(.2rem)}.decision-options b,.decision-options p,.decision-options small{display:block;margin:.25rem 0}.decision-options p{color:#5c5141}.decision-options small{font:.64rem "IBM Plex Mono",monospace;color:#6f5e47}.risk{font:600 .58rem "IBM Plex Mono",monospace;text-transform:uppercase}.risk.safe{color:#17603c}.risk.calculated{color:#875b14}.risk.gamble{color:#a3301f}
+.simulating{display:flex;gap:.7rem;align-items:center;margin-top:1rem;font:.7rem "IBM Plex Mono",monospace}.simulating i{width:.8rem;height:.8rem;border:2px solid #856c3d;border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.season-footer { padding:.8rem 1rem 1.2rem; display:flex; justify-content:space-between; align-items:center; color:#83998f; font:.68rem "IBM Plex Mono",monospace; }.retire-confirm{display:flex;align-items:center;gap:.4rem}.retire-confirm button{border:1px solid var(--line);background:transparent;padding:.3rem .5rem;cursor:pointer}
+
+/* Battle broadcast */
+.battle-scene{min-height:calc(100dvh - 3.75rem);display:grid;grid-template-rows:auto minmax(18rem,1fr) auto auto;background:#050b09;}
+.broadcast-header{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.7rem;padding:.65rem 1rem;border-bottom:1px solid var(--line);background:#0b1512}.broadcast-header button{border:0;background:none;color:#93a79e;cursor:pointer}.broadcast-header div{text-align:center}.broadcast-header span,.broadcast-header b{display:block}.broadcast-header span{font:.58rem "IBM Plex Mono",monospace;color:var(--coral)}.broadcast-header b{font-size:1rem}.broadcast-header b i{color:#6f8179;font-weight:400}.broadcast-header>strong{font:1rem "IBM Plex Mono",monospace;color:var(--gold)}
+.arena-wrap{position:relative;min-height:20rem;background:radial-gradient(circle at 50% 45%,rgba(78,151,106,.18),transparent 45%),repeating-linear-gradient(90deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4rem);}.pixi-arena{position:absolute;inset:.5rem;overflow:hidden;border-radius:.6rem;box-shadow:inset 0 0 0 1px rgba(232,184,90,.22),0 1.5rem 4rem rgba(0,0,0,.35)}.pixi-arena canvas{display:block;width:100%;height:100%}
+.broadcast-lower{background:#e8ddbd;color:#211d16;padding:.7rem 1rem}.combatants-strip{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-bottom:1px solid #aa9b78;padding-bottom:.5rem}.combatants-strip span{display:flex;align-items:center;gap:.3rem}.combatants-strip span:last-child{justify-content:flex-end}.combatant-sprite{width:2.5rem;height:2.5rem}.combatants-strip em{font:.58rem "IBM Plex Mono",monospace;color:#7d6441}.broadcast-lower blockquote{margin:.7rem 0;font-size:1.1rem;min-height:2.6rem}.playback-controls{display:flex;justify-content:flex-end;gap:.45rem;align-items:center}.playback-controls span{margin-right:auto;font:.62rem "IBM Plex Mono",monospace}.playback-controls button{border:1px solid #766a50;background:transparent;color:#211d16;padding:.4rem .6rem;cursor:pointer}.verification-stamp{display:flex;justify-content:space-between;padding:.45rem 1rem;background:#111b17;color:#6f847a;font:.57rem "IBM Plex Mono",monospace}.verification-stamp span{color:var(--mint)}
+
+/* Profile, timeline, daily */
+.profile-scene{display:grid;gap:1rem;padding:1rem;max-width:70rem;margin:auto}.profile-portrait{min-height:18rem;position:relative;background:linear-gradient(150deg,#244f40,#10231d);display:grid;place-items:center;overflow:hidden}.trainer-silhouette{position:absolute;font-size:18rem;line-height:1;color:rgba(244,231,197,.09);transform:translateX(-22%)}.profile-sprite{width:12rem;height:12rem;filter:drop-shadow(0 1rem .8rem rgba(0,0,0,.4));z-index:2}.profile-portrait small{position:absolute;bottom:1rem;right:1rem;color:var(--gold);font:.7rem "IBM Plex Mono",monospace;text-transform:uppercase}.trainer-dossier{padding:.5rem}.trainer-dossier h1,.timeline-scene h1,.daily-scene h1,.retirement-scene h1{font:400 clamp(2.2rem,9vw,5rem)/.95 "Bowlby One SC",sans-serif;letter-spacing:-.05em;margin:.5rem 0}.dossier-stats{display:grid;grid-template-columns:1fr 1fr;border-block:1px solid var(--line);margin:1rem 0}.dossier-stats span{padding:.8rem;border-right:1px solid var(--line);color:#95aaa1}.dossier-stats b{display:block;font:1.4rem "IBM Plex Mono",monospace;color:var(--paper)}.trainer-dossier section{padding:1rem 0;border-bottom:1px solid var(--line)}.trainer-dossier h2,.replay-shelf h2{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold)}.class-stamps{display:flex;gap:.5rem;flex-wrap:wrap}.class-stamps span{border:1px solid var(--gold);padding:.35rem .55rem;transform:rotate(-1deg)}.roster-line{display:flex;gap:.7rem}.roster-line figure{margin:0;text-align:center}.roster-sprite{width:5rem;height:5rem}.empty-copy{color:#82968d;font-style:italic}
+.timeline-scene,.daily-scene{padding:2rem 1rem;max-width:68rem;margin:auto}.timeline-track{position:relative;margin-top:2rem}.timeline-track::before{content:"";position:absolute;left:2rem;top:0;bottom:0;width:1px;background:linear-gradient(var(--gold),rgba(232,184,90,.1))}.timeline-track article{position:relative;display:grid;grid-template-columns:4rem 1fr;gap:1rem;padding:0 0 2rem}.timeline-age{width:4rem;height:4rem;border:1px solid var(--gold);background:var(--night);display:grid;place-content:center;text-align:center;z-index:2}.timeline-age b{font:1.1rem "IBM Plex Mono",monospace}.timeline-age small{font-size:.62rem;color:#8da198}.timeline-track article span{font:.6rem "IBM Plex Mono",monospace;color:var(--coral);text-transform:uppercase}.timeline-track article h2{margin:.25rem 0}.timeline-track article p{margin:.2rem 0;color:#8fa39a}.replay-shelf{display:flex;flex-wrap:wrap;gap:.45rem;border-top:1px solid var(--line);padding-top:1rem}.replay-shelf h2{width:100%}.replay-shelf button{border:1px solid var(--line);background:#14251f;padding:.6rem;text-align:left;cursor:pointer}.replay-shelf small{display:block;color:#70867c}
+.daily-scene>header{padding:1rem 0 2rem}.daily-scene>header p:last-child{font:.72rem "IBM Plex Mono",monospace;color:var(--mint)}.daily-mode{display:flex;gap:.4rem;margin-bottom:.7rem}.daily-mode button{border:1px solid var(--line);background:transparent;padding:.5rem 1rem;text-transform:uppercase;cursor:pointer}.daily-mode button.active{background:var(--gold);color:var(--ink)}.leaderboard-board{background:#e8ddbd;color:#211d16;padding:.5rem}.leaderboard-board>div{display:grid;grid-template-columns:3.5rem 1fr 5rem;gap:.5rem;align-items:center;padding:.7rem;border-bottom:1px solid #b7a987}.leaderboard-head{font:.6rem "IBM Plex Mono",monospace;text-transform:uppercase;color:#75684f}.leaderboard-board strong{text-align:right;font:1rem "IBM Plex Mono",monospace}.empty-board{grid-column:1/-1!important;display:block!important;color:#75684f;font-style:italic}.retirement-scene{min-height:calc(100dvh - 8.5rem);display:grid;place-content:center;text-align:center;padding:2rem;background:radial-gradient(circle,rgba(232,184,90,.15),transparent 50%)}.retirement-score b{display:block;font:3rem "IBM Plex Mono",monospace;color:var(--gold)}.retirement-score span{color:#8fa39a}.record-ribbon{display:flex;justify-content:center;gap:1rem;margin:1rem 0;color:var(--mint)}.share-actions{display:flex;justify-content:center;gap:.6rem;margin-top:1rem}.share-actions button{border:1px solid var(--line);background:transparent;color:var(--paper);padding:.55rem .8rem}.share-url{display:block;margin:1rem auto 0;max-width:38rem;padding:.7rem;border:1px dashed var(--gold);color:var(--mint);overflow-wrap:anywhere}.battle-error{padding:3rem 1rem}.battle-error button{border:1px solid var(--line);background:transparent;padding:.6rem;cursor:pointer}
+
+.ranked-entry{display:grid;gap:.8rem;align-items:center;border:1px solid var(--line);padding:1rem;margin-bottom:1rem;background:#0c1915}.ranked-entry span,.ranked-entry small{display:block;color:#8fa39a}.ranked-entry b{font:1.5rem "Bowlby One SC",sans-serif;color:var(--gold)}.ranked-entry>.primary-action{justify-self:start}.auth-actions{display:flex;gap:.4rem;flex-wrap:wrap}.auth-actions button,.auth-actions input{border:1px solid var(--line);background:transparent;color:var(--paper);padding:.5rem}.auth-actions input{min-width:13rem}
+.shared-career{min-height:calc(100dvh - 3.75rem);display:grid;place-content:center;justify-items:center;text-align:center;padding:2rem;background:radial-gradient(circle,rgba(232,184,90,.16),transparent 55%)}.shared-career h1{font:400 clamp(3rem,10vw,7rem)/.9 "Bowlby One SC",sans-serif;margin:.4rem}.shared-partner{width:10rem;height:10rem}.shared-score b{display:block;font:3rem "IBM Plex Mono",monospace;color:var(--gold)}.shared-career>small{color:var(--mint);font-family:"IBM Plex Mono",monospace}
+
+@media (min-width: 700px) {
+  .game-header{padding-inline:2rem}.save-light{display:inline}.game-nav{left:50%;right:auto;bottom:1rem;transform:translateX(-50%);width:min(34rem,calc(100% - 2rem));border:1px solid var(--line);border-radius:.5rem;height:4rem;box-shadow:0 1rem 3rem rgba(0,0,0,.45)}
+  .creation-scene{padding:4rem 2rem 7rem}.form-row{grid-template-columns:1fr 1fr}.registration-book{padding:1.8rem 2rem 1.8rem 2.8rem}.starter-card{flex-basis:9rem}.final-row{align-items:end}
+  .season-scene{min-height:calc(100dvh - 3.75rem);padding:1.5rem 3vw 7rem}.season-scoreboard{padding-inline:2rem}.season-stage{grid-template-columns:minmax(14rem,.55fr) minmax(32rem,1.45fr);align-items:center;max-width:78rem;margin:auto}.decision-options{grid-template-columns:repeat(3,1fr)}.decision-options button:hover{transform:translateY(-.25rem)}
+  .profile-scene{grid-template-columns:minmax(18rem,.75fr) minmax(28rem,1.25fr);padding:3rem 2rem 7rem}.profile-portrait{position:sticky;top:5rem;height:34rem}.dossier-stats{grid-template-columns:repeat(4,1fr)}.timeline-scene,.daily-scene{padding:4rem 2rem 7rem}
+  .battle-scene{height:calc(100dvh - 3.75rem);grid-template-rows:auto minmax(20rem,1fr) auto auto}.arena-wrap{min-height:0}.pixi-arena{inset:1rem 3vw}.broadcast-lower{display:grid;grid-template-columns:minmax(24rem,1fr) minmax(18rem,.8fr);gap:1rem;align-items:center}.combatants-strip{grid-row:1/3}.broadcast-lower blockquote{margin:0}.playback-controls{grid-column:2}.broadcast-header{padding-inline:2rem}
+}
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important} }

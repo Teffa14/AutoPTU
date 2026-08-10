@@ -1,4 +1,7 @@
 __pycache__/
+node_modules/
+test-results/
+*.tsbuildinfo
 *.py[cod]
 *.egg-info/
 .eggs/
@@ -16,6 +19,7 @@ __pycache__/
 .DS_Store
 /build/
 /dist/
+/auto_ptu/api/static/career/
 /archive/
 /build_new/
 /dist_new/

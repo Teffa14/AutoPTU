@@ -1,0 +1,24 @@
+.git
+.github
+.pytest_tmp*
+**/__pycache__
+**/node_modules
+**/test-results
+auto_ptu/api/static/career
+portable_data
+reports
+build
+build_*
+dist
+dist_*
+archive
+audit_sources
+concept art
+Foundry
+repos
+_refs
+*.rar
+*.zip
+*.7z
+*.log
+*.tmp

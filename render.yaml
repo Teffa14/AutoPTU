@@ -1,0 +1,47 @@
+services:
+  - type: web
+    name: autoptu-career-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/v1/catalog
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: OLLAMA_URL
+        fromService:
+          type: pserv
+          name: autoptu-career-ollama
+          property: hostport
+      - key: OLLAMA_MODEL
+        value: qwen2.5:3b
+      - key: OLLAMA_MODEL_DIGEST
+        sync: false
+
+  - type: worker
+    name: autoptu-career-battle-worker
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerCommand: python scripts/career_worker.py
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+
+  - type: pserv
+    name: autoptu-career-ollama
+    runtime: docker
+    dockerfilePath: ./deploy/ollama/Dockerfile
+    disk:
+      name: ollama-models
+      mountPath: /root/.ollama
+      sizeGB: 20
+    envVars:
+      - key: OLLAMA_HOST
+        value: 0.0.0.0:11434
+      - key: OLLAMA_MODEL
+        value: qwen2.5:3b

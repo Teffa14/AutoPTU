@@ -2,6 +2,9 @@
 
 Auto PTU is a local-first encounter generator and battle simulator for Pokemon Tabletop United (PTU). It focuses on deterministic, testable combat resolution and a CLI-first workflow.
 
+> Este repositorio contiene también **AutoPTU Career**, el modo carrera web. Consulta
+> [README_CAREER.md](README_CAREER.md) para arquitectura, ejecución y despliegue.
+
 PTUDatabase and the CSV sheets in `files/` are the source of truth for item descriptions and mechanics. Foundry is a last-resort reference to copy math or logic only when the primary datasets are missing.
 
 Docs index: `DOCS_INDEX.md` lists the authoritative project documents and archives.
