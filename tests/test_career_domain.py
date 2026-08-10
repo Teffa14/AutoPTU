@@ -102,6 +102,46 @@ def test_advanced_mode_requires_three_season_decisions() -> None:
     assert run.season_number == 2
 
 
+def test_career_attributes_change_schedule_preparation_transparently() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="trainer-prepared",
+        name="Ari",
+        region="kanto",
+        starter="Rattata",
+        classes=["Ace Trainer"],
+        seed=91,
+    )
+    run.development = 6
+    run.scouting = 3
+    run.finances = 4
+    schedule = engine._schedule(run)
+    assert all(spec.home_level_bonus == 3 for spec in schedule)
+    assert all(spec.away_level_bonus == -1 for spec in schedule)
+
+
+def test_active_legacy_run_records_version_migration_before_new_mechanics() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="trainer-migration",
+        name="Ari",
+        region="kanto",
+        starter="Rattata",
+        classes=["Ace Trainer"],
+        seed=102,
+    )
+    run.versions.career = "career-0.1.0"
+    run, _ = engine.advance_season(run, option_id=run.season.decision.options[0].id)
+    migration = next(entry for entry in run.timeline if entry["type"] == "career.version_migrated")
+    assert migration == {
+        "type": "career.version_migrated",
+        "season": 1,
+        "age": 12,
+        "from": "career-0.1.0",
+        "to": "career-0.2.0",
+    }
+
+
 def test_invalid_underdog_or_class_is_rejected() -> None:
     engine = CareerEngine(fake_battle)
     with pytest.raises(ValueError, match="eligible"):

@@ -28,6 +28,8 @@ def test_same_battle_twice_has_identical_transcript_hash() -> None:
     assert first.sha256 == second.sha256
     assert first.events == second.events
     assert first.final_state == second.final_state
+    assert all(entry["stats"] for entry in first.initial_state["combatants"])
+    assert all(entry["moves"] for entry in first.initial_state["combatants"])
 
 
 def test_run_identity_does_not_change_mechanical_transcript_hash() -> None:
@@ -50,3 +52,16 @@ def test_paldea_pbs_species_can_enter_real_ptu_battle() -> None:
     assert transcript.rounds > 0
     assert transcript.winner_team in {"career-home", "career-away"}
     assert transcript.sha256
+
+
+def test_career_preparation_bonus_uses_real_ptu_levels() -> None:
+    baseline = simulate_battle(_spec("baseline", 777))
+    prepared_spec = _spec("prepared", 777)
+    prepared_spec.home_level_bonus = 2
+    prepared_spec.away_level_bonus = -1
+    prepared = simulate_battle(prepared_spec)
+    baseline_levels = {entry["team"]: entry["level"] for entry in baseline.initial_state["combatants"]}
+    prepared_levels = {entry["team"]: entry["level"] for entry in prepared.initial_state["combatants"]}
+    assert prepared_levels["career-home"] == baseline_levels["career-home"] + 2
+    assert prepared_levels["career-away"] == baseline_levels["career-away"] - 1
+    assert prepared.sha256 != baseline.sha256

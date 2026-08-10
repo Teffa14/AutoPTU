@@ -24,8 +24,10 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 600) -> BattleTranscri
     """Resolve one match with a fresh, isolated AutoPTU engine instance."""
     repo = PTUCsvRepository(rng=random.Random(spec.seed))
     builder = CsvRandomCampaignBuilder(repo=repo, seed=spec.seed)
-    home = _build_species(repo, builder, spec.home_species, spec.level)
-    away = _build_species(repo, builder, spec.away_species, spec.level)
+    home_level = max(1, spec.level + spec.home_level_bonus)
+    away_level = max(1, spec.level + spec.away_level_bonus)
+    home = _build_species(repo, builder, spec.home_species, home_level)
+    away = _build_species(repo, builder, spec.away_species, away_level)
     home.name = spec.home_species
     away.name = spec.away_species
     payload = {
@@ -133,11 +135,30 @@ def _compact_state(snapshot: Dict[str, Any]) -> Dict[str, Any]:
                 "name": entry.get("name"),
                 "species": entry.get("species"),
                 "team": entry.get("team"),
+                "level": int(entry.get("level") or 1),
                 "hp": entry.get("hp"),
                 "max_hp": entry.get("max_hp"),
                 "position": deepcopy(entry.get("position")),
                 "statuses": deepcopy(entry.get("statuses") or []),
                 "sprite_url": entry.get("sprite_url"),
+                "stats": _canonical_value(entry.get("stats") or {}),
+                "effective_stats": _canonical_value(entry.get("effective_stats") or {}),
+                "abilities": sorted(str(value) for value in (entry.get("abilities") or [])),
+                "moves": sorted(
+                    (
+                        {
+                            "name": str(move.get("name") or ""),
+                            "type": str(move.get("type") or ""),
+                            "category": str(move.get("category") or ""),
+                            "db": move.get("db"),
+                            "ac": move.get("ac"),
+                            "range": str(move.get("range") or ""),
+                        }
+                        for move in (entry.get("moves") or [])
+                        if isinstance(move, dict) and str(move.get("name") or "").strip()
+                    ),
+                    key=lambda move: (move["name"].lower(), move["type"].lower()),
+                ),
             }
         )
     combatants.sort(key=lambda entry: str(entry.get("id") or ""))

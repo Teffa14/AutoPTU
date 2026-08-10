@@ -18,6 +18,8 @@ from .models import (
     CareerSummary,
     ClubContract,
     ContentVersion,
+    CURRENT_CAREER_VERSION,
+    CURRENT_NARRATIVE_VERSION,
     DailyChallenge,
     SeasonState,
     TrainerCareerBuild,
@@ -114,6 +116,18 @@ class CareerEngine:
         option = next((entry for entry in decision.options if entry.id == option_id), None)
         if option is None:
             raise ValueError(f"Decision option is not legal for this season: {option_id}")
+        if run.versions.career != CURRENT_CAREER_VERSION:
+            run.timeline.append(
+                {
+                    "type": "career.version_migrated",
+                    "season": run.season_number,
+                    "age": run.age,
+                    "from": run.versions.career,
+                    "to": CURRENT_CAREER_VERSION,
+                }
+            )
+            run.versions.career = CURRENT_CAREER_VERSION
+            run.versions.narrative = CURRENT_NARRATIVE_VERSION
         decision_result = apply_option(run, option)
         run.season.decision_history.append(
             {"decision_id": decision.id, "option_id": option.id, "label": option.label, "effects": decision_result}
@@ -207,8 +221,8 @@ class CareerEngine:
             id=f"daily-{day.isoformat()}",
             date=day.isoformat(),
             region=region,
-            seed=stable_seed("daily", day.isoformat(), "career-0.1.0"),
-            content_version="career-0.1.0",
+            seed=stable_seed("daily", day.isoformat(), CURRENT_CAREER_VERSION),
+            content_version=CURRENT_CAREER_VERSION,
             rules_version="ptu-1.05-autoptu",
         )
 
@@ -232,6 +246,15 @@ class CareerEngine:
         home = run.contract.club_name if run.contract else clubs[0]
         rng = random.Random(stable_seed(run.seed, run.season_number, "schedule"))
         candidates = [entry for entry in region.underdogs if entry != run.build.starter]
+        # Career choices alter preparation without bypassing PTU stats or rolls.
+        # Development and facilities raise the partner's generated PTU level;
+        # scouting reduces the opponent's preparation. Low health/finances have a
+        # visible competitive cost. All thresholds are deterministic.
+        home_bonus = min(3, max(0, run.development) // 3)
+        home_bonus += min(1, max(0, run.finances) // 4)
+        home_bonus -= int(run.health < 45)
+        home_bonus -= int(run.finances <= -4)
+        away_bonus = -min(2, max(0, run.scouting) // 3)
         specs = []
         for index in range(league.matches):
             away_club = clubs[(index + 1) % len(clubs)]
@@ -251,6 +274,8 @@ class CareerEngine:
                     away_species=opponent,
                     level=league.min_level + min(15, max(0, run.season_number - 1)),
                     featured=index == league.matches - 1,
+                    home_level_bonus=home_bonus,
+                    away_level_bonus=away_bonus,
                 )
             )
         return specs

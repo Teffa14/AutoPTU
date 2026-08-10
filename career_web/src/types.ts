@@ -25,7 +25,11 @@ export interface DecisionOption {
   risk: "safe" | "calculated" | "gamble";
   transparency: "full" | "estimated" | "hidden";
   guaranteed: Record<string, number>;
-  gamble?: { chance?: number };
+  gamble?: {
+    chance?: number;
+    success?: Record<string, number>;
+    failure?: Record<string, number>;
+  };
 }
 
 export interface CareerDecision {
@@ -46,6 +50,10 @@ export interface CareerRun {
   season_number: number;
   health: number;
   score: number;
+  reputation: number;
+  development: number;
+  scouting: number;
+  finances: number;
   status: "active" | "retired";
   revision: number;
   build: { name: string; region: string; starter: string; classes: string[]; pokeballs: number };
@@ -82,6 +90,10 @@ export interface BattleTranscript {
     away_species: string;
     region: string;
     league: string;
+    season?: number;
+    level?: number;
+    home_level_bonus?: number;
+    away_level_bonus?: number;
   };
   events: Record<string, unknown>[];
   initial_state: BattleFrame;
@@ -93,14 +105,31 @@ export interface BattleFrame {
   battle_over: boolean;
   winner_team?: string;
   grid?: { width: number; height: number };
-  combatants: {
+  combatants: BattleCombatant[];
+}
+
+export interface BattleMove {
+  name: string;
+  type: string;
+  category: string;
+  db?: number;
+  ac?: number;
+  range?: string;
+}
+
+export interface BattleCombatant {
     id: string;
     name: string;
     species: string;
     team: string;
+    level?: number;
     hp: number;
     max_hp: number;
     position?: [number, number];
     sprite_url?: string;
-  }[];
+    statuses?: string[];
+    stats?: Partial<Record<"hp" | "atk" | "def" | "spatk" | "spdef" | "spd", number>>;
+    effective_stats?: Partial<Record<"hp" | "atk" | "def" | "spatk" | "spdef" | "spd", number>>;
+    abilities?: string[];
+    moves?: BattleMove[];
 }

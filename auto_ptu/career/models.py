@@ -6,6 +6,10 @@ import os
 from typing import Any, Dict, List, Optional
 
 
+CURRENT_CAREER_VERSION = "career-0.2.0"
+CURRENT_NARRATIVE_VERSION = "career-hooks-0.2.0"
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
@@ -13,9 +17,9 @@ def utc_now() -> str:
 @dataclass
 class ContentVersion:
     rules: str = "ptu-1.05-autoptu"
-    career: str = "career-0.1.0"
+    career: str = CURRENT_CAREER_VERSION
     scoring: str = "competitive-0.1.0"
-    narrative: str = "career-hooks-0.1.0"
+    narrative: str = CURRENT_NARRATIVE_VERSION
     model_digest: str = "authorial-fallback:sha256:5d81ab17f14dd65ec7a398ffb88d97b48670c74f9319ee4c392bf7077dca5da2"
 
     @classmethod
@@ -80,6 +84,8 @@ class BattleSpec:
     away_species: str
     level: int
     featured: bool = False
+    home_level_bonus: int = 0
+    away_level_bonus: int = 0
 
 
 @dataclass

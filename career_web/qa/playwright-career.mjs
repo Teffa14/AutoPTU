@@ -53,15 +53,22 @@ try {
   await page.getByRole("button", { name: /Temporada|Season/ }).click();
   await page.waitForURL(/\/run\//);
   await page.locator(".decision-options button").first().click();
+  await page.getByRole("button", { name: /Confirmar y jugar|Confirm and play/ }).click();
   await page.waitForURL(/\/battle\//, { timeout: 45_000 });
+  const battleUrl = page.url();
   await page.locator("canvas").waitFor({ state: "visible", timeout: 15_000 });
-  await page.getByRole("button", { name: /Velocidad|Speed/ }).click();
+  if (await page.locator(".hp-track").count() !== 2) throw new Error("Battle HUD does not expose both HP bars.");
+  if (await page.locator(".battle-stats").count() !== 2) throw new Error("Battle HUD does not expose both PTU stat blocks.");
+  await page.getByRole("button", { name: "2×" }).click();
+  await page.waitForTimeout(900);
+  await page.screenshot({ path: `${output}/desktop-battle.png` });
   await page.getByRole("button", { name: /Saltar|Skip/ }).click();
   await page.waitForTimeout(250);
-  await page.screenshot({ path: `${output}/desktop-battle.png` });
+  await page.getByRole("button", { name: /Continuar la carrera|Continue career/ }).waitFor();
+  await page.screenshot({ path: `${output}/desktop-battle-result.png` });
   const battle = await metrics(page);
   if (battle.canvasCount !== 1 || battle.navCount !== 0 || battle.horizontalOverflow) throw new Error(`Bad battle isolation: ${JSON.stringify(battle)}`);
-  await page.locator(".broadcast-header button").click();
+  await page.getByRole("button", { name: /Continuar la carrera|Continue career/ }).click();
   await page.waitForURL(/\/run\//);
   if ((await metrics(page)).canvasCount !== 0) throw new Error("Pixi canvas remained mounted after leaving battle.");
   await page.locator(".season-footer .text-action").click();
@@ -78,6 +85,11 @@ try {
   const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   await mobile.addInitScript(() => localStorage.setItem("autoptu-career-development-user", "career-qa-user"));
   const mobilePage = await mobile.newPage();
+  await mobilePage.goto(battleUrl, { waitUntil: "networkidle" });
+  await mobilePage.locator("canvas").waitFor({ state: "visible", timeout: 15_000 });
+  await mobilePage.screenshot({ path: `${output}/mobile-battle.png` });
+  const mobileBattle = await metrics(mobilePage);
+  if (mobileBattle.horizontalOverflow || mobileBattle.canvasCount !== 1 || await mobilePage.locator(".hp-track").count() !== 2) throw new Error(`Bad mobile battle: ${JSON.stringify(mobileBattle)}`);
   await mobilePage.goto(page.url(), { waitUntil: "networkidle" });
   await mobilePage.screenshot({ path: `${output}/mobile-season.png` });
   const mobileState = await metrics(mobilePage);
@@ -88,7 +100,7 @@ try {
   if ((await metrics(mobilePage)).horizontalOverflow) throw new Error("Mobile profile overflows horizontally.");
 
   if (errors.length) throw new Error(`Browser errors: ${errors.join(" | ")}`);
-  console.log(JSON.stringify({ initial, season, battle, mobileState, status: "passed" }, null, 2));
+  console.log(JSON.stringify({ initial, season, battle, mobileBattle, mobileState, status: "passed" }, null, 2));
   await mobile.close();
   await desktop.close();
 } finally {
