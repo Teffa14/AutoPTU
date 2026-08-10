@@ -60,7 +60,7 @@ class CareerService:
     def create_daily_attempt(self, player_id: str, payload: Dict[str, object], day: date) -> dict:
         challenge = self.engine.daily_challenge(day)
         mode = str(payload.get("mode") or "simple").lower()
-        starter = str(payload.get("starter") or REGIONS[challenge.region].underdogs[0])
+        starter = str(payload.get("starter") or REGIONS[challenge.region].partner_choices[0])
         run = self.engine.new_run(
             player_id=player_id,
             name=str(payload.get("name") or "Ranked Trainer"),
@@ -75,8 +75,10 @@ class CareerService:
             attempt_no=0,
         )
         attempt_no = self.store.create_daily_run(run, challenge)
-        run.seed = challenge.seed + attempt_no * 1009
-        run.season = self.engine._open_season(run)
+        # Every ranked attempt receives the exact committed world. The player may
+        # change build choices, but schedule, decisions, rolls and rival AI remain
+        # tied to the published daily seed.
+        run.seed = challenge.seed
         self.store.save_run(run)
         return {"challenge": asdict(challenge), "run": run.to_dict(), "attempt_no": attempt_no}
 

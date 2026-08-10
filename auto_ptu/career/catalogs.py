@@ -17,9 +17,14 @@ class LeagueDefinition:
 class RegionDefinition:
     id: str
     label: str
+    starters: tuple[str, ...]
     underdogs: tuple[str, ...]
     clubs: tuple[str, ...]
     arena_theme: str
+
+    @property
+    def partner_choices(self) -> tuple[str, ...]:
+        return tuple(dict.fromkeys((*self.starters, *self.underdogs)))
 
 
 LEAGUES: Dict[str, LeagueDefinition] = {
@@ -34,47 +39,108 @@ LEAGUE_ORDER = tuple(LEAGUES)
 REGIONS: Dict[str, RegionDefinition] = {
     "kanto": RegionDefinition(
         "kanto", "Kanto",
-        ("Rattata", "Caterpie", "Weedle", "Spearow", "Paras", "Venonat", "Krabby", "Cubone", "Horsea", "Goldeen", "Magikarp"),
+        ("Bulbasaur", "Charmander", "Squirtle", "Pikachu", "Eevee"),
+        (
+            "Caterpie", "Weedle", "Pidgey", "Rattata", "Spearow", "Ekans", "Sandshrew", "Nidoran F",
+            "Nidoran M", "Clefairy", "Vulpix", "Jigglypuff", "Zubat", "Oddish", "Paras", "Venonat",
+            "Diglett", "Meowth", "Psyduck", "Mankey", "Growlithe", "Poliwag", "Abra", "Machop",
+            "Bellsprout", "Tentacool", "Geodude", "Ponyta", "Slowpoke", "Magnemite", "Farfetch'd", "Doduo",
+            "Seel", "Grimer", "Shellder", "Gastly", "Onix", "Drowzee", "Krabby", "Voltorb", "Exeggcute",
+            "Cubone", "Lickitung", "Koffing", "Rhyhorn", "Tangela", "Horsea", "Goldeen", "Staryu",
+            "Magikarp", "Ditto", "Porygon", "Omanyte", "Kabuto", "Dratini",
+        ),
         ("Saffron Comets", "Cerulean Current", "Fuchsia Wardens"), "indigo-stone",
     ),
     "johto": RegionDefinition(
         "johto", "Johto",
-        ("Sentret", "Hoothoot", "Ledyba", "Spinarak", "Chinchou", "Natu", "Wooper", "Snubbull", "Slugma", "Remoraid", "Delibird"),
+        ("Chikorita", "Cyndaquil", "Totodile"),
+        (
+            "Sentret", "Hoothoot", "Ledyba", "Spinarak", "Chinchou", "Pichu", "Cleffa", "Igglybuff",
+            "Togepi", "Natu", "Mareep", "Marill", "Sudowoodo", "Hoppip", "Aipom", "Sunkern", "Yanma",
+            "Wooper", "Murkrow", "Misdreavus", "Unown", "Pineco", "Dunsparce", "Snubbull", "Teddiursa",
+            "Slugma", "Swinub", "Corsola", "Remoraid", "Delibird", "Houndour", "Phanpy", "Smeargle",
+            "Tyrogue", "Smoochum", "Elekid", "Magby", "Larvitar",
+        ),
         ("Goldenrod Signals", "Ecruteak Bells", "Olivine Breakers"), "cedar-brass",
     ),
     "hoenn": RegionDefinition(
         "hoenn", "Hoenn",
-        ("Poochyena", "Zigzagoon", "Wurmple", "Lotad", "Seedot", "Taillow", "Surskit", "Whismur", "Skitty", "Gulpin", "Spoink"),
+        ("Treecko", "Torchic", "Mudkip"),
+        (
+            "Poochyena", "Zigzagoon", "Wurmple", "Lotad", "Seedot", "Taillow", "Wingull", "Ralts",
+            "Surskit", "Shroomish", "Slakoth", "Nincada", "Whismur", "Makuhita", "Azurill", "Nosepass",
+            "Skitty", "Sableye", "Mawile", "Aron", "Meditite", "Electrike", "Plusle", "Minun", "Volbeat",
+            "Illumise", "Gulpin", "Carvanha", "Wailmer", "Numel", "Spoink", "Spinda", "Trapinch", "Cacnea",
+            "Swablu", "Barboach", "Corphish", "Baltoy", "Lileep", "Anorith", "Feebas", "Castform", "Kecleon",
+            "Shuppet", "Duskull", "Wynaut", "Snorunt", "Spheal", "Clamperl", "Luvdisc", "Bagon", "Beldum",
+        ),
         ("Slateport Tides", "Mauville Dynamo", "Fortree Canopy"), "ocean-volcanic",
     ),
     "sinnoh": RegionDefinition(
         "sinnoh", "Sinnoh",
-        ("Bidoof", "Kricketot", "Shinx", "Burmy", "Combee", "Buizel", "Cherubi", "Shellos", "Stunky", "Chatot", "Finneon"),
+        ("Turtwig", "Chimchar", "Piplup"),
+        (
+            "Starly", "Bidoof", "Kricketot", "Shinx", "Budew", "Cranidos", "Shieldon", "Burmy", "Combee",
+            "Pachirisu", "Buizel", "Cherubi", "Shellos", "Drifloon", "Buneary", "Glameow", "Chingling",
+            "Stunky", "Bronzor", "Bonsly", "Mime Jr.", "Happiny", "Chatot", "Gible", "Munchlax", "Riolu",
+            "Hippopotas", "Skorupi", "Croagunk", "Carnivine", "Finneon", "Mantyke", "Snover", "Rotom",
+        ),
         ("Jubilife Press", "Canalave Anchors", "Snowpoint Crown"), "mountain-snow",
     ),
     "unova": RegionDefinition(
         "unova", "Unova",
-        ("Patrat", "Lillipup", "Purrloin", "Pidove", "Blitzle", "Roggenrola", "Woobat", "Tympole", "Sewaddle", "Venipede", "Dwebble"),
+        ("Snivy", "Tepig", "Oshawott"),
+        (
+            "Patrat", "Lillipup", "Purrloin", "Pansage", "Pansear", "Panpour", "Munna", "Pidove", "Blitzle",
+            "Roggenrola", "Woobat", "Drilbur", "Audino", "Timburr", "Tympole", "Sewaddle", "Venipede",
+            "Cottonee", "Petilil", "Sandile", "Darumaka", "Dwebble", "Scraggy", "Yamask", "Tirtouga", "Archen",
+            "Trubbish", "Zorua", "Minccino", "Gothita", "Solosis", "Ducklett", "Vanillite", "Deerling", "Emolga",
+            "Karrablast", "Foongus", "Frillish", "Joltik", "Ferroseed", "Klink", "Tynamo", "Elgyem", "Litwick",
+            "Axew", "Cubchoo", "Shelmet", "Mienfoo", "Golett", "Pawniard", "Rufflet", "Vullaby", "Deino", "Larvesta",
+        ),
         ("Castelia Borough", "Nimbasa Voltage", "Driftveil Union"), "metro-steel",
     ),
     "kalos": RegionDefinition(
         "kalos", "Kalos",
-        ("Bunnelby", "Fletchling", "Scatterbug", "Litleo", "Flabebe", "Skiddo", "Pancham", "Furfrou", "Espurr", "Spritzee", "Swirlix", "Inkay"),
+        ("Chespin", "Fennekin", "Froakie"),
+        (
+            "Bunnelby", "Fletchling", "Scatterbug", "Litleo", "Flabebe", "Skiddo", "Pancham", "Espurr",
+            "Honedge", "Spritzee", "Swirlix", "Inkay", "Binacle", "Skrelp", "Clauncher", "Helioptile", "Tyrunt",
+            "Amaura", "Dedenne", "Goomy", "Phantump", "Bergmite", "Noibat",
+        ),
         ("Lumiose Atelier", "Cyllage Peloton", "Laverre Masque"), "prism-garden",
     ),
     "alola": RegionDefinition(
         "alola", "Alola",
-        ("Pikipek", "Yungoos", "Grubbin", "Crabrawler", "Cutiefly", "Rockruff", "Wishiwashi", "Mudbray", "Dewpider", "Fomantis", "Morelull", "Salandit"),
+        ("Rowlet", "Litten", "Popplio"),
+        (
+            "Rattata Alolan", "Sandshrew Alolan", "Vulpix Alolan", "Diglett Alolan", "Meowth Alolan", "Geodude Alolan",
+            "Grimer Alolan", "Pikipek", "Yungoos", "Grubbin", "Crabrawler", "Cutiefly", "Rockruff", "Mareanie",
+            "Mudbray", "Dewpider", "Fomantis", "Morelull", "Salandit", "Stufful", "Bounsweet", "Wimpod",
+            "Sandygast", "Pyukumuku", "Togedemaru", "Jangmo-o", "Cosmog", "Poipole", "Meltan",
+        ),
         ("Hau'oli Breakers", "Konikoni Forge", "Malie Stars"), "island-sunset",
     ),
     "galar": RegionDefinition(
         "galar", "Galar",
-        ("Skwovet", "Rookidee", "Blipbug", "Nickit", "Gossifleur", "Wooloo", "Chewtle", "Yamper", "Rolycoly", "Silicobra", "Arrokuda", "Clobbopus"),
+        ("Grookey", "Scorbunny", "Sobble"),
+        (
+            "Meowth Galar", "Ponyta Galar", "Farfetch'd Galar", "Corsola Galar", "Zigzagoon Galar", "Darumaka Galar",
+            "Yamask Galar", "Slowpoke Galar", "Skwovet", "Rookidee", "Blipbug", "Nickit", "Gossifleur", "Wooloo",
+            "Chewtle", "Yamper", "Rolycoly", "Applin", "Silicobra", "Arrokuda", "Toxel", "Sizzlipede", "Clobbopus",
+            "Sinistea", "Hatenna", "Impidimp", "Milcery", "Pincurchin", "Snom", "Morpeko", "Cufant", "Dreepy", "Kubfu",
+        ),
         ("Motostoke Engine", "Hulbury Fleet", "Hammerlocke Keep"), "stadium-industrial",
     ),
     "paldea": RegionDefinition(
         "paldea", "Paldea",
-        ("Lechonk", "Tarountula", "Nymble", "Pawmi", "Tandemaus", "Fidough", "Smoliv", "Squawkabilly", "Nacli", "Charcadet", "Tadbulb", "Wattrel"),
+        ("Sprigatito", "Fuecoco", "Quaxly"),
+        (
+            "Lechonk", "Tarountula", "Nymble", "Pawmi", "Tandemaus", "Fidough", "Smoliv", "Squawkabilly",
+            "Nacli", "Charcadet", "Tadbulb", "Wattrel", "Maschiff", "Shroodle", "Bramblin", "Toedscool", "Klawf",
+            "Capsakid", "Rellor", "Flittle", "Tinkatink", "Wiglett", "Finizen", "Varoom", "Glimmet", "Greavard",
+            "Cetoddle", "Frigibax", "Gimmighoul",
+        ),
         ("Mesagoza Scholars", "Levincia Circuit", "Medali Table"), "terra-mosaic",
     ),
 }
@@ -94,7 +160,9 @@ def region_catalog() -> List[dict]:
         {
             "id": region.id,
             "label": region.label,
+            "starters": list(region.starters),
             "underdogs": list(region.underdogs),
+            "partner_choices": list(region.partner_choices),
             "clubs": list(region.clubs),
             "arena_theme": region.arena_theme,
         }

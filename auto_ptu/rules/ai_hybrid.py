@@ -402,7 +402,7 @@ def generate_candidates(battle: BattleState, actor_id: str) -> List[object]:
         for action_kind in ["attack", "secure", "move", "end", "contest", "escape"]:
             action = GrappleAction(actor_id=actor_id, action_kind=action_kind, target_id=other_id)
             if action_kind == "move" and battle.grid is not None:
-                dests = movement.legal_shift_tiles(battle, actor_id)
+                dests = sorted(movement.legal_shift_tiles(battle, actor_id), key=lambda coord: (coord[1], coord[0]))
                 for dest in dests[:2]:
                     action = GrappleAction(
                         actor_id=actor_id,

@@ -30,6 +30,11 @@ def test_same_battle_twice_has_identical_transcript_hash() -> None:
     assert first.final_state == second.final_state
     assert all(entry["stats"] for entry in first.initial_state["combatants"])
     assert all(entry["moves"] for entry in first.initial_state["combatants"])
+    assert all(entry["nature"] for entry in first.initial_state["combatants"])
+    assert all(entry["abilities"] for entry in first.initial_state["combatants"])
+    assert all(entry["size"] and entry["footprint_side"] >= 1 for entry in first.initial_state["combatants"])
+    rattata = next(entry for entry in first.initial_state["combatants"] if entry["team"] == "career-home")
+    assert {move["name"] for move in rattata["moves"]}.isdisjoint({"Thunder", "Ice Beam", "Surf"})
 
 
 def test_run_identity_does_not_change_mechanical_transcript_hash() -> None:
@@ -65,3 +70,23 @@ def test_career_preparation_bonus_uses_real_ptu_levels() -> None:
     assert prepared_levels["career-home"] == baseline_levels["career-home"] + 2
     assert prepared_levels["career-away"] == baseline_levels["career-away"] - 1
     assert prepared.sha256 != baseline.sha256
+
+
+def test_complete_team_battle_uses_tactical_engine_ai_on_both_sides() -> None:
+    spec = _spec("team-ai", 7)
+    spec.home_team_species = ["Rattata", "Caterpie"]
+    spec.home_pokemon_ids = ["partner", "capture-1"]
+    spec.home_team_levels = [8, 8]
+    spec.away_team_species = ["Spearow", "Weedle"]
+    spec.away_team_levels = [8, 8]
+    transcript = simulate_battle(spec)
+
+    assert len(transcript.initial_state["combatants"]) == 4
+    assert transcript.spec.home_ai_level == transcript.spec.away_ai_level == "tactical"
+    engine_actions = [event for event in transcript.events if event.get("type") in {"move", "shift", "switch"}]
+    assert any(str(event.get("actor", "")).startswith("career-home-") for event in engine_actions)
+    assert any(str(event.get("actor", "")).startswith("career-away-") for event in engine_actions)
+    assert any(event.get("type") == "switch" for event in transcript.events)
+    repeated = simulate_battle(spec)
+    assert repeated.sha256 == transcript.sha256
+    assert repeated.events == transcript.events

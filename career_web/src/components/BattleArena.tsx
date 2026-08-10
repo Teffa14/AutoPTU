@@ -2,10 +2,25 @@ import { useEffect, useRef } from "react";
 import { Application, Container, Graphics, Rectangle, Sprite, Text, TextStyle, Texture } from "pixi.js";
 
 import type { BattleViewState } from "../battlePresentation";
-import type { BattleTranscript } from "../types";
+import type { BattleCombatant, BattleMove, BattleTranscript } from "../types";
 
 type ActorVisual = { container: Container; sprite?: Sprite; home: boolean };
-type ArenaEffect = { display: Container; life: number; maxLife: number };
+type ArenaEffect = {
+  display: Container;
+  life: number;
+  maxLife: number;
+  kind?: "float" | "projectile";
+  from?: [number, number];
+  to?: [number, number];
+};
+
+const TYPE_COLORS: Record<string, number> = {
+  bug: 0xa8c957, dark: 0x6b6170, dragon: 0x7a79ff, electric: 0xffdf4d,
+  fairy: 0xff9fd7, fighting: 0xe86942, fire: 0xff6a32, flying: 0x91c8ee,
+  ghost: 0x8c71c5, grass: 0x6fd05c, ground: 0xd6a65a, ice: 0xa7ecff,
+  normal: 0xe8dfc4, poison: 0xb968c7, psychic: 0xff62a5, rock: 0xc8aa66,
+  steel: 0xb8cad0, water: 0x4ba5ff, typeless: 0xf1e5c5,
+};
 
 export function BattleArena({ transcript, eventIndex, view }: { transcript: BattleTranscript; eventIndex: number; view: BattleViewState }) {
   const host = useRef<HTMLDivElement>(null);
@@ -30,21 +45,25 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
       appRef.current = app;
       mount.appendChild(app.canvas);
       screen.current = { width: app.screen.width, height: app.screen.height };
-      app.stage.addChild(buildStadium(app.screen.width, app.screen.height));
+      app.stage.addChild(buildStadium(app.screen.width, app.screen.height, transcript.initial_state.grid));
       visuals.current.clear();
       targets.current.clear();
       impulses.current.clear();
 
+      const tile = tileMetrics(app.screen.width, app.screen.height, transcript.initial_state.grid);
       const ordered = [...transcript.initial_state.combatants].sort((left, right) => Number(right.team === "career-home") - Number(left.team === "career-home"));
       for (const combatant of ordered) {
         const home = combatant.team === "career-home";
         const container = new Container();
         const position = combatant.position
-          ? stagePosition(combatant.position, app.screen.width, app.screen.height, transcript.initial_state.grid)
-          : home ? [app.screen.width * 0.24, app.screen.height * 0.58] : [app.screen.width * 0.76, app.screen.height * 0.38];
+          ? stagePosition(combatant.position, app.screen.width, app.screen.height, transcript.initial_state.grid, combatant.footprint_side)
+          : home ? [app.screen.width * 0.18, app.screen.height * 0.58] : [app.screen.width * 0.82, app.screen.height * 0.58];
         container.position.set(position[0], position[1]);
+        container.visible = combatant.active !== false;
         targets.current.set(combatant.id, [position[0], position[1]]);
-        const shadow = new Graphics().ellipse(0, 42, 82, 22).fill({ color: 0x020706, alpha: 0.48 });
+        const footprint = Math.max(1, combatant.footprint_side ?? 1);
+        const visualTiles = visualTileScale(combatant.size, footprint);
+        const shadow = new Graphics().ellipse(0, tile.height * 0.18, tile.width * Math.min(2.8, visualTiles * 0.76), tile.height * Math.min(1.2, visualTiles * 0.23)).fill({ color: 0x020706, alpha: 0.52 });
         container.addChild(shadow);
         let sprite: Sprite | undefined;
         try {
@@ -53,27 +72,24 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
           const frameSize = Math.min(sheet.width, sheet.height);
           const texture = new Texture({ source: sheet.source, frame: new Rectangle(0, 0, frameSize, frameSize) });
           sprite = new Sprite(texture);
-          sprite.anchor.set(0.5, 1);
-          const scale = Math.min(1.7, 174 / Math.max(sprite.width, sprite.height));
-          sprite.scale.set(home ? scale : -scale, scale);
+          sprite.anchor.set(0.5, 0.82);
+          const targetSize = Math.max(36, tile.height * visualTiles);
+          const scale = targetSize / Math.max(sprite.width, sprite.height);
+          // Bundled front sprites face left. The home side stands on the left,
+          // so it must be mirrored toward the opposing half of the field.
+          sprite.scale.set(home ? -scale : scale, scale);
           container.addChild(sprite);
         } catch {
           if (cancelled || appRef.current !== app) return;
-          container.addChild(new Graphics().circle(0, 0, 42).fill({ color: home ? 0xffc86a : 0xff715b }));
+          container.addChild(new Graphics().circle(0, -tile.height * visualTiles * 0.22, tile.width * Math.min(1.2, visualTiles * 0.34)).fill({ color: home ? 0xffc86a : 0xff715b }));
         }
-        if (cancelled || appRef.current !== app) return;
-        const plate = new Graphics().roundRect(-58, 52, 116, 24, 7).fill({ color: 0x07100e, alpha: 0.86 }).stroke({ color: home ? 0xe8b85a : 0xff8066, width: 1, alpha: 0.7 });
-        const label = new Text({ text: combatant.species, style: new TextStyle({ fill: 0xfff1c9, fontFamily: "Arial", fontSize: 14, fontWeight: "700" }) });
-        label.anchor.set(0.5, 0);
-        label.position.set(0, 56);
-        container.addChild(plate, label);
         visuals.current.set(combatant.id, { container, sprite, home });
         app.stage.addChild(container);
       }
 
       let time = 0;
       app.ticker.add((ticker) => {
-        time += ticker.deltaTime * 0.045;
+        time += ticker.deltaTime * 0.035;
         for (const [id, visual] of visuals.current) {
           const target = targets.current.get(id);
           const impulse = impulses.current.get(id) ?? [0, 0];
@@ -82,14 +98,24 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
             visual.container.y += (target[1] + impulse[1] - visual.container.y) * 0.2;
           }
           impulses.current.set(id, [impulse[0] * 0.78, impulse[1] * 0.78]);
-          if (visual.sprite) visual.sprite.y = Math.sin(time + (visual.home ? 0 : 2.4)) * 2.5;
+          if (visual.sprite) visual.sprite.y = Math.sin(time + (visual.home ? 0 : 2.4)) * 0.7;
         }
         effects.current = effects.current.filter((effect) => {
           effect.life += ticker.deltaTime;
-          const progress = effect.life / effect.maxLife;
-          effect.display.alpha = Math.max(0, 1 - progress);
-          effect.display.y -= ticker.deltaTime * 0.45;
-          effect.display.scale.set(0.85 + progress * 0.45);
+          const progress = Math.min(1, effect.life / effect.maxLife);
+          if (effect.kind === "projectile" && effect.from && effect.to) {
+            const eased = 1 - (1 - progress) ** 3;
+            effect.display.position.set(
+              effect.from[0] + (effect.to[0] - effect.from[0]) * eased,
+              effect.from[1] + (effect.to[1] - effect.from[1]) * eased,
+            );
+            effect.display.rotation += ticker.deltaTime * 0.18;
+            effect.display.alpha = progress < 0.82 ? 1 : Math.max(0, (1 - progress) / 0.18);
+          } else {
+            effect.display.alpha = Math.max(0, 1 - progress);
+            effect.display.y -= ticker.deltaTime * 0.45;
+            effect.display.scale.set(0.85 + progress * 0.45);
+          }
           if (progress < 1) return true;
           effect.display.destroy({ children: true });
           return false;
@@ -112,75 +138,116 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
   useEffect(() => {
     const app = appRef.current;
     for (const combatant of view.combatants) {
-      if (combatant.position) targets.current.set(combatant.id, stagePosition(combatant.position, screen.current.width, screen.current.height, transcript.initial_state.grid));
+      const visual = visuals.current.get(combatant.id);
+      if (!visual) continue;
+      visual.container.visible = combatant.active !== false;
+      if (combatant.position) targets.current.set(combatant.id, stagePosition(combatant.position, screen.current.width, screen.current.height, transcript.initial_state.grid, combatant.footprint_side));
     }
     if (!app || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const event = view.event;
     if (!event) {
       for (const combatant of view.combatants) {
         const visual = visuals.current.get(combatant.id);
-        if (!visual) continue;
+        if (!visual || !visual.container.visible) continue;
         const winner = combatant.team === transcript.winner_team;
         visual.container.alpha = winner ? 1 : 0.38;
-        visual.container.scale.set(winner ? 1.12 : 0.82);
+        visual.container.scale.set(winner ? 1.08 : 0.86);
       }
       return;
     }
     const actor = visuals.current.get(view.actorId);
     const target = visuals.current.get(view.targetId);
+    if (event.type === "switch") {
+      const incoming = visuals.current.get(String(event.target ?? ""));
+      if (incoming) {
+        incoming.container.visible = true;
+        incoming.container.alpha = 1;
+        incoming.container.scale.set(0.25);
+        timers.current.push(window.setTimeout(() => incoming.container.scale.set(1), 40));
+        spawnStatus(app, incoming.container.x, incoming.container.y - 34, "¡ENTRA!", effects.current, 0x72d9a0);
+      }
+      return;
+    }
     if (event.type === "move" && actor) {
       const actorPoint = targets.current.get(view.actorId);
       const targetPoint = targets.current.get(view.targetId);
-      if (actorPoint && targetPoint) impulses.current.set(view.actorId, [(targetPoint[0] - actorPoint[0]) * 0.22, (targetPoint[1] - actorPoint[1]) * 0.12]);
-      actor.container.scale.set(1.14);
-      timers.current.push(window.setTimeout(() => actor.container.scale.set(1), 210));
+      const move = moveMetadata(view, transcript);
+      const melee = String(move?.range ?? "").toLowerCase().includes("melee") || move?.category.toLowerCase() === "physical" && !String(move?.range ?? "").match(/\d/);
+      if (actorPoint && targetPoint) {
+        impulses.current.set(view.actorId, [(targetPoint[0] - actorPoint[0]) * (melee ? 0.28 : 0.08), (targetPoint[1] - actorPoint[1]) * (melee ? 0.16 : 0.04)]);
+        spawnAttack(app, actorPoint, targetPoint, move, effects.current, view.hit === false);
+      }
+      actor.container.scale.set(1.1);
+      timers.current.push(window.setTimeout(() => actor.container.scale.set(1), 260));
       if (target && view.hit !== false) {
-        impulses.current.set(view.targetId, [view.critical ? 42 : 24, view.critical ? -14 : -7]);
-        flashCombatant(target, view.critical ? 0xffdc68 : 0xff795f, timers.current);
-        spawnImpact(app, target.container.x, target.container.y - 34, view.damage, view.critical, effects.current);
-        if (view.combatants.find((entry) => entry.id === view.targetId)?.hp === 0) {
-          timers.current.push(window.setTimeout(() => { target.container.alpha = 0.42; target.container.scale.set(0.78); }, 260));
-        }
+        timers.current.push(window.setTimeout(() => {
+          impulses.current.set(view.targetId, [view.critical ? 34 : 20, view.critical ? -11 : -5]);
+          flashCombatant(target, view.critical ? 0xffdc68 : attackColor(move), timers.current);
+          spawnImpact(app, target.container.x, target.container.y - 24, view.damage, view.critical, effects.current, attackColor(move));
+          if (view.combatants.find((entry) => entry.id === view.targetId)?.hp === 0) {
+            timers.current.push(window.setTimeout(() => { target.container.alpha = 0.34; target.container.scale.set(0.72); }, 240));
+          }
+        }, melee ? 170 : 330));
       }
     } else if ((event.type === "status" || event.type === "ability") && target) {
-      spawnStatus(app, target.container.x, target.container.y - 36, String(event.status ?? event.ability ?? "STATUS"), effects.current);
+      spawnStatus(app, target.container.x, target.container.y - 30, String(event.status ?? event.ability ?? "STATUS"), effects.current);
     } else if (event.type === "combat_stage" && target) {
-      spawnStatus(app, target.container.x, target.container.y - 36, `${Number(event.amount ?? 0) > 0 ? "+" : ""}${Number(event.amount ?? 0)} ${String(event.stat ?? "STAT").toUpperCase()}`, effects.current, 0x72d9a0);
+      spawnStatus(app, target.container.x, target.container.y - 30, `${Number(event.amount ?? 0) > 0 ? "+" : ""}${Number(event.amount ?? 0)} ${String(event.stat ?? "STAT").toUpperCase()}`, effects.current, 0x72d9a0);
     }
   }, [eventIndex, transcript, view]);
 
-  return <div ref={host} className="pixi-arena" role="img" aria-label={`${transcript.spec.home_species} versus ${transcript.spec.away_species}`} />;
+  return <div ref={host} className="pixi-arena" role="img" aria-label={`${transcript.spec.home_club} versus ${transcript.spec.away_club}`} />;
 }
 
-function buildStadium(width: number, height: number): Container {
+function buildStadium(width: number, height: number, grid?: { width: number; height: number }): Container {
   const stadium = new Container();
+  const columns = Math.max(2, grid?.width ?? 15);
+  const rows = Math.max(2, grid?.height ?? 9);
+  const metrics = tileMetrics(width, height, grid);
   stadium.addChild(new Graphics().rect(0, 0, width, height).fill({ color: 0x08120f }));
-  const crowd = new Graphics().roundRect(width * 0.03, height * 0.035, width * 0.94, height * 0.18, 16).fill({ color: 0x13211d }).stroke({ color: 0x4e665c, width: 2, alpha: 0.5 });
+  const crowd = new Graphics().roundRect(width * 0.03, height * 0.035, width * 0.94, height * 0.14, 16).fill({ color: 0x13211d }).stroke({ color: 0x4e665c, width: 2, alpha: 0.5 });
   for (let x = width * 0.055; x < width * 0.95; x += 17) {
     const color = Math.round(x / 17) % 4 === 0 ? 0xe8b85a : 0x82968d;
-    crowd.circle(x, height * (0.08 + ((x / 17) % 3) * 0.035), 2.3).fill({ color, alpha: 0.55 });
+    crowd.circle(x, height * (0.07 + ((x / 17) % 3) * 0.025), 2.3).fill({ color, alpha: 0.55 });
   }
   stadium.addChild(crowd);
-  const field = new Graphics().roundRect(width * 0.035, height * 0.205, width * 0.93, height * 0.75, 24).fill({ color: 0x184f39 }).stroke({ color: 0xe5cf91, width: 4, alpha: 0.85 });
-  for (let column = 1; column < 15; column += 1) field.moveTo(width * 0.035 + column * (width * 0.93 / 15), height * 0.205).lineTo(width * 0.035 + column * (width * 0.93 / 15), height * 0.955).stroke({ color: 0xdce6cb, width: 1, alpha: 0.08 });
-  for (let row = 1; row < 9; row += 1) field.moveTo(width * 0.035, height * 0.205 + row * (height * 0.75 / 9)).lineTo(width * 0.965, height * 0.205 + row * (height * 0.75 / 9)).stroke({ color: 0xdce6cb, width: 1, alpha: 0.08 });
-  field.ellipse(width * 0.25, height * 0.62, width * 0.22, height * 0.22).fill({ color: 0x2d7656, alpha: 0.6 }).stroke({ color: 0xdce6cb, width: 2, alpha: 0.24 });
-  field.ellipse(width * 0.75, height * 0.48, width * 0.22, height * 0.22).fill({ color: 0x316c52, alpha: 0.6 }).stroke({ color: 0xdce6cb, width: 2, alpha: 0.24 });
-  field.moveTo(width * 0.5, height * 0.205).lineTo(width * 0.5, height * 0.955).stroke({ color: 0xf5e7bd, width: 3, alpha: 0.32 });
-  field.circle(width * 0.5, height * 0.58, Math.min(width, height) * 0.11).stroke({ color: 0xf5e7bd, width: 3, alpha: 0.28 });
+  const field = new Graphics().rect(metrics.left, metrics.top, metrics.fieldWidth, metrics.fieldHeight).fill({ color: 0x184f39 }).stroke({ color: 0xe5cf91, width: 3, alpha: 0.88 });
+  for (let column = 1; column < columns; column += 1) field.moveTo(metrics.left + column * metrics.width, metrics.top).lineTo(metrics.left + column * metrics.width, metrics.top + metrics.fieldHeight).stroke({ color: 0xdce6cb, width: 1, alpha: 0.17 });
+  for (let row = 1; row < rows; row += 1) field.moveTo(metrics.left, metrics.top + row * metrics.height).lineTo(metrics.left + metrics.fieldWidth, metrics.top + row * metrics.height).stroke({ color: 0xdce6cb, width: 1, alpha: 0.17 });
+  field.circle(width * 0.5, metrics.top + metrics.fieldHeight * 0.5, Math.min(width, height) * 0.1).stroke({ color: 0xf5e7bd, width: 3, alpha: 0.28 });
+  field.moveTo(width * 0.5, metrics.top).lineTo(width * 0.5, metrics.top + metrics.fieldHeight).stroke({ color: 0xf5e7bd, width: 3, alpha: 0.3 });
   stadium.addChild(field);
-  const light = new Graphics().poly([width * 0.08, height * 0.2, width * 0.38, height * 0.2, width * 0.5, height, 0, height]).fill({ color: 0xf4e4a6, alpha: 0.035 });
-  stadium.addChild(light);
+  stadium.addChild(new Graphics().poly([metrics.left, metrics.top, width * 0.34, metrics.top, width * 0.48, metrics.top + metrics.fieldHeight, metrics.left, metrics.top + metrics.fieldHeight]).fill({ color: 0xf4e4a6, alpha: 0.035 }));
   return stadium;
 }
 
-function spawnImpact(app: Application, x: number, y: number, damage: number, critical: boolean, bucket: ArenaEffect[]) {
+function spawnAttack(app: Application, from: [number, number], to: [number, number], move: BattleMove | undefined, bucket: ArenaEffect[], missed: boolean) {
+  const color = attackColor(move);
+  const display = new Container();
+  const core = new Graphics();
+  const type = move?.type.toLowerCase() ?? "normal";
+  if (type === "electric") core.moveTo(-16, 0).lineTo(-4, -9).lineTo(2, 5).lineTo(15, -5).stroke({ color, width: 6 });
+  else if (type === "fire") core.poly([-13, 10, -7, -12, 0, -3, 9, -17, 14, 10]).fill({ color, alpha: 0.96 });
+  else if (type === "grass") core.poly([0, -15, 11, 0, 0, 15, -11, 0]).fill({ color, alpha: 0.95 }).stroke({ color: 0xeaffc7, width: 2 });
+  else if (type === "water" || type === "ice") core.circle(0, 0, 12).fill({ color, alpha: 0.9 }).circle(-4, -4, 4).fill({ color: 0xe9ffff, alpha: 0.75 });
+  else if (type === "psychic" || type === "ghost") core.circle(0, 0, 13).stroke({ color, width: 5 }).circle(0, 0, 5).fill({ color, alpha: 0.7 });
+  else core.poly([-15, -5, -3, -13, 14, 0, -3, 13, -15, 5]).fill({ color, alpha: 0.92 });
+  display.addChild(core);
+  display.position.set(from[0], from[1] - 20);
+  app.stage.addChild(display);
+  const destination: [number, number] = missed ? [to[0] + 45, to[1] - 55] : [to[0], to[1] - 20];
+  bucket.push({ display, life: 0, maxLife: 20, kind: "projectile", from: [from[0], from[1] - 20], to: destination });
+}
+
+function spawnImpact(app: Application, x: number, y: number, damage: number, critical: boolean, bucket: ArenaEffect[], baseColor: number) {
   const display = new Container();
   display.position.set(x, y);
-  const color = critical ? 0xffdf65 : 0xff765d;
-  display.addChild(new Graphics().circle(0, 0, critical ? 46 : 34).fill({ color, alpha: 0.18 }).stroke({ color, width: critical ? 7 : 4, alpha: 0.9 }));
+  const color = critical ? 0xffdf65 : baseColor;
+  const burst = new Graphics().circle(0, 0, critical ? 40 : 30).fill({ color, alpha: 0.2 }).stroke({ color, width: critical ? 7 : 4, alpha: 0.95 });
+  for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 4) burst.moveTo(Math.cos(angle) * 18, Math.sin(angle) * 18).lineTo(Math.cos(angle) * 45, Math.sin(angle) * 45).stroke({ color, width: 3, alpha: 0.85 });
+  display.addChild(burst);
   if (damage > 0) {
-    const text = new Text({ text: `−${damage}`, style: new TextStyle({ fill: 0xfff2ce, stroke: { color: 0x4b160e, width: 5 }, fontFamily: "Arial", fontSize: critical ? 34 : 27, fontWeight: "900" }) });
+    const text = new Text({ text: `−${damage}`, style: new TextStyle({ fill: 0xfff2ce, stroke: { color: 0x4b160e, width: 5 }, fontFamily: "Arial", fontSize: critical ? 32 : 25, fontWeight: "900" }) });
     text.anchor.set(0.5);
     display.addChild(text);
   }
@@ -200,10 +267,17 @@ function spawnStatus(app: Application, x: number, y: number, label: string, buck
 }
 
 function flashCombatant(target: ActorVisual, color: number, timers: number[]) {
-  const flash = new Graphics().circle(0, -35, 56).fill({ color, alpha: 0.42 });
+  const flash = new Graphics().circle(0, -26, 42).fill({ color, alpha: 0.42 });
   target.container.addChild(flash);
-  timers.push(window.setTimeout(() => flash.destroy(), 130));
+  timers.push(window.setTimeout(() => flash.destroy(), 140));
 }
+
+function moveMetadata(view: BattleViewState, transcript: BattleTranscript): BattleMove | undefined {
+  const actor = transcript.initial_state.combatants.find((entry) => entry.id === view.actorId);
+  return actor?.moves?.find((move) => move.name.toLowerCase() === view.move.toLowerCase());
+}
+
+function attackColor(move?: BattleMove): number { return TYPE_COLORS[move?.type.toLowerCase() ?? "normal"] ?? TYPE_COLORS.normal; }
 
 async function loadPokemonTexture(species: string): Promise<Texture> {
   const image = new Image();
@@ -212,8 +286,23 @@ async function loadPokemonTexture(species: string): Promise<Texture> {
   return Texture.from(image);
 }
 
-function stagePosition(position: [number, number], width: number, height: number, grid?: { width: number; height: number }): [number, number] {
+function tileMetrics(width: number, height: number, grid?: { width: number; height: number }) {
   const columns = Math.max(2, grid?.width ?? 15);
   const rows = Math.max(2, grid?.height ?? 9);
-  return [width * (0.08 + (position[0] / (columns - 1)) * 0.84), height * (0.29 + (position[1] / (rows - 1)) * 0.59)];
+  const left = width * 0.035;
+  const top = height * 0.19;
+  const fieldWidth = width * 0.93;
+  const fieldHeight = height * 0.76;
+  return { columns, rows, left, top, fieldWidth, fieldHeight, width: fieldWidth / columns, height: fieldHeight / rows };
+}
+
+function stagePosition(position: [number, number], width: number, height: number, grid?: { width: number; height: number }, footprintSide = 1): [number, number] {
+  const tile = tileMetrics(width, height, grid);
+  const centerOffset = Math.max(0, footprintSide - 1) / 2;
+  return [tile.left + (position[0] + 0.5 + centerOffset) * tile.width, tile.top + (position[1] + 0.5 + centerOffset) * tile.height];
+}
+
+function visualTileScale(size = "Medium", footprintSide = 1): number {
+  const bySize: Record<string, number> = { tiny: 0.72, small: 0.95, medium: 1.28, large: 1.85, huge: 2.65, gigantic: 3.35 };
+  return Math.max(bySize[String(size).toLowerCase()] ?? 1.28, footprintSide * 0.92);
 }

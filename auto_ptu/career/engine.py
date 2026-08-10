@@ -9,7 +9,7 @@ from typing import Callable, Dict, List, Optional
 
 from .battle import simulate_battle
 from .catalogs import LEAGUES, LEAGUE_ORDER, REGIONS
-from .class_adapters import validate_selected_classes
+from .class_adapters import selected_class_effects, validate_selected_classes
 from .decisions import apply_option, build_season_decision
 from .models import (
     BattleSpec,
@@ -27,7 +27,8 @@ from .models import (
 )
 from .roster import (
     active_pokemon,
-    capture_between_seasons,
+    career_level_cap,
+    grant_partner_levels,
     initialize_roster,
     progress_after_season,
     set_active_roster,
@@ -68,11 +69,11 @@ class CareerEngine:
         if mode_key not in {"simple", "advanced"}:
             raise ValueError("Career mode must be 'simple' or 'advanced'.")
         canonical_starter = next(
-            (entry for entry in REGIONS[region_key].underdogs if entry.lower() == str(starter).strip().lower()),
+            (entry for entry in REGIONS[region_key].partner_choices if entry.lower() == str(starter).strip().lower()),
             None,
         )
         if canonical_starter is None:
-            raise ValueError(f"{starter} is not an eligible {REGIONS[region_key].label} underdog.")
+            raise ValueError(f"{starter} is not an eligible {REGIONS[region_key].label} starter or underdog.")
         canonical_classes = validate_selected_classes(classes)
         run_id = str(uuid.uuid4())
         run_seed = int(seed if seed is not None else stable_seed(run_id, player_id))
@@ -101,6 +102,7 @@ class CareerEngine:
                 seasons_remaining=1,
             ),
             roster=[canonical_starter],
+            class_effects=selected_class_effects(canonical_classes),
             versions=ContentVersion.from_environment(),
         )
         run.timeline.append(
@@ -119,7 +121,12 @@ class CareerEngine:
         return run
 
     def ensure_roster(self, run: CareerRun) -> bool:
-        return initialize_roster(run, stable_seed(run.seed, run.season_number, "academy-intake"))
+        changed = initialize_roster(run, stable_seed(run.seed, run.season_number, "academy-intake"))
+        current = selected_class_effects(run.build.classes)
+        if run.class_effects != current:
+            run.class_effects = current
+            changed = True
+        return changed
 
     def update_lineup(self, run: CareerRun, pokemon_ids: List[str]) -> CareerRun:
         if run.status != "active":
@@ -189,6 +196,7 @@ class CareerEngine:
         outcome = self._apply_competitive_progression(run, season)
         self._apply_health_and_contract(run, wins=wins, losses=losses)
         roster_outcome = progress_after_season(run, specs, transcripts)
+        class_outcome = self._apply_class_progression(run)
         run.timeline.append(
             {
                 "type": "season.completed",
@@ -207,6 +215,7 @@ class CareerEngine:
                 "score_delta": season.score_delta,
                 "lineup": list(run.active_roster),
                 **roster_outcome,
+                "class_effects": class_outcome,
                 **outcome,
             }
         )
@@ -216,7 +225,6 @@ class CareerEngine:
             return run, transcripts
         run.age += 1
         run.season_number += 1
-        capture_between_seasons(run, stable_seed(run.seed, run.season_number, "offseason-captures"))
         run.season = self._open_season(run)
         run.updated_at = utc_now()
         return run, transcripts
@@ -301,17 +309,29 @@ class CareerEngine:
         home_bonus -= int(run.health < 45)
         home_bonus -= int(run.finances <= -4)
         away_bonus = -min(2, max(0, run.scouting) // 3)
+        class_effects = selected_class_effects(run.build.classes)
+        home_bonus += int(class_effects["battle"].get("home_level_bonus", 0))
+        away_bonus += int(class_effects["battle"].get("away_level_bonus", 0))
         league_floor = league.min_level + min(15, max(0, run.season_number - 1))
-        competitive_level = max(league_floor, round(sum(entry.level for entry in lineup) / len(lineup)))
+        competitive_level = min(career_level_cap(run), max(league_floor, round(sum(entry.level for entry in lineup) / len(lineup))))
         specs = []
         for index in range(league.matches):
             away_club = clubs[(index + 1) % len(clubs)]
             if away_club == home:
                 away_club = f"{region.label} Academy {index + 1}"
-            pokemon = lineup[index % len(lineup)]
-            eligible_opponents = [entry for entry in candidates if entry != pokemon.species] or candidates
-            opponent = eligible_opponents[rng.randrange(len(eligible_opponents))]
-            base_level = competitive_level
+            rotation = index % len(lineup)
+            match_lineup = lineup[rotation:] + lineup[:rotation]
+            pokemon = match_lineup[0]
+            eligible_opponents = [entry for entry in candidates if entry not in {member.species for member in match_lineup}] or candidates
+            opponent_team: List[str] = []
+            pool = list(eligible_opponents)
+            rng.shuffle(pool)
+            while len(opponent_team) < len(match_lineup):
+                if not pool:
+                    pool = list(eligible_opponents)
+                    rng.shuffle(pool)
+                opponent_team.append(pool.pop())
+            opponent = opponent_team[0]
             specs.append(
                 BattleSpec(
                     id=f"{run.id}-s{run.season_number}-m{index + 1}",
@@ -323,14 +343,52 @@ class CareerEngine:
                     away_club=away_club,
                     home_species=pokemon.species,
                     away_species=opponent,
-                    level=base_level,
+                    level=competitive_level,
                     home_pokemon_id=pokemon.id,
                     featured=index == league.matches - 1,
-                    home_level_bonus=home_bonus + pokemon.level - base_level,
+                    home_level_bonus=home_bonus,
                     away_level_bonus=away_bonus,
+                    home_team_species=[member.species for member in match_lineup],
+                    home_pokemon_ids=[member.id for member in match_lineup],
+                    home_team_levels=[member.level for member in match_lineup],
+                    home_team_moves=[list(member.taught_moves) for member in match_lineup],
+                    home_team_natures=[member.nature for member in match_lineup],
+                    home_team_abilities=[list(member.abilities) for member in match_lineup],
+                    away_team_species=opponent_team,
+                    away_team_levels=[competitive_level for _ in opponent_team],
                 )
             )
         return specs
+
+    def _apply_class_progression(self, run: CareerRun) -> dict:
+        effects = selected_class_effects(run.build.classes)
+        applied: Dict[str, int] = {}
+        for key, value in effects["season"].items():
+            amount = int(value)
+            if key == "health":
+                before = run.health
+                run.health = min(100, max(0, run.health + amount))
+                applied[key] = run.health - before
+            elif key == "partner_levels":
+                partner = next((entry for entry in run.pokemon if entry.is_partner), None)
+                before = partner.level if partner else 0
+                grant_partner_levels(run, amount, source="trainer_class")
+                applied[key] = (partner.level - before) if partner else 0
+            elif hasattr(run, key):
+                setattr(run, key, int(getattr(run, key)) + amount)
+                applied[key] = amount
+        event = {
+            "type": "class.effect_applied",
+            "season": run.season_number,
+            "age": run.age,
+            "classes": list(run.build.classes),
+            "battle": dict(effects["battle"]),
+            "season_effects": applied,
+            "focus": [entry["focus"] for entry in effects["adapters"]],
+            "label": "Trainer class effects changed PTU preparation and career progression.",
+        }
+        run.timeline.append(event)
+        return event
 
     def _apply_competitive_progression(self, run: CareerRun, season: SeasonState) -> dict:
         league = LEAGUES[run.league]

@@ -60,7 +60,7 @@ class PostgresCareerStore:
                 """,
                 (
                     challenge.date, challenge.region, challenge.seed,
-                    self.psycopg.types.json.Jsonb({"underdogs": list(region.underdogs), "clubs": list(region.clubs)}),
+                    self.psycopg.types.json.Jsonb({"starters": list(region.starters), "underdogs": list(region.underdogs), "clubs": list(region.clubs)}),
                     challenge.rules_version, challenge.content_version, run.versions.scoring,
                 ),
             ).fetchone()[0]

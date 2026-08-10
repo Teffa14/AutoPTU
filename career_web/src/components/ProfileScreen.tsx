@@ -19,6 +19,7 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
   const selectedSet = useMemo(() => new Set(selected), [selected]);
   const active = selected.map((id) => pokemonById.get(id)).filter(isPokemon);
   const pc = run.pokemon.filter((pokemon) => !selectedSet.has(pokemon.id));
+  const requiredLineup = Math.min(6, run.pokemon.length);
 
   useEffect(() => setSelected(run.active_roster), [run.active_roster]);
 
@@ -27,7 +28,7 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
     setError("");
     setSelected((current) => {
       if (current.includes(pokemon.id)) return current.filter((id) => id !== pokemon.id);
-      return current.length < 6 ? [...current, pokemon.id] : current;
+      return current.length < requiredLineup ? [...current, pokemon.id] : current;
     });
   }
 
@@ -36,18 +37,18 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
     const ranked = [...run.pokemon]
       .filter((pokemon) => pokemon.id !== partner?.id)
       .sort((left, right) => right.level - left.level || right.matches - left.matches || left.species.localeCompare(right.species));
-    setSelected([...(partner ? [partner.id] : []), ...ranked.map((pokemon) => pokemon.id)].slice(0, 6));
+    setSelected([...(partner ? [partner.id] : []), ...ranked.map((pokemon) => pokemon.id)].slice(0, requiredLineup));
     setMessage("");
   }
 
   async function saveLineup() {
-    if (selected.length !== 6) return;
+    if (selected.length !== requiredLineup) return;
     setBusy(true);
     setError("");
     try {
       const updated = await careerApi.lineup(run, selected);
       onRun(updated);
-      setMessage(locale === "es" ? "Alineación registrada. Estos seis jugarán el próximo calendario." : "Lineup registered. These six will play the next schedule.");
+      setMessage(locale === "es" ? "Equipo registrado. Todos jugarán el próximo calendario." : "Team registered. Everyone will play the next schedule.");
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : String(reason));
     } finally {
@@ -76,17 +77,17 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
 
         <section className="squad-room" aria-labelledby="active-squad-title">
           <header>
-            <div><p className="eyebrow">{locale === "es" ? "Vestuario del club" : "Club locker room"}</p><h2 id="active-squad-title">{locale === "es" ? "Seis titulares" : "Starting six"}</h2></div>
-            <span className={selected.length === 6 ? "lineup-count ready" : "lineup-count"}>{selected.length}/6</span>
+            <div><p className="eyebrow">{locale === "es" ? "Vestuario del club" : "Club locker room"}</p><h2 id="active-squad-title">{locale === "es" ? "Equipo activo" : "Active team"}</h2></div>
+            <span className={selected.length === requiredLineup ? "lineup-count ready" : "lineup-count"}>{selected.length}/{requiredLineup}</span>
           </header>
-          <p className="roster-instruction">{locale === "es" ? "Cada titular juega por turnos durante la temporada. Toca uno para enviarlo a la PC." : "Each starter rotates through the season. Select one to send it to the PC."}</p>
+          <p className="roster-instruction">{locale === "es" ? "El combate usa todo este equipo y cambia de Pokémon al caer uno. Al capturar más de seis, el resto quedará en la PC." : "Battles use this full team and switch when one faints. Once you catch more than six, the rest stay in the PC."}</p>
           <div className="active-six">
             {active.map((pokemon, index) => <PokemonCard key={pokemon.id} pokemon={pokemon} slot={index + 1} active onClick={() => toggle(pokemon)} locale={locale} />)}
-            {Array.from({ length: Math.max(0, 6 - active.length) }, (_, index) => <div className="empty-roster-slot" key={`empty-${index}`}>{locale === "es" ? "Elegí desde la PC" : "Choose from PC"}</div>)}
+            {Array.from({ length: Math.max(0, 6 - active.length) }, (_, index) => <div className="empty-roster-slot" key={`empty-${index}`}>{run.pokemon.length > active.length ? (locale === "es" ? "Elegí desde la PC" : "Choose from PC") : (locale === "es" ? "Se desbloquea al capturar" : "Unlocked by catching")}</div>)}
           </div>
           <div className="lineup-actions">
             <button type="button" onClick={chooseBestSix}>{locale === "es" ? "Elegir mejores seis" : "Choose best six"}</button>
-            <button type="button" className="primary-action" onClick={saveLineup} disabled={busy || selected.length !== 6}>{busy ? (locale === "es" ? "Guardando…" : "Saving…") : (locale === "es" ? "Guardar alineación" : "Save lineup")}</button>
+            <button type="button" className="primary-action" onClick={saveLineup} disabled={busy || selected.length !== requiredLineup}>{busy ? (locale === "es" ? "Guardando…" : "Saving…") : (locale === "es" ? "Guardar equipo" : "Save team")}</button>
           </div>
           {message ? <p className="lineup-success" role="status">{message}</p> : null}
           {error ? <p className="form-error" role="alert">{error}</p> : null}
@@ -96,11 +97,13 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
           <header><div><p className="eyebrow">PC regional</p><h2 id="pc-title">{locale === "es" ? "Pokémon disponibles" : "Available Pokémon"}</h2></div><b>{pc.length}</b></header>
           <p className="roster-instruction">{locale === "es" ? "Los Pokémon en la PC siguen entrenando lentamente. Toca uno para subirlo al equipo." : "Pokémon in the PC keep training slowly. Select one to add it to the team."}</p>
           <div className="pc-grid">
-            {pc.map((pokemon) => <PokemonCard key={pokemon.id} pokemon={pokemon} onClick={() => toggle(pokemon)} locale={locale} disabled={selected.length >= 6} />)}
+            {pc.map((pokemon) => <PokemonCard key={pokemon.id} pokemon={pokemon} onClick={() => toggle(pokemon)} locale={locale} disabled={selected.length >= requiredLineup} />)}
           </div>
         </section>
 
-        <section><h2>{locale === "es" ? "Clases PTU" : "PTU classes"}</h2><div className="class-stamps">{run.build.classes.map((name) => <span key={name}>{name}</span>)}</div></section>
+        <section><h2>{locale === "es" ? "Clases PTU" : "PTU classes"}</h2><div className="class-stamps">{run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b><small>{locale === "es" ? entry.description_es : entry.description_en}</small></span>)}</div></section>
+        <section><h2>{locale === "es" ? "Mochila" : "Bag"}</h2><div className="world-rewards"><span>Poké Ball × {run.build.pokeballs}</span>{Object.entries(run.inventory ?? {}).map(([item, quantity]) => <span key={item}>{item} × {quantity}</span>)}</div></section>
+        <section><h2>{locale === "es" ? "Relaciones" : "Relationships"}</h2><div className="world-rewards">{Object.entries(run.relationships ?? {}).length ? Object.entries(run.relationships).map(([name, value]) => <span key={name}>{name.split(" · ")[0]} <b>{value > 0 ? `+${value}` : value}</b></span>) : <p className="empty-copy">{locale === "es" ? "Todavía no hay vínculos registrados." : "No relationships recorded yet."}</p>}</div></section>
         <section><h2>{locale === "es" ? "Logros" : "Achievements"}</h2>{run.achievements.length ? <ul>{run.achievements.map((entry) => <li key={entry}>{entry}</li>)}</ul> : <p className="empty-copy">{locale === "es" ? "La primera placa todavía está vacía." : "The first plaque is still empty."}</p>}</section>
       </article>
     </section>
@@ -116,7 +119,9 @@ function PokemonCard({ pokemon, active = false, slot, disabled = false, onClick,
       <PokemonSprite name={pokemon.species} className="roster-sprite" />
       <strong>{pokemon.species}</strong>
       <span className="pokemon-level">LV {pokemon.level}</span>
+      <small>{pokemon.nature || "—"} · {(pokemon.abilities ?? []).join(" / ") || "—"}</small>
       <small>{pokemon.matches} {locale === "es" ? "partidos" : "matches"} · {pokemon.wins} W</small>
+      {pokemon.taught_moves?.length ? <em>{pokemon.taught_moves.join(" · ")}</em> : null}
       {lastEvolution ? <em>{lastEvolution.from} → {lastEvolution.to}</em> : null}
     </button>
   );

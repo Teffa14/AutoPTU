@@ -13,7 +13,7 @@ export interface BattleViewState {
   complete: boolean;
 }
 
-const PRESENTED_EVENT_TYPES = new Set(["round_start", "move", "status", "ability", "combat_stage"]);
+const PRESENTED_EVENT_TYPES = new Set(["round_start", "move", "status", "ability", "combat_stage", "switch"]);
 
 export function playbackEventIndexes(transcript: BattleTranscript): number[] {
   return transcript.events.flatMap((event, index) => PRESENTED_EVENT_TYPES.has(String(event.type ?? "")) ? [index] : []);
@@ -38,11 +38,25 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
         if (typeof raw.hp === "number") current.hp = raw.hp;
         if (typeof raw.max_hp === "number") current.max_hp = raw.max_hp;
         if (Array.isArray(raw.statuses)) current.statuses = raw.statuses.map(String);
+        if (typeof raw.active === "boolean") current.active = raw.active;
       }
     }
     if (event.type === "shift" && Array.isArray(event.to)) {
       const current = combatants.get(String(event.actor ?? ""));
       if (current && event.to.length >= 2) current.position = [Number(event.to[0]), Number(event.to[1])];
+    }
+    if (event.type === "switch") {
+      const outgoing = combatants.get(String(event.outgoing ?? ""));
+      const incoming = combatants.get(String(event.target ?? ""));
+      if (outgoing) {
+        outgoing.active = false;
+        outgoing.position = undefined;
+      }
+      if (incoming) {
+        incoming.active = true;
+        const position = event.target_position ?? event.position;
+        if (Array.isArray(position) && position.length >= 2) incoming.position = [Number(position[0]), Number(position[1])];
+      }
     }
     const hpOwner = String(event.target ?? event.actor ?? "");
     const hpCombatant = combatants.get(hpOwner);
@@ -68,6 +82,7 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
       current.max_hp = final.max_hp;
       current.position = final.position;
       current.statuses = [...(final.statuses ?? [])];
+      current.active = final.active;
     }
   }
 
@@ -102,6 +117,10 @@ export function battleCommentary(locale: Locale, transcript: BattleTranscript, v
   const target = combatantName(transcript, String(event.target ?? event.actor ?? ""));
   if (type === "round_start") {
     return locale === "es" ? `Comienza la ronda ${view.round}. Los dos equipos buscan la iniciativa.` : `Round ${view.round} begins. Both teams fight for position.`;
+  }
+  if (type === "switch") {
+    const incoming = combatantName(transcript, String(event.target ?? ""));
+    return locale === "es" ? `${incoming} entra a la cancha.` : `${incoming} enters the field.`;
   }
   if (type === "move") {
     const move = String(event.move ?? (locale === "es" ? "un movimiento" : "a move"));
@@ -148,6 +167,7 @@ export function eventTitle(locale: Locale, view: BattleViewState): string {
   if (event.type === "move") return String(event.move ?? (locale === "es" ? "ATAQUE" : "ATTACK")).toUpperCase();
   if (event.type === "ability") return String(event.ability ?? (locale === "es" ? "HABILIDAD" : "ABILITY")).toUpperCase();
   if (event.type === "combat_stage") return locale === "es" ? "CAMBIO DE STATS" : "STAT CHANGE";
+  if (event.type === "switch") return locale === "es" ? "CAMBIO DE POKÉMON" : "POKÉMON SWITCH";
   return event.status ? statusLabel(String(event.status), locale).toUpperCase() : (locale === "es" ? "ESTADO" : "STATUS");
 }
 

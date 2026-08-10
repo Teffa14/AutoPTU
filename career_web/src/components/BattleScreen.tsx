@@ -6,6 +6,7 @@ import { battleCommentary, deriveBattleView, eventTitle, playbackEventIndexes, s
 import { t } from "../i18n";
 import type { BattleCombatant, BattleTranscript, Locale } from "../types";
 import { BattleArena } from "./BattleArena";
+import { PokemonSprite } from "./PokemonSprite";
 
 export default function BattleScreen({ runId, battleId, locale }: { runId: string; battleId: string; locale: Locale }) {
   const copy = t(locale);
@@ -45,8 +46,10 @@ export default function BattleScreen({ runId, battleId, locale }: { runId: strin
   if (error) return <section className="battle-error"><h1>{locale === "es" ? "No se pudo abrir el combate" : "Battle unavailable"}</h1><p>{error}</p><button onClick={() => navigate(`run/${runId}`)}>{copy.back}</button></section>;
   if (!transcript || !view) return <div className="scene-loading">{locale === "es" ? "Preparando el estadio…" : "Preparing the stadium…"}</div>;
 
-  const home = view.combatants.find((entry) => entry.team === "career-home") ?? view.combatants[0];
-  const away = view.combatants.find((entry) => entry.team === "career-away") ?? view.combatants[1];
+  const homeTeam = view.combatants.filter((entry) => entry.team === "career-home");
+  const awayTeam = view.combatants.filter((entry) => entry.team === "career-away");
+  const home = homeTeam.find((entry) => entry.active !== false && entry.hp > 0) ?? homeTeam.find((entry) => entry.active !== false) ?? homeTeam[0];
+  const away = awayTeam.find((entry) => entry.active !== false && entry.hp > 0) ?? awayTeam.find((entry) => entry.active !== false) ?? awayTeam[0];
   const userWon = transcript.winner_team === "career-home";
   const commentary = battleCommentary(locale, transcript, view);
 
@@ -59,7 +62,7 @@ export default function BattleScreen({ runId, battleId, locale }: { runId: strin
       </header>
 
       <div className="battle-stage">
-        <CombatantHud combatant={away} club={transcript.spec.away_club} locale={locale} side="away" transcript={transcript} />
+        <CombatantHud combatant={away} team={awayTeam} club={transcript.spec.away_club} locale={locale} side="away" transcript={transcript} />
         <div className="arena-wrap">
           <BattleArena transcript={transcript} eventIndex={rawEventIndex} view={view} />
           <div className={`event-callout ${view.critical ? "critical" : ""} ${view.hit === false ? "miss" : ""}`} key={`${rawEventIndex}-${eventTitle(locale, view)}`}>
@@ -76,7 +79,7 @@ export default function BattleScreen({ runId, battleId, locale }: { runId: strin
             </div>
           ) : null}
         </div>
-        <CombatantHud combatant={home} club={transcript.spec.home_club} locale={locale} side="home" transcript={transcript} />
+        <CombatantHud combatant={home} team={homeTeam} club={transcript.spec.home_club} locale={locale} side="home" transcript={transcript} />
       </div>
 
       <div className="broadcast-lower">
@@ -89,12 +92,12 @@ export default function BattleScreen({ runId, battleId, locale }: { runId: strin
           <button disabled={complete} onClick={() => setStepIndex(steps.length)}>{copy.skip}</button>
         </div>
       </div>
-      <footer className="verification-stamp"><span>✓ {locale === "es" ? "Simulado con reglas PTU 1.05" : "Simulated with PTU 1.05 rules"}</span><b>{locale === "es" ? "Resultado verificado" : "Verified result"}</b></footer>
+      <footer className="verification-stamp"><span>✓ {locale === "es" ? "Motor PTU 1.05 · IA táctica en ambos equipos" : "PTU 1.05 engine · tactical AI on both teams"}</span><b>seed {transcript.spec.seed ?? "legacy"} · {transcript.sha256.slice(0, 10)}</b></footer>
     </section>
   );
 }
 
-function CombatantHud({ combatant, club, locale, side, transcript }: { combatant?: BattleCombatant; club: string; locale: Locale; side: "home" | "away"; transcript: BattleTranscript }) {
+function CombatantHud({ combatant, team, club, locale, side, transcript }: { combatant?: BattleCombatant; team: BattleCombatant[]; club: string; locale: Locale; side: "home" | "away"; transcript: BattleTranscript }) {
   if (!combatant) return <aside className={`combatant-hud ${side}`} />;
   const ratio = Math.max(0, Math.min(100, (combatant.hp / Math.max(1, combatant.max_hp)) * 100));
   const stats = { ...fallbackStats(combatant.id, transcript), ...(combatant.stats ?? {}) };
@@ -104,6 +107,10 @@ function CombatantHud({ combatant, club, locale, side, transcript }: { combatant
       <header><span>{club}</span><b>{combatant.species}</b><small>LV {level}</small></header>
       <div className="hp-readout"><div><span>{locale === "es" ? "PS" : "HP"}</span><strong>{combatant.hp}<i>/{combatant.max_hp}</i></strong></div><div className="hp-track"><i style={{ "--hp": `${ratio}%` } as CSSProperties} /></div></div>
       <div className="status-row">{combatant.hp <= 0 ? <b>{locale === "es" ? "DEBILITADO" : "FAINTED"}</b> : (combatant.statuses?.length ? combatant.statuses.map((status) => <b key={status}>{statusLabel(status, locale)}</b>) : <span>{locale === "es" ? "Sin estados" : "No status"}</span>)}</div>
+      <div className="build-row"><span>{combatant.nature || (locale === "es" ? "Naturaleza desconocida" : "Unknown nature")}</span>{combatant.abilities?.map((ability) => <b key={ability}>{ability}</b>)}</div>
+      <div className="team-rack" aria-label={`${team.filter((entry) => entry.hp > 0).length} / ${team.length} ${locale === "es" ? "Pokémon disponibles" : "Pokémon available"}`}>
+        {team.map((entry) => <span key={entry.id} className={`${entry.hp <= 0 ? "fainted" : ""} ${entry.id === combatant.id ? "active" : ""}`} title={`${entry.species} · ${entry.hp}/${entry.max_hp}`}><PokemonSprite name={entry.species} className="team-sprite" /></span>)}
+      </div>
       <dl className="battle-stats">{(["atk", "def", "spatk", "spdef", "spd"] as const).map((key) => <div key={key}><dt>{statLabel(key, locale)}</dt><dd>{stats[key] ?? "—"}</dd></div>)}</dl>
       {combatant.moves?.length ? <div className="move-rack">{combatant.moves.slice(0, 4).map((move) => <span key={move.name}><b>{move.name}</b><small>{move.type} · {move.category}{move.db ? ` · DB ${move.db}` : ""}</small></span>)}</div> : null}
     </aside>

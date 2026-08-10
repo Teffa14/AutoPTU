@@ -459,7 +459,13 @@ def _pivot_switch(ctx: MoveSpecialContext, *, effect: str) -> None:
         return
     candidates.sort(key=lambda pid: (battle.pokemon[pid].hp or 0, pid), reverse=True)
     replacement_id = candidates[0]
-    battle._apply_switch(attacker_id=ctx.attacker_id, replacement_id=replacement_id, allow_replacement_turn=True)
+    battle._apply_switch(
+        outgoing_id=ctx.attacker_id,
+        replacement_id=replacement_id,
+        initiator_id=ctx.attacker_id,
+        allow_replacement_turn=True,
+        allow_immediate=True,
+    )
     ctx.events.append(
         {
             "type": "move",

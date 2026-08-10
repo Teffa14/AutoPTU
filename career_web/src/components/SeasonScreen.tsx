@@ -4,7 +4,7 @@ import { careerApi } from "../api";
 import { navigate } from "../App";
 import { decisionPresentation, effectLabel, effectRule, riskLabel, transparencyLabel } from "../decisionPresentation";
 import { t } from "../i18n";
-import type { CareerRun, DecisionOption, Locale } from "../types";
+import type { CareerRun, DecisionOption, DecisionReward, Locale } from "../types";
 import { PokemonSprite } from "./PokemonSprite";
 
 interface Props { run: CareerRun; locale: Locale; onRun: (run: CareerRun) => void }
@@ -16,6 +16,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   const [selectedId, setSelectedId] = useState("");
   const [confirmRetire, setConfirmRetire] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
+  const [roulette, setRoulette] = useState<"idle" | "spinning" | "success" | "failure">("idle");
   const decision = run.season?.decision;
   const presentation = useMemo(
     () => decision ? decisionPresentation(decision, run, locale) : null,
@@ -33,16 +34,22 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
 
   async function decide() {
     if (!selectedId) return;
+    const isGamble = selected?.risk === "gamble";
     setBusy(true);
     setError("");
+    if (isGamble) setRoulette("spinning");
     try {
       const result = await careerApi.decide(run, selectedId);
       onRun(result.run);
+      if (isGamble) {
+        setRoulette(gambleSucceeded(result.run) ? "success" : "failure");
+        await new Promise((resolve) => window.setTimeout(resolve, 1800));
+      }
       const featured = result.battle_ids.at(-1);
       if (featured) navigate(`battle/${run.id}/${featured}`);
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : String(reason));
-    } finally { setBusy(false); }
+    } finally { setBusy(false); setRoulette("idle"); }
   }
 
   async function retire() {
@@ -67,7 +74,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
       <div className="record-ribbon"><span>{run.totals.wins} W</span><span>{run.totals.losses} L</span><span>{run.totals.titles} titles</span></div>
       <div className="retirement-roster"><span><b>{run.summary?.pokemon_owned ?? run.pokemon.length}</b> Pokémon</span><span><b>{run.summary?.evolutions ?? 0}</b> {locale === "es" ? "evoluciones" : "evolutions"}</span></div>
       <button className="primary-action" onClick={() => navigate(`timeline/${run.id}`)}>{copy.timeline}</button>
-      <div className="share-actions"><button onClick={share} disabled={busy}>{locale === "es" ? "Compartir resumen" : "Share summary"}</button></div>
+      <div className="share-actions"><button onClick={() => navigate("")}>{locale === "es" ? "Nueva historia" : "New story"}</button><button onClick={share} disabled={busy}>{locale === "es" ? "Compartir resumen" : "Share summary"}</button></div>
       {shareUrl ? <output className="share-url"><a href={`${window.location.origin}${shareUrl}`} target="_blank" rel="noreferrer">{window.location.origin}{shareUrl}</a></output> : null}
       {error ? <p className="form-error" role="alert">{error}</p> : null}
     </section>
@@ -76,6 +83,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   return (
     <section className="season-scene">
       <div className="season-sky" aria-hidden="true" />
+      {roulette !== "idle" ? <RouletteOverlay state={roulette} locale={locale} option={selected} /> : null}
       <header className="season-scoreboard">
         <div><span>{copy.season} {run.season_number}</span><b>{run.contract?.club_name ?? "Independent"}</b><small>{run.league} league · age {run.age}</small></div>
         <div className="scoreboard-metrics"><span><i style={{ "--meter": `${run.health}%` } as CSSProperties} />{copy.health} <b>{run.health}</b></span><span>{copy.score} <b>{run.score}</b></span></div>
@@ -88,6 +96,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
           </div>
         ))}
       </div>
+      <div className="active-class-effect">{run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b> · {locale === "es" ? entry.description_es : entry.description_en}</span>)}</div>
 
       <div className="season-stage">
         <aside className="partner-stand squad-stand">
@@ -102,7 +111,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
               </div>
             ))}
           </div>
-          <button type="button" className="manage-squad" onClick={() => navigate(`profile/${run.id}`)}>{locale === "es" ? "Cambiar los seis titulares" : "Change the starting six"}</button>
+          <button type="button" className="manage-squad" onClick={() => navigate(`profile/${run.id}`)}>{locale === "es" ? "Gestionar equipo y PC" : "Manage team and PC"}</button>
           <div className="partner-preparation"><span>{locale === "es" ? "Ventaja de preparación" : "Preparation edge"}</span><b>{preparationEdge(run) >= 0 ? "+" : ""}{preparationEdge(run)} LV</b></div>
         </aside>
 
@@ -110,7 +119,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
           <div className="ticket-notch top" /><div className="ticket-notch bottom" />
           <header className="decision-brief">
             <div><span>{locale === "es" ? "QUIÉN" : "WHO"}</span><b>{decision?.npc_name?.split(" · ")[0] ?? "League staff"}</b></div>
-            <div><span>{locale === "es" ? "ÁREA" : "AREA"}</span><b>{decision ? effectLabel(primaryEffect(decision.options), locale) : "—"}</b></div>
+            <div><span>{locale === "es" ? "OPORTUNIDAD" : "OPPORTUNITY"}</span><b>{decision ? familyLabel(decision.family, locale) : "—"}</b></div>
             <div><span>{locale === "es" ? "DECISIÓN" : "DECISION"}</span><b>{run.season ? `${run.season.decisions_completed + 1}/${run.season.decisions_required}` : "—"}</b></div>
           </header>
           <p className="eyebrow">{locale === "es" ? "Antes del calendario" : "Before the schedule"}</p>
@@ -128,7 +137,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
               >
                 <span className={`choice-number ${option.risk}`}>{String(index + 1).padStart(2, "0")}</span>
                 <span className="choice-copy"><small className={`risk ${option.risk}`}>{riskLabel(option.risk, locale)}</small><b>{option.label}</b><p>{option.description}</p></span>
-                <span className="choice-effects">{effectChips(option.guaranteed, locale)}<small>{transparencyLabel(option.transparency, locale)}</small></span>
+                <span className="choice-effects"><span className="choice-rewards">{rewardChips(option.risk === "gamble" ? option.gamble?.success_rewards ?? [] : option.rewards ?? [], locale)}</span>{effectChips(option.guaranteed, locale)}<small>{transparencyLabel(option.transparency, locale)}</small></span>
               </button>
             ))}
           </div>
@@ -136,14 +145,17 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
           {selected ? (
             <section className={`decision-confirmation ${selected.risk}`} aria-live="polite">
               <div>
-                <span>{locale === "es" ? "CONSECUENCIA ASEGURADA" : "GUARANTEED OUTCOME"}</span>
-                <strong>{effectSentence(selected.guaranteed, locale)}</strong>
+                <span>{selected.risk === "gamble" ? (locale === "es" ? "PREMIO DE LA RULETA" : "ROULETTE PRIZE") : (locale === "es" ? "RECIBIRÁS" : "YOU RECEIVE")}</span>
+                <strong>{rewardSentence(selected.risk === "gamble" ? selected.gamble?.success_rewards ?? [] : selected.rewards ?? [], locale) || effectSentence(selected.guaranteed, locale)}</strong>
+                {selected.risk !== "gamble" && (selected.rewards?.length ?? 0) > 0 ? <p>{locale === "es" ? "Además:" : "Also:"} {effectSentence(selected.guaranteed, locale)}</p> : null}
                 {selected.gamble?.chance ? (
                   <p><b>{Math.round(selected.gamble.chance * 100)}%</b> {locale === "es" ? "de éxito." : "success chance."} {gambleSentence(selected, locale)}</p>
                 ) : <p>{locale === "es" ? "No hay tirada oculta para este resultado." : "There is no hidden roll for this outcome."}</p>}
               </div>
               <button className="primary-action" onClick={decide} disabled={busy}>
-                {finalDecision
+                {selected.risk === "gamble"
+                  ? (locale === "es" ? "Girar la ruleta y comprometerse" : "Spin the wheel and commit")
+                  : finalDecision
                   ? (locale === "es" ? "Confirmar y jugar la temporada" : "Confirm and play the season")
                   : (locale === "es" ? `Confirmar decisión ${decisionNumber} de ${decisionTotal}` : `Confirm decision ${decisionNumber} of ${decisionTotal}`)}
               </button>
@@ -161,6 +173,19 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
 
 function signed(value: number): string { return value > 0 ? `+${value}` : String(value); }
 
+function RouletteOverlay({ state, locale, option }: { state: "spinning" | "success" | "failure"; locale: Locale; option?: DecisionOption }) {
+  const reward = rewardSentence(option?.gamble?.success_rewards ?? [], locale);
+  return <div className={`roulette-overlay ${state}`} role="status" aria-live="assertive"><div className="roulette-wheel" aria-hidden="true"><i>?</i><i>★</i><i>×</i><i>★</i></div><section><span>{locale === "es" ? "RULETA DE APUESTA" : "GAMBLE WHEEL"}</span><h2>{state === "spinning" ? (locale === "es" ? "Girando…" : "Spinning…") : state === "success" ? (locale === "es" ? "¡ÉXITO!" : "SUCCESS!") : (locale === "es" ? "NO SALIÓ" : "NO WIN")}</h2><p>{state === "spinning" ? (locale === "es" ? "La elección ya está comprometida." : "The choice is committed.") : state === "success" ? reward : (locale === "es" ? "Se aplican las consecuencias indicadas; el premio no se entrega." : "The stated consequences apply; the prize is not granted.")}</p></section></div>;
+}
+
+function gambleSucceeded(run: CareerRun): boolean {
+  const seasonEvent = [...run.timeline].reverse().find((entry) => entry.type === "season.completed");
+  const eventEffects = seasonEvent?.decision_effects as Record<string, unknown> | undefined;
+  if (typeof eventEffects?.gamble_success === "boolean") return eventEffects.gamble_success;
+  const history = run.season?.decision_history?.at(-1) as { effects?: Record<string, unknown> } | undefined;
+  return history?.effects?.gamble_success === true;
+}
+
 function effectChips(effects: Record<string, number>, locale: Locale) {
   return <>{Object.entries(effects).map(([key, value]) => <b key={key} className={value < 0 ? "negative" : "positive"}>{effectLabel(key, locale)} {signed(value)}</b>)}</>;
 }
@@ -169,14 +194,36 @@ function effectSentence(effects: Record<string, number>, locale: Locale): string
   return Object.entries(effects).map(([key, value]) => `${signed(value)} ${effectLabel(key, locale)}`).join(" · ");
 }
 
+function rewardChips(rewards: DecisionReward[], locale: Locale) {
+  return <>{rewards.map((reward, index) => <b key={`${reward.type}-${index}`} className="world-reward">{rewardLabel(reward, locale)}</b>)}</>;
+}
+
+function rewardSentence(rewards: DecisionReward[], locale: Locale): string {
+  return rewards.map((reward) => rewardLabel(reward, locale)).join(" · ");
+}
+
+function rewardLabel(reward: DecisionReward, locale: Locale): string {
+  if (reward.type === "pokemon") return `${locale === "es" ? "Capturar" : "Catch"} ${reward.species}`;
+  if (reward.type === "item") return `${reward.item} × ${reward.quantity}`;
+  if (reward.type === "move") return `${locale === "es" ? "Aprender" : "Learn"} ${reward.move}`;
+  if (reward.type === "level") return `${locale === "es" ? "Compañero" : "Partner"} +${reward.levels} LV`;
+  return `${locale === "es" ? "Vínculo" : "Bond"}: ${reward.name.split(" · ")[0]} ${reward.amount > 0 ? "+" : ""}${reward.amount}`;
+}
+
 function gambleSentence(option: DecisionOption, locale: Locale): string {
   const success = effectSentence(option.gamble?.success ?? {}, locale);
   const failure = effectSentence(option.gamble?.failure ?? {}, locale);
   return locale === "es" ? `Si sale bien: ${success}. Si falla: ${failure}.` : `On success: ${success}. On failure: ${failure}.`;
 }
 
-function primaryEffect(options: DecisionOption[]): string {
-  return Object.keys(options[1]?.guaranteed ?? options[0]?.guaranteed ?? {})[0] ?? "development";
+function familyLabel(family: string, locale: Locale): string {
+  const labels: Record<string, [string, string]> = {
+    capture: ["Captura", "Capture"], evolution: ["Evolución", "Evolution"], breeding: ["Crianza", "Breeding"], contest: ["Concurso", "Contest"],
+    research: ["Investigación", "Research"], health: ["Salud", "Health"], economy: ["Economía", "Economy"], media: ["Medios", "Media"],
+    crime: ["Legalidad", "Legality"], friendship: ["Amistad", "Friendship"], rivalry: ["Rivalidad", "Rivalry"], conservation: ["Conservación", "Conservation"],
+    regional_culture: ["Cultura regional", "Regional culture"], contract: ["Contrato", "Contract"], training: ["Entrenamiento", "Training"],
+  };
+  return labels[family]?.[locale === "es" ? 0 : 1] ?? family;
 }
 
 function preparationEdge(run: CareerRun): number {
@@ -184,7 +231,9 @@ function preparationEdge(run: CareerRun): number {
     + Math.min(1, Math.max(0, run.finances) / 4 | 0)
     - Number(run.health < 45)
     - Number(run.finances <= -4)
-    + Math.min(2, Math.max(0, run.scouting) / 3 | 0);
+    + Math.min(2, Math.max(0, run.scouting) / 3 | 0)
+    + Number(run.class_effects?.battle?.home_level_bonus ?? 0)
+    - Number(run.class_effects?.battle?.away_level_bonus ?? 0);
 }
 
 function attributeHint(key: "development" | "scouting" | "finances" | "reputation", value: number, locale: Locale): string {

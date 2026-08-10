@@ -8,9 +8,9 @@ type ScenarioCopy = {
 
 const SCENARIOS: Record<string, { es: ScenarioCopy; en: ScenarioCopy }> = {
   capture: pair("Una señal en la ruta", "El ojeador encontró un Pokémon fuera del radar del club. Perseguir la pista puede ampliar el roster, pero quitará recursos al calendario.", [
-    ["Mantener el plan", "Protege la preparación actual y registra la pista para más adelante."], ["Enviar al equipo de scouting", "Invierte recursos para estudiar el hábitat antes de actuar."], ["Salir tras la pista", "Busca una ventaja grande asumiendo el riesgo de una expedición fallida."],
+    ["Intentar la captura", "Usa una Poké Ball y suma al primer candidato al equipo."], ["Cambiar de ruta", "Invierte en scouting para buscar otro Pokémon regional."], ["Ir por la pista difícil", "Busca una captura distinta y consigue apoyo adicional para futuras expediciones."],
   ], "A trail outside the club", "A scout found a Pokémon the club overlooked. Following it could expand the roster, but it will take resources from the schedule.", [
-    ["Keep the plan", "Protect current preparation and record the lead for later."], ["Send the scouting team", "Spend resources to study the habitat before acting."], ["Follow the trail", "Chase a major advantage with a real chance of failure."],
+    ["Attempt the catch", "Use a Poké Ball and add the first candidate to your team."], ["Change the route", "Invest in scouting to find another regional Pokémon."], ["Take the difficult trail", "Pursue a different catch and secure support for future expeditions."],
   ]),
   evolution: pair("Tu compañero está cambiando", "El cuerpo técnico detectó señales de evolución. Debes decidir cuánto exigirle antes de que empiece el calendario.", [
     ["Esperar y protegerlo", "Prioriza su salud y deja que el proceso llegue a su ritmo."], ["Preparar la evolución", "Dedica instalaciones y entrenamiento a una transición controlada."], ["Forzar el momento", "Acelera el desarrollo, con riesgo real para la salud y la reputación."],
@@ -85,19 +85,10 @@ const SCENARIOS: Record<string, { es: ScenarioCopy; en: ScenarioCopy }> = {
 };
 
 export function decisionPresentation(decision: CareerDecision, run: CareerRun, locale: Locale) {
-  const scenario = SCENARIOS[decision.family]?.[locale] ?? {
-    title: decision.title,
-    body: decision.body,
-    options: decision.options.map((option) => [option.label, option.description]) as ScenarioCopy["options"],
-  };
   return {
-    title: scenario.title.replaceAll("{partner}", run.build.starter),
-    body: scenario.body.replaceAll("{partner}", run.build.starter),
-    options: decision.options.map((option, index) => ({
-      ...option,
-      label: scenario.options[index]?.[0] ?? option.label,
-      description: scenario.options[index]?.[1] ?? option.description,
-    })),
+    title: decision.title.replaceAll("{partner}", run.build.starter),
+    body: decision.body.replaceAll("{partner}", run.build.starter),
+    options: decision.options,
   };
 }
 

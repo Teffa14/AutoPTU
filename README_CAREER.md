@@ -6,12 +6,15 @@ el contrato determinista `BattleSpec + seed + ContentVersion -> BattleTranscript
 
 ## Vertical slice incluida
 
-- Nueve regiones, Junior/Rookie/Regular/Elite, edad inicial 12, underdog regional, 10 Poké Balls y
+- Nueve regiones, Junior/Rookie/Regular/Elite, edad inicial 12, starters oficiales y catálogo PTU
+  completo de underdogs regionales, 10 Poké Balls y
   las 69 clases PTU adaptadas con cobertura explícita de sus 709 features.
 - 240 familias de decisiones y 25.920 nodos mecánicamente distintos, validados por hash para
   rechazar nodos muertos o variantes que sólo cambien texto.
 - Temporadas completas de 6/8/10/12 combates PTU, progresión por edad/rendimiento, contratos,
   salud, ascenso, descenso, retiro, resumen y timeline.
+- Identidad persistente por Pokémon, movimientos legales por nivel/fuente, clases con efectos
+  directos, apuestas con ruleta y replays exportados antes de desmontar el motor aislado.
 - React 19 + TypeScript, arena PixiJS 8 cargada sólo en `/career-game/battle/...`, replay local en
   IndexedDB y escenas exclusivas para creación, temporada, perfil, timeline y reto diario.
 - Auth Supabase, esquema privado para carreras ranked, RLS en proyecciones públicas, cuota de tres

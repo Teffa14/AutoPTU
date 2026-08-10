@@ -5,6 +5,8 @@ export interface RegionCatalog {
   id: string;
   label: string;
   underdogs: string[];
+  starters: string[];
+  partner_choices: string[];
   clubs: string[];
   arena_theme: string;
 }
@@ -12,7 +14,16 @@ export interface RegionCatalog {
 export interface CareerCatalog {
   version: string;
   regions: RegionCatalog[];
-  classes: { id: string; name: string }[];
+  classes: {
+    id: string;
+    name: string;
+    focus: string;
+    battle: Record<string, number>;
+    season: Record<string, number>;
+    decision_affinity: string;
+    description_es: string;
+    description_en: string;
+  }[];
   class_count: number;
   feature_count: number;
   decision_signature_count: number;
@@ -25,12 +36,22 @@ export interface DecisionOption {
   risk: "safe" | "calculated" | "gamble";
   transparency: "full" | "estimated" | "hidden";
   guaranteed: Record<string, number>;
+  rewards: DecisionReward[];
   gamble?: {
     chance?: number;
     success?: Record<string, number>;
     failure?: Record<string, number>;
+    success_rewards?: DecisionReward[];
+    failure_rewards?: DecisionReward[];
   };
 }
+
+export type DecisionReward =
+  | { type: "pokemon"; species: string }
+  | { type: "item"; item: string; quantity: number }
+  | { type: "move"; move: string }
+  | { type: "relationship"; name: string; amount: number }
+  | { type: "level"; levels: number };
 
 export interface CareerDecision {
   id: string;
@@ -39,6 +60,7 @@ export interface CareerDecision {
   body: string;
   npc_name: string;
   options: DecisionOption[];
+  variant?: string;
 }
 
 export interface CareerPokemon {
@@ -53,6 +75,9 @@ export interface CareerPokemon {
   status: "active" | "pc";
   matches: number;
   wins: number;
+  taught_moves: string[];
+  nature: string;
+  abilities: string[];
   evolution_history: {
     from: string;
     to: string;
@@ -75,6 +100,8 @@ export interface CareerRun {
   development: number;
   scouting: number;
   finances: number;
+  relationships: Record<string, number>;
+  inventory: Record<string, number>;
   status: "active" | "retired";
   revision: number;
   build: { name: string; region: string; starter: string; classes: string[]; pokeballs: number };
@@ -84,6 +111,11 @@ export interface CareerRun {
   active_roster: string[];
   totals: { wins: number; losses: number; draws: number; titles: number };
   achievements: string[];
+  class_effects: {
+    adapters: { class_name: string; focus: string; description_es: string; description_en: string; battle: Record<string, number>; season: Record<string, number> }[];
+    battle: Record<string, number>;
+    season: Record<string, number>;
+  };
   timeline: Record<string, unknown>[];
   season?: {
     number: number;
@@ -120,6 +152,7 @@ export interface BattleTranscript {
   rounds: number;
   sha256: string;
   spec: {
+    seed?: number;
     home_club: string;
     away_club: string;
     home_species: string;
@@ -131,6 +164,15 @@ export interface BattleTranscript {
     level?: number;
     home_level_bonus?: number;
     away_level_bonus?: number;
+    home_team_species?: string[];
+    home_pokemon_ids?: string[];
+    home_team_levels?: number[];
+    home_team_natures?: string[];
+    home_team_abilities?: string[][];
+    away_team_species?: string[];
+    away_team_levels?: number[];
+    home_ai_level?: string;
+    away_ai_level?: string;
   };
   events: Record<string, unknown>[];
   initial_state: BattleFrame;
@@ -160,6 +202,7 @@ export interface BattleCombatant {
     species: string;
     team: string;
     level?: number;
+    nature?: string;
     hp: number;
     max_hp: number;
     position?: [number, number];
@@ -169,4 +212,7 @@ export interface BattleCombatant {
     effective_stats?: Partial<Record<"hp" | "atk" | "def" | "spatk" | "spdef" | "spd", number>>;
     abilities?: string[];
     moves?: BattleMove[];
+    active?: boolean;
+    size?: string;
+    footprint_side?: number;
 }

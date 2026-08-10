@@ -6,8 +6,8 @@ import os
 from typing import Any, Dict, List, Optional
 
 
-CURRENT_CAREER_VERSION = "career-0.3.0"
-CURRENT_NARRATIVE_VERSION = "career-hooks-0.2.0"
+CURRENT_CAREER_VERSION = "career-0.5.0"
+CURRENT_NARRATIVE_VERSION = "career-hooks-0.4.0"
 
 
 def utc_now() -> str:
@@ -58,6 +58,7 @@ class CareerDecisionOption:
     risk: str
     transparency: str
     guaranteed: Dict[str, int]
+    rewards: List[Dict[str, Any]] = field(default_factory=list)
     gamble: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -69,6 +70,7 @@ class CareerDecision:
     body: str
     npc_name: str
     options: List[CareerDecisionOption]
+    variant: str = ""
 
 
 @dataclass
@@ -84,6 +86,9 @@ class CareerPokemon:
     status: str = "pc"
     matches: int = 0
     wins: int = 0
+    taught_moves: List[str] = field(default_factory=list)
+    nature: str = ""
+    abilities: List[str] = field(default_factory=list)
     evolution_history: List[Dict[str, Any]] = field(default_factory=list)
 
 
@@ -103,6 +108,16 @@ class BattleSpec:
     featured: bool = False
     home_level_bonus: int = 0
     away_level_bonus: int = 0
+    home_team_species: List[str] = field(default_factory=list)
+    home_pokemon_ids: List[str] = field(default_factory=list)
+    home_team_levels: List[int] = field(default_factory=list)
+    home_team_moves: List[List[str]] = field(default_factory=list)
+    home_team_natures: List[str] = field(default_factory=list)
+    home_team_abilities: List[List[str]] = field(default_factory=list)
+    away_team_species: List[str] = field(default_factory=list)
+    away_team_levels: List[int] = field(default_factory=list)
+    home_ai_level: str = "tactical"
+    away_ai_level: str = "tactical"
 
 
 @dataclass
@@ -196,8 +211,10 @@ class CareerRun:
     pokemon: List[CareerPokemon] = field(default_factory=list)
     active_roster: List[str] = field(default_factory=list)
     relationships: Dict[str, int] = field(default_factory=dict)
+    inventory: Dict[str, int] = field(default_factory=dict)
     totals: Dict[str, int] = field(default_factory=lambda: {"wins": 0, "losses": 0, "draws": 0, "titles": 0})
     achievements: List[str] = field(default_factory=list)
+    class_effects: Dict[str, Any] = field(default_factory=dict)
     timeline: List[Dict[str, Any]] = field(default_factory=list)
     season: Optional[SeasonState] = None
     versions: ContentVersion = field(default_factory=ContentVersion)

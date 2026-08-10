@@ -90,6 +90,10 @@ function eventKind(entry: Record<string, unknown>, locale: Locale): string {
     "career.started": ["inicio", "start"],
     "pokemon.captured": ["capturas", "captures"],
     "pokemon.evolved": ["evolución", "evolution"],
+    "pokemon.trained": ["entrenamiento", "training"],
+    "pokemon.move_learned": ["movimiento", "move learned"],
+    "item.acquired": ["objeto", "item"],
+    "relationship.changed": ["relación", "relationship"],
     "roster.lineup_changed": ["alineación", "lineup"],
     "season.completed": ["temporada", "season"],
     "career.retired": ["retiro", "retirement"],
@@ -117,6 +121,10 @@ function eventTitle(entry: Record<string, unknown>, locale: Locale): string {
       ? `${String(entry.from)} evolucionó a ${String(entry.to)} en el nivel ${String(entry.level)}`
       : `${String(entry.from)} evolved into ${String(entry.to)} at level ${String(entry.level)}`;
   }
+  if (type === "pokemon.trained") return locale === "es" ? `${String(entry.species)} ganó ${String(entry.levels)} niveles` : `${String(entry.species)} gained ${String(entry.levels)} levels`;
+  if (type === "pokemon.move_learned") return locale === "es" ? `${String(entry.species)} aprendió ${String(entry.move)}` : `${String(entry.species)} learned ${String(entry.move)}`;
+  if (type === "item.acquired") return locale === "es" ? `Conseguiste ${String(entry.quantity)} × ${String(entry.item)}` : `Received ${String(entry.quantity)} × ${String(entry.item)}`;
+  if (type === "relationship.changed") return locale === "es" ? `El vínculo con ${String(entry.name).split(" · ")[0]} cambió ${signed(Number(entry.amount ?? 0))}` : `Bond with ${String(entry.name).split(" · ")[0]} changed ${signed(Number(entry.amount ?? 0))}`;
   if (type === "roster.lineup_changed") return locale === "es" ? "Se registraron los seis titulares" : "The starting six were registered";
   if (type === "career.retired") return locale === "es" ? "La carrera quedó cerrada" : "The career came to an end";
   if (type === "career.version_migrated") return locale === "es" ? "Las reglas de carrera se actualizaron" : "Career rules were updated";
@@ -125,6 +133,15 @@ function eventTitle(entry: Record<string, unknown>, locale: Locale): string {
 
 function effectSummary(effects: Record<string, unknown>, locale: Locale): string {
   const pieces = Object.entries(effects).flatMap(([key, value]) => {
+    if (key === "rewards" && Array.isArray(value)) return value.flatMap((entry) => {
+      const reward = asRecord(entry);
+      if (reward.type === "pokemon") return [`${locale === "es" ? "captura" : "caught"}: ${String(reward.species)}`];
+      if (reward.type === "item") return [`${String(reward.item)} × ${String(reward.quantity)}`];
+      if (reward.type === "move") return [`${locale === "es" ? "movimiento" : "move"}: ${String(reward.move)}`];
+      if (reward.type === "relationship") return [`${locale === "es" ? "vínculo" : "bond"}: ${String(reward.name).split(" · ")[0]}`];
+      if (reward.type === "level") return [`+${String(reward.levels)} LV`];
+      return [];
+    });
     if (key === "gamble_success") return [value ? (locale === "es" ? "La apuesta salió bien" : "The gamble succeeded") : (locale === "es" ? "La apuesta falló" : "The gamble failed")];
     if (typeof value !== "number") return [];
     return [`${effectLabel(key, locale)} ${signed(value)}`];
