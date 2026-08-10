@@ -25,6 +25,9 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   const finalDecision = Boolean(run.season && run.season.decisions_completed + 1 >= run.season.decisions_required);
   const decisionNumber = (run.season?.decisions_completed ?? 0) + 1;
   const decisionTotal = run.season?.decisions_required ?? 1;
+  const lineup = run.active_roster
+    .map((id) => run.pokemon.find((pokemon) => pokemon.id === id))
+    .filter((pokemon) => pokemon !== undefined);
 
   useEffect(() => setSelectedId(""), [decision?.id]);
 
@@ -63,6 +66,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
       <p>{locale === "es" ? `Se retiró a los ${run.age}. La liga conserva el registro.` : `Retired at ${run.age}. The league keeps the record.`}</p>
       <div className="retirement-score"><b>{run.score}</b><span>{copy.score}</span></div>
       <div className="record-ribbon"><span>{run.totals.wins} W</span><span>{run.totals.losses} L</span><span>{run.totals.titles} titles</span></div>
+      <div className="retirement-roster"><span><b>{run.summary?.pokemon_owned ?? run.pokemon.length}</b> Pokémon</span><span><b>{run.summary?.evolutions ?? 0}</b> {locale === "es" ? "evoluciones" : "evolutions"}</span></div>
       <button className="primary-action" onClick={() => navigate(`timeline/${run.id}`)}>{copy.timeline}</button>
       <div className="share-actions"><button onClick={() => share(false)} disabled={busy}>{locale === "es" ? "Compartir tarjeta" : "Share card"}</button><button onClick={() => share(true)} disabled={busy}>{locale === "es" ? "Compartir con replay" : "Share with replay"}</button></div>
       {shareUrl ? <output className="share-url"><a href={`${window.location.origin}${shareUrl}`} target="_blank" rel="noreferrer">{window.location.origin}{shareUrl}</a></output> : null}
@@ -87,10 +91,19 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
       </div>
 
       <div className="season-stage">
-        <aside className="partner-stand">
+        <aside className="partner-stand squad-stand">
           <div className="sprite-halo"><PokemonSprite name={run.build.starter} className="partner-sprite" /></div>
-          <p>{locale === "es" ? "primer compañero" : "first partner"}</p><h2>{run.build.starter}</h2>
-          <span>{run.build.pokeballs} Poké Balls · {run.build.classes.join(" / ")}</span>
+          <p>{locale === "es" ? "capitán del equipo" : "team captain"}</p><h2>{run.build.starter}</h2>
+          <span>{run.build.pokeballs} Poké Balls · {run.pokemon.length} {locale === "es" ? "capturados" : "caught"}</span>
+          <div className="season-lineup" aria-label={locale === "es" ? "Alineación activa" : "Active lineup"}>
+            {lineup.map((pokemon) => (
+              <div key={pokemon.id} title={`${pokemon.species} · LV ${pokemon.level}`}>
+                <PokemonSprite name={pokemon.species} className="lineup-sprite" />
+                <small>LV {pokemon.level}</small>
+              </div>
+            ))}
+          </div>
+          <button type="button" className="manage-squad" onClick={() => navigate(`profile/${run.id}`)}>{locale === "es" ? "Cambiar los seis titulares" : "Change the starting six"}</button>
           <div className="partner-preparation"><span>{locale === "es" ? "Ventaja de preparación" : "Preparation edge"}</span><b>{preparationEdge(run) >= 0 ? "+" : ""}{preparationEdge(run)} LV</b></div>
         </aside>
 

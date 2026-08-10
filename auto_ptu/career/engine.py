@@ -25,6 +25,13 @@ from .models import (
     TrainerCareerBuild,
     utc_now,
 )
+from .roster import (
+    active_pokemon,
+    capture_between_seasons,
+    initialize_roster,
+    progress_after_season,
+    set_active_roster,
+)
 
 
 BattleRunner = Callable[[BattleSpec], BattleTranscript]
@@ -104,12 +111,35 @@ class CareerEngine:
                 "label": f"{run.build.name} joined {club} with {canonical_starter}.",
             }
         )
+        initialize_roster(run, stable_seed(run.seed, "academy-intake"))
         run.season = self._open_season(run)
+        return run
+
+    def ensure_roster(self, run: CareerRun) -> bool:
+        return initialize_roster(run, stable_seed(run.seed, run.season_number, "academy-intake"))
+
+    def update_lineup(self, run: CareerRun, pokemon_ids: List[str]) -> CareerRun:
+        if run.status != "active":
+            raise ValueError("A retired career cannot change its active team.")
+        self.ensure_roster(run)
+        set_active_roster(run, pokemon_ids)
+        run.timeline.append(
+            {
+                "type": "roster.lineup_changed",
+                "season": run.season_number,
+                "age": run.age,
+                "pokemon_ids": list(run.active_roster),
+                "label": "The six-Pokémon active lineup was registered for the next schedule.",
+            }
+        )
+        run.revision += 1
+        run.updated_at = utc_now()
         return run
 
     def advance_season(self, run: CareerRun, *, option_id: str) -> tuple[CareerRun, List[BattleTranscript]]:
         if run.status != "active" or run.season is None:
             raise ValueError("This career cannot advance.")
+        self.ensure_roster(run)
         decision = run.season.decision
         if decision is None:
             raise ValueError("The season has no pending decision.")
@@ -155,6 +185,7 @@ class CareerEngine:
         run.totals["draws"] += draws
         outcome = self._apply_competitive_progression(run, season)
         self._apply_health_and_contract(run, wins=wins, losses=losses)
+        roster_outcome = progress_after_season(run, specs, transcripts)
         run.timeline.append(
             {
                 "type": "season.completed",
@@ -167,6 +198,8 @@ class CareerEngine:
                 "decision_effects": decision_result,
                 "battle_ids": list(season.battle_ids),
                 "score_delta": season.score_delta,
+                "lineup": list(run.active_roster),
+                **roster_outcome,
                 **outcome,
             }
         )
@@ -176,6 +209,7 @@ class CareerEngine:
             return run, transcripts
         run.age += 1
         run.season_number += 1
+        capture_between_seasons(run, stable_seed(run.seed, run.season_number, "offseason-captures"))
         run.season = self._open_season(run)
         run.updated_at = utc_now()
         return run, transcripts
@@ -200,6 +234,9 @@ class CareerEngine:
             score=run.score,
             retirement_reason=run.retirement_reason,
             achievements=list(run.achievements),
+            pokemon_owned=len(run.pokemon),
+            evolutions=sum(len(entry.evolution_history) for entry in run.pokemon),
+            partner_species=run.build.starter,
         )
         run.timeline.append(
             {
@@ -240,12 +277,14 @@ class CareerEngine:
         return season
 
     def _schedule(self, run: CareerRun) -> List[BattleSpec]:
+        self.ensure_roster(run)
         league = LEAGUES[run.league]
         region = REGIONS[run.build.region]
         clubs = list(region.clubs)
         home = run.contract.club_name if run.contract else clubs[0]
         rng = random.Random(stable_seed(run.seed, run.season_number, "schedule"))
-        candidates = [entry for entry in region.underdogs if entry != run.build.starter]
+        lineup = active_pokemon(run)
+        candidates = list(region.underdogs)
         # Career choices alter preparation without bypassing PTU stats or rolls.
         # Development and facilities raise the partner's generated PTU level;
         # scouting reduces the opponent's preparation. Low health/finances have a
@@ -255,12 +294,17 @@ class CareerEngine:
         home_bonus -= int(run.health < 45)
         home_bonus -= int(run.finances <= -4)
         away_bonus = -min(2, max(0, run.scouting) // 3)
+        league_floor = league.min_level + min(15, max(0, run.season_number - 1))
+        competitive_level = max(league_floor, round(sum(entry.level for entry in lineup) / len(lineup)))
         specs = []
         for index in range(league.matches):
             away_club = clubs[(index + 1) % len(clubs)]
             if away_club == home:
                 away_club = f"{region.label} Academy {index + 1}"
-            opponent = candidates[rng.randrange(len(candidates))]
+            pokemon = lineup[index % len(lineup)]
+            eligible_opponents = [entry for entry in candidates if entry != pokemon.species] or candidates
+            opponent = eligible_opponents[rng.randrange(len(eligible_opponents))]
+            base_level = competitive_level
             specs.append(
                 BattleSpec(
                     id=f"{run.id}-s{run.season_number}-m{index + 1}",
@@ -270,11 +314,12 @@ class CareerEngine:
                     season=run.season_number,
                     home_club=home,
                     away_club=away_club,
-                    home_species=run.build.starter,
+                    home_species=pokemon.species,
                     away_species=opponent,
-                    level=league.min_level + min(15, max(0, run.season_number - 1)),
+                    level=base_level,
+                    home_pokemon_id=pokemon.id,
                     featured=index == league.matches - 1,
-                    home_level_bonus=home_bonus,
+                    home_level_bonus=home_bonus + pokemon.level - base_level,
                     away_level_bonus=away_bonus,
                 )
             )

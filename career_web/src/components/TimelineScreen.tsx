@@ -44,7 +44,7 @@ export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale
         {run.timeline.map((entry, index) => (
           <article key={`${String(entry.type)}-${index}`}>
             <div className="timeline-age"><b>{String(entry.age ?? run.age)}</b><small>{locale === "es" ? "años" : "years"}</small></div>
-            <div><span>{String(entry.type).replace(".", " / ")}</span><h2>{String(entry.label ?? entry.club ?? entry.reason ?? "Season recorded")}</h2>
+            <div><span>{eventKind(entry, locale)}</span><h2>{eventTitle(entry, locale)}</h2>
               {entry.record ? <p>{String(entry.league)} · {String(entry.record)} · score {Number(entry.score_delta ?? 0) >= 0 ? "+" : ""}{String(entry.score_delta)}</p> : null}</div>
           </article>
         ))}
@@ -68,4 +68,32 @@ export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale
       ) : null}
     </section>
   );
+}
+
+function eventKind(entry: Record<string, unknown>, locale: Locale): string {
+  const type = String(entry.type ?? "");
+  const labels: Record<string, [string, string]> = {
+    "career.started": ["inicio", "start"],
+    "pokemon.captured": ["capturas", "captures"],
+    "pokemon.evolved": ["evolución", "evolution"],
+    "roster.lineup_changed": ["alineación", "lineup"],
+    "season.completed": ["temporada", "season"],
+    "career.retired": ["retiro", "retirement"],
+  };
+  return labels[type]?.[locale === "es" ? 0 : 1] ?? type.replace(".", " / ");
+}
+
+function eventTitle(entry: Record<string, unknown>, locale: Locale): string {
+  const type = String(entry.type ?? "");
+  if (type === "pokemon.captured" && Array.isArray(entry.species)) {
+    const names = entry.species.map(String).join(", ");
+    return locale === "es" ? `Se sumaron ${names}` : `Caught ${names}`;
+  }
+  if (type === "pokemon.evolved") {
+    return locale === "es"
+      ? `${String(entry.from)} evolucionó a ${String(entry.to)} en el nivel ${String(entry.level)}`
+      : `${String(entry.from)} evolved into ${String(entry.to)} at level ${String(entry.level)}`;
+  }
+  if (type === "roster.lineup_changed") return locale === "es" ? "Se registraron los seis titulares" : "The starting six were registered";
+  return String(entry.label ?? entry.club ?? entry.reason ?? (locale === "es" ? "Temporada registrada" : "Season recorded"));
 }

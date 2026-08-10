@@ -6,7 +6,7 @@ import os
 from typing import Any, Dict, List, Optional
 
 
-CURRENT_CAREER_VERSION = "career-0.2.0"
+CURRENT_CAREER_VERSION = "career-0.3.0"
 CURRENT_NARRATIVE_VERSION = "career-hooks-0.2.0"
 
 
@@ -72,6 +72,22 @@ class CareerDecision:
 
 
 @dataclass
+class CareerPokemon:
+    id: str
+    species: str
+    caught_species: str
+    level: int
+    acquired_season: int
+    acquired_age: int
+    capture_region: str
+    is_partner: bool = False
+    status: str = "pc"
+    matches: int = 0
+    wins: int = 0
+    evolution_history: List[Dict[str, Any]] = field(default_factory=list)
+
+
+@dataclass
 class BattleSpec:
     id: str
     seed: int
@@ -83,6 +99,7 @@ class BattleSpec:
     home_species: str
     away_species: str
     level: int
+    home_pokemon_id: str = ""
     featured: bool = False
     home_level_bonus: int = 0
     away_level_bonus: int = 0
@@ -144,6 +161,9 @@ class CareerSummary:
     score: int
     retirement_reason: str
     achievements: List[str]
+    pokemon_owned: int = 0
+    evolutions: int = 0
+    partner_species: str = ""
 
 
 @dataclass
@@ -173,6 +193,8 @@ class CareerRun:
     revision: int = 0
     contract: Optional[ClubContract] = None
     roster: List[str] = field(default_factory=list)
+    pokemon: List[CareerPokemon] = field(default_factory=list)
+    active_roster: List[str] = field(default_factory=list)
     relationships: Dict[str, int] = field(default_factory=dict)
     totals: Dict[str, int] = field(default_factory=lambda: {"wins": 0, "losses": 0, "draws": 0, "titles": 0})
     achievements: List[str] = field(default_factory=list)
@@ -206,11 +228,41 @@ class CareerRun:
                 decision=decision,
                 battles=[BattleSpec(**dict(entry)) for entry in battles_payload],
             )
+        pokemon_payload = payload.get("pokemon") or []
+        pokemon = [CareerPokemon(**dict(entry)) for entry in pokemon_payload]
+        if not pokemon:
+            legacy_roster = list(payload.get("roster") or [build.starter])
+            pokemon = [
+                CareerPokemon(
+                    id=f"{payload['id']}-p{index + 1:03d}",
+                    species=str(species),
+                    caught_species=str(species),
+                    level=5,
+                    acquired_season=1,
+                    acquired_age=12,
+                    capture_region=build.region,
+                    is_partner=index == 0,
+                    status="active" if index < 6 else "pc",
+                )
+                for index, species in enumerate(legacy_roster)
+            ]
+        active_roster = [str(value) for value in payload.get("active_roster") or []]
+        if not active_roster:
+            active_roster = [entry.id for entry in pokemon[:6]]
         summary = CareerSummary(**dict(payload["summary"])) if payload.get("summary") else None
         fields = dict(payload)
-        for key in ("build", "contract", "versions", "season", "summary"):
+        for key in ("build", "contract", "versions", "season", "summary", "pokemon", "active_roster"):
             fields.pop(key, None)
-        return cls(**fields, build=build, contract=contract, versions=versions, season=season, summary=summary)
+        return cls(
+            **fields,
+            build=build,
+            contract=contract,
+            versions=versions,
+            season=season,
+            summary=summary,
+            pokemon=pokemon,
+            active_roster=active_roster,
+        )
 
 
 @dataclass

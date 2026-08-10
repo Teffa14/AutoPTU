@@ -8,7 +8,7 @@ from .catalogs import REGIONS, region_catalog
 from .class_adapters import compile_class_adapters
 from .content_compiler import validate_compiled_content
 from .engine import CareerEngine
-from .models import CareerRun
+from .models import CURRENT_CAREER_VERSION, CareerRun
 from .postgres_store import career_store_from_environment
 from .store import CareerStore
 
@@ -28,7 +28,7 @@ class CareerService:
         adapters = compile_class_adapters()
         content = validate_compiled_content()
         return {
-            "version": "career-0.1.0",
+            "version": CURRENT_CAREER_VERSION,
             "locale": "es" if str(locale).lower().startswith("es") else "en",
             "regions": region_catalog(),
             "classes": adapters["classes"],
@@ -82,6 +82,18 @@ class CareerService:
 
     def get_run(self, player_id: str, run_id: str) -> dict:
         run = self._owned_run(player_id, run_id)
+        return run.to_dict()
+
+    def lineup(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
+        run = self._owned_run(player_id, run_id)
+        expected = int(payload.get("expected_revision", -1))
+        if expected != run.revision:
+            raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
+        pokemon_ids = payload.get("pokemon_ids") or []
+        if not isinstance(pokemon_ids, list):
+            raise ValueError("pokemon_ids must be a list.")
+        self.engine.update_lineup(run, [str(value) for value in pokemon_ids])
+        self.store.save_run(run)
         return run.to_dict()
 
     def decide(self, player_id: str, run_id: str, payload: Dict[str, object], idempotency_key: str) -> dict:
@@ -153,4 +165,7 @@ class CareerService:
         run = self.store.load_run(run_id)
         if run.player_id != player_id:
             raise PermissionError("Career run belongs to another account.")
+        if self.engine.ensure_roster(run):
+            run.revision += 1
+            self.store.save_run(run)
         return run

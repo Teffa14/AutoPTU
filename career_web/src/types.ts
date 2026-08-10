@@ -41,6 +41,27 @@ export interface CareerDecision {
   options: DecisionOption[];
 }
 
+export interface CareerPokemon {
+  id: string;
+  species: string;
+  caught_species: string;
+  level: number;
+  acquired_season: number;
+  acquired_age: number;
+  capture_region: string;
+  is_partner: boolean;
+  status: "active" | "pc";
+  matches: number;
+  wins: number;
+  evolution_history: {
+    from: string;
+    to: string;
+    level: number;
+    season: number;
+    age: number;
+  }[];
+}
+
 export interface CareerRun {
   id: string;
   mode: CareerMode;
@@ -59,6 +80,8 @@ export interface CareerRun {
   build: { name: string; region: string; starter: string; classes: string[]; pokeballs: number };
   contract?: { club_name: string; region: string; league: string; salary: number; loan_slots: number };
   roster: string[];
+  pokemon: CareerPokemon[];
+  active_roster: string[];
   totals: { wins: number; losses: number; draws: number; titles: number };
   achievements: string[];
   timeline: Record<string, unknown>[];
@@ -74,7 +97,20 @@ export interface CareerRun {
     decisions_completed: number;
     decision_history: Record<string, unknown>[];
   };
-  summary?: Record<string, unknown>;
+  summary?: {
+    seasons: number;
+    final_age: number;
+    highest_league: string;
+    wins: number;
+    losses: number;
+    titles: number;
+    score: number;
+    retirement_reason: string;
+    achievements: string[];
+    pokemon_owned: number;
+    evolutions: number;
+    partner_species: string;
+  };
 }
 
 export interface BattleTranscript {
@@ -87,6 +123,7 @@ export interface BattleTranscript {
     home_club: string;
     away_club: string;
     home_species: string;
+    home_pokemon_id?: string;
     away_species: string;
     region: string;
     league: string;

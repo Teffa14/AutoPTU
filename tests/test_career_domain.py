@@ -9,7 +9,7 @@ from auto_ptu.career.catalogs import REGIONS, compiled_decision_count
 from auto_ptu.career.class_adapters import compile_class_adapters
 from auto_ptu.career.content_compiler import validate_compiled_content
 from auto_ptu.career.engine import CareerEngine
-from auto_ptu.career.models import BattleSpec, BattleTranscript
+from auto_ptu.career.models import BattleSpec, BattleTranscript, CareerRun
 from auto_ptu.career.service import CareerService
 from auto_ptu.career.store import CareerStore
 
@@ -49,7 +49,7 @@ def test_every_ptu_class_and_feature_gets_a_career_adapter() -> None:
     assert payload["unmapped"] == []
 
 
-def test_career_starts_at_twelve_with_underdog_and_ten_pokeballs() -> None:
+def test_career_starts_at_twelve_then_builds_a_full_squad_in_the_academy_trial() -> None:
     run = CareerEngine(fake_battle).new_run(
         player_id="trainer-1",
         name="Ari",
@@ -60,9 +60,92 @@ def test_career_starts_at_twelve_with_underdog_and_ten_pokeballs() -> None:
     )
     assert run.age == 12
     assert run.league == "junior"
-    assert run.build.pokeballs == 10
-    assert run.roster == ["Rattata"]
+    assert run.build.pokeballs == 3
+    assert len(run.pokemon) == 8
+    assert len(run.active_roster) == 6
+    assert len([entry for entry in run.pokemon if entry.status == "pc"]) == 2
+    assert run.roster[0] == "Rattata"
+    assert len(set(entry.id for entry in run.pokemon)) == 8
+    capture = next(entry for entry in run.timeline if entry["type"] == "pokemon.captured")
+    assert len(capture["species"]) == 7
     assert len(run.season.decision.options) == 3
+
+
+def test_first_calendar_rotates_the_six_registered_pokemon() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="trainer-team",
+        name="Ari",
+        region="kanto",
+        starter="Rattata",
+        classes=["Ace Trainer"],
+        seed=43,
+    )
+    schedule = engine._schedule(run)
+    assert [entry.home_pokemon_id for entry in schedule] == run.active_roster
+    assert [entry.home_species for entry in schedule] == [entry.species for entry in run.pokemon[:6]]
+
+
+def test_lineup_can_move_pokemon_between_active_team_and_pc() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="trainer-lineup",
+        name="Ari",
+        region="kanto",
+        starter="Rattata",
+        classes=["Ace Trainer"],
+        seed=44,
+    )
+    selected = [entry.id for entry in run.pokemon[2:8]]
+    engine.update_lineup(run, selected)
+    assert run.active_roster == selected
+    assert [entry.id for entry in run.pokemon if entry.status == "active"] == selected
+    assert engine._schedule(run)[0].home_pokemon_id == selected[0]
+    with pytest.raises(ValueError, match="exactly 6"):
+        engine.update_lineup(run, selected[:5])
+
+
+def test_legacy_single_partner_run_is_upgraded_to_six_active_and_two_in_pc() -> None:
+    engine = CareerEngine(fake_battle)
+    current = engine.new_run(
+        player_id="trainer-legacy",
+        name="Ari",
+        region="kanto",
+        starter="Rattata",
+        classes=["Ace Trainer"],
+        seed=46,
+    )
+    payload = current.to_dict()
+    payload.pop("pokemon")
+    payload.pop("active_roster")
+    payload["roster"] = ["Rattata"]
+    payload["build"]["pokeballs"] = 10
+    restored = CareerRun.from_dict(payload)
+    assert engine.ensure_roster(restored) is True
+    assert len(restored.pokemon) == 8
+    assert len(restored.active_roster) == 6
+    assert len([entry for entry in restored.pokemon if entry.status == "pc"]) == 2
+
+
+def test_partner_evolves_and_roster_keeps_growing_across_seasons() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="trainer-growth",
+        name="Ari",
+        region="kanto",
+        starter="Rattata",
+        classes=["Ace Trainer"],
+        seed=45,
+    )
+    for _ in range(2):
+        run, _ = engine.advance_season(run, option_id=run.season.decision.options[0].id)
+    partner = next(entry for entry in run.pokemon if entry.is_partner)
+    assert partner.species == "Raticate"
+    assert partner.level >= 20
+    assert partner.matches == 2
+    assert run.build.starter == "Raticate"
+    assert len(run.pokemon) == 14
+    assert sum(len(entry.evolution_history) for entry in run.pokemon) >= 1
 
 
 def test_junior_is_age_gated_then_promotes_to_rookie() -> None:
@@ -138,7 +221,7 @@ def test_active_legacy_run_records_version_migration_before_new_mechanics() -> N
         "season": 1,
         "age": 12,
         "from": "career-0.1.0",
-        "to": "career-0.2.0",
+        "to": "career-0.3.0",
     }
 
 
@@ -164,6 +247,22 @@ def test_decision_endpoint_is_revisioned_and_idempotent(tmp_path: Path) -> None:
     assert first["run"]["revision"] == 1
     with pytest.raises(RuntimeError, match="Revision conflict"):
         service.decide("trainer-1", run_id, {"expected_revision": 0, "option_id": first["run"]["season"]["decision"]["options"][0]["id"]}, "season-2")
+
+
+def test_lineup_endpoint_is_revisioned_and_persisted(tmp_path: Path) -> None:
+    service = CareerService(store=CareerStore(tmp_path), engine=CareerEngine(fake_battle))
+    run = service.create_run(
+        "trainer-1",
+        {"name": "Ari", "region": "kanto", "starter": "Rattata", "classes": ["Ace Trainer"], "seed": 6},
+    )
+    selected = [entry["id"] for entry in run["pokemon"][2:8]]
+    updated = service.lineup(
+        "trainer-1",
+        run["id"],
+        {"expected_revision": run["revision"], "pokemon_ids": selected},
+    )
+    assert updated["active_roster"] == selected
+    assert service.get_run("trainer-1", run["id"])["active_roster"] == selected
 
 
 def test_ranked_daily_attempts_are_limited_to_three(tmp_path: Path) -> None:

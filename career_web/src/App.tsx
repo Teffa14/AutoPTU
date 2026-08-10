@@ -85,7 +85,7 @@ export function App() {
       </section>
     ) : <div className="scene-loading">{locale === "es" ? "Cargando carrera…" : "Loading career…"}</div>;
   } else if (path.startsWith("profile/") && routeRun) {
-    screen = <ProfileScreen run={routeRun} locale={locale} />;
+    screen = <ProfileScreen run={routeRun} locale={locale} onRun={setRun} />;
   } else if (path.startsWith("timeline/") && routeRun) {
     screen = <TimelineScreen run={routeRun} locale={locale} />;
   } else if (path === "daily" || path.startsWith("leaderboard")) {

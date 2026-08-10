@@ -18,6 +18,13 @@ export const careerApi = {
   catalog: (locale: string) => request<CareerCatalog>(`/api/v1/catalog?locale=${encodeURIComponent(locale)}`),
   create: (payload: Record<string, unknown>) => request<CareerRun>("/api/v1/runs", { method: "POST", body: JSON.stringify(payload) }),
   run: (id: string) => request<CareerRun>(`/api/v1/runs/${encodeURIComponent(id)}`),
+  lineup: (run: CareerRun, pokemonIds: string[]) => request<CareerRun>(
+    `/api/v1/runs/${encodeURIComponent(run.id)}/lineup`,
+    {
+      method: "POST",
+      body: JSON.stringify({ expected_revision: run.revision, pokemon_ids: pokemonIds }),
+    },
+  ),
   decide: (run: CareerRun, optionId: string) => request<{ run: CareerRun; battle_ids: string[] }>(
     `/api/v1/runs/${encodeURIComponent(run.id)}/decisions`,
     {
