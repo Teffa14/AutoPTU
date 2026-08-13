@@ -1,11 +1,11 @@
-import { useEffect, useRef } from "react";
-import { Application, Container, Graphics, Rectangle, Sprite, Text, TextStyle, Texture } from "pixi.js";
+import { useEffect, useRef, type CSSProperties } from "react";
+import { Application, Container, Graphics, Text, TextStyle } from "pixi.js";
 
 import type { BattleViewState } from "../battlePresentation";
-import { fallbackSpriteUrl, spriteUrl } from "../spriteUrl";
 import type { BattleCombatant, BattleMove, BattleTranscript } from "../types";
+import { PokemonSprite } from "./PokemonSprite";
 
-type ActorVisual = { container: Container; sprite?: Sprite; home: boolean };
+type ActorVisual = { container: Container };
 type ArenaEffect = {
   display: Container;
   life: number;
@@ -66,31 +66,13 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
         const visualTiles = visualTileScale(combatant.size, footprint);
         const shadow = new Graphics().ellipse(0, tile.height * 0.18, tile.width * Math.min(2.8, visualTiles * 0.76), tile.height * Math.min(1.2, visualTiles * 0.23)).fill({ color: 0x020706, alpha: 0.52 });
         container.addChild(shadow);
-        let sprite: Sprite | undefined;
-        try {
-          const sheet = await loadPokemonTexture(combatant.species);
-          if (cancelled || appRef.current !== app) return;
-          const frameSize = Math.min(sheet.width, sheet.height);
-          const texture = new Texture({ source: sheet.source, frame: new Rectangle(0, 0, frameSize, frameSize) });
-          sprite = new Sprite(texture);
-          sprite.anchor.set(0.5, 0.82);
-          const targetSize = Math.max(36, tile.height * visualTiles);
-          const scale = targetSize / Math.max(sprite.width, sprite.height);
-          // Bundled front sprites face left. The home side stands on the left,
-          // so it must be mirrored toward the opposing half of the field.
-          sprite.scale.set(home ? -scale : scale, scale);
-          container.addChild(sprite);
-        } catch {
-          if (cancelled || appRef.current !== app) return;
-          container.addChild(new Graphics().circle(0, -tile.height * visualTiles * 0.22, tile.width * Math.min(1.2, visualTiles * 0.34)).fill({ color: home ? 0xffc86a : 0xff715b }));
-        }
-        visuals.current.set(combatant.id, { container, sprite, home });
+        const footing = new Graphics().circle(0, tile.height * 0.16, tile.width * Math.min(0.9, visualTiles * 0.28)).stroke({ color: home ? 0xf0c760 : 0xff7464, width: 2, alpha: 0.7 });
+        container.addChild(footing);
+        visuals.current.set(combatant.id, { container });
         app.stage.addChild(container);
       }
 
-      let time = 0;
       app.ticker.add((ticker) => {
-        time += ticker.deltaTime * 0.035;
         for (const [id, visual] of visuals.current) {
           const target = targets.current.get(id);
           const impulse = impulses.current.get(id) ?? [0, 0];
@@ -99,7 +81,6 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
             visual.container.y += (target[1] + impulse[1] - visual.container.y) * 0.2;
           }
           impulses.current.set(id, [impulse[0] * 0.78, impulse[1] * 0.78]);
-          if (visual.sprite) visual.sprite.y = Math.sin(time + (visual.home ? 0 : 2.4)) * 0.7;
         }
         effects.current = effects.current.filter((effect) => {
           effect.life += ticker.deltaTime;
@@ -197,7 +178,27 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
     }
   }, [eventIndex, transcript, view]);
 
-  return <div ref={host} className="pixi-arena" role="img" aria-label={`${transcript.spec.home_club} versus ${transcript.spec.away_club}`} />;
+  const parity = eventIndex % 2 === 0 ? "event-even" : "event-odd";
+  return (
+    <div className="arena-canvas-shell" role="img" aria-label={`${transcript.spec.home_club} versus ${transcript.spec.away_club}`}>
+      <div ref={host} className="pixi-arena" aria-hidden="true" />
+      <div className="field-pokemon-layer" aria-hidden="true">
+        {view.combatants.filter((combatant) => combatant.active !== false).map((combatant) => {
+          const isActor = view.event?.type === "move" && combatant.id === view.actorId;
+          const isTarget = view.event?.type === "move" && combatant.id === view.targetId && view.hit !== false;
+          return (
+            <div
+              key={combatant.id}
+              className={`field-pokemon ${combatant.team === "career-home" ? "home" : "away"} ${isActor ? `attacking ${parity}` : ""} ${isTarget ? `taking-hit ${parity}` : ""} ${combatant.hp <= 0 ? "fainted" : ""}`}
+              style={actorFieldStyle(combatant, transcript)}
+            >
+              <div className="field-model-facing"><PokemonSprite name={combatant.species} className="field-model" /></div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 function buildStadium(width: number, height: number, grid?: { width: number; height: number }): Container {
@@ -280,19 +281,6 @@ function moveMetadata(view: BattleViewState, transcript: BattleTranscript): Batt
 
 function attackColor(move?: BattleMove): number { return TYPE_COLORS[move?.type.toLowerCase() ?? "normal"] ?? TYPE_COLORS.normal; }
 
-async function loadPokemonTexture(species: string): Promise<Texture> {
-  const image = new Image();
-  image.crossOrigin = "anonymous";
-  image.src = spriteUrl(species);
-  try {
-    await image.decode();
-  } catch {
-    image.src = fallbackSpriteUrl();
-    await image.decode();
-  }
-  return Texture.from(image);
-}
-
 function tileMetrics(width: number, height: number, grid?: { width: number; height: number }) {
   const columns = Math.max(2, grid?.width ?? 15);
   const rows = Math.max(2, grid?.height ?? 9);
@@ -312,4 +300,20 @@ function stagePosition(position: [number, number], width: number, height: number
 function visualTileScale(size = "Medium", footprintSide = 1): number {
   const bySize: Record<string, number> = { tiny: 0.72, small: 0.95, medium: 1.28, large: 1.85, huge: 2.65, gigantic: 3.35 };
   return Math.max(bySize[String(size).toLowerCase()] ?? 1.28, footprintSide * 0.92);
+}
+
+function actorFieldStyle(combatant: BattleCombatant, transcript: BattleTranscript): CSSProperties {
+  const columns = Math.max(2, transcript.initial_state.grid?.width ?? 15);
+  const rows = Math.max(2, transcript.initial_state.grid?.height ?? 9);
+  const position = combatant.position ?? (combatant.team === "career-home" ? [2, Math.floor(rows / 2)] : [columns - 3, Math.floor(rows / 2)]);
+  const footprint = Math.max(1, combatant.footprint_side ?? 1);
+  const offset = Math.max(0, footprint - 1) / 2;
+  const x = 3.5 + (position[0] + 0.5 + offset) * (93 / columns);
+  const y = 19 + (position[1] + 0.5 + offset) * (76 / rows);
+  const size = Math.max(8.5, (76 / rows) * visualTileScale(combatant.size, footprint));
+  return {
+    "--field-x": `${x}%`,
+    "--field-y": `${y}%`,
+    "--field-size": `${size}%`,
+  } as CSSProperties;
 }

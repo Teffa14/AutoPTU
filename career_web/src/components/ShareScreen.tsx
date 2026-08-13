@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { careerApi } from "../api";
 import type { Locale } from "../types";
+import { achievementLabel } from "../achievementPresentation";
 import { PokemonSprite } from "./PokemonSprite";
 
 export function ShareScreen({ shareId, locale }: { shareId: string; locale: Locale }) {
@@ -22,7 +23,7 @@ export function ShareScreen({ shareId, locale }: { shareId: string; locale: Loca
       <p>{locale === "es" ? `Retiro a los ${String(summary.final_age ?? "—")}` : `Retired at ${String(summary.final_age ?? "—")}`}</p>
       <div className="shared-score"><b>{String(summary.score ?? 0)}</b><span>competitive score</span></div>
       <div className="record-ribbon"><span>{totals.wins ?? 0} W</span><span>{totals.losses ?? 0} L</span><span>{totals.titles ?? 0} titles</span></div>
-      {achievements.length ? <ul>{achievements.map((entry) => <li key={entry}>{entry}</li>)}</ul> : null}
+      {achievements.length ? <ul>{achievements.map((entry) => <li key={entry}>{achievementLabel(entry, locale)}</li>)}</ul> : null}
       <small>{locale === "es" ? "RESUMEN DE CARRERA VERIFICADO" : "VERIFIED CAREER SUMMARY"}</small>
     </section>
   );

@@ -5,6 +5,7 @@ import json
 import re
 import threading
 from typing import Any, Dict, Optional
+from urllib.parse import quote
 try:  # Desktop-only helpers are unavailable in the Render container.
     import tkinter as tk
     from tkinter import filedialog
@@ -991,10 +992,10 @@ def get_gen9_move_anim_file(filename: str) -> FileResponse:
     return FileResponse(target, media_type=media)
 
 
-CAREER_STATIC_DIR = Path(__file__).resolve().parents[2] / "public"
+CAREER_STATIC_DIR = Path(__file__).resolve().parents[2] / "public" / "career-game"
 app.mount(
     "/career-game/assets",
-    StaticFiles(directory=CAREER_STATIC_DIR / "career-game" / "assets", check_dir=False),
+    StaticFiles(directory=CAREER_STATIC_DIR / "assets", check_dir=False),
     name="career-assets",
 )
 
@@ -1002,11 +1003,12 @@ app.mount(
 @app.get("/career-game")
 @app.get("/career-game/")
 @app.get("/career-game/{path:path}")
-def career_game(path: str = "") -> FileResponse:
+def career_game(path: str = "") -> Response:
     """Serve the Career SPA while keeping every scene on an exclusive URL."""
     entrypoint = CAREER_STATIC_DIR / "index.html"
     if not entrypoint.exists():
-        raise HTTPException(status_code=503, detail="Career client has not been built")
+        resume_path = f"/career-game/{path.lstrip('/')}"
+        return RedirectResponse(f"/career-game/index.html?resume={quote(resume_path, safe='')}", status_code=307)
     return FileResponse(entrypoint, headers={"Cache-Control": "no-store"})
 
 

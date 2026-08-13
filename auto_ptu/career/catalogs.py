@@ -154,6 +154,57 @@ RISK_TIERS = ("safe", "calculated", "gamble")
 TRANSPARENCY_TIERS = ("full", "estimated", "hidden")
 NPC_ARCHETYPES = ("mentor", "rival", "owner")
 
+# Canonical trainers keep every regional relationship anchored in the games.
+# The suffix remains machine-readable so relationship effects and old saves
+# continue to use the same deterministic contract.
+FRANCHISE_TRAINERS: Dict[str, Dict[str, tuple[str, ...]]] = {
+    "kanto": {
+        "mentor": ("Professor Oak", "Brock", "Misty"),
+        "rival": ("Blue", "Red", "Trace"),
+        "owner": ("Lance", "Erika", "Lt. Surge"),
+    },
+    "johto": {
+        "mentor": ("Professor Elm", "Falkner", "Jasmine"),
+        "rival": ("Silver", "Ethan", "Lyra"),
+        "owner": ("Clair", "Morty", "Whitney"),
+    },
+    "hoenn": {
+        "mentor": ("Professor Birch", "Roxanne", "Brawly"),
+        "rival": ("Brendan", "May", "Wally"),
+        "owner": ("Steven Stone", "Wallace", "Winona"),
+    },
+    "sinnoh": {
+        "mentor": ("Professor Rowan", "Roark", "Gardenia"),
+        "rival": ("Barry", "Lucas", "Dawn"),
+        "owner": ("Cynthia", "Volkner", "Fantina"),
+    },
+    "unova": {
+        "mentor": ("Professor Juniper", "Cheren", "Lenora"),
+        "rival": ("Bianca", "Hilbert", "Hilda"),
+        "owner": ("Alder", "Iris", "Elesa"),
+    },
+    "kalos": {
+        "mentor": ("Professor Sycamore", "Korrina", "Viola"),
+        "rival": ("Serena", "Calem", "Shauna"),
+        "owner": ("Diantha", "Clemont", "Olympia"),
+    },
+    "alola": {
+        "mentor": ("Professor Kukui", "Hala", "Olivia"),
+        "rival": ("Hau", "Gladion", "Selene"),
+        "owner": ("Lusamine", "Guzma", "Nanu"),
+    },
+    "galar": {
+        "mentor": ("Professor Magnolia", "Sonia", "Milo"),
+        "rival": ("Hop", "Bede", "Marnie"),
+        "owner": ("Leon", "Raihan", "Rose"),
+    },
+    "paldea": {
+        "mentor": ("Professor Sada", "Professor Turo", "Jacq"),
+        "rival": ("Nemona", "Arven", "Penny"),
+        "owner": ("Geeta", "Clavell", "Larry"),
+    },
+}
+
 
 def region_catalog() -> List[dict]:
     return [

@@ -1,4 +1,5 @@
 import { effectLabel } from "../decisionPresentation";
+import { achievementLabel } from "../achievementPresentation";
 import type { CareerRun, Locale } from "../types";
 
 interface TimelineDecision {
@@ -33,8 +34,10 @@ export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale
         {run.timeline.map((entry, index) => {
           const decisions = timelineSeasonDecisions(entry);
           const pokemonUsed = Array.isArray(entry.pokemon_used) ? entry.pokemon_used.map(String) : [];
+          const unlocked = Array.isArray(entry.new_achievements) ? entry.new_achievements.map(String) : [];
+          const majorHighlight = entry.title === true || entry.promoted === true || unlocked.length > 0;
           return (
-            <article className={`timeline-entry type-${String(entry.type).replaceAll(".", "-")}`} key={`${String(entry.type)}-${index}`}>
+            <article className={`timeline-entry type-${String(entry.type).replaceAll(".", "-")} ${majorHighlight ? "major-highlight" : ""}`} key={`${String(entry.type)}-${index}`}>
               <div className="timeline-age"><b>{String(entry.age ?? run.age)}</b><small>{locale === "es" ? "años" : "years"}</small></div>
               <div className="timeline-entry-copy">
                 <span>{eventKind(entry, locale)}</span>
@@ -52,6 +55,7 @@ export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale
                   </div>
                 ) : null}
                 {pokemonUsed.length ? <p className="pokemon-used"><b>{locale === "es" ? "Jugaron" : "Played"}</b>{pokemonUsed.map((species) => <span key={species}>{species}</span>)}</p> : null}
+                {unlocked.length ? <div className="timeline-achievements"><b>{locale === "es" ? "Logros desbloqueados" : "Achievements unlocked"}</b>{unlocked.map((entry) => <span key={entry}>◆ {achievementLabel(entry, locale)}</span>)}</div> : null}
               </div>
             </article>
           );
@@ -79,7 +83,7 @@ function FinalCareerSheet({ run, locale }: { run: CareerRun; locale: Locale }) {
         <span><b>{run.build.starter}</b>{locale === "es" ? "compañero final" : "final partner"}</span>
       </div>
       {clubs.length ? <p className="club-history"><b>{locale === "es" ? "Clubes" : "Clubs"}</b>{clubs.join(" · ")}</p> : null}
-      <div className="final-achievements"><b>{locale === "es" ? "Logros" : "Achievements"}</b>{run.achievements.length ? run.achievements.map((achievement) => <span key={achievement}>{achievement}</span>) : <small>{locale === "es" ? "Sin títulos registrados." : "No recorded titles."}</small>}</div>
+      <div className="final-achievements"><b>{locale === "es" ? "Logros" : "Achievements"}</b>{run.achievements.length ? run.achievements.map((achievement) => <span key={achievement}>{achievementLabel(achievement, locale)}</span>) : <small>{locale === "es" ? "Sin títulos registrados." : "No recorded titles."}</small>}</div>
     </section>
   );
 }

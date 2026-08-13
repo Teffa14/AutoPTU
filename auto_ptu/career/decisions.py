@@ -4,7 +4,7 @@ import hashlib
 import random
 from typing import Any, Dict, List
 
-from .catalogs import EVENT_DOMAINS, NPC_ARCHETYPES, REGIONS, RISK_TIERS, TRANSPARENCY_TIERS
+from .catalogs import EVENT_DOMAINS, FRANCHISE_TRAINERS, NPC_ARCHETYPES, REGIONS, RISK_TIERS, TRANSPARENCY_TIERS
 from .class_adapters import selected_class_effects
 from .content_compiler import AUTHORIAL_VARIANTS
 from .evolutions import next_evolution
@@ -436,7 +436,6 @@ def _npc_name(run: CareerRun, kind: str, rng: random.Random) -> str:
     )
     if existing and rng.random() < 0.75:
         return existing[rng.randrange(len(existing))]
-    first = ("Mara", "Ivo", "Sena", "Tomas", "Nia", "Rei", "Asha", "Milo")
-    last = ("Vale", "Ortega", "Reed", "Kwan", "Moss", "Arden", "Sato", "Bell")
-    identity = _stable_seed(region, kind, "career-contact")
-    return f"{first[identity % len(first)]} {last[(identity // len(first)) % len(last)]} · {kind} · {region.title()}"
+    names = FRANCHISE_TRAINERS[region][kind]
+    identity = _stable_seed(region, kind, run.season_number, len(run.relationships), "career-contact")
+    return f"{names[identity % len(names)]} · {kind} · {region.title()}"

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from auto_ptu.career.catalogs import REGIONS, compiled_decision_count
+from auto_ptu.career.catalogs import FRANCHISE_TRAINERS, REGIONS, compiled_decision_count
 from auto_ptu.career.class_adapters import compile_class_adapters
 from auto_ptu.career.content_compiler import validate_compiled_content
 from auto_ptu.career.decisions import apply_option, build_season_decision
@@ -65,6 +65,34 @@ def test_official_regional_starter_and_seeded_identity_are_supported() -> None:
     assert first.class_effects["battle"] == {"home_level_bonus": 1}
     assert engine._schedule(first)[0].home_level_bonus == 1
     assert "Commander" in first.season.decision.body
+
+
+def test_every_regional_decision_uses_a_canonical_franchise_trainer() -> None:
+    engine = CareerEngine(fake_battle)
+    for index, region in enumerate(REGIONS):
+        run = engine.new_run(
+            player_id=f"canon-{region}", name="Ari", region=region,
+            starter=REGIONS[region].starters[0], classes=["Ace Trainer"], seed=1200 + index,
+        )
+        decision = run.season.decision
+        name, kind, _ = decision.npc_name.split(" · ")
+        assert name in FRANCHISE_TRAINERS[region][kind]
+
+
+def test_positive_career_milestones_unlock_as_achievements() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="milestones", name="Ari", region="kanto", starter="Bulbasaur",
+        classes=["Ace Trainer"], seed=1210,
+    )
+    for species in ("Rattata", "Pidgey", "Zubat", "Oddish", "Psyduck"):
+        capture_species(run, species, source="test")
+    run.totals["wins"] = 6
+    run.season.wins = 6
+    run.season.losses = 0
+    run.pokemon[0].evolution_history = [{}, {}, {}]
+    engine._unlock_achievements(run, run.season, {"promoted": True})
+    assert {"First victory", "Full squad", "Perfect season", "Evolution specialist", "Rising star"}.issubset(run.achievements)
 
 
 def test_mentor_class_directly_advances_partner_after_a_season() -> None:

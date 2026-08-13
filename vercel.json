@@ -13,10 +13,5 @@
     "**/*.py": {
       "excludeFiles": "{career_web/**,auto_ptu/api/static/**}"
     }
-  },
-  "rewrites": [
-    { "source": "/career-game/:path*", "destination": "/index.html" },
-    { "source": "/career-game", "destination": "/index.html" },
-    { "source": "/", "destination": "/index.html" }
-  ]
+  }
 }

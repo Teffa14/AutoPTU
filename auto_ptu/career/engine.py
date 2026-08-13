@@ -230,10 +230,13 @@ class CareerEngine:
         run.totals["wins"] += wins
         run.totals["losses"] += losses
         run.totals["draws"] += draws
+        achievements_before = set(run.achievements)
         outcome = self._apply_competitive_progression(run, season)
         relationship_outcome = self._apply_health_and_contract(run, wins=wins, losses=losses)
         roster_outcome = progress_after_season(run, specs, transcripts)
         class_outcome = self._apply_class_progression(run)
+        self._unlock_achievements(run, season, outcome)
+        new_achievements = [entry for entry in run.achievements if entry not in achievements_before]
         run.timeline.append(
             {
                 "type": "season.completed",
@@ -256,6 +259,7 @@ class CareerEngine:
                 **roster_outcome,
                 "class_effects": class_outcome,
                 "relationship_effects": relationship_outcome,
+                "new_achievements": new_achievements,
                 **outcome,
             }
         )
@@ -505,6 +509,28 @@ class CareerEngine:
             run.contract.league = run.league
             run.contract.salary = 120 * LEAGUES[run.league].weight + max(0, run.reputation * 5)
         return {"title": title, "promoted": promotion, "relegated": relegation}
+
+    def _unlock_achievements(self, run: CareerRun, season: SeasonState, outcome: dict) -> None:
+        """Grant stable career milestones after every fully resolved season."""
+        evolution_count = sum(len(entry.evolution_history) for entry in run.pokemon)
+        candidates = []
+        if run.totals["wins"] >= 1:
+            candidates.append("First victory")
+        if len(run.pokemon) >= 6:
+            candidates.append("Full squad")
+        if season.wins > 0 and season.losses == 0:
+            candidates.append("Perfect season")
+        if evolution_count >= 3:
+            candidates.append("Evolution specialist")
+        if outcome.get("promoted"):
+            candidates.append("Rising star")
+        if run.league == "elite":
+            candidates.append("Elite contender")
+        if run.season_number >= 5:
+            candidates.append("Veteran")
+        for achievement in candidates:
+            if achievement not in run.achievements:
+                run.achievements.append(achievement)
 
     def _apply_health_and_contract(self, run: CareerRun, *, wins: int, losses: int) -> dict:
         relationship_effects = refresh_relationship_effects(run)

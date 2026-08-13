@@ -7,6 +7,7 @@ import { t } from "../i18n";
 import type { BattleCombatant, BattleTranscript, CareerRun, Locale } from "../types";
 import { BattleArena } from "./BattleArena";
 import { BattlePreparing } from "./BattlePreparing";
+import { CareerCelebration } from "./CareerCelebration";
 import { PokemonSprite } from "./PokemonSprite";
 
 export default function BattleScreen({ runId, battleId, locale, run, onRun }: { runId: string; battleId: string; locale: Locale; run?: CareerRun | null; onRun: (run: CareerRun) => void }) {
@@ -41,7 +42,7 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: { 
 
   useEffect(() => {
     if (!complete) return;
-    const timer = window.setTimeout(() => navigate(`run/${runId}`), 2500);
+    const timer = window.setTimeout(() => navigate(`run/${runId}`), 4200);
     return () => window.clearTimeout(timer);
   }, [complete, runId]);
 
@@ -76,6 +77,7 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: { 
               <span>{locale === "es" ? "TEMPORADA RESUELTA" : "SEASON RESOLVED"}</span>
               <h1>{userWon ? (locale === "es" ? "VICTORIA" : "VICTORY") : (locale === "es" ? "DERROTA" : "DEFEAT")}</h1>
               <p>{transcript.winner_label} · {transcript.rounds} {locale === "es" ? "rondas" : "rounds"}</p>
+              <CareerCelebration run={run} locale={locale} season={transcript.spec.season} />
               <button className="primary-action" onClick={() => navigate(`run/${runId}`)}>{locale === "es" ? "Continuar la carrera" : "Continue career"}</button>
               <small>{locale === "es" ? "La siguiente temporada se abrirá automáticamente." : "The next season will open automatically."}</small>
             </div>

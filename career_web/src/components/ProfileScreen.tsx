@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { careerApi } from "../api";
 import type { CareerPokemon, CareerRun, Locale } from "../types";
+import { achievementLabel } from "../achievementPresentation";
 import { PokemonSprite } from "./PokemonSprite";
 
 interface Props {
@@ -104,7 +105,7 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
         <section><h2>{locale === "es" ? "Clases PTU" : "PTU classes"}</h2><div className="class-stamps">{run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b><small>{locale === "es" ? entry.description_es : entry.description_en}</small></span>)}</div></section>
         <section><h2>{locale === "es" ? "Mochila" : "Bag"}</h2><div className="world-rewards"><span>Poké Ball × {run.build.pokeballs}</span>{Object.entries(run.inventory ?? {}).map(([item, quantity]) => <span key={item}>{item} × {quantity}</span>)}</div></section>
         <section><h2>{locale === "es" ? "Relaciones" : "Relationships"}</h2>{run.relationship_effects?.best_contact ? <div className="relationship-benefits"><b>{locale === "es" ? "Red activa" : "Active network"}</b><span>+{run.relationship_effects.home_level_bonus ?? 0} LV {locale === "es" ? "en combate" : "in battle"}</span><span>+{run.relationship_effects.season_recovery ?? 0} {locale === "es" ? "salud/temporada" : "health/season"}</span>{run.relationship_effects.contract_guard ? <span>{locale === "es" ? "Seguro de contrato disponible" : "Contract protection available"}</span> : null}</div> : null}<div className="world-rewards">{Object.entries(run.relationships ?? {}).length ? Object.entries(run.relationships).map(([name, value]) => <span key={name}>{name.split(" · ")[0]} <b>{value > 0 ? `+${value}` : value}</b><small>{relationshipTier(value, locale)}</small></span>) : <p className="empty-copy">{locale === "es" ? "Todavía no hay vínculos registrados." : "No relationships recorded yet."}</p>}</div></section>
-        <section><h2>{locale === "es" ? "Logros" : "Achievements"}</h2>{run.achievements.length ? <ul>{run.achievements.map((entry) => <li key={entry}>{entry}</li>)}</ul> : <p className="empty-copy">{locale === "es" ? "La primera placa todavía está vacía." : "The first plaque is still empty."}</p>}</section>
+        <section><h2>{locale === "es" ? "Logros" : "Achievements"}</h2>{run.achievements.length ? <ul>{run.achievements.map((entry) => <li key={entry}>{achievementLabel(entry, locale)}</li>)}</ul> : <p className="empty-copy">{locale === "es" ? "La primera placa todavía está vacía." : "The first plaque is still empty."}</p>}</section>
       </article>
     </section>
   );
