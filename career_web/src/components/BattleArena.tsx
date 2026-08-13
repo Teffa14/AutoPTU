@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Application, Container, Graphics, Rectangle, Sprite, Text, TextStyle, Texture } from "pixi.js";
 
 import type { BattleViewState } from "../battlePresentation";
+import { fallbackSpriteUrl, spriteUrl } from "../spriteUrl";
 import type { BattleCombatant, BattleMove, BattleTranscript } from "../types";
 
 type ActorVisual = { container: Container; sprite?: Sprite; home: boolean };
@@ -281,8 +282,13 @@ function attackColor(move?: BattleMove): number { return TYPE_COLORS[move?.type.
 
 async function loadPokemonTexture(species: string): Promise<Texture> {
   const image = new Image();
-  image.src = `/api/sprites/pokemon?name=${encodeURIComponent(species)}`;
-  await image.decode();
+  image.src = spriteUrl(species);
+  try {
+    await image.decode();
+  } catch {
+    image.src = fallbackSpriteUrl();
+    await image.decode();
+  }
   return Texture.from(image);
 }
 

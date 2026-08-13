@@ -116,9 +116,11 @@ class CareerService:
         if expected != run.revision:
             raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
         run, specs = self.engine.prepare_season(run, option_id=str(payload.get("option_id") or ""))
-        self.store.save_run(run)
         battle_ids = [entry.id for entry in specs]
         season_resolved = False
+        season_transcripts = []
+        persisted_atomically = False
+        prepared_run = CareerRun.from_dict(run.to_dict())
         if specs:
             # The client has already switched to the stadium transition. Resolve
             # the immutable calendar during that transition so /battle only has
@@ -130,10 +132,8 @@ class CareerService:
                 featured_seconds = time.perf_counter() - started_at
                 summaries = simulate_calendar_summaries([entry for entry in specs if entry.id != featured_spec.id])
                 summaries_seconds = time.perf_counter() - started_at - featured_seconds
-                for transcript in [*summaries, featured]:
-                    self.store.save_battle(transcript)
-                run, _ = self.engine.resolve_prepared_season(run, [*summaries, featured])
-                self.store.save_run(run)
+                season_transcripts = [*summaries, featured]
+                run, _ = self.engine.resolve_prepared_season(run, season_transcripts)
                 season_resolved = True
                 LOGGER.info(
                     "career calendar ready run=%s season=%s featured=%.3fs summaries=%.3fs total=%.3fs",
@@ -147,9 +147,16 @@ class CareerService:
                 LOGGER.exception("career eager battle generation failed run=%s", run.id)
                 # A prepared season is recoverable: /battle retains the same
                 # deterministic fallback if eager generation ever fails.
+                run = prepared_run
                 self.store.save_run(run)
         response = {"run": run.to_dict(), "battle_ids": battle_ids, "season_resolved": season_resolved}
-        self.store.record_idempotency(run_id, idempotency_key, response)
+        if season_resolved and hasattr(self.store, "save_season_resolution"):
+            self.store.save_season_resolution(run, season_transcripts, idempotency_key, response)
+            persisted_atomically = True
+        elif not specs:
+            self.store.save_run(run)
+        if not persisted_atomically:
+            self.store.record_idempotency(run_id, idempotency_key, response)
         return response
 
     def retire(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:

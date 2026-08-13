@@ -7,7 +7,7 @@ import time
 import urllib.request
 import uuid
 from dataclasses import asdict
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Sequence
 
 from .catalogs import REGIONS
 from .models import BattleSpec, BattleTranscript, CareerRun, DailyChallenge, LeaderboardEntry
@@ -30,27 +30,8 @@ class PostgresCareerStore:
         self.psycopg = psycopg
 
     def save_run(self, run: CareerRun) -> None:
-        challenge_date = run.daily_challenge_id.removeprefix("daily-") if run.daily_challenge_id else None
         with self.psycopg.connect(self.database_url) as connection:
-            connection.execute(
-                """
-                insert into private.career_runs
-                  (id, user_id, mode, ranked, challenge_id, seed, revision, status, state, score,
-                   rules_version, content_version, scoring_version, updated_at)
-                values
-                  (%s, %s, %s, %s,
-                   (select id from public.daily_challenges where challenge_date = %s),
-                   %s, %s, %s, %s, %s, %s, %s, %s, now())
-                on conflict (id) do update set
-                  revision = excluded.revision, status = excluded.status, state = excluded.state,
-                  score = excluded.score, updated_at = now()
-                """,
-                (
-                    uuid.UUID(run.id), uuid.UUID(run.player_id), run.mode, run.ranked, challenge_date,
-                    run.seed, run.revision, run.status, self.psycopg.types.json.Jsonb(run.to_dict()), run.score,
-                    run.versions.rules, run.versions.career, run.versions.scoring,
-                ),
-            )
+            self._execute_save_run(connection, run)
 
     def create_daily_run(self, run: CareerRun, challenge: DailyChallenge) -> int:
         region = REGIONS[challenge.region]
@@ -102,24 +83,23 @@ class PostgresCareerStore:
         return CareerRun.from_dict(row[0])
 
     def save_battle(self, transcript: BattleTranscript) -> None:
-        run_id = transcript.battle_id.split("-s", 1)[0]
         with self.psycopg.connect(self.database_url) as connection:
-            connection.execute(
-                """
-                insert into private.battle_results
-                  (run_id, battle_key, spec, result, transcript_sha256, rules_version, status, updated_at)
-                values (%s, %s, %s, %s, %s, %s, 'complete', now())
-                on conflict (run_id, battle_key) do update set
-                  result = excluded.result, transcript_sha256 = excluded.transcript_sha256,
-                  status = 'complete', updated_at = now()
-                """,
-                (
-                    uuid.UUID(run_id), transcript.battle_id,
-                    self.psycopg.types.json.Jsonb(asdict(transcript.spec)),
-                    self.psycopg.types.json.Jsonb(transcript.to_dict()), transcript.sha256,
-                    transcript.engine_version,
-                ),
-            )
+            self._execute_save_battle(connection, transcript)
+
+    def save_season_resolution(
+        self,
+        run: CareerRun,
+        transcripts: Sequence[BattleTranscript],
+        idempotency_key: str,
+        response: dict,
+    ) -> None:
+        """Commit one season with a single database connection and transaction."""
+        with self.psycopg.connect(self.database_url, autocommit=False) as connection:
+            for transcript in transcripts:
+                self._execute_save_battle(connection, transcript)
+            self._execute_save_run(connection, run)
+            self._execute_record_idempotency(connection, run.id, idempotency_key, response)
+            connection.commit()
 
     def run_battle(self, spec: BattleSpec, timeout_seconds: float = 90.0) -> BattleTranscript:
         """Enqueue a battle in PGMQ and wait for an isolated worker's authoritative result."""
@@ -168,17 +148,61 @@ class PostgresCareerStore:
         return row[0]
 
     def record_idempotency(self, run_id: str, key: str, response: dict) -> None:
-        revision = int(response.get("run", {}).get("revision", 0))
         with self.psycopg.connect(self.database_url) as connection:
-            connection.execute(
-                """
-                insert into private.run_commands
-                  (run_id, idempotency_key, expected_revision, command_type, payload, response)
-                values (%s, %s, %s, 'season.advance', '{}'::jsonb, %s)
-                on conflict (run_id, idempotency_key) do nothing
-                """,
-                (uuid.UUID(run_id), key, max(0, revision - 1), self.psycopg.types.json.Jsonb(response)),
-            )
+            self._execute_record_idempotency(connection, run_id, key, response)
+
+    def _execute_save_run(self, connection, run: CareerRun) -> None:
+        challenge_date = run.daily_challenge_id.removeprefix("daily-") if run.daily_challenge_id else None
+        connection.execute(
+            """
+            insert into private.career_runs
+              (id, user_id, mode, ranked, challenge_id, seed, revision, status, state, score,
+               rules_version, content_version, scoring_version, updated_at)
+            values
+              (%s, %s, %s, %s,
+               (select id from public.daily_challenges where challenge_date = %s),
+               %s, %s, %s, %s, %s, %s, %s, %s, now())
+            on conflict (id) do update set
+              revision = excluded.revision, status = excluded.status, state = excluded.state,
+              score = excluded.score, updated_at = now()
+            """,
+            (
+                uuid.UUID(run.id), uuid.UUID(run.player_id), run.mode, run.ranked, challenge_date,
+                run.seed, run.revision, run.status, self.psycopg.types.json.Jsonb(run.to_dict()), run.score,
+                run.versions.rules, run.versions.career, run.versions.scoring,
+            ),
+        )
+
+    def _execute_save_battle(self, connection, transcript: BattleTranscript) -> None:
+        run_id = transcript.battle_id.split("-s", 1)[0]
+        connection.execute(
+            """
+            insert into private.battle_results
+              (run_id, battle_key, spec, result, transcript_sha256, rules_version, status, updated_at)
+            values (%s, %s, %s, %s, %s, %s, 'complete', now())
+            on conflict (run_id, battle_key) do update set
+              result = excluded.result, transcript_sha256 = excluded.transcript_sha256,
+              status = 'complete', updated_at = now()
+            """,
+            (
+                uuid.UUID(run_id), transcript.battle_id,
+                self.psycopg.types.json.Jsonb(asdict(transcript.spec)),
+                self.psycopg.types.json.Jsonb(transcript.to_dict()), transcript.sha256,
+                transcript.engine_version,
+            ),
+        )
+
+    def _execute_record_idempotency(self, connection, run_id: str, key: str, response: dict) -> None:
+        revision = int(response.get("run", {}).get("revision", 0))
+        connection.execute(
+            """
+            insert into private.run_commands
+              (run_id, idempotency_key, expected_revision, command_type, payload, response)
+            values (%s, %s, %s, 'season.advance', '{}'::jsonb, %s)
+            on conflict (run_id, idempotency_key) do nothing
+            """,
+            (uuid.UUID(run_id), key, max(0, revision - 1), self.psycopg.types.json.Jsonb(response)),
+        )
 
     def idempotent_response(self, run_id: str, key: str) -> Optional[dict]:
         with self.psycopg.connect(self.database_url) as connection:

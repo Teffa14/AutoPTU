@@ -47,6 +47,19 @@ class CareerStore:
         with self._lock:
             self._atomic_write(self.battles_dir / f"{_safe_id(transcript.battle_id)}.json", transcript.to_dict())
 
+    def save_season_resolution(
+        self,
+        run: CareerRun,
+        transcripts: List[BattleTranscript],
+        idempotency_key: str,
+        response: dict,
+    ) -> None:
+        with self._lock:
+            for transcript in transcripts:
+                self.save_battle(transcript)
+            self.save_run(run)
+            self.record_idempotency(run.id, idempotency_key, response)
+
     def load_battle(self, battle_id: str) -> dict:
         path = self.battles_dir / f"{_safe_id(battle_id)}.json"
         if not path.exists():
