@@ -994,16 +994,8 @@ def get_gen9_move_anim_file(filename: str) -> FileResponse:
 CAREER_STATIC_DIR = STATIC_DIR / "career"
 app.mount(
     "/career-game/assets",
-    StaticFiles(directory=CAREER_STATIC_DIR / "assets", check_dir=False),
+    StaticFiles(directory=CAREER_STATIC_DIR / "career-game" / "assets", check_dir=False),
     name="career-assets",
-)
-# Vercel's static rewrite strips the /career-game prefix before handing the
-# request to FastAPI. Keep the canonical mount above for local/Render hosting
-# and expose the rewritten path from the same immutable build directory.
-app.mount(
-    "/assets",
-    StaticFiles(directory=CAREER_STATIC_DIR / "assets", check_dir=False),
-    name="career-assets-vercel",
 )
 
 
