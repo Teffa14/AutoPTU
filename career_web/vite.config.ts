@@ -5,7 +5,9 @@ export default defineConfig({
   base: "/",
   plugins: [react()],
   build: {
-    outDir: "../auto_ptu/api/static/career",
+    // Vercel's FastAPI runtime only publishes generated static files from
+    // public/. The local API serves this same directory for parity.
+    outDir: "../public",
     emptyOutDir: true,
     sourcemap: true,
     assetsDir: "career-game/assets",

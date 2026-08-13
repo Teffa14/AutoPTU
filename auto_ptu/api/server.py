@@ -991,7 +991,7 @@ def get_gen9_move_anim_file(filename: str) -> FileResponse:
     return FileResponse(target, media_type=media)
 
 
-CAREER_STATIC_DIR = STATIC_DIR / "career"
+CAREER_STATIC_DIR = Path(__file__).resolve().parents[2] / "public"
 app.mount(
     "/career-game/assets",
     StaticFiles(directory=CAREER_STATIC_DIR / "career-game" / "assets", check_dir=False),
