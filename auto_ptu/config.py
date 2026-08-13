@@ -9,6 +9,7 @@ from pathlib import Path
 PACKAGE_ROOT = Path(__file__).resolve().parent
 PROJECT_ROOT = Path(getattr(sys, "_MEIPASS", PACKAGE_ROOT.parent))
 _SERVERLESS_PROJECT = str(PROJECT_ROOT).replace("\\", "/").startswith("/var/task")
+SERVERLESS_RUNTIME = _SERVERLESS_PROJECT
 RUNTIME_ROOT = Path(
     os.environ.get("AUTO_PTU_RUNTIME_ROOT")
     or ("/tmp/autoptu" if _SERVERLESS_PROJECT else "")

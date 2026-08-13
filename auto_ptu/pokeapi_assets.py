@@ -13,7 +13,7 @@ import urllib.request
 from pathlib import Path
 from typing import Optional
 
-from .config import FILES_DIR, FOUNDRY_DIR, IMPLEMENTATION_DIR, PTU_DATABASE_DIR
+from .config import FILES_DIR, FOUNDRY_DIR, IMPLEMENTATION_DIR, PTU_DATABASE_DIR, RUNTIME_ROOT, SERVERLESS_RUNTIME
 
 _POKE_API_BASE = "https://pokeapi.co/api/v2"
 _USER_AGENT = "AutoPTU-PokeAssets/1.0"
@@ -29,6 +29,8 @@ def _default_cache_root() -> Path:
     override = os.environ.get("AUTO_PTU_POKEAPI_CACHE")
     if override:
         return Path(override)
+    if SERVERLESS_RUNTIME:
+        return RUNTIME_ROOT / "pokeapi"
     local = os.environ.get("LOCALAPPDATA")
     if local:
         return Path(local) / "AutoPTU" / "pokeapi"

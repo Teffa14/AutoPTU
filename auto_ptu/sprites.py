@@ -10,13 +10,15 @@ import urllib.request
 from pathlib import Path
 from typing import Optional
 
-from .config import IMPLEMENTATION_DIR
+from .config import IMPLEMENTATION_DIR, RUNTIME_ROOT, SERVERLESS_RUNTIME
 
 
 def _default_cache_dir() -> Path:
     override = os.environ.get("AUTO_PTU_SPRITE_DIR")
     if override:
         return Path(override)
+    if SERVERLESS_RUNTIME:
+        return RUNTIME_ROOT / "sprites"
     local = os.environ.get("LOCALAPPDATA")
     if local:
         return Path(local) / "AutoPTU" / "sprites"
