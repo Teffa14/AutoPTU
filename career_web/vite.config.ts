@@ -8,9 +8,18 @@ export default defineConfig({
     // Vercel's FastAPI runtime only publishes generated static files from
     // public/. The local API serves this same directory for parity.
     outDir: "../public",
-    emptyOutDir: true,
-    sourcemap: true,
+    // Keep the versioned CDN files present while the remote build overwrites
+    // them; Vercel discovers public/ before it runs the build command.
+    emptyOutDir: false,
+    sourcemap: false,
     assetsDir: "career-game/assets",
+    rollupOptions: {
+      output: {
+        entryFileNames: "career-game/assets/app.js",
+        chunkFileNames: "career-game/assets/[name].js",
+        assetFileNames: "career-game/assets/[name][extname]",
+      },
+    },
   },
   server: {
     port: 5174,
