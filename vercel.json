@@ -11,8 +11,8 @@
     "CAREER_BATTLE_EXECUTION": "inline"
   },
   "functions": {
-    "app.py": {
-      "excludeFiles": "{career_web/public/sprites/**,auto_ptu/api/static/career/sprites/**}"
+    "**/*.py": {
+      "excludeFiles": "{career_web/**,auto_ptu/api/static/**}"
     }
   },
   "rewrites": [
