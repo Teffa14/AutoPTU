@@ -6,8 +6,8 @@ import os
 from typing import Any, Dict, List, Optional
 
 
-CURRENT_CAREER_VERSION = "career-0.6.0"
-CURRENT_NARRATIVE_VERSION = "career-hooks-0.5.0"
+CURRENT_CAREER_VERSION = "career-0.7.0"
+CURRENT_NARRATIVE_VERSION = "career-hooks-0.6.0"
 
 
 def utc_now() -> str:

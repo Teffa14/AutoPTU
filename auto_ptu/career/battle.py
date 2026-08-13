@@ -21,7 +21,7 @@ _VOLATILE_KEYS = {
 }
 
 
-def simulate_battle(spec: BattleSpec, *, max_steps: int = 36) -> BattleTranscript:
+def simulate_battle(spec: BattleSpec, *, max_steps: int = 30) -> BattleTranscript:
     """Resolve one match with a fresh, isolated AutoPTU engine instance."""
     repo = PTUCsvRepository(rng=random.Random(spec.seed))
     builder = CsvRandomCampaignBuilder(repo=repo, seed=spec.seed)
@@ -77,6 +77,8 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 36) -> BattleTranscrip
         "grid": {"width": 15, "height": 9, "blockers": [], "tiles": {}},
     }
     engine = EngineFacade()
+    engine._history_enabled = False
+    engine._snapshot_ai_metadata = False
     initial = engine.start_encounter(
         battle_payload=payload,
         seed=spec.seed,
@@ -85,11 +87,12 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 36) -> BattleTranscrip
         team_size=max(len(home_team), len(away_team)),
         active_slots=1,
     )
-    snapshot = initial
+    progress = {"battle_over": bool(initial.get("battle_over")), "round": int(initial.get("round") or 0)}
     steps = 0
-    while not snapshot.get("battle_over") and steps < max_steps:
-        snapshot = engine.ai_step()
+    while not progress.get("battle_over") and steps < max_steps:
+        progress = engine.ai_step(include_snapshot=False)
         steps += 1
+    snapshot = engine.snapshot()
     timed_out = not snapshot.get("battle_over")
     # Export while the isolated facade still owns the active session. Stopping
     # first clears the in-memory log and produced replays with zero events.

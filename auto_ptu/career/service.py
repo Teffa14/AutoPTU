@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import os
+import logging
+import time
 from dataclasses import asdict
 from datetime import date
 from typing import Dict, Optional
@@ -13,6 +15,9 @@ from .engine import CareerEngine
 from .models import CURRENT_CAREER_VERSION, BattleTranscript, CareerRun
 from .postgres_store import career_store_from_environment
 from .store import CareerStore
+
+
+LOGGER = logging.getLogger("autoptu.career")
 
 
 class CareerService:
@@ -112,7 +117,38 @@ class CareerService:
             raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
         run, specs = self.engine.prepare_season(run, option_id=str(payload.get("option_id") or ""))
         self.store.save_run(run)
-        response = {"run": run.to_dict(), "battle_ids": [entry.id for entry in specs]}
+        battle_ids = [entry.id for entry in specs]
+        season_resolved = False
+        if specs:
+            # The client has already switched to the stadium transition. Resolve
+            # the immutable calendar during that transition so /battle only has
+            # to fetch a cached transcript instead of starting a cold PTU engine.
+            try:
+                started_at = time.perf_counter()
+                featured_spec = next((entry for entry in specs if entry.featured), specs[-1])
+                featured = self.engine.battle_runner(featured_spec)
+                featured_seconds = time.perf_counter() - started_at
+                summaries = simulate_calendar_summaries([entry for entry in specs if entry.id != featured_spec.id])
+                summaries_seconds = time.perf_counter() - started_at - featured_seconds
+                for transcript in [*summaries, featured]:
+                    self.store.save_battle(transcript)
+                run, _ = self.engine.resolve_prepared_season(run, [*summaries, featured])
+                self.store.save_run(run)
+                season_resolved = True
+                LOGGER.info(
+                    "career calendar ready run=%s season=%s featured=%.3fs summaries=%.3fs total=%.3fs",
+                    run.id,
+                    max(1, run.season_number - 1),
+                    featured_seconds,
+                    summaries_seconds,
+                    time.perf_counter() - started_at,
+                )
+            except Exception:
+                LOGGER.exception("career eager battle generation failed run=%s", run.id)
+                # A prepared season is recoverable: /battle retains the same
+                # deterministic fallback if eager generation ever fails.
+                self.store.save_run(run)
+        response = {"run": run.to_dict(), "battle_ids": battle_ids, "season_resolved": season_resolved}
         self.store.record_idempotency(run_id, idempotency_key, response)
         return response
 

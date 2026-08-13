@@ -7,6 +7,7 @@ from typing import Any, Dict, List
 from .catalogs import EVENT_DOMAINS, NPC_ARCHETYPES, REGIONS, RISK_TIERS, TRANSPARENCY_TIERS
 from .class_adapters import selected_class_effects
 from .content_compiler import AUTHORIAL_VARIANTS
+from .evolutions import next_evolution
 from .models import CareerDecision, CareerDecisionOption, CareerRun
 from .relationships import refresh_relationship_effects
 from .ptu_builds import choose_legal_taught_move
@@ -93,29 +94,29 @@ def _stable_seed(*parts: object) -> int:
 
 def build_season_decision(run: CareerRun, slot: int = 0) -> CareerDecision:
     rng = random.Random(_stable_seed(run.seed, run.season_number, slot, "decision"))
-    family = EVENT_DOMAINS[(run.season_number - 1 + slot) % len(EVENT_DOMAINS)]
+    family = _decision_family(run, slot)
     variant = AUTHORIAL_VARIANTS[rng.randrange(len(AUTHORIAL_VARIANTS))]
     transparency = TRANSPARENCY_TIERS[rng.randrange(len(TRANSPARENCY_TIERS))]
     npc_kind = NPC_ARCHETYPES[rng.randrange(len(NPC_ARCHETYPES))]
-    npc_name = _npc_name(run.build.region, npc_kind, rng)
+    npc_name = _npc_name(run, npc_kind, rng)
     locale = "es" if run.locale.lower().startswith("es") else "en"
-    title, base_body = _COPY[locale].get(family, _COPY[locale]["default"])
+    effects = _effect_sets(family, run.mode)
+    rewards = _reward_sets(run, family, npc_name, rng)
+    title, base_body = _decision_story(run, family, rewards, locale)
     hook = _VARIANT_HOOKS[variant][0 if locale == "es" else 1]
     club = run.contract.club_name if run.contract else ("el club" if locale == "es" else "the club")
     trainer_class = run.build.classes[0]
     adapter = selected_class_effects(run.build.classes)["adapters"][0]
     if locale == "es":
         body = (
-            f"{npc_name.split(' · ')[0]} llega a {club} por {run.build.starter}. "
-            f"{base_body} {hook} Tu clase {trainer_class} seguirá activa: {adapter['description_es']}"
+            f"{npc_name.split(' · ')[0]} lleva el caso a {club}. "
+            f"{base_body} {hook} {trainer_class} cambia la respuesta posible: {adapter['description_es']}"
         )
     else:
         body = (
-            f"{npc_name.split(' · ')[0]} comes to {club} because of {run.build.starter}. "
-            f"{base_body} {hook} Your {trainer_class} class remains active: {adapter['description_en']}"
+            f"{npc_name.split(' · ')[0]} brings the case to {club}. "
+            f"{base_body} {hook} {trainer_class} changes what the staff can do: {adapter['description_en']}"
         )
-    effects = _effect_sets(family, run.mode)
-    rewards = _reward_sets(run, family, npc_name, rng)
     labels = (_OPTION_LABELS if locale == "es" else _OPTION_LABELS_EN).get(
         family,
         ("Proteger", "Invertir", "Apostar") if locale == "es" else ("Protect", "Invest", "Gamble"),
@@ -215,9 +216,24 @@ def _reward_sets(run: CareerRun, family: str, npc_name: str, rng: random.Random)
         return [{"type": "move", "move": chosen}] if chosen else [{"type": "level", "levels": 2}]
 
     relationship = [{"type": "relationship", "name": npc_name, "amount": 2}]
+    partner = next((entry for entry in run.pokemon if entry.is_partner), run.pokemon[0] if run.pokemon else None)
+    evolution_levels = 4
+    if partner is not None:
+        target = next_evolution(
+            partner.species,
+            seed=_stable_seed(run.seed, partner.id),
+            region=run.build.region,
+        )
+        if target is not None:
+            evolution_levels = max(1, target[1] - partner.level)
+    evolution_move = move("Return", "Protect")
     rewards: Dict[str, tuple[List[dict], List[dict], List[dict]]] = {
         "capture": (pokemon(first), pokemon(second), pokemon(third) + [{"type": "item", "item": "Premier Ball", "quantity": 1}]),
-        "evolution": ([{"type": "item", "item": "Exp. Share", "quantity": 1}], [{"type": "level", "levels": 4}], move("Return", "Protect")),
+        "evolution": (
+            [{"type": "item", "item": "Exp. Share", "quantity": 1}],
+            [{"type": "level", "levels": evolution_levels}],
+            [{"type": "level", "levels": evolution_levels}, *evolution_move],
+        ),
         "breeding": (relationship, pokemon(first), pokemon(second) + [{"type": "item", "item": "Egg Incubator", "quantity": 1}]),
         "contest": ([{"type": "item", "item": "Contest Ribbon", "quantity": 1}], move("Swift", "Round"), relationship),
         "research": ([{"type": "item", "item": "Pokédex Upgrade", "quantity": 1}], move("Hidden Power", "Secret Power"), pokemon(first)),
@@ -306,7 +322,121 @@ def _apply_reward(run: CareerRun, reward: Dict[str, Any], source: str) -> Dict[s
     return None
 
 
-def _npc_name(region: str, kind: str, rng: random.Random) -> str:
+def _decision_family(run: CareerRun, slot: int) -> str:
+    """Surface urgent career state before falling back to authored rotation."""
+    base_index = run.season_number - 1 + slot
+    if run.ranked:
+        # Daily attempts share the exact mechanical decision tree even when the
+        # player chooses a different starter or class.
+        return EVENT_DOMAINS[base_index % len(EVENT_DOMAINS)]
+    if run.contract is None:
+        return "contract"
+    if run.health <= 55:
+        return "health"
+    partner = next((entry for entry in run.pokemon if entry.is_partner), run.pokemon[0] if run.pokemon else None)
+    if partner is not None:
+        target = next_evolution(
+            partner.species,
+            seed=_stable_seed(run.seed, partner.id),
+            region=run.build.region,
+        )
+        if target is not None and partner.level >= max(1, target[1] - 6):
+            return "evolution"
+    if len(run.pokemon) < 6 and base_index % 3 == 0:
+        return "capture"
+    return EVENT_DOMAINS[base_index % len(EVENT_DOMAINS)]
+
+
+def _decision_story(
+    run: CareerRun,
+    family: str,
+    rewards: tuple[List[dict], List[dict], List[dict]],
+    locale: str,
+) -> tuple[str, str]:
+    partner = next((entry for entry in run.pokemon if entry.is_partner), run.pokemon[0] if run.pokemon else None)
+    partner_name = partner.species if partner else run.build.starter
+    partner_level = partner.level if partner else 1
+    if family == "capture":
+        species = next(
+            (str(reward.get("species")) for option in rewards for reward in option if reward.get("type") == "pokemon"),
+            "un Pokémon" if locale == "es" else "a Pokémon",
+        )
+        if locale == "es":
+            return (
+                f"{species} apareció cerca del estadio",
+                f"El informe confirma que {species} está solo y puede sumarse al plantel. "
+                f"Tenés {run.build.pokeballs} Poké Balls y {len(run.pokemon)}/6 plazas activas ocupadas.",
+            )
+        return (
+            f"{species} appeared near the stadium",
+            f"The report confirms {species} is alone and can join the squad. "
+            f"You have {run.build.pokeballs} Poke Balls and {len(run.pokemon)}/6 active places occupied.",
+        )
+    if family == "evolution" and partner is not None:
+        target = next_evolution(partner.species, seed=_stable_seed(run.seed, partner.id), region=run.build.region)
+        if target is not None:
+            evolved, threshold = target
+            if locale == "es":
+                return (
+                    f"{partner_name} está listo para cambiar",
+                    f"{partner_name} está en nivel {partner_level}; el umbral PTU para convertirse en "
+                    f"{evolved} es {threshold}. El cuerpo técnico necesita una orden antes del calendario.",
+                )
+            return (
+                f"{partner_name} is ready to change",
+                f"{partner_name} is level {partner_level}; the PTU threshold for becoming {evolved} is "
+                f"{threshold}. The staff needs an order before the schedule.",
+            )
+    if family == "rivalry":
+        rivals = [club for club in REGIONS[run.build.region].clubs if club != (run.contract.club_name if run.contract else "")]
+        rival = rivals[_stable_seed(run.seed, run.season_number, "rival-preview") % len(rivals)] if rivals else REGIONS[run.build.region].label
+        if locale == "es":
+            return (
+                f"{rival} señaló a {partner_name}",
+                f"El próximo rival publicó un análisis de {partner_name} y prepara una respuesta específica. "
+                "Ignorarlo, estudiarlo o responder cambia la preparación real del cruce.",
+            )
+        return (
+            f"{rival} called out {partner_name}",
+            f"The next opponent published an analysis of {partner_name} and is preparing a specific answer. "
+            "Ignoring, studying or answering it changes the real match preparation.",
+        )
+    if family == "friendship":
+        bond = max(run.relationships.values(), default=0)
+        if locale == "es":
+            return (
+                "Un vínculo exige una respuesta",
+                f"Tu contacto más cercano está en vínculo {bond}. Esta decisión puede convertir esa relación "
+                "en preparación, recuperación o protección contractual.",
+            )
+        return (
+            "A bond demands an answer",
+            f"Your strongest contact is at bond {bond}. This choice can turn that relationship into preparation, "
+            "recovery or contract protection.",
+        )
+    if family == "training":
+        if locale == "es":
+            return (
+                f"{partner_name} no puede entrenar todo",
+                f"{partner_name} llega en nivel {partner_level}. El staff debe elegir entre descanso, "
+                "niveles PTU o un movimiento legal antes del calendario.",
+            )
+        return (
+            f"{partner_name} cannot train everything",
+            f"{partner_name} enters at level {partner_level}. Staff must choose rest, PTU levels or a legal move before the schedule.",
+        )
+    return _COPY[locale].get(family, _COPY[locale]["default"])
+
+
+def _npc_name(run: CareerRun, kind: str, rng: random.Random) -> str:
+    region = run.build.region
+    existing = sorted(
+        name for name in run.relationships
+        if f" · {kind} · " in name and name.lower().endswith(region.lower())
+    )
+    if existing and rng.random() < 0.75:
+        return existing[rng.randrange(len(existing))]
     first = ("Mara", "Ivo", "Sena", "Tomas", "Nia", "Rei", "Asha", "Milo")
     last = ("Vale", "Ortega", "Reed", "Kwan", "Moss", "Arden", "Sato", "Bell")
-    return f"{first[rng.randrange(len(first))]} {last[rng.randrange(len(last))]} · {kind} · {region.title()}"
+    identity = _stable_seed(region, kind, "career-contact")
+    return f"{first[identity % len(first)]} {last[(identity // len(first)) % len(last)]} · {kind} · {region.title()}"

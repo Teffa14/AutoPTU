@@ -8,9 +8,11 @@ import pytest
 from auto_ptu.career.catalogs import REGIONS, compiled_decision_count
 from auto_ptu.career.class_adapters import compile_class_adapters
 from auto_ptu.career.content_compiler import validate_compiled_content
+from auto_ptu.career.decisions import apply_option, build_season_decision
 from auto_ptu.career.engine import CareerEngine
 from auto_ptu.career.models import BattleSpec, BattleTranscript, CareerRun
-from auto_ptu.career.roster import capture_species
+from auto_ptu.career.evolutions import evolve_species_for_level, next_evolution
+from auto_ptu.career.roster import capture_species, grant_partner_levels
 from auto_ptu.career.service import CareerService
 from auto_ptu.career.store import CareerStore
 
@@ -163,6 +165,19 @@ def test_legacy_single_partner_run_is_not_filled_with_unchosen_pokemon() -> None
     assert len([entry for entry in restored.pokemon if entry.status == "pc"]) == 0
 
 
+def test_loading_a_legacy_ready_partner_applies_missing_evolutions() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="legacy-evolution", name="Ari", region="kanto", starter="Bulbasaur",
+        classes=["Ace Trainer"], seed=47,
+    )
+    run.pokemon[0].level = 20
+    assert engine.ensure_roster(run) is True
+    assert run.pokemon[0].species == "Ivysaur"
+    assert run.build.starter == "Ivysaur"
+    assert any(entry["type"] == "pokemon.evolved" for entry in run.timeline)
+
+
 def test_partner_evolves_and_roster_keeps_growing_across_seasons() -> None:
     engine = CareerEngine(fake_battle)
     run = engine.new_run(
@@ -182,6 +197,60 @@ def test_partner_evolves_and_roster_keeps_growing_across_seasons() -> None:
     assert run.build.starter == "Raticate"
     assert len(run.pokemon) == 2
     assert sum(len(entry.evolution_history) for entry in run.pokemon) >= 1
+
+
+@pytest.mark.parametrize(
+    ("region", "starter"),
+    [
+        ("kanto", "Bulbasaur"), ("johto", "Chikorita"), ("hoenn", "Treecko"),
+        ("sinnoh", "Turtwig"), ("unova", "Snivy"), ("kalos", "Chespin"),
+        ("alola", "Rowlet"), ("galar", "Grookey"), ("paldea", "Sprigatito"),
+    ],
+)
+def test_regional_starters_use_compiled_ptu_evolution_chains(region: str, starter: str) -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id=f"evolution-{region}", name="Ari", region=region, starter=starter,
+        classes=["Ace Trainer"], seed=808,
+    )
+    partner = run.pokemon[0]
+    target = next_evolution(starter, seed=run.seed, region=region)
+    assert target is not None
+    evolved, threshold = target
+    grant_partner_levels(run, threshold - partner.level, source="test")
+    assert partner.species == evolved
+    assert partner.evolution_history[-1]["threshold"] == threshold
+
+
+def test_evolution_decision_reaches_the_declared_ptu_threshold() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="evolution-decision", name="Ari", region="kanto", starter="Bulbasaur",
+        classes=["Ace Trainer"], seed=810,
+    )
+    run.pokemon[0].level = 10
+    run.season_number = 2
+    decision = build_season_decision(run)
+    assert decision.family == "evolution"
+    controlled = decision.options[1]
+    level_reward = next(reward for reward in controlled.rewards if reward["type"] == "level")
+    assert level_reward["levels"] == 6
+    apply_option(run, controlled)
+    assert run.pokemon[0].species == "Ivysaur"
+
+
+def test_high_level_rivals_evolve_and_featured_clubs_rotate() -> None:
+    assert evolve_species_for_level("Poochyena", 63, seed=1, region="hoenn") == "Mightyena"
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="rival-rotation", name="Ari", region="kanto", starter="Bulbasaur",
+        classes=["Ace Trainer"], seed=809,
+    )
+    featured = []
+    for _ in range(4):
+        featured.append(engine._schedule(run)[-1].away_club)
+        run, _ = engine.advance_season(run, option_id=run.season.decision.options[0].id)
+    assert len(set(featured)) == len(featured)
 
 
 def test_junior_is_age_gated_then_promotes_to_rookie() -> None:
@@ -346,7 +415,7 @@ def test_active_legacy_run_records_version_migration_before_new_mechanics() -> N
         "season": 1,
         "age": 12,
         "from": "career-0.1.0",
-        "to": "career-0.6.0",
+        "to": "career-0.7.0",
     }
 
 
@@ -369,14 +438,15 @@ def test_decision_endpoint_is_revisioned_and_idempotent(tmp_path: Path) -> None:
     first = service.decide("trainer-1", run_id, {"expected_revision": 0, "option_id": option_id}, "season-1")
     second = service.decide("trainer-1", run_id, {"expected_revision": 0, "option_id": option_id}, "season-1")
     assert first == second
-    assert first["run"]["revision"] == 1
-    assert first["run"]["season"]["status"] == "battle"
+    assert first["run"]["revision"] == 2
+    assert first["run"]["season_number"] == 2
+    assert first["season_resolved"] is True
     assert len(first["battle_ids"]) == 6
     with pytest.raises(RuntimeError, match="Revision conflict"):
         service.decide("trainer-1", run_id, {"expected_revision": 0, "option_id": option_id}, "season-2")
 
 
-def test_decision_prepares_immediately_and_featured_battle_finishes_the_season(tmp_path: Path) -> None:
+def test_decision_precomputes_featured_battle_before_opening_the_arena(tmp_path: Path) -> None:
     calls: list[str] = []
 
     def counted_battle(spec: BattleSpec) -> BattleTranscript:
@@ -395,8 +465,9 @@ def test_decision_prepares_immediately_and_featured_battle_finishes_the_season(t
         {"expected_revision": created["revision"], "option_id": option_id},
         "fast-season-1",
     )
-    assert calls == []
-    assert prepared["run"]["season"]["status"] == "battle"
+    assert len(calls) == 1
+    assert prepared["run"]["season_number"] == 2
+    assert prepared["season_resolved"] is True
     featured = prepared["battle_ids"][-1]
     transcript = service.battle("trainer-fast", created["id"], featured)
     assert transcript["battle_id"] == featured

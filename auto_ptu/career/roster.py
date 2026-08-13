@@ -1,59 +1,12 @@
 from __future__ import annotations
 
 from collections import Counter
-from typing import Dict, Iterable, List, Sequence
+from typing import Iterable, List, Sequence
 
 from .catalogs import LEAGUES, REGIONS
+from .evolutions import next_evolution
 from .models import BattleSpec, BattleTranscript, CareerPokemon, CareerRun
 from .ptu_builds import identity_seed, is_legal_taught_move, persistent_identity
-
-
-EVOLUTIONS: Dict[str, tuple[str, int]] = {
-    "Rattata": ("Raticate", 20), "Caterpie": ("Metapod", 10), "Metapod": ("Butterfree", 20),
-    "Weedle": ("Kakuna", 10), "Kakuna": ("Beedrill", 20), "Spearow": ("Fearow", 20),
-    "Paras": ("Parasect", 20), "Venonat": ("Venomoth", 30), "Krabby": ("Kingler", 28),
-    "Cubone": ("Marowak", 28), "Horsea": ("Seadra", 30), "Seadra": ("Kingdra", 40),
-    "Goldeen": ("Seaking", 25), "Magikarp": ("Gyarados", 20),
-    "Sentret": ("Furret", 15), "Hoothoot": ("Noctowl", 20), "Ledyba": ("Ledian", 20),
-    "Spinarak": ("Ariados", 20), "Chinchou": ("Lanturn", 20), "Natu": ("Xatu", 25),
-    "Wooper": ("Quagsire", 20), "Snubbull": ("Granbull", 20), "Slugma": ("Magcargo", 30),
-    "Remoraid": ("Octillery", 25),
-    "Poochyena": ("Mightyena", 20), "Zigzagoon": ("Linoone", 20), "Wurmple": ("Silcoon", 10),
-    "Silcoon": ("Beautifly", 20), "Lotad": ("Lombre", 20), "Lombre": ("Ludicolo", 30),
-    "Seedot": ("Nuzleaf", 20), "Nuzleaf": ("Shiftry", 30), "Taillow": ("Swellow", 20),
-    "Surskit": ("Masquerain", 22), "Whismur": ("Loudred", 20), "Loudred": ("Exploud", 40),
-    "Skitty": ("Delcatty", 25), "Gulpin": ("Swalot", 25), "Spoink": ("Grumpig", 30),
-    "Bidoof": ("Bibarel", 15), "Kricketot": ("Kricketune", 15), "Shinx": ("Luxio", 15),
-    "Luxio": ("Luxray", 30), "Burmy": ("Wormadam", 20), "Combee": ("Vespiquen", 21),
-    "Buizel": ("Floatzel", 25), "Cherubi": ("Cherrim", 20), "Shellos": ("Gastrodon", 30),
-    "Stunky": ("Skuntank", 30), "Finneon": ("Lumineon", 30),
-    "Patrat": ("Watchog", 20), "Lillipup": ("Herdier", 16), "Herdier": ("Stoutland", 32),
-    "Purrloin": ("Liepard", 20), "Pidove": ("Tranquill", 20), "Tranquill": ("Unfezant", 35),
-    "Blitzle": ("Zebstrika", 25), "Roggenrola": ("Boldore", 20), "Boldore": ("Gigalith", 35),
-    "Woobat": ("Swoobat", 20), "Tympole": ("Palpitoad", 20), "Palpitoad": ("Seismitoad", 35),
-    "Sewaddle": ("Swadloon", 20), "Swadloon": ("Leavanny", 30), "Venipede": ("Whirlipede", 20),
-    "Whirlipede": ("Scolipede", 35), "Dwebble": ("Crustle", 25),
-    "Bunnelby": ("Diggersby", 20), "Fletchling": ("Fletchinder", 17), "Fletchinder": ("Talonflame", 35),
-    "Scatterbug": ("Spewpa", 10), "Spewpa": ("Vivillon", 20), "Litleo": ("Pyroar", 30),
-    "Flabebe": ("Floette", 20), "Floette": ("Florges", 35), "Skiddo": ("Gogoat", 25),
-    "Pancham": ("Pangoro", 30), "Espurr": ("Meowstic", 25), "Spritzee": ("Aromatisse", 25),
-    "Swirlix": ("Slurpuff", 25), "Inkay": ("Malamar", 30),
-    "Pikipek": ("Trumbeak", 15), "Trumbeak": ("Toucannon", 30), "Yungoos": ("Gumshoos", 20),
-    "Grubbin": ("Charjabug", 20), "Charjabug": ("Vikavolt", 35), "Crabrawler": ("Crabominable", 30),
-    "Cutiefly": ("Ribombee", 25), "Rockruff": ("Lycanroc", 25), "Mudbray": ("Mudsdale", 30),
-    "Dewpider": ("Araquanid", 25), "Fomantis": ("Lurantis", 25), "Morelull": ("Shiinotic", 25),
-    "Salandit": ("Salazzle", 33),
-    "Skwovet": ("Greedent", 25), "Rookidee": ("Corvisquire", 20), "Corvisquire": ("Corviknight", 40),
-    "Blipbug": ("Dottler", 10), "Dottler": ("Orbeetle", 30), "Nickit": ("Thievul", 20),
-    "Gossifleur": ("Eldegoss", 20), "Wooloo": ("Dubwool", 25), "Chewtle": ("Drednaw", 20),
-    "Yamper": ("Boltund", 25), "Rolycoly": ("Carkol", 20), "Carkol": ("Coalossal", 40),
-    "Silicobra": ("Sandaconda", 30), "Arrokuda": ("Barraskewda", 25), "Clobbopus": ("Grapploct", 30),
-    "Lechonk": ("Oinkologne", 20), "Tarountula": ("Spidops", 15), "Nymble": ("Lokix", 25),
-    "Pawmi": ("Pawmo", 18), "Pawmo": ("Pawmot", 32), "Tandemaus": ("Maushold", 25),
-    "Fidough": ("Dachsbun", 25), "Smoliv": ("Dolliv", 20), "Dolliv": ("Arboliva", 35),
-    "Nacli": ("Naclstack", 20), "Naclstack": ("Garganacl", 40), "Charcadet": ("Armarouge", 30),
-    "Tadbulb": ("Bellibolt", 25), "Wattrel": ("Kilowattrel", 25),
-}
 
 LEVEL_CAPS = {"junior": 20, "rookie": 35, "regular": 55, "elite": 100}
 
@@ -75,8 +28,15 @@ def initialize_roster(run: CareerRun, stable_seed: int) -> bool:
         if pokemon.level > cap:
             pokemon.level = cap
             changed = True
+        if _evolve_ready(run, pokemon):
+            changed = True
         if _refresh_identity(run, pokemon):
             changed = True
+
+    partner = next((entry for entry in run.pokemon if entry.is_partner), None)
+    if partner is not None and run.build.starter != partner.species:
+        run.build.starter = partner.species
+        changed = True
 
     valid_ids = {entry.id for entry in run.pokemon}
     active = [entry_id for entry_id in run.active_roster if entry_id in valid_ids]
@@ -265,9 +225,17 @@ def _capture_event(run: CareerRun, captured: Sequence[CareerPokemon], source: st
 
 def _evolve_ready(run: CareerRun, pokemon: CareerPokemon) -> List[dict]:
     evolutions: List[dict] = []
-    while pokemon.species in EVOLUTIONS and pokemon.level >= EVOLUTIONS[pokemon.species][1]:
+    while True:
+        target = next_evolution(
+            pokemon.species,
+            seed=identity_seed(run.seed, pokemon.id),
+            region=run.build.region,
+            level=pokemon.level,
+        )
+        if target is None:
+            break
         previous = pokemon.species
-        evolved, threshold = EVOLUTIONS[previous]
+        evolved, threshold = target
         pokemon.species = evolved
         _refresh_identity(run, pokemon, replace_abilities=True)
         event = {

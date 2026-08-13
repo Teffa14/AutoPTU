@@ -11,6 +11,7 @@ from .battle import simulate_battle
 from .catalogs import LEAGUES, LEAGUE_ORDER, REGIONS
 from .class_adapters import selected_class_effects, validate_selected_classes
 from .decisions import apply_option, build_season_decision
+from .evolutions import evolve_species_for_level
 from .models import (
     BattleSpec,
     BattleTranscript,
@@ -248,6 +249,8 @@ class CareerEngine:
                     {"id": transcript.battle_id, "sha256": transcript.sha256}
                     for transcript in transcripts
                 ],
+                "opponents": [spec.away_club for spec in specs],
+                "featured_opponent": next((spec.away_club for spec in specs if spec.featured), specs[-1].away_club),
                 "score_delta": season.score_delta,
                 "lineup": list(run.active_roster),
                 **roster_outcome,
@@ -362,10 +365,30 @@ class CareerEngine:
         league_floor = league.min_level + min(15, max(0, run.season_number - 1))
         competitive_level = min(career_level_cap(run), max(league_floor, round(sum(entry.level for entry in lineup) / len(lineup))))
         specs = []
+        away_clubs = [club for club in clubs if club != home]
+        rng.shuffle(away_clubs)
+        if not away_clubs:
+            away_clubs = [f"{region.label} League Select"]
+        rotation = (run.season_number - 1) % len(away_clubs)
+        away_clubs = away_clubs[rotation:] + away_clubs[:rotation]
+        scheduled_clubs = [away_clubs[index % len(away_clubs)] for index in range(league.matches)]
+        previous_featured = next(
+            (
+                str(entry.get("featured_opponent") or "")
+                for entry in reversed(run.timeline)
+                if entry.get("type") == "season.completed" and entry.get("featured_opponent")
+            ),
+            "",
+        )
+        if len(scheduled_clubs) > 1 and scheduled_clubs[-1] == previous_featured:
+            replacement = next(
+                (index for index, club in enumerate(scheduled_clubs[:-1]) if club != previous_featured),
+                None,
+            )
+            if replacement is not None:
+                scheduled_clubs[replacement], scheduled_clubs[-1] = scheduled_clubs[-1], scheduled_clubs[replacement]
         for index in range(league.matches):
-            away_club = clubs[(index + 1) % len(clubs)]
-            if away_club == home:
-                away_club = f"{region.label} Academy {index + 1}"
+            away_club = scheduled_clubs[index]
             rotation = index % len(lineup)
             match_lineup = lineup[rotation:] + lineup[:rotation]
             pokemon = match_lineup[0]
@@ -377,7 +400,15 @@ class CareerEngine:
                 if not pool:
                     pool = list(eligible_opponents)
                     rng.shuffle(pool)
-                opponent_team.append(pool.pop())
+                base_species = pool.pop()
+                opponent_team.append(
+                    evolve_species_for_level(
+                        base_species,
+                        competitive_level,
+                        seed=stable_seed(run.seed, run.season_number, index, len(opponent_team), away_club),
+                        region=run.build.region,
+                    )
+                )
             opponent = opponent_team[0]
             specs.append(
                 BattleSpec(

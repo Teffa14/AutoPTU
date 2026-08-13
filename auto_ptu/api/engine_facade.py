@@ -2634,6 +2634,8 @@ class EngineFacade:
     record: Optional[BattleRecord] = None
     _history: List[dict] = None
     _history_limit: int = 20
+    _history_enabled: bool = True
+    _snapshot_ai_metadata: bool = True
     _ability_repo: Optional[PTUCsvRepository] = None
     _ability_repo_checked: bool = False
     _last_random_terrain: Optional[str] = None
@@ -4174,8 +4176,11 @@ class EngineFacade:
             "pending_prompts": list(self._pending_prompts),
             "battle_royale": copy.deepcopy(self._battle_royale_state),
             "ai_diagnostics": copy.deepcopy(getattr(battle, "_ai_diagnostics", None)),
-            "ai_model": ai_model_status(),
-            "ai_learning": ai_learning_status(battle),
+            # Model-management diagnostics are useful in the technical UI, but
+            # scanning every saved AI profile on every automated turn is pure
+            # overhead for immutable Career transcripts.
+            "ai_model": ai_model_status() if self._snapshot_ai_metadata else {},
+            "ai_learning": ai_learning_status(battle) if self._snapshot_ai_metadata else {},
             "battle_log_path": self._battle_log_path,
         }
 
@@ -4502,7 +4507,7 @@ class EngineFacade:
             self._advance_until_player()
         return self.snapshot()
 
-    def ai_step(self) -> dict:
+    def ai_step(self, *, include_snapshot: bool = True) -> dict:
         if self.mode != "ai":
             raise ValueError("Not in AI vs AI mode.")
         battle = self.battle
@@ -4511,11 +4516,14 @@ class EngineFacade:
         if battle is None or session is None or record is None:
             raise ValueError("No active AI battle.")
         if session._battle_finished(battle):
-            return self.snapshot()
+            return self.snapshot() if include_snapshot else {"battle_over": True, "round": battle.round}
         self._push_history()
         entry = battle.advance_turn()
         if entry is None:
-            return self.snapshot()
+            return self.snapshot() if include_snapshot else {
+                "battle_over": session._battle_finished(battle),
+                "round": battle.round,
+            }
         controller_kind = session._controller_kind_for_actor(battle, entry.actor_id)
         if battle.is_trainer_actor_id(entry.actor_id):
             if controller_kind != "player":
@@ -4527,7 +4535,11 @@ class EngineFacade:
                 except ValueError:
                     session._ai_skip_turn(battle, entry.actor_id, record)
         battle.end_turn()
-        return self.snapshot()
+        if include_snapshot:
+            return self.snapshot()
+        self._apply_battle_royale_circle_if_needed(battle)
+        self._flush_battle_log_events(battle)
+        return {"battle_over": session._battle_finished(battle), "round": battle.round}
 
     def undo(self) -> dict:
         if not self._history:
@@ -4550,6 +4562,8 @@ class EngineFacade:
 
     def _push_history(self) -> None:
         if self.battle is None or self.record is None:
+            return
+        if not self._history_enabled or self._history_limit <= 0:
             return
         battle_clone = self._clone_battle_for_history(self.battle)
         snapshot = {

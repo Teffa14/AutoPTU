@@ -49,7 +49,7 @@ REGIONS: Dict[str, RegionDefinition] = {
             "Cubone", "Lickitung", "Koffing", "Rhyhorn", "Tangela", "Horsea", "Goldeen", "Staryu",
             "Magikarp", "Ditto", "Porygon", "Omanyte", "Kabuto", "Dratini",
         ),
-        ("Saffron Comets", "Cerulean Current", "Fuchsia Wardens"), "indigo-stone",
+        ("Saffron Comets", "Cerulean Current", "Fuchsia Wardens", "Pewter Foundry", "Vermilion Surge", "Celadon Canopy", "Lavender Echoes", "Cinnabar Forge"), "indigo-stone",
     ),
     "johto": RegionDefinition(
         "johto", "Johto",
@@ -61,7 +61,7 @@ REGIONS: Dict[str, RegionDefinition] = {
             "Slugma", "Swinub", "Corsola", "Remoraid", "Delibird", "Houndour", "Phanpy", "Smeargle",
             "Tyrogue", "Smoochum", "Elekid", "Magby", "Larvitar",
         ),
-        ("Goldenrod Signals", "Ecruteak Bells", "Olivine Breakers"), "cedar-brass",
+        ("Goldenrod Signals", "Ecruteak Bells", "Olivine Breakers", "Violet Rooks", "Azalea Hive", "Cianwood Storm", "Mahogany Red", "Blackthorn Drakes"), "cedar-brass",
     ),
     "hoenn": RegionDefinition(
         "hoenn", "Hoenn",
@@ -74,7 +74,7 @@ REGIONS: Dict[str, RegionDefinition] = {
             "Swablu", "Barboach", "Corphish", "Baltoy", "Lileep", "Anorith", "Feebas", "Castform", "Kecleon",
             "Shuppet", "Duskull", "Wynaut", "Snorunt", "Spheal", "Clamperl", "Luvdisc", "Bagon", "Beldum",
         ),
-        ("Slateport Tides", "Mauville Dynamo", "Fortree Canopy"), "ocean-volcanic",
+        ("Slateport Tides", "Mauville Dynamo", "Fortree Canopy", "Rustboro Strata", "Lavaridge Caldera", "Lilycove Lights", "Mossdeep Orbit", "Sootopolis Depths"), "ocean-volcanic",
     ),
     "sinnoh": RegionDefinition(
         "sinnoh", "Sinnoh",
@@ -85,7 +85,7 @@ REGIONS: Dict[str, RegionDefinition] = {
             "Stunky", "Bronzor", "Bonsly", "Mime Jr.", "Happiny", "Chatot", "Gible", "Munchlax", "Riolu",
             "Hippopotas", "Skorupi", "Croagunk", "Carnivine", "Finneon", "Mantyke", "Snover", "Rotom",
         ),
-        ("Jubilife Press", "Canalave Anchors", "Snowpoint Crown"), "mountain-snow",
+        ("Jubilife Press", "Canalave Anchors", "Snowpoint Crown", "Oreburgh Bedrock", "Eterna Grove", "Hearthome Union", "Veilstone Edge", "Sunyshore Current"), "mountain-snow",
     ),
     "unova": RegionDefinition(
         "unova", "Unova",
@@ -98,7 +98,7 @@ REGIONS: Dict[str, RegionDefinition] = {
             "Karrablast", "Foongus", "Frillish", "Joltik", "Ferroseed", "Klink", "Tynamo", "Elgyem", "Litwick",
             "Axew", "Cubchoo", "Shelmet", "Mienfoo", "Golett", "Pawniard", "Rufflet", "Vullaby", "Deino", "Larvesta",
         ),
-        ("Castelia Borough", "Nimbasa Voltage", "Driftveil Union"), "metro-steel",
+        ("Castelia Borough", "Nimbasa Voltage", "Driftveil Union", "Striaton Trio", "Nacrene Archive", "Mistralton Wings", "Icirrus Thaw", "Opelucid Axis"), "metro-steel",
     ),
     "kalos": RegionDefinition(
         "kalos", "Kalos",
@@ -108,7 +108,7 @@ REGIONS: Dict[str, RegionDefinition] = {
             "Honedge", "Spritzee", "Swirlix", "Inkay", "Binacle", "Skrelp", "Clauncher", "Helioptile", "Tyrunt",
             "Amaura", "Dedenne", "Goomy", "Phantump", "Bergmite", "Noibat",
         ),
-        ("Lumiose Atelier", "Cyllage Peloton", "Laverre Masque"), "prism-garden",
+        ("Lumiose Atelier", "Cyllage Peloton", "Laverre Masque", "Santalune Silks", "Shalour Aura", "Coumarine Rails", "Anistar Dial", "Snowbelle Guard"), "prism-garden",
     ),
     "alola": RegionDefinition(
         "alola", "Alola",
@@ -119,7 +119,7 @@ REGIONS: Dict[str, RegionDefinition] = {
             "Mudbray", "Dewpider", "Fomantis", "Morelull", "Salandit", "Stufful", "Bounsweet", "Wimpod",
             "Sandygast", "Pyukumuku", "Togedemaru", "Jangmo-o", "Cosmog", "Poipole", "Meltan",
         ),
-        ("Hau'oli Breakers", "Konikoni Forge", "Malie Stars"), "island-sunset",
+        ("Hau'oli Breakers", "Konikoni Forge", "Malie Stars", "Iki Kahunas", "Heahea Tides", "Paniola Riders", "Po Town Skulls", "Seafolk Voyagers"), "island-sunset",
     ),
     "galar": RegionDefinition(
         "galar", "Galar",
@@ -130,7 +130,7 @@ REGIONS: Dict[str, RegionDefinition] = {
             "Chewtle", "Yamper", "Rolycoly", "Applin", "Silicobra", "Arrokuda", "Toxel", "Sizzlipede", "Clobbopus",
             "Sinistea", "Hatenna", "Impidimp", "Milcery", "Pincurchin", "Snom", "Morpeko", "Cufant", "Dreepy", "Kubfu",
         ),
-        ("Motostoke Engine", "Hulbury Fleet", "Hammerlocke Keep"), "stadium-industrial",
+        ("Motostoke Engine", "Hulbury Fleet", "Hammerlocke Keep", "Turffield Wool", "Stow-on-Side Relics", "Ballonlea Glamour", "Circhester Crown", "Spikemuth Noise"), "stadium-industrial",
     ),
     "paldea": RegionDefinition(
         "paldea", "Paldea",
@@ -141,7 +141,7 @@ REGIONS: Dict[str, RegionDefinition] = {
             "Capsakid", "Rellor", "Flittle", "Tinkatink", "Wiglett", "Finizen", "Varoom", "Glimmet", "Greavard",
             "Cetoddle", "Frigibax", "Gimmighoul",
         ),
-        ("Mesagoza Scholars", "Levincia Circuit", "Medali Table"), "terra-mosaic",
+        ("Mesagoza Scholars", "Levincia Circuit", "Medali Table", "Cortondo Harvest", "Artazon Sunflora", "Cascarrafa Cascades", "Montenevera Choir", "Alfornada Stars"), "terra-mosaic",
     ),
 }
 

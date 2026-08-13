@@ -112,9 +112,16 @@ def persistent_identity(
 @lru_cache(maxsize=4096)
 def _base_identity(species: str, level: int, seed: int) -> tuple[str, tuple[str, ...]]:
     repo = PTUCsvRepository(rng=random.Random(int(seed)))
-    mon = build_career_pokemon_spec(repo, species, level)
-    selected = _ability_names(getattr(mon, "abilities", []))
-    if repo.get_species(species) is None:
+    record = repo.get_species(species)
+    if record is not None:
+        # Persistent identity never needs a moveset. Building a full combatant
+        # here used to reload every learnset and move table after each season.
+        selected_nature = pick_random_nature_name(repo._rng, root=repo.root)
+        selected = list(repo._select_abilities(record.name, level))
+    else:
+        mon = build_paldea_spec(species, level, repo)
+        selected_nature = str(getattr(mon, "nature", "")) or pick_random_nature_name(repo._rng, root=repo.root)
+        selected = _ability_names(getattr(mon, "abilities", []))
         # Generation 9 PBS lists ability alternatives rather than PTU tiers.
         # Keep a deterministic legal subset as the career advances.
         count = 1 + int(level >= 20) + int(level >= 40)
@@ -122,7 +129,7 @@ def _base_identity(species: str, level: int, seed: int) -> tuple[str, tuple[str,
         selected = list(selected)
         rng.shuffle(selected)
         selected = selected[:count]
-    return str(getattr(mon, "nature", "")), tuple(selected)
+    return selected_nature, tuple(selected)
 
 
 def identity_seed(run_seed: int, pokemon_id: str) -> int:
