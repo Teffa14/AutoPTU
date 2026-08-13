@@ -11,7 +11,7 @@
   },
   "functions": {
     "**/*.py": {
-      "excludeFiles": "{career_web/**,auto_ptu/api/static/**,public/**}"
+      "excludeFiles": "{career_web/**,auto_ptu/api/static/**}"
     }
   },
   "rewrites": [
