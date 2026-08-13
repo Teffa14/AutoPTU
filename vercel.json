@@ -10,6 +10,11 @@
     "AUTO_PTU_POKEAPI_CACHE": "/tmp/autoptu/pokeapi",
     "CAREER_BATTLE_EXECUTION": "inline"
   },
+  "functions": {
+    "app.py": {
+      "excludeFiles": "{career_web/public/sprites/**,auto_ptu/api/static/career/sprites/**}"
+    }
+  },
   "rewrites": [
     { "source": "/career-game/assets/:path*", "destination": "/assets/:path*" },
     { "source": "/career-game/sprites/:path*", "destination": "/sprites/:path*" },
