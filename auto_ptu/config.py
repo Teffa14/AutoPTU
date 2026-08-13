@@ -8,7 +8,10 @@ from pathlib import Path
 
 PACKAGE_ROOT = Path(__file__).resolve().parent
 PROJECT_ROOT = Path(getattr(sys, "_MEIPASS", PACKAGE_ROOT.parent))
-RUNTIME_ROOT = Path(sys.executable).resolve().parent if getattr(sys, "frozen", False) else PROJECT_ROOT
+RUNTIME_ROOT = Path(
+    os.environ.get("AUTO_PTU_RUNTIME_ROOT")
+    or (Path(sys.executable).resolve().parent if getattr(sys, "frozen", False) else PROJECT_ROOT)
+)
 DATA_DIR = PACKAGE_ROOT / "data"
 CAMPAIGNS_DIR = DATA_DIR / "campaigns"
 DEFAULT_CAMPAIGN_FILE = CAMPAIGNS_DIR / "demo_campaign.json"
@@ -34,8 +37,10 @@ def _pick_existing_path(*candidates: Path | None) -> Path:
 FILES_DIR = _pick_existing_path(_env_path("AUTO_PTU_FILES_DIR"), RUNTIME_ROOT / "files", PROJECT_ROOT / "files")
 # Writable runtime overrides must win even before their directory exists. Serverless
 # filesystems expose the bundled project tree as an existing but read-only path.
-REPORTS_DIR = _env_path("AUTO_PTU_REPORTS_DIR") or _pick_existing_path(
-    RUNTIME_ROOT / "reports", PROJECT_ROOT / "reports"
+REPORTS_DIR = (
+    _env_path("AUTO_PTU_REPORTS_DIR")
+    or ((RUNTIME_ROOT / "reports") if os.environ.get("VERCEL") else None)
+    or _pick_existing_path(RUNTIME_ROOT / "reports", PROJECT_ROOT / "reports")
 )
 IMPLEMENTATION_DIR = _pick_existing_path(
     _env_path("AUTO_PTU_IMPLEMENTATION_DIR"),
