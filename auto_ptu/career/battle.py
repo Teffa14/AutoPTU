@@ -79,6 +79,10 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 30) -> BattleTranscrip
     engine = EngineFacade()
     engine._history_enabled = False
     engine._snapshot_ai_metadata = False
+    # The career transcript is already canonicalized and persisted by the
+    # career store; a second JSONL replay only adds I/O and is illegal on
+    # serverless read-only roots.
+    engine._battle_logging_enabled = False
     initial = engine.start_encounter(
         battle_payload=payload,
         seed=spec.seed,

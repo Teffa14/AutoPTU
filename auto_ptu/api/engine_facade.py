@@ -2636,6 +2636,7 @@ class EngineFacade:
     _history_limit: int = 20
     _history_enabled: bool = True
     _snapshot_ai_metadata: bool = True
+    _battle_logging_enabled: bool = True
     _ability_repo: Optional[PTUCsvRepository] = None
     _ability_repo_checked: bool = False
     _last_random_terrain: Optional[str] = None
@@ -2743,6 +2744,11 @@ class EngineFacade:
         return path
 
     def _start_battle_log(self, *, mode: str, source: str, seed: Optional[int]) -> None:
+        if not self._battle_logging_enabled:
+            self._battle_log_path = None
+            self._battle_log_cursor = 0
+            self._battle_log_closed = False
+            return
         ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         suffix = random.randint(1000, 9999)
         path = self._battle_log_dir() / f"battle_{ts}_{suffix}.jsonl"
