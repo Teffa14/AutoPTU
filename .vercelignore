@@ -18,6 +18,8 @@ career_web/node_modules/
 auto_ptu/api/static/*
 !auto_ptu/api/static/character_creation.json
 !auto_ptu/api/static/pokemon_move_sources.json
+!auto_ptu/api/static/career/
+!auto_ptu/api/static/career/**
 files/**/*.pdf
 files/**/*.xlsx
 files/**/*.xls
