@@ -1,20 +1,23 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+SOURCE_DIR = ROOT / "IMPLEMENTATION FILES" / "Generation 9 Pack v3.3.4" / "Graphics" / "Pokemon" / "Front"
+os.environ["AUTO_PTU_LOCAL_SPRITE_DIRS"] = str(SOURCE_DIR)
 
 from auto_ptu.career.catalogs import REGIONS
 from auto_ptu.sprites import _fallback_slugs, _local_sprite_path_for_slug, _slugify
 
 
 SPECIES_PATH = ROOT / "auto_ptu" / "data" / "compiled" / "species.json"
-OUTPUT_DIR = ROOT / "auto_ptu" / "api" / "static" / "career" / "sprites"
-PLACEHOLDER = ROOT / "Animated Pokemon Sprites" / "Graphics" / "Pokemon" / "Front" / "000.png"
+OUTPUT_DIR = ROOT / "career_web" / "public" / "sprites"
+PLACEHOLDER = SOURCE_DIR / "000.png"
 
 
 def main() -> None:
