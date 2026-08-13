@@ -1,20 +1,23 @@
 export function spriteUrl(species: string): string {
-  if (import.meta.env.DEV) return `/api/sprites/pokemon?name=${encodeURIComponent(species)}`;
-  return `/career-game/sprites/${spriteSlug(species)}.png`;
+  return `https://play.pokemonshowdown.com/sprites/ani/${spriteSlug(species)}.gif`;
 }
 
 export function fallbackSpriteUrl(): string {
-  return import.meta.env.DEV ? "/sprites/000.png" : "/career-game/sprites/000.png";
+  return "https://play.pokemonshowdown.com/sprites/ani/substitute.gif";
 }
 
 export function spriteSlug(species: string): string {
-  return species
+  const normalized = species
     .trim()
     .toLowerCase()
-    .replaceAll("♀", " female")
-    .replaceAll("♂", " male")
+    .replaceAll("♀", "f")
+    .replaceAll("♂", "m")
     .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .replace(/[\u0300-\u036f]/g, "");
+  const regional = normalized
+    .replace(/\s+(alolan|alola)$/i, "-alola")
+    .replace(/\s+(galarian|galar)$/i, "-galar")
+    .replace(/\s+(hisuian|hisui)$/i, "-hisui")
+    .replace(/\s+(paldean|paldea)$/i, "-paldea");
+  return regional.replace(/[^a-z0-9-]+/g, "").replace(/^-+|-+$/g, "");
 }

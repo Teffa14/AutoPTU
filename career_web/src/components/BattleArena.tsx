@@ -282,6 +282,7 @@ function attackColor(move?: BattleMove): number { return TYPE_COLORS[move?.type.
 
 async function loadPokemonTexture(species: string): Promise<Texture> {
   const image = new Image();
+  image.crossOrigin = "anonymous";
   image.src = spriteUrl(species);
   try {
     await image.decode();
