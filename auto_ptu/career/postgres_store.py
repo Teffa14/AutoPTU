@@ -20,8 +20,9 @@ class PostgresCareerStore:
         self.database_url = (
             database_url
             or os.environ.get("DATABASE_URL", "")
-            or os.environ.get("POSTGRES_URL_NON_POOLING", "")
             or os.environ.get("POSTGRES_URL", "")
+            or os.environ.get("POSTGRES_PRISMA_URL", "")
+            or os.environ.get("POSTGRES_URL_NON_POOLING", "")
         )
         if not self.database_url:
             raise ValueError("DATABASE_URL is required for PostgresCareerStore.")
@@ -29,13 +30,18 @@ class PostgresCareerStore:
 
         self.psycopg = psycopg
 
+    def _connect(self, **kwargs):
+        # Supabase's transaction pooler is the correct endpoint for ephemeral
+        # Vercel functions and requires prepared statements to stay disabled.
+        return self.psycopg.connect(self.database_url, prepare_threshold=None, **kwargs)
+
     def save_run(self, run: CareerRun) -> None:
-        with self.psycopg.connect(self.database_url) as connection:
+        with self._connect() as connection:
             self._execute_save_run(connection, run)
 
     def create_daily_run(self, run: CareerRun, challenge: DailyChallenge) -> int:
         region = REGIONS[challenge.region]
-        with self.psycopg.connect(self.database_url, autocommit=False) as connection:
+        with self._connect(autocommit=False) as connection:
             challenge_id = connection.execute(
                 """
                 insert into public.daily_challenges
@@ -76,14 +82,14 @@ class PostgresCareerStore:
         return run.attempt_no
 
     def load_run(self, run_id: str) -> CareerRun:
-        with self.psycopg.connect(self.database_url) as connection:
+        with self._connect() as connection:
             row = connection.execute("select state from private.career_runs where id = %s", (uuid.UUID(run_id),)).fetchone()
         if not row:
             raise KeyError(f"Career run not found: {run_id}")
         return CareerRun.from_dict(row[0])
 
     def save_battle(self, transcript: BattleTranscript) -> None:
-        with self.psycopg.connect(self.database_url) as connection:
+        with self._connect() as connection:
             self._execute_save_battle(connection, transcript)
 
     def save_season_resolution(
@@ -94,7 +100,7 @@ class PostgresCareerStore:
         response: dict,
     ) -> None:
         """Commit one season with a single database connection and transaction."""
-        with self.psycopg.connect(self.database_url, autocommit=False) as connection:
+        with self._connect(autocommit=False) as connection:
             for transcript in transcripts:
                 self._execute_save_battle(connection, transcript)
             self._execute_save_run(connection, run)
@@ -104,7 +110,7 @@ class PostgresCareerStore:
     def run_battle(self, spec: BattleSpec, timeout_seconds: float = 90.0) -> BattleTranscript:
         """Enqueue a battle in PGMQ and wait for an isolated worker's authoritative result."""
         run_id = spec.id.split("-s", 1)[0]
-        with self.psycopg.connect(self.database_url, autocommit=False) as connection:
+        with self._connect(autocommit=False) as connection:
             row = connection.execute(
                 """
                 insert into private.battle_results
@@ -125,7 +131,7 @@ class PostgresCareerStore:
             connection.commit()
         deadline = time.monotonic() + timeout_seconds
         while time.monotonic() < deadline:
-            with self.psycopg.connect(self.database_url) as connection:
+            with self._connect() as connection:
                 current = connection.execute(
                     "select status, result from private.battle_results where id = %s", (row[0],)
                 ).fetchone()
@@ -138,7 +144,7 @@ class PostgresCareerStore:
         raise RuntimeError(f"Battle worker timed out for {spec.id}; the durable job remains queued.")
 
     def load_battle(self, battle_id: str) -> dict:
-        with self.psycopg.connect(self.database_url) as connection:
+        with self._connect() as connection:
             row = connection.execute(
                 "select result from private.battle_results where battle_key = %s and status = 'complete'",
                 (battle_id,),
@@ -148,7 +154,7 @@ class PostgresCareerStore:
         return row[0]
 
     def record_idempotency(self, run_id: str, key: str, response: dict) -> None:
-        with self.psycopg.connect(self.database_url) as connection:
+        with self._connect() as connection:
             self._execute_record_idempotency(connection, run_id, key, response)
 
     def _execute_save_run(self, connection, run: CareerRun) -> None:
@@ -205,7 +211,7 @@ class PostgresCareerStore:
         )
 
     def idempotent_response(self, run_id: str, key: str) -> Optional[dict]:
-        with self.psycopg.connect(self.database_url) as connection:
+        with self._connect() as connection:
             row = connection.execute(
                 "select response from private.run_commands where run_id = %s and idempotency_key = %s",
                 (uuid.UUID(run_id), key),
@@ -214,7 +220,7 @@ class PostgresCareerStore:
 
     def attempt_count(self, challenge_id: str, player_id: str, mode: str) -> int:
         challenge_date = challenge_id.removeprefix("daily-")
-        with self.psycopg.connect(self.database_url) as connection:
+        with self._connect() as connection:
             row = connection.execute(
                 """
                 select count(*) from private.daily_attempts a
@@ -227,7 +233,7 @@ class PostgresCareerStore:
 
     def leaderboard(self, challenge_id: str, mode: str) -> List[LeaderboardEntry]:
         day = challenge_id.removeprefix("daily-")
-        with self.psycopg.connect(self.database_url) as connection:
+        with self._connect() as connection:
             rows = connection.execute(
                 """
                 select e.handle, e.score, e.achievements, e.completed_at
@@ -247,7 +253,7 @@ class PostgresCareerStore:
     def finalize_ranked(self, run: CareerRun) -> None:
         if not run.ranked or run.status != "retired":
             return
-        with self.psycopg.connect(self.database_url, autocommit=False) as connection:
+        with self._connect(autocommit=False) as connection:
             challenge_id = connection.execute(
                 "select challenge_id from private.career_runs where id = %s", (uuid.UUID(run.id),)
             ).fetchone()[0]
@@ -295,7 +301,7 @@ class PostgresCareerStore:
             "totals": run.totals,
             "retirement_reason": run.retirement_reason,
         }
-        with self.psycopg.connect(self.database_url) as connection:
+        with self._connect() as connection:
             connection.execute(
                 """
                 insert into public.career_shares (share_slug, owner_id, summary, replay_path)
@@ -317,7 +323,7 @@ class PostgresCareerStore:
         service_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
         if not supabase_url or not service_key:
             raise RuntimeError("Replay sharing requires SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY on the backend.")
-        with self.psycopg.connect(self.database_url) as connection:
+        with self._connect() as connection:
             rows = connection.execute(
                 "select battle_key, result from private.battle_results where run_id = %s and status = 'complete' order by battle_key",
                 (uuid.UUID(run.id),),
@@ -344,7 +350,7 @@ class PostgresCareerStore:
         return path
 
     def load_share(self, share_id: str) -> dict:
-        with self.psycopg.connect(self.database_url) as connection:
+        with self._connect() as connection:
             row = connection.execute(
                 "select share_slug, summary, replay_path from public.career_shares where share_slug = %s and revoked_at is null",
                 (share_id,),
@@ -357,7 +363,7 @@ class PostgresCareerStore:
 def career_store_from_environment():
     if any(
         os.environ.get(name, "").strip()
-        for name in ("DATABASE_URL", "POSTGRES_URL", "POSTGRES_URL_NON_POOLING")
+        for name in ("DATABASE_URL", "POSTGRES_URL", "POSTGRES_PRISMA_URL", "POSTGRES_URL_NON_POOLING")
     ):
         return PostgresCareerStore()
     from .store import CareerStore
