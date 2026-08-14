@@ -4,6 +4,13 @@ import type { BattleTranscript, CareerCatalog, CareerRun } from "./types";
 const base = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") ?? "";
 const battleCache = new Map<string, BattleTranscript>();
 
+export class ApiError extends Error {
+  constructor(message: string, public readonly status: number) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
 async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   const identity = await authHeaders();
   const response = await fetch(`${base}${path}`, {
@@ -11,12 +18,35 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     headers: { "Content-Type": "application/json", ...identity, ...(init.headers ?? {}) },
   });
   const payload = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(payload.detail || `Request failed (${response.status})`);
+  if (!response.ok) throw new ApiError(payload.detail || `Request failed (${response.status})`, response.status);
   return payload as T;
 }
 
 async function decide(run: CareerRun, optionId: string): Promise<{ run: CareerRun; battle_ids: string[]; featured_battle?: BattleTranscript }> {
-  const result = await request<{ run: CareerRun; battle_ids: string[]; featured_battle?: BattleTranscript }>(
+  const originalDecisionId = run.season?.decision?.id;
+  const originalSeason = run.season_number;
+  let source = run;
+  let result;
+  try {
+    result = await decideOnce(source, optionId);
+  } catch (reason) {
+    if (!(reason instanceof ApiError) || reason.status !== 409) throw reason;
+    const latest = await request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}`);
+    if (latest.season?.decision?.id !== originalDecisionId) {
+      const completed = [...latest.timeline].reverse().find((entry) => entry.type === "season.completed" && entry.season === originalSeason);
+      const hashes = Array.isArray(completed?.battle_hashes) ? completed.battle_hashes as { id?: string }[] : [];
+      return { run: latest, battle_ids: hashes.map((entry) => String(entry.id ?? "")).filter(Boolean) };
+    }
+    if (!latest.season?.decision?.options.some((option) => option.id === optionId)) throw reason;
+    source = latest;
+    result = await decideOnce(source, optionId);
+  }
+  if (result.featured_battle) battleCache.set(`${run.id}:${result.featured_battle.battle_id}`, result.featured_battle);
+  return result;
+}
+
+function decideOnce(run: CareerRun, optionId: string) {
+  return request<{ run: CareerRun; battle_ids: string[]; featured_battle?: BattleTranscript }>(
     `/api/v1/runs/${encodeURIComponent(run.id)}/decisions`,
     {
       method: "POST",
@@ -24,8 +54,61 @@ async function decide(run: CareerRun, optionId: string): Promise<{ run: CareerRu
       body: JSON.stringify({ expected_revision: run.revision, option_id: optionId }),
     },
   );
-  if (result.featured_battle) battleCache.set(`${run.id}:${result.featured_battle.battle_id}`, result.featured_battle);
-  return result;
+}
+
+async function lineup(run: CareerRun, pokemonIds: string[]): Promise<CareerRun> {
+  try {
+    return await lineupOnce(run, pokemonIds);
+  } catch (reason) {
+    if (!(reason instanceof ApiError) || reason.status !== 409) throw reason;
+    const latest = await request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}`);
+    const owned = new Set(latest.pokemon.map((pokemon) => pokemon.id));
+    if (pokemonIds.some((id) => !owned.has(id))) return latest;
+    return lineupOnce(latest, pokemonIds);
+  }
+}
+
+function lineupOnce(run: CareerRun, pokemonIds: string[]): Promise<CareerRun> {
+  return request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}/lineup`, {
+    method: "POST",
+    body: JSON.stringify({ expected_revision: run.revision, pokemon_ids: pokemonIds }),
+  });
+}
+
+async function useItem(run: CareerRun, item: string, pokemonId = "", stat = ""): Promise<CareerRun> {
+  try {
+    return await useItemOnce(run, item, pokemonId, stat);
+  } catch (reason) {
+    if (!(reason instanceof ApiError) || reason.status !== 409) throw reason;
+    const latest = await request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}`);
+    if ((latest.inventory[item] ?? 0) < (run.inventory[item] ?? 0)) return latest;
+    return useItemOnce(latest, item, pokemonId, stat);
+  }
+}
+
+function useItemOnce(run: CareerRun, item: string, pokemonId: string, stat: string): Promise<CareerRun> {
+  return request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}/items/use`, {
+    method: "POST",
+    body: JSON.stringify({ expected_revision: run.revision, item, pokemon_id: pokemonId, stat }),
+  });
+}
+
+async function train(run: CareerRun, method: string, pokemonId: string): Promise<CareerRun> {
+  try {
+    return await trainOnce(run, method, pokemonId);
+  } catch (reason) {
+    if (!(reason instanceof ApiError) || reason.status !== 409) throw reason;
+    const latest = await request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}`);
+    if (latest.season?.training_completed) return latest;
+    return trainOnce(latest, method, pokemonId);
+  }
+}
+
+function trainOnce(run: CareerRun, method: string, pokemonId: string): Promise<CareerRun> {
+  return request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}/training`, {
+    method: "POST",
+    body: JSON.stringify({ expected_revision: run.revision, method, pokemon_id: pokemonId }),
+  });
 }
 
 async function battle(runId: string, battleId: string): Promise<BattleTranscript> {
@@ -39,13 +122,9 @@ export const careerApi = {
   catalog: (locale: string) => request<CareerCatalog>(`/api/v1/catalog?locale=${encodeURIComponent(locale)}`),
   create: (payload: Record<string, unknown>) => request<CareerRun>("/api/v1/runs", { method: "POST", body: JSON.stringify(payload) }),
   run: (id: string) => request<CareerRun>(`/api/v1/runs/${encodeURIComponent(id)}`),
-  lineup: (run: CareerRun, pokemonIds: string[]) => request<CareerRun>(
-    `/api/v1/runs/${encodeURIComponent(run.id)}/lineup`,
-    {
-      method: "POST",
-      body: JSON.stringify({ expected_revision: run.revision, pokemon_ids: pokemonIds }),
-    },
-  ),
+  lineup,
+  useItem,
+  train,
   decide,
   battle,
   retire: (runId: string) => request<CareerRun>(`/api/v1/runs/${encodeURIComponent(runId)}/retire`, { method: "POST", body: JSON.stringify({ reason: "voluntary" }) }),

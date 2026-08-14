@@ -27,6 +27,8 @@ export interface CareerCatalog {
   class_count: number;
   feature_count: number;
   decision_signature_count: number;
+  items: Record<string, { description_es: string; description_en: string; target: string }>;
+  training_methods: Record<string, { label_es: string; label_en: string; description_es: string; description_en: string; stats: Record<string, number> }>;
 }
 
 export interface DecisionOption {
@@ -47,7 +49,7 @@ export interface DecisionOption {
 }
 
 export type DecisionReward =
-  | { type: "pokemon"; species: string }
+  | { type: "pokemon"; species: string; rarity?: "common" | "rare" | "very_rare" | "epic" | "legendary" | "mythical" }
   | { type: "item"; item: string; quantity: number }
   | { type: "move"; move: string }
   | { type: "relationship"; name: string; amount: number }
@@ -102,6 +104,10 @@ export interface CareerRun {
   development: number;
   scouting: number;
   finances: number;
+  career_earnings: number;
+  pokedex_level: number;
+  license_status: string;
+  seasons_without_contract: number;
   relationships: Record<string, number>;
   relationship_effects: {
     best_contact?: string;
@@ -127,7 +133,7 @@ export interface CareerRun {
   status: "active" | "retired";
   revision: number;
   build: { name: string; region: string; starter: string; classes: string[]; pokeballs: number };
-  contract?: { club_name: string; region: string; league: string; salary: number; loan_slots: number };
+  contract?: { club_name: string; region: string; league: string; salary: number; loan_slots: number; seasons_remaining: number };
   roster: string[];
   pokemon: CareerPokemon[];
   active_roster: string[];
@@ -150,6 +156,8 @@ export interface CareerRun {
     decisions_required: number;
     decisions_completed: number;
     decision_history: Record<string, unknown>[];
+    training_completed: boolean;
+    training_method: string;
   };
   summary?: {
     seasons: number;
@@ -193,6 +201,8 @@ export interface BattleTranscript {
     home_team_abilities?: string[][];
     away_team_species?: string[];
     away_team_levels?: number[];
+    away_team_rarities?: string[];
+    difficulty_label?: "favored" | "even" | "dangerous";
     home_ai_level?: string;
     away_ai_level?: string;
   };

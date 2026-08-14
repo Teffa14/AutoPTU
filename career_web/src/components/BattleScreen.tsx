@@ -39,12 +39,6 @@ export default function BattleScreen({ runId, battleId, locale, run }: { runId: 
     return () => window.clearTimeout(timer);
   }, [complete, speed, transcript, view?.event?.type, stepIndex]);
 
-  useEffect(() => {
-    if (!complete) return;
-    const timer = window.setTimeout(() => navigate(`run/${runId}`), 4200);
-    return () => window.clearTimeout(timer);
-  }, [complete, runId]);
-
   if (error) return <section className="battle-error"><h1>{locale === "es" ? "No se pudo abrir el combate" : "Battle unavailable"}</h1><p>{error}</p><button onClick={() => navigate(`run/${runId}`)}>{copy.back}</button></section>;
   if (!transcript || !view) return <BattlePreparing run={run} locale={locale} />;
 
@@ -55,6 +49,8 @@ export default function BattleScreen({ runId, battleId, locale, run }: { runId: 
   const userWon = transcript.winner_team === "career-home";
   const commentary = battleCommentary(locale, transcript, view);
   const adjudicated = transcript.events.some((event) => event.type === "match_adjudicated");
+  const homePower = battleTeamPower(homeTeam);
+  const awayPower = battleTeamPower(awayTeam);
   const calloutClass = [
     "event-callout",
     view.critical ? "critical" : "",
@@ -91,9 +87,10 @@ export default function BattleScreen({ runId, battleId, locale, run }: { runId: 
               <span>{adjudicated ? (locale === "es" ? "DECISIÓN ARBITRAL" : "REFEREE DECISION") : (locale === "es" ? "COMBATE TERMINADO" : "BATTLE COMPLETE")}</span>
               <h1>{userWon ? (locale === "es" ? "VICTORIA" : "VICTORY") : (locale === "es" ? "DERROTA" : "DEFEAT")}</h1>
               <p>{transcript.winner_label} · {transcript.rounds} {locale === "es" ? "rondas" : "rounds"}</p>
+              <p className="battle-result-explanation">{locale === "es" ? `Potencia efectiva ${homePower}–${awayPower}. El nivel es sólo una parte: stats, tipos, STAB, habilidades, precisión y decisiones tácticas también definieron el resultado.` : `Effective power ${homePower}–${awayPower}. Level is only one part: stats, types, STAB, abilities, accuracy and tactical choices also decided the result.`}</p>
               <CareerCelebration run={run} locale={locale} season={transcript.spec.season} />
               <button className="primary-action" onClick={() => navigate(`run/${runId}`)}>{locale === "es" ? "Continuar la carrera" : "Continue career"}</button>
-              <small>{locale === "es" ? "La siguiente temporada se abrirá automáticamente." : "The next season will open automatically."}</small>
+              <small>{locale === "es" ? "Este resultado queda en pantalla hasta que decidas continuar." : "This result remains on screen until you choose to continue."}</small>
             </div>
           ) : null}
         </div>
@@ -182,4 +179,12 @@ function fallbackStats(id: string, transcript: BattleTranscript): Partial<Record
     }
   }
   return result;
+}
+
+function battleTeamPower(team: BattleCombatant[]): number {
+  return Math.round(team.reduce((total, pokemon) => {
+    const stats = pokemon.effective_stats ?? pokemon.stats ?? {};
+    const statPower = ["atk", "def", "spatk", "spdef", "spd"].reduce((sum, key) => sum + Number(stats[key as keyof typeof stats] ?? 0), 0);
+    return total + Number(pokemon.level ?? 1) * 4 + statPower;
+  }, 0));
 }

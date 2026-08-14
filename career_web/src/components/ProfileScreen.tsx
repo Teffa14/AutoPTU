@@ -16,6 +16,10 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [itemTarget, setItemTarget] = useState(run.pokemon.find((pokemon) => pokemon.is_partner)?.id ?? run.pokemon[0]?.id ?? "");
+  const [itemStat, setItemStat] = useState("hp");
+  const [trainingTarget, setTrainingTarget] = useState(run.pokemon.find((pokemon) => pokemon.is_partner)?.id ?? run.pokemon[0]?.id ?? "");
+  const [trainingMethod, setTrainingMethod] = useState("conditioning");
   const pokemonById = useMemo(() => new Map(run.pokemon.map((pokemon) => [pokemon.id, pokemon])), [run.pokemon]);
   const selectedSet = useMemo(() => new Set(selected), [selected]);
   const active = selected.map((id) => pokemonById.get(id)).filter(isPokemon);
@@ -50,6 +54,36 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
       const updated = await careerApi.lineup(run, selected);
       onRun(updated);
       setMessage(locale === "es" ? "Equipo registrado. Todos jugarán el próximo calendario." : "Team registered. Everyone will play the next schedule.");
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : String(reason));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function useInventoryItem(item: string) {
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      const updated = await careerApi.useItem(run, item, itemTarget, itemStat);
+      onRun(updated);
+      setMessage(locale === "es" ? `${item} usado. El efecto ya está aplicado.` : `${item} used. Its effect is now applied.`);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : String(reason));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function completeTraining() {
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      const updated = await careerApi.train(run, trainingMethod, trainingTarget);
+      onRun(updated);
+      setMessage(locale === "es" ? "Sesión terminada. La mejora es permanente y se usa en combate." : "Session complete. The permanent improvement is used in battle.");
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : String(reason));
     } finally {
@@ -103,7 +137,33 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
         </section>
 
         <section><h2>{locale === "es" ? "Clases de entrenador" : "Trainer classes"}</h2><div className="class-stamps">{run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b><small>{locale === "es" ? entry.description_es : entry.description_en}</small></span>)}</div></section>
-        <section><h2>{locale === "es" ? "Mochila" : "Bag"}</h2><div className="world-rewards"><span>Poké Ball × {run.build.pokeballs}</span>{Object.entries(run.inventory ?? {}).map(([item, quantity]) => <span key={item}>{item} × {quantity}</span>)}</div></section>
+        <section className="contract-office">
+          <h2>{locale === "es" ? "Contrato e ingresos" : "Contract and earnings"}</h2>
+          <div className="contract-ledger">
+            <span><small>{locale === "es" ? "Club" : "Club"}</small><b>{run.contract?.club_name ?? (locale === "es" ? "Sin contrato" : "No contract")}</b></span>
+            <span><small>{locale === "es" ? "Salario por temporada" : "Salary per season"}</small><b>₽ {run.contract?.salary ?? 0}</b></span>
+            <span><small>{locale === "es" ? "Ganado en la carrera" : "Career earnings"}</small><b>₽ {run.career_earnings ?? 0}</b></span>
+            <span><small>{locale === "es" ? "Temporadas firmadas" : "Seasons secured"}</small><b>{run.contract?.seasons_remaining ?? 0}</b></span>
+          </div>
+          <p>{locale === "es" ? "El salario se acredita al cerrar cada calendario y también mejora tus recursos. Dos temporadas consecutivas sin contrato cierran la carrera; una mala temporada muestra primero esta advertencia y un Club Voucher puede extender el vínculo." : "Salary is paid after each calendar and also improves your resources. Two consecutive seasons without a contract end the career; a poor season first shows this warning and a Club Voucher can extend the deal."}</p>
+          <div className={run.seasons_without_contract ? "career-warning active" : "career-warning"}>{locale === "es" ? `Advertencias sin contrato: ${run.seasons_without_contract}/2` : `No-contract warnings: ${run.seasons_without_contract}/2`} · {locale === "es" ? `Licencia ${run.license_status}` : `License ${run.license_status}`}</div>
+        </section>
+
+        <section className="training-room">
+          <h2>{locale === "es" ? "Entrenamiento de temporada" : "Season training"}</h2>
+          <p>{locale === "es" ? "Elegí un método y un Pokémon. Se permite una sesión antes de cerrar el calendario; los stats quedan guardados y entran al cálculo real del combate." : "Choose a method and a Pokémon. One session is available before the calendar locks; its stats persist and enter the real battle calculation."}</p>
+          <div className="training-controls">
+            <select value={trainingTarget} onChange={(event) => setTrainingTarget(event.target.value)}>{run.pokemon.map((pokemon) => <option key={pokemon.id} value={pokemon.id}>{pokemon.species} · LV {pokemon.level}</option>)}</select>
+            <select value={trainingMethod} onChange={(event) => setTrainingMethod(event.target.value)}>{Object.entries(TRAINING_METHODS).map(([id, details]) => <option key={id} value={id}>{details[locale === "es" ? 0 : 1]}</option>)}</select>
+            <button type="button" className="primary-action" onClick={completeTraining} disabled={busy || run.season?.training_completed || run.season?.status !== "decision"}>{run.season?.training_completed ? (locale === "es" ? "Sesión completada" : "Session complete") : (locale === "es" ? "Entrenar" : "Train")}</button>
+          </div>
+          <small>{trainingDescription(trainingMethod, locale)}</small>
+        </section>
+
+        <section className="bag-room"><h2>{locale === "es" ? "Mochila" : "Bag"}</h2><div className="world-rewards"><span>Poké Ball × {run.build.pokeballs}</span><span>{locale === "es" ? "Escáner Pokédex" : "Pokédex scanner"} LV {run.pokedex_level ?? 0}</span></div>
+          {Object.keys(run.inventory ?? {}).length ? <div className="item-targeting"><label>{locale === "es" ? "Pokémon objetivo" : "Target Pokémon"}<select value={itemTarget} onChange={(event) => setItemTarget(event.target.value)}>{run.pokemon.map((pokemon) => <option key={pokemon.id} value={pokemon.id}>{pokemon.species} · LV {pokemon.level}</option>)}</select></label><label>{locale === "es" ? "Stat para Training Kit" : "Training Kit stat"}<select value={itemStat} onChange={(event) => setItemStat(event.target.value)}>{["hp", "atk", "def", "spatk", "spdef", "spd"].map((stat) => <option key={stat} value={stat}>{pokemonStatLabel(stat, locale)}</option>)}</select></label></div> : null}
+          <div className="bag-grid">{Object.entries(run.inventory ?? {}).map(([item, quantity]) => <article key={item}><header><b>{item}</b><span>× {quantity}</span></header><p>{itemDescription(item, locale)}</p><button type="button" onClick={() => useInventoryItem(item)} disabled={busy}>{locale === "es" ? "Usar" : "Use"}</button></article>)}</div>
+        </section>
         <section className="relationship-section"><h2>{locale === "es" ? "Relaciones" : "Relationships"}</h2>{run.relationship_effects?.best_contact ? <div className="relationship-benefits"><b>{locale === "es" ? "Red activa" : "Active network"}</b><span>+{run.relationship_effects.home_level_bonus ?? 0} LV {locale === "es" ? "en combate" : "in battle"}</span><span>+{run.relationship_effects.season_recovery ?? 0} {locale === "es" ? "salud/temporada" : "health/season"}</span>{run.relationship_effects.contract_guard ? <span>{locale === "es" ? "Seguro de contrato disponible" : "Contract protection available"}</span> : null}</div> : null}
           <div className="relationship-cards">{run.relationship_effects?.contact_effects?.length ? run.relationship_effects.contact_effects.map((contact) => (
             <article key={contact.name} className={`relationship-card role-${contact.role}`}>
@@ -155,4 +215,36 @@ function relationshipBenefit(benefit: string, amount: number, locale: Locale): s
 function pokemonStatLabel(stat: string, locale: Locale): string {
   const labels: Record<string, [string, string]> = { hp: ["PS", "HP"], atk: ["ATQ", "ATK"], def: ["DEF", "DEF"], spatk: ["AT.ESP", "SP.ATK"], spdef: ["DF.ESP", "SP.DEF"], spd: ["VEL", "SPD"] };
   return labels[stat]?.[locale === "es" ? 0 : 1] ?? stat.toUpperCase();
+}
+
+const TRAINING_METHODS: Record<string, [string, string, string, string]> = {
+  conditioning: ["Fondo físico", "Conditioning", "+2 PS permanentes.", "+2 permanent HP."],
+  power: ["Potencia mixta", "Mixed power", "+1 Ataque y +1 Ataque Especial permanentes.", "+1 permanent Attack and Special Attack."],
+  guard: ["Bloque defensivo", "Defensive block", "+1 Defensa y +1 Defensa Especial permanentes.", "+1 permanent Defense and Special Defense."],
+  agility: ["Agilidad", "Agility", "+2 Velocidad permanentes.", "+2 permanent Speed."],
+};
+
+function trainingDescription(method: string, locale: Locale): string {
+  const details = TRAINING_METHODS[method] ?? TRAINING_METHODS.conditioning;
+  return details[locale === "es" ? 2 : 3];
+}
+
+function itemDescription(item: string, locale: Locale): string {
+  const descriptions: Record<string, [string, string]> = {
+    "Training Kit": ["+2 permanentes al stat elegido del Pokémon objetivo.", "+2 permanent points to the target Pokémon's chosen stat."],
+    "Exp. Share": ["+3 niveles al objetivo; evoluciona automáticamente al alcanzar el nivel.", "+3 levels to the target; it evolves automatically at the required level."],
+    "Super Potion": ["Recupera 12 de salud de carrera.", "Restores 12 career health."],
+    "Pokédex Upgrade": ["Desplaza 3% de encuentros comunes hacia la rareza más alta disponible.", "Shifts 3% of common encounters toward the highest available rarity."],
+    "Club Voucher": ["Extiende el contrato y elimina una advertencia sin club.", "Extends the contract and clears a no-club warning."],
+    "Press Pass": ["+2 reputación.", "+2 reputation."],
+    "Facility Pass": ["+2 desarrollo.", "+2 development."],
+    "Choice Scarf": ["+3 Velocidad permanentes al objetivo.", "+3 permanent Speed to the target."],
+    "Ranger Kit": ["+2 scouting y 2 Poké Balls.", "+2 scouting and 2 Poké Balls."],
+    "Evidence File": ["Protege la licencia y concede +1 reputación.", "Protects the license and grants +1 reputation."],
+    "Contest Ribbon": ["+2 reputación.", "+2 reputation."],
+    "Egg Incubator": ["+2 niveles al objetivo.", "+2 levels to the target."],
+    "Premier Ball": ["Se suma a tus Poké Balls disponibles.", "Adds one available Poké Ball."],
+  };
+  if (item.endsWith(" Charm")) return locale === "es" ? "+1 nivel de escáner Pokédex y +1 scouting." : "+1 Pokédex scanner level and +1 scouting.";
+  return descriptions[item]?.[locale === "es" ? 0 : 1] ?? (locale === "es" ? "Objeto utilizable de carrera." : "Usable career item.");
 }

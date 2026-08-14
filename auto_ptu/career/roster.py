@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import Counter
 from typing import Iterable, List, Sequence
 
-from .catalogs import LEAGUES, REGIONS
+from .catalogs import LEAGUES, REGIONS, all_region_encounters
 from .evolutions import next_evolution
 from .models import BattleSpec, BattleTranscript, CareerPokemon, CareerRun
 from .ptu_builds import identity_seed, is_legal_taught_move, persistent_identity
@@ -54,7 +54,7 @@ def initialize_roster(run: CareerRun, stable_seed: int) -> bool:
 
 
 def capture_species(run: CareerRun, species: str, *, source: str, spend_ball: bool = True) -> CareerPokemon | None:
-    canonical = next((entry for entry in REGIONS[run.build.region].underdogs if entry.lower() == species.lower()), None)
+    canonical = next((entry for entry in all_region_encounters(run.build.region) if entry.lower() == species.lower()), None)
     if canonical is None:
         return None
     if spend_ball and run.build.pokeballs <= 0:
@@ -74,23 +74,30 @@ def grant_partner_levels(run: CareerRun, levels: int, *, source: str) -> List[di
     partner = next((entry for entry in run.pokemon if entry.is_partner), None)
     if partner is None:
         return []
-    previous_level = partner.level
-    partner.level = min(career_level_cap(run), partner.level + max(0, int(levels)))
-    gained = partner.level - previous_level
+    return grant_pokemon_levels(run, partner.id, levels, source=source)
+
+
+def grant_pokemon_levels(run: CareerRun, pokemon_id: str, levels: int, *, source: str) -> List[dict]:
+    pokemon = next((entry for entry in run.pokemon if entry.id == pokemon_id), None)
+    if pokemon is None:
+        return []
+    previous_level = pokemon.level
+    pokemon.level = min(career_level_cap(run), pokemon.level + max(0, int(levels)))
+    gained = pokemon.level - previous_level
     if gained <= 0:
         return []
-    _refresh_identity(run, partner)
+    _refresh_identity(run, pokemon)
     run.timeline.append({
         "type": "pokemon.trained",
         "season": run.season_number,
         "age": run.age,
-        "pokemon_id": partner.id,
-        "species": partner.species,
+        "pokemon_id": pokemon.id,
+        "species": pokemon.species,
         "levels": gained,
         "source": source,
-        "label": f"{partner.species} gained {gained} levels.",
+        "label": f"{pokemon.species} gained {gained} levels.",
     })
-    evolutions = _evolve_ready(run, partner)
+    evolutions = _evolve_ready(run, pokemon)
     _sync(run)
     return evolutions
 

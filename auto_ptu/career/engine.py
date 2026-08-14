@@ -8,7 +8,14 @@ from datetime import date, datetime, timezone
 from typing import Callable, Dict, List, Optional
 
 from .battle import simulate_battle
-from .catalogs import FRANCHISE_TRAINERS, LEAGUES, LEAGUE_ORDER, REGIONS
+from .catalogs import (
+    FRANCHISE_TRAINERS,
+    LEAGUES,
+    LEAGUE_ORDER,
+    REGIONS,
+    choose_encounter_rarity,
+    encounter_pool,
+)
 from .class_adapters import selected_class_effects, validate_selected_classes
 from .decisions import apply_option, build_season_decision
 from .evolutions import evolve_species_for_level
@@ -30,6 +37,7 @@ from .roster import (
     active_pokemon,
     career_level_cap,
     grant_partner_levels,
+    grant_pokemon_levels,
     grant_stat_training,
     initialize_roster,
     progress_after_season,
@@ -126,6 +134,17 @@ class CareerEngine:
 
     def ensure_roster(self, run: CareerRun) -> bool:
         changed = initialize_roster(run, stable_seed(run.seed, run.season_number, "academy-intake"))
+        if run.season and run.season.status == "decision" and run.season.decision and run.season.decision.family == "evolution":
+            run.season.decision = build_season_decision(run, run.season.decisions_completed)
+            run.timeline.append({
+                "type": "decision.migrated",
+                "season": run.season_number,
+                "age": run.age,
+                "from": "evolution",
+                "to": run.season.decision.family,
+                "label": "Evolution now happens automatically at the required level.",
+            })
+            changed = True
         current = selected_class_effects(run.build.classes)
         if run.class_effects != current:
             run.class_effects = current
@@ -232,6 +251,7 @@ class CareerEngine:
         run.totals["losses"] += losses
         run.totals["draws"] += draws
         achievements_before = set(run.achievements)
+        salary_outcome = self._pay_season_salary(run)
         outcome = self._apply_competitive_progression(run, season)
         relationship_outcome = self._apply_health_and_contract(run, wins=wins, losses=losses)
         roster_outcome = progress_after_season(run, specs, transcripts)
@@ -255,6 +275,8 @@ class CareerEngine:
                     for transcript in transcripts
                 ],
                 "opponents": [spec.away_club for spec in specs],
+                "opponent_species": list(dict.fromkeys(species for spec in specs for species in spec.away_team_species)),
+                "opponent_rarities": list(dict.fromkeys(rarity for spec in specs for rarity in spec.away_team_rarities)),
                 "featured_opponent": next((spec.away_club for spec in specs if spec.featured), specs[-1].away_club),
                 "score_delta": season.score_delta,
                 "lineup": list(run.active_roster),
@@ -262,6 +284,7 @@ class CareerEngine:
                 "class_effects": class_outcome,
                 "relationship_effects": relationship_outcome,
                 "incident": incident_outcome,
+                "salary": salary_outcome,
                 "new_achievements": new_achievements,
                 **outcome,
             }
@@ -354,7 +377,6 @@ class CareerEngine:
         home = run.contract.club_name if run.contract else clubs[0]
         rng = random.Random(stable_seed(run.seed, run.season_number, "schedule"))
         lineup = active_pokemon(run)
-        candidates = list(region.underdogs)
         # Career choices alter preparation without bypassing PTU stats or rolls.
         # Development and facilities raise the partner's generated PTU level;
         # scouting reduces the opponent's preparation. Low health/finances have a
@@ -395,29 +417,56 @@ class CareerEngine:
             )
             if replacement is not None:
                 scheduled_clubs[replacement], scheduled_clubs[-1] = scheduled_clubs[-1], scheduled_clubs[replacement]
+        recent_opponents = {
+            str(species).casefold()
+            for event in run.timeline[-80:]
+            if event.get("type") == "season.completed"
+            for species in event.get("opponent_species", [])
+        }
+        rarity_level_adjustment = {
+            "common": 0, "rare": -1, "very_rare": -2,
+            "epic": -3, "legendary": -5, "mythical": -6,
+        }
         for index in range(league.matches):
             away_club = scheduled_clubs[index]
             rotation = index % len(lineup)
             match_lineup = lineup[rotation:] + lineup[:rotation]
             pokemon = match_lineup[0]
-            eligible_opponents = [entry for entry in candidates if entry not in {member.species for member in match_lineup}] or candidates
             opponent_team: List[str] = []
-            pool = list(eligible_opponents)
-            rng.shuffle(pool)
+            opponent_levels: List[int] = []
+            opponent_rarities: List[str] = []
+            unavailable = {member.species.casefold() for member in match_lineup}
             while len(opponent_team) < len(match_lineup):
-                if not pool:
-                    pool = list(eligible_opponents)
-                    rng.shuffle(pool)
-                base_species = pool.pop()
-                opponent_team.append(
-                    evolve_species_for_level(
-                        base_species,
-                        competitive_level,
-                        seed=stable_seed(run.seed, run.season_number, index, len(opponent_team), away_club),
-                        region=run.build.region,
-                    )
+                rarity = choose_encounter_rarity(
+                    run.build.region,
+                    run.league,
+                    rng,
+                    pokedex_level=max(0, run.pokedex_level - 1),
                 )
+                pool = list(encounter_pool(run.build.region, rarity))
+                rng.shuffle(pool)
+                base_species = next(
+                    (
+                        entry for entry in pool
+                        if entry.casefold() not in unavailable | recent_opponents
+                        and entry.casefold() not in {value.casefold() for value in opponent_team}
+                    ),
+                    next((entry for entry in pool if entry.casefold() not in unavailable), pool[0]),
+                )
+                member_level = max(1, competitive_level + rarity_level_adjustment[rarity])
+                evolved = evolve_species_for_level(
+                    base_species,
+                    member_level,
+                    seed=stable_seed(run.seed, run.season_number, index, len(opponent_team), away_club),
+                    region=run.build.region,
+                )
+                opponent_team.append(evolved)
+                opponent_levels.append(member_level)
+                opponent_rarities.append(rarity)
             opponent = opponent_team[0]
+            home_visible_level = sum(member.level + home_bonus for member in match_lineup) / len(match_lineup)
+            away_visible_level = sum(level + away_bonus for level in opponent_levels) / len(opponent_levels)
+            difficulty = "favored" if home_visible_level >= away_visible_level + 2 else "dangerous" if away_visible_level >= home_visible_level + 2 else "even"
             specs.append(
                 BattleSpec(
                     id=f"{run.id}-s{run.season_number}-m{index + 1}",
@@ -442,7 +491,9 @@ class CareerEngine:
                     home_team_abilities=[list(member.abilities) for member in match_lineup],
                     home_team_stat_training=[dict(member.stat_training) for member in match_lineup],
                     away_team_species=opponent_team,
-                    away_team_levels=[competitive_level for _ in opponent_team],
+                    away_team_levels=opponent_levels,
+                    away_team_rarities=opponent_rarities,
+                    difficulty_label=difficulty,
                 )
             )
         return specs
@@ -451,7 +502,7 @@ class CareerEngine:
         """Add one low-impact, deterministic life event between seasons."""
         lineup = active_pokemon(run)
         pokemon = lineup[stable_seed(run.seed, run.season_number, "incident-pokemon") % len(lineup)]
-        variant = stable_seed(run.seed, run.season_number, "incident") % 4
+        variant = stable_seed(run.seed, run.season_number, "incident") % 8
         if variant == 0:
             stat = ("atk", "spatk", "spd")[stable_seed(run.seed, run.season_number, "incident-stat") % 3]
             trained = grant_stat_training(run, pokemon.id, stat, 1, source="season_incident")
@@ -491,7 +542,7 @@ class CareerEngine:
                 "detail_en": "The conversation started a rivalry that can become tactical information.",
                 "effects": {"relationship": 1},
             }
-        else:
+        elif variant == 3:
             run.inventory["Training Kit"] = run.inventory.get("Training Kit", 0) + 1
             event = {
                 "type": "season.incident", "season": run.season_number, "age": run.age,
@@ -501,6 +552,54 @@ class CareerEngine:
                 "detail_es": "El equipo recuperó un Training Kit para futuras sesiones.",
                 "detail_en": "The squad recovered a Training Kit for future sessions.",
                 "effects": {"item": "Training Kit", "quantity": 1},
+            }
+        elif variant == 4:
+            before = pokemon.level
+            evolutions = grant_pokemon_levels(run, pokemon.id, 1, source="informal_scrimmage")
+            run.health = max(0, run.health - 1)
+            event = {
+                "type": "season.incident", "season": run.season_number, "age": run.age,
+                "kind": "informal_scrimmage", "pokemon": pokemon.species,
+                "title_es": f"{pokemon.species} aceptó un combate informal en la plaza",
+                "title_en": f"{pokemon.species} accepted an informal match in the town square",
+                "detail_es": "El combate no contó para la liga, pero dejó experiencia real y algo de cansancio.",
+                "detail_en": "The match did not count for the league, but produced real experience and some fatigue.",
+                "effects": {"levels": pokemon.level - before, "health": -1, "evolutions": evolutions},
+            }
+        elif variant == 5:
+            before = run.health
+            run.health = min(100, run.health + 5)
+            event = {
+                "type": "season.incident", "season": run.season_number, "age": run.age,
+                "kind": "family_day", "pokemon": pokemon.species,
+                "title_es": "Una visita familiar cambió el ritmo de la semana",
+                "title_en": "A family visit changed the rhythm of the week",
+                "detail_es": "Elegiste desconectar del club durante un día. No hubo entrenamiento, pero recuperaste energía.",
+                "detail_en": "You stepped away from the club for a day. There was no training, but you recovered energy.",
+                "effects": {"health": run.health - before},
+            }
+        elif variant == 6:
+            run.reputation += 2
+            event = {
+                "type": "season.incident", "season": run.season_number, "age": run.age,
+                "kind": "regional_festival", "pokemon": pokemon.species,
+                "title_es": f"{pokemon.species} fue la sorpresa del festival regional",
+                "title_en": f"{pokemon.species} became the regional festival surprise",
+                "detail_es": "La exhibición acercó al equipo a la comunidad y mejoró tu valor público.",
+                "detail_en": "The exhibition brought the team closer to the community and improved your public value.",
+                "effects": {"reputation": 2},
+            }
+        else:
+            run.scouting += 2
+            run.finances -= 1
+            event = {
+                "type": "season.incident", "season": run.season_number, "age": run.age,
+                "kind": "travel_disruption", "pokemon": pokemon.species,
+                "title_es": "Una conexión perdida obligó a improvisar el viaje",
+                "title_en": "A missed connection forced the team to improvise its travel",
+                "detail_es": "El cambio costó recursos, pero permitió observar una ruta y rivales que no estaban en el informe.",
+                "detail_en": "The change cost resources, but revealed a route and opponents missing from the report.",
+                "effects": {"finances": -1, "scouting": 2},
             }
         run.timeline.append(event)
         return event
@@ -531,6 +630,26 @@ class CareerEngine:
             "season_effects": applied,
             "focus": [entry["focus"] for entry in effects["adapters"]],
             "label": "Trainer class effects changed preparation and career progression.",
+        }
+        run.timeline.append(event)
+        return event
+
+    def _pay_season_salary(self, run: CareerRun) -> dict:
+        salary = max(0, int(run.contract.salary)) if run.contract else 0
+        finance_gain = salary // 240 + int(salary > 0)
+        if salary:
+            run.career_earnings += salary
+            run.finances += finance_gain
+            run.contract.seasons_remaining = max(0, run.contract.seasons_remaining - 1)
+        event = {
+            "type": "contract.salary_paid",
+            "season": run.season_number,
+            "age": run.age,
+            "club": run.contract.club_name if run.contract else "Independent",
+            "salary": salary,
+            "finance_gain": finance_gain,
+            "career_earnings": run.career_earnings,
+            "label": f"Season salary paid: {salary}." if salary else "No club salary was paid this season.",
         }
         run.timeline.append(event)
         return event
@@ -617,8 +736,11 @@ class CareerEngine:
                         "label": f"{str(mentor['name']).split(' · ')[0]} trained {partner.species}.",
                     })
         guard_used = False
-        if losses > wins * 2 and run.league != "junior":
-            if relationship_effects.get("contract_guard") and relationship_effects.get("best_contact"):
+        poor_season = losses > wins * 2 and run.league != "junior"
+        if poor_season:
+            if run.contract is not None and run.contract.seasons_remaining > 0:
+                run.seasons_without_contract = 0
+            elif relationship_effects.get("contract_guard") and relationship_effects.get("best_contact"):
                 contact = str(relationship_effects["best_contact"])
                 run.relationships[contact] = max(0, int(run.relationships.get(contact, 0)) - 2)
                 relationship_effects = refresh_relationship_effects(run)
@@ -637,22 +759,28 @@ class CareerEngine:
                 run.contract = None
         else:
             run.seasons_without_contract = 0
-            region = REGIONS[run.build.region]
-            club = region.clubs[(run.season_number + LEAGUE_ORDER.index(run.league)) % len(region.clubs)]
-            run.contract = ClubContract(
-                club_id=_slug(club),
-                club_name=club,
-                region=run.build.region,
-                league=run.league,
-                salary=120 * LEAGUES[run.league].weight + max(0, run.reputation * 5),
-                seasons_remaining=1,
-                loan_slots=1 + int(run.league in {"regular", "elite"}),
-            )
+            if run.contract is None or run.contract.seasons_remaining <= 0:
+                region = REGIONS[run.build.region]
+                club = region.clubs[(run.season_number + LEAGUE_ORDER.index(run.league)) % len(region.clubs)]
+                run.contract = ClubContract(
+                    club_id=_slug(club),
+                    club_name=club,
+                    region=run.build.region,
+                    league=run.league,
+                    salary=120 * LEAGUES[run.league].weight + max(0, run.reputation * 5),
+                    seasons_remaining=1,
+                    loan_slots=1 + int(run.league in {"regular", "elite"}),
+                )
+            else:
+                run.contract.league = run.league
+                run.contract.salary = 120 * LEAGUES[run.league].weight + max(0, run.reputation * 5)
         outcome = {
             **relationship_effects,
             "recovery_applied": recovery,
             "mentor_training": mentor_training,
             "contract_guard_used": guard_used,
+            "poor_season": poor_season,
+            "contract_warning": run.seasons_without_contract,
         }
         run.timeline.append({
             "type": "relationship.effect_applied",

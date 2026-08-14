@@ -4,7 +4,16 @@ import hashlib
 import random
 from typing import Any, Dict, List
 
-from .catalogs import EVENT_DOMAINS, FRANCHISE_TRAINERS, NPC_ARCHETYPES, REGIONS, RISK_TIERS, TRANSPARENCY_TIERS
+from .catalogs import (
+    EVENT_DOMAINS,
+    FRANCHISE_TRAINERS,
+    NPC_ARCHETYPES,
+    REGIONS,
+    RISK_TIERS,
+    TRANSPARENCY_TIERS,
+    choose_encounter_rarity,
+    encounter_pool,
+)
 from .content_compiler import AUTHORIAL_VARIANTS
 from .evolutions import next_evolution
 from .models import CareerDecision, CareerDecisionOption, CareerRun
@@ -197,17 +206,39 @@ def _effect_sets(family: str, mode: str) -> tuple[dict, dict, dict]:
 
 
 def _reward_sets(run: CareerRun, family: str, npc_name: str, rng: random.Random) -> tuple[List[dict], List[dict], List[dict]]:
-    candidates = [
-        species for species in REGIONS[run.build.region].underdogs
-        if run.ranked or (species != run.build.starter and all(entry.caught_species != species for entry in run.pokemon))
-    ]
-    rng.shuffle(candidates)
-    first = candidates[0] if candidates else ""
-    second = candidates[1] if len(candidates) > 1 else first
-    third = candidates[2] if len(candidates) > 2 else second
+    owned = set() if run.ranked else {entry.caught_species.casefold() for entry in run.pokemon}
+    recent = {
+        str(species).casefold()
+        for event in run.timeline[-40:]
+        if event.get("type") == "pokemon.captured"
+        for species in event.get("species", [])
+    }
+    used: set[str] = set()
 
-    def pokemon(species: str) -> List[dict]:
-        return [{"type": "pokemon", "species": species}] if species else [{"type": "item", "item": "Poké Ball", "quantity": 2}]
+    def encounter(minimum: str) -> tuple[str, str]:
+        rarity = choose_encounter_rarity(
+            run.build.region,
+            run.league,
+            rng,
+            minimum=minimum,
+            pokedex_level=run.pokedex_level,
+        )
+        pool = list(encounter_pool(run.build.region, rarity))
+        rng.shuffle(pool)
+        candidate = next(
+            (entry for entry in pool if entry.casefold() not in owned | recent | used),
+            next((entry for entry in pool if entry.casefold() not in used), pool[0] if pool else ""),
+        )
+        if candidate:
+            used.add(candidate.casefold())
+        return candidate, rarity
+
+    first, first_rarity = encounter("common")
+    second, second_rarity = encounter("rare")
+    third, third_rarity = encounter("very_rare")
+
+    def pokemon(species: str, rarity: str) -> List[dict]:
+        return [{"type": "pokemon", "species": species, "rarity": rarity}] if species else [{"type": "item", "item": "Poké Ball", "quantity": 2}]
 
     def move(*preferred: str) -> List[dict]:
         chosen = choose_legal_taught_move(run.build.starter, preferred, rng.randrange(1 << 30))
@@ -215,6 +246,12 @@ def _reward_sets(run: CareerRun, family: str, npc_name: str, rng: random.Random)
 
     relationship = [{"type": "relationship", "name": npc_name, "amount": 2}]
     partner = next((entry for entry in run.pokemon if entry.is_partner), run.pokemon[0] if run.pokemon else None)
+    target_id = partner.id if partner else ""
+    target_species = partner.species if partner else run.build.starter
+
+    def stat(name: str, amount: int) -> List[dict]:
+        return [{"type": "stat", "pokemon_id": target_id, "species": target_species, "stat": name, "amount": amount}]
+
     evolution_levels = 4
     if partner is not None:
         target = next_evolution(
@@ -226,60 +263,48 @@ def _reward_sets(run: CareerRun, family: str, npc_name: str, rng: random.Random)
             evolution_levels = max(1, target[1] - partner.level)
     evolution_move = move("Return", "Protect")
     rewards: Dict[str, tuple[List[dict], List[dict], List[dict]]] = {
-        "capture": (pokemon(first), pokemon(second), pokemon(third) + [{"type": "item", "item": "Premier Ball", "quantity": 1}]),
+        "capture": (
+            pokemon(first, first_rarity),
+            pokemon(second, second_rarity),
+            pokemon(third, third_rarity) + [{"type": "item", "item": "Premier Ball", "quantity": 1}],
+        ),
         "evolution": (
             [{"type": "item", "item": "Exp. Share", "quantity": 1}],
             [{"type": "level", "levels": evolution_levels}],
             [{"type": "level", "levels": evolution_levels}, *evolution_move],
         ),
-        "breeding": (relationship, pokemon(first), pokemon(second) + [{"type": "item", "item": "Egg Incubator", "quantity": 1}]),
+        "breeding": (relationship, pokemon(first, first_rarity), [{"type": "item", "item": "Egg Incubator", "quantity": 1}, *move("Return", "Helping Hand")]),
         "contest": ([{"type": "item", "item": "Contest Ribbon", "quantity": 1}], move("Swift", "Round"), relationship),
-        "research": ([{"type": "item", "item": "Pokédex Upgrade", "quantity": 1}], move("Hidden Power", "Secret Power"), pokemon(first)),
+        "research": ([{"type": "item", "item": "Pokédex Upgrade", "quantity": 1}], move("Hidden Power", "Secret Power"), pokemon(second, second_rarity)),
         "health": ([{"type": "item", "item": "Super Potion", "quantity": 2}], move("Rest", "Protect"), relationship),
-        "economy": ([{"type": "item", "item": "Club Voucher", "quantity": 1}], [{"type": "item", "item": "Poké Ball", "quantity": 3}], pokemon(first)),
-        "media": (relationship, [{"type": "item", "item": "Press Pass", "quantity": 1}], pokemon(first)),
+        "economy": ([{"type": "item", "item": "Club Voucher", "quantity": 1}], [{"type": "item", "item": "Poké Ball", "quantity": 3}], [{"type": "item", "item": "Facility Pass", "quantity": 1}]),
+        "media": (relationship, [{"type": "item", "item": "Press Pass", "quantity": 1}], [{"type": "item", "item": "Contest Ribbon", "quantity": 1}]),
         "crime": ([{"type": "item", "item": "Evidence File", "quantity": 1}], move("Thief", "Knock Off"), relationship),
-        "friendship": (relationship, move("Return", "Helping Hand"), pokemon(first)),
-        "rivalry": (move("Quick Attack", "Protect"), [{"type": "item", "item": "Choice Scarf", "quantity": 1}], pokemon(first)),
-        "conservation": (relationship, pokemon(first), [{"type": "item", "item": "Ranger Kit", "quantity": 1}]),
-        "regional_culture": ([{"type": "item", "item": f"{REGIONS[run.build.region].label} Charm", "quantity": 1}], relationship, pokemon(first)),
-        "contract": ([{"type": "item", "item": "Facility Pass", "quantity": 1}], relationship, pokemon(first)),
-        "training": ([{"type": "level", "levels": 2}], move("Protect", "Substitute"), pokemon(first)),
+        "friendship": (relationship, move("Return", "Helping Hand"), [{"type": "relationship", "name": npc_name, "amount": 4}]),
+        "rivalry": (move("Quick Attack", "Protect"), [{"type": "item", "item": "Choice Scarf", "quantity": 1}], stat("spd", 3)),
+        "conservation": (relationship, pokemon(first, first_rarity), [{"type": "item", "item": "Ranger Kit", "quantity": 1}]),
+        "regional_culture": ([{"type": "item", "item": f"{REGIONS[run.build.region].label} Charm", "quantity": 1}], relationship, pokemon(second, second_rarity)),
+        "contract": ([{"type": "item", "item": "Facility Pass", "quantity": 1}], relationship, [{"type": "item", "item": "Club Voucher", "quantity": 1}]),
+        "training": (stat("hp", 2), stat(("atk", "def", "spatk", "spdef", "spd")[rng.randrange(5)], 2), [{"type": "level", "levels": 3}, *move("Protect", "Substitute")]),
     }
-    selected = rewards.get(family, (relationship, [{"type": "level", "levels": 2}], pokemon(first)))
-    active = [entry for entry in run.pokemon if entry.id in run.active_roster] or list(run.pokemon)
-    stat_cycles = {
-        "health": ("hp", "def", "spdef"), "training": ("def", "atk", "spd"),
-        "research": ("spdef", "spatk", "spd"), "contest": ("spd", "spatk", "atk"),
-        "rivalry": ("def", "atk", "spd"), "friendship": ("spdef", "hp", "atk"),
-    }
-    stats = stat_cycles.get(family, ("hp", "atk", "spd"))
-    enriched: List[List[dict]] = []
-    for index, option_rewards in enumerate(selected):
-        target = active[index % len(active)] if active else partner
-        training = [{
-            "type": "stat",
-            "pokemon_id": target.id if target else "",
-            "species": target.species if target else run.build.starter,
-            "stat": stats[index],
-            "amount": index + 1,
-        }]
-        enriched.append([*option_rewards, *training])
-    return tuple(enriched)  # type: ignore[return-value]
+    return rewards.get(
+        family,
+        (relationship, [{"type": "level", "levels": 2}], [{"type": "item", "item": "Training Kit", "quantity": 1}]),
+    )
 
 
 def _option_description(index: int, rewards: List[dict], locale: str) -> str:
     reward = _reward_summary(rewards, locale)
     if locale == "es":
         return (
-            f"Resultado garantizado: {reward}; no hay tirada oculta.",
+            f"Recibís: {reward}.",
             f"Pagás el coste indicado y asegurás {reward}.",
-            f"La apuesta puede cambiar la temporada; si sale bien, además obtenés {reward}.",
+            f"Hay una tirada oculta: si sale bien, obtenés {reward}.",
         )[index]
     return (
-        f"Guaranteed outcome: {reward}; there is no hidden roll.",
+        f"You receive: {reward}.",
         f"Pay the stated cost and secure {reward}.",
-        f"The gamble can change the season; on success you also secure {reward}.",
+        f"There is a hidden roll: on success you receive {reward}.",
     )[index]
 
 
@@ -302,7 +327,10 @@ def _apply_reward(run: CareerRun, reward: Dict[str, Any], source: str) -> Dict[s
     reward_type = str(reward.get("type") or "")
     if reward_type == "pokemon":
         pokemon = capture_species(run, str(reward.get("species") or ""), source=f"decision:{source}")
-        return {"type": "pokemon", "species": pokemon.species, "pokemon_id": pokemon.id} if pokemon else None
+        return {
+            "type": "pokemon", "species": pokemon.species, "pokemon_id": pokemon.id,
+            "rarity": str(reward.get("rarity") or "common"),
+        } if pokemon else None
     if reward_type == "move":
         move = str(reward.get("move") or "")
         if teach_partner_move(run, move, source=f"decision:{source}"):
@@ -356,26 +384,18 @@ def _apply_reward(run: CareerRun, reward: Dict[str, Any], source: str) -> Dict[s
 def _decision_family(run: CareerRun, slot: int) -> str:
     """Surface urgent career state before falling back to authored rotation."""
     base_index = run.season_number - 1 + slot
+    playable_domains = tuple(domain for domain in EVENT_DOMAINS if domain != "evolution")
     if run.ranked:
         # Daily attempts share the exact mechanical decision tree even when the
         # player chooses a different starter or class.
-        return EVENT_DOMAINS[base_index % len(EVENT_DOMAINS)]
+        return playable_domains[base_index % len(playable_domains)]
     if run.contract is None:
         return "contract"
     if run.health <= 55:
         return "health"
-    partner = next((entry for entry in run.pokemon if entry.is_partner), run.pokemon[0] if run.pokemon else None)
-    if partner is not None:
-        target = next_evolution(
-            partner.species,
-            seed=_stable_seed(run.seed, partner.id),
-            region=run.build.region,
-        )
-        if target is not None and partner.level >= max(1, target[1] - 6):
-            return "evolution"
     if len(run.pokemon) < 6 and base_index % 3 == 0:
         return "capture"
-    return EVENT_DOMAINS[base_index % len(EVENT_DOMAINS)]
+    return playable_domains[base_index % len(playable_domains)]
 
 
 def _decision_story(
@@ -402,6 +422,113 @@ def _decision_story(
             f"{species} appeared near the stadium",
             f"The report confirms {species} is alone and can join the squad. "
             f"You have {run.build.pokeballs} Poke Balls and {len(run.pokemon)}/6 active places occupied.",
+        )
+    if family == "breeding":
+        species = next((str(reward.get("species")) for option in rewards for reward in option if reward.get("type") == "pokemon"), partner_name)
+        if locale == "es":
+            return (
+                "La guardería abre una sola plaza",
+                f"El cuidador puede trabajar el vínculo con {partner_name}, recibir a {species} o reservar la incubadora. "
+                "Cada alternativa ocupa la semana completa y cambia quién llega al vestuario.",
+            )
+        return (
+            "The nursery has one opening",
+            f"The caretaker can work on {partner_name}'s bond, welcome {species}, or reserve the incubator. "
+            "Each path consumes the full week and changes who enters the locker room.",
+        )
+    if family == "contest":
+        if locale == "es":
+            return (
+                f"{REGIONS[run.build.region].label} prepara una exhibición nocturna",
+                f"Los jueces invitaron a {partner_name}. Podés observar, ensayar un movimiento o competir por visibilidad, "
+                "pero el tiempo usado acá no vuelve antes del calendario.",
+            )
+        return (
+            f"{REGIONS[run.build.region].label} is preparing a night exhibition",
+            f"The judges invited {partner_name}. You can observe, rehearse a move, or compete for attention, "
+            "but the time spent here will not return before the schedule.",
+        )
+    if family == "research":
+        if locale == "es":
+            return (
+                "Una señal nueva contradice el mapa del hábitat",
+                f"El escáner está en nivel {run.pokedex_level}. Analizar la señal puede mejorar futuros encuentros, "
+                "enseñar una técnica o revelar un Pokémon que el informe común no registró.",
+            )
+        return (
+            "A new signal contradicts the habitat map",
+            f"Your scanner is level {run.pokedex_level}. Studying the signal can improve future encounters, "
+            "teach a technique, or reveal a Pokémon missing from the common report.",
+        )
+    if family == "health":
+        if locale == "es":
+            return (
+                "El parte médico exige cambiar la semana",
+                f"Tu salud está en {run.health}/100. El equipo médico propone descanso, recuperación activa o competir con carga; "
+                "la elección afecta cuánto podés sostener la carrera.",
+            )
+        return (
+            "The medical report demands a different week",
+            f"Your health is {run.health}/100. Staff offer rest, active recovery, or carrying the strain into competition; "
+            "the choice affects how long the career can be sustained.",
+        )
+    if family in {"economy", "contract"}:
+        salary = run.contract.salary if run.contract else 0
+        warnings = run.seasons_without_contract
+        if locale == "es":
+            return (
+                "La oficina del club puso números sobre la mesa",
+                f"El salario actual es ₽ {salary} por temporada y llevás {warnings}/2 advertencias sin contrato. "
+                "Podés proteger estabilidad, pedir recursos reales o exponerte a una oferta mejor.",
+            )
+        return (
+            "The club office put real numbers on the table",
+            f"Current salary is ₽ {salary} per season and you have {warnings}/2 no-contract warnings. "
+            "You can protect stability, ask for usable resources, or risk waiting for a better offer.",
+        )
+    if family == "media":
+        if locale == "es":
+            return (
+                "Una cámara espera fuera del vestuario",
+                f"Tu reputación está en {run.reputation}. La entrevista puede fortalecer un vínculo o abrir accesos, "
+                "pero una respuesta impulsiva quedará asociada al club toda la temporada.",
+            )
+        return (
+            "A camera is waiting outside the locker room",
+            f"Your reputation is {run.reputation}. The interview can strengthen a bond or unlock access, "
+            "but an impulsive answer will follow the club all season.",
+        )
+    if family == "crime":
+        if locale == "es":
+            return (
+                "Un intermediario ofrece información que no debería tener",
+                "La Liga no autorizó el contacto. Rechazar deja evidencia, investigar puede enseñar cómo opera la red y aceptar pone salud, reputación y licencia en juego.",
+            )
+        return (
+            "A broker offers information they should not have",
+            "The League did not authorize the contact. Refusing preserves evidence, investigating can expose the network, and accepting puts health, reputation and license at risk.",
+        )
+    if family == "conservation":
+        if locale == "es":
+            return (
+                "El nuevo campo invade una ruta de migración",
+                "El club quiere empezar obras mañana. Frenarlas protege vínculos y encuentros silvestres; rediseñar cuesta recursos; seguir cambia el hábitat para siempre.",
+            )
+        return (
+            "The new facility crosses a migration route",
+            "Construction starts tomorrow. Stopping it protects bonds and wild encounters; redesign costs resources; pushing ahead changes the habitat permanently.",
+        )
+    if family == "regional_culture":
+        if locale == "es":
+            return (
+                f"Una tradición de {REGIONS[run.build.region].label} llega al club",
+                f"La comunidad pidió que {partner_name} participe sin convertir la ceremonia en publicidad. "
+                "La forma de responder define confianza local, scouting y acceso a encuentros regionales.",
+            )
+        return (
+            f"A {REGIONS[run.build.region].label} tradition reaches the club",
+            f"The community asked {partner_name} to participate without turning the ceremony into advertising. "
+            "Your response shapes local trust, scouting and access to regional encounters.",
         )
     if family == "evolution" and partner is not None:
         target = next_evolution(partner.species, seed=_stable_seed(run.seed, partner.id), region=run.build.region)

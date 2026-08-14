@@ -102,6 +102,34 @@ def career_lineup(
         raise _error(exc) from exc
 
 
+@router.post("/runs/{run_id}/items/use")
+def career_use_item(
+    run_id: str,
+    payload: Dict[str, Any],
+    authorization: Optional[str] = Header(default=""),
+    x_career_user: Optional[str] = Header(default=""),
+) -> dict:
+    identity = _identity(authorization or "", x_career_user or "")
+    try:
+        return SERVICE.use_item(identity.user_id, run_id, payload)
+    except Exception as exc:
+        raise _error(exc) from exc
+
+
+@router.post("/runs/{run_id}/training")
+def career_training(
+    run_id: str,
+    payload: Dict[str, Any],
+    authorization: Optional[str] = Header(default=""),
+    x_career_user: Optional[str] = Header(default=""),
+) -> dict:
+    identity = _identity(authorization or "", x_career_user or "")
+    try:
+        return SERVICE.train(identity.user_id, run_id, payload)
+    except Exception as exc:
+        raise _error(exc) from exc
+
+
 @router.get("/runs/{run_id}/battles/{battle_id}")
 def career_battle(
     run_id: str,

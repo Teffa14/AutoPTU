@@ -12,7 +12,8 @@ from .class_adapters import compile_class_adapters
 from .battle import simulate_calendar_summaries
 from .content_compiler import validate_compiled_content
 from .engine import CareerEngine
-from .models import CURRENT_CAREER_VERSION, BattleTranscript, CareerRun
+from .items import complete_training, item_catalog, training_catalog, use_item
+from .models import CURRENT_CAREER_VERSION, BattleTranscript, CareerRun, utc_now
 from .postgres_store import career_store_from_environment
 from .store import CareerStore
 
@@ -44,6 +45,8 @@ class CareerService:
             "decision_family_count": content["family_count"],
             "decision_signature_count": content["node_count"],
             "decision_content_sha256": content["sha256"],
+            "items": item_catalog(),
+            "training_methods": training_catalog(),
             "modes": [
                 {"id": "simple", "target_minutes": "15–20", "decisions_per_season": 1},
                 {"id": "advanced", "target_minutes": "30–45", "decisions_per_season": 3},
@@ -102,6 +105,37 @@ class CareerService:
         if not isinstance(pokemon_ids, list):
             raise ValueError("pokemon_ids must be a list.")
         self.engine.update_lineup(run, [str(value) for value in pokemon_ids])
+        self.store.save_run(run)
+        return run.to_dict()
+
+    def use_item(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
+        run = self._owned_run(player_id, run_id)
+        expected = int(payload.get("expected_revision", -1))
+        if expected != run.revision:
+            raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
+        use_item(
+            run,
+            str(payload.get("item") or ""),
+            pokemon_id=str(payload.get("pokemon_id") or ""),
+            stat=str(payload.get("stat") or ""),
+        )
+        run.revision += 1
+        run.updated_at = utc_now()
+        self.store.save_run(run)
+        return run.to_dict()
+
+    def train(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
+        run = self._owned_run(player_id, run_id)
+        expected = int(payload.get("expected_revision", -1))
+        if expected != run.revision:
+            raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
+        complete_training(
+            run,
+            str(payload.get("method") or ""),
+            str(payload.get("pokemon_id") or ""),
+        )
+        run.revision += 1
+        run.updated_at = utc_now()
         self.store.save_run(run)
         return run.to_dict()
 

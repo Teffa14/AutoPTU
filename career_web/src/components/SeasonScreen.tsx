@@ -73,6 +73,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
       onRun(result.run);
       const featured = result.battle_ids.at(-1);
       if (featured) navigate(`battle/${run.id}/${featured}`);
+      else setFieldTransition(false);
     } catch (reason) {
       setFieldTransition(false);
       setRoulette("idle");
@@ -109,7 +110,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   if (run.status === "retired") return (
     <section className="retirement-scene">
       <p className="eyebrow">Career record sealed</p><h1>{run.build.name}</h1>
-      <p>{locale === "es" ? `Se retiró a los ${run.age}. La liga conserva el registro.` : `Retired at ${run.age}. The league keeps the record.`}</p>
+      <p>{locale === "es" ? `La carrera terminó a los ${run.age}: ${retirementReason(run.summary?.retirement_reason ?? "voluntary", locale)}. La liga conserva el registro.` : `The career ended at ${run.age}: ${retirementReason(run.summary?.retirement_reason ?? "voluntary", locale)}. The league keeps the record.`}</p>
       <div className="retirement-score"><b>{run.score}</b><span>{copy.score}</span></div>
       <div className="record-ribbon"><span>{run.totals.wins} W</span><span>{run.totals.losses} L</span><span>{run.totals.titles} titles</span></div>
       <div className="retirement-roster"><span><b>{run.summary?.pokemon_owned ?? run.pokemon.length}</b> Pokémon</span><span><b>{run.summary?.evolutions ?? 0}</b> {locale === "es" ? "evoluciones" : "evolutions"}</span></div>
@@ -149,6 +150,11 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
             <span>{effectLabel(key, locale)}</span><b>{signed(run[key])}</b><small>{attributeHint(key, run[key], locale)}</small>
           </div>
         ))}
+      </div>
+      <div className={`season-contract-strip ${run.seasons_without_contract ? "warning" : ""}`}>
+        <span><small>{locale === "es" ? "CONTRATO" : "CONTRACT"}</small><b>{run.contract ? `${run.contract.club_name} · ${run.contract.seasons_remaining} ${locale === "es" ? "temp. firmadas" : "seasons secured"}` : (locale === "es" ? "Sin club" : "No club")}</b></span>
+        <span><small>{locale === "es" ? "SALARIO" : "SALARY"}</small><b>₽ {run.contract?.salary ?? 0} / {locale === "es" ? "temporada" : "season"}</b></span>
+        <span><small>{locale === "es" ? "RIESGO DE RETIRO" : "RETIREMENT RISK"}</small><b>{run.seasons_without_contract}/2 {locale === "es" ? "temporadas sin contrato" : "seasons without a contract"}</b></span>
       </div>
       <div className="active-class-effect">{run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b> · {locale === "es" ? entry.description_es : entry.description_en}</span>)}</div>
       {run.relationship_effects?.best_contact ? (
@@ -210,7 +216,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
                 {selected.risk !== "gamble" && (selected.rewards?.length ?? 0) > 0 ? <p>{locale === "es" ? "Además:" : "Also:"} {effectSentence(selected.guaranteed, locale)}</p> : null}
                 {selected.gamble?.chance ? (
                   <p><b>{Math.round(selected.gamble.chance * 100)}%</b> {locale === "es" ? "de éxito." : "success chance."} {gambleSentence(selected, locale)}</p>
-                ) : <p>{locale === "es" ? "No hay tirada oculta para este resultado." : "There is no hidden roll for this outcome."}</p>}
+                ) : null}
               </div>
               <button className="primary-action" onClick={decide} disabled={busy}>
                 {selected.risk === "gamble"
@@ -299,12 +305,30 @@ function rewardSentence(rewards: DecisionReward[], locale: Locale): string {
 }
 
 function rewardLabel(reward: DecisionReward, locale: Locale): string {
-  if (reward.type === "pokemon") return `${locale === "es" ? "Capturar" : "Catch"} ${reward.species}`;
+  if (reward.type === "pokemon") return `${locale === "es" ? "Capturar" : "Catch"} ${reward.species}${reward.rarity ? ` · ${rarityLabel(reward.rarity, locale)}` : ""}`;
   if (reward.type === "item") return `${reward.item} × ${reward.quantity}`;
   if (reward.type === "move") return `${locale === "es" ? "Aprender" : "Learn"} ${reward.move}`;
   if (reward.type === "level") return `${locale === "es" ? "Compañero" : "Partner"} +${reward.levels} LV`;
   if (reward.type === "stat") return `${reward.species} +${reward.amount} ${effectLabel(reward.stat, locale)}`;
   return `${locale === "es" ? "Vínculo" : "Bond"}: ${reward.name.split(" · ")[0]} ${reward.amount > 0 ? "+" : ""}${reward.amount}`;
+}
+
+function rarityLabel(rarity: string, locale: Locale): string {
+  const labels: Record<string, [string, string]> = {
+    common: ["común", "common"], rare: ["raro", "rare"], very_rare: ["muy raro", "very rare"],
+    epic: ["épico", "epic"], legendary: ["legendario", "legendary"], mythical: ["mítico", "mythical"],
+  };
+  return labels[rarity]?.[locale === "es" ? 0 : 1] ?? rarity;
+}
+
+function retirementReason(reason: string, locale: Locale): string {
+  const labels: Record<string, [string, string]> = {
+    voluntary: ["retiro voluntario", "voluntary retirement"],
+    health: ["la salud llegó a cero", "health reached zero"],
+    license: ["la licencia dejó de estar activa", "the license was no longer active"],
+    no_contract: ["pasaron dos temporadas consecutivas sin contrato", "two consecutive seasons passed without a contract"],
+  };
+  return labels[reason]?.[locale === "es" ? 0 : 1] ?? reason;
 }
 
 function gambleSentence(option: DecisionOption, locale: Locale): string {

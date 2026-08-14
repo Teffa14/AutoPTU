@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from auto_ptu.career.catalogs import FRANCHISE_TRAINERS, REGIONS, compiled_decision_count
+from auto_ptu.career.catalogs import FRANCHISE_TRAINERS, REGIONS, RARITY_ORDER, compiled_decision_count
 from auto_ptu.career.class_adapters import compile_class_adapters
 from auto_ptu.career.content_compiler import validate_compiled_content
 from auto_ptu.career.decisions import apply_option, build_season_decision
@@ -250,20 +250,18 @@ def test_regional_starters_use_compiled_ptu_evolution_chains(region: str, starte
     assert partner.evolution_history[-1]["threshold"] == threshold
 
 
-def test_evolution_decision_reaches_the_declared_ptu_threshold() -> None:
+def test_evolution_is_automatic_and_never_occupies_an_advanced_decision() -> None:
     engine = CareerEngine(fake_battle)
     run = engine.new_run(
         player_id="evolution-decision", name="Ari", region="kanto", starter="Bulbasaur",
         classes=["Ace Trainer"], seed=810,
     )
-    run.pokemon[0].level = 10
-    run.season_number = 2
-    decision = build_season_decision(run)
-    assert decision.family == "evolution"
-    controlled = decision.options[1]
-    level_reward = next(reward for reward in controlled.rewards if reward["type"] == "level")
-    assert level_reward["levels"] == 6
-    apply_option(run, controlled)
+    assert run.pokemon[0].level == 5
+    first = build_season_decision(run, 0)
+    second = build_season_decision(run, 1)
+    assert first.family != "evolution"
+    assert second.family != "evolution"
+    grant_partner_levels(run, 11, source="test")
     assert run.pokemon[0].species == "Ivysaur"
 
 
@@ -360,19 +358,16 @@ def test_decisions_grant_pokemon_items_moves_and_relationships() -> None:
     assert len(capture_run.pokemon) == 2
     assert capture_run.build.pokeballs == 9
 
-    evolution_decision = capture_run.season.decision
-    move_option = next(
-        option for option in evolution_decision.options
-        if any(reward["type"] == "move" for reward in option.gamble.get("success_rewards", []))
-    )
-    capture_run, _ = engine.advance_season(capture_run, option_id=move_option.id)
-    assert next(entry for entry in capture_run.pokemon if entry.is_partner).taught_moves == ["Return"]
-
     breeding_decision = capture_run.season.decision
     relationship_option = next(option for option in breeding_decision.options if any(reward["type"] == "relationship" for reward in option.rewards))
     capture_run, _ = engine.advance_season(capture_run, option_id=relationship_option.id)
     assert capture_run.relationships
     assert capture_run.relationship_effects["home_level_bonus"] >= 1
+
+    contest_decision = capture_run.season.decision
+    move_option = next(option for option in contest_decision.options if any(reward["type"] == "move" for reward in option.rewards))
+    capture_run, _ = engine.advance_season(capture_run, option_id=move_option.id)
+    assert next(entry for entry in capture_run.pokemon if entry.is_partner).taught_moves
     completed = next(entry for entry in capture_run.timeline if entry["type"] == "season.completed")
     assert completed["relationship_effects"]["recovery_applied"] >= 1
 
@@ -388,24 +383,83 @@ def test_decisions_grant_pokemon_items_moves_and_relationships() -> None:
     assert item_run.build.pokeballs > 10 or item_run.inventory
 
 
-def test_every_choice_trains_a_specific_pokemon_stat_permanently() -> None:
+def test_capture_choices_never_train_an_unrelated_pokemon_stat() -> None:
     engine = CareerEngine(fake_battle)
     run = engine.new_run(
         player_id="stat-training", name="Ari", region="kanto", starter="Rattata",
         classes=["Ace Trainer"], seed=1,
     )
     decision = run.season.decision
+    assert decision.family == "capture"
     for option in decision.options:
         rewards = option.gamble.get("success_rewards", []) if option.risk == "gamble" else option.rewards
-        assert any(reward["type"] == "stat" for reward in rewards)
-    safe = decision.options[0]
-    stat_reward = next(reward for reward in safe.rewards if reward["type"] == "stat")
-    pokemon = next(entry for entry in run.pokemon if entry.id == stat_reward["pokemon_id"])
-    before = pokemon.stat_training.get(stat_reward["stat"], 0)
-    run, _ = engine.advance_season(run, option_id=safe.id)
-    assert pokemon.stat_training[stat_reward["stat"]] == before + stat_reward["amount"]
-    assert any(entry["type"] == "pokemon.stat_trained" for entry in run.timeline)
-    assert engine._schedule(run)[0].home_team_stat_training[0] == pokemon.stat_training
+        assert not any(reward["type"] == "stat" for reward in rewards)
+        pokemon_rewards = [reward for reward in rewards if reward["type"] == "pokemon"]
+        assert pokemon_rewards
+        assert pokemon_rewards[0]["rarity"] in {"common", "rare", "very_rare"}
+
+
+def test_rival_species_and_rarities_change_with_league_progression() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="rarity-calendar", name="Ari", region="kanto", starter="Rattata",
+        classes=["Ace Trainer"], seed=929,
+    )
+    junior = engine._schedule(run)
+    assert all(rarity in {"common", "rare", "very_rare"} for spec in junior for rarity in spec.away_team_rarities)
+    run.league = "elite"
+    run.pokedex_level = 4
+    elite = engine._schedule(run)
+    assert all(rarity in RARITY_ORDER for spec in elite for rarity in spec.away_team_rarities)
+    assert len({species for spec in elite for species in spec.away_team_species}) > 4
+    assert any(rarity in {"epic", "legendary", "mythical"} for spec in elite for rarity in spec.away_team_rarities)
+
+
+def test_inventory_items_and_training_have_direct_pokemon_effects(tmp_path: Path) -> None:
+    service = CareerService(store=CareerStore(tmp_path), engine=CareerEngine(fake_battle))
+    created = service.create_run(
+        "trainer-items",
+        {"name": "Ari", "region": "kanto", "starter": "Rattata", "classes": ["Ace Trainer"], "seed": 303},
+    )
+    run = CareerRun.from_dict(created)
+    run.inventory["Training Kit"] = 1
+    run.inventory["Pokédex Upgrade"] = 1
+    service.store.save_run(run)
+    trained = service.use_item(
+        "trainer-items", run.id,
+        {"expected_revision": run.revision, "item": "Training Kit", "pokemon_id": run.pokemon[0].id, "stat": "atk"},
+    )
+    assert trained["pokemon"][0]["stat_training"]["atk"] == 2
+    upgraded = service.use_item(
+        "trainer-items", run.id,
+        {"expected_revision": trained["revision"], "item": "Pokédex Upgrade"},
+    )
+    assert upgraded["pokedex_level"] == 1
+    session = service.train(
+        "trainer-items", run.id,
+        {"expected_revision": upgraded["revision"], "method": "agility", "pokemon_id": run.pokemon[0].id},
+    )
+    assert session["pokemon"][0]["stat_training"]["spd"] == 2
+    assert session["season"]["training_completed"] is True
+    with pytest.raises(ValueError, match="already complete"):
+        service.train(
+            "trainer-items", run.id,
+            {"expected_revision": session["revision"], "method": "guard", "pokemon_id": run.pokemon[0].id},
+        )
+
+
+def test_salary_is_paid_and_retirement_risk_is_explicit() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="salary", name="Ari", region="kanto", starter="Rattata",
+        classes=["Ace Trainer"], seed=712,
+    )
+    salary = run.contract.salary
+    run, _ = engine.advance_season(run, option_id=run.season.decision.options[0].id)
+    assert run.career_earnings == salary
+    paid = next(entry for entry in run.timeline if entry["type"] == "contract.salary_paid")
+    assert paid["salary"] == salary
+    assert engine._forced_retirement_reason(run) in {"", "no_contract"}
 
 
 def test_season_incidents_are_deterministic_and_visible_in_the_summary() -> None:
@@ -487,7 +541,7 @@ def test_active_legacy_run_records_version_migration_before_new_mechanics() -> N
         "season": 1,
         "age": 12,
         "from": "career-0.1.0",
-        "to": "career-0.7.0",
+        "to": "career-0.8.0",
     }
 
 
@@ -563,6 +617,7 @@ def test_relationships_change_battle_recovery_and_contract_security() -> None:
     run.relationships[contact] = 6
     run.health = 50
     run.league = "regular"
+    run.contract.seasons_remaining = 0
     engine.ensure_roster(run)
     assert run.relationship_effects["home_level_bonus"] == 2
     assert all(spec.home_level_bonus >= 2 for spec in engine._schedule(run))

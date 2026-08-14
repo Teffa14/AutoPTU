@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import random
 from dataclasses import dataclass
 from typing import Dict, Iterable, List
 
@@ -145,6 +146,140 @@ REGIONS: Dict[str, RegionDefinition] = {
     ),
 }
 
+# Encounter pools are separate from the academy underdog catalogue.  The
+# academy list remains the broad, low-power intake pool; career exploration can
+# now surface progressively scarcer species without pretending that every wild
+# meeting has the same value.
+RARITY_ORDER = ("common", "rare", "very_rare", "epic", "legendary", "mythical")
+RARITY_LABELS = {
+    "common": ("Común", "Common"),
+    "rare": ("Raro", "Rare"),
+    "very_rare": ("Muy raro", "Very rare"),
+    "epic": ("Épico", "Epic"),
+    "legendary": ("Legendario", "Legendary"),
+    "mythical": ("Mítico", "Mythical"),
+}
+
+REGIONAL_SPECIAL_ENCOUNTERS: Dict[str, Dict[str, tuple[str, ...]]] = {
+    "kanto": {
+        "rare": ("Scyther", "Pinsir", "Kangaskhan", "Chansey"),
+        "very_rare": ("Lapras", "Snorlax", "Aerodactyl", "Dratini"),
+        "epic": ("Dragonite", "Gyarados", "Arcanine", "Gengar"),
+        "legendary": ("Articuno", "Zapdos", "Moltres", "Mewtwo"),
+        "mythical": ("Mew",),
+    },
+    "johto": {
+        "rare": ("Heracross", "Skarmory", "Stantler", "Miltank"),
+        "very_rare": ("Larvitar", "Hitmontop", "Kingdra", "Blissey"),
+        "epic": ("Tyranitar", "Scizor", "Houndoom", "Donphan"),
+        "legendary": ("Raikou", "Entei", "Suicune", "Lugia", "Ho-Oh"),
+        "mythical": ("Celebi",),
+    },
+    "hoenn": {
+        "rare": ("Absol", "Tropius", "Chimecho", "Relicanth"),
+        "very_rare": ("Bagon", "Beldum", "Feebas", "Spiritomb"),
+        "epic": ("Salamence", "Metagross", "Milotic", "Flygon"),
+        "legendary": ("Regirock", "Regice", "Registeel", "Latias", "Latios", "Kyogre", "Groudon", "Rayquaza"),
+        "mythical": ("Jirachi", "Deoxys"),
+    },
+    "sinnoh": {
+        "rare": ("Heracross", "Skuntank", "Toxicroak", "Drapion"),
+        "very_rare": ("Gible", "Riolu", "Rotom", "Spiritomb"),
+        "epic": ("Garchomp", "Lucario", "Togekiss", "Electivire"),
+        "legendary": ("Uxie", "Mesprit", "Azelf", "Dialga", "Palkia", "Giratina", "Cresselia"),
+        "mythical": ("Phione", "Manaphy", "Darkrai", "Shaymin", "Arceus"),
+    },
+    "unova": {
+        "rare": ("Zorua", "Cryogonal", "Druddigon", "Bouffalant"),
+        "very_rare": ("Deino", "Larvesta", "Axew", "Tynamo"),
+        "epic": ("Hydreigon", "Volcarona", "Haxorus", "Chandelure"),
+        "legendary": ("Cobalion", "Terrakion", "Virizion", "Tornadus", "Thundurus", "Reshiram", "Zekrom", "Kyurem"),
+        "mythical": ("Victini", "Keldeo", "Meloetta", "Genesect"),
+    },
+    "kalos": {
+        "rare": ("Hawlucha", "Klefki", "Trevenant", "Gourgeist"),
+        "very_rare": ("Goomy", "Noibat", "Honedge", "Carbink"),
+        "epic": ("Goodra", "Aegislash", "Noivern", "Tyrantrum"),
+        "legendary": ("Xerneas", "Yveltal", "Zygarde"),
+        "mythical": ("Diancie", "Hoopa", "Volcanion"),
+    },
+    "alola": {
+        "rare": ("Oranguru", "Passimian", "Drampa", "Turtonator"),
+        "very_rare": ("Jangmo-o", "Dhelmise", "Type: Null", "Minior"),
+        "epic": ("Kommo-o", "Silvally", "Golisopod", "Mimikyu"),
+        "legendary": ("Tapu Koko", "Tapu Lele", "Tapu Bulu", "Tapu Fini", "Solgaleo", "Lunala", "Necrozma"),
+        "mythical": ("Magearna", "Marshadow", "Zeraora", "Meltan", "Melmetal"),
+    },
+    "galar": {
+        "rare": ("Falinks", "Stonjourner", "Eiscue", "Indeedee"),
+        "very_rare": ("Dreepy", "Dracozolt", "Arctozolt", "Dracovish", "Arctovish"),
+        "epic": ("Dragapult", "Duraludon", "Grimmsnarl", "Hatterene"),
+        "legendary": ("Zacian", "Zamazenta", "Eternatus", "Kubfu", "Urshifu", "Regieleki", "Regidrago"),
+        "mythical": ("Zarude",),
+    },
+    "paldea": {
+        "rare": ("Flamigo", "Cyclizar", "Orthworm", "Bombirdier"),
+        "very_rare": ("Frigibax", "Gimmighoul", "Dondozo", "Tatsugiri"),
+        "epic": ("Baxcalibur", "Gholdengo", "Kingambit", "Palafin"),
+        "legendary": ("Wo-Chien", "Chien-Pao", "Ting-Lu", "Chi-Yu", "Koraidon", "Miraidon"),
+        "mythical": ("Pecharunt",),
+    },
+}
+
+_RARITY_WEIGHTS: Dict[str, tuple[int, ...]] = {
+    "junior": (70, 25, 5, 0, 0, 0),
+    "rookie": (50, 30, 15, 5, 0, 0),
+    "regular": (30, 28, 22, 15, 5, 0),
+    "elite": (18, 22, 23, 22, 11, 4),
+}
+
+
+def encounter_pool(region_id: str, rarity: str) -> tuple[str, ...]:
+    region = REGIONS[region_id]
+    if rarity == "common":
+        special = {
+            species.lower()
+            for pool in REGIONAL_SPECIAL_ENCOUNTERS.get(region_id, {}).values()
+            for species in pool
+        }
+        return tuple(species for species in region.underdogs if species.lower() not in special)
+    return REGIONAL_SPECIAL_ENCOUNTERS.get(region_id, {}).get(rarity, ())
+
+
+def all_region_encounters(region_id: str) -> tuple[str, ...]:
+    return tuple(dict.fromkeys(
+        species
+        for rarity in RARITY_ORDER
+        for species in encounter_pool(region_id, rarity)
+    ))
+
+
+def choose_encounter_rarity(
+    region_id: str,
+    league: str,
+    rng: random.Random,
+    *,
+    minimum: str = "common",
+    pokedex_level: int = 0,
+) -> str:
+    weights = list(_RARITY_WEIGHTS.get(league, _RARITY_WEIGHTS["junior"]))
+    boost = min(12, max(0, int(pokedex_level)) * 3)
+    weights[0] = max(1, weights[0] - boost)
+    highest_unlocked = max(index for index, value in enumerate(weights) if value > 0)
+    weights[highest_unlocked] += boost
+    minimum_index = min(RARITY_ORDER.index(minimum), highest_unlocked)
+    for index in range(minimum_index):
+        weights[minimum_index] += weights[index]
+        weights[index] = 0
+    available = [
+        index
+        for index, weight in enumerate(weights)
+        if weight > 0 and encounter_pool(region_id, RARITY_ORDER[index])
+    ]
+    if not available:
+        return "common"
+    picked = rng.choices(available, weights=[weights[index] for index in available], k=1)[0]
+    return RARITY_ORDER[picked]
 EVENT_DOMAINS = (
     "capture", "evolution", "breeding", "contest", "research", "health",
     "economy", "media", "crime", "friendship", "rivalry", "conservation",

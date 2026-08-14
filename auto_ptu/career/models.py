@@ -6,8 +6,8 @@ import os
 from typing import Any, Dict, List, Optional
 
 
-CURRENT_CAREER_VERSION = "career-0.7.0"
-CURRENT_NARRATIVE_VERSION = "career-hooks-0.6.0"
+CURRENT_CAREER_VERSION = "career-0.8.0"
+CURRENT_NARRATIVE_VERSION = "career-hooks-0.7.0"
 
 
 def utc_now() -> str:
@@ -118,6 +118,8 @@ class BattleSpec:
     home_team_stat_training: List[Dict[str, int]] = field(default_factory=list)
     away_team_species: List[str] = field(default_factory=list)
     away_team_levels: List[int] = field(default_factory=list)
+    away_team_rarities: List[str] = field(default_factory=list)
+    difficulty_label: str = "even"
     home_ai_level: str = "tactical"
     away_ai_level: str = "tactical"
 
@@ -165,6 +167,8 @@ class SeasonState:
     decisions_required: int = 1
     decisions_completed: int = 0
     decision_history: List[Dict[str, Any]] = field(default_factory=list)
+    training_completed: bool = False
+    training_method: str = ""
 
 
 @dataclass
@@ -202,6 +206,8 @@ class CareerRun:
     development: int = 0
     scouting: int = 0
     finances: int = 0
+    career_earnings: int = 0
+    pokedex_level: int = 0
     license_status: str = "active"
     seasons_without_contract: int = 0
     score: int = 0
