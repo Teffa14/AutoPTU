@@ -126,13 +126,28 @@ class PostgresCareerStore:
                 """
                 select
                   (select response from private.run_commands where run_id = %s and idempotency_key = %s),
-                  (select state from private.career_runs where id = %s)
+                  (select state from private.career_runs where id = %s),
+                  (
+                    select result from private.battle_results
+                    where run_id = %s and battle_key = (
+                      select response->>'featured_battle_id' from private.run_commands
+                      where run_id = %s and idempotency_key = %s
+                    ) and status = 'complete'
+                  )
                 """,
-                (uuid.UUID(run_id), key, uuid.UUID(run_id)),
+                (
+                    uuid.UUID(run_id), key, uuid.UUID(run_id), uuid.UUID(run_id),
+                    uuid.UUID(run_id), key,
+                ),
             ).fetchone()
         if not row:
             return None, None
-        return row[0], CareerRun.from_dict(row[1]) if row[1] else None
+        response = dict(row[0]) if row[0] else None
+        if response is not None:
+            response.pop("featured_battle_id", None)
+            if row[2] and "featured_battle" not in response:
+                response["featured_battle"] = row[2]
+        return response, CareerRun.from_dict(row[1]) if row[1] else None
 
     def load_owned_battle(self, player_id: str, run_id: str, battle_id: str) -> dict:
         """Authorize and fetch an already-resolved transcript with one query."""
@@ -270,6 +285,13 @@ class PostgresCareerStore:
 
     def _execute_record_idempotency(self, connection, run_id: str, key: str, response: dict) -> None:
         revision = int(response.get("run", {}).get("revision", 0))
+        # The full transcript already lives in battle_results. Duplicating it in
+        # run_commands made the season transaction write the same large JSON
+        # twice and added several seconds before the arena could open.
+        stored_response = dict(response)
+        featured = stored_response.pop("featured_battle", None)
+        if isinstance(featured, dict) and featured.get("battle_id"):
+            stored_response["featured_battle_id"] = str(featured["battle_id"])
         connection.execute(
             """
             insert into private.run_commands
@@ -277,7 +299,7 @@ class PostgresCareerStore:
             values (%s, %s, %s, 'season.advance', '{}'::jsonb, %s)
             on conflict (run_id, idempotency_key) do nothing
             """,
-            (uuid.UUID(run_id), key, max(0, revision - 1), self.psycopg.types.json.Jsonb(response)),
+            (uuid.UUID(run_id), key, max(0, revision - 1), self.psycopg.types.json.Jsonb(stored_response)),
         )
 
     def idempotent_response(self, run_id: str, key: str) -> Optional[dict]:
