@@ -100,6 +100,7 @@ function eventKind(entry: Record<string, unknown>, locale: Locale): string {
     "relationship.changed": ["relación", "relationship"],
     "relationship.effect_applied": ["red de apoyo", "support network"],
     "relationship.contract_saved": ["contrato", "contract"],
+    "class.effect_applied": ["clase PTU", "PTU class"],
     "season.schedule_ready": ["calendario", "schedule"],
     "roster.lineup_changed": ["alineación", "lineup"],
     "season.completed": ["temporada", "season"],
@@ -109,7 +110,7 @@ function eventKind(entry: Record<string, unknown>, locale: Locale): string {
   return labels[type]?.[locale === "es" ? 0 : 1] ?? type.replace(".", " / ");
 }
 
-function eventTitle(entry: Record<string, unknown>, locale: Locale): string {
+export function eventTitle(entry: Record<string, unknown>, locale: Locale): string {
   const type = String(entry.type ?? "");
   if (type === "career.started") {
     const structured = entry.trainer && entry.club && entry.starter
@@ -128,12 +129,27 @@ function eventTitle(entry: Record<string, unknown>, locale: Locale): string {
       ? `${String(entry.from)} evolucionó a ${String(entry.to)} en el nivel ${String(entry.level)}`
       : `${String(entry.from)} evolved into ${String(entry.to)} at level ${String(entry.level)}`;
   }
-  if (type === "pokemon.trained") return locale === "es" ? `${String(entry.species)} ganó ${String(entry.levels)} niveles` : `${String(entry.species)} gained ${String(entry.levels)} levels`;
+  if (type === "pokemon.trained") {
+    const levels = Number(entry.levels ?? 0);
+    return locale === "es"
+      ? `${String(entry.species)} ganó ${levels} ${levels === 1 ? "nivel" : "niveles"}`
+      : `${String(entry.species)} gained ${levels} ${levels === 1 ? "level" : "levels"}`;
+  }
   if (type === "pokemon.move_learned") return locale === "es" ? `${String(entry.species)} aprendió ${String(entry.move)}` : `${String(entry.species)} learned ${String(entry.move)}`;
   if (type === "item.acquired") return locale === "es" ? `Conseguiste ${String(entry.quantity)} × ${String(entry.item)}` : `Received ${String(entry.quantity)} × ${String(entry.item)}`;
   if (type === "relationship.changed") return locale === "es" ? `El vínculo con ${String(entry.name).split(" · ")[0]} cambió ${signed(Number(entry.amount ?? 0))}` : `Bond with ${String(entry.name).split(" · ")[0]} changed ${signed(Number(entry.amount ?? 0))}`;
   if (type === "relationship.effect_applied") return locale === "es" ? `La red aportó +${String(entry.home_level_bonus ?? 0)} LV y +${String(entry.recovery_applied ?? 0)} salud` : `The network supplied +${String(entry.home_level_bonus ?? 0)} LV and +${String(entry.recovery_applied ?? 0)} health`;
   if (type === "relationship.contract_saved") return locale === "es" ? `${String(entry.name).split(" · ")[0]} protegió el contrato` : `${String(entry.name).split(" · ")[0]} protected the contract`;
+  if (type === "class.effect_applied") {
+    const classes = Array.isArray(entry.classes) ? entry.classes.map(String).join(" + ") : (locale === "es" ? "Clase PTU" : "PTU class");
+    const seasonEffects = asRecord(entry.season_effects);
+    const partnerLevels = Number(seasonEffects.partner_levels ?? 0);
+    if (partnerLevels) return locale === "es"
+      ? `${classes} dio +${partnerLevels} ${partnerLevels === 1 ? "nivel" : "niveles"} al compañero`
+      : `${classes} gave the partner +${partnerLevels} ${partnerLevels === 1 ? "level" : "levels"}`;
+    const summary = effectSummary(seasonEffects, locale);
+    return locale === "es" ? `${classes} modificó la preparación: ${summary}` : `${classes} changed preparation: ${summary}`;
+  }
   if (type === "season.schedule_ready") return locale === "es" ? "El equipo salió al campo" : "The team entered the field";
   if (type === "roster.lineup_changed") return locale === "es" ? "Se registraron los seis titulares" : "The starting six were registered";
   if (type === "career.retired") return locale === "es" ? "La carrera quedó cerrada" : "The career came to an end";

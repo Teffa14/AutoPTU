@@ -96,6 +96,9 @@ export function effectLabel(key: string, locale: Locale): string {
   const labels: Record<string, [string, string]> = {
     health: ["Salud", "Health"], development: ["Desarrollo", "Development"],
     scouting: ["Scouting", "Scouting"], finances: ["Recursos", "Resources"], reputation: ["Reputación", "Reputation"],
+    partner_levels: ["Niveles del compañero", "Partner levels"],
+    home_level_bonus: ["Preparación propia", "Home preparation"],
+    away_level_bonus: ["Preparación rival", "Opponent preparation"],
   };
   return labels[key]?.[locale === "es" ? 0 : 1] ?? key;
 }
