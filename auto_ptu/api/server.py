@@ -1013,8 +1013,9 @@ def career_game(path: str = "") -> Response:
 
 
 @app.get("/")
-def index() -> FileResponse:
-    return FileResponse(STATIC_DIR / "index.html", headers={"Cache-Control": "no-store"})
+def index() -> RedirectResponse:
+    """The standalone Career deployment always opens on its playable client."""
+    return RedirectResponse("/career-game/", status_code=307, headers={"Cache-Control": "no-store"})
 
 
 @app.get("/create")

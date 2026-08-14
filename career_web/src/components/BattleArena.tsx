@@ -221,14 +221,16 @@ function buildStadium(width: number, height: number, grid?: { width: number; hei
   const columns = Math.max(2, grid?.width ?? 15);
   const rows = Math.max(2, grid?.height ?? 9);
   const metrics = tileMetrics(width, height, grid);
-  stadium.addChild(new Graphics().rect(0, 0, width, height).fill({ color: 0x08120f }));
-  const crowd = new Graphics().roundRect(width * 0.03, height * 0.035, width * 0.94, height * 0.14, 16).fill({ color: 0x13211d }).stroke({ color: 0x4e665c, width: 2, alpha: 0.5 });
+  // The painted stadium is supplied by CSS. Pixi owns the deterministic
+  // tactical grid, actors and effects, so this layer stays translucent.
+  stadium.addChild(new Graphics().rect(0, 0, width, height).fill({ color: 0x06100d, alpha: 0.12 }));
+  const crowd = new Graphics().roundRect(width * 0.03, height * 0.035, width * 0.94, height * 0.14, 16).fill({ color: 0x13211d, alpha: 0.24 }).stroke({ color: 0xe8c86f, width: 2, alpha: 0.24 });
   for (let x = width * 0.055; x < width * 0.95; x += 17) {
     const color = Math.round(x / 17) % 4 === 0 ? 0xe8b85a : 0x82968d;
     crowd.circle(x, height * (0.07 + ((x / 17) % 3) * 0.025), 2.3).fill({ color, alpha: 0.55 });
   }
   stadium.addChild(crowd);
-  const field = new Graphics().rect(metrics.left, metrics.top, metrics.fieldWidth, metrics.fieldHeight).fill({ color: 0x184f39 }).stroke({ color: 0xe5cf91, width: 3, alpha: 0.88 });
+  const field = new Graphics().rect(metrics.left, metrics.top, metrics.fieldWidth, metrics.fieldHeight).fill({ color: 0x184f39, alpha: 0.16 }).stroke({ color: 0xf5e2a8, width: 3, alpha: 0.82 });
   for (let column = 1; column < columns; column += 1) field.moveTo(metrics.left + column * metrics.width, metrics.top).lineTo(metrics.left + column * metrics.width, metrics.top + metrics.fieldHeight).stroke({ color: 0xdce6cb, width: 1, alpha: 0.17 });
   for (let row = 1; row < rows; row += 1) field.moveTo(metrics.left, metrics.top + row * metrics.height).lineTo(metrics.left + metrics.fieldWidth, metrics.top + row * metrics.height).stroke({ color: 0xdce6cb, width: 1, alpha: 0.17 });
   field.circle(width * 0.5, metrics.top + metrics.fieldHeight * 0.5, Math.min(width, height) * 0.1).stroke({ color: 0xf5e7bd, width: 3, alpha: 0.28 });

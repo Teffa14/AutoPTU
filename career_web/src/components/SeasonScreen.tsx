@@ -19,6 +19,9 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   const [shareUrl, setShareUrl] = useState("");
   const [roulette, setRoulette] = useState<"idle" | "spinning" | "settling" | "success" | "failure">("idle");
   const [rouletteOutcome, setRouletteOutcome] = useState<Record<string, unknown> | null>(null);
+  const [rouletteOption, setRouletteOption] = useState<DecisionOption | undefined>();
+  const [rouletteTarget, setRouletteTarget] = useState<"success" | "failure" | null>(null);
+  const [readyBattleId, setReadyBattleId] = useState<string | null>(null);
   const [fieldTransition, setFieldTransition] = useState(false);
   const decision = run.season?.decision;
   const presentation = useMemo(
@@ -35,44 +38,58 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   const featuredContact = run.relationship_effects?.contact_effects?.[0];
 
   useEffect(() => setSelectedId(""), [decision?.id]);
-  useEffect(() => {
-    if (busy || roulette !== "idle" || run.season?.status !== "battle") return;
-    const featured = run.season.battle_ids.at(-1);
-    if (featured) navigate(`battle/${run.id}/${featured}`);
-  }, [busy, roulette, run.id, run.season?.battle_ids, run.season?.status]);
-
   async function decide() {
     if (!selectedId) return;
     const isGamble = selected?.risk === "gamble";
     setBusy(true);
     setError("");
-    if (isGamble) { setRouletteOutcome(null); setRoulette("spinning"); }
+    if (isGamble) {
+      setRouletteOutcome(null);
+      setRouletteOption(selected);
+      setRouletteTarget(null);
+      setReadyBattleId(null);
+      setRoulette("spinning");
+    }
     try {
       const pending = careerApi.decide(run, selectedId);
       if (isGamble) {
-        await new Promise((resolve) => window.setTimeout(resolve, 520));
+        const [result] = await Promise.all([pending, delay(1800)]);
+        onRun(result.run);
+        const outcome = latestDecisionEffects(result.run);
+        const target = outcome?.gamble_success === true ? "success" : "failure";
+        setRouletteOutcome(outcome);
+        setRouletteTarget(target);
+        setReadyBattleId(result.battle_ids.at(-1) ?? null);
         setRoulette("settling");
-        await new Promise((resolve) => window.setTimeout(resolve, 130));
-        setRoulette("idle");
-        if (finalDecision) setFieldTransition(true);
-      } else if (finalDecision) {
+        await delay(1450);
+        setRoulette(target);
+        return;
+      }
+      if (finalDecision) {
         await new Promise((resolve) => window.setTimeout(resolve, 120));
         setFieldTransition(true);
       }
       const result = await pending;
       onRun(result.run);
-      if (isGamble) {
-        const outcome = latestDecisionEffects(result.run);
-        setRouletteOutcome(outcome);
-        setRoulette(outcome?.gamble_success === true ? "success" : "failure");
-        await new Promise((resolve) => window.setTimeout(resolve, 1800));
-      }
       const featured = result.battle_ids.at(-1);
       if (featured) navigate(`battle/${run.id}/${featured}`);
     } catch (reason) {
       setFieldTransition(false);
+      setRoulette("idle");
       setError(reason instanceof Error ? reason.message : String(reason));
-    } finally { setBusy(false); setRoulette("idle"); }
+    } finally { setBusy(false); }
+  }
+
+  function continueAfterRoulette() {
+    const featured = readyBattleId;
+    setRoulette("idle");
+    setRouletteOutcome(null);
+    setRouletteOption(undefined);
+    setRouletteTarget(null);
+    setReadyBattleId(null);
+    if (!featured) return;
+    setFieldTransition(true);
+    window.setTimeout(() => navigate(`battle/${run.id}/${featured}`), 420);
   }
 
   async function retire() {
@@ -104,16 +121,23 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   );
 
   if (fieldTransition) return (
-    <>
-      <BattlePreparing run={run} locale={locale} />
-      {roulette === "success" || roulette === "failure" ? <RouletteOverlay state={roulette} locale={locale} option={selected} outcome={rouletteOutcome} /> : null}
-    </>
+    <BattlePreparing run={run} locale={locale} />
   );
 
   return (
     <section className="season-scene">
       <div className="season-sky" aria-hidden="true" />
-      {roulette !== "idle" ? <RouletteOverlay state={roulette} locale={locale} option={selected} outcome={rouletteOutcome} /> : null}
+      {roulette !== "idle" ? (
+        <RouletteOverlay
+          state={roulette}
+          target={rouletteTarget}
+          locale={locale}
+          option={rouletteOption}
+          outcome={rouletteOutcome}
+          hasBattle={Boolean(readyBattleId)}
+          onContinue={continueAfterRoulette}
+        />
+      ) : null}
       <header className="season-scoreboard">
         <div><span>{copy.season} {run.season_number}</span><b>{run.contract?.club_name ?? "Independent"}</b><small>{run.league} league · age {run.age}</small></div>
         <div className="scoreboard-metrics"><span><i style={{ "--meter": `${run.health}%` } as CSSProperties} />{copy.health} <b>{run.health}</b></span><span>{copy.score} <b>{run.score}</b></span></div>
@@ -209,11 +233,32 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
 
 function signed(value: number): string { return value > 0 ? `+${value}` : String(value); }
 
-function RouletteOverlay({ state, locale, option, outcome }: { state: "spinning" | "settling" | "success" | "failure"; locale: Locale; option?: DecisionOption; outcome?: Record<string, unknown> | null }) {
+function RouletteOverlay({ state, target, locale, option, outcome, hasBattle, onContinue }: {
+  state: "spinning" | "settling" | "success" | "failure";
+  target: "success" | "failure" | null;
+  locale: Locale;
+  option?: DecisionOption;
+  outcome?: Record<string, unknown> | null;
+  hasBattle: boolean;
+  onContinue: () => void;
+}) {
   const actualRewards = Array.isArray(outcome?.rewards) ? outcome.rewards as DecisionReward[] : [];
   const reward = rewardSentence(actualRewards.length ? actualRewards : option?.gamble?.success_rewards ?? [], locale);
   const mechanical = outcome ? effectSentence(Object.fromEntries(Object.entries(outcome).filter(([, value]) => typeof value === "number")) as Record<string, number>, locale) : "";
-  return <div className={`roulette-overlay ${state}`} role="status" aria-live="assertive"><div className="roulette-wheel" aria-hidden="true"><i>?</i><i>★</i><i>×</i><i>★</i></div><section><span>{locale === "es" ? "RULETA DE APUESTA" : "GAMBLE WHEEL"}</span><h2>{state === "spinning" ? (locale === "es" ? "Girando…" : "Spinning…") : state === "settling" ? (locale === "es" ? "Cerrando jugada" : "Locking result") : state === "success" ? (locale === "es" ? "¡ÉXITO!" : "SUCCESS!") : (locale === "es" ? "NO SALIÓ" : "NO WIN")}</h2><p>{state === "spinning" ? (locale === "es" ? "La elección ya está comprometida." : "The choice is committed.") : state === "settling" ? (locale === "es" ? "La rueda ya se detuvo; preparando el campo." : "The wheel has stopped; preparing the field.") : state === "success" ? `${reward}${mechanical ? ` · ${mechanical}` : ""}` : (locale === "es" ? `Resultado aplicado: ${mechanical || "sin cambios permanentes"}. El premio no se entrega.` : `Applied result: ${mechanical || "no permanent changes"}. The prize is not granted.`)}</p></section></div>;
+  const resolved = state === "success" || state === "failure";
+  return <div className={`roulette-overlay ${state}${target ? ` target-${target}` : ""}`} role="status" aria-live="assertive">
+    <div className="roulette-wheel" aria-hidden="true"><i>×</i><i>×</i><i>✓</i><i>✓</i><b /></div>
+    <section>
+      <span>{locale === "es" ? "RULETA DE APUESTA" : "GAMBLE WHEEL"}</span>
+      <h2>{state === "spinning" ? (locale === "es" ? "Girando…" : "Spinning…") : state === "settling" ? (locale === "es" ? "La rueda se detiene" : "The wheel is stopping") : state === "success" ? (locale === "es" ? "¡ÉXITO!" : "SUCCESS!") : (locale === "es" ? "NO SALIÓ" : "NO WIN")}</h2>
+      <p>{state === "spinning" ? (locale === "es" ? "La elección está comprometida. La rueda completará el giro antes de revelar el resultado." : "The choice is committed. The wheel will complete its spin before revealing the result.") : state === "settling" ? (locale === "es" ? "Mira el puntero: el resultado quedará fijado en la rueda." : "Watch the pointer: the result will lock on the wheel.") : state === "success" ? `${reward}${mechanical ? ` · ${mechanical}` : ""}` : (locale === "es" ? `Resultado aplicado: ${mechanical || "sin cambios permanentes"}. El premio no se entrega.` : `Applied result: ${mechanical || "no permanent changes"}. The prize is not granted.`)}</p>
+      {resolved ? <button type="button" className="primary-action roulette-continue" onClick={onContinue}>{hasBattle ? (locale === "es" ? "Entrar al campo de batalla" : "Enter the battlefield") : (locale === "es" ? "Continuar la carrera" : "Continue career")}</button> : null}
+    </section>
+  </div>;
+}
+
+function delay(milliseconds: number): Promise<void> {
+  return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
 }
 
 function latestDecisionEffects(run: CareerRun): Record<string, unknown> {

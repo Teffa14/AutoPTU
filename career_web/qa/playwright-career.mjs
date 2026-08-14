@@ -30,8 +30,8 @@ try {
   const initial = await metrics(page);
   if (initial.horizontalOverflow || initial.canvasCount !== 0) throw new Error(`Bad creation fit: ${JSON.stringify(initial)}`);
 
-  await page.getByRole("button", { name: "ES" }).click();
-  await page.getByRole("button", { name: "EN" }).click();
+  await page.getByRole("button", { name: "ES", exact: true }).click();
+  await page.getByRole("button", { name: "EN", exact: true }).click();
   await page.getByRole("button", { name: /advanced/i }).click();
   await page.getByRole("button", { name: /simple/i }).click();
   await page.getByLabel("Nombre").fill("Ari Vale");
@@ -52,8 +52,15 @@ try {
   await page.screenshot({ path: `${output}/desktop-daily.png` });
   await page.getByRole("button", { name: /Temporada|Season/ }).click();
   await page.waitForURL(/\/run\//);
-  await page.locator(".decision-options button").first().click();
-  await page.getByRole("button", { name: /Confirmar y jugar|Confirm and play/ }).click();
+  await page.locator(".decision-options button").last().click();
+  await page.getByRole("button", { name: /Girar la ruleta|Spin the wheel/ }).click();
+  await page.locator(".roulette-overlay.spinning").waitFor({ state: "visible" });
+  await page.locator(".roulette-overlay.settling").waitFor({ state: "visible", timeout: 45_000 });
+  const rouletteResult = page.getByRole("button", { name: /Entrar al campo de batalla|Enter the battlefield/ });
+  await rouletteResult.waitFor({ state: "visible", timeout: 10_000 });
+  if (!/\/career-game\/run\//.test(page.url())) throw new Error("Roulette navigated away before the result was accepted.");
+  await page.screenshot({ path: `${output}/desktop-roulette-result.png` });
+  await rouletteResult.click();
   await page.waitForURL(/\/battle\//, { timeout: 45_000 });
   const battleUrl = page.url();
   await page.locator("canvas").waitFor({ state: "visible", timeout: 15_000 });

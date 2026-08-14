@@ -153,7 +153,7 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px s
 .starter-field{min-width:0}.starter-carousel{display:grid;grid-template-columns:2.35rem minmax(0,1fr) 2.35rem;gap:.35rem;align-items:stretch;min-width:0}.starter-strip{min-width:0;max-width:100%;padding-inline:.25rem;scrollbar-color:#6f624e #d7c69e;scrollbar-width:thin;overscroll-behavior-inline:contain;touch-action:pan-x}.starter-arrow{border:1px solid #9d8c65;background:#dcc99e;color:#392f24;font:800 1.6rem "IBM Plex Mono",monospace;cursor:pointer}.starter-arrow:active{background:#f7b56c}
 .starter-picker-tools{display:grid;gap:.45rem;margin:.2rem 2.7rem .65rem}.starter-picker-tools>div{display:flex;flex-wrap:wrap;gap:.3rem}.starter-picker-tools button{border:1px solid #9d8c65;background:#e7d8b2;color:#4a3c2b;padding:.32rem .55rem;font:700 .62rem "IBM Plex Mono",monospace;text-transform:uppercase}.starter-picker-tools button.active{background:#263e34;color:#f7e6bd}.starter-picker-tools label{display:block}.starter-picker-tools input{width:100%;padding:.55rem .65rem;border:1px solid #aa9971;background:#f3e5c2;color:#2a231b}.starter-picker-tools>small{color:#665943;font:600 .6rem "IBM Plex Mono",monospace;text-transform:uppercase}.partner-kind{display:block;min-height:1rem;color:#775f39;font:800 .5rem "IBM Plex Mono",monospace;text-transform:uppercase}.partner-kind.starter{color:#a13e27}.starter-empty{padding:1rem;color:#655844}.class-choice small,.daily-build-fields label>small{display:block;margin-top:.35rem;color:#6e614d;line-height:1.35}.active-class-effect{max-width:78rem;margin:.55rem auto 0;padding:.55rem .75rem;border-left:4px solid var(--gold);background:#132a22;color:#c4d4cb;font-size:.72rem}.active-class-effect b{color:var(--gold)}.class-stamps span{display:grid;gap:.18rem}.class-stamps span small{max-width:32rem;color:#aebfb6;line-height:1.35;text-transform:none}.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 .build-row{display:flex;flex-wrap:wrap;gap:.3rem;padding:.35rem 0;color:#8fa39a;font:.58rem "IBM Plex Mono",monospace}.build-row b{padding:.16rem .28rem;border:1px solid #416254;color:var(--mint)}
-.roulette-overlay{position:fixed;z-index:80;inset:0;display:grid;grid-template-columns:auto minmax(12rem,24rem);place-content:center;align-items:center;gap:1.5rem;padding:1.5rem;background:rgba(4,12,9,.9);color:var(--paper)}.roulette-wheel{position:relative;width:min(46vw,17rem);aspect-ratio:1;border:.7rem solid #e9c66e;border-radius:50%;background:conic-gradient(#d75c45 0 25%,#1f6e50 0 50%,#e6ad41 0 75%,#273d75 0);box-shadow:0 0 0 .35rem #f5e7bd,0 1.2rem 2rem #0008}.roulette-wheel::before{content:"";position:absolute;left:50%;top:-1.35rem;translate:-50% 0;border:1rem solid transparent;border-top:1.8rem solid #f7e7b8;z-index:2}.roulette-wheel i{position:absolute;font:900 2rem "IBM Plex Mono",monospace}.roulette-wheel i:nth-child(1){left:24%;top:18%}.roulette-wheel i:nth-child(2){right:22%;top:24%}.roulette-wheel i:nth-child(3){right:25%;bottom:18%}.roulette-wheel i:nth-child(4){left:22%;bottom:24%}.roulette-overlay.spinning .roulette-wheel{animation:roulette-spin .7s linear infinite}.roulette-overlay.success .roulette-wheel{filter:drop-shadow(0 0 1rem #70dda0)}.roulette-overlay.failure .roulette-wheel{filter:grayscale(.6) drop-shadow(0 0 1rem #c74b39)}.roulette-overlay section span{color:var(--gold);font:700 .65rem "IBM Plex Mono",monospace;letter-spacing:.14em}.roulette-overlay h2{margin:.3rem 0;font:400 clamp(2rem,7vw,4.2rem) "Bowlby One SC",sans-serif}.roulette-overlay p{color:#b7c8c0;line-height:1.45}@keyframes roulette-spin{to{transform:rotate(1turn)}}
+.roulette-overlay{position:fixed;z-index:80;inset:0;display:grid;grid-template-columns:auto minmax(12rem,24rem);place-content:center;align-items:center;gap:1.5rem;padding:1.5rem;background:rgba(4,12,9,.94);color:var(--paper)}.roulette-wheel{position:relative;width:min(46vw,17rem);aspect-ratio:1;border:.7rem solid #e9c66e;border-radius:50%;background:conic-gradient(#b94335 0 25%,#1f6e50 0 50%,#d69e27 0 75%,#344f8b 0);box-shadow:0 0 0 .35rem #f5e7bd,0 1.2rem 2rem #0008}.roulette-wheel::before{content:"";position:absolute;left:50%;top:-1.35rem;translate:-50% 0;border:1rem solid transparent;border-top:1.8rem solid #fff2be;z-index:3;filter:drop-shadow(0 .2rem .15rem #0008)}.roulette-wheel::after{content:"";position:absolute;inset:39%;border:.28rem solid #f7e8bb;border-radius:50%;background:#10241c;box-shadow:0 0 1rem #0008}.roulette-wheel>b{position:absolute;z-index:2;inset:-1.05rem;border-radius:50%;background:repeating-conic-gradient(from 0deg,#f8e8b8 0 2deg,transparent 2deg 15deg);mask:radial-gradient(circle,transparent 0 82%,#000 83%);-webkit-mask:radial-gradient(circle,transparent 0 82%,#000 83%)}.roulette-wheel i{position:absolute;font:900 2.1rem "IBM Plex Mono",monospace;font-style:normal;color:#fff6d7;text-shadow:0 .15rem .2rem #0008}.roulette-wheel i:nth-child(1){left:24%;top:18%}.roulette-wheel i:nth-child(2){right:22%;top:24%}.roulette-wheel i:nth-child(3){right:25%;bottom:18%}.roulette-wheel i:nth-child(4){left:22%;bottom:24%}.roulette-overlay.spinning .roulette-wheel{animation:roulette-spin .72s linear infinite}.roulette-overlay.settling.target-success .roulette-wheel{animation:roulette-stop-success 1.4s cubic-bezier(.08,.72,.12,1) forwards}.roulette-overlay.settling.target-failure .roulette-wheel{animation:roulette-stop-failure 1.4s cubic-bezier(.08,.72,.12,1) forwards}.roulette-overlay.success .roulette-wheel{transform:rotate(1935deg);filter:drop-shadow(0 0 1rem #70dda0)}.roulette-overlay.failure .roulette-wheel{transform:rotate(1845deg);filter:grayscale(.35) drop-shadow(0 0 1rem #e65b48)}.roulette-overlay section span{color:var(--gold);font:700 .65rem "IBM Plex Mono",monospace;letter-spacing:.14em}.roulette-overlay h2{margin:.3rem 0;font:400 clamp(2rem,7vw,4.2rem) "Bowlby One SC",sans-serif}.roulette-overlay p{min-height:3.2rem;color:#b7c8c0;line-height:1.45}.roulette-continue{margin-top:.75rem;animation:roulette-result-in .32s ease-out both}@keyframes roulette-spin{to{transform:rotate(1turn)}}@keyframes roulette-stop-success{from{transform:rotate(0)}to{transform:rotate(1935deg)}}@keyframes roulette-stop-failure{from{transform:rotate(0)}to{transform:rotate(1845deg)}}@keyframes roulette-result-in{from{opacity:0;transform:translateY(.5rem)}to{opacity:1;transform:none}}
 @media(max-width:699px){.roulette-overlay{grid-template-columns:1fr;text-align:center}.roulette-wheel{margin:auto;width:min(68vw,15rem)}}
 .choice-rewards{display:flex;flex-wrap:wrap;gap:.25rem;margin-bottom:.35rem}.choice-rewards .world-reward{padding:.26rem .38rem;background:#184f39;color:#f7ebc9;font-size:.67rem;text-transform:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
 .team-rack{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.18rem;margin:.35rem 0 .5rem}.team-rack>span{position:relative;display:grid;place-items:center;min-width:0;aspect-ratio:1;background:#09130f;border-bottom:2px solid #416153;opacity:.72}.team-rack>span.active{border-color:var(--gold);background:#20372e;opacity:1}.team-rack>span.fainted{filter:grayscale(1);opacity:.25}.team-sprite{width:100%;height:100%;max-width:2.4rem;max-height:2.4rem}
@@ -162,7 +162,7 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px s
 @media (max-width:699px){.starter-carousel{grid-template-columns:2rem minmax(0,1fr) 2rem}.starter-arrow{font-size:1.25rem}.ranked-entry>footer{align-items:stretch;flex-direction:column}.ranked-entry>footer .primary-action{width:100%}}
 
 /* Career 0.6: immediate arena transition and mechanical relationship network. */
-.roulette-overlay.settling .roulette-wheel{transform:rotate(26deg);transition:transform .22s cubic-bezier(.2,.8,.2,1);filter:drop-shadow(0 0 .65rem #e9c66e)}
+.roulette-overlay.settling .roulette-wheel{filter:drop-shadow(0 0 .65rem #e9c66e)}
 .relationship-edge{display:flex;justify-content:space-between;gap:1rem;align-items:center;max-width:78rem;margin:.45rem auto;padding:.6rem .8rem;border:1px solid rgba(235,196,105,.36);background:linear-gradient(90deg,rgba(31,92,67,.92),rgba(20,55,44,.92));color:#f5e7bd}.relationship-edge span{font-size:.82rem}.relationship-edge small{color:#c7d9cf;text-align:right}.relationship-benefits{display:flex;flex-wrap:wrap;gap:.5rem;margin:.4rem 0 .75rem;padding:.7rem;border:1px solid #c8ad6d;background:#f2e5bf}.relationship-benefits b{width:100%;color:#315b48}.relationship-benefits span{padding:.25rem .45rem;background:#315b48;color:#fff4d6;font-size:.76rem}.world-rewards span small{display:block;color:#91a49a;font-size:.58rem;text-transform:uppercase;letter-spacing:.05em}
 .relationship-edge span i{display:block;margin-top:.12rem;color:#91b9a5;font:600 .56rem "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.08em}
 
@@ -190,3 +190,98 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px s
 .timeline-entry.major-highlight .timeline-age{background:#49371d;box-shadow:0 0 1.3rem rgba(244,198,91,.2)}.timeline-entry.major-highlight .timeline-entry-copy{border-color:#937842}.timeline-achievements{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.7rem}.timeline-achievements>b{width:100%;color:var(--gold);font:700 .55rem "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.08em}.timeline-achievements span{padding:.24rem .4rem;background:#4b371c;color:#ffe7a1;font-size:.7rem}
 @media(max-width:699px){.field-pokemon{min-height:2.3rem;max-height:31%}.career-celebration{width:min(94vw,34rem);padding:.5rem}.battle-result h1{font-size:clamp(2.5rem,12vw,4.5rem)}.battle-result>p{margin-bottom:.35rem}.achievement-highlights,.evolution-highlights{max-height:7rem;overflow-y:auto}}
 .victory-particles i{left:var(--spark-x,50%);animation-delay:var(--spark-delay,0s)}.victory-particles i:nth-child(1){--spark-x:4%;--spark-drift:-1rem}.victory-particles i:nth-child(2){--spark-x:10%;--spark-drift:.5rem;--spark-delay:.08s}.victory-particles i:nth-child(3){--spark-x:17%;--spark-drift:-.4rem;--spark-delay:.14s}.victory-particles i:nth-child(4){--spark-x:23%;--spark-drift:1rem}.victory-particles i:nth-child(5){--spark-x:29%;--spark-drift:-.8rem;--spark-delay:.18s}.victory-particles i:nth-child(6){--spark-x:35%;--spark-drift:.3rem;--spark-delay:.06s}.victory-particles i:nth-child(7){--spark-x:41%;--spark-drift:-1.1rem;--spark-delay:.11s}.victory-particles i:nth-child(8){--spark-x:47%;--spark-drift:.7rem;--spark-delay:.2s}.victory-particles i:nth-child(9){--spark-x:52%;--spark-drift:-.5rem}.victory-particles i:nth-child(10){--spark-x:57%;--spark-drift:1rem;--spark-delay:.13s}.victory-particles i:nth-child(11){--spark-x:62%;--spark-drift:-.7rem;--spark-delay:.04s}.victory-particles i:nth-child(12){--spark-x:67%;--spark-drift:.5rem;--spark-delay:.21s}.victory-particles i:nth-child(13){--spark-x:72%;--spark-drift:-.9rem;--spark-delay:.09s}.victory-particles i:nth-child(14){--spark-x:77%;--spark-drift:.8rem;--spark-delay:.16s}.victory-particles i:nth-child(15){--spark-x:82%;--spark-drift:-.4rem;--spark-delay:.03s}.victory-particles i:nth-child(16){--spark-x:87%;--spark-drift:1.1rem;--spark-delay:.19s}.victory-particles i:nth-child(17){--spark-x:92%;--spark-drift:-.6rem;--spark-delay:.1s}.victory-particles i:nth-child(18){--spark-x:96%;--spark-drift:.4rem;--spark-delay:.23s}@keyframes stadium-spark{0%{opacity:0;translate:0 1rem;scale:.3}24%{opacity:1}100%{opacity:0;translate:var(--spark-drift,0) -8rem;scale:1.4}}
+
+/* Generated game art: physical locations and ornamental surfaces. */
+.creation-scene{
+  background-image:linear-gradient(90deg,rgba(4,13,11,.9) 0%,rgba(5,16,13,.72) 42%,rgba(5,16,13,.28) 100%),url("./assets/generated/career-journey.jpg");
+  background-position:center;
+  background-size:cover;
+  background-attachment:fixed;
+}
+.creation-atmosphere{background:linear-gradient(180deg,rgba(6,18,15,.04),rgba(6,18,15,.78)),radial-gradient(circle at 18% 22%,rgba(255,186,99,.24),transparent 30%)}
+.creation-copy{text-shadow:0 .18rem 1rem #000}.registration-book{box-shadow:1rem 1.4rem 3.5rem rgba(0,0,0,.5),inset 0 0 0 1px rgba(37,31,24,.14)}
+
+.season-scene{
+  isolation:isolate;
+  background-image:linear-gradient(180deg,rgba(5,14,12,.46),rgba(5,14,12,.88) 56%,#07100e 100%),url("./assets/generated/clubhouse.jpg");
+  background-position:center top;
+  background-size:cover;
+  background-attachment:fixed;
+}
+.season-sky{z-index:-1;height:100%;background:radial-gradient(circle at 52% 28%,rgba(235,186,86,.16),transparent 35%),linear-gradient(180deg,transparent 45%,rgba(5,14,12,.62))}
+.season-scoreboard{
+  min-height:clamp(7.5rem,15vw,11rem);
+  padding:clamp(1.1rem,3vw,2rem) clamp(1rem,4vw,3rem);
+  overflow:hidden;
+  background-image:linear-gradient(90deg,rgba(3,13,11,.18),rgba(3,13,11,.72) 48%,rgba(3,13,11,.18)),url("./assets/generated/season-banner.jpg");
+  background-position:center;
+  background-size:cover;
+  border-bottom:1px solid rgba(235,196,105,.42);
+  box-shadow:0 1rem 2.8rem rgba(0,0,0,.35);
+}
+.season-scoreboard>div{position:relative;z-index:1;text-shadow:0 .15rem .75rem #000}
+.decision-ticket{box-shadow:.7rem .85rem 2.4rem rgba(0,0,0,.5),inset 0 0 0 1px rgba(72,55,28,.12)}
+
+.profile-scene{
+  max-width:none;
+  min-height:calc(100dvh - 3.75rem);
+  padding-inline:max(1rem,calc((100vw - 70rem)/2));
+  background-image:linear-gradient(90deg,rgba(4,13,11,.9),rgba(4,13,11,.68)),url("./assets/generated/clubhouse.jpg");
+  background-position:center;
+  background-size:cover;
+  background-attachment:fixed;
+}
+.profile-portrait,.trainer-dossier{background:rgba(6,17,14,.76);border:1px solid rgba(235,196,105,.22);box-shadow:0 1.2rem 3.2rem rgba(0,0,0,.34);backdrop-filter:blur(9px)}
+.trainer-dossier{padding:clamp(.9rem,2vw,1.5rem)}
+
+.timeline-scene,.daily-scene,.retirement-scene{
+  max-width:none;
+  min-height:calc(100dvh - 3.75rem);
+  padding-inline:max(1rem,calc((100vw - 68rem)/2));
+  background-image:linear-gradient(90deg,rgba(4,13,11,.93),rgba(4,13,11,.75) 52%,rgba(4,13,11,.45)),url("./assets/generated/career-journey.jpg");
+  background-position:center;
+  background-size:cover;
+  background-attachment:fixed;
+}
+.career-book-cover,.daily-scene>header,.retirement-scene>*{position:relative;z-index:1}
+.career-book-cover{background-image:linear-gradient(90deg,rgba(9,31,24,.94),rgba(8,24,20,.74)),url("./assets/generated/season-banner.jpg");background-size:cover;background-position:center;box-shadow:0 1.2rem 3rem rgba(0,0,0,.38)}
+
+.arena-wrap{
+  background-color:#07100e;
+  background-image:linear-gradient(180deg,rgba(4,13,11,.08),rgba(4,13,11,.2)),url("./assets/generated/arena-stadium.jpg");
+  background-position:center;
+  background-size:cover;
+  box-shadow:0 1.4rem 4rem rgba(0,0,0,.5),inset 0 0 0 1px rgba(239,201,107,.3);
+}
+.pixi-arena canvas{filter:saturate(1.08) contrast(1.03)}
+
+.primary-action,.manage-squad{
+  position:relative;
+  border:0;
+  border-radius:.15rem;
+  background-color:#0b432f;
+  background-image:url("./assets/generated/ui-ornament.jpg");
+  background-position:center;
+  background-size:100% 100%;
+  color:#fff0bd;
+  text-shadow:0 1px .3rem #000;
+  box-shadow:0 .55rem 1.2rem rgba(0,0,0,.35),0 0 0 1px rgba(244,205,108,.18);
+  padding:.92rem 1.55rem;
+  transition:transform .18s ease,filter .18s ease,box-shadow .18s ease;
+}
+.primary-action:hover,.manage-squad:hover{filter:brightness(1.14) saturate(1.08);transform:translateY(-2px);box-shadow:0 .8rem 1.6rem rgba(0,0,0,.42),0 0 1.2rem rgba(239,195,84,.22)}
+.primary-action:active,.manage-squad:active{transform:translateY(1px);box-shadow:0 .25rem .7rem rgba(0,0,0,.4)}
+.primary-action:disabled{filter:grayscale(.45);opacity:.58}
+
+.battle-result{
+  background-image:linear-gradient(180deg,rgba(5,16,13,.77),rgba(5,16,13,.96)),url("./assets/generated/season-banner.jpg");
+  background-position:center;
+  background-size:cover;
+}
+
+@media(max-width:699px){
+  .creation-scene,.season-scene,.profile-scene,.timeline-scene,.daily-scene,.retirement-scene{background-attachment:scroll}
+  .season-scoreboard{min-height:7rem;padding:.9rem 1rem}.season-scoreboard>div:first-child>b{font-size:1.3rem}
+  .primary-action,.manage-squad{padding:.85rem 1.2rem}
+  .arena-wrap{background-position:center}
+}
