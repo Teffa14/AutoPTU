@@ -262,6 +262,10 @@ def _reward_sets(run: CareerRun, family: str, npc_name: str, rng: random.Random)
         if target is not None:
             evolution_levels = max(1, target[1] - partner.level)
     evolution_move = move("Return", "Protect")
+    regional_gimmick = {
+        "kalos": "Mega Stone", "alola": "Z-Crystal", "galar": "Dynamax Band", "paldea": "Tera Orb",
+    }.get(run.build.region, ("Mega Stone", "Z-Crystal", "Dynamax Band", "Tera Orb")[rng.randrange(4)])
+    gimmick_reward = [{"type": "item", "item": regional_gimmick, "quantity": 1}]
     rewards: Dict[str, tuple[List[dict], List[dict], List[dict]]] = {
         "capture": (
             pokemon(first, first_rarity),
@@ -275,7 +279,7 @@ def _reward_sets(run: CareerRun, family: str, npc_name: str, rng: random.Random)
         ),
         "breeding": (relationship, pokemon(first, first_rarity), [{"type": "item", "item": "Egg Incubator", "quantity": 1}, *move("Return", "Helping Hand")]),
         "contest": ([{"type": "item", "item": "Contest Ribbon", "quantity": 1}], move("Swift", "Round"), relationship),
-        "research": ([{"type": "item", "item": "Pokédex Upgrade", "quantity": 1}], move("Hidden Power", "Secret Power"), pokemon(second, second_rarity)),
+        "research": ([{"type": "item", "item": "Pokédex Upgrade", "quantity": 1}], move("Hidden Power", "Secret Power"), [*pokemon(second, second_rarity), *gimmick_reward]),
         "health": ([{"type": "item", "item": "Super Potion", "quantity": 2}], move("Rest", "Protect"), relationship),
         "economy": ([{"type": "item", "item": "Club Voucher", "quantity": 1}], [{"type": "item", "item": "Poké Ball", "quantity": 3}], [{"type": "item", "item": "Facility Pass", "quantity": 1}]),
         "media": (relationship, [{"type": "item", "item": "Press Pass", "quantity": 1}], [{"type": "item", "item": "Contest Ribbon", "quantity": 1}]),
@@ -283,7 +287,7 @@ def _reward_sets(run: CareerRun, family: str, npc_name: str, rng: random.Random)
         "friendship": (relationship, move("Return", "Helping Hand"), [{"type": "relationship", "name": npc_name, "amount": 4}]),
         "rivalry": (move("Quick Attack", "Protect"), [{"type": "item", "item": "Choice Scarf", "quantity": 1}], stat("spd", 3)),
         "conservation": (relationship, pokemon(first, first_rarity), [{"type": "item", "item": "Ranger Kit", "quantity": 1}]),
-        "regional_culture": ([{"type": "item", "item": f"{REGIONS[run.build.region].label} Charm", "quantity": 1}], relationship, pokemon(second, second_rarity)),
+        "regional_culture": ([{"type": "item", "item": f"{REGIONS[run.build.region].label} Charm", "quantity": 1}], relationship, gimmick_reward),
         "contract": ([{"type": "item", "item": "Facility Pass", "quantity": 1}], relationship, [{"type": "item", "item": "Club Voucher", "quantity": 1}]),
         "training": (stat("hp", 2), stat(("atk", "def", "spatk", "spdef", "spd")[rng.randrange(5)], 2), [{"type": "level", "levels": 3}, *move("Protect", "Substitute")]),
     }

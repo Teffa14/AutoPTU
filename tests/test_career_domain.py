@@ -12,6 +12,7 @@ from auto_ptu.career.decisions import apply_option, build_season_decision
 from auto_ptu.career.engine import CareerEngine
 from auto_ptu.career.models import BattleSpec, BattleTranscript, CareerRun
 from auto_ptu.career.evolutions import evolve_species_for_level, next_evolution
+from auto_ptu.career.items import use_item
 from auto_ptu.career.roster import capture_species, grant_partner_levels
 from auto_ptu.career.service import CareerService
 from auto_ptu.career.store import CareerStore
@@ -448,6 +449,47 @@ def test_inventory_items_and_training_have_direct_pokemon_effects(tmp_path: Path
         )
 
 
+def test_advanced_training_covers_each_active_pokemon_once(tmp_path: Path) -> None:
+    service = CareerService(store=CareerStore(tmp_path), engine=CareerEngine(fake_battle))
+    created = service.create_run("advanced-training", {
+        "name": "Ari", "region": "kanto", "starter": "Rattata",
+        "classes": ["Ace Trainer"], "mode": "advanced", "seed": 812,
+    })
+    run = CareerRun.from_dict(created)
+    capture_species(run, "Sandshrew", source="test", spend_ball=False)
+    service.engine.update_lineup(run, [pokemon.id for pokemon in run.pokemon])
+    service.store.save_run(run)
+    first, second = run.active_roster
+    trained = service.train("advanced-training", run.id, {
+        "expected_revision": run.revision, "method": "conditioning", "pokemon_id": first,
+    })
+    assert trained["season"]["training_completed"] is False
+    assert trained["season"]["training_completed_ids"] == [first]
+    with pytest.raises(ValueError, match="already trained"):
+        service.train("advanced-training", run.id, {
+            "expected_revision": trained["revision"], "method": "power", "pokemon_id": first,
+        })
+    finished = service.train("advanced-training", run.id, {
+        "expected_revision": trained["revision"], "method": "guard", "pokemon_id": second,
+    })
+    assert finished["season"]["training_completed"] is True
+
+
+def test_gimmick_item_unlocks_and_affects_only_one_battle_member() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="gimmick", name="Ari", region="kanto", starter="Rattata",
+        classes=["Ace Trainer"], mode="advanced", seed=816,
+    )
+    steelix = capture_species(run, "Gyarados", source="test", spend_ball=False)
+    run.inventory["Mega Stone"] = 1
+    use_item(run, "Mega Stone", pokemon_id=steelix.id)
+    assert steelix.gimmicks == ["mega_evolution"]
+    run.active_roster = [steelix.id, run.pokemon[0].id]
+    spec = engine._schedule(run)[0]
+    assert spec.home_team_gimmicks == ["mega_evolution", ""]
+
+
 def test_salary_is_paid_and_retirement_risk_is_explicit() -> None:
     engine = CareerEngine(fake_battle)
     run = engine.new_run(
@@ -457,9 +499,52 @@ def test_salary_is_paid_and_retirement_risk_is_explicit() -> None:
     salary = run.contract.salary
     run, _ = engine.advance_season(run, option_id=run.season.decision.options[0].id)
     assert run.career_earnings == salary
+    assert run.money == salary
     paid = next(entry for entry in run.timeline if entry["type"] == "contract.salary_paid")
     assert paid["salary"] == salary
     assert engine._forced_retirement_reason(run) in {"", "no_contract"}
+
+
+def test_salary_can_be_spent_and_club_debt_has_an_immediate_cost(tmp_path: Path) -> None:
+    service = CareerService(store=CareerStore(tmp_path), engine=CareerEngine(fake_battle))
+    created = service.create_run("economy", {
+        "name": "Ari", "region": "kanto", "starter": "Rattata",
+        "classes": ["Ace Trainer"], "seed": 813,
+    })
+    run = CareerRun.from_dict(created)
+    run.money = 230
+    run.finances = -2
+    service.store.save_run(run)
+
+    purchased = service.purchase(
+        "economy", run.id,
+        {"expected_revision": run.revision, "product_id": "club_resource"},
+    )
+    assert purchased["money"] == 130
+    assert purchased["finances"] == -1
+    purchased_run = CareerRun.from_dict(purchased)
+    assert all(spec.home_level_bonus <= -1 for spec in service.engine._schedule(purchased_run))
+    assert any(entry["type"] == "market.purchase" for entry in purchased["timeline"])
+
+    item_purchase = service.purchase(
+        "economy", run.id,
+        {"expected_revision": purchased["revision"], "product_id": "training_kit"},
+    )
+    assert item_purchase["money"] == 5
+    assert item_purchase["inventory"]["Training Kit"] == 1
+
+
+def test_legacy_salary_earnings_seed_the_new_wallet_once() -> None:
+    run = CareerEngine(fake_battle).new_run(
+        player_id="wallet-migration", name="Ari", region="kanto", starter="Rattata",
+        classes=["Ace Trainer"], seed=814,
+    )
+    payload = run.to_dict()
+    payload.pop("money")
+    payload["career_earnings"] = 405
+    migrated = CareerRun.from_dict(payload)
+    assert migrated.money == 405
+    assert CareerRun.from_dict(migrated.to_dict()).money == 405
 
 
 def test_season_incidents_are_deterministic_and_visible_in_the_summary() -> None:
@@ -541,7 +626,7 @@ def test_active_legacy_run_records_version_migration_before_new_mechanics() -> N
         "season": 1,
         "age": 12,
         "from": "career-0.1.0",
-        "to": "career-0.8.0",
+            "to": "career-0.9.0",
     }
 
 

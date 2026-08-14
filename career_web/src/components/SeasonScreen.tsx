@@ -6,7 +6,9 @@ import { decisionPresentation, effectLabel, effectRule, riskLabel, transparencyL
 import { t } from "../i18n";
 import type { CareerRun, DecisionOption, DecisionReward, Locale } from "../types";
 import { BattlePreparing } from "./BattlePreparing";
+import { EconomyShop } from "./EconomyShop";
 import { PokemonSprite } from "./PokemonSprite";
+import { TrainerPortrait } from "./TrainerPortrait";
 
 interface Props { run: CareerRun; locale: Locale; onRun: (run: CareerRun) => void }
 
@@ -23,6 +25,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   const [rouletteTarget, setRouletteTarget] = useState<"success" | "failure" | null>(null);
   const [readyBattleId, setReadyBattleId] = useState<string | null>(null);
   const [fieldTransition, setFieldTransition] = useState(false);
+  const [economyOpen, setEconomyOpen] = useState(false);
   const decision = run.season?.decision;
   const presentation = useMemo(
     () => decision ? decisionPresentation(decision, run, locale) : null,
@@ -140,22 +143,23 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
         />
       ) : null}
       <header className="season-scoreboard">
-        <div><span>{copy.season} {run.season_number}</span><b>{run.contract?.club_name ?? "Independent"}</b><small>{run.league} league · age {run.age}</small></div>
+        <div><span>{copy.season} {run.season_number}</span><b>{run.contract?.club_name ?? (locale === "es" ? "Independiente" : "Independent")}</b><small>{leagueLabel(run.league, locale)} · {locale === "es" ? "edad" : "age"} {run.age}</small></div>
         <div className="scoreboard-metrics"><span><i style={{ "--meter": `${run.health}%` } as CSSProperties} />{copy.health} <b>{run.health}</b></span><span>{copy.score} <b>{run.score}</b></span></div>
       </header>
 
       <div className="career-attributes" aria-label={locale === "es" ? "Estado de carrera" : "Career state"}>
         {(["development", "scouting", "finances", "reputation"] as const).map((key) => (
-          <div key={key} title={effectRule(key, locale)}>
+          <div key={key} className={key === "finances" && run.finances < 0 ? "attribute-debt" : ""} title={effectRule(key, locale)}>
             <span>{effectLabel(key, locale)}</span><b>{signed(run[key])}</b><small>{attributeHint(key, run[key], locale)}</small>
           </div>
         ))}
       </div>
       <div className={`season-contract-strip ${run.seasons_without_contract ? "warning" : ""}`}>
-        <span><small>{locale === "es" ? "CONTRATO" : "CONTRACT"}</small><b>{run.contract ? `${run.contract.club_name} · ${run.contract.seasons_remaining} ${locale === "es" ? "temp. firmadas" : "seasons secured"}` : (locale === "es" ? "Sin club" : "No club")}</b></span>
-        <span><small>{locale === "es" ? "SALARIO" : "SALARY"}</small><b>₽ {run.contract?.salary ?? 0} / {locale === "es" ? "temporada" : "season"}</b></span>
+        <span><small>{locale === "es" ? "CONTRATO" : "CONTRACT"}</small><b>{run.contract ? `${run.contract.club_name} · ${run.contract.seasons_remaining} ${locale === "es" ? "temp. firmadas" : run.contract.seasons_remaining === 1 ? "season secured" : "seasons secured"}` : (locale === "es" ? "Sin club" : "No club")}</b></span>
+        <span className="salary-card"><small>{locale === "es" ? "SALARIO" : "SALARY"}</small><b>₽ {run.contract?.salary ?? 0} / {locale === "es" ? "temporada" : "season"}</b><em>{locale === "es" ? "Saldo" : "Balance"} ₽ {run.money ?? 0}</em><button type="button" onClick={() => setEconomyOpen((open) => !open)}>{economyOpen ? (locale === "es" ? "Cerrar" : "Close") : (locale === "es" ? "Usar dinero" : "Spend money")}</button></span>
         <span><small>{locale === "es" ? "RIESGO DE RETIRO" : "RETIREMENT RISK"}</small><b>{run.seasons_without_contract}/2 {locale === "es" ? "temporadas sin contrato" : "seasons without a contract"}</b></span>
       </div>
+      {economyOpen ? <EconomyShop run={run} locale={locale} onRun={onRun} compact /> : null}
       <div className="active-class-effect">{run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b> · {locale === "es" ? entry.description_es : entry.description_en}</span>)}</div>
       {run.relationship_effects?.best_contact ? (
         <div className="relationship-edge" aria-label={locale === "es" ? "Beneficios de relaciones" : "Relationship benefits"}>
@@ -184,7 +188,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
         <article className="decision-ticket">
           <div className="ticket-notch top" /><div className="ticket-notch bottom" />
           <header className="decision-brief">
-            <div><span>{locale === "es" ? "QUIÉN" : "WHO"}</span><b>{decision?.npc_name?.split(" · ")[0] ?? "League staff"}</b></div>
+            <div className="decision-npc"><TrainerPortrait name={decision?.npc_name?.split(" · ")[0] ?? "League staff"} role={decisionRole(decision?.family)} /><span>{locale === "es" ? "QUIÉN" : "WHO"}</span><b>{decision?.npc_name?.split(" · ")[0] ?? "League staff"}</b></div>
             <div><span>{locale === "es" ? "OPORTUNIDAD" : "OPPORTUNITY"}</span><b>{decision ? familyLabel(decision.family, locale) : "—"}</b></div>
             <div><span>{locale === "es" ? "DECISIÓN" : "DECISION"}</span><b>{run.season ? `${run.season.decisions_completed + 1}/${run.season.decisions_required}` : "—"}</b></div>
           </header>
@@ -203,7 +207,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
               >
                 <span className={`choice-number ${option.risk}`}>{String(index + 1).padStart(2, "0")}</span>
                 <span className="choice-copy"><small className={`risk ${option.risk}`}>{riskLabel(option.risk, locale)}</small><b>{option.label}</b><p>{option.description}</p></span>
-                <span className="choice-effects"><span className="choice-rewards">{rewardChips(option.risk === "gamble" ? option.gamble?.success_rewards ?? [] : option.rewards ?? [], locale)}</span>{effectChips(option.guaranteed, locale)}<small>{transparencyLabel(option.transparency, locale)}</small></span>
+                <span className="choice-effects"><span className="choice-rewards">{rewardChips(option.risk === "gamble" ? option.gamble?.success_rewards ?? [] : option.rewards ?? [], locale)}</span>{effectChips(option.guaranteed, locale)}{transparencyLabel(option.transparency, locale) ? <small>{transparencyLabel(option.transparency, locale)}</small> : null}</span>
               </button>
             ))}
           </div>
@@ -331,6 +335,10 @@ function retirementReason(reason: string, locale: Locale): string {
   return labels[reason]?.[locale === "es" ? 0 : 1] ?? reason;
 }
 
+function leagueLabel(league: string, locale: Locale): string {
+  return locale === "es" ? `liga ${league}` : `${league} league`;
+}
+
 function gambleSentence(option: DecisionOption, locale: Locale): string {
   const success = effectSentence(option.gamble?.success ?? {}, locale);
   const failure = effectSentence(option.gamble?.failure ?? {}, locale);
@@ -347,11 +355,18 @@ function familyLabel(family: string, locale: Locale): string {
   return labels[family]?.[locale === "es" ? 0 : 1] ?? family;
 }
 
+function decisionRole(family?: string): "owner" | "mentor" | "rival" | "scout" {
+  if (family === "contract" || family === "economy" || family === "media") return "owner";
+  if (family === "training" || family === "health" || family === "friendship") return "mentor";
+  if (family === "rivalry" || family === "crime") return "rival";
+  return "scout";
+}
+
 function preparationEdge(run: CareerRun): number {
   return Math.min(3, Math.max(0, run.development) / 3 | 0)
     + Math.min(1, Math.max(0, run.finances) / 4 | 0)
     - Number(run.health < 45)
-    - Number(run.finances <= -4)
+    - Math.min(3, Math.max(0, -run.finances))
     + Math.min(2, Math.max(0, run.scouting) / 3 | 0)
     + Number(run.class_effects?.battle?.home_level_bonus ?? 0)
     - Number(run.class_effects?.battle?.away_level_bonus ?? 0);
@@ -359,6 +374,7 @@ function preparationEdge(run: CareerRun): number {
 
 function attributeHint(key: "development" | "scouting" | "finances" | "reputation", value: number, locale: Locale): string {
   if (key === "reputation") return locale === "es" ? "contratos" : "contracts";
+  if (key === "finances" && value < 0) return locale === "es" ? `${Math.min(3, -value)} menos de preparación` : `${Math.min(3, -value)} less preparation`;
   const threshold = key === "finances" ? 4 : 3;
   const remainder = Math.max(0, threshold - (Math.max(0, value) % threshold));
   if (value > 0 && value % threshold === 0) return locale === "es" ? "bono activo" : "bonus active";

@@ -73,6 +73,99 @@ ITEM_CATALOG: Dict[str, Dict[str, str]] = {
         "description_en": "Converts into one Poké Ball available for the next capture.",
         "target": "none",
     },
+    "Mega Stone": {
+        "description_es": "Desbloquea Megaevolución para un Pokémon compatible. Sólo puede activarse un gimmick por equipo y combate.",
+        "description_en": "Unlocks Mega Evolution for a compatible Pokémon. Only one gimmick can activate per team and battle.",
+        "target": "pokemon",
+    },
+    "Z-Crystal": {
+        "description_es": "Desbloquea un Movimiento Z para el Pokémon elegido y potencia su ofensiva en combate.",
+        "description_en": "Unlocks a Z-Move for the chosen Pokémon and boosts its offense in battle.",
+        "target": "pokemon",
+    },
+    "Dynamax Band": {
+        "description_es": "Desbloquea Dynamax para el Pokémon elegido y aumenta considerablemente sus PS en combate.",
+        "description_en": "Unlocks Dynamax for the chosen Pokémon and substantially increases its battle HP.",
+        "target": "pokemon",
+    },
+    "Tera Orb": {
+        "description_es": "Desbloquea Teracristalización para el Pokémon elegido y potencia su adaptación ofensiva y defensiva.",
+        "description_en": "Unlocks Terastallization for the chosen Pokémon and boosts offensive and defensive adaptation.",
+        "target": "pokemon",
+    },
+}
+
+
+GIMMICK_ITEMS: Dict[str, str] = {
+    "Mega Stone": "mega_evolution",
+    "Z-Crystal": "z_move",
+    "Dynamax Band": "dynamax",
+    "Tera Orb": "terastallization",
+}
+
+MEGA_CAPABLE = {
+    "venusaur", "charizard", "blastoise", "beedrill", "pidgeot", "alakazam", "slowbro", "gengar",
+    "kangaskhan", "pinsir", "gyarados", "aerodactyl", "mewtwo", "ampharos", "steelix", "scizor",
+    "heracross", "houndoom", "tyranitar", "sceptile", "blaziken", "swampert", "gardevoir", "sableye",
+    "mawile", "aggron", "medicham", "manectric", "sharpedo", "camerupt", "altaria", "banette", "absol",
+    "glalie", "salamence", "metagross", "latias", "latios", "rayquaza", "lopunny", "garchomp", "lucario",
+    "abomasnow", "gallade", "audino", "diancie",
+}
+
+
+SHOP_CATALOG: Dict[str, Dict[str, Any]] = {
+    "pokeball": {
+        "label_es": "Poké Ball",
+        "label_en": "Poké Ball",
+        "description_es": "Añade una Poké Ball disponible para una futura captura.",
+        "description_en": "Adds one Poké Ball for a future capture.",
+        "price": 30,
+        "kind": "pokeball",
+    },
+    "super_potion": {
+        "label_es": "Super Potion",
+        "label_en": "Super Potion",
+        "description_es": "Se guarda en la mochila y recupera 12 de salud de carrera.",
+        "description_en": "Stored in the bag; restores 12 career health.",
+        "price": 75,
+        "kind": "item",
+        "item": "Super Potion",
+    },
+    "club_resource": {
+        "label_es": "Sanear recursos",
+        "label_en": "Fund club resources",
+        "description_es": "+1 recurso del club. Elimina un nivel de penalización si estás en deuda.",
+        "description_en": "+1 club resource. Removes one preparation penalty while in debt.",
+        "price": 100,
+        "kind": "resource",
+    },
+    "training_kit": {
+        "label_es": "Training Kit",
+        "label_en": "Training Kit",
+        "description_es": "Se guarda en la mochila: +2 permanentes al stat que elijas.",
+        "description_en": "Stored in the bag: +2 permanent points to a chosen stat.",
+        "price": 125,
+        "kind": "item",
+        "item": "Training Kit",
+    },
+    "facility_pass": {
+        "label_es": "Facility Pass",
+        "label_en": "Facility Pass",
+        "description_es": "Se guarda en la mochila y concede +2 desarrollo al usarlo.",
+        "description_en": "Stored in the bag and grants +2 development when used.",
+        "price": 180,
+        "kind": "item",
+        "item": "Facility Pass",
+    },
+    "pokedex_upgrade": {
+        "label_es": "Pokédex Upgrade",
+        "label_en": "Pokédex Upgrade",
+        "description_es": "Mejora permanentemente la probabilidad de encuentros de mayor rareza.",
+        "description_en": "Permanently improves the chance of higher-rarity encounters.",
+        "price": 300,
+        "kind": "item",
+        "item": "Pokédex Upgrade",
+    },
 }
 
 
@@ -114,6 +207,48 @@ def item_catalog() -> Dict[str, Dict[str, str]]:
 
 def training_catalog() -> Dict[str, Dict[str, Any]]:
     return {name: dict(details) for name, details in TRAINING_METHODS.items()}
+
+
+def shop_catalog() -> Dict[str, Dict[str, Any]]:
+    return {product_id: dict(details) for product_id, details in SHOP_CATALOG.items()}
+
+
+def buy_product(run: CareerRun, product_id: str) -> Dict[str, Any]:
+    if run.status != "active":
+        raise ValueError("Purchases are only available during an active career.")
+    canonical = str(product_id).strip().lower()
+    product = SHOP_CATALOG.get(canonical)
+    if product is None:
+        raise ValueError("That market product does not exist.")
+    price = int(product["price"])
+    if run.money < price:
+        raise ValueError(f"Not enough money: this purchase costs ₽ {price}.")
+
+    run.money -= price
+    effects: Dict[str, Any] = {"product_id": canonical, "price": price, "money": run.money}
+    kind = str(product["kind"])
+    if kind == "pokeball":
+        run.build.pokeballs = min(30, run.build.pokeballs + 1)
+        effects["pokeballs"] = 1
+    elif kind == "resource":
+        run.finances += 1
+        effects["finances"] = 1
+    elif kind == "item":
+        item = str(product["item"])
+        run.inventory[item] = run.inventory.get(item, 0) + 1
+        effects.update({"item": item, "quantity": 1})
+    else:
+        raise ValueError("That market product is not configured.")
+
+    run.timeline.append({
+        "type": "market.purchase",
+        "season": run.season_number,
+        "age": run.age,
+        "product_id": canonical,
+        "label": str(product["label_en"]),
+        "effects": effects,
+    })
+    return effects
 
 
 def use_item(run: CareerRun, item: str, *, pokemon_id: str = "", stat: str = "") -> Dict[str, Any]:
@@ -182,6 +317,16 @@ def use_item(run: CareerRun, item: str, *, pokemon_id: str = "", stat: str = "")
     elif canonical == "Premier Ball":
         run.build.pokeballs = min(30, run.build.pokeballs + 1)
         effects["pokeballs"] = 1
+    elif canonical in GIMMICK_ITEMS:
+        if target is None:
+            raise ValueError("Choose a Pokémon to receive this battle gimmick.")
+        gimmick = GIMMICK_ITEMS[canonical]
+        if gimmick == "mega_evolution" and target.species.casefold() not in MEGA_CAPABLE:
+            raise ValueError(f"{target.species} does not have a known Mega Evolution.")
+        if gimmick in target.gimmicks:
+            raise ValueError(f"{target.species} has already unlocked that gimmick.")
+        target.gimmicks.append(gimmick)
+        effects.update({"pokemon": target.species, "pokemon_id": target.id, "gimmick": gimmick})
     elif canonical.endswith(" Charm"):
         run.pokedex_level += 1
         run.scouting += 1
@@ -204,7 +349,9 @@ def use_item(run: CareerRun, item: str, *, pokemon_id: str = "", stat: str = "")
 def complete_training(run: CareerRun, method: str, pokemon_id: str) -> Dict[str, Any]:
     if run.status != "active" or run.season is None or run.season.status != "decision":
         raise ValueError("Training is only available before the season calendar is locked.")
-    if run.season.training_completed:
+    capacity = 1 if run.mode == "simple" else max(1, len(run.active_roster))
+    completed_ids = run.season.training_completed_ids
+    if run.season.training_completed or len(completed_ids) >= capacity:
         raise ValueError("The training session for this season is already complete.")
     plan = TRAINING_METHODS.get(str(method).strip().lower())
     pokemon = next((entry for entry in run.pokemon if entry.id == pokemon_id), None)
@@ -212,6 +359,10 @@ def complete_training(run: CareerRun, method: str, pokemon_id: str) -> Dict[str,
         raise ValueError("Unknown training method.")
     if pokemon is None:
         raise ValueError("Choose a Pokémon from your roster.")
+    if pokemon.id not in run.active_roster:
+        raise ValueError("Season training is reserved for the active team.")
+    if pokemon.id in completed_ids:
+        raise ValueError("That Pokémon has already trained this season.")
     applied: Dict[str, int] = {}
     for stat, amount in plan["stats"].items():
         trained = grant_stat_training(run, pokemon.id, stat, int(amount), source=f"season_training:{method}")
@@ -219,12 +370,14 @@ def complete_training(run: CareerRun, method: str, pokemon_id: str) -> Dict[str,
             applied[stat] = int(trained["amount"])
     if not applied:
         raise ValueError("That Pokémon has no room for this training plan.")
-    run.season.training_completed = True
+    completed_ids.append(pokemon.id)
+    run.season.training_completed = len(completed_ids) >= capacity
     run.season.training_method = str(method).strip().lower()
     event = {
         "type": "training.completed", "season": run.season_number, "age": run.age,
         "method": run.season.training_method, "pokemon_id": pokemon.id,
         "pokemon": pokemon.species, "stats": applied,
+        "sessions_completed": len(completed_ids), "sessions_available": capacity,
         "label": f"{pokemon.species} completed {run.season.training_method} training.",
     }
     run.timeline.append(event)

@@ -64,14 +64,14 @@ export default function BattleScreen({ runId, battleId, locale, run }: { runId: 
     <section className={`battle-scene event-${String(view.event?.type ?? "complete")}`}>
       <header className="broadcast-header">
         <button onClick={() => navigate(`run/${runId}`)}>← {locale === "es" ? "Temporada" : "Season"}</button>
-        <div><span>{transcript.spec.region} · {transcript.spec.league} league</span><b>{transcript.spec.home_club} <i>vs</i> {transcript.spec.away_club}</b></div>
+        <div><span>{transcript.spec.region} · {locale === "es" ? `liga ${transcript.spec.league}` : `${transcript.spec.league} league`}</span><b>{transcript.spec.home_club} <i>vs</i> {transcript.spec.away_club}</b></div>
         <strong><small>{locale === "es" ? "RONDA" : "ROUND"}</small>{Math.max(1, view.round)}</strong>
       </header>
 
       <div className="battle-stage">
         <CombatantHud combatant={away} team={awayTeam} club={transcript.spec.away_club} locale={locale} side="away" transcript={transcript} />
         <div className="arena-wrap">
-          <BattleArena transcript={transcript} eventIndex={rawEventIndex} view={view} />
+          <BattleArena transcript={transcript} eventIndex={rawEventIndex} view={view} locale={locale} />
           <div className={calloutClass} key={`${rawEventIndex}-${eventTitle(locale, view)}`}>
             <span>{eventTitle(locale, view)}</span>
             {view.knockout ? <b>{locale === "es" ? "¡DEBILITADO!" : "FAINTED!"}</b>
@@ -98,7 +98,7 @@ export default function BattleScreen({ runId, battleId, locale, run }: { runId: 
       </div>
 
       <div className="broadcast-lower">
-        <div className="commentary-mark"><span>EN VIVO</span><b>{locale === "es" ? "COMENTARIO" : "COMMENTARY"}</b></div>
+        <div className="commentary-mark"><span>{locale === "es" ? "EN VIVO" : "LIVE"}</span><b>{locale === "es" ? "COMENTARIO" : "COMMENTARY"}</b></div>
         <blockquote key={rawEventIndex}>{commentary}</blockquote>
         <div className="playback-controls">
           <span>{Math.min(stepIndex + 1, steps.length + 1)}/{steps.length + 1}</span>
@@ -123,6 +123,7 @@ function CombatantHud({ combatant, team, club, locale, side, transcript }: { com
       <div className="hp-readout"><div><span>{locale === "es" ? "PS" : "HP"}</span><strong>{combatant.hp}<i>/{combatant.max_hp}</i></strong></div><div className="hp-track"><i style={{ "--hp": `${ratio}%` } as CSSProperties} /></div></div>
       <div className="status-row">{combatant.hp <= 0 ? <b>{locale === "es" ? "DEBILITADO" : "FAINTED"}</b> : (combatant.statuses?.length ? combatant.statuses.map((status) => <b key={status}>{statusLabel(status, locale)}</b>) : <span>{locale === "es" ? "Sin estados" : "No status"}</span>)}</div>
       <div className="combatant-types">{combatant.types?.map((type) => <b key={type} className={`type-${type.toLowerCase()}`}>{type}</b>)}</div>
+      {combatant.gimmick ? <div className="gimmick-active" title={locale === "es" ? "Gimmick activo: sus bonos ya están incluidos en los stats mostrados." : "Active gimmick: its bonuses are already included in the displayed stats."}>✦ {gimmickBattleLabel(combatant.gimmick, locale)}</div> : null}
       <div className="build-row"><span>{combatant.nature || (locale === "es" ? "Naturaleza desconocida" : "Unknown nature")}</span>{combatant.abilities?.length ? <small>{locale === "es" ? "HABILIDAD" : "ABILITY"}</small> : null}{combatant.abilities?.map((ability) => <b key={ability} title={locale === "es" ? "Habilidad activa en combate" : "Ability active in battle"}>{ability}</b>)}</div>
       <div className="team-rack" aria-label={`${team.filter((entry) => entry.hp > 0).length} / ${team.length} ${locale === "es" ? "Pokémon disponibles" : "Pokémon available"}`}>
         {team.map((entry) => <span key={entry.id} className={`${entry.hp <= 0 ? "fainted" : ""} ${entry.id === combatant.id ? "active" : ""}`} title={`${entry.species} · ${entry.hp}/${entry.max_hp}`}><PokemonSprite name={entry.species} className="team-sprite" /></span>)}
@@ -130,7 +131,7 @@ function CombatantHud({ combatant, team, club, locale, side, transcript }: { com
       <dl className="battle-stats">{(["atk", "def", "spatk", "spdef", "spd"] as const).map((key) => {
         const base = stats[key];
         const effective = combatant.effective_stats?.[key];
-        return <div key={key}><dt>{statLabel(key, locale)}</dt><dd className={effective !== undefined && effective !== base ? "modified" : ""}>{effective ?? base ?? "—"}{effective !== undefined && base !== undefined && effective !== base ? <small>{base} base</small> : null}</dd></div>;
+        return <div key={key} title={battleStatDescription(key, locale)}><dt>{statLabel(key, locale)}</dt><dd className={effective !== undefined && effective !== base ? "modified" : ""}>{effective ?? base ?? "—"}{effective !== undefined && base !== undefined && effective !== base ? <small>{base} base</small> : null}</dd></div>;
       })}</dl>
       {combatant.moves?.length ? <div className="move-rack">{combatant.moves.slice(0, 4).map((move) => {
         const stab = combatant.types?.some((type) => type.toLowerCase() === move.type.toLowerCase());
@@ -138,6 +139,25 @@ function CombatantHud({ combatant, team, club, locale, side, transcript }: { com
       })}</div> : null}
     </aside>
   );
+}
+
+function gimmickBattleLabel(gimmick: string, locale: Locale): string {
+  const labels: Record<string, [string, string]> = {
+    mega_evolution: ["MEGAEVOLUCIÓN", "MEGA EVOLUTION"], z_move: ["MOVIMIENTO Z", "Z-MOVE"],
+    dynamax: ["DYNAMAX", "DYNAMAX"], terastallization: ["TERACRISTALIZACIÓN", "TERASTALLIZATION"],
+  };
+  return labels[gimmick]?.[locale === "es" ? 0 : 1] ?? gimmick.toUpperCase();
+}
+
+function battleStatDescription(stat: string, locale: Locale): string {
+  const descriptions: Record<string, [string, string]> = {
+    atk: ["Potencia de los movimientos físicos.", "Power of physical moves."],
+    def: ["Reduce el daño físico recibido.", "Reduces incoming physical damage."],
+    spatk: ["Potencia de los movimientos especiales.", "Power of special moves."],
+    spdef: ["Reduce el daño especial recibido.", "Reduces incoming special damage."],
+    spd: ["Define iniciativa y orden de acción.", "Determines initiative and action order."],
+  };
+  return descriptions[stat]?.[locale === "es" ? 0 : 1] ?? stat;
 }
 
 function BattleMechanics({ transcript, view, locale }: { transcript: BattleTranscript; view: ReturnType<typeof deriveBattleView>; locale: Locale }) {

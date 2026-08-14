@@ -13,6 +13,7 @@ export function PokemonSprite({ name, className = "", decorative = false }: Prop
         src={spriteUrl(name)}
         alt={decorative ? "" : name}
         loading="lazy"
+        draggable={false}
         onError={(event) => {
           const image = event.currentTarget;
           const fallback = fallbackSpriteUrl();

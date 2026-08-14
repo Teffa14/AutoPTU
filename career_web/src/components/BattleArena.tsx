@@ -2,7 +2,7 @@ import { useEffect, useRef, type CSSProperties } from "react";
 import { Application, Container, Graphics, Text, TextStyle } from "pixi.js";
 
 import type { BattleViewState } from "../battlePresentation";
-import type { BattleCombatant, BattleMove, BattleTranscript } from "../types";
+import type { BattleCombatant, BattleMove, BattleTranscript, Locale } from "../types";
 import { PokemonSprite } from "./PokemonSprite";
 
 type ActorVisual = { container: Container };
@@ -23,7 +23,7 @@ const TYPE_COLORS: Record<string, number> = {
   steel: 0xb8cad0, water: 0x4ba5ff, typeless: 0xf1e5c5,
 };
 
-export function BattleArena({ transcript, eventIndex, view }: { transcript: BattleTranscript; eventIndex: number; view: BattleViewState }) {
+export function BattleArena({ transcript, eventIndex, view, locale }: { transcript: BattleTranscript; eventIndex: number; view: BattleViewState; locale: Locale }) {
   const host = useRef<HTMLDivElement>(null);
   const appRef = useRef<Application | null>(null);
   const visuals = useRef<Map<string, ActorVisual>>(new Map());
@@ -146,12 +146,12 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
         incoming.container.alpha = 1;
         incoming.container.scale.set(0.25);
         timers.current.push(window.setTimeout(() => incoming.container.scale.set(1), 40));
-        spawnStatus(app, incoming.container.x, incoming.container.y - 34, "¡ENTRA!", effects.current, 0x72d9a0);
+        spawnStatus(app, incoming.container.x, incoming.container.y - 34, locale === "es" ? "¡ENTRA!" : "IN!", effects.current, 0x72d9a0);
       }
       return;
     }
     if (event.type === "shift" && actor) {
-      spawnStatus(app, actor.container.x, actor.container.y - 34, "POSICIÓN", effects.current, 0x72d9a0);
+      spawnStatus(app, actor.container.x, actor.container.y - 34, locale === "es" ? "POSICIÓN" : "POSITION", effects.current, 0x72d9a0);
       actor.container.scale.set(1.06);
       timers.current.push(window.setTimeout(() => actor.container.scale.set(1), 220));
       return;
@@ -162,7 +162,7 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
       if (actorPoint && targetPoint) spawnAttack(app, actorPoint, targetPoint, undefined, effects.current, false);
       impulses.current.set(view.targetId, [view.targetId.includes("away") ? 28 : -28, -9]);
       flashCombatant(target, 0xf0c760, timers.current);
-      spawnStatus(app, target.container.x, target.container.y - 34, "MANIOBRA", effects.current, 0xf0c760);
+      spawnStatus(app, target.container.x, target.container.y - 34, locale === "es" ? "MANIOBRA" : "MANEUVER", effects.current, 0xf0c760);
       return;
     }
     if (event.type === "move" && actor) {

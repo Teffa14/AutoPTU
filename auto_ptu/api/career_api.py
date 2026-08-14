@@ -130,6 +130,20 @@ def career_training(
         raise _error(exc) from exc
 
 
+@router.post("/runs/{run_id}/market/purchases")
+def career_purchase(
+    run_id: str,
+    payload: Dict[str, Any],
+    authorization: Optional[str] = Header(default=""),
+    x_career_user: Optional[str] = Header(default=""),
+) -> dict:
+    identity = _identity(authorization or "", x_career_user or "")
+    try:
+        return SERVICE.purchase(identity.user_id, run_id, payload)
+    except Exception as exc:
+        raise _error(exc) from exc
+
+
 @router.get("/runs/{run_id}/battles/{battle_id}")
 def career_battle(
     run_id: str,

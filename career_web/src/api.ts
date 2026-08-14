@@ -111,6 +111,23 @@ function trainOnce(run: CareerRun, method: string, pokemonId: string): Promise<C
   });
 }
 
+async function purchase(run: CareerRun, productId: string): Promise<CareerRun> {
+  try {
+    return await purchaseOnce(run, productId);
+  } catch (reason) {
+    if (!(reason instanceof ApiError) || reason.status !== 409) throw reason;
+    const latest = await request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}`);
+    return purchaseOnce(latest, productId);
+  }
+}
+
+function purchaseOnce(run: CareerRun, productId: string): Promise<CareerRun> {
+  return request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}/market/purchases`, {
+    method: "POST",
+    body: JSON.stringify({ expected_revision: run.revision, product_id: productId }),
+  });
+}
+
 async function battle(runId: string, battleId: string): Promise<BattleTranscript> {
   const key = `${runId}:${battleId}`;
   const cached = battleCache.get(key);
@@ -125,6 +142,7 @@ export const careerApi = {
   lineup,
   useItem,
   train,
+  purchase,
   decide,
   battle,
   retire: (runId: string) => request<CareerRun>(`/api/v1/runs/${encodeURIComponent(runId)}/retire`, { method: "POST", body: JSON.stringify({ reason: "voluntary" }) }),

@@ -6,8 +6,8 @@ import os
 from typing import Any, Dict, List, Optional
 
 
-CURRENT_CAREER_VERSION = "career-0.8.0"
-CURRENT_NARRATIVE_VERSION = "career-hooks-0.7.0"
+CURRENT_CAREER_VERSION = "career-0.9.0"
+CURRENT_NARRATIVE_VERSION = "career-hooks-0.8.0"
 
 
 def utc_now() -> str:
@@ -91,6 +91,7 @@ class CareerPokemon:
     abilities: List[str] = field(default_factory=list)
     stat_training: Dict[str, int] = field(default_factory=dict)
     evolution_history: List[Dict[str, Any]] = field(default_factory=list)
+    gimmicks: List[str] = field(default_factory=list)
 
 
 @dataclass
@@ -116,9 +117,11 @@ class BattleSpec:
     home_team_natures: List[str] = field(default_factory=list)
     home_team_abilities: List[List[str]] = field(default_factory=list)
     home_team_stat_training: List[Dict[str, int]] = field(default_factory=list)
+    home_team_gimmicks: List[str] = field(default_factory=list)
     away_team_species: List[str] = field(default_factory=list)
     away_team_levels: List[int] = field(default_factory=list)
     away_team_rarities: List[str] = field(default_factory=list)
+    away_team_gimmicks: List[str] = field(default_factory=list)
     difficulty_label: str = "even"
     home_ai_level: str = "tactical"
     away_ai_level: str = "tactical"
@@ -169,6 +172,7 @@ class SeasonState:
     decision_history: List[Dict[str, Any]] = field(default_factory=list)
     training_completed: bool = False
     training_method: str = ""
+    training_completed_ids: List[str] = field(default_factory=list)
 
 
 @dataclass
@@ -207,6 +211,7 @@ class CareerRun:
     scouting: int = 0
     finances: int = 0
     career_earnings: int = 0
+    money: int = 0
     pokedex_level: int = 0
     license_status: str = "active"
     seasons_without_contract: int = 0
@@ -279,6 +284,11 @@ class CareerRun:
         fields = dict(payload)
         for key in ("build", "contract", "versions", "season", "summary", "pokemon", "active_roster"):
             fields.pop(key, None)
+        # Careers created before the wallet existed retain the salary they had
+        # already earned. Once saved, `money` is persisted normally and this
+        # migration cannot credit the same earnings twice.
+        if "money" not in fields:
+            fields["money"] = max(0, int(fields.get("career_earnings", 0)))
         return cls(
             **fields,
             build=build,

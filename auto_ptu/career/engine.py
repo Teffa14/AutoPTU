@@ -384,7 +384,10 @@ class CareerEngine:
         home_bonus = min(3, max(0, run.development) // 3)
         home_bonus += min(1, max(0, run.finances) // 4)
         home_bonus -= int(run.health < 45)
-        home_bonus -= int(run.finances <= -4)
+        # Every point of club debt is felt immediately in travel, equipment and
+        # recovery. The penalty is capped so debt hurts without making a season
+        # mathematically unwinnable.
+        home_bonus -= min(3, max(0, -run.finances))
         away_bonus = -min(2, max(0, run.scouting) // 3)
         class_effects = selected_class_effects(run.build.classes)
         home_bonus += int(class_effects["battle"].get("home_level_bonus", 0))
@@ -490,9 +493,11 @@ class CareerEngine:
                     home_team_natures=[member.nature for member in match_lineup],
                     home_team_abilities=[list(member.abilities) for member in match_lineup],
                     home_team_stat_training=[dict(member.stat_training) for member in match_lineup],
+                    home_team_gimmicks=_battle_gimmicks(match_lineup),
                     away_team_species=opponent_team,
                     away_team_levels=opponent_levels,
                     away_team_rarities=opponent_rarities,
+                    away_team_gimmicks=_rival_gimmicks(run.build.region, run.league, len(opponent_team), specs_seed=stable_seed(run.seed, run.season_number, index, "rival-gimmick")),
                     difficulty_label=difficulty,
                 )
             )
@@ -639,6 +644,7 @@ class CareerEngine:
         finance_gain = salary // 240 + int(salary > 0)
         if salary:
             run.career_earnings += salary
+            run.money += salary
             run.finances += finance_gain
             run.contract.seasons_remaining = max(0, run.contract.seasons_remaining - 1)
         event = {
@@ -649,6 +655,7 @@ class CareerEngine:
             "salary": salary,
             "finance_gain": finance_gain,
             "career_earnings": run.career_earnings,
+            "money": run.money,
             "label": f"Season salary paid: {salary}." if salary else "No club salary was paid this season.",
         }
         run.timeline.append(event)
@@ -804,3 +811,24 @@ class CareerEngine:
 
 def _slug(value: str) -> str:
     return "-".join(part for part in "".join(char.lower() if char.isalnum() else " " for char in value).split() if part)
+
+
+def _battle_gimmicks(lineup: List) -> List[str]:
+    """Equip at most one unlocked gimmick for the whole team."""
+    equipped = False
+    result: List[str] = []
+    for pokemon in lineup:
+        gimmick = str(pokemon.gimmicks[0]) if not equipped and pokemon.gimmicks else ""
+        result.append(gimmick)
+        equipped = equipped or bool(gimmick)
+    return result
+
+
+def _rival_gimmicks(region: str, league: str, team_size: int, *, specs_seed: int) -> List[str]:
+    result = ["" for _ in range(team_size)]
+    chance = {"junior": 0, "rookie": 8, "regular": 25, "elite": 50}.get(league, 0)
+    if team_size and specs_seed % 100 < chance:
+        result[0] = {
+            "kalos": "mega_evolution", "alola": "z_move", "galar": "dynamax", "paldea": "terastallization",
+        }.get(region, ("mega_evolution", "z_move", "dynamax", "terastallization")[specs_seed % 4])
+    return result

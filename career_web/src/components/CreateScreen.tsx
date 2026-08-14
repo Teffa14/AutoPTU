@@ -45,11 +45,11 @@ export function CreateScreen({ locale, onCreated }: Props) {
     <section className="creation-scene">
       <div className="creation-atmosphere" aria-hidden="true"><span /><span /><span /></div>
       <header className="creation-copy">
-        <p className="eyebrow">Junior intake · age 12</p>
+        <p className="eyebrow">{locale === "es" ? "Ingreso Junior · edad 12" : "Junior intake · age 12"}</p>
         <h1>{copy.createTitle}</h1>
         <p>{copy.createBody}</p>
       </header>
-      {!catalog ? <div className="ticket-loader">Preparing the regional registry…</div> : (
+      {!catalog ? <div className="ticket-loader">{locale === "es" ? "Preparando el registro regional…" : "Preparing the regional registry…"}</div> : (
         <form className="registration-book" onSubmit={begin}>
           <div className="book-spine" aria-hidden="true" />
           <div className="form-row">
@@ -66,7 +66,7 @@ export function CreateScreen({ locale, onCreated }: Props) {
               {(["simple", "advanced"] as CareerMode[]).map((entry) => <button type="button" key={entry} className={mode === entry ? "active" : ""} aria-pressed={mode === entry} onClick={() => setMode(entry)}><b>{entry}</b><small>{entry === "simple" ? "15–20 min" : "30–45 min"}</small></button>)}
             </div>
           </div>
-          <div className="registration-footer"><span><b>10</b> Poké Balls</span><span><b>{catalog.decision_signature_count.toLocaleString()}</b> decision contexts</span><button className="primary-action" disabled={busy}>{busy ? "Signing…" : copy.start}</button></div>
+          <div className="registration-footer"><span><b>10</b> Poké Balls</span><span><b>{catalog.decision_signature_count.toLocaleString()}</b> {locale === "es" ? "contextos de decisión" : "decision contexts"}</span><button className="primary-action" disabled={busy}>{busy ? (locale === "es" ? "Firmando…" : "Signing…") : copy.start}</button></div>
           {error ? <p className="form-error" role="alert">{error}</p> : null}
         </form>
       )}

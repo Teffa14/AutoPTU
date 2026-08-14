@@ -33,6 +33,8 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 90) -> BattleTranscrip
     home_natures = list(spec.home_team_natures or ["" for _ in home_species])
     home_abilities = list(spec.home_team_abilities or [[] for _ in home_species])
     home_stat_training = list(spec.home_team_stat_training or [{} for _ in home_species])
+    home_gimmicks = list(spec.home_team_gimmicks or ["" for _ in home_species])
+    away_gimmicks = list(spec.away_team_gimmicks or ["" for _ in away_species])
     level_cap = LEVEL_CAPS.get(spec.league, 100)
     home_team = [
         _build_species(
@@ -40,12 +42,19 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 90) -> BattleTranscrip
             taught_moves=home_moves[index] if index < len(home_moves) else [],
             nature=home_natures[index] if index < len(home_natures) else "",
             abilities=home_abilities[index] if index < len(home_abilities) else [],
-            stat_training=home_stat_training[index] if index < len(home_stat_training) else {},
+            stat_training=_gimmick_training(
+                home_stat_training[index] if index < len(home_stat_training) else {},
+                home_gimmicks[index] if index < len(home_gimmicks) else "",
+            ),
         )
         for index, species in enumerate(home_species)
     ]
     away_team = [
-        _build_species(repo, builder, species, min(level_cap, max(1, away_levels[min(index, len(away_levels) - 1)] + spec.away_level_bonus)))
+        _build_species(
+            repo, builder, species,
+            min(level_cap, max(1, away_levels[min(index, len(away_levels) - 1)] + spec.away_level_bonus)),
+            stat_training=_gimmick_training({}, away_gimmicks[index] if index < len(away_gimmicks) else ""),
+        )
         for index, species in enumerate(away_species)
     ]
     for pokemon, species in zip(home_team, home_species):
@@ -56,9 +65,19 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 90) -> BattleTranscrip
     # index-based metadata can attach one team member's types to another. Species
     # identity is stable even when the active order rotates or switches.
     combatant_metadata = {
-        str(pokemon.species).strip().lower(): {"types": list(pokemon.types)}
-        for pokemon in [*home_team, *away_team]
+        f"career-home:{str(pokemon.species).strip().lower()}": {
+            "types": list(pokemon.types),
+            "gimmick": home_gimmicks[index] if index < len(home_gimmicks) else "",
+        }
+        for index, pokemon in enumerate(home_team)
     }
+    combatant_metadata.update({
+        f"career-away:{str(pokemon.species).strip().lower()}": {
+            "types": list(pokemon.types),
+            "gimmick": away_gimmicks[index] if index < len(away_gimmicks) else "",
+        }
+        for index, pokemon in enumerate(away_team)
+    })
     payload = {
         "name": f"{spec.home_club} vs {spec.away_club}",
         "description": f"{REGIONS[spec.region].label} {spec.league.title()} League",
@@ -174,6 +193,8 @@ def simulate_calendar_summaries(specs: Sequence[BattleSpec]) -> list[BattleTrans
         home_natures = list(spec.home_team_natures or ["" for _ in home_species])
         home_abilities = list(spec.home_team_abilities or [[] for _ in home_species])
         home_stat_training = list(spec.home_team_stat_training or [{} for _ in home_species])
+        home_gimmicks = list(spec.home_team_gimmicks or ["" for _ in home_species])
+        away_gimmicks = list(spec.away_team_gimmicks or ["" for _ in away_species])
         level_cap = LEVEL_CAPS.get(spec.league, 100)
         home_team = [
             _build_species(
@@ -184,7 +205,10 @@ def simulate_calendar_summaries(specs: Sequence[BattleSpec]) -> list[BattleTrans
                 taught_moves=home_moves[index] if index < len(home_moves) else [],
                 nature=home_natures[index] if index < len(home_natures) else "",
                 abilities=home_abilities[index] if index < len(home_abilities) else [],
-                stat_training=home_stat_training[index] if index < len(home_stat_training) else {},
+                stat_training=_gimmick_training(
+                    home_stat_training[index] if index < len(home_stat_training) else {},
+                    home_gimmicks[index] if index < len(home_gimmicks) else "",
+                ),
             )
             for index, species in enumerate(home_species)
         ]
@@ -194,6 +218,7 @@ def simulate_calendar_summaries(specs: Sequence[BattleSpec]) -> list[BattleTrans
                 builder,
                 species,
                 min(level_cap, max(1, away_levels[min(index, len(away_levels) - 1)] + spec.away_level_bonus)),
+                stat_training=_gimmick_training({}, away_gimmicks[index] if index < len(away_gimmicks) else ""),
             )
             for index, species in enumerate(away_species)
         ]
@@ -288,6 +313,11 @@ def _summary_combatants(spec: BattleSpec, home_team: Sequence[Any], away_team: S
                 "nature": pokemon.nature,
                 "abilities": [entry.get("name", "") if isinstance(entry, dict) else str(entry) for entry in pokemon.abilities],
                 "types": list(pokemon.types),
+                "gimmick": (
+                    spec.home_team_gimmicks[index] if team_id == "career-home" and index < len(spec.home_team_gimmicks)
+                    else spec.away_team_gimmicks[index] if team_id == "career-away" and index < len(spec.away_team_gimmicks)
+                    else ""
+                ),
                 "statuses": [],
                 "size": pokemon.size,
                 "footprint_side": 1,
@@ -343,6 +373,19 @@ def _build_species(
     return mon
 
 
+def _gimmick_training(training: Dict[str, int], gimmick: str) -> Dict[str, int]:
+    bonuses = {
+        "mega_evolution": {"atk": 2, "def": 2, "spatk": 2, "spdef": 2, "spd": 2},
+        "z_move": {"atk": 3, "spatk": 3},
+        "dynamax": {"hp": 8},
+        "terastallization": {"atk": 2, "def": 1, "spatk": 2, "spdef": 1},
+    }.get(str(gimmick), {})
+    result = {str(key): int(value) for key, value in dict(training).items()}
+    for stat, amount in bonuses.items():
+        result[stat] = result.get(stat, 0) + amount
+    return result
+
+
 def _canonical_value(value: Any) -> Any:
     if isinstance(value, dict):
         return {
@@ -363,7 +406,8 @@ def _compact_state(snapshot: Dict[str, Any], combatant_metadata: Dict[str, Dict[
     combatants = []
     for entry in snapshot.get("combatants", []) or []:
         species_key = str(entry.get("species") or entry.get("name") or "").strip().lower()
-        metadata = (combatant_metadata or {}).get(species_key, {})
+        team_key = f"{str(entry.get('team') or '')}:{species_key}"
+        metadata = (combatant_metadata or {}).get(team_key, (combatant_metadata or {}).get(species_key, {}))
         combatants.append(
             {
                 "id": entry.get("id"),
@@ -384,6 +428,7 @@ def _compact_state(snapshot: Dict[str, Any], combatant_metadata: Dict[str, Dict[
                 "effective_stats": _canonical_value(entry.get("effective_stats") or {}),
                 "abilities": sorted(str(value) for value in (entry.get("abilities") or [])),
                 "types": sorted(str(value) for value in (entry.get("types") or metadata.get("types") or [])),
+                "gimmick": str(metadata.get("gimmick") or ""),
                 "moves": sorted(
                     (
                         {

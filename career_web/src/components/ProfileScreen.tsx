@@ -2,8 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 
 import { careerApi } from "../api";
 import type { CareerPokemon, CareerRun, Locale } from "../types";
-import { achievementLabel } from "../achievementPresentation";
+import { achievementDescription, achievementLabel } from "../achievementPresentation";
+import { EconomyShop } from "./EconomyShop";
 import { PokemonSprite } from "./PokemonSprite";
+import { TrainerPortrait } from "./TrainerPortrait";
 
 interface Props {
   run: CareerRun;
@@ -25,6 +27,9 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
   const active = selected.map((id) => pokemonById.get(id)).filter(isPokemon);
   const pc = run.pokemon.filter((pokemon) => !selectedSet.has(pokemon.id));
   const requiredLineup = Math.min(6, run.pokemon.length);
+  const trainingCompletedIds = run.season?.training_completed_ids ?? [];
+  const trainingCapacity = run.mode === "advanced" ? Math.max(1, run.active_roster.length) : 1;
+  const targetAlreadyTrained = trainingCompletedIds.includes(trainingTarget);
 
   useEffect(() => setSelected(run.active_roster), [run.active_roster]);
 
@@ -94,7 +99,7 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
   return (
     <section className="profile-scene">
       <aside className="profile-portrait">
-        <span className="trainer-silhouette" aria-hidden="true">♟</span>
+        <TrainerPortrait name={run.build.name} role="scout" className="profile-trainer-portrait" />
         <PokemonSprite name={run.build.starter} className="profile-sprite" />
         <div className="partner-plaque"><small>{locale === "es" ? "Compañero" : "Partner"}</small><b>{run.build.starter}</b></div>
       </aside>
@@ -102,12 +107,12 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
       <article className="trainer-dossier">
         <p className="eyebrow">{locale === "es" ? "Licencia de entrenador" : "Trainer license"} · {run.id.slice(-8)}</p>
         <h1>{run.build.name}</h1>
-        <p>{run.contract?.club_name ?? "Independent"} · {run.league} · {locale === "es" ? "edad" : "age"} {run.age}</p>
+        <p>{run.contract?.club_name ?? (locale === "es" ? "Independiente" : "Independent")} · {locale === "es" ? `liga ${run.league}` : `${run.league} league`} · {locale === "es" ? "edad" : "age"} {run.age}</p>
         <div className="dossier-stats">
-          <span><b>{run.score}</b>{locale === "es" ? "competitivo" : "competitive"}</span>
-          <span><b>{run.health}</b>{locale === "es" ? "salud" : "health"}</span>
-          <span><b>{run.pokemon.length}</b>{locale === "es" ? "capturados" : "caught"}</span>
-          <span><b>{run.pokemon.reduce((total, pokemon) => total + pokemon.evolution_history.length, 0)}</b>{locale === "es" ? "evoluciones" : "evolutions"}</span>
+          <span title={locale === "es" ? "Índice competitivo: títulos, ascensos y resultados ajustados por rival." : "Competitive index: titles, promotions and opponent-adjusted results."}><b>{run.score}</b>{locale === "es" ? "competitivo" : "competitive"}</span>
+          <span title={locale === "es" ? "A 0 termina la carrera; por debajo de 45 reduce la preparación." : "At 0 the career ends; below 45 it reduces preparation."}><b>{run.health}</b>{locale === "es" ? "salud" : "health"}</span>
+          <span title={locale === "es" ? "Todos los Pokémon capturados, incluidos los guardados en la PC." : "All caught Pokémon, including those stored in the PC."}><b>{run.pokemon.length}</b>{locale === "es" ? "capturados" : "caught"}</span>
+          <span title={locale === "es" ? "Evoluciones automáticas alcanzadas al nivel correspondiente." : "Automatic evolutions reached at the appropriate level."}><b>{run.pokemon.reduce((total, pokemon) => total + pokemon.evolution_history.length, 0)}</b>{locale === "es" ? "evoluciones" : "evolutions"}</span>
         </div>
 
         <section className="squad-room" aria-labelledby="active-squad-title">
@@ -129,44 +134,47 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
         </section>
 
         <section className="pc-storage" aria-labelledby="pc-title">
-          <header><div><p className="eyebrow">PC regional</p><h2 id="pc-title">{locale === "es" ? "Pokémon disponibles" : "Available Pokémon"}</h2></div><b>{pc.length}</b></header>
+          <header><div><p className="eyebrow">{locale === "es" ? "PC regional" : "Regional PC"}</p><h2 id="pc-title">{locale === "es" ? "Pokémon disponibles" : "Available Pokémon"}</h2></div><b>{pc.length}</b></header>
           <p className="roster-instruction">{locale === "es" ? "Los Pokémon en la PC siguen entrenando lentamente. Toca uno para subirlo al equipo." : "Pokémon in the PC keep training slowly. Select one to add it to the team."}</p>
           <div className="pc-grid">
             {pc.map((pokemon) => <PokemonCard key={pokemon.id} pokemon={pokemon} onClick={() => toggle(pokemon)} locale={locale} disabled={selected.length >= requiredLineup} />)}
           </div>
         </section>
 
-        <section><h2>{locale === "es" ? "Clases de entrenador" : "Trainer classes"}</h2><div className="class-stamps">{run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b><small>{locale === "es" ? entry.description_es : entry.description_en}</small></span>)}</div></section>
+        <section><h2>{locale === "es" ? "Clases de entrenador" : "Trainer classes"}</h2><div className="class-stamps">{run.class_effects?.adapters?.map((entry) => <span key={entry.class_name} title={locale === "es" ? entry.description_es : entry.description_en}><b>{entry.class_name}</b><small>{locale === "es" ? entry.description_es : entry.description_en}</small></span>)}</div></section>
         <section className="contract-office">
           <h2>{locale === "es" ? "Contrato e ingresos" : "Contract and earnings"}</h2>
           <div className="contract-ledger">
-            <span><small>{locale === "es" ? "Club" : "Club"}</small><b>{run.contract?.club_name ?? (locale === "es" ? "Sin contrato" : "No contract")}</b></span>
-            <span><small>{locale === "es" ? "Salario por temporada" : "Salary per season"}</small><b>₽ {run.contract?.salary ?? 0}</b></span>
-            <span><small>{locale === "es" ? "Ganado en la carrera" : "Career earnings"}</small><b>₽ {run.career_earnings ?? 0}</b></span>
-            <span><small>{locale === "es" ? "Temporadas firmadas" : "Seasons secured"}</small><b>{run.contract?.seasons_remaining ?? 0}</b></span>
+            <span title={locale === "es" ? "Club responsable de salario, instalaciones y contrato actual." : "Club responsible for your current salary, facilities and contract."}><small>Club</small><b>{run.contract?.club_name ?? (locale === "es" ? "Sin contrato" : "No contract")}</b></span>
+            <span title={locale === "es" ? "Se acredita en tu saldo al terminar cada temporada." : "Credited to your balance after each season."}><small>{locale === "es" ? "Salario por temporada" : "Salary per season"}</small><b>₽ {run.contract?.salary ?? 0}</b></span>
+            <span title={locale === "es" ? "Suma histórica de todos los salarios cobrados." : "Lifetime total of every salary payment."}><small>{locale === "es" ? "Ganado en la carrera" : "Career earnings"}</small><b>₽ {run.career_earnings ?? 0}</b></span>
+            <span title={locale === "es" ? "Dinero que todavía podés gastar en el mercado." : "Money you can still spend in the market."}><small>{locale === "es" ? "Saldo disponible" : "Available balance"}</small><b>₽ {run.money ?? 0}</b></span>
+            <span title={locale === "es" ? "Temporadas restantes antes de necesitar una renovación." : "Seasons remaining before you need a renewal."}><small>{locale === "es" ? "Temporadas firmadas" : "Seasons secured"}</small><b>{run.contract?.seasons_remaining ?? 0}</b></span>
           </div>
-          <p>{locale === "es" ? "El salario se acredita al cerrar cada calendario y también mejora tus recursos. Dos temporadas consecutivas sin contrato cierran la carrera; una mala temporada muestra primero esta advertencia y un Club Voucher puede extender el vínculo." : "Salary is paid after each calendar and also improves your resources. Two consecutive seasons without a contract end the career; a poor season first shows this warning and a Club Voucher can extend the deal."}</p>
-          <div className={run.seasons_without_contract ? "career-warning active" : "career-warning"}>{locale === "es" ? `Advertencias sin contrato: ${run.seasons_without_contract}/2` : `No-contract warnings: ${run.seasons_without_contract}/2`} · {locale === "es" ? `Licencia ${run.license_status}` : `License ${run.license_status}`}</div>
+          <p>{locale === "es" ? "El salario se acredita al saldo al cerrar cada calendario. Podés gastarlo en equipo, capturas o para sanear recursos del club. Dos temporadas consecutivas sin contrato cierran la carrera; un Club Voucher puede extender el vínculo." : "Salary is credited to your balance after each calendar. Spend it on equipment, captures or club resources. Two consecutive seasons without a contract end the career; a Club Voucher can extend the deal."}</p>
+          <EconomyShop run={run} locale={locale} onRun={onRun} />
+          <div className={run.seasons_without_contract ? "career-warning active" : "career-warning"}>{locale === "es" ? `Advertencias sin contrato: ${run.seasons_without_contract}/2` : `No-contract warnings: ${run.seasons_without_contract}/2`} · {locale === "es" ? `Licencia ${run.license_status === "active" ? "activa" : run.license_status}` : `License ${run.license_status}`}</div>
         </section>
 
         <section className="training-room">
           <h2>{locale === "es" ? "Entrenamiento de temporada" : "Season training"}</h2>
-          <p>{locale === "es" ? "Elegí un método y un Pokémon. Se permite una sesión antes de cerrar el calendario; los stats quedan guardados y entran al cálculo real del combate." : "Choose a method and a Pokémon. One session is available before the calendar locks; its stats persist and enter the real battle calculation."}</p>
+          <p>{run.mode === "advanced" ? (locale === "es" ? "Cada Pokémon del equipo activo puede completar una sesión por temporada. Las mejoras son permanentes y entran al cálculo real del combate." : "Every active-team Pokémon can complete one session per season. Improvements are permanent and enter the real battle calculation.") : (locale === "es" ? "En Simple se permite una sesión por temporada. La mejora es permanente y entra al cálculo real del combate." : "Simple mode allows one session per season. The improvement is permanent and enters the real battle calculation.")}</p>
           <div className="training-controls">
             <select value={trainingTarget} onChange={(event) => setTrainingTarget(event.target.value)}>{run.pokemon.map((pokemon) => <option key={pokemon.id} value={pokemon.id}>{pokemon.species} · LV {pokemon.level}</option>)}</select>
             <select value={trainingMethod} onChange={(event) => setTrainingMethod(event.target.value)}>{Object.entries(TRAINING_METHODS).map(([id, details]) => <option key={id} value={id}>{details[locale === "es" ? 0 : 1]}</option>)}</select>
-            <button type="button" className="primary-action" onClick={completeTraining} disabled={busy || run.season?.training_completed || run.season?.status !== "decision"}>{run.season?.training_completed ? (locale === "es" ? "Sesión completada" : "Session complete") : (locale === "es" ? "Entrenar" : "Train")}</button>
+            <button type="button" className="primary-action" onClick={completeTraining} disabled={busy || run.season?.training_completed || targetAlreadyTrained || run.season?.status !== "decision"}>{run.season?.training_completed ? (locale === "es" ? "Equipo entrenado" : "Team trained") : targetAlreadyTrained ? (locale === "es" ? "Ya entrenó" : "Already trained") : (locale === "es" ? "Entrenar" : "Train")}</button>
           </div>
-          <small>{trainingDescription(trainingMethod, locale)}</small>
+          <small>{trainingDescription(trainingMethod, locale)} · {locale === "es" ? "Sesiones" : "Sessions"} {trainingCompletedIds.length}/{trainingCapacity}</small>
         </section>
 
         <section className="bag-room"><h2>{locale === "es" ? "Mochila" : "Bag"}</h2><div className="world-rewards"><span>Poké Ball × {run.build.pokeballs}</span><span>{locale === "es" ? "Escáner Pokédex" : "Pokédex scanner"} LV {run.pokedex_level ?? 0}</span></div>
           {Object.keys(run.inventory ?? {}).length ? <div className="item-targeting"><label>{locale === "es" ? "Pokémon objetivo" : "Target Pokémon"}<select value={itemTarget} onChange={(event) => setItemTarget(event.target.value)}>{run.pokemon.map((pokemon) => <option key={pokemon.id} value={pokemon.id}>{pokemon.species} · LV {pokemon.level}</option>)}</select></label><label>{locale === "es" ? "Stat para Training Kit" : "Training Kit stat"}<select value={itemStat} onChange={(event) => setItemStat(event.target.value)}>{["hp", "atk", "def", "spatk", "spdef", "spd"].map((stat) => <option key={stat} value={stat}>{pokemonStatLabel(stat, locale)}</option>)}</select></label></div> : null}
-          <div className="bag-grid">{Object.entries(run.inventory ?? {}).map(([item, quantity]) => <article key={item}><header><b>{item}</b><span>× {quantity}</span></header><p>{itemDescription(item, locale)}</p><button type="button" onClick={() => useInventoryItem(item)} disabled={busy}>{locale === "es" ? "Usar" : "Use"}</button></article>)}</div>
+          <div className="bag-grid">{Object.entries(run.inventory ?? {}).map(([item, quantity]) => <article key={item} title={itemDescription(item, locale)}><header><b>{item}</b><span>× {quantity}</span></header><p>{itemDescription(item, locale)}</p><button type="button" onClick={() => useInventoryItem(item)} disabled={busy}>{locale === "es" ? "Usar" : "Use"}</button></article>)}</div>
         </section>
         <section className="relationship-section"><h2>{locale === "es" ? "Relaciones" : "Relationships"}</h2>{run.relationship_effects?.best_contact ? <div className="relationship-benefits"><b>{locale === "es" ? "Red activa" : "Active network"}</b><span>+{run.relationship_effects.home_level_bonus ?? 0} LV {locale === "es" ? "en combate" : "in battle"}</span><span>+{run.relationship_effects.season_recovery ?? 0} {locale === "es" ? "salud/temporada" : "health/season"}</span>{run.relationship_effects.contract_guard ? <span>{locale === "es" ? "Seguro de contrato disponible" : "Contract protection available"}</span> : null}</div> : null}
           <div className="relationship-cards">{run.relationship_effects?.contact_effects?.length ? run.relationship_effects.contact_effects.map((contact) => (
-            <article key={contact.name} className={`relationship-card role-${contact.role}`}>
+            <article key={contact.name} className={`relationship-card role-${contact.role}`} title={relationshipBenefit(contact.benefit, contact.amount, locale)}>
+              <TrainerPortrait name={contact.name.split(" · ")[0]} role={contact.role} className="relationship-portrait" />
               <header><div><small>{relationshipRole(contact.role, locale)}</small><b>{contact.name.split(" · ")[0]}</b></div><strong>{contact.bond}/6</strong></header>
               <div className="bond-track"><i style={{ width: `${Math.min(100, contact.bond / 6 * 100)}%` }} /></div>
               <p>{relationshipBenefit(contact.benefit, contact.amount, locale)}</p>
@@ -174,7 +182,7 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
             </article>
           )) : <p className="empty-copy">{locale === "es" ? "Todavía no hay vínculos registrados." : "No relationships recorded yet."}</p>}</div>
         </section>
-        <section><h2>{locale === "es" ? "Logros" : "Achievements"}</h2>{run.achievements.length ? <ul>{run.achievements.map((entry) => <li key={entry}>{achievementLabel(entry, locale)}</li>)}</ul> : <p className="empty-copy">{locale === "es" ? "La primera placa todavía está vacía." : "The first plaque is still empty."}</p>}</section>
+        <section className="achievement-room"><h2>{locale === "es" ? "Logros" : "Achievements"}</h2>{run.achievements.length ? <ul>{run.achievements.map((entry) => <li key={entry} title={achievementDescription(entry, locale)} tabIndex={0}>{achievementLabel(entry, locale)}</li>)}</ul> : <p className="empty-copy">{locale === "es" ? "La primera placa todavía está vacía." : "The first plaque is still empty."}</p>}</section>
       </article>
     </section>
   );
@@ -191,7 +199,8 @@ function PokemonCard({ pokemon, active = false, slot, disabled = false, onClick,
       <span className="pokemon-level">LV {pokemon.level}</span>
       <small>{pokemon.nature || "—"} · {(pokemon.abilities ?? []).join(" / ") || "—"}</small>
       <small>{pokemon.matches} {locale === "es" ? "partidos" : "matches"} · {pokemon.wins} W</small>
-      {Object.entries(pokemon.stat_training ?? {}).some(([, value]) => Number(value) > 0) ? <div className="pokemon-training">{Object.entries(pokemon.stat_training).filter(([, value]) => Number(value) > 0).map(([stat, value]) => <b key={stat}>{pokemonStatLabel(stat, locale)} +{value}</b>)}</div> : null}
+      {Object.entries(pokemon.stat_training ?? {}).some(([, value]) => Number(value) > 0) ? <div className="pokemon-training">{Object.entries(pokemon.stat_training).filter(([, value]) => Number(value) > 0).map(([stat, value]) => <b key={stat} title={pokemonStatDescription(stat, locale)}>{pokemonStatLabel(stat, locale)} +{value}</b>)}</div> : null}
+      {pokemon.gimmicks?.length ? <div className="pokemon-gimmicks">{pokemon.gimmicks.map((gimmick) => <b key={gimmick} title={gimmickDescription(gimmick, locale)}>✦ {gimmickLabel(gimmick, locale)}</b>)}</div> : null}
       {pokemon.taught_moves?.length ? <em>{pokemon.taught_moves.join(" · ")}</em> : null}
       {lastEvolution ? <em>{lastEvolution.from} → {lastEvolution.to}</em> : null}
     </button>
@@ -215,6 +224,36 @@ function relationshipBenefit(benefit: string, amount: number, locale: Locale): s
 function pokemonStatLabel(stat: string, locale: Locale): string {
   const labels: Record<string, [string, string]> = { hp: ["PS", "HP"], atk: ["ATQ", "ATK"], def: ["DEF", "DEF"], spatk: ["AT.ESP", "SP.ATK"], spdef: ["DF.ESP", "SP.DEF"], spd: ["VEL", "SPD"] };
   return labels[stat]?.[locale === "es" ? 0 : 1] ?? stat.toUpperCase();
+}
+
+function pokemonStatDescription(stat: string, locale: Locale): string {
+  const descriptions: Record<string, [string, string]> = {
+    hp: ["PS: cuánto daño puede soportar antes de debilitarse.", "HP: how much damage it can take before fainting."],
+    atk: ["Ataque: potencia de movimientos físicos.", "Attack: power of physical moves."],
+    def: ["Defensa: reduce el daño físico recibido.", "Defense: reduces incoming physical damage."],
+    spatk: ["Ataque Especial: potencia de movimientos especiales.", "Special Attack: power of special moves."],
+    spdef: ["Defensa Especial: reduce el daño especial recibido.", "Special Defense: reduces incoming special damage."],
+    spd: ["Velocidad: influye en iniciativa, alcance táctico y orden de acción.", "Speed: affects initiative, tactical reach and action order."],
+  };
+  return descriptions[stat]?.[locale === "es" ? 0 : 1] ?? stat;
+}
+
+function gimmickLabel(gimmick: string, locale: Locale): string {
+  const labels: Record<string, [string, string]> = {
+    mega_evolution: ["Megaevolución", "Mega Evolution"], z_move: ["Movimiento Z", "Z-Move"],
+    dynamax: ["Dynamax", "Dynamax"], terastallization: ["Teracristalización", "Terastallization"],
+  };
+  return labels[gimmick]?.[locale === "es" ? 0 : 1] ?? gimmick;
+}
+
+function gimmickDescription(gimmick: string, locale: Locale): string {
+  const descriptions: Record<string, [string, string]> = {
+    mega_evolution: ["Una activación por equipo: +2 a Ataque, Defensa, At. Esp., Def. Esp. y Velocidad.", "One team activation: +2 Attack, Defense, Sp. Atk, Sp. Def and Speed."],
+    z_move: ["Una activación por equipo: +3 Ataque y +3 Ataque Especial.", "One team activation: +3 Attack and +3 Special Attack."],
+    dynamax: ["Una activación por equipo: +8 PS durante el combate.", "One team activation: +8 HP during battle."],
+    terastallization: ["Una activación por equipo: mejora ataque y adaptación defensiva.", "One team activation: improves offense and defensive adaptation."],
+  };
+  return descriptions[gimmick]?.[locale === "es" ? 0 : 1] ?? gimmick;
 }
 
 const TRAINING_METHODS: Record<string, [string, string, string, string]> = {
@@ -244,6 +283,10 @@ function itemDescription(item: string, locale: Locale): string {
     "Contest Ribbon": ["+2 reputación.", "+2 reputation."],
     "Egg Incubator": ["+2 niveles al objetivo.", "+2 levels to the target."],
     "Premier Ball": ["Se suma a tus Poké Balls disponibles.", "Adds one available Poké Ball."],
+    "Mega Stone": ["Desbloquea Megaevolución para un Pokémon compatible.", "Unlocks Mega Evolution for a compatible Pokémon."],
+    "Z-Crystal": ["Desbloquea un Movimiento Z para el objetivo.", "Unlocks a Z-Move for the target."],
+    "Dynamax Band": ["Desbloquea Dynamax para el objetivo.", "Unlocks Dynamax for the target."],
+    "Tera Orb": ["Desbloquea Teracristalización para el objetivo.", "Unlocks Terastallization for the target."],
   };
   if (item.endsWith(" Charm")) return locale === "es" ? "+1 nivel de escáner Pokédex y +1 scouting." : "+1 Pokédex scanner level and +1 scouting.";
   return descriptions[item]?.[locale === "es" ? 0 : 1] ?? (locale === "es" ? "Objeto utilizable de carrera." : "Usable career item.");

@@ -31,7 +31,7 @@ export function GameShell({ children, run, locale, path, displaySeason, homePath
           <span>AUTO</span>PTU <b>CAREER</b>
         </button>
         <div className="header-meta">
-          {seasonNumber ? <span className="save-light"><i /> season {seasonNumber}</span> : <span>RULESET 1.05</span>}
+          {seasonNumber ? <span className="save-light"><i /> {locale === "es" ? "temporada" : "season"} {seasonNumber}</span> : <span>RULESET 1.05</span>}
           <GoogleAccount locale={locale} />
           <button className="locale-toggle" onClick={() => onLocale(locale === "es" ? "en" : "es")}>{locale.toUpperCase()}</button>
         </div>

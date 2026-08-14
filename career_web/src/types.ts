@@ -28,6 +28,7 @@ export interface CareerCatalog {
   feature_count: number;
   decision_signature_count: number;
   items: Record<string, { description_es: string; description_en: string; target: string }>;
+  shop: Record<string, { label_es: string; label_en: string; description_es: string; description_en: string; price: number; kind: string; item?: string }>;
   training_methods: Record<string, { label_es: string; label_en: string; description_es: string; description_en: string; stats: Record<string, number> }>;
 }
 
@@ -89,6 +90,7 @@ export interface CareerPokemon {
     season: number;
     age: number;
   }[];
+  gimmicks: string[];
 }
 
 export interface CareerRun {
@@ -105,6 +107,7 @@ export interface CareerRun {
   scouting: number;
   finances: number;
   career_earnings: number;
+  money: number;
   pokedex_level: number;
   license_status: string;
   seasons_without_contract: number;
@@ -158,6 +161,7 @@ export interface CareerRun {
     decision_history: Record<string, unknown>[];
     training_completed: boolean;
     training_method: string;
+    training_completed_ids: string[];
   };
   summary?: {
     seasons: number;
@@ -202,6 +206,7 @@ export interface BattleTranscript {
     away_team_species?: string[];
     away_team_levels?: number[];
     away_team_rarities?: string[];
+    away_team_gimmicks?: string[];
     difficulty_label?: "favored" | "even" | "dangerous";
     home_ai_level?: string;
     away_ai_level?: string;
@@ -248,4 +253,5 @@ export interface BattleCombatant {
     active?: boolean;
     size?: string;
     footprint_side?: number;
+    gimmick?: string;
 }

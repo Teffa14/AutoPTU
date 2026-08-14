@@ -36,6 +36,8 @@ export function App() {
   useEffect(() => {
     localStorage.setItem("career-locale", locale);
     document.documentElement.lang = locale;
+    const skipLink = document.querySelector<HTMLElement>(".skip-link");
+    if (skipLink) skipLink.textContent = locale === "es" ? "Saltar al contenido" : "Skip to content";
   }, [locale]);
 
   const runMatch = path.match(/^(?:run|profile|timeline)\/([^/]+)/);

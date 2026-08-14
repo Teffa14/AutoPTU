@@ -85,10 +85,15 @@ const SCENARIOS: Record<string, { es: ScenarioCopy; en: ScenarioCopy }> = {
 };
 
 export function decisionPresentation(decision: CareerDecision, run: CareerRun, locale: Locale) {
+  const localized = SCENARIOS[decision.family]?.[locale];
   return {
-    title: decision.title.replaceAll("{partner}", run.build.starter),
-    body: decision.body.replaceAll("{partner}", run.build.starter),
-    options: decision.options,
+    title: (localized?.title ?? decision.title).replaceAll("{partner}", run.build.starter),
+    body: (localized?.body ?? decision.body).replaceAll("{partner}", run.build.starter),
+    options: decision.options.map((option, index) => ({
+      ...option,
+      label: localized?.options[index]?.[0] ?? option.label,
+      description: localized?.options[index]?.[1] ?? option.description,
+    })),
   };
 }
 
@@ -116,7 +121,7 @@ export function riskLabel(risk: DecisionOption["risk"], locale: Locale): string 
 
 export function transparencyLabel(value: DecisionOption["transparency"], locale: Locale): string {
   const labels = {
-    full: locale === "es" ? "Información completa" : "Full information",
+    full: "",
     estimated: locale === "es" ? "Probabilidad estimada" : "Estimated probability",
     hidden: locale === "es" ? "Hay consecuencias ocultas" : "Some consequences are hidden",
   };
@@ -128,7 +133,7 @@ export function effectRule(key: string, locale: Locale): string {
     health: ["A 0 termina la carrera; por debajo de 45 reduce la preparación.", "At 0 the career ends; below 45 it reduces preparation."],
     development: ["Cada 3 puntos añade un nivel de preparación al compañero, hasta +3.", "Every 3 points adds one preparation level to your partner, up to +3."],
     scouting: ["Cada 3 puntos reduce un nivel de preparación rival, hasta −2.", "Every 3 points removes one opponent preparation level, up to −2."],
-    finances: ["Cada 4 puntos financia +1 nivel; una deuda de −4 aplica −1.", "Every 4 points funds +1 level; −4 debt applies −1."],
+    finances: ["Cada 4 puntos financia +1 nivel. Cada punto de deuda resta 1, hasta −3; podés sanearla con tu dinero.", "Every 4 points funds +1 level. Each debt point removes 1, up to −3; you can clear it with your money."],
     reputation: ["Mejora salario, contratos y posición dentro del club.", "Improves salary, contracts and standing inside the club."],
   };
   return rules[key]?.[locale === "es" ? 0 : 1] ?? "";
