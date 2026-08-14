@@ -77,9 +77,9 @@ const SCENARIOS: Record<string, { es: ScenarioCopy; en: ScenarioCopy }> = {
   ], "A contract is on the table", "The club wants a renewal before final results. Each clause changes stability, salary and sporting room.", [
     ["Take stability", "Secure continuity on conservative terms."], ["Negotiate resources", "Trade immediate salary for better sporting tools."], ["Wait for another offer", "Risk being left without a contract while chasing a bigger move."],
   ]),
-  training: pair("Sólo queda una semana", "No hay tiempo para mejorar todo. La prioridad elegida definirá la preparación PTU del equipo durante el calendario.", [
+  training: pair("Sólo queda una semana", "No hay tiempo para mejorar todo. La prioridad elegida definirá la preparación del equipo durante el calendario.", [
     ["Reducir la carga", "Protege salud y consolida lo que el equipo ya domina."], ["Trabajar una debilidad", "Invierte recursos en una mejora medible y controlada."], ["Doblar las sesiones", "Busca desarrollo rápido con riesgo de fatiga y lesión."],
-  ], "Only one week remains", "There is no time to improve everything. The chosen priority defines the team's PTU preparation for the schedule.", [
+  ], "Only one week remains", "There is no time to improve everything. The chosen priority defines the team's preparation for the schedule.", [
     ["Reduce the load", "Protect health and consolidate what the team already knows."], ["Train a weakness", "Invest resources in a measurable, controlled improvement."], ["Double the sessions", "Chase rapid development with fatigue and injury risk."],
   ]),
 };
@@ -99,6 +99,8 @@ export function effectLabel(key: string, locale: Locale): string {
     partner_levels: ["Niveles del compañero", "Partner levels"],
     home_level_bonus: ["Preparación propia", "Home preparation"],
     away_level_bonus: ["Preparación rival", "Opponent preparation"],
+    hp: ["PS", "HP"], atk: ["Ataque", "Attack"], def: ["Defensa", "Defense"],
+    spatk: ["At. Esp.", "Sp. Atk"], spdef: ["Def. Esp.", "Sp. Def"], spd: ["Velocidad", "Speed"],
   };
   return labels[key]?.[locale === "es" ? 0 : 1] ?? key;
 }
@@ -124,7 +126,7 @@ export function transparencyLabel(value: DecisionOption["transparency"], locale:
 export function effectRule(key: string, locale: Locale): string {
   const rules: Record<string, [string, string]> = {
     health: ["A 0 termina la carrera; por debajo de 45 reduce la preparación.", "At 0 the career ends; below 45 it reduces preparation."],
-    development: ["Cada 3 puntos añade un nivel PTU al compañero, hasta +3.", "Every 3 points adds one PTU level to your partner, up to +3."],
+    development: ["Cada 3 puntos añade un nivel de preparación al compañero, hasta +3.", "Every 3 points adds one preparation level to your partner, up to +3."],
     scouting: ["Cada 3 puntos reduce un nivel de preparación rival, hasta −2.", "Every 3 points removes one opponent preparation level, up to −2."],
     finances: ["Cada 4 puntos financia +1 nivel; una deuda de −4 aplica −1.", "Every 4 points funds +1 level; −4 debt applies −1."],
     reputation: ["Mejora salario, contratos y posición dentro del club.", "Improves salary, contracts and standing inside the club."],

@@ -61,7 +61,7 @@ export function CreateScreen({ locale, onCreated }: Props) {
             <StarterPicker starters={selectedRegion?.starters ?? []} underdogs={selectedRegion?.underdogs ?? []} value={starter} locale={locale} onChange={setStarter} />
           </fieldset>
           <div className="form-row final-row">
-            <label className="class-choice"><span>{locale === "es" ? "Clase PTU" : "PTU class"}</span><select value={trainerClass} onChange={(event) => setTrainerClass(event.target.value)}>{catalog.classes.map((entry) => <option key={entry.id} value={entry.name}>{entry.name}</option>)}</select><small>{classDescription(catalog, trainerClass, locale)}</small></label>
+            <label className="class-choice"><span>{locale === "es" ? "Clase de entrenador" : "Trainer class"}</span><select value={trainerClass} onChange={(event) => setTrainerClass(event.target.value)}>{catalog.classes.map((entry) => <option key={entry.id} value={entry.name}>{entry.name}</option>)}</select><small>{classDescription(catalog, trainerClass, locale)}</small></label>
             <div className="mode-switch" role="group" aria-label="Career mode">
               {(["simple", "advanced"] as CareerMode[]).map((entry) => <button type="button" key={entry} className={mode === entry ? "active" : ""} aria-pressed={mode === entry} onClick={() => setMode(entry)}><b>{entry}</b><small>{entry === "simple" ? "15–20 min" : "30–45 min"}</small></button>)}
             </div>

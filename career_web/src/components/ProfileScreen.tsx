@@ -102,9 +102,18 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
           </div>
         </section>
 
-        <section><h2>{locale === "es" ? "Clases PTU" : "PTU classes"}</h2><div className="class-stamps">{run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b><small>{locale === "es" ? entry.description_es : entry.description_en}</small></span>)}</div></section>
+        <section><h2>{locale === "es" ? "Clases de entrenador" : "Trainer classes"}</h2><div className="class-stamps">{run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b><small>{locale === "es" ? entry.description_es : entry.description_en}</small></span>)}</div></section>
         <section><h2>{locale === "es" ? "Mochila" : "Bag"}</h2><div className="world-rewards"><span>Poké Ball × {run.build.pokeballs}</span>{Object.entries(run.inventory ?? {}).map(([item, quantity]) => <span key={item}>{item} × {quantity}</span>)}</div></section>
-        <section><h2>{locale === "es" ? "Relaciones" : "Relationships"}</h2>{run.relationship_effects?.best_contact ? <div className="relationship-benefits"><b>{locale === "es" ? "Red activa" : "Active network"}</b><span>+{run.relationship_effects.home_level_bonus ?? 0} LV {locale === "es" ? "en combate" : "in battle"}</span><span>+{run.relationship_effects.season_recovery ?? 0} {locale === "es" ? "salud/temporada" : "health/season"}</span>{run.relationship_effects.contract_guard ? <span>{locale === "es" ? "Seguro de contrato disponible" : "Contract protection available"}</span> : null}</div> : null}<div className="world-rewards">{Object.entries(run.relationships ?? {}).length ? Object.entries(run.relationships).map(([name, value]) => <span key={name}>{name.split(" · ")[0]} <b>{value > 0 ? `+${value}` : value}</b><small>{relationshipTier(value, locale)}</small></span>) : <p className="empty-copy">{locale === "es" ? "Todavía no hay vínculos registrados." : "No relationships recorded yet."}</p>}</div></section>
+        <section className="relationship-section"><h2>{locale === "es" ? "Relaciones" : "Relationships"}</h2>{run.relationship_effects?.best_contact ? <div className="relationship-benefits"><b>{locale === "es" ? "Red activa" : "Active network"}</b><span>+{run.relationship_effects.home_level_bonus ?? 0} LV {locale === "es" ? "en combate" : "in battle"}</span><span>+{run.relationship_effects.season_recovery ?? 0} {locale === "es" ? "salud/temporada" : "health/season"}</span>{run.relationship_effects.contract_guard ? <span>{locale === "es" ? "Seguro de contrato disponible" : "Contract protection available"}</span> : null}</div> : null}
+          <div className="relationship-cards">{run.relationship_effects?.contact_effects?.length ? run.relationship_effects.contact_effects.map((contact) => (
+            <article key={contact.name} className={`relationship-card role-${contact.role}`}>
+              <header><div><small>{relationshipRole(contact.role, locale)}</small><b>{contact.name.split(" · ")[0]}</b></div><strong>{contact.bond}/6</strong></header>
+              <div className="bond-track"><i style={{ width: `${Math.min(100, contact.bond / 6 * 100)}%` }} /></div>
+              <p>{relationshipBenefit(contact.benefit, contact.amount, locale)}</p>
+              <small>{contact.next_unlock ? (locale === "es" ? `Próximo beneficio al vínculo ${contact.next_unlock}` : `Next benefit at bond ${contact.next_unlock}`) : (locale === "es" ? "Vínculo máximo" : "Maximum bond")}</small>
+            </article>
+          )) : <p className="empty-copy">{locale === "es" ? "Todavía no hay vínculos registrados." : "No relationships recorded yet."}</p>}</div>
+        </section>
         <section><h2>{locale === "es" ? "Logros" : "Achievements"}</h2>{run.achievements.length ? <ul>{run.achievements.map((entry) => <li key={entry}>{achievementLabel(entry, locale)}</li>)}</ul> : <p className="empty-copy">{locale === "es" ? "La primera placa todavía está vacía." : "The first plaque is still empty."}</p>}</section>
       </article>
     </section>
@@ -122,6 +131,7 @@ function PokemonCard({ pokemon, active = false, slot, disabled = false, onClick,
       <span className="pokemon-level">LV {pokemon.level}</span>
       <small>{pokemon.nature || "—"} · {(pokemon.abilities ?? []).join(" / ") || "—"}</small>
       <small>{pokemon.matches} {locale === "es" ? "partidos" : "matches"} · {pokemon.wins} W</small>
+      {Object.entries(pokemon.stat_training ?? {}).some(([, value]) => Number(value) > 0) ? <div className="pokemon-training">{Object.entries(pokemon.stat_training).filter(([, value]) => Number(value) > 0).map(([stat, value]) => <b key={stat}>{pokemonStatLabel(stat, locale)} +{value}</b>)}</div> : null}
       {pokemon.taught_moves?.length ? <em>{pokemon.taught_moves.join(" · ")}</em> : null}
       {lastEvolution ? <em>{lastEvolution.from} → {lastEvolution.to}</em> : null}
     </button>
@@ -130,9 +140,19 @@ function PokemonCard({ pokemon, active = false, slot, disabled = false, onClick,
 
 function isPokemon(value: CareerPokemon | undefined): value is CareerPokemon { return Boolean(value); }
 
-function relationshipTier(value: number, locale: Locale): string {
-  if (value >= 6) return locale === "es" ? "confidente" : "confidant";
-  if (value >= 4) return locale === "es" ? "aliado" : "ally";
-  if (value >= 2) return locale === "es" ? "contacto activo" : "active contact";
-  return locale === "es" ? "conocido" : "acquaintance";
+function relationshipRole(role: string, locale: Locale): string {
+  const labels: Record<string, [string, string]> = { mentor: ["Mentor", "Mentor"], rival: ["Rival", "Rival"], owner: ["Dirección del club", "Club owner"], contact: ["Contacto", "Contact"] };
+  return labels[role]?.[locale === "es" ? 0 : 1] ?? role;
+}
+
+function relationshipBenefit(benefit: string, amount: number, locale: Locale): string {
+  if (benefit === "partner_training") return locale === "es" ? `Entrenamiento guiado: +${amount} al desarrollo del compañero.` : `Guided training: +${amount} partner development.`;
+  if (benefit === "rival_read") return locale === "es" ? `Lectura del rival: reduce ${amount} nivel${amount === 1 ? "" : "es"} de preparación enemiga.` : `Opponent read: reduces enemy preparation by ${amount}.`;
+  if (benefit === "club_protection") return locale === "es" ? `Respaldo del club: +${amount} recuperación y protección contractual.` : `Club backing: +${amount} recovery and contract protection.`;
+  return locale === "es" ? `Apoyo de preparación: +${amount}.` : `Preparation support: +${amount}.`;
+}
+
+function pokemonStatLabel(stat: string, locale: Locale): string {
+  const labels: Record<string, [string, string]> = { hp: ["PS", "HP"], atk: ["ATQ", "ATK"], def: ["DEF", "DEF"], spatk: ["AT.ESP", "SP.ATK"], spdef: ["DF.ESP", "SP.DEF"], spd: ["VEL", "SPD"] };
+  return labels[stat]?.[locale === "es" ? 0 : 1] ?? stat.toUpperCase();
 }

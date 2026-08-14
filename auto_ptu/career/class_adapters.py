@@ -41,7 +41,7 @@ _KEYWORDS = {
 
 _FOCUS_EFFECTS = {
     "health": ({}, {"health": 4}, "health", "Recupera 4 de salud tras cada temporada.", "Recover 4 health after every season."),
-    "scouting": ({"away_level_bonus": -1}, {}, "capture", "Reduce en 1 nivel la preparación PTU rival.", "Reduce opposing PTU preparation by 1 level."),
+    "scouting": ({"away_level_bonus": -1}, {}, "capture", "Reduce en 1 nivel la preparación rival.", "Reduce opposing preparation by 1 level."),
     "development": ({}, {"partner_levels": 1}, "training", "Tu compañero gana 1 nivel adicional por temporada.", "Your partner gains 1 additional level each season."),
     "economy": ({}, {"finances": 1}, "economy", "Genera 1 recurso de club tras cada temporada.", "Generate 1 club resource after every season."),
     "reputation": ({}, {"reputation": 1}, "media", "Gana 1 reputación adicional tras cada temporada.", "Gain 1 additional reputation after every season."),
@@ -96,7 +96,7 @@ def compile_class_adapters() -> Dict[str, object]:
     adapters: List[CareerFeatureAdapter] = []
     raw_features = {str(entry.get("name") or ""): entry for entry in payload.get("features", [])}
     for feature in sorted(payload.get("features", []), key=lambda entry: str(entry.get("name") or "").lower()):
-        name = str(feature.get("name") or "Unnamed PTU feature")
+        name = str(feature.get("name") or "Unnamed trainer feature")
         effects = str(feature.get("effects") or "")
         digest = hashlib.sha256(f"{name}\n{effects}".encode("utf-8", errors="replace")).hexdigest()[:16]
         category = _category(name, effects)
@@ -162,9 +162,9 @@ def validate_selected_classes(class_names: List[str]) -> List[str]:
     for raw in class_names:
         key = str(raw).strip().lower()
         if not key or key not in available:
-            raise ValueError(f"Unknown PTU trainer class: {raw}")
+            raise ValueError(f"Unknown trainer class: {raw}")
         if available[key] not in normalized:
             normalized.append(available[key])
     if not normalized:
-        raise ValueError("Choose at least one PTU trainer class.")
+        raise ValueError("Choose at least one trainer class.")
     return normalized

@@ -10,10 +10,18 @@ export interface BattleViewState {
   damage: number;
   hit: boolean | null;
   critical: boolean;
+  effectiveness: number;
+  stab: boolean;
+  attackValue: number | null;
+  defenseValue: number | null;
+  effectiveDb: number | null;
+  knockout: boolean;
   complete: boolean;
 }
 
-const PRESENTED_EVENT_TYPES = new Set(["round_start", "move", "status", "ability", "combat_stage", "switch"]);
+const PRESENTED_EVENT_TYPES = new Set([
+  "round_start", "shift", "forced_movement", "maneuver", "move", "status", "ability", "combat_stage", "switch",
+]);
 
 export function playbackEventIndexes(transcript: BattleTranscript): number[] {
   return transcript.events.flatMap((event, index) => PRESENTED_EVENT_TYPES.has(String(event.type ?? "")) ? [index] : []);
@@ -43,6 +51,10 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
     }
     if (event.type === "shift" && Array.isArray(event.to)) {
       const current = combatants.get(String(event.actor ?? ""));
+      if (current && event.to.length >= 2) current.position = [Number(event.to[0]), Number(event.to[1])];
+    }
+    if (event.type === "forced_movement" && Array.isArray(event.to)) {
+      const current = combatants.get(String(event.target ?? ""));
       if (current && event.to.length >= 2) current.position = [Number(event.to[0]), Number(event.to[1])];
     }
     if (event.type === "switch") {
@@ -87,6 +99,8 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
   }
 
   const event = complete ? null : transcript.events[rawEventIndex] ?? null;
+  const context = isRecord(event?.context) ? event.context : {};
+  const rollOptions = Array.isArray(context.roll_options) ? context.roll_options.map(String) : [];
   return {
     combatants: [...combatants.values()],
     round: complete ? transcript.rounds : Number(event?.round ?? 1),
@@ -101,6 +115,12 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
         : 0,
     hit: typeof event?.hit === "boolean" ? event.hit : null,
     critical: Boolean(event?.crit),
+    effectiveness: Number(event?.type_multiplier ?? 1),
+    stab: rollOptions.includes("stab"),
+    attackValue: typeof event?.attack_value === "number" ? event.attack_value : null,
+    defenseValue: typeof event?.defense_value === "number" ? event.defense_value : null,
+    effectiveDb: typeof event?.effective_db === "number" ? event.effective_db : null,
+    knockout: event?.type === "move" && event?.hit !== false && Number(event?.target_hp ?? -1) === 0,
     complete,
   };
 }
@@ -121,6 +141,14 @@ export function battleCommentary(locale: Locale, transcript: BattleTranscript, v
   if (type === "switch") {
     const incoming = combatantName(transcript, String(event.target ?? ""));
     return locale === "es" ? `${incoming} entra a la cancha.` : `${incoming} enters the field.`;
+  }
+  if (type === "shift") {
+    return locale === "es" ? `${actor} toma una nueva posición en la cancha.` : `${actor} takes a new position on the field.`;
+  }
+  if (type === "forced_movement" || type === "maneuver") {
+    return locale === "es"
+      ? `${actor} rompe la posición de ${target} con una maniobra táctica.`
+      : `${actor} breaks ${target}'s position with a tactical maneuver.`;
   }
   if (type === "move") {
     const move = String(event.move ?? (locale === "es" ? "un movimiento" : "a move"));
@@ -165,6 +193,8 @@ export function eventTitle(locale: Locale, view: BattleViewState): string {
   const event = view.event ?? {};
   if (event.type === "round_start") return `${locale === "es" ? "RONDA" : "ROUND"} ${view.round}`;
   if (event.type === "move") return String(event.move ?? (locale === "es" ? "ATAQUE" : "ATTACK")).toUpperCase();
+  if (event.type === "shift") return locale === "es" ? "REPOSICIONAMIENTO" : "REPOSITION";
+  if (event.type === "forced_movement" || event.type === "maneuver") return locale === "es" ? "MANIOBRA TÁCTICA" : "TACTICAL MANEUVER";
   if (event.type === "ability") return String(event.ability ?? (locale === "es" ? "HABILIDAD" : "ABILITY")).toUpperCase();
   if (event.type === "combat_stage") return locale === "es" ? "CAMBIO DE STATS" : "STAT CHANGE";
   if (event.type === "switch") return locale === "es" ? "CAMBIO DE POKÉMON" : "POKÉMON SWITCH";

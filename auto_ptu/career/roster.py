@@ -119,6 +119,43 @@ def teach_partner_move(run: CareerRun, move: str, *, source: str) -> bool:
     return True
 
 
+def grant_stat_training(
+    run: CareerRun,
+    pokemon_id: str,
+    stat: str,
+    amount: int,
+    *,
+    source: str,
+) -> Dict[str, object] | None:
+    """Persist deterministic training that changes the generated battle build."""
+    aliases = {"attack": "atk", "defense": "def", "special_attack": "spatk", "special_defense": "spdef", "speed": "spd"}
+    key = aliases.get(str(stat).lower(), str(stat).lower())
+    if key not in {"hp", "atk", "def", "spatk", "spdef", "spd"}:
+        return None
+    pokemon = next((entry for entry in run.pokemon if entry.id == pokemon_id), None)
+    if pokemon is None:
+        return None
+    previous = int(pokemon.stat_training.get(key, 0))
+    gained = min(max(0, 12 - previous), max(0, int(amount)))
+    if gained <= 0:
+        return None
+    pokemon.stat_training[key] = previous + gained
+    event = {
+        "type": "pokemon.stat_trained",
+        "season": run.season_number,
+        "age": run.age,
+        "pokemon_id": pokemon.id,
+        "species": pokemon.species,
+        "stat": key,
+        "amount": gained,
+        "total": pokemon.stat_training[key],
+        "source": source,
+        "label": f"{pokemon.species} gained {gained} permanent {key} training.",
+    }
+    run.timeline.append(event)
+    return event
+
+
 def set_active_roster(run: CareerRun, pokemon_ids: Sequence[str]) -> None:
     requested = [str(value) for value in pokemon_ids]
     required = min(6, len(run.pokemon))

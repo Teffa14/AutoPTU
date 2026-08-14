@@ -95,15 +95,18 @@ function eventKind(entry: Record<string, unknown>, locale: Locale): string {
     "pokemon.captured": ["capturas", "captures"],
     "pokemon.evolved": ["evolución", "evolution"],
     "pokemon.trained": ["entrenamiento", "training"],
+    "pokemon.stat_trained": ["mejora permanente", "permanent training"],
     "pokemon.move_learned": ["movimiento", "move learned"],
     "item.acquired": ["objeto", "item"],
     "relationship.changed": ["relación", "relationship"],
     "relationship.effect_applied": ["red de apoyo", "support network"],
+    "relationship.mentor_training": ["sesión con mentor", "mentor session"],
     "relationship.contract_saved": ["contrato", "contract"],
-    "class.effect_applied": ["clase PTU", "PTU class"],
+    "class.effect_applied": ["clase de entrenador", "trainer class"],
     "season.schedule_ready": ["calendario", "schedule"],
     "roster.lineup_changed": ["alineación", "lineup"],
     "season.completed": ["temporada", "season"],
+    "season.incident": ["imprevisto", "unexpected event"],
     "career.retired": ["retiro", "retirement"],
     "career.version_migrated": ["actualización", "update"],
   };
@@ -135,13 +138,20 @@ export function eventTitle(entry: Record<string, unknown>, locale: Locale): stri
       ? `${String(entry.species)} ganó ${levels} ${levels === 1 ? "nivel" : "niveles"}`
       : `${String(entry.species)} gained ${levels} ${levels === 1 ? "level" : "levels"}`;
   }
+  if (type === "pokemon.stat_trained") return locale === "es"
+    ? `${String(entry.species)} mejoró ${effectLabel(String(entry.stat), locale)} +${String(entry.amount)}`
+    : `${String(entry.species)} improved ${effectLabel(String(entry.stat), locale)} +${String(entry.amount)}`;
+  if (type === "season.incident") return String(entry[locale === "es" ? "title_es" : "title_en"] ?? entry.label ?? (locale === "es" ? "Algo inesperado cambió la temporada" : "Something unexpected changed the season"));
   if (type === "pokemon.move_learned") return locale === "es" ? `${String(entry.species)} aprendió ${String(entry.move)}` : `${String(entry.species)} learned ${String(entry.move)}`;
   if (type === "item.acquired") return locale === "es" ? `Conseguiste ${String(entry.quantity)} × ${String(entry.item)}` : `Received ${String(entry.quantity)} × ${String(entry.item)}`;
   if (type === "relationship.changed") return locale === "es" ? `El vínculo con ${String(entry.name).split(" · ")[0]} cambió ${signed(Number(entry.amount ?? 0))}` : `Bond with ${String(entry.name).split(" · ")[0]} changed ${signed(Number(entry.amount ?? 0))}`;
   if (type === "relationship.effect_applied") return locale === "es" ? `La red aportó +${String(entry.home_level_bonus ?? 0)} LV y +${String(entry.recovery_applied ?? 0)} salud` : `The network supplied +${String(entry.home_level_bonus ?? 0)} LV and +${String(entry.recovery_applied ?? 0)} health`;
+  if (type === "relationship.mentor_training") return locale === "es"
+    ? `${String(entry.name).split(" · ")[0]} entrenó a ${String(entry.pokemon)}: +${String(entry.amount)} ${effectLabel(String(entry.stat), locale)}`
+    : `${String(entry.name).split(" · ")[0]} trained ${String(entry.pokemon)}: +${String(entry.amount)} ${effectLabel(String(entry.stat), locale)}`;
   if (type === "relationship.contract_saved") return locale === "es" ? `${String(entry.name).split(" · ")[0]} protegió el contrato` : `${String(entry.name).split(" · ")[0]} protected the contract`;
   if (type === "class.effect_applied") {
-    const classes = Array.isArray(entry.classes) ? entry.classes.map(String).join(" + ") : (locale === "es" ? "Clase PTU" : "PTU class");
+    const classes = Array.isArray(entry.classes) ? entry.classes.map(String).join(" + ") : (locale === "es" ? "Clase de entrenador" : "Trainer class");
     const seasonEffects = asRecord(entry.season_effects);
     const partnerLevels = Number(seasonEffects.partner_levels ?? 0);
     if (partnerLevels) return locale === "es"
@@ -166,6 +176,7 @@ function effectSummary(effects: Record<string, unknown>, locale: Locale): string
       if (reward.type === "move") return [`${locale === "es" ? "movimiento" : "move"}: ${String(reward.move)}`];
       if (reward.type === "relationship") return [`${locale === "es" ? "vínculo" : "bond"}: ${String(reward.name).split(" · ")[0]}`];
       if (reward.type === "level") return [`+${String(reward.levels)} LV`];
+      if (reward.type === "stat") return [`${String(reward.species)} +${String(reward.amount)} ${effectLabel(String(reward.stat), locale)}`];
       return [];
     });
     if (key === "gamble_success") return [value ? (locale === "es" ? "La apuesta salió bien" : "The gamble succeeded") : (locale === "es" ? "La apuesta falló" : "The gamble failed")];

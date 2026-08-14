@@ -150,6 +150,21 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
       }
       return;
     }
+    if (event.type === "shift" && actor) {
+      spawnStatus(app, actor.container.x, actor.container.y - 34, "POSICIÓN", effects.current, 0x72d9a0);
+      actor.container.scale.set(1.06);
+      timers.current.push(window.setTimeout(() => actor.container.scale.set(1), 220));
+      return;
+    }
+    if ((event.type === "forced_movement" || event.type === "maneuver") && target) {
+      const actorPoint = targets.current.get(view.actorId);
+      const targetPoint = targets.current.get(view.targetId);
+      if (actorPoint && targetPoint) spawnAttack(app, actorPoint, targetPoint, undefined, effects.current, false);
+      impulses.current.set(view.targetId, [view.targetId.includes("away") ? 28 : -28, -9]);
+      flashCombatant(target, 0xf0c760, timers.current);
+      spawnStatus(app, target.container.x, target.container.y - 34, "MANIOBRA", effects.current, 0xf0c760);
+      return;
+    }
     if (event.type === "move" && actor) {
       const actorPoint = targets.current.get(view.actorId);
       const targetPoint = targets.current.get(view.targetId);
@@ -184,8 +199,8 @@ export function BattleArena({ transcript, eventIndex, view }: { transcript: Batt
       <div ref={host} className="pixi-arena" aria-hidden="true" />
       <div className="field-pokemon-layer" aria-hidden="true">
         {view.combatants.filter((combatant) => combatant.active !== false).map((combatant) => {
-          const isActor = view.event?.type === "move" && combatant.id === view.actorId;
-          const isTarget = view.event?.type === "move" && combatant.id === view.targetId && view.hit !== false;
+          const isActor = (view.event?.type === "move" || view.event?.type === "forced_movement" || view.event?.type === "maneuver") && combatant.id === view.actorId;
+          const isTarget = (view.event?.type === "move" || view.event?.type === "forced_movement" || view.event?.type === "maneuver") && combatant.id === view.targetId && view.hit !== false;
           return (
             <div
               key={combatant.id}

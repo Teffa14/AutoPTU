@@ -388,6 +388,50 @@ def test_decisions_grant_pokemon_items_moves_and_relationships() -> None:
     assert item_run.build.pokeballs > 10 or item_run.inventory
 
 
+def test_every_choice_trains_a_specific_pokemon_stat_permanently() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="stat-training", name="Ari", region="kanto", starter="Rattata",
+        classes=["Ace Trainer"], seed=1,
+    )
+    decision = run.season.decision
+    for option in decision.options:
+        rewards = option.gamble.get("success_rewards", []) if option.risk == "gamble" else option.rewards
+        assert any(reward["type"] == "stat" for reward in rewards)
+    safe = decision.options[0]
+    stat_reward = next(reward for reward in safe.rewards if reward["type"] == "stat")
+    pokemon = next(entry for entry in run.pokemon if entry.id == stat_reward["pokemon_id"])
+    before = pokemon.stat_training.get(stat_reward["stat"], 0)
+    run, _ = engine.advance_season(run, option_id=safe.id)
+    assert pokemon.stat_training[stat_reward["stat"]] == before + stat_reward["amount"]
+    assert any(entry["type"] == "pokemon.stat_trained" for entry in run.timeline)
+    assert engine._schedule(run)[0].home_team_stat_training[0] == pokemon.stat_training
+
+
+def test_season_incidents_are_deterministic_and_visible_in_the_summary() -> None:
+    engine = CareerEngine(fake_battle)
+    first = engine.new_run(player_id="incident-a", name="Ari", region="kanto", starter="Rattata", classes=["Ace Trainer"], seed=313)
+    second = engine.new_run(player_id="incident-b", name="Ari", region="kanto", starter="Rattata", classes=["Ace Trainer"], seed=313)
+    first, _ = engine.advance_season(first, option_id=first.season.decision.options[0].id)
+    second, _ = engine.advance_season(second, option_id=second.season.decision.options[0].id)
+    first_incident = next(entry for entry in first.timeline if entry["type"] == "season.incident")
+    second_incident = next(entry for entry in second.timeline if entry["type"] == "season.incident")
+    assert first_incident["kind"] == second_incident["kind"]
+    assert first_incident["title_es"] == second_incident["title_es"]
+    completed = next(entry for entry in first.timeline if entry["type"] == "season.completed")
+    assert completed["incident"] == first_incident
+
+
+def test_decision_copy_never_exposes_internal_ruleset_language() -> None:
+    run = CareerEngine(fake_battle).new_run(
+        player_id="clean-copy", name="Ari", region="kanto", starter="Rattata",
+        classes=["Ace Trainer"], seed=2,
+    )
+    decision = run.season.decision
+    visible_copy = " ".join([decision.title, decision.body, *(value for option in decision.options for value in (option.label, option.description))])
+    assert "PTU" not in visible_copy.upper()
+
+
 def test_gamble_rewards_are_exclusive_and_only_granted_on_success() -> None:
     engine = CareerEngine(fake_battle)
     failed = engine.new_run(
@@ -451,7 +495,7 @@ def test_invalid_underdog_or_class_is_rejected() -> None:
     engine = CareerEngine(fake_battle)
     with pytest.raises(ValueError, match="eligible"):
         engine.new_run(player_id="x", name="X", region="kanto", starter="Mewtwo", classes=["Ace Trainer"])
-    with pytest.raises(ValueError, match="Unknown PTU"):
+    with pytest.raises(ValueError, match="Unknown trainer class"):
         engine.new_run(player_id="x", name="X", region="kanto", starter="Rattata", classes=["Influencer"])
 
 
@@ -527,6 +571,24 @@ def test_relationships_change_battle_recovery_and_contract_security() -> None:
     assert outcome["contract_guard_used"] is True
     assert run.relationships[contact] == 4
     assert run.health > 45
+
+
+def test_relationship_roles_have_distinct_mechanical_effects() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="trainer-roles", name="Ari", region="kanto", starter="Rattata",
+        classes=["Ace Trainer"], seed=89,
+    )
+    run.relationships["Brock · mentor · Kanto"] = 6
+    run.relationships["Blue · rival · Kanto"] = 6
+    partner = run.pokemon[0]
+    before = sum(partner.stat_training.values())
+    schedule = engine._schedule(run)
+    assert all(spec.away_level_bonus <= -2 for spec in schedule)
+    outcome = engine._apply_health_and_contract(run, wins=3, losses=3)
+    assert outcome["mentor_training_bonus"] == 2
+    assert sum(partner.stat_training.values()) == before + 2
+    assert any(entry["type"] == "relationship.mentor_training" for entry in run.timeline)
 
 
 def test_lineup_endpoint_is_revisioned_and_persisted(tmp_path: Path) -> None:

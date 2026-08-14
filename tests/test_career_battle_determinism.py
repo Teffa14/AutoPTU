@@ -32,6 +32,7 @@ def test_same_battle_twice_has_identical_transcript_hash() -> None:
     assert all(entry["moves"] for entry in first.initial_state["combatants"])
     assert all(entry["nature"] for entry in first.initial_state["combatants"])
     assert all(entry["abilities"] for entry in first.initial_state["combatants"])
+    assert all(entry["types"] for entry in first.initial_state["combatants"])
     assert all(entry["size"] and entry["footprint_side"] >= 1 for entry in first.initial_state["combatants"])
     rattata = next(entry for entry in first.initial_state["combatants"] if entry["team"] == "career-home")
     assert {move["name"] for move in rattata["moves"]}.isdisjoint({"Thunder", "Ice Beam", "Surf"})
@@ -87,6 +88,20 @@ def test_complete_team_battle_uses_tactical_engine_ai_on_both_sides() -> None:
     assert any(str(event.get("actor", "")).startswith("career-home-") for event in engine_actions)
     assert any(str(event.get("actor", "")).startswith("career-away-") for event in engine_actions)
     assert any(event.get("type") == "switch" for event in transcript.events)
+    assert not any(event.get("type") == "match_adjudicated" for event in transcript.events)
+    team_hp = {
+        team: sum(max(0, int(entry["hp"])) for entry in transcript.final_state["combatants"] if entry["team"] == team)
+        for team in ("career-home", "career-away")
+    }
+    assert team_hp[transcript.winner_team] > 0
+    assert team_hp["career-away" if transcript.winner_team == "career-home" else "career-home"] == 0
+    damaging = next(event for event in transcript.events if event.get("type") == "move" and event.get("damage", 0) > 0)
+    assert {"attack_value", "defense_value", "type_multiplier", "effective_db"}.issubset(damaging)
+    expected_types = {
+        "Rattata": {"Normal"}, "Caterpie": {"Bug"},
+        "Spearow": {"Normal", "Flying"}, "Weedle": {"Bug", "Poison"},
+    }
+    assert all(set(entry["types"]) == expected_types[entry["species"]] for entry in transcript.initial_state["combatants"])
     repeated = simulate_battle(spec)
     assert repeated.sha256 == transcript.sha256
     assert repeated.events == transcript.events

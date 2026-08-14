@@ -41,7 +41,7 @@ export function StarterPicker({ starters, underdogs, value, locale, name = "star
           ))}
         </div>
         <label><span className="sr-only">{locale === "es" ? "Buscar Pokémon" : "Search Pokémon"}</span><input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={locale === "es" ? "Buscar por nombre…" : "Search by name…"} /></label>
-        <small>{starters.length} starters · {underdogs.length} underdogs PTU</small>
+        <small>{starters.length} starters · {underdogs.length} {locale === "es" ? "underdogs regionales" : "regional underdogs"}</small>
       </div>
       <div className="starter-carousel">
         <button type="button" className="starter-arrow previous" onClick={() => move(-1)} aria-label={locale === "es" ? "Ver Pokémon anteriores" : "See previous Pokémon"}>‹</button>
@@ -49,7 +49,7 @@ export function StarterPicker({ starters, underdogs, value, locale, name = "star
           {visible.map((entry) => (
             <label key={`${entry.kind}:${entry.species}`} className={value === entry.species ? "starter-card selected" : "starter-card"}>
               <input type="radio" name={name} checked={value === entry.species} onChange={() => onChange(entry.species)} />
-              <span className={`partner-kind ${entry.kind}`}>{entry.kind === "starter" ? (locale === "es" ? "Starter regional" : "Regional starter") : "Underdog PTU"}</span>
+              <span className={`partner-kind ${entry.kind}`}>{entry.kind === "starter" ? (locale === "es" ? "Starter regional" : "Regional starter") : (locale === "es" ? "Underdog regional" : "Regional underdog")}</span>
               <PokemonSprite name={entry.species} className="starter-sprite" />
               <b>{entry.species}</b>
             </label>

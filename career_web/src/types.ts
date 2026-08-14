@@ -51,7 +51,8 @@ export type DecisionReward =
   | { type: "item"; item: string; quantity: number }
   | { type: "move"; move: string }
   | { type: "relationship"; name: string; amount: number }
-  | { type: "level"; levels: number };
+  | { type: "level"; levels: number }
+  | { type: "stat"; pokemon_id: string; species: string; stat: "hp" | "atk" | "def" | "spatk" | "spdef" | "spd"; amount: number };
 
 export interface CareerDecision {
   id: string;
@@ -78,6 +79,7 @@ export interface CareerPokemon {
   taught_moves: string[];
   nature: string;
   abilities: string[];
+  stat_training: Partial<Record<"hp" | "atk" | "def" | "spatk" | "spdef" | "spd", number>>;
   evolution_history: {
     from: string;
     to: string;
@@ -108,6 +110,18 @@ export interface CareerRun {
     home_level_bonus?: number;
     season_recovery?: number;
     contract_guard?: boolean;
+    mentor_training_bonus?: number;
+    rival_scouting_bonus?: number;
+    owner_recovery_bonus?: number;
+    contact_effects?: {
+      name: string;
+      role: string;
+      bond: number;
+      tier: string;
+      benefit: string;
+      amount: number;
+      next_unlock?: number | null;
+    }[];
   };
   inventory: Record<string, number>;
   status: "active" | "retired";
@@ -219,6 +233,7 @@ export interface BattleCombatant {
     stats?: Partial<Record<"hp" | "atk" | "def" | "spatk" | "spdef" | "spd", number>>;
     effective_stats?: Partial<Record<"hp" | "atk" | "def" | "spatk" | "spdef" | "spd", number>>;
     abilities?: string[];
+    types?: string[];
     moves?: BattleMove[];
     active?: boolean;
     size?: string;

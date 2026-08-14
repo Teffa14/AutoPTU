@@ -8,7 +8,7 @@ from datetime import date, datetime, timezone
 from typing import Callable, Dict, List, Optional
 
 from .battle import simulate_battle
-from .catalogs import LEAGUES, LEAGUE_ORDER, REGIONS
+from .catalogs import FRANCHISE_TRAINERS, LEAGUES, LEAGUE_ORDER, REGIONS
 from .class_adapters import selected_class_effects, validate_selected_classes
 from .decisions import apply_option, build_season_decision
 from .evolutions import evolve_species_for_level
@@ -30,6 +30,7 @@ from .roster import (
     active_pokemon,
     career_level_cap,
     grant_partner_levels,
+    grant_stat_training,
     initialize_roster,
     progress_after_season,
     set_active_roster,
@@ -235,6 +236,7 @@ class CareerEngine:
         relationship_outcome = self._apply_health_and_contract(run, wins=wins, losses=losses)
         roster_outcome = progress_after_season(run, specs, transcripts)
         class_outcome = self._apply_class_progression(run)
+        incident_outcome = self._apply_season_incident(run)
         self._unlock_achievements(run, season, outcome)
         new_achievements = [entry for entry in run.achievements if entry not in achievements_before]
         run.timeline.append(
@@ -259,6 +261,7 @@ class CareerEngine:
                 **roster_outcome,
                 "class_effects": class_outcome,
                 "relationship_effects": relationship_outcome,
+                "incident": incident_outcome,
                 "new_achievements": new_achievements,
                 **outcome,
             }
@@ -366,6 +369,7 @@ class CareerEngine:
         away_bonus += int(class_effects["battle"].get("away_level_bonus", 0))
         relationship_effects = refresh_relationship_effects(run)
         home_bonus += int(relationship_effects.get("home_level_bonus", 0))
+        away_bonus -= int(relationship_effects.get("rival_scouting_bonus", 0))
         league_floor = league.min_level + min(15, max(0, run.season_number - 1))
         competitive_level = min(career_level_cap(run), max(league_floor, round(sum(entry.level for entry in lineup) / len(lineup))))
         specs = []
@@ -436,11 +440,70 @@ class CareerEngine:
                     home_team_moves=[list(member.taught_moves) for member in match_lineup],
                     home_team_natures=[member.nature for member in match_lineup],
                     home_team_abilities=[list(member.abilities) for member in match_lineup],
+                    home_team_stat_training=[dict(member.stat_training) for member in match_lineup],
                     away_team_species=opponent_team,
                     away_team_levels=[competitive_level for _ in opponent_team],
                 )
             )
         return specs
+
+    def _apply_season_incident(self, run: CareerRun) -> dict:
+        """Add one low-impact, deterministic life event between seasons."""
+        lineup = active_pokemon(run)
+        pokemon = lineup[stable_seed(run.seed, run.season_number, "incident-pokemon") % len(lineup)]
+        variant = stable_seed(run.seed, run.season_number, "incident") % 4
+        if variant == 0:
+            stat = ("atk", "spatk", "spd")[stable_seed(run.seed, run.season_number, "incident-stat") % 3]
+            trained = grant_stat_training(run, pokemon.id, stat, 1, source="season_incident")
+            event = {
+                "type": "season.incident", "season": run.season_number, "age": run.age,
+                "kind": "breakthrough", "pokemon": pokemon.species,
+                "title_es": f"{pokemon.species} pidió quedarse después del entrenamiento",
+                "title_en": f"{pokemon.species} asked to stay after training",
+                "detail_es": f"La sesión extra dejó una mejora permanente de +1 en {stat}.",
+                "detail_en": f"The extra session produced a permanent +1 {stat} improvement.",
+                "effects": {"stat": stat, "amount": int(trained["amount"]) if trained else 0},
+            }
+        elif variant == 1:
+            before = run.health
+            run.health = max(0, run.health - 3)
+            trained = grant_stat_training(run, pokemon.id, "hp", 2, source="season_incident")
+            event = {
+                "type": "season.incident", "season": run.season_number, "age": run.age,
+                "kind": "hard_match", "pokemon": pokemon.species,
+                "title_es": f"{pokemon.species} terminó golpeado, pero más resistente",
+                "title_en": f"{pokemon.species} finished bruised but tougher",
+                "detail_es": "El cuerpo médico registró el desgaste y una mejora permanente de resistencia.",
+                "detail_en": "Medical staff recorded the strain and a permanent endurance gain.",
+                "effects": {"health": run.health - before, "stat": "hp", "amount": int(trained["amount"]) if trained else 0},
+            }
+        elif variant == 2:
+            rivals = FRANCHISE_TRAINERS[run.build.region]["rival"]
+            contact = f"{rivals[stable_seed(run.seed, run.season_number, 'incident-rival') % len(rivals)]} · rival · {run.build.region.title()}"
+            run.relationships[contact] = run.relationships.get(contact, 0) + 1
+            refresh_relationship_effects(run)
+            event = {
+                "type": "season.incident", "season": run.season_number, "age": run.age,
+                "kind": "rival_visit", "pokemon": pokemon.species, "contact": contact,
+                "title_es": f"{contact.split(' · ')[0]} apareció sin avisar en el entrenamiento",
+                "title_en": f"{contact.split(' · ')[0]} arrived at training unannounced",
+                "detail_es": "La conversación abrió una rivalidad que puede convertirse en información táctica.",
+                "detail_en": "The conversation started a rivalry that can become tactical information.",
+                "effects": {"relationship": 1},
+            }
+        else:
+            run.inventory["Training Kit"] = run.inventory.get("Training Kit", 0) + 1
+            event = {
+                "type": "season.incident", "season": run.season_number, "age": run.age,
+                "kind": "equipment_find", "pokemon": pokemon.species,
+                "title_es": f"{pokemon.species} encontró material olvidado en el estadio",
+                "title_en": f"{pokemon.species} found equipment left in the stadium",
+                "detail_es": "El equipo recuperó un Training Kit para futuras sesiones.",
+                "detail_en": "The squad recovered a Training Kit for future sessions.",
+                "effects": {"item": "Training Kit", "quantity": 1},
+            }
+        run.timeline.append(event)
+        return event
 
     def _apply_class_progression(self, run: CareerRun) -> dict:
         effects = selected_class_effects(run.build.classes)
@@ -467,7 +530,7 @@ class CareerEngine:
             "battle": dict(effects["battle"]),
             "season_effects": applied,
             "focus": [entry["focus"] for entry in effects["adapters"]],
-            "label": "Trainer class effects changed PTU preparation and career progression.",
+            "label": "Trainer class effects changed preparation and career progression.",
         }
         run.timeline.append(event)
         return event
@@ -536,8 +599,23 @@ class CareerEngine:
         relationship_effects = refresh_relationship_effects(run)
         age_strain = max(0, run.age - 28) // 4
         result_strain = max(0, losses - wins) // 2
-        recovery = int(relationship_effects.get("season_recovery", 0))
+        recovery = int(relationship_effects.get("season_recovery", 0)) + int(relationship_effects.get("owner_recovery_bonus", 0))
         run.health = max(0, min(100, run.health - age_strain - result_strain + (1 if wins > losses else 0) + recovery))
+        mentor_training = None
+        mentor_bonus = int(relationship_effects.get("mentor_training_bonus", 0))
+        if mentor_bonus > 0:
+            partner = next((entry for entry in run.pokemon if entry.is_partner), None)
+            if partner:
+                stat = ("atk", "def", "spatk", "spdef", "spd")[stable_seed(run.seed, run.season_number, "mentor-stat") % 5]
+                mentor_training = grant_stat_training(run, partner.id, stat, mentor_bonus, source="mentor_relationship")
+                mentor = next((entry for entry in relationship_effects.get("contact_effects", []) if entry.get("role") == "mentor"), None)
+                if mentor_training and mentor:
+                    run.timeline.append({
+                        "type": "relationship.mentor_training", "season": run.season_number, "age": run.age,
+                        "name": mentor["name"], "pokemon": partner.species, "stat": stat,
+                        "amount": mentor_training["amount"],
+                        "label": f"{str(mentor['name']).split(' · ')[0]} trained {partner.species}.",
+                    })
         guard_used = False
         if losses > wins * 2 and run.league != "junior":
             if relationship_effects.get("contract_guard") and relationship_effects.get("best_contact"):
@@ -573,6 +651,7 @@ class CareerEngine:
         outcome = {
             **relationship_effects,
             "recovery_applied": recovery,
+            "mentor_training": mentor_training,
             "contract_guard_used": guard_used,
         }
         run.timeline.append({

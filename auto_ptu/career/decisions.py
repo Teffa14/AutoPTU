@@ -5,13 +5,12 @@ import random
 from typing import Any, Dict, List
 
 from .catalogs import EVENT_DOMAINS, FRANCHISE_TRAINERS, NPC_ARCHETYPES, REGIONS, RISK_TIERS, TRANSPARENCY_TIERS
-from .class_adapters import selected_class_effects
 from .content_compiler import AUTHORIAL_VARIANTS
 from .evolutions import next_evolution
 from .models import CareerDecision, CareerDecisionOption, CareerRun
 from .relationships import refresh_relationship_effects
 from .ptu_builds import choose_legal_taught_move
-from .roster import capture_species, grant_partner_levels, teach_partner_move
+from .roster import capture_species, grant_partner_levels, grant_stat_training, teach_partner_move
 
 
 _COPY = {
@@ -106,16 +105,15 @@ def build_season_decision(run: CareerRun, slot: int = 0) -> CareerDecision:
     hook = _VARIANT_HOOKS[variant][0 if locale == "es" else 1]
     club = run.contract.club_name if run.contract else ("el club" if locale == "es" else "the club")
     trainer_class = run.build.classes[0]
-    adapter = selected_class_effects(run.build.classes)["adapters"][0]
     if locale == "es":
         body = (
             f"{npc_name.split(' · ')[0]} lleva el caso a {club}. "
-            f"{base_body} {hook} {trainer_class} cambia la respuesta posible: {adapter['description_es']}"
+            f"{base_body} {hook} Tu experiencia como {trainer_class} abre una forma distinta de intervenir."
         )
     else:
         body = (
             f"{npc_name.split(' · ')[0]} brings the case to {club}. "
-            f"{base_body} {hook} {trainer_class} changes what the staff can do: {adapter['description_en']}"
+            f"{base_body} {hook} Your experience as a {trainer_class} opens a different way to intervene."
         )
     labels = (_OPTION_LABELS if locale == "es" else _OPTION_LABELS_EN).get(
         family,
@@ -248,7 +246,26 @@ def _reward_sets(run: CareerRun, family: str, npc_name: str, rng: random.Random)
         "contract": ([{"type": "item", "item": "Facility Pass", "quantity": 1}], relationship, pokemon(first)),
         "training": ([{"type": "level", "levels": 2}], move("Protect", "Substitute"), pokemon(first)),
     }
-    return rewards.get(family, (relationship, [{"type": "level", "levels": 2}], pokemon(first)))
+    selected = rewards.get(family, (relationship, [{"type": "level", "levels": 2}], pokemon(first)))
+    active = [entry for entry in run.pokemon if entry.id in run.active_roster] or list(run.pokemon)
+    stat_cycles = {
+        "health": ("hp", "def", "spdef"), "training": ("def", "atk", "spd"),
+        "research": ("spdef", "spatk", "spd"), "contest": ("spd", "spatk", "atk"),
+        "rivalry": ("def", "atk", "spd"), "friendship": ("spdef", "hp", "atk"),
+    }
+    stats = stat_cycles.get(family, ("hp", "atk", "spd"))
+    enriched: List[List[dict]] = []
+    for index, option_rewards in enumerate(selected):
+        target = active[index % len(active)] if active else partner
+        training = [{
+            "type": "stat",
+            "pokemon_id": target.id if target else "",
+            "species": target.species if target else run.build.starter,
+            "stat": stats[index],
+            "amount": index + 1,
+        }]
+        enriched.append([*option_rewards, *training])
+    return tuple(enriched)  # type: ignore[return-value]
 
 
 def _option_description(index: int, rewards: List[dict], locale: str) -> str:
@@ -275,6 +292,9 @@ def _reward_summary(rewards: List[dict], locale: str) -> str:
         elif kind == "item": labels.append(f"{reward.get('quantity', 1)} × {reward.get('item')}")
         elif kind == "relationship": labels.append("una relación" if locale == "es" else "a relationship")
         elif kind == "level": labels.append(f"{reward.get('levels', 1)} " + ("niveles" if locale == "es" else "levels"))
+        elif kind == "stat": labels.append(
+            f"{reward.get('species')} +{reward.get('amount', 1)} {_stat_label(str(reward.get('stat') or ''), locale)}"
+        )
     return ", ".join(labels) or ("progreso de carrera" if locale == "es" else "career progress")
 
 
@@ -294,6 +314,17 @@ def _apply_reward(run: CareerRun, reward: Dict[str, Any], source: str) -> Dict[s
             return None
         grant_partner_levels(run, levels, source=f"decision:{source}")
         return {"type": "level", "levels": levels, "target": run.build.starter}
+    if reward_type == "stat":
+        pokemon_id = str(reward.get("pokemon_id") or "")
+        stat = str(reward.get("stat") or "")
+        amount = max(0, int(reward.get("amount") or 0))
+        event = grant_stat_training(run, pokemon_id, stat, amount, source=f"decision:{source}")
+        if event is None:
+            return None
+        return {
+            "type": "stat", "pokemon_id": pokemon_id, "species": event["species"],
+            "stat": stat, "amount": event["amount"], "total": event["total"],
+        }
     if reward_type == "relationship":
         name = str(reward.get("name") or "League staff")
         amount = int(reward.get("amount") or 0)
@@ -379,13 +410,13 @@ def _decision_story(
             if locale == "es":
                 return (
                     f"{partner_name} está listo para cambiar",
-                    f"{partner_name} está en nivel {partner_level}; el umbral PTU para convertirse en "
-                    f"{evolved} es {threshold}. El cuerpo técnico necesita una orden antes del calendario.",
+                    f"{partner_name} está en nivel {partner_level}; su evolución natural a {evolved} ocurre "
+                    f"al alcanzar el nivel {threshold}. El cuerpo técnico decide cómo acompañar su desarrollo.",
                 )
             return (
                 f"{partner_name} is ready to change",
-                f"{partner_name} is level {partner_level}; the PTU threshold for becoming {evolved} is "
-                f"{threshold}. The staff needs an order before the schedule.",
+                f"{partner_name} is level {partner_level}; its natural evolution into {evolved} happens "
+                f"at level {threshold}. The staff must decide how to support that growth.",
             )
     if family == "rivalry":
         rivals = [club for club in REGIONS[run.build.region].clubs if club != (run.contract.club_name if run.contract else "")]
@@ -419,13 +450,22 @@ def _decision_story(
             return (
                 f"{partner_name} no puede entrenar todo",
                 f"{partner_name} llega en nivel {partner_level}. El staff debe elegir entre descanso, "
-                "niveles PTU o un movimiento legal antes del calendario.",
+                "resistencia, una mejora de stats o un movimiento antes del calendario.",
             )
         return (
             f"{partner_name} cannot train everything",
-            f"{partner_name} enters at level {partner_level}. Staff must choose rest, PTU levels or a legal move before the schedule.",
+            f"{partner_name} enters at level {partner_level}. Staff must choose recovery, stat growth or a move before the schedule.",
         )
     return _COPY[locale].get(family, _COPY[locale]["default"])
+
+
+def _stat_label(stat: str, locale: str) -> str:
+    labels = {
+        "hp": ("PS", "HP"), "atk": ("Ataque", "Attack"), "def": ("Defensa", "Defense"),
+        "spatk": ("Ataque Especial", "Special Attack"), "spdef": ("Defensa Especial", "Special Defense"),
+        "spd": ("Velocidad", "Speed"),
+    }
+    return labels.get(stat, (stat, stat))[0 if locale == "es" else 1]
 
 
 def _npc_name(run: CareerRun, kind: str, rng: random.Random) -> str:

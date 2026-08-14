@@ -89,6 +89,7 @@ class CareerPokemon:
     taught_moves: List[str] = field(default_factory=list)
     nature: str = ""
     abilities: List[str] = field(default_factory=list)
+    stat_training: Dict[str, int] = field(default_factory=dict)
     evolution_history: List[Dict[str, Any]] = field(default_factory=list)
 
 
@@ -114,6 +115,7 @@ class BattleSpec:
     home_team_moves: List[List[str]] = field(default_factory=list)
     home_team_natures: List[str] = field(default_factory=list)
     home_team_abilities: List[List[str]] = field(default_factory=list)
+    home_team_stat_training: List[Dict[str, int]] = field(default_factory=list)
     away_team_species: List[str] = field(default_factory=list)
     away_team_levels: List[int] = field(default_factory=list)
     home_ai_level: str = "tactical"

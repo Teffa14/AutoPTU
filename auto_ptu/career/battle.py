@@ -21,7 +21,7 @@ _VOLATILE_KEYS = {
 }
 
 
-def simulate_battle(spec: BattleSpec, *, max_steps: int = 30) -> BattleTranscript:
+def simulate_battle(spec: BattleSpec, *, max_steps: int = 90) -> BattleTranscript:
     """Resolve one match with a fresh, isolated AutoPTU engine instance."""
     repo = PTUCsvRepository(rng=random.Random(spec.seed))
     builder = CsvRandomCampaignBuilder(repo=repo, seed=spec.seed)
@@ -32,6 +32,7 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 30) -> BattleTranscrip
     home_moves = list(spec.home_team_moves or [[] for _ in home_species])
     home_natures = list(spec.home_team_natures or ["" for _ in home_species])
     home_abilities = list(spec.home_team_abilities or [[] for _ in home_species])
+    home_stat_training = list(spec.home_team_stat_training or [{} for _ in home_species])
     level_cap = LEVEL_CAPS.get(spec.league, 100)
     home_team = [
         _build_species(
@@ -39,6 +40,7 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 30) -> BattleTranscrip
             taught_moves=home_moves[index] if index < len(home_moves) else [],
             nature=home_natures[index] if index < len(home_natures) else "",
             abilities=home_abilities[index] if index < len(home_abilities) else [],
+            stat_training=home_stat_training[index] if index < len(home_stat_training) else {},
         )
         for index, species in enumerate(home_species)
     ]
@@ -50,6 +52,13 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 30) -> BattleTranscrip
         pokemon.name = species
     for pokemon, species in zip(away_team, away_species):
         pokemon.name = species
+    # The engine assigns combatant ids after initiative/order normalization, so
+    # index-based metadata can attach one team member's types to another. Species
+    # identity is stable even when the active order rotates or switches.
+    combatant_metadata = {
+        str(pokemon.species).strip().lower(): {"types": list(pokemon.types)}
+        for pokemon in [*home_team, *away_team]
+    }
     payload = {
         "name": f"{spec.home_club} vs {spec.away_club}",
         "description": f"{REGIONS[spec.region].label} {spec.league.title()} League",
@@ -118,8 +127,8 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 30) -> BattleTranscrip
             "team_scores": team_scores,
             "winner_team": winner_team,
         })
-    initial_state = _compact_state(initial)
-    final_state = _compact_state(snapshot)
+    initial_state = _compact_state(initial, combatant_metadata)
+    final_state = _compact_state(snapshot, combatant_metadata)
     digest_payload = {
         "spec": _canonical_value({key: value for key, value in spec.__dict__.items() if key != "id"}),
         "winner_team": snapshot.get("winner_team"),
@@ -164,6 +173,7 @@ def simulate_calendar_summaries(specs: Sequence[BattleSpec]) -> list[BattleTrans
         home_moves = list(spec.home_team_moves or [[] for _ in home_species])
         home_natures = list(spec.home_team_natures or ["" for _ in home_species])
         home_abilities = list(spec.home_team_abilities or [[] for _ in home_species])
+        home_stat_training = list(spec.home_team_stat_training or [{} for _ in home_species])
         level_cap = LEVEL_CAPS.get(spec.league, 100)
         home_team = [
             _build_species(
@@ -174,6 +184,7 @@ def simulate_calendar_summaries(specs: Sequence[BattleSpec]) -> list[BattleTrans
                 taught_moves=home_moves[index] if index < len(home_moves) else [],
                 nature=home_natures[index] if index < len(home_natures) else "",
                 abilities=home_abilities[index] if index < len(home_abilities) else [],
+                stat_training=home_stat_training[index] if index < len(home_stat_training) else {},
             )
             for index, species in enumerate(home_species)
         ]
@@ -276,6 +287,7 @@ def _summary_combatants(spec: BattleSpec, home_team: Sequence[Any], away_team: S
                 "moves": [{"name": move.name, "type": move.type, "category": move.category, "db": move.db} for move in pokemon.moves[:4]],
                 "nature": pokemon.nature,
                 "abilities": [entry.get("name", "") if isinstance(entry, dict) else str(entry) for entry in pokemon.abilities],
+                "types": list(pokemon.types),
                 "statuses": [],
                 "size": pokemon.size,
                 "footprint_side": 1,
@@ -311,6 +323,7 @@ def _build_species(
     taught_moves: Iterable[str] = (),
     nature: str = "",
     abilities: Iterable[str] = (),
+    stat_training: Dict[str, int] | None = None,
 ):
     mon = build_career_pokemon_spec(
         repo,
@@ -321,6 +334,12 @@ def _build_species(
         taught_moves=taught_moves,
     )
     builder._apply_level_up_stats(mon)
+    training = stat_training or {}
+    attributes = {"hp": "hp_stat", "atk": "atk", "def": "defense", "spatk": "spatk", "spdef": "spdef", "spd": "spd"}
+    for key, attribute in attributes.items():
+        amount = max(0, int(training.get(key, 0)))
+        if amount:
+            setattr(mon, attribute, int(getattr(mon, attribute)) + amount)
     return mon
 
 
@@ -340,9 +359,11 @@ def _canonical_value(value: Any) -> Any:
     return str(value)
 
 
-def _compact_state(snapshot: Dict[str, Any]) -> Dict[str, Any]:
+def _compact_state(snapshot: Dict[str, Any], combatant_metadata: Dict[str, Dict[str, Any]] | None = None) -> Dict[str, Any]:
     combatants = []
     for entry in snapshot.get("combatants", []) or []:
+        species_key = str(entry.get("species") or entry.get("name") or "").strip().lower()
+        metadata = (combatant_metadata or {}).get(species_key, {})
         combatants.append(
             {
                 "id": entry.get("id"),
@@ -362,6 +383,7 @@ def _compact_state(snapshot: Dict[str, Any]) -> Dict[str, Any]:
                 "stats": _canonical_value(entry.get("stats") or {}),
                 "effective_stats": _canonical_value(entry.get("effective_stats") or {}),
                 "abilities": sorted(str(value) for value in (entry.get("abilities") or [])),
+                "types": sorted(str(value) for value in (entry.get("types") or metadata.get("types") or [])),
                 "moves": sorted(
                     (
                         {
