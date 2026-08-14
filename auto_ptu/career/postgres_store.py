@@ -114,10 +114,14 @@ class PostgresCareerStore:
     ) -> None:
         """Commit one season with a single database connection and transaction."""
         with self._connect(autocommit=False) as connection:
-            self._execute_save_battles(connection, transcripts)
-            self._execute_save_run(connection, run)
-            self._execute_record_idempotency(connection, run.id, idempotency_key, response)
-            connection.commit()
+            # Pipeline the independent writes so serverless latency costs one
+            # database round trip rather than one per statement. COMMIT remains
+            # the single atomic boundary for run, replay and idempotency state.
+            with connection.pipeline():
+                self._execute_save_battles(connection, transcripts)
+                self._execute_save_run(connection, run)
+                self._execute_record_idempotency(connection, run.id, idempotency_key, response)
+                connection.commit()
 
     def load_command_context(self, run_id: str, key: str) -> tuple[Optional[dict], Optional[CareerRun]]:
         """Load idempotency and run state in one serverless database round trip."""

@@ -157,7 +157,14 @@ class CareerService:
         if season_resolved:
             response["featured_battle"] = featured.to_dict()
         if season_resolved and hasattr(self.store, "save_season_resolution"):
+            persistence_started = time.perf_counter()
             self.store.save_season_resolution(run, season_transcripts, idempotency_key, response)
+            LOGGER.info(
+                "career season persisted run=%s season=%s seconds=%.3f",
+                run.id,
+                max(1, run.season_number - 1),
+                time.perf_counter() - persistence_started,
+            )
             persisted_atomically = True
         elif not specs:
             self.store.save_run(run)
