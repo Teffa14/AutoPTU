@@ -114,11 +114,41 @@ class PostgresCareerStore:
     ) -> None:
         """Commit one season with a single database connection and transaction."""
         with self._connect(autocommit=False) as connection:
-            for transcript in transcripts:
-                self._execute_save_battle(connection, transcript)
+            self._execute_save_battles(connection, transcripts)
             self._execute_save_run(connection, run)
             self._execute_record_idempotency(connection, run.id, idempotency_key, response)
             connection.commit()
+
+    def load_command_context(self, run_id: str, key: str) -> tuple[Optional[dict], Optional[CareerRun]]:
+        """Load idempotency and run state in one serverless database round trip."""
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                select
+                  (select response from private.run_commands where run_id = %s and idempotency_key = %s),
+                  (select state from private.career_runs where id = %s)
+                """,
+                (uuid.UUID(run_id), key, uuid.UUID(run_id)),
+            ).fetchone()
+        if not row:
+            return None, None
+        return row[0], CareerRun.from_dict(row[1]) if row[1] else None
+
+    def load_owned_battle(self, player_id: str, run_id: str, battle_id: str) -> dict:
+        """Authorize and fetch an already-resolved transcript with one query."""
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                select b.result
+                from private.battle_results b
+                join private.career_runs r on r.id = b.run_id
+                where b.run_id = %s and b.battle_key = %s and b.status = 'complete' and r.user_id = %s
+                """,
+                (uuid.UUID(run_id), battle_id, uuid.UUID(player_id)),
+            ).fetchone()
+        if not row:
+            raise KeyError(f"Battle transcript not found: {battle_id}")
+        return row[0]
 
     def run_battle(self, spec: BattleSpec, timeout_seconds: float = 90.0) -> BattleTranscript:
         """Enqueue a battle in PGMQ and wait for an isolated worker's authoritative result."""
@@ -209,6 +239,33 @@ class PostgresCareerStore:
                 self.psycopg.types.json.Jsonb(transcript.to_dict()), transcript.sha256,
                 transcript.engine_version,
             ),
+        )
+
+    def _execute_save_battles(self, connection, transcripts: Sequence[BattleTranscript]) -> None:
+        if not transcripts:
+            return
+        placeholders = ",".join(["(%s, %s, %s, %s, %s, %s, 'complete', now())"] * len(transcripts))
+        parameters = []
+        for transcript in transcripts:
+            run_id = transcript.battle_id.split("-s", 1)[0]
+            parameters.extend(
+                (
+                    uuid.UUID(run_id), transcript.battle_id,
+                    self.psycopg.types.json.Jsonb(asdict(transcript.spec)),
+                    self.psycopg.types.json.Jsonb(transcript.to_dict()), transcript.sha256,
+                    transcript.engine_version,
+                )
+            )
+        connection.execute(
+            f"""
+            insert into private.battle_results
+              (run_id, battle_key, spec, result, transcript_sha256, rules_version, status, updated_at)
+            values {placeholders}
+            on conflict (run_id, battle_key) do update set
+              result = excluded.result, transcript_sha256 = excluded.transcript_sha256,
+              status = 'complete', updated_at = now()
+            """,
+            tuple(parameters),
         )
 
     def _execute_record_idempotency(self, connection, run_id: str, key: str, response: dict) -> None:

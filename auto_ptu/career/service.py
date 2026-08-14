@@ -108,10 +108,14 @@ class CareerService:
     def decide(self, player_id: str, run_id: str, payload: Dict[str, object], idempotency_key: str) -> dict:
         if not idempotency_key:
             raise ValueError("An idempotency key is required.")
-        cached = self.store.idempotent_response(run_id, idempotency_key)
+        if hasattr(self.store, "load_command_context"):
+            cached, run = self.store.load_command_context(run_id, idempotency_key)
+        else:
+            cached = self.store.idempotent_response(run_id, idempotency_key)
+            run = None
         if cached is not None:
             return cached
-        run = self._owned_run(player_id, run_id)
+        run = self._validate_owned_run(player_id, run) if run is not None else self._owned_run(player_id, run_id)
         expected = int(payload.get("expected_revision", -1))
         if expected != run.revision:
             raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
@@ -150,6 +154,8 @@ class CareerService:
                 run = prepared_run
                 self.store.save_run(run)
         response = {"run": run.to_dict(), "battle_ids": battle_ids, "season_resolved": season_resolved}
+        if season_resolved:
+            response["featured_battle"] = featured.to_dict()
         if season_resolved and hasattr(self.store, "save_season_resolution"):
             self.store.save_season_resolution(run, season_transcripts, idempotency_key, response)
             persisted_atomically = True
@@ -168,6 +174,11 @@ class CareerService:
         return run.to_dict()
 
     def battle(self, player_id: str, run_id: str, battle_id: str) -> dict:
+        if hasattr(self.store, "load_owned_battle"):
+            try:
+                return self.store.load_owned_battle(player_id, run_id, battle_id)
+            except KeyError:
+                pass
         run = self._owned_run(player_id, run_id)
         if run.season is not None and run.season.status == "battle":
             specs = list(run.season.battles)
@@ -234,7 +245,9 @@ class CareerService:
         return self.store.load_share(share_id)
 
     def _owned_run(self, player_id: str, run_id: str) -> CareerRun:
-        run = self.store.load_run(run_id)
+        return self._validate_owned_run(player_id, self.store.load_run(run_id))
+
+    def _validate_owned_run(self, player_id: str, run: CareerRun) -> CareerRun:
         if run.player_id != player_id:
             raise PermissionError("Career run belongs to another account.")
         if self.engine.ensure_roster(run):

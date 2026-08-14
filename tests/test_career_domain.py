@@ -470,6 +470,7 @@ def test_decision_endpoint_is_revisioned_and_idempotent(tmp_path: Path) -> None:
     assert first["run"]["season_number"] == 2
     assert first["season_resolved"] is True
     assert len(first["battle_ids"]) == 6
+    assert first["featured_battle"]["battle_id"] == first["battle_ids"][-1]
     with pytest.raises(RuntimeError, match="Revision conflict"):
         service.decide("trainer-1", run_id, {"expected_revision": 0, "option_id": option_id}, "season-2")
 
@@ -497,6 +498,7 @@ def test_decision_precomputes_featured_battle_before_opening_the_arena(tmp_path:
     assert prepared["run"]["season_number"] == 2
     assert prepared["season_resolved"] is True
     featured = prepared["battle_ids"][-1]
+    assert prepared["featured_battle"]["battle_id"] == featured
     transcript = service.battle("trainer-fast", created["id"], featured)
     assert transcript["battle_id"] == featured
     assert calls == [featured]

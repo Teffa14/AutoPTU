@@ -10,7 +10,7 @@ import { BattlePreparing } from "./BattlePreparing";
 import { CareerCelebration } from "./CareerCelebration";
 import { PokemonSprite } from "./PokemonSprite";
 
-export default function BattleScreen({ runId, battleId, locale, run, onRun }: { runId: string; battleId: string; locale: Locale; run?: CareerRun | null; onRun: (run: CareerRun) => void }) {
+export default function BattleScreen({ runId, battleId, locale, run }: { runId: string; battleId: string; locale: Locale; run?: CareerRun | null }) {
   const copy = t(locale);
   const [transcript, setTranscript] = useState<BattleTranscript | null>(null);
   const [stepIndex, setStepIndex] = useState(0);
@@ -23,7 +23,6 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: { 
       if (!active) return;
       setTranscript(value);
       setStepIndex(0);
-      careerApi.run(runId).then(onRun).catch(() => undefined);
     }).catch((reason: Error) => active && setError(reason.message));
     return () => { active = false; };
   }, [runId, battleId]);
