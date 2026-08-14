@@ -8,24 +8,37 @@ import urllib.request
 import uuid
 from dataclasses import asdict
 from typing import Dict, List, Optional, Sequence
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from .catalogs import REGIONS
 from .models import BattleSpec, BattleTranscript, CareerRun, DailyChallenge, LeaderboardEntry
+
+
+def _libpq_compatible_url(database_url: str) -> str:
+    """Remove integration-only URL hints that libpq/psycopg cannot parse."""
+    parts = urlsplit(database_url)
+    query = urlencode([
+        (key, value)
+        for key, value in parse_qsl(parts.query, keep_blank_values=True)
+        if key.lower() not in {"supa", "pgbouncer"}
+    ])
+    return urlunsplit((parts.scheme, parts.netloc, parts.path, query, parts.fragment))
 
 
 class PostgresCareerStore:
     """Authoritative production store. The browser never writes scores or run state."""
 
     def __init__(self, database_url: Optional[str] = None) -> None:
-        self.database_url = (
+        raw_database_url = (
             database_url
             or os.environ.get("DATABASE_URL", "")
             or os.environ.get("POSTGRES_URL", "")
             or os.environ.get("POSTGRES_PRISMA_URL", "")
             or os.environ.get("POSTGRES_URL_NON_POOLING", "")
         )
-        if not self.database_url:
+        if not raw_database_url:
             raise ValueError("DATABASE_URL is required for PostgresCareerStore.")
+        self.database_url = _libpq_compatible_url(raw_database_url)
         import psycopg
 
         self.psycopg = psycopg

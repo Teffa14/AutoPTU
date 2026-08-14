@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import sys
 
-from auto_ptu.career.postgres_store import PostgresCareerStore
+from auto_ptu.career.postgres_store import PostgresCareerStore, _libpq_compatible_url
 
 
 class _FakePsycopg:
@@ -35,3 +35,11 @@ def test_pooled_url_precedes_non_pooling_url(monkeypatch) -> None:
     store = PostgresCareerStore()
 
     assert store.database_url == "postgresql://pooler.example.invalid/db"
+
+
+def test_integration_hints_are_removed_but_libpq_options_remain() -> None:
+    source = "postgresql://user:pass@pooler.example.invalid:6543/db?sslmode=require&supa=base-pooler.x&pgbouncer=true"
+
+    assert _libpq_compatible_url(source) == (
+        "postgresql://user:pass@pooler.example.invalid:6543/db?sslmode=require"
+    )
