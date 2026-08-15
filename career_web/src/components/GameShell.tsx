@@ -51,20 +51,21 @@ export function GameShell({ children, run, locale, path, displaySeason, homePath
 
 function GoogleAccount({ locale }: { locale: Locale }) {
   const [label, setLabel] = useState("");
+  const [error, setError] = useState("");
   useEffect(() => {
     const client = supabase;
     if (!client) return;
     let active = true;
-    const update = () => client.auth.getUser().then(({ data }) => {
+    const update = (user: { is_anonymous?: boolean; email?: string; user_metadata?: Record<string, unknown> } | null | undefined) => {
       if (!active) return;
-      setLabel(data.user && !data.user.is_anonymous ? String(data.user.email ?? data.user.user_metadata?.name ?? "Google") : "");
-    });
-    void update();
-    const { data } = client.auth.onAuthStateChange(() => { void update(); });
+      setLabel(user && !user.is_anonymous ? String(user.email ?? user.user_metadata?.name ?? "Google") : "");
+    };
+    void client.auth.getSession().then(({ data }) => update(data.session?.user));
+    const { data } = client.auth.onAuthStateChange((_event, session) => update(session?.user));
     return () => { active = false; data.subscription.unsubscribe(); };
   }, []);
   if (!supabase) return null;
   return label
-    ? <button className="account-chip" title={label} onClick={() => { void signOut(); }}>{label.split("@")[0]} <small>{locale === "es" ? "salir" : "sign out"}</small></button>
-    : <button className="account-chip google" onClick={() => { void signInWithProvider("google"); }}>G <small>{locale === "es" ? "Entrar" : "Sign in"}</small></button>;
+    ? <button className="account-chip" title={label} onClick={() => { void signOut().catch((reason: Error) => setError(reason.message)); }}>{label.split("@")[0]} <small>{locale === "es" ? "salir" : "sign out"}</small></button>
+    : <button className="account-chip google" title={error || undefined} onClick={() => { setError(""); void signInWithProvider("google").catch((reason: Error) => setError(reason.message)); }}>G <small>{error ? "!" : locale === "es" ? "Entrar" : "Sign in"}</small></button>;
 }

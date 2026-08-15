@@ -296,3 +296,18 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px s
   .primary-action,.manage-squad{padding:.85rem 1.2rem}
   .arena-wrap{background-position:center}
 }
+.career-home { min-height: calc(100vh - 76px); padding: clamp(3rem, 9vw, 8rem) clamp(1.25rem, 6vw, 6rem); display: grid; align-content: center; gap: 2rem; background: linear-gradient(120deg, rgba(7, 13, 23, .94), rgba(12, 23, 35, .72)), url("./assets/generated/career-journey.jpg") center/cover; }
+.career-home-copy { max-width: 760px; }
+.career-home-copy h1 { margin: .35rem 0 .8rem; font-size: clamp(2.5rem, 6vw, 5.8rem); line-height: .94; }
+.career-home-copy > p:last-child { max-width: 620px; color: var(--muted); font-size: 1.05rem; }
+.career-entry-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.career-entry-card { min-height: 240px; padding: 1.4rem; border: 1px solid rgba(255,255,255,.16); border-radius: 18px; display: flex; flex-direction: column; align-items: flex-start; text-align: left; color: inherit; background: rgba(7, 13, 23, .78); backdrop-filter: blur(14px); transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+.career-entry-card:hover { transform: translateY(-4px); border-color: var(--accent); background: rgba(15, 30, 45, .92); }
+.career-entry-card small { color: var(--accent); letter-spacing: .13em; }
+.career-entry-card strong { margin: .55rem 0 .7rem; font-size: 1.8rem; }
+.career-entry-card span { color: var(--muted); line-height: 1.55; }
+.career-entry-card b { margin-top: auto; padding-top: 1.2rem; }
+.career-entry-card.ranked { border-color: rgba(246, 196, 83, .42); }
+.career-entry-card.leaderboard { border-color: rgba(103, 232, 249, .34); }
+.continue-career { justify-self: start; padding: .75rem 1rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: rgba(7,13,23,.72); color: inherit; }
+@media (max-width: 780px) { .career-entry-grid { grid-template-columns: 1fr; } .career-entry-card { min-height: 190px; } }

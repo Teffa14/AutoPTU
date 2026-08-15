@@ -3,6 +3,7 @@ import { careerApi } from "./api";
 import { CreateScreen } from "./components/CreateScreen";
 import { DailyScreen } from "./components/DailyScreen";
 import { GameShell } from "./components/GameShell";
+import { HomeScreen } from "./components/HomeScreen";
 import { ProfileScreen } from "./components/ProfileScreen";
 import { SeasonScreen } from "./components/SeasonScreen";
 import { ShareScreen } from "./components/ShareScreen";
@@ -91,14 +92,16 @@ export function App() {
   } else if (path.startsWith("timeline/") && routeRun) {
     screen = <TimelineScreen run={routeRun} locale={locale} />;
   } else if (path === "daily" || path.startsWith("leaderboard")) {
-    screen = <DailyScreen locale={locale} onRun={setRun} />;
+    screen = <DailyScreen locale={locale} onRun={setRun} leaderboardOnly={path.startsWith("leaderboard")} />;
   } else if (path.startsWith("run/") && routeRun) {
     screen = <SeasonScreen run={routeRun} locale={locale} onRun={setRun} />;
-  } else {
+  } else if (path === "new" || path === "create") {
     screen = <CreateScreen locale={locale} onCreated={(value) => { setRun(value); localStorage.setItem("career-last-run", value.id); navigate(`run/${value.id}`); }} />;
+  } else {
+    screen = <HomeScreen locale={locale} />;
   }
 
-  const shellRun = shareMatch || path === "" ? null : requestedRunId ? routeRun : run;
+  const shellRun = shareMatch || path === "" || path === "new" || path === "create" ? null : requestedRunId ? routeRun : run;
 
   return (
     <GameShell

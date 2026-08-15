@@ -26,9 +26,22 @@ try {
   page.on("console", (message) => message.type() === "error" && errors.push(message.text()));
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto(base, { waitUntil: "networkidle" });
-  await page.screenshot({ path: `${output}/desktop-create.png` });
+  await page.screenshot({ path: `${output}/desktop-home.png` });
   const initial = await metrics(page);
-  if (initial.horizontalOverflow || initial.canvasCount !== 0) throw new Error(`Bad creation fit: ${JSON.stringify(initial)}`);
+  if (initial.horizontalOverflow || initial.canvasCount !== 0) throw new Error(`Bad home fit: ${JSON.stringify(initial)}`);
+  if (await page.locator(".career-entry-card").count() !== 3) throw new Error("Career home does not expose normal, ranked, and leaderboard choices.");
+
+  await page.getByRole("button", { name: /Leaderboard/i }).click();
+  await page.waitForURL(/\/leaderboard$/);
+  if (await page.locator(".ranked-entry").count() !== 0 || await page.locator(".leaderboard-board").count() !== 1) throw new Error("Leaderboard route did not isolate the standings.");
+  await page.getByRole("button", { name: /AutoPTU Career home/i }).click();
+  await page.getByRole("button", { name: /Ranked/i }).click();
+  await page.waitForURL(/\/daily$/);
+  if (await page.locator(".ranked-entry").count() !== 1) throw new Error("Ranked route did not expose the daily entry form.");
+  await page.getByRole("button", { name: /AutoPTU Career home/i }).click();
+  await page.getByRole("button", { name: /Carrera normal|Normal career/i }).click();
+  await page.waitForURL(/\/new$/);
+  await page.screenshot({ path: `${output}/desktop-create.png` });
 
   await page.getByRole("button", { name: "ES", exact: true }).click();
   await page.getByRole("button", { name: "EN", exact: true }).click();
