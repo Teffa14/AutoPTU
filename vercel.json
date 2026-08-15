@@ -8,10 +8,5 @@
     "AUTO_PTU_SPRITE_DIR": "/tmp/autoptu/sprites",
     "AUTO_PTU_POKEAPI_CACHE": "/tmp/autoptu/pokeapi",
     "CAREER_BATTLE_EXECUTION": "inline"
-  },
-  "functions": {
-    "api/index.py": {
-      "excludeFiles": "{career_web,files,IMPLEMENTATION FILES,Animated Pokemon Sprites,Generation 9 Pack v3.3.4,Foundry,reports,tests,_refs,archive,audit_sources,build*,dist*,repos,vendor,portable_data}/**"
-    }
   }
 }
