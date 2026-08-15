@@ -1,6 +1,10 @@
 .git/
 .pytest_tmp/
+.pytest_tmp*/
 .pytest_tmp_runtime/
+.tmp/
+.tmp_restore/
+tmp*/
 .venv/
 Foundry/
 repos/
