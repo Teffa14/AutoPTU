@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm --prefix career_web ci && npm --prefix career_web run build",
+  "buildCommand": "python scripts/build_vercel.py",
   "env": {
     "AUTO_PTU_RUNTIME_ROOT": "/tmp",
     "AUTO_PTU_REPORTS_DIR": "/tmp/autoptu/reports",
