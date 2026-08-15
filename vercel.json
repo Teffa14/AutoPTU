@@ -10,7 +10,7 @@
     "CAREER_BATTLE_EXECUTION": "inline"
   },
   "functions": {
-    "**/*.py": {
+    "app.py": {
       "excludeFiles": "{career_web/**,auto_ptu/api/static/**}"
     }
   }
