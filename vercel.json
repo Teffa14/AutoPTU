@@ -8,10 +8,5 @@
     "AUTO_PTU_SPRITE_DIR": "/tmp/autoptu/sprites",
     "AUTO_PTU_POKEAPI_CACHE": "/tmp/autoptu/pokeapi",
     "CAREER_BATTLE_EXECUTION": "inline"
-  },
-  "functions": {
-    "app.py": {
-      "excludeFiles": "{career_web/**,auto_ptu/api/static/**}"
-    }
   }
 }
