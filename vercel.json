@@ -11,7 +11,7 @@
   },
   "functions": {
     "api/**/*.py": {
-      "excludeFiles": "{.codex/**,.cursor/**,.github/**,.pytest*/**,.tmp*/**,_anim_probe/**,_anim_sys_probe/**,_refs/**,7z-extra/**,Animated Pokemon Sprites/**,Foundry/**,Generation 9 Pack v3.3.4/**,IMPLEMENTATION FILES/**,PTUDatabase-main/**,Teams/**,archive/**,audit_sources/**,build*/**,career_web/**,check here for issues/**,concept art/**,deploy/**,design-system/**,dist*/**,extensions/**,files/**,portable_data/**,py_trees/**,repos/**,reports/**,scripts/**,supabase/**,test-results/**,tests/**,tmp*/**,trueskill/**,vendor/**}"
+      "excludeFiles": "{career_web,files,IMPLEMENTATION FILES,Animated Pokemon Sprites,Generation 9 Pack v3.3.4,Foundry,reports,tests,_refs,archive,audit_sources,build*,dist*,repos,vendor,portable_data}/**"
     }
   }
 }
