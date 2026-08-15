@@ -1,7 +1,7 @@
 import { chromium } from "playwright";
 import { mkdir } from "node:fs/promises";
 
-const base = "http://127.0.0.1:8010/career-game/";
+const base = process.env.CAREER_QA_BASE ?? "http://127.0.0.1:8010/career-game/";
 const output = "test-results/career-qa";
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch({ headless: true });
@@ -43,13 +43,27 @@ try {
   await page.waitForURL(/\/new$/);
   await page.screenshot({ path: `${output}/desktop-create.png` });
 
+  const starterStrip = page.locator(".starter-strip").first();
+  await starterStrip.evaluate((element) => { element.scrollLeft = element.scrollWidth; });
+  const starterScrollBefore = await starterStrip.evaluate((element) => element.scrollLeft);
+  const finalStarter = starterStrip.getByRole("radio").last();
+  await finalStarter.click();
+  await page.waitForTimeout(100);
+  const starterScrollAfter = await starterStrip.evaluate((element) => element.scrollLeft);
+  if (starterScrollBefore <= 0 || starterScrollAfter < starterScrollBefore * 0.8 || await finalStarter.getAttribute("aria-checked") !== "true") throw new Error(`Starter selection reset the carousel: ${starterScrollBefore} -> ${starterScrollAfter}`);
+
   await page.getByRole("button", { name: "ES", exact: true }).click();
   await page.getByRole("button", { name: "EN", exact: true }).click();
   await page.getByRole("button", { name: /advanced/i }).click();
   await page.getByRole("button", { name: /simple/i }).click();
   await page.getByLabel("Nombre").fill("Ari Vale");
   await page.getByRole("button", { name: /contrato|contract/i }).click();
-  await page.waitForURL(/\/career-game\/run\//, { timeout: 20_000 });
+  try {
+    await page.waitForURL(/\/career-game\/run\//, { timeout: 20_000 });
+  } catch (reason) {
+    const alert = await page.getByRole("alert").textContent().catch(() => null);
+    throw new Error(`Career creation stayed at ${page.url()}${alert ? `: ${alert}` : ""}`, { cause: reason });
+  }
   await page.screenshot({ path: `${output}/desktop-season.png` });
   const season = await metrics(page);
   if (season.horizontalOverflow || season.canvasCount !== 0 || season.navCount !== 1) throw new Error(`Bad season state: ${JSON.stringify(season)}`);

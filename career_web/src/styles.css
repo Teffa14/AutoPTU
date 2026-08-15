@@ -64,8 +64,7 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px s
 .registration-book input[type="text"], .registration-book input:not([type]), .registration-book select { width:100%; border:0; border-bottom:2px solid #6f624e; color:var(--paper-ink); background:rgba(255,255,255,.18); padding:.7rem .45rem; border-radius:0; }
 .starter-field { border:0; padding:0; margin:1.4rem 0; }
 .starter-strip { display:flex; overflow-x:auto; gap:.65rem; padding:.4rem .1rem 1rem; scroll-snap-type:x mandatory; }
-.starter-card { flex:0 0 8.1rem; width:8.1rem; min-width:8.1rem; max-width:8.1rem; overflow:hidden; scroll-snap-align:start; border:1px solid #c4b58e; background:#e9dbb8; padding:.5rem; min-height:9.5rem; cursor:pointer; transition:transform .2s,background .2s; }
-.starter-card input { position:absolute; opacity:0; }
+.starter-card { flex:0 0 8.1rem; width:8.1rem; min-width:8.1rem; max-width:8.1rem; overflow:hidden; scroll-snap-align:start; border:1px solid #c4b58e; background:#e9dbb8; color:var(--paper-ink); padding:.5rem; min-height:9.5rem; cursor:pointer; text-align:center; transition:transform .2s,background .2s; }
 .pokemon-sprite{display:inline-block;overflow:hidden;line-height:0}.pokemon-sprite img{display:block;width:100%;height:100%;max-width:100%;object-fit:contain;object-position:center bottom;image-rendering:pixelated;user-select:none}.starter-sprite{display:block;width:5rem;height:5rem;margin-inline:auto}.starter-sprite img{filter:drop-shadow(0 .35rem .25rem rgba(38,30,19,.2))}
 .starter-card b,.starter-card small { display:block; }.starter-card small{color:#746753;font-size:.72rem;}
 .starter-card.selected { background:#f7b56c; border:2px solid #4d3521; transform:translateY(-.25rem) rotate(-1deg); }

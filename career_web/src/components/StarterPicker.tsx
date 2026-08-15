@@ -16,6 +16,7 @@ type Filter = "all" | "starter" | "underdog";
 
 export function StarterPicker({ starters, underdogs, value, locale, name = "starter", onChange }: Props) {
   const strip = useRef<HTMLDivElement>(null);
+  const selectionScrollLeft = useRef<number | null>(null);
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
   const visible = useMemo(() => {
@@ -28,6 +29,13 @@ export function StarterPicker({ starters, underdogs, value, locale, name = "star
 
   function move(direction: -1 | 1) {
     strip.current?.scrollBy({ left: direction * Math.max(240, strip.current.clientWidth * 0.72), behavior: "smooth" });
+  }
+
+  function choose(species: string) {
+    const left = selectionScrollLeft.current ?? strip.current?.scrollLeft ?? 0;
+    onChange(species);
+    requestAnimationFrame(() => strip.current?.scrollTo({ left, behavior: "auto" }));
+    selectionScrollLeft.current = null;
   }
 
   return (
@@ -45,14 +53,13 @@ export function StarterPicker({ starters, underdogs, value, locale, name = "star
       </div>
       <div className="starter-carousel">
         <button type="button" className="starter-arrow previous" onClick={() => move(-1)} aria-label={locale === "es" ? "Ver Pokémon anteriores" : "See previous Pokémon"}>‹</button>
-        <div className="starter-strip" ref={strip} tabIndex={0}>
+        <div className="starter-strip" ref={strip} tabIndex={0} role="radiogroup" aria-label={locale === "es" ? "Compañero inicial" : "Starting partner"}>
           {visible.map((entry) => (
-            <label key={`${entry.kind}:${entry.species}`} className={value === entry.species ? "starter-card selected" : "starter-card"}>
-              <input type="radio" name={name} checked={value === entry.species} onChange={() => onChange(entry.species)} />
+            <button type="button" role="radio" aria-checked={value === entry.species} name={name} key={`${entry.kind}:${entry.species}`} className={value === entry.species ? "starter-card selected" : "starter-card"} onPointerDown={() => { selectionScrollLeft.current = strip.current?.scrollLeft ?? 0; }} onClick={() => choose(entry.species)}>
               <span className={`partner-kind ${entry.kind}`}>{entry.kind === "starter" ? (locale === "es" ? "Starter regional" : "Regional starter") : (locale === "es" ? "Underdog regional" : "Regional underdog")}</span>
               <PokemonSprite name={entry.species} className="starter-sprite" />
               <b>{entry.species}</b>
-            </label>
+            </button>
           ))}
           {!visible.length ? <p className="starter-empty">{locale === "es" ? "No hay coincidencias." : "No matches."}</p> : null}
         </div>
