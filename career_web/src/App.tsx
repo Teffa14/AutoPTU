@@ -8,6 +8,7 @@ import { ProfileScreen } from "./components/ProfileScreen";
 import { SeasonHub } from "./components/SeasonHub";
 import { ShareScreen } from "./components/ShareScreen";
 import { TimelineScreen } from "./components/TimelineScreen";
+import { trainerSpriteForRun } from "./trainerSprites";
 import type { CareerRun, Locale } from "./types";
 
 const BattleScreen = lazy(() => import("./components/BattleScreen"));
@@ -40,6 +41,14 @@ export function App() {
     const skipLink = document.querySelector<HTMLElement>(".skip-link");
     if (skipLink) skipLink.textContent = locale === "es" ? "Saltar al contenido" : "Skip to content";
   }, [locale]);
+
+  useEffect(() => {
+    if (!run) return;
+    localStorage.setItem(
+      `career-trainer-sprite:${run.build.name.trim().toLocaleLowerCase()}`,
+      trainerSpriteForRun(run),
+    );
+  }, [run]);
 
   const runMatch = path.match(/^(?:run|profile|timeline)\/([^/]+)/);
   const battleMatch = path.match(/^battle\/([^/]+)\/([^/]+)/);
