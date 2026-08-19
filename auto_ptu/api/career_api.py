@@ -6,6 +6,7 @@ from typing import Any, Dict, Optional
 from fastapi import APIRouter, Header, HTTPException, Query
 
 from ..career.auth import SupabaseIdentityResolver
+from ..career.models import CareerRun
 from ..career.service import CareerService
 
 
@@ -45,6 +46,29 @@ def create_run(payload: Dict[str, Any], authorization: Optional[str] = Header(de
     identity = _user(authorization, x_career_user)
     try:
         return SERVICE.create_run(identity.user_id, payload)
+    except Exception as exc:
+        raise _error(exc) from exc
+
+
+@router.post("/runs/restore")
+def restore_unranked_run(payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    """Rehydrate a casual browser run after a serverless cold start.
+
+    Ranked runs never enter this path. Competitive state remains authoritative
+    in Postgres and requires a Supabase identity.
+    """
+    identity = _user(authorization, x_career_user)
+    try:
+        raw_run = payload.get("run")
+        if not isinstance(raw_run, dict):
+            raise ValueError("run must be an object")
+        run = CareerRun.from_dict(raw_run)
+        if run.ranked:
+            raise PermissionError("Ranked career state cannot be restored from the browser.")
+        if run.player_id != identity.user_id:
+            raise PermissionError("Career run belongs to another account.")
+        SERVICE.store.save_run(run)
+        return run.to_dict()
     except Exception as exc:
         raise _error(exc) from exc
 
@@ -191,7 +215,7 @@ def daily_challenge(day: date) -> dict:
 @router.post("/daily/{day}/attempts")
 def create_daily_attempt(day: date, payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
     identity = _user(authorization, x_career_user)
-    if not identity.permanent:
+    if not identity.permanent or identity.source != "supabase":
         raise HTTPException(status_code=403, detail="A permanent account is required for ranked daily attempts.")
     try:
         return SERVICE.create_daily_attempt(identity.user_id, payload, day)
