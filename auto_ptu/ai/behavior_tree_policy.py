@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, Optional
 
-from .._vendor import py_trees
+import py_trees
 
 
 @dataclass
