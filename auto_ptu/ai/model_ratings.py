@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-import trueskill
+from .._vendor import trueskill
 
 
 DEFAULT_MU = 25.0
