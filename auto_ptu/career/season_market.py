@@ -61,7 +61,7 @@ def club_offers(run: CareerRun) -> List[Dict[str, Any]]:
     clubs = list(region.clubs)
     rng = random.Random(_stable_seed(run.seed, run.season_number, "club-market"))
     current = run.contract.club_name if run.contract else ""
-    renewal_allowed = bool(current and _same_league_as_last_season(run))
+    renewal_allowed = bool(current and run.season_number > 1 and _same_league_as_last_season(run))
     alternatives = [club for club in clubs if club != current]
     rng.shuffle(alternatives)
     selected = ([current] if renewal_allowed else []) + alternatives
@@ -412,7 +412,15 @@ def _apply_perk(run: CareerRun, stat: str, amount: int) -> None:
 
 
 def _contract_covers_current_season(run: CareerRun) -> bool:
-    return bool(run.contract and run.contract.seasons_remaining > 0 and _same_league_as_last_season(run))
+    # The default club on a brand-new career is only a placeholder until the
+    # player makes the first club choice. From season two onward, a genuinely
+    # multi-season signed deal carries forward without forcing another market.
+    return bool(
+        run.season_number > 1
+        and run.contract
+        and run.contract.seasons_remaining > 0
+        and _same_league_as_last_season(run)
+    )
 
 
 def _same_league_as_last_season(run: CareerRun) -> bool:
