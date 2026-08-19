@@ -5,6 +5,7 @@ import { DEFAULT_TRAINER_SPRITE, trainerSpriteOptions } from "../trainerSprites"
 import type { CareerCatalog, CareerMode, CareerRun, Locale } from "../types";
 import { StarterPicker } from "./StarterPicker";
 import { TrainerSpritePicker } from "./TrainerSpritePicker";
+import "./creation-mobile.css";
 
 interface Props { locale: Locale; onCreated: (run: CareerRun) => void }
 
