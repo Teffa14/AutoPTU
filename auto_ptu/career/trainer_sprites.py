@@ -1,24 +1,26 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List
+from typing import Dict, List
 
 from .models import CareerRun
 
 
+# Curated IDs from the canonical Pokemon Showdown 2D trainer sprite set.
+# Keep this list intentionally small so the creation screen stays readable.
 TRAINER_SPRITES: tuple[dict[str, str], ...] = (
     {"id": "red", "label": "Red", "region": "kanto"},
     {"id": "green", "label": "Green", "region": "kanto"},
     {"id": "ethan", "label": "Ethan", "region": "johto"},
-    {"id": "kris", "label": "Kris", "region": "johto"},
+    {"id": "lyra", "label": "Lyra", "region": "johto"},
     {"id": "brendan", "label": "Brendan", "region": "hoenn"},
     {"id": "may", "label": "May", "region": "hoenn"},
     {"id": "lucas", "label": "Lucas", "region": "sinnoh"},
     {"id": "dawn", "label": "Dawn", "region": "sinnoh"},
     {"id": "hilbert", "label": "Hilbert", "region": "unova"},
     {"id": "hilda", "label": "Hilda", "region": "unova"},
-    {"id": "calem", "label": "Calem", "region": "kalos"},
+    {"id": "nate", "label": "Nate", "region": "unova"},
+    {"id": "rosa", "label": "Rosa", "region": "unova"},
     {"id": "serena", "label": "Serena", "region": "kalos"},
-    {"id": "elio", "label": "Elio", "region": "alola"},
     {"id": "selene", "label": "Selene", "region": "alola"},
     {"id": "victor", "label": "Victor", "region": "galar"},
     {"id": "gloria", "label": "Gloria", "region": "galar"},
