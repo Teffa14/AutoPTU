@@ -10,6 +10,9 @@ from .ptu_builds import identity_seed, is_legal_taught_move, persistent_identity
 
 LEVEL_CAPS = {"junior": 20, "rookie": 35, "regular": 55, "elite": 100}
 TRAINING_KIT_WEAR = 12
+BASE_ACTIVE_SEASON_WEAR = 2
+VETERAN_WEAR_START_SEASON = 9
+PC_AGING_START_SEASON = 12
 
 
 def initialize_roster(run: CareerRun, stable_seed: int) -> bool:
@@ -237,6 +240,7 @@ def progress_after_season(
     )
     used: List[str] = []
     evolutions: List[dict] = []
+    longevity: List[dict] = []
     active_ids = set(run.active_roster)
     for pokemon in run.pokemon:
         if pokemon.status == "retired" or pokemon.career_health <= 0:
@@ -254,11 +258,34 @@ def progress_after_season(
         pokemon.level = min(career_level_cap(run), pokemon.level)
         evolutions.extend(_evolve_ready(run, pokemon))
         _refresh_identity(run, pokemon)
+
+        wear = _season_career_wear(run, pokemon, played=played, active=pokemon.id in active_ids)
+        if wear:
+            before = pokemon.career_health
+            pokemon.career_health = max(0, pokemon.career_health - wear)
+            retired = pokemon.career_health <= 0 and _retire_pokemon(run, pokemon, reason="career_wear")
+            longevity.append({
+                "pokemon_id": pokemon.id,
+                "species": pokemon.species,
+                "wear": before - pokemon.career_health,
+                "career_health": pokemon.career_health,
+                "played": played,
+                "retired": bool(retired),
+            })
+
     partner = next((entry for entry in run.pokemon if entry.is_partner), None)
     if partner:
         run.build.starter = partner.species
+    if longevity:
+        run.timeline.append({
+            "type": "pokemon.longevity_updated",
+            "season": run.season_number,
+            "age": run.age,
+            "updates": longevity,
+            "label": "Season workload reduced competitive career health for the roster.",
+        })
     _sync(run)
-    return {"pokemon_used": used, "evolutions": evolutions}
+    return {"pokemon_used": used, "evolutions": evolutions, "pokemon_longevity": longevity}
 
 
 def _pokemon(run: CareerRun, species: str, partner: bool, level: int) -> CareerPokemon:
@@ -285,6 +312,23 @@ def _base_level(run: CareerRun) -> int:
 
 def career_level_cap(run: CareerRun) -> int:
     return LEVEL_CAPS.get(run.league, 100)
+
+
+def _season_career_wear(run: CareerRun, pokemon: CareerPokemon, *, played: int, active: bool) -> int:
+    """Return deterministic irreversible wear for one completed season.
+
+    Match workload is the main source. Long-tenured Pokemon accumulate an extra
+    veteran load. Pokemon outside the active team age much more slowly. Training
+    Kit wear is applied separately and remains deliberately much larger.
+    """
+    career_seasons = max(1, run.season_number - pokemon.acquired_season + 1)
+    veteran_wear = min(3, max(0, career_seasons - VETERAN_WEAR_START_SEASON) // 4)
+    if played > 0:
+        workload_wear = min(2, max(0, played - 1) // 3)
+        return BASE_ACTIVE_SEASON_WEAR + workload_wear + veteran_wear
+    if active:
+        return 1 + veteran_wear
+    return 1 if career_seasons >= PC_AGING_START_SEASON else 0
 
 
 def _capture_event(run: CareerRun, captured: Sequence[CareerPokemon], source: str) -> None:
@@ -365,6 +409,12 @@ def _retire_pokemon(run: CareerRun, pokemon: CareerPokemon, *, reason: str) -> b
     ]
     while len(run.active_roster) < min(6, sum(1 for entry in run.pokemon if entry.status != "retired" and entry.career_health > 0)) and replacements:
         run.active_roster.append(replacements.pop(0))
+    if reason == "training_wear":
+        label = f"{pokemon.species} retired from competitive play after intensive Training Kit wear."
+    elif reason == "career_wear":
+        label = f"{pokemon.species} retired from competitive play after accumulated seasonal workload."
+    else:
+        label = f"{pokemon.species} retired from competitive play."
     run.timeline.append({
         "type": "pokemon.retired",
         "season": run.season_number,
@@ -372,7 +422,7 @@ def _retire_pokemon(run: CareerRun, pokemon: CareerPokemon, *, reason: str) -> b
         "pokemon_id": pokemon.id,
         "species": pokemon.species,
         "reason": reason,
-        "label": f"{pokemon.species} retired from competitive play after intensive training wear.",
+        "label": label,
     })
     return True
 
