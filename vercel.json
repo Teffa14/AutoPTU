@@ -1,6 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "python scripts/build_vercel.py",
+  "functions": {
+    "app.py": {
+      "includeFiles": "public/career-game/**"
+    }
+  },
   "env": {
     "AUTO_PTU_RUNTIME_ROOT": "/tmp",
     "AUTO_PTU_REPORTS_DIR": "/tmp/autoptu/reports",
