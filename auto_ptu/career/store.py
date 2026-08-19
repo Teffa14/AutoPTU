@@ -7,12 +7,13 @@ import uuid
 from pathlib import Path
 from typing import Dict, List, Optional
 
+from ..config import RUNTIME_ROOT
 from .models import BattleTranscript, CareerRun, LeaderboardEntry
 
 
 def default_career_root() -> Path:
     runtime = os.environ.get("AUTO_PTU_RUNTIME_ROOT")
-    base = Path(runtime) if runtime else Path(__file__).resolve().parents[2]
+    base = Path(runtime) if runtime else RUNTIME_ROOT
     return base / "portable_data" / "career"
 
 
