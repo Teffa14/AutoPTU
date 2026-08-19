@@ -119,6 +119,25 @@ try {
   const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   await mobile.addInitScript(() => localStorage.setItem("autoptu-career-development-user", "career-qa-user"));
   const mobilePage = await mobile.newPage();
+
+  const mobileCreateUrl = new URL("new", base).toString();
+  await mobilePage.goto(mobileCreateUrl, { waitUntil: "networkidle" });
+  await mobilePage.locator(".registration-book").waitFor({ state: "visible" });
+  await mobilePage.screenshot({ path: `${output}/mobile-create.png` });
+  const mobileCreate = await metrics(mobilePage);
+  if (mobileCreate.horizontalOverflow || mobileCreate.canvasCount !== 0) throw new Error(`Bad mobile creation fit: ${JSON.stringify(mobileCreate)}`);
+  const trainerOptions = mobilePage.locator(".trainer-sprite-option");
+  if (await trainerOptions.count() < 2) throw new Error("Mobile creation does not expose trainer appearance choices.");
+  const trainerFitsViewport = await trainerOptions.evaluateAll((nodes) => nodes.every((node) => {
+    const rect = node.getBoundingClientRect();
+    return rect.left >= -1 && rect.right <= window.innerWidth + 1 && rect.width <= window.innerWidth;
+  }));
+  if (!trainerFitsViewport) throw new Error("Trainer appearance cards overflow the mobile viewport.");
+  const activeTrainer = mobilePage.locator(".trainer-sprite-option.active").first();
+  if (await activeTrainer.count() !== 1) throw new Error("Mobile creation does not expose a selected trainer appearance.");
+  const activeTrainerInk = await activeTrainer.evaluate((node) => getComputedStyle(node).color);
+  if (activeTrainerInk === "rgb(255, 255, 255)") throw new Error("Selected trainer appearance uses white text on the paper creation UI.");
+
   await mobilePage.goto(battleUrl, { waitUntil: "networkidle" });
   await mobilePage.locator("canvas").waitFor({ state: "visible", timeout: 15_000 });
   await mobilePage.screenshot({ path: `${output}/mobile-battle.png` });
@@ -134,7 +153,7 @@ try {
   if ((await metrics(mobilePage)).horizontalOverflow) throw new Error("Mobile profile overflows horizontally.");
 
   if (errors.length) throw new Error(`Browser errors: ${errors.join(" | ")}`);
-  console.log(JSON.stringify({ initial, season, battle, mobileBattle, mobileState, status: "passed" }, null, 2));
+  console.log(JSON.stringify({ initial, season, battle, mobileCreate, mobileBattle, mobileState, status: "passed" }, null, 2));
   await mobile.close();
   await desktop.close();
 } finally {
