@@ -6,7 +6,7 @@ import os
 from typing import Any, Dict, List, Optional
 
 
-CURRENT_CAREER_VERSION = "career-0.9.0"
+CURRENT_CAREER_VERSION = "career-0.10.0"
 CURRENT_NARRATIVE_VERSION = "career-hooks-0.8.0"
 
 
@@ -92,6 +92,9 @@ class CareerPokemon:
     stat_training: Dict[str, int] = field(default_factory=dict)
     evolution_history: List[Dict[str, Any]] = field(default_factory=list)
     gimmicks: List[str] = field(default_factory=list)
+    ownership: str = "owned"
+    loan_club_id: str = ""
+    loan_expires_season: int = 0
 
 
 @dataclass
@@ -284,9 +287,6 @@ class CareerRun:
         fields = dict(payload)
         for key in ("build", "contract", "versions", "season", "summary", "pokemon", "active_roster"):
             fields.pop(key, None)
-        # Careers created before the wallet existed retain the salary they had
-        # already earned. Once saved, `money` is persisted normally and this
-        # migration cannot credit the same earnings twice.
         if "money" not in fields:
             fields["money"] = max(0, int(fields.get("career_earnings", 0)))
         return cls(
