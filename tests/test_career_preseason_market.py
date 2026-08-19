@@ -111,7 +111,34 @@ def test_higher_leagues_offer_better_signing_gift_tiers(tmp_path: Path) -> None:
             run.contract.league = league
         offers = club_offers(run)
         assert offers
+        assert all(entry["gift_target_rarity"] == rarity for entry in offers)
         assert all(entry["gift_rarity"] == rarity for entry in offers)
+
+
+def test_signing_gift_reports_actual_rarity_when_target_tier_is_empty(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    import auto_ptu.career.season_market as market
+
+    service = service_for(tmp_path)
+    run = expire_contract(service, new_run(service, "gift-fallback-user", 4407))
+    run.season_number = 2
+    run.league = "elite"
+    if run.contract:
+        run.contract.league = "elite"
+
+    real_encounter_pool = market.encounter_pool
+
+    def without_epic(region: str, rarity: str):
+        if rarity == "epic":
+            return ()
+        return real_encounter_pool(region, rarity)
+
+    monkeypatch.setattr(market, "encounter_pool", without_epic)
+    offers = market.club_offers(run)
+
+    assert offers
+    assert all(entry["gift_target_rarity"] == "epic" for entry in offers)
+    assert all(entry["gift_rarity"] == "very_rare" for entry in offers)
+    assert all(entry["gift_species"] in real_encounter_pool(run.build.region, "very_rare") for entry in offers)
 
 
 def test_sponsor_pays_upfront_and_bonus_only_when_objective_is_met(tmp_path: Path) -> None:
