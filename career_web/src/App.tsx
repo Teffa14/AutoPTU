@@ -8,6 +8,7 @@ import { ProfileScreen } from "./components/ProfileScreen";
 import { SeasonHub } from "./components/SeasonHub";
 import { ShareScreen } from "./components/ShareScreen";
 import { TimelineScreen } from "./components/TimelineScreen";
+import { loadLocalRun, saveLocalRun } from "./localCareer";
 import { trainerSpriteForRun } from "./trainerSprites";
 import type { CareerRun, Locale } from "./types";
 
@@ -44,6 +45,7 @@ export function App() {
 
   useEffect(() => {
     if (!run) return;
+    saveLocalRun(run);
     localStorage.setItem(
       `career-trainer-sprite:${run.build.name.trim().toLocaleLowerCase()}`,
       trainerSpriteForRun(run),
@@ -68,7 +70,14 @@ export function App() {
     careerApi.run(requestedRunId).then((value) => {
       if (active) setRun(value);
     }).catch((reason: Error) => {
-      if (active) setRunLoadError(reason.message);
+      if (!active) return;
+      const local = loadLocalRun(requestedRunId);
+      if (local) {
+        setRun(local);
+        setRunLoadError("");
+        return;
+      }
+      setRunLoadError(reason.message);
     });
     return () => { active = false; };
   }, [requestedRunId, run?.id]);
@@ -101,7 +110,7 @@ export function App() {
   } else if (path.startsWith("run/") && routeRun) {
     screen = <SeasonHub run={routeRun} locale={locale} onRun={setRun} />;
   } else if (path === "new" || path === "create") {
-    screen = <CreateScreen locale={locale} onCreated={(value) => { setRun(value); localStorage.setItem("career-last-run", value.id); navigate(`run/${value.id}`); }} />;
+    screen = <CreateScreen locale={locale} onCreated={(value) => { setRun(value); saveLocalRun(value); navigate(`run/${value.id}`); }} />;
   } else {
     screen = <HomeScreen locale={locale} />;
   }
