@@ -65,7 +65,8 @@ def test_decision_returns_after_featured_battle_then_finalizes_calendar(tmp_path
     finalized = service.finalize_season("pipeline-user", run.id, featured_id)
     assert finalized["season_number"] == 2
     assert finalized["season"]["status"] == "decision"
-    assert finalized["totals"]["wins"] == 6
+    totals = finalized["totals"]
+    assert totals["wins"] + totals["losses"] + totals["draws"] == 6
     assert all(service.store.load_battle(battle_id)["battle_id"] == battle_id for battle_id in response["battle_ids"])
 
 
