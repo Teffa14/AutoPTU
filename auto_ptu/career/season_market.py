@@ -309,6 +309,20 @@ def capture_candidate(run: CareerRun, candidate_id: str) -> Dict[str, Any]:
     _require_preseason(run)
     if _season_event(run, {"capture.board_used"}):
         raise ValueError("The scouting capture opportunity was already used this season.")
+    if not str(candidate_id).strip():
+        event = {
+            "type": "capture.board_used",
+            "season": run.season_number,
+            "age": run.age,
+            "skipped": True,
+            "pokemon_id": "",
+            "species": "",
+            "rarity": "",
+            "sent_to_pc": False,
+            "label": "The trainer kept their Poké Balls and skipped this season's scouting capture.",
+        }
+        run.timeline.append(event)
+        return event
     candidate = next((entry for entry in capture_board(run) if entry["id"] == candidate_id), None)
     if candidate is None:
         raise ValueError("The selected Pokémon is no longer in this season's scouting board.")
@@ -321,6 +335,7 @@ def capture_candidate(run: CareerRun, candidate_id: str) -> Dict[str, Any]:
         "type": "capture.board_used",
         "season": run.season_number,
         "age": run.age,
+        "skipped": False,
         "pokemon_id": pokemon.id,
         "species": pokemon.species,
         "rarity": candidate["rarity"],
