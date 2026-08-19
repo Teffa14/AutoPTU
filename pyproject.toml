@@ -18,7 +18,11 @@ dependencies = [
     "PyPDF2>=3.0",
     "fastapi>=0.115",
     "uvicorn[standard]>=0.30",
-    "psycopg[binary]>=3.2"
+    "psycopg[binary]>=3.2",
+    "py-trees==2.4.0",
+    "trueskill==0.4.5",
+    "six>=1.16",
+    "pydot>=3.0"
 ]
 
 [project.scripts]

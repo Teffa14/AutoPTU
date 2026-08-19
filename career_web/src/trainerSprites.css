@@ -1,86 +1,131 @@
 .trainer-sprite-field {
   border: 0;
-  margin: 1.25rem 0;
+  margin: 1.4rem 0;
   padding: 0;
+  color: inherit;
 }
 
 .trainer-sprite-field legend {
-  font-weight: 800;
-  margin-bottom: .7rem;
+  display: block;
+  margin-bottom: .4rem;
+  font: 600 .66rem "IBM Plex Mono", monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 
 .trainer-sprite-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+  display: flex;
   gap: .65rem;
+  overflow-x: auto;
+  padding: .4rem .1rem 1rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
 }
 
 .trainer-sprite-option {
-  min-height: 116px;
+  flex: 0 0 7.2rem;
+  width: 7.2rem;
+  min-width: 7.2rem;
+  min-height: 9.5rem;
   display: grid;
   place-items: center;
   align-content: center;
   gap: .2rem;
-  padding: .6rem .35rem;
-  border: 2px solid rgba(255,255,255,.12);
-  border-radius: 12px;
-  background: rgba(10,16,27,.7);
-  color: inherit;
+  padding: .5rem;
+  overflow: hidden;
+  scroll-snap-align: start;
+  border: 1px solid #c4b58e;
+  border-radius: 0;
+  background: #e9dbb8;
+  color: var(--paper-ink);
+  text-align: center;
   cursor: pointer;
+  transition: transform .2s, background .2s, border-color .2s, box-shadow .2s;
 }
 
-.trainer-sprite-option:hover,
+.trainer-sprite-option:hover {
+  background: #f0e2be;
+  transform: translateY(-.12rem);
+}
+
 .trainer-sprite-option.active {
-  border-color: currentColor;
-  transform: translateY(-1px);
+  background: #f7b56c;
+  border: 2px solid #4d3521;
+  transform: translateY(-.25rem) rotate(-1deg);
+  box-shadow: .18rem .22rem 0 rgba(77, 53, 33, .18);
 }
 
 .trainer-sprite-option img {
-  width: 56px;
-  height: 72px;
+  width: 4.2rem;
+  height: 5.25rem;
   object-fit: contain;
+  object-position: center bottom;
   image-rendering: pixelated;
+  filter: drop-shadow(0 .3rem .2rem rgba(38, 30, 19, .2));
+}
+
+.trainer-sprite-option span,
+.trainer-sprite-option small {
+  display: block;
 }
 
 .trainer-sprite-option span {
-  font-weight: 800;
-  font-size: .83rem;
+  font-weight: 700;
+  font-size: .82rem;
 }
 
 .trainer-sprite-option small {
-  opacity: .62;
-  font-size: .62rem;
+  color: #746753;
+  font: 600 .55rem "IBM Plex Mono", monospace;
   letter-spacing: .08em;
 }
 
-.trainer-sprite-credit {
-  display: block;
-  margin-top: .5rem;
-  opacity: .65;
-}
-
+/* Ranked entry uses the stadium surface rather than the paper registration book. */
 .trainer-sprite-field.compact .trainer-sprite-grid {
-  grid-template-columns: repeat(auto-fit, minmax(68px, 1fr));
+  padding-bottom: .65rem;
 }
 
 .trainer-sprite-field.compact .trainer-sprite-option {
-  min-height: 96px;
+  flex-basis: 5.8rem;
+  width: 5.8rem;
+  min-width: 5.8rem;
+  min-height: 7.8rem;
+  border-color: #385348;
+  background: #10251e;
+  color: var(--paper);
+}
+
+.trainer-sprite-field.compact .trainer-sprite-option:hover {
+  background: #17382e;
+}
+
+.trainer-sprite-field.compact .trainer-sprite-option.active {
+  background: #214c3d;
+  border-color: var(--gold);
+  box-shadow: inset 0 -3px var(--gold), 0 .45rem 1rem rgba(0, 0, 0, .25);
+  transform: translateY(-.18rem);
 }
 
 .trainer-sprite-field.compact .trainer-sprite-option img {
-  width: 44px;
-  height: 58px;
+  width: 3.5rem;
+  height: 4.5rem;
+  filter: drop-shadow(0 .35rem .25rem rgba(0, 0, 0, .35));
+}
+
+.trainer-sprite-field.compact .trainer-sprite-option small {
+  color: #9bb0a6;
 }
 
 @media (max-width: 640px) {
-  .trainer-sprite-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
   .trainer-sprite-option {
-    min-height: 100px;
+    flex-basis: 6.4rem;
+    width: 6.4rem;
+    min-width: 6.4rem;
+    min-height: 8.6rem;
   }
+
   .trainer-sprite-option img {
-    width: 46px;
-    height: 60px;
+    width: 3.8rem;
+    height: 4.8rem;
   }
 }
