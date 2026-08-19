@@ -31,18 +31,18 @@ def _error(exc: Exception) -> HTTPException:
     return HTTPException(status_code=400, detail=str(exc))
 
 
+def _user(authorization: Optional[str], x_career_user: Optional[str]):
+    return _identity(authorization or "", x_career_user or "")
+
+
 @router.get("/catalog")
 def career_catalog(locale: str = Query(default="es")) -> dict:
     return SERVICE.catalog(locale)
 
 
 @router.post("/runs")
-def create_run(
-    payload: Dict[str, Any],
-    authorization: Optional[str] = Header(default=""),
-    x_career_user: Optional[str] = Header(default=""),
-) -> dict:
-    identity = _identity(authorization or "", x_career_user or "")
+def create_run(payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
     try:
         return SERVICE.create_run(identity.user_id, payload)
     except Exception as exc:
@@ -50,14 +50,46 @@ def create_run(
 
 
 @router.get("/runs/{run_id}")
-def get_run(
-    run_id: str,
-    authorization: Optional[str] = Header(default=""),
-    x_career_user: Optional[str] = Header(default=""),
-) -> dict:
-    identity = _identity(authorization or "", x_career_user or "")
+def get_run(run_id: str, authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
     try:
         return SERVICE.get_run(identity.user_id, run_id)
+    except Exception as exc:
+        raise _error(exc) from exc
+
+
+@router.get("/runs/{run_id}/preseason")
+def career_preseason(run_id: str, authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
+    try:
+        return SERVICE.preseason(identity.user_id, run_id)
+    except Exception as exc:
+        raise _error(exc) from exc
+
+
+@router.post("/runs/{run_id}/club")
+def career_choose_club(run_id: str, payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
+    try:
+        return SERVICE.choose_club(identity.user_id, run_id, payload)
+    except Exception as exc:
+        raise _error(exc) from exc
+
+
+@router.post("/runs/{run_id}/sponsor")
+def career_choose_sponsor(run_id: str, payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
+    try:
+        return SERVICE.choose_sponsor(identity.user_id, run_id, payload)
+    except Exception as exc:
+        raise _error(exc) from exc
+
+
+@router.post("/runs/{run_id}/captures")
+def career_capture(run_id: str, payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
+    try:
+        return SERVICE.capture(identity.user_id, run_id, payload)
     except Exception as exc:
         raise _error(exc) from exc
 
@@ -70,7 +102,7 @@ def career_decision(
     x_career_user: Optional[str] = Header(default=""),
     idempotency_key: Optional[str] = Header(default=""),
 ) -> dict:
-    identity = _identity(authorization or "", x_career_user or "")
+    identity = _user(authorization, x_career_user)
     try:
         return SERVICE.decide(identity.user_id, run_id, payload, idempotency_key or "")
     except Exception as exc:
@@ -89,13 +121,8 @@ def career_advance(
 
 
 @router.post("/runs/{run_id}/lineup")
-def career_lineup(
-    run_id: str,
-    payload: Dict[str, Any],
-    authorization: Optional[str] = Header(default=""),
-    x_career_user: Optional[str] = Header(default=""),
-) -> dict:
-    identity = _identity(authorization or "", x_career_user or "")
+def career_lineup(run_id: str, payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
     try:
         return SERVICE.lineup(identity.user_id, run_id, payload)
     except Exception as exc:
@@ -103,13 +130,8 @@ def career_lineup(
 
 
 @router.post("/runs/{run_id}/items/use")
-def career_use_item(
-    run_id: str,
-    payload: Dict[str, Any],
-    authorization: Optional[str] = Header(default=""),
-    x_career_user: Optional[str] = Header(default=""),
-) -> dict:
-    identity = _identity(authorization or "", x_career_user or "")
+def career_use_item(run_id: str, payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
     try:
         return SERVICE.use_item(identity.user_id, run_id, payload)
     except Exception as exc:
@@ -117,13 +139,8 @@ def career_use_item(
 
 
 @router.post("/runs/{run_id}/training")
-def career_training(
-    run_id: str,
-    payload: Dict[str, Any],
-    authorization: Optional[str] = Header(default=""),
-    x_career_user: Optional[str] = Header(default=""),
-) -> dict:
-    identity = _identity(authorization or "", x_career_user or "")
+def career_training(run_id: str, payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
     try:
         return SERVICE.train(identity.user_id, run_id, payload)
     except Exception as exc:
@@ -131,13 +148,8 @@ def career_training(
 
 
 @router.post("/runs/{run_id}/market/purchases")
-def career_purchase(
-    run_id: str,
-    payload: Dict[str, Any],
-    authorization: Optional[str] = Header(default=""),
-    x_career_user: Optional[str] = Header(default=""),
-) -> dict:
-    identity = _identity(authorization or "", x_career_user or "")
+def career_purchase(run_id: str, payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
     try:
         return SERVICE.purchase(identity.user_id, run_id, payload)
     except Exception as exc:
@@ -145,13 +157,8 @@ def career_purchase(
 
 
 @router.get("/runs/{run_id}/battles/{battle_id}")
-def career_battle(
-    run_id: str,
-    battle_id: str,
-    authorization: Optional[str] = Header(default=""),
-    x_career_user: Optional[str] = Header(default=""),
-) -> dict:
-    identity = _identity(authorization or "", x_career_user or "")
+def career_battle(run_id: str, battle_id: str, authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
     try:
         return SERVICE.battle(identity.user_id, run_id, battle_id)
     except Exception as exc:
@@ -159,13 +166,8 @@ def career_battle(
 
 
 @router.post("/runs/{run_id}/battles/{battle_id}/finalize")
-def career_finalize_battle(
-    run_id: str,
-    battle_id: str,
-    authorization: Optional[str] = Header(default=""),
-    x_career_user: Optional[str] = Header(default=""),
-) -> dict:
-    identity = _identity(authorization or "", x_career_user or "")
+def career_finalize_battle(run_id: str, battle_id: str, authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
     try:
         return SERVICE.finalize_season(identity.user_id, run_id, battle_id)
     except Exception as exc:
@@ -173,13 +175,8 @@ def career_finalize_battle(
 
 
 @router.post("/runs/{run_id}/retire")
-def career_retire(
-    run_id: str,
-    payload: Dict[str, Any],
-    authorization: Optional[str] = Header(default=""),
-    x_career_user: Optional[str] = Header(default=""),
-) -> dict:
-    identity = _identity(authorization or "", x_career_user or "")
+def career_retire(run_id: str, payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
     try:
         return SERVICE.retire(identity.user_id, run_id, payload)
     except Exception as exc:
@@ -192,13 +189,8 @@ def daily_challenge(day: date) -> dict:
 
 
 @router.post("/daily/{day}/attempts")
-def create_daily_attempt(
-    day: date,
-    payload: Dict[str, Any],
-    authorization: Optional[str] = Header(default=""),
-    x_career_user: Optional[str] = Header(default=""),
-) -> dict:
-    identity = _identity(authorization or "", x_career_user or "")
+def create_daily_attempt(day: date, payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
     if not identity.permanent:
         raise HTTPException(status_code=403, detail="A permanent account is required for ranked daily attempts.")
     try:
@@ -215,13 +207,8 @@ def daily_leaderboard(day: date, mode: str) -> dict:
 
 
 @router.post("/runs/{run_id}/shares")
-def create_share(
-    run_id: str,
-    payload: Dict[str, Any],
-    authorization: Optional[str] = Header(default=""),
-    x_career_user: Optional[str] = Header(default=""),
-) -> dict:
-    identity = _identity(authorization or "", x_career_user or "")
+def create_share(run_id: str, payload: Dict[str, Any], authorization: Optional[str] = Header(default=""), x_career_user: Optional[str] = Header(default="")) -> dict:
+    identity = _user(authorization, x_career_user)
     try:
         return SERVICE.share(identity.user_id, run_id, payload)
     except Exception as exc:
