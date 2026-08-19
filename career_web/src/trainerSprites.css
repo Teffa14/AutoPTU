@@ -1,0 +1,86 @@
+.trainer-sprite-field {
+  border: 0;
+  margin: 1.25rem 0;
+  padding: 0;
+}
+
+.trainer-sprite-field legend {
+  font-weight: 800;
+  margin-bottom: .7rem;
+}
+
+.trainer-sprite-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(82px, 1fr));
+  gap: .65rem;
+}
+
+.trainer-sprite-option {
+  min-height: 116px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: .2rem;
+  padding: .6rem .35rem;
+  border: 2px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  background: rgba(10,16,27,.7);
+  color: inherit;
+  cursor: pointer;
+}
+
+.trainer-sprite-option:hover,
+.trainer-sprite-option.active {
+  border-color: currentColor;
+  transform: translateY(-1px);
+}
+
+.trainer-sprite-option img {
+  width: 56px;
+  height: 72px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.trainer-sprite-option span {
+  font-weight: 800;
+  font-size: .83rem;
+}
+
+.trainer-sprite-option small {
+  opacity: .62;
+  font-size: .62rem;
+  letter-spacing: .08em;
+}
+
+.trainer-sprite-credit {
+  display: block;
+  margin-top: .5rem;
+  opacity: .65;
+}
+
+.trainer-sprite-field.compact .trainer-sprite-grid {
+  grid-template-columns: repeat(auto-fit, minmax(68px, 1fr));
+}
+
+.trainer-sprite-field.compact .trainer-sprite-option {
+  min-height: 96px;
+}
+
+.trainer-sprite-field.compact .trainer-sprite-option img {
+  width: 44px;
+  height: 58px;
+}
+
+@media (max-width: 640px) {
+  .trainer-sprite-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .trainer-sprite-option {
+    min-height: 100px;
+  }
+  .trainer-sprite-option img {
+    width: 46px;
+    height: 60px;
+  }
+}
