@@ -86,8 +86,13 @@ def club_offers(run: CareerRun) -> List[Dict[str, Any]]:
             max(0, loan_slots - len(retained_loans)),
             excluded={entry.casefold() for entry in retained_loans},
         )
-        gift_rarity = _LEAGUE_GIFT_RARITY.get(run.league, "common")
-        gift_species = _gift_species(run, offer_rng, gift_rarity, excluded={entry.casefold() for entry in loan_species})
+        gift_target_rarity = _LEAGUE_GIFT_RARITY.get(run.league, "common")
+        gift_species, gift_rarity = _gift_species(
+            run,
+            offer_rng,
+            gift_target_rarity,
+            excluded={entry.casefold() for entry in loan_species},
+        )
         perk_stat, perk_amount, perk_label = _CLUB_PERKS[_stable_seed(club, run.season_number) % len(_CLUB_PERKS)]
         salary_base = 120 * LEAGUES[run.league].weight + max(0, run.reputation * 5)
         salary = max(60, salary_base + offer_rng.choice((-20, 0, 20, 40)))
@@ -103,6 +108,7 @@ def club_offers(run: CareerRun) -> List[Dict[str, Any]]:
             "loan_species": loan_species,
             "gift_species": gift_species,
             "gift_rarity": gift_rarity,
+            "gift_target_rarity": gift_target_rarity,
             "perk": {"stat": perk_stat, "amount": perk_amount, "label": perk_label},
             "renewal": renewal,
             "retains_current_team": renewal,
@@ -174,6 +180,7 @@ def sign_club(run: CareerRun, offer_id: str) -> Dict[str, Any]:
         "gift_species": gift.species if gift else "",
         "gift_pokemon_id": gift.id if gift else "",
         "gift_rarity": offer.get("gift_rarity"),
+        "gift_target_rarity": offer.get("gift_target_rarity"),
         "perk": perk,
         "label": (
             f"Extended with {run.contract.club_name} for {run.contract.seasons_remaining} seasons; current club squad retained."
@@ -367,7 +374,13 @@ def _loan_species(run: CareerRun, rng: random.Random, count: int, *, excluded: s
     return selected
 
 
-def _gift_species(run: CareerRun, rng: random.Random, rarity: str, *, excluded: set[str] | None = None) -> str:
+def _gift_species(
+    run: CareerRun,
+    rng: random.Random,
+    rarity: str,
+    *,
+    excluded: set[str] | None = None,
+) -> tuple[str, str]:
     unavailable = {entry.caught_species.casefold() for entry in run.pokemon if entry.ownership == "owned"}
     unavailable.update(excluded or set())
     for candidate_rarity in _RARITY_FALLBACKS.get(rarity, (rarity, "common")):
@@ -375,8 +388,8 @@ def _gift_species(run: CareerRun, rng: random.Random, rarity: str, *, excluded: 
         rng.shuffle(pool)
         species = next((entry for entry in pool if entry.casefold() not in unavailable), "")
         if species:
-            return species
-    return ""
+            return species, candidate_rarity
+    return "", ""
 
 
 def _create_loan(run: CareerRun, species: str, club_id: str) -> CareerPokemon:
