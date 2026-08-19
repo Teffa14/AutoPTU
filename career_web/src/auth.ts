@@ -12,12 +12,17 @@ export const supabase: SupabaseClient | null = url && publishable ? createClient
 
 const localUserKey = "autoptu-career-development-user";
 
-export async function authHeaders(): Promise<Record<string, string>> {
-  if (supabase) {
-    const { data } = await supabase.auth.getSession();
-    if (data.session?.access_token) return { Authorization: `Bearer ${data.session.access_token}` };
-  }
-  return localCareerHeaders();
+export type CareerAuthMode = "public" | "casual" | "ranked";
+
+export async function authHeaders(mode: CareerAuthMode = "casual"): Promise<Record<string, string>> {
+  if (mode === "public") return {};
+  if (mode === "casual") return localCareerHeaders();
+  if (!supabase) return {};
+
+  const { data } = await supabase.auth.getSession();
+  const session = data.session;
+  if (!session?.access_token || session.user.is_anonymous) return {};
+  return { Authorization: `Bearer ${session.access_token}` };
 }
 
 export async function hasPersistentCareerAccount(): Promise<boolean> {
