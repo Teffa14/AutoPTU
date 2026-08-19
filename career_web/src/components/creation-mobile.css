@@ -1,0 +1,140 @@
+/* Mobile safeguards for the league registration book.
+   Keep every control inside the paper sheet and preserve readable contrast. */
+.creation-scene,
+.registration-book,
+.registration-book fieldset,
+.registration-book .form-row,
+.registration-book label,
+.registration-book .class-choice,
+.registration-book .mode-switch,
+.registration-book .registration-footer {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.registration-book {
+  overflow: hidden;
+}
+
+.registration-book input,
+.registration-book select,
+.registration-book button {
+  max-width: 100%;
+}
+
+/* Paper surfaces always use dark ink. Never inherit the app's light foreground. */
+.registration-book,
+.registration-book label,
+.registration-book legend,
+.registration-book .starter-card,
+.registration-book .starter-card.selected,
+.registration-book .trainer-sprite-option,
+.registration-book .trainer-sprite-option.active,
+.registration-book .mode-switch button {
+  color: #251f18;
+}
+
+.registration-book .mode-switch button.active {
+  background: #10251e;
+  color: #fff4dc;
+  border-color: #10251e;
+}
+
+.registration-book .primary-action {
+  color: #180c08;
+}
+
+@media (max-width: 640px) {
+  .creation-scene {
+    padding: 1.35rem .55rem 2rem;
+  }
+
+  .creation-copy {
+    margin-bottom: 1.15rem;
+  }
+
+  .creation-copy h1 {
+    font-size: clamp(2.15rem, 12vw, 3.45rem);
+  }
+
+  .creation-copy > p:last-child {
+    font-size: 1rem;
+  }
+
+  .registration-book {
+    width: 100%;
+    padding: 1.05rem .7rem 1.05rem 1.05rem;
+    border-radius: .3rem .8rem .8rem .3rem;
+    box-shadow: .4rem .55rem 0 rgba(0, 0, 0, .24), inset 0 0 0 1px rgba(37, 31, 24, .14);
+  }
+
+  .registration-book::after {
+    display: none;
+  }
+
+  .book-spine {
+    left: .32rem;
+  }
+
+  .registration-book .form-row,
+  .registration-book .final-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .registration-book input,
+  .registration-book select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .starter-field,
+  .starter-strip {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .starter-strip {
+    overscroll-behavior-inline: contain;
+  }
+
+  .mode-switch {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mode-switch button {
+    width: 100%;
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .registration-footer {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    width: 100%;
+  }
+
+  .registration-footer span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .registration-footer .primary-action {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-left: 0;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 360px) {
+  .mode-switch {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .registration-footer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
