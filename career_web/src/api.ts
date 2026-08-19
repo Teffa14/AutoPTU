@@ -41,6 +41,7 @@ export interface PreseasonSnapshot {
   club_offers: ClubOffer[];
   sponsor_offers: SponsorOffer[];
   capture_candidates: CaptureCandidate[];
+  run?: CareerRun;
 }
 
 const base = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") ?? "";
@@ -319,7 +320,11 @@ async function finalizeSeason(runId: string, battleId: string): Promise<CareerRu
 
 async function preseason(runId: string): Promise<PreseasonSnapshot> {
   const local = loadLocalRun(runId);
-  if (local && !local.ranked) return portable<PreseasonSnapshot>("preseason", local);
+  if (local && !local.ranked) {
+    const snapshot = await portable<PreseasonSnapshot>("preseason", local);
+    if (snapshot.run) remember(snapshot.run);
+    return snapshot;
+  }
   const path = `/api/v1/runs/${encodeURIComponent(runId)}/preseason`;
   try {
     return await request<PreseasonSnapshot>(path);
