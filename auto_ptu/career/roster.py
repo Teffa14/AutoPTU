@@ -48,17 +48,18 @@ def initialize_roster(run: CareerRun, stable_seed: int) -> bool:
         run.build.starter = partner.species
         changed = True
 
-    eligible_ids = {entry.id for entry in run.pokemon if entry.status != "retired" and entry.career_health > 0}
+    eligible_order = [entry.id for entry in run.pokemon if entry.status != "retired" and entry.career_health > 0]
+    eligible_ids = set(eligible_order)
     active = [entry_id for entry_id in run.active_roster if entry_id in eligible_ids]
-    if not active and eligible_ids:
+    if not active and eligible_order:
         partner_id = next(
             (entry.id for entry in run.pokemon if entry.is_partner and entry.id in eligible_ids),
-            next(iter(eligible_ids)),
+            eligible_order[0],
         )
         active = [partner_id]
-    target_size = min(6, len(eligible_ids))
+    target_size = min(6, len(eligible_order))
     if len(active) < target_size:
-        active.extend(entry.id for entry in run.pokemon if entry.id in eligible_ids and entry.id not in active)
+        active.extend(entry_id for entry_id in eligible_order if entry_id not in active)
     active = active[:6]
     if active != run.active_roster:
         run.active_roster = active
