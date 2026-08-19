@@ -40,5 +40,8 @@ jobs:
       - name: Install Career frontend
         run: npm --prefix career_web ci
 
+      - name: Test Career frontend
+        run: npm --prefix career_web test
+
       - name: Build Career frontend
         run: npm --prefix career_web run build
