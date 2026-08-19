@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { careerApi } from "../api";
 import { t } from "../i18n";
+import { DEFAULT_TRAINER_SPRITE, trainerSpriteOptions } from "../trainerSprites";
 import type { CareerCatalog, CareerMode, CareerRun, Locale } from "../types";
 import { StarterPicker } from "./StarterPicker";
+import { TrainerSpritePicker } from "./TrainerSpritePicker";
 
 interface Props { locale: Locale; onCreated: (run: CareerRun) => void }
 
@@ -12,6 +14,7 @@ export function CreateScreen({ locale, onCreated }: Props) {
   const [region, setRegion] = useState("kanto");
   const [starter, setStarter] = useState("Bulbasaur");
   const [trainerClass, setTrainerClass] = useState("Ace Trainer");
+  const [trainerSprite, setTrainerSprite] = useState(DEFAULT_TRAINER_SPRITE);
   const [name, setName] = useState("");
   const [mode, setMode] = useState<CareerMode>("simple");
   const [busy, setBusy] = useState(false);
@@ -21,6 +24,7 @@ export function CreateScreen({ locale, onCreated }: Props) {
     careerApi.catalog(locale).then(setCatalog).catch((reason: Error) => setError(reason.message));
   }, [locale]);
   const selectedRegion = useMemo(() => catalog?.regions.find((entry) => entry.id === region), [catalog, region]);
+  const spriteOptions = useMemo(() => trainerSpriteOptions(catalog), [catalog]);
 
   function chooseRegion(value: string) {
     setRegion(value);
@@ -33,7 +37,9 @@ export function CreateScreen({ locale, onCreated }: Props) {
     setBusy(true);
     setError("");
     try {
-      onCreated(await careerApi.create({ name, region, starter, classes: [trainerClass], mode, locale }));
+      const created = await careerApi.create({ name, region, starter, classes: [trainerClass], mode, locale, trainer_sprite: trainerSprite });
+      localStorage.setItem(`career-trainer-sprite:${created.build.name.trim().toLocaleLowerCase()}`, trainerSprite);
+      onCreated(created);
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : String(reason));
     } finally {
@@ -60,6 +66,7 @@ export function CreateScreen({ locale, onCreated }: Props) {
             <legend>{locale === "es" ? "Elegí tu compañero regional" : "Choose your regional partner"}</legend>
             <StarterPicker starters={selectedRegion?.starters ?? []} underdogs={selectedRegion?.underdogs ?? []} value={starter} locale={locale} onChange={setStarter} />
           </fieldset>
+          <TrainerSpritePicker sprites={spriteOptions} value={trainerSprite} locale={locale} onChange={setTrainerSprite} />
           <div className="form-row final-row">
             <label className="class-choice"><span>{locale === "es" ? "Clase de entrenador" : "Trainer class"}</span><select value={trainerClass} onChange={(event) => setTrainerClass(event.target.value)}>{catalog.classes.map((entry) => <option key={entry.id} value={entry.name}>{entry.name}</option>)}</select><small>{classDescription(catalog, trainerClass, locale)}</small></label>
             <div className="mode-switch" role="group" aria-label="Career mode">

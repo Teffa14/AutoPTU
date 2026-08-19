@@ -1,5 +1,6 @@
 import type { Locale } from "../types";
 import { trainerSpriteUrl, type TrainerSpriteOption } from "../trainerSprites";
+import "../trainerSprites.css";
 
 interface Props {
   sprites: TrainerSpriteOption[];
@@ -13,7 +14,7 @@ export function TrainerSpritePicker({ sprites, value, locale, compact = false, o
   if (!sprites.length) return null;
   return (
     <fieldset className={`trainer-sprite-field ${compact ? "compact" : ""}`.trim()}>
-      <legend>{locale === "es" ? "Elegí tu sprite de entrenador" : "Choose your trainer sprite"}</legend>
+      <legend>{locale === "es" ? "Elegí tu sprite 2D de entrenador" : "Choose your 2D trainer sprite"}</legend>
       <div className="trainer-sprite-grid">
         {sprites.map((sprite) => (
           <button
@@ -30,7 +31,7 @@ export function TrainerSpritePicker({ sprites, value, locale, compact = false, o
         ))}
       </div>
       <small className="trainer-sprite-credit">
-        {locale === "es" ? "Sprites 2D clásicos, sin retratos generados." : "Classic 2D sprites, no generated portraits."}
+        {locale === "es" ? "Sprites 2D clásicos de Pokémon Showdown / Smogon. No se usan retratos generados para tu entrenador." : "Classic 2D Pokémon Showdown / Smogon sprites. Your trainer does not use generated portraits."}
       </small>
     </fieldset>
   );
