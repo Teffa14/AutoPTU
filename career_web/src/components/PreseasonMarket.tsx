@@ -27,6 +27,7 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
     setError("");
     careerApi.preseason(run.id).then((value) => {
       if (!active) return;
+      if (value.run && value.run.revision !== run.revision) onRun(value.run);
       setSnapshot(value);
       onClubReady(value.club_completed);
     }).catch((reason: Error) => {
@@ -35,7 +36,7 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
       onClubReady(true);
     });
     return () => { active = false; };
-  }, [onClubReady, run.id, run.season?.decisions_completed, run.season?.status, run.status, run.revision]);
+  }, [onClubReady, onRun, run.id, run.season?.decisions_completed, run.season?.status, run.status, run.revision]);
 
   async function mutate(key: string, action: () => Promise<CareerRun>) {
     setBusy(key);
@@ -44,6 +45,7 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
       const next = await action();
       onRun(next);
       const fresh = await careerApi.preseason(next.id);
+      if (fresh.run) onRun(fresh.run);
       setSnapshot(fresh);
       onClubReady(fresh.club_completed);
     } catch (reason) {
