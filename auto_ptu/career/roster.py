@@ -23,9 +23,6 @@ def initialize_roster(run: CareerRun, stable_seed: int) -> bool:
         for index, species in enumerate(existing):
             run.pokemon.append(_pokemon(run, str(species), index == 0, _base_level(run)))
         changed = True
-    if not any(entry.is_partner for entry in run.pokemon):
-        run.pokemon[0].is_partner = True
-        changed = True
 
     cap = career_level_cap(run)
     for pokemon in run.pokemon:
@@ -43,11 +40,6 @@ def initialize_roster(run: CareerRun, stable_seed: int) -> bool:
         if _refresh_identity(run, pokemon):
             changed = True
 
-    partner = next((entry for entry in run.pokemon if entry.is_partner), None)
-    if partner is not None and run.build.starter != partner.species:
-        run.build.starter = partner.species
-        changed = True
-
     eligible_order = [entry.id for entry in run.pokemon if entry.status != "retired" and entry.career_health > 0]
     eligible_ids = set(eligible_order)
     active = [entry_id for entry_id in run.active_roster if entry_id in eligible_ids]
@@ -64,6 +56,9 @@ def initialize_roster(run: CareerRun, stable_seed: int) -> bool:
     if active != run.active_roster:
         run.active_roster = active
         changed = True
+
+    _, partner_changed = _ensure_current_partner(run)
+    changed = partner_changed or changed
     changed = _sync(run) or changed
     return changed
 
@@ -86,7 +81,7 @@ def capture_species(run: CareerRun, species: str, *, source: str, spend_ball: bo
 
 
 def grant_partner_levels(run: CareerRun, levels: int, *, source: str) -> List[dict]:
-    partner = next((entry for entry in run.pokemon if entry.is_partner and entry.status != "retired"), None)
+    partner, _ = _ensure_current_partner(run)
     if partner is None:
         return []
     return grant_pokemon_levels(run, partner.id, levels, source=source)
@@ -118,7 +113,7 @@ def grant_pokemon_levels(run: CareerRun, pokemon_id: str, levels: int, *, source
 
 
 def teach_partner_move(run: CareerRun, move: str, *, source: str) -> bool:
-    partner = next((entry for entry in run.pokemon if entry.is_partner and entry.status != "retired"), None)
+    partner, _ = _ensure_current_partner(run)
     canonical = str(move).strip()
     if (
         partner is None
@@ -274,9 +269,7 @@ def progress_after_season(
                 "retired": bool(retired),
             })
 
-    partner = next((entry for entry in run.pokemon if entry.is_partner), None)
-    if partner:
-        run.build.starter = partner.species
+    _ensure_current_partner(run)
     if longevity:
         run.timeline.append({
             "type": "pokemon.longevity_updated",
@@ -395,13 +388,39 @@ def _refresh_identity(run: CareerRun, pokemon: CareerPokemon, *, replace_abiliti
     return previous != (pokemon.nature, tuple(pokemon.abilities))
 
 
+def _ensure_current_partner(run: CareerRun) -> tuple[CareerPokemon | None, bool]:
+    """Keep exactly one eligible partner and derive the displayed starter from it."""
+    eligible = [entry for entry in run.pokemon if entry.status != "retired" and entry.career_health > 0]
+    before_flags = {entry.id: entry.is_partner for entry in run.pokemon}
+    before_starter = run.build.starter
+
+    if not eligible:
+        for entry in run.pokemon:
+            entry.is_partner = False
+        return None, before_flags != {entry.id: entry.is_partner for entry in run.pokemon}
+
+    current = next((entry for entry in eligible if entry.is_partner), None)
+    if current is None:
+        by_id = {entry.id: entry for entry in eligible}
+        current = next((by_id[entry_id] for entry_id in run.active_roster if entry_id in by_id), eligible[0])
+
+    for entry in run.pokemon:
+        entry.is_partner = entry.id == current.id
+    run.build.starter = current.species
+    after_flags = {entry.id: entry.is_partner for entry in run.pokemon}
+    return current, before_flags != after_flags or before_starter != run.build.starter
+
+
 def _retire_pokemon(run: CareerRun, pokemon: CareerPokemon, *, reason: str) -> bool:
     if pokemon.status == "retired":
         return False
+    was_partner = pokemon.is_partner
     pokemon.status = "retired"
     pokemon.career_health = 0
     pokemon.retired_season = run.season_number
     pokemon.retired_reason = reason
+    if was_partner:
+        pokemon.is_partner = False
     run.active_roster = [entry_id for entry_id in run.active_roster if entry_id != pokemon.id]
     replacements = [
         entry.id
@@ -410,12 +429,16 @@ def _retire_pokemon(run: CareerRun, pokemon: CareerPokemon, *, reason: str) -> b
     ]
     while len(run.active_roster) < min(6, sum(1 for entry in run.pokemon if entry.status != "retired" and entry.career_health > 0)) and replacements:
         run.active_roster.append(replacements.pop(0))
+
+    successor, _ = _ensure_current_partner(run)
     if reason == "training_wear":
         label = f"{pokemon.species} retired from competitive play after intensive Training Kit wear."
     elif reason == "career_wear":
         label = f"{pokemon.species} retired from competitive play after accumulated seasonal workload."
     else:
         label = f"{pokemon.species} retired from competitive play."
+    if was_partner and successor is not None:
+        label += f" {successor.species} became the new team captain."
     run.timeline.append({
         "type": "pokemon.retired",
         "season": run.season_number,
@@ -423,6 +446,8 @@ def _retire_pokemon(run: CareerRun, pokemon: CareerPokemon, *, reason: str) -> b
         "pokemon_id": pokemon.id,
         "species": pokemon.species,
         "reason": reason,
+        "successor_pokemon_id": successor.id if was_partner and successor is not None else "",
+        "successor_species": successor.species if was_partner and successor is not None else "",
         "label": label,
     })
     return True
@@ -445,6 +470,8 @@ def _sync(run: CareerRun) -> bool:
         if pokemon.status != status:
             pokemon.status = status
             changed = True
+    _, partner_changed = _ensure_current_partner(run)
+    changed = partner_changed or changed
     roster = [entry.species for entry in run.pokemon]
     if roster != run.roster:
         run.roster = roster
