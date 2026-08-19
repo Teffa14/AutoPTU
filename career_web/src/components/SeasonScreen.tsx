@@ -4,6 +4,7 @@ import { careerApi } from "../api";
 import { navigate } from "../App";
 import { decisionPresentation, effectLabel, effectRule, riskLabel, transparencyLabel } from "../decisionPresentation";
 import { t } from "../i18n";
+import { automaticTrainingCandidates, automaticTrainingHasRoom, type TrainingPlan } from "../trainingPlan";
 import type { CareerRun, DecisionOption, DecisionReward, Locale } from "../types";
 import { BattlePreparing } from "./BattlePreparing";
 import { EconomyShop } from "./EconomyShop";
@@ -11,7 +12,6 @@ import { PokemonSprite } from "./PokemonSprite";
 import { TrainerPortrait } from "./TrainerPortrait";
 
 interface Props { run: CareerRun; locale: Locale; onRun: (run: CareerRun) => void }
-type TrainingPlan = "manual" | "conditioning" | "power" | "guard" | "agility";
 
 export function SeasonScreen({ run, locale, onRun }: Props) {
   const copy = t(locale);
@@ -43,6 +43,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
     .map((id) => run.pokemon.find((pokemon) => pokemon.id === id))
     .filter((pokemon) => pokemon !== undefined);
   const featuredContact = run.relationship_effects?.contact_effects?.[0];
+  const automaticPlanHasRoom = trainingPlan === "manual" ? true : automaticTrainingHasRoom(run, trainingPlan);
 
   useEffect(() => setSelectedId(""), [decision?.id]);
   useEffect(() => {
@@ -54,10 +55,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   }, [run.id, trainingPlan]);
   useEffect(() => {
     if (trainingPlan === "manual" || trainingBusy || busy || run.status !== "active" || run.season?.status !== "decision" || run.season.training_completed) return;
-    const completed = new Set(run.season.training_completed_ids ?? []);
-    const partner = run.pokemon.find((pokemon) => pokemon.is_partner)?.id ?? run.active_roster[0] ?? "";
-    const candidates = run.mode === "advanced" ? run.active_roster : [partner];
-    const pendingIds = candidates.filter((id) => id && !completed.has(id));
+    const pendingIds = automaticTrainingCandidates(run, trainingPlan);
     if (!pendingIds.length) return;
     const token = `${run.id}:${run.season_number}:${trainingPlan}`;
     if (autoTrainingRef.current === token) return;
@@ -75,7 +73,10 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
         onRun(current);
       } catch (reason) {
         autoTrainingRef.current = "";
-        if (!cancelled) setError(reason instanceof Error ? reason.message : String(reason));
+        if (!cancelled) {
+          if (current.revision !== run.revision) onRun(current);
+          setError(reason instanceof Error ? reason.message : String(reason));
+        }
       } finally {
         if (!cancelled) setTrainingBusy(false);
       }
@@ -213,7 +214,15 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
             <option value="guard">{locale === "es" ? "Automático · Defensa" : "Automatic · Guard"}</option>
             <option value="agility">{locale === "es" ? "Automático · Agilidad" : "Automatic · Agility"}</option>
           </select>
-          <small>{trainingBusy ? (locale === "es" ? "Entrenando equipo…" : "Training team…") : trainingPlan === "manual" ? (locale === "es" ? "Podés entrenar desde el perfil." : "You can train from the profile.") : (locale === "es" ? "Se aplica solo al abrir cada temporada." : "Applied automatically when each season opens.")}</small>
+          <small>{trainingBusy
+            ? (locale === "es" ? "Entrenando equipo…" : "Training team…")
+            : trainingPlan === "manual"
+            ? (locale === "es" ? "Podés entrenar desde el perfil." : "You can train from the profile.")
+            : run.season?.training_completed
+            ? (locale === "es" ? "Entrenamiento automático completado esta temporada." : "Automatic training completed this season.")
+            : !automaticPlanHasRoom
+            ? (locale === "es" ? "Este plan ya no puede mejorar a los Pokémon elegibles. Cambiá el plan o usá Manual." : "This plan cannot improve any eligible Pokémon. Change the plan or use Manual.")
+            : (locale === "es" ? "Se aplica solo al abrir cada temporada." : "Applied automatically when each season opens.")}</small>
         </label>
       </div>
       {run.relationship_effects?.best_contact ? (
