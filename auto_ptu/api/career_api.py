@@ -158,6 +158,20 @@ def career_battle(
         raise _error(exc) from exc
 
 
+@router.post("/runs/{run_id}/battles/{battle_id}/finalize")
+def career_finalize_battle(
+    run_id: str,
+    battle_id: str,
+    authorization: Optional[str] = Header(default=""),
+    x_career_user: Optional[str] = Header(default=""),
+) -> dict:
+    identity = _identity(authorization or "", x_career_user or "")
+    try:
+        return SERVICE.finalize_season(identity.user_id, run_id, battle_id)
+    except Exception as exc:
+        raise _error(exc) from exc
+
+
 @router.post("/runs/{run_id}/retire")
 def career_retire(
     run_id: str,

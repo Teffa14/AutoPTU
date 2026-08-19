@@ -53,7 +53,10 @@ def simulate_battle(spec: BattleSpec, *, max_steps: int = 90) -> BattleTranscrip
         _build_species(
             repo, builder, species,
             min(level_cap, max(1, away_levels[min(index, len(away_levels) - 1)] + spec.away_level_bonus)),
-            stat_training=_gimmick_training({}, away_gimmicks[index] if index < len(away_gimmicks) else ""),
+            stat_training=_gimmick_training(
+                _rival_stat_training(spec, index),
+                away_gimmicks[index] if index < len(away_gimmicks) else "",
+            ),
         )
         for index, species in enumerate(away_species)
     ]
@@ -218,7 +221,10 @@ def simulate_calendar_summaries(specs: Sequence[BattleSpec]) -> list[BattleTrans
                 builder,
                 species,
                 min(level_cap, max(1, away_levels[min(index, len(away_levels) - 1)] + spec.away_level_bonus)),
-                stat_training=_gimmick_training({}, away_gimmicks[index] if index < len(away_gimmicks) else ""),
+                stat_training=_gimmick_training(
+                    _rival_stat_training(spec, index),
+                    away_gimmicks[index] if index < len(away_gimmicks) else "",
+                ),
             )
             for index, species in enumerate(away_species)
         ]
@@ -371,6 +377,38 @@ def _build_species(
         if amount:
             setattr(mon, attribute, int(getattr(mon, attribute)) + amount)
     return mon
+
+
+def _rival_stat_training(spec: BattleSpec, index: int) -> Dict[str, int]:
+    """Model the opponent trainer's accumulated season work deterministically.
+
+    Player Pokémon can gain two permanent training points per season. Rivals now
+    receive a comparable seeded budget, with stronger leagues starting from a
+    more developed baseline. Three focus stats per Pokémon keep builds distinct
+    instead of applying a flat bonus to every stat.
+    """
+    league_base = {"junior": 2, "rookie": 4, "regular": 6, "elite": 8}.get(spec.league, 2)
+    budget = min(30, league_base + max(0, int(spec.season) - 1) * 2)
+    if budget <= 0:
+        return {}
+    stats = ["hp", "atk", "def", "spatk", "spdef", "spd"]
+    seed_bytes = hashlib.sha256(f"{spec.seed}:{spec.away_club}:{index}:rival-training".encode("utf-8")).digest()
+    rng = random.Random(int.from_bytes(seed_bytes[:8], "big"))
+    rng.shuffle(stats)
+    focus = stats[:3]
+    result: Dict[str, int] = {}
+    cursor = 0
+    while budget > 0 and cursor < 48:
+        stat = focus[cursor % len(focus)]
+        room = max(0, 12 - result.get(stat, 0))
+        amount = min(2, budget, room)
+        if amount:
+            result[stat] = result.get(stat, 0) + amount
+            budget -= amount
+        cursor += 1
+        if all(result.get(stat, 0) >= 12 for stat in focus):
+            break
+    return result
 
 
 def _gimmick_training(training: Dict[str, int], gimmick: str) -> Dict[str, int]:

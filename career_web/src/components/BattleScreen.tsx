@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 
 import { careerApi } from "../api";
 import { navigate } from "../App";
@@ -10,15 +10,26 @@ import { BattlePreparing } from "./BattlePreparing";
 import { CareerCelebration } from "./CareerCelebration";
 import { PokemonSprite } from "./PokemonSprite";
 
-export default function BattleScreen({ runId, battleId, locale, run }: { runId: string; battleId: string; locale: Locale; run?: CareerRun | null }) {
+export default function BattleScreen({ runId, battleId, locale, run, onRun }: {
+  runId: string;
+  battleId: string;
+  locale: Locale;
+  run?: CareerRun | null;
+  onRun?: (run: CareerRun) => void;
+}) {
   const copy = t(locale);
   const [transcript, setTranscript] = useState<BattleTranscript | null>(null);
   const [stepIndex, setStepIndex] = useState(0);
   const [speed, setSpeed] = useState(1);
   const [error, setError] = useState("");
+  const [finalizing, setFinalizing] = useState(false);
+  const [finalizeError, setFinalizeError] = useState("");
+  const finalizationRef = useRef<{ key: string; promise: Promise<CareerRun> } | null>(null);
 
   useEffect(() => {
     let active = true;
+    setTranscript(null);
+    setError("");
     careerApi.battle(runId, battleId).then((value) => {
       if (!active) return;
       setTranscript(value);
@@ -26,6 +37,27 @@ export default function BattleScreen({ runId, battleId, locale, run }: { runId: 
     }).catch((reason: Error) => active && setError(reason.message));
     return () => { active = false; };
   }, [runId, battleId]);
+
+  useEffect(() => {
+    if (!transcript) return;
+    const key = `${runId}:${battleId}`;
+    if (finalizationRef.current?.key !== key) {
+      finalizationRef.current = { key, promise: careerApi.finalizeSeason(runId, battleId) };
+    }
+    let active = true;
+    setFinalizing(true);
+    setFinalizeError("");
+    finalizationRef.current.promise.then((value) => {
+      if (!active) return;
+      onRun?.(value);
+      setFinalizing(false);
+    }).catch((reason: Error) => {
+      if (!active) return;
+      setFinalizeError(reason.message);
+      setFinalizing(false);
+    });
+    return () => { active = false; };
+  }, [battleId, onRun, runId, transcript]);
 
   const steps = useMemo(() => transcript ? playbackEventIndexes(transcript) : [], [transcript]);
   const complete = Boolean(transcript) && stepIndex >= steps.length;
@@ -38,6 +70,24 @@ export default function BattleScreen({ runId, battleId, locale, run }: { runId: 
     const timer = window.setTimeout(() => setStepIndex((current) => current + 1), delay / speed);
     return () => window.clearTimeout(timer);
   }, [complete, speed, transcript, view?.event?.type, stepIndex]);
+
+  async function continueCareer() {
+    if (finalizing) return;
+    if (finalizeError) {
+      setFinalizing(true);
+      setFinalizeError("");
+      try {
+        const value = await careerApi.finalizeSeason(runId, battleId);
+        onRun?.(value);
+      } catch (reason) {
+        setFinalizeError(reason instanceof Error ? reason.message : String(reason));
+        setFinalizing(false);
+        return;
+      }
+      setFinalizing(false);
+    }
+    navigate(`run/${runId}`);
+  }
 
   if (error) return <section className="battle-error"><h1>{locale === "es" ? "No se pudo abrir el combate" : "Battle unavailable"}</h1><p>{error}</p><button onClick={() => navigate(`run/${runId}`)}>{copy.back}</button></section>;
   if (!transcript || !view) return <BattlePreparing run={run} locale={locale} />;
@@ -89,8 +139,15 @@ export default function BattleScreen({ runId, battleId, locale, run }: { runId: 
               <p>{transcript.winner_label} · {transcript.rounds} {locale === "es" ? "rondas" : "rounds"}</p>
               <p className="battle-result-explanation">{locale === "es" ? `Potencia efectiva ${homePower}–${awayPower}. El nivel es sólo una parte: stats, tipos, STAB, habilidades, precisión y decisiones tácticas también definieron el resultado.` : `Effective power ${homePower}–${awayPower}. Level is only one part: stats, types, STAB, abilities, accuracy and tactical choices also decided the result.`}</p>
               <CareerCelebration run={run} locale={locale} season={transcript.spec.season} />
-              <button className="primary-action" onClick={() => navigate(`run/${runId}`)}>{locale === "es" ? "Continuar la carrera" : "Continue career"}</button>
-              <small>{locale === "es" ? "Este resultado queda en pantalla hasta que decidas continuar." : "This result remains on screen until you choose to continue."}</small>
+              {finalizeError ? <p className="form-error" role="alert">{locale === "es" ? "La temporada no terminó de guardarse. Reintentá para continuar." : "The season did not finish saving. Retry to continue."}</p> : null}
+              <button className="primary-action" onClick={continueCareer} disabled={finalizing}>
+                {finalizing
+                  ? (locale === "es" ? "Cerrando temporada…" : "Finalizing season…")
+                  : finalizeError
+                  ? (locale === "es" ? "Reintentar y continuar" : "Retry and continue")
+                  : (locale === "es" ? "Continuar la carrera" : "Continue career")}
+              </button>
+              <small>{finalizing ? (locale === "es" ? "El resto del calendario se está resolviendo mientras termina el replay." : "The rest of the schedule is resolving while the replay finishes.") : (locale === "es" ? "Este resultado queda en pantalla hasta que decidas continuar." : "This result remains on screen until you choose to continue.")}</small>
             </div>
           ) : null}
         </div>

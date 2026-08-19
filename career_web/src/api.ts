@@ -135,6 +135,13 @@ async function battle(runId: string, battleId: string): Promise<BattleTranscript
   return request<BattleTranscript>(`/api/v1/runs/${encodeURIComponent(runId)}/battles/${encodeURIComponent(battleId)}`);
 }
 
+function finalizeSeason(runId: string, battleId: string): Promise<CareerRun> {
+  return request<CareerRun>(
+    `/api/v1/runs/${encodeURIComponent(runId)}/battles/${encodeURIComponent(battleId)}/finalize`,
+    { method: "POST", body: "{}" },
+  );
+}
+
 export const careerApi = {
   catalog: (locale: string) => request<CareerCatalog>(`/api/v1/catalog?locale=${encodeURIComponent(locale)}`),
   create: (payload: Record<string, unknown>) => request<CareerRun>("/api/v1/runs", { method: "POST", body: JSON.stringify(payload) }),
@@ -145,6 +152,7 @@ export const careerApi = {
   purchase,
   decide,
   battle,
+  finalizeSeason,
   retire: (runId: string) => request<CareerRun>(`/api/v1/runs/${encodeURIComponent(runId)}/retire`, { method: "POST", body: JSON.stringify({ reason: "voluntary" }) }),
   share: (runId: string) => request<{ url: string; include_replay: boolean }>(
     `/api/v1/runs/${encodeURIComponent(runId)}/shares`,

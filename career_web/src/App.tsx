@@ -76,7 +76,7 @@ export function App() {
   } else if (battleMatch) {
     screen = (
       <Suspense fallback={<div className="scene-loading">Loading arena…</div>}>
-        <BattleScreen runId={battleMatch[1]} battleId={battleMatch[2]} locale={locale} run={routeRun} />
+        <BattleScreen runId={battleMatch[1]} battleId={battleMatch[2]} locale={locale} run={routeRun} onRun={setRun} />
       </Suspense>
     );
   } else if (runMatch && !routeRun) {

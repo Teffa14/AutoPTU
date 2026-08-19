@@ -33,3 +33,12 @@ jobs:
 
       - name: Run standard validation
         run: python scripts/validate_repo.py
+
+      - name: Run Career pipeline tests
+        run: python -m pytest -q tests/test_career_battle_pipeline.py tests/test_career_rival_training.py
+
+      - name: Install Career frontend
+        run: npm --prefix career_web ci
+
+      - name: Build Career frontend
+        run: npm --prefix career_web run build

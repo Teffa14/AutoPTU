@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 
 import { careerApi } from "../api";
 import { navigate } from "../App";
@@ -11,6 +11,7 @@ import { PokemonSprite } from "./PokemonSprite";
 import { TrainerPortrait } from "./TrainerPortrait";
 
 interface Props { run: CareerRun; locale: Locale; onRun: (run: CareerRun) => void }
+type TrainingPlan = "manual" | "conditioning" | "power" | "guard" | "agility";
 
 export function SeasonScreen({ run, locale, onRun }: Props) {
   const copy = t(locale);
@@ -26,6 +27,9 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   const [readyBattleId, setReadyBattleId] = useState<string | null>(null);
   const [fieldTransition, setFieldTransition] = useState(false);
   const [economyOpen, setEconomyOpen] = useState(false);
+  const [trainingBusy, setTrainingBusy] = useState(false);
+  const [trainingPlan, setTrainingPlan] = useState<TrainingPlan>(() => storedTrainingPlan(run.id));
+  const autoTrainingRef = useRef("");
   const decision = run.season?.decision;
   const presentation = useMemo(
     () => decision ? decisionPresentation(decision, run, locale) : null,
@@ -41,8 +45,47 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   const featuredContact = run.relationship_effects?.contact_effects?.[0];
 
   useEffect(() => setSelectedId(""), [decision?.id]);
+  useEffect(() => {
+    setTrainingPlan(storedTrainingPlan(run.id));
+    autoTrainingRef.current = "";
+  }, [run.id]);
+  useEffect(() => {
+    window.localStorage.setItem(trainingStorageKey(run.id), trainingPlan);
+  }, [run.id, trainingPlan]);
+  useEffect(() => {
+    if (trainingPlan === "manual" || trainingBusy || busy || run.status !== "active" || run.season?.status !== "decision" || run.season.training_completed) return;
+    const completed = new Set(run.season.training_completed_ids ?? []);
+    const partner = run.pokemon.find((pokemon) => pokemon.is_partner)?.id ?? run.active_roster[0] ?? "";
+    const candidates = run.mode === "advanced" ? run.active_roster : [partner];
+    const pendingIds = candidates.filter((id) => id && !completed.has(id));
+    if (!pendingIds.length) return;
+    const token = `${run.id}:${run.season_number}:${trainingPlan}`;
+    if (autoTrainingRef.current === token) return;
+    autoTrainingRef.current = token;
+    let cancelled = false;
+    async function trainAutomatically() {
+      setTrainingBusy(true);
+      setError("");
+      let current = run;
+      try {
+        for (const pokemonId of pendingIds) {
+          current = await careerApi.train(current, trainingPlan, pokemonId);
+          if (cancelled) return;
+        }
+        onRun(current);
+      } catch (reason) {
+        autoTrainingRef.current = "";
+        if (!cancelled) setError(reason instanceof Error ? reason.message : String(reason));
+      } finally {
+        if (!cancelled) setTrainingBusy(false);
+      }
+    }
+    void trainAutomatically();
+    return () => { cancelled = true; };
+  }, [busy, onRun, run, trainingPlan]);
+
   async function decide() {
-    if (!selectedId) return;
+    if (!selectedId || trainingBusy) return;
     const isGamble = selected?.risk === "gamble";
     setBusy(true);
     setError("");
@@ -56,7 +99,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
     try {
       const pending = careerApi.decide(run, selectedId);
       if (isGamble) {
-        const [result] = await Promise.all([pending, delay(1800)]);
+        const [result] = await Promise.all([pending, delay(450)]);
         onRun(result.run);
         const outcome = latestDecisionEffects(result.run);
         const target = outcome?.gamble_success === true ? "success" : "failure";
@@ -64,12 +107,11 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
         setRouletteTarget(target);
         setReadyBattleId(result.battle_ids.at(-1) ?? null);
         setRoulette("settling");
-        await delay(1450);
+        await delay(420);
         setRoulette(target);
         return;
       }
       if (finalDecision) {
-        await new Promise((resolve) => window.setTimeout(resolve, 120));
         setFieldTransition(true);
       }
       const result = await pending;
@@ -93,7 +135,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
     setReadyBattleId(null);
     if (!featured) return;
     setFieldTransition(true);
-    window.setTimeout(() => navigate(`battle/${run.id}/${featured}`), 420);
+    navigate(`battle/${run.id}/${featured}`);
   }
 
   async function retire() {
@@ -160,7 +202,20 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
         <span><small>{locale === "es" ? "RIESGO DE RETIRO" : "RETIREMENT RISK"}</small><b>{run.seasons_without_contract}/2 {locale === "es" ? "temporadas sin contrato" : "seasons without a contract"}</b></span>
       </div>
       {economyOpen ? <EconomyShop run={run} locale={locale} onRun={onRun} compact /> : null}
-      <div className="active-class-effect">{run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b> · {locale === "es" ? entry.description_es : entry.description_en}</span>)}</div>
+      <div className="active-class-effect">
+        {run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b> · {locale === "es" ? entry.description_es : entry.description_en}</span>)}
+        <label>
+          <b>{locale === "es" ? "Plan de entrenamiento" : "Training plan"}</b>{" "}
+          <select value={trainingPlan} onChange={(event) => setTrainingPlan(event.target.value as TrainingPlan)} disabled={trainingBusy || busy}>
+            <option value="manual">{locale === "es" ? "Manual" : "Manual"}</option>
+            <option value="conditioning">{locale === "es" ? "Automático · Resistencia" : "Automatic · Conditioning"}</option>
+            <option value="power">{locale === "es" ? "Automático · Potencia" : "Automatic · Power"}</option>
+            <option value="guard">{locale === "es" ? "Automático · Defensa" : "Automatic · Guard"}</option>
+            <option value="agility">{locale === "es" ? "Automático · Agilidad" : "Automatic · Agility"}</option>
+          </select>
+          <small>{trainingBusy ? (locale === "es" ? "Entrenando equipo…" : "Training team…") : trainingPlan === "manual" ? (locale === "es" ? "Podés entrenar desde el perfil." : "You can train from the profile.") : (locale === "es" ? "Se aplica solo al abrir cada temporada." : "Applied automatically when each season opens.")}</small>
+        </label>
+      </div>
       {run.relationship_effects?.best_contact ? (
         <div className="relationship-edge" aria-label={locale === "es" ? "Beneficios de relaciones" : "Relationship benefits"}>
           <span><b>{run.relationship_effects.best_contact.split(" · ")[0]}</b>{locale === "es" ? " está de tu lado" : " has your back"}{featuredContact ? <i>{relationshipRoleLabel(featuredContact.role, locale)} · {featuredContact.bond}/6</i> : null}</span>
@@ -201,7 +256,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
                 key={option.id}
                 className={selectedId === option.id ? "selected" : ""}
                 onClick={() => setSelectedId(option.id)}
-                disabled={busy}
+                disabled={busy || trainingBusy}
                 role="radio"
                 aria-checked={selectedId === option.id}
               >
@@ -222,7 +277,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
                   <p><b>{Math.round(selected.gamble.chance * 100)}%</b> {locale === "es" ? "de éxito." : "success chance."} {gambleSentence(selected, locale)}</p>
                 ) : null}
               </div>
-              <button className="primary-action" onClick={decide} disabled={busy}>
+              <button className="primary-action" onClick={decide} disabled={busy || trainingBusy}>
                 {selected.risk === "gamble"
                   ? (locale === "es" ? "Girar la ruleta y comprometerse" : "Spin the wheel and commit")
                   : finalDecision
@@ -232,7 +287,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
             </section>
           ) : <p className="choice-help">{locale === "es" ? "Elige una opción para ver exactamente qué puede cambiar antes de confirmarla." : "Choose an option to see exactly what can change before confirming it."}</p>}
 
-          {busy && selectedId ? <div className="simulating" role="status"><i /><div><b>{finalDecision ? (locale === "es" ? "Jugando el calendario de liga" : "Playing the league schedule") : (locale === "es" ? "Registrando la decisión" : "Recording the decision")}</b><span>{finalDecision ? (locale === "es" ? "6 combates · stats reales · resultado verificado" : "6 battles · real stats · verified result") : (locale === "es" ? `Quedan ${Math.max(0, decisionTotal - decisionNumber)} decisiones antes del calendario` : `${Math.max(0, decisionTotal - decisionNumber)} decisions remain before the schedule`)}</span></div></div> : null}
+          {busy && selectedId ? <div className="simulating" role="status"><i /><div><b>{finalDecision ? (locale === "es" ? "Preparando el combate destacado" : "Preparing the featured battle") : (locale === "es" ? "Registrando la decisión" : "Recording the decision")}</b><span>{finalDecision ? (locale === "es" ? "El resto del calendario usa resúmenes PTU más livianos." : "The rest of the calendar uses lighter PTU summaries.") : (locale === "es" ? `Quedan ${Math.max(0, decisionTotal - decisionNumber)} decisiones antes del calendario` : `${Math.max(0, decisionTotal - decisionNumber)} decisions remain before the schedule`)}</span></div></div> : null}
           {error ? <p className="form-error" role="alert">{error}</p> : null}
         </article>
       </div>
@@ -241,6 +296,12 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
   );
 }
 
+function trainingStorageKey(runId: string): string { return `autoptu-career-training-plan:${runId}`; }
+function storedTrainingPlan(runId: string): TrainingPlan {
+  if (typeof window === "undefined") return "manual";
+  const value = window.localStorage.getItem(trainingStorageKey(runId));
+  return value === "conditioning" || value === "power" || value === "guard" || value === "agility" ? value : "manual";
+}
 function signed(value: number): string { return value > 0 ? `+${value}` : String(value); }
 
 function RouletteOverlay({ state, target, locale, option, outcome, hasBattle, onContinue }: {
@@ -257,11 +318,11 @@ function RouletteOverlay({ state, target, locale, option, outcome, hasBattle, on
   const mechanical = outcome ? effectSentence(Object.fromEntries(Object.entries(outcome).filter(([, value]) => typeof value === "number")) as Record<string, number>, locale) : "";
   const resolved = state === "success" || state === "failure";
   return <div className={`roulette-overlay ${state}${target ? ` target-${target}` : ""}`} role="status" aria-live="assertive">
-    <div className="roulette-wheel" aria-hidden="true"><i>×</i><i>×</i><i>✓</i><i>✓</i><b /></div>
+    <div className="roulette-wheel" aria-hidden="true" style={state === "settling" ? { animationDuration: "400ms" } : undefined}><i>×</i><i>×</i><i>✓</i><i>✓</i><b /></div>
     <section>
       <span>{locale === "es" ? "RULETA DE APUESTA" : "GAMBLE WHEEL"}</span>
-      <h2>{state === "spinning" ? (locale === "es" ? "Girando…" : "Spinning…") : state === "settling" ? (locale === "es" ? "La rueda se detiene" : "The wheel is stopping") : state === "success" ? (locale === "es" ? "¡ÉXITO!" : "SUCCESS!") : (locale === "es" ? "NO SALIÓ" : "NO WIN")}</h2>
-      <p>{state === "spinning" ? (locale === "es" ? "La elección está comprometida. La rueda completará el giro antes de revelar el resultado." : "The choice is committed. The wheel will complete its spin before revealing the result.") : state === "settling" ? (locale === "es" ? "Mira el puntero: el resultado quedará fijado en la rueda." : "Watch the pointer: the result will lock on the wheel.") : state === "success" ? `${reward}${mechanical ? ` · ${mechanical}` : ""}` : (locale === "es" ? `Resultado aplicado: ${mechanical || "sin cambios permanentes"}. El premio no se entrega.` : `Applied result: ${mechanical || "no permanent changes"}. The prize is not granted.`)}</p>
+      <h2>{state === "spinning" ? (locale === "es" ? "Girando…" : "Spinning…") : state === "settling" ? (locale === "es" ? "Resultado fijado" : "Result locked") : state === "success" ? (locale === "es" ? "¡ÉXITO!" : "SUCCESS!") : (locale === "es" ? "NO SALIÓ" : "NO WIN")}</h2>
+      <p>{state === "spinning" ? (locale === "es" ? "La elección ya está comprometida; el servidor calcula el resultado mientras gira la rueda." : "The choice is committed; the server resolves the outcome while the wheel spins.") : state === "settling" ? (locale === "es" ? "El puntero se está fijando en el resultado real." : "The pointer is locking onto the real outcome.") : state === "success" ? `${reward}${mechanical ? ` · ${mechanical}` : ""}` : (locale === "es" ? `Resultado aplicado: ${mechanical || "sin cambios permanentes"}. El premio no se entrega.` : `Applied result: ${mechanical || "no permanent changes"}. The prize is not granted.`)}</p>
       {resolved ? <button type="button" className="primary-action roulette-continue" onClick={onContinue}>{hasBattle ? (locale === "es" ? "Entrar al campo de batalla" : "Enter the battlefield") : (locale === "es" ? "Continuar la carrera" : "Continue career")}</button> : null}
     </section>
   </div>;
