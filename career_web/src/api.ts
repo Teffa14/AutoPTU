@@ -1,4 +1,4 @@
-import { authHeaders } from "./auth";
+import { authHeaders, type CareerAuthMode } from "./auth";
 import { loadLocalRun, saveLocalRun } from "./localCareer";
 import type { BattleTranscript, CareerCatalog, CareerRun } from "./types";
 
@@ -54,8 +54,16 @@ export class ApiError extends Error {
   }
 }
 
-async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const identity = await authHeaders();
+export function authModeForPath(path: string): CareerAuthMode {
+  const pathname = path.split("?", 1)[0];
+  if (pathname === "/api/v1/portable/action" || pathname === "/api/v1/runs/restore") return "casual";
+  if (/^\/api\/v1\/daily\/[^/]+\/attempts$/.test(pathname)) return "ranked";
+  if (pathname.startsWith("/api/v1/runs/")) return "ranked";
+  return "public";
+}
+
+async function request<T>(path: string, init: RequestInit = {}, authMode: CareerAuthMode = authModeForPath(path)): Promise<T> {
+  const identity = await authHeaders(authMode);
   const response = await fetch(`${base}${path}`, {
     ...init,
     headers: { "Content-Type": "application/json", ...identity, ...(init.headers ?? {}) },
@@ -354,13 +362,15 @@ async function retire(runId: string): Promise<CareerRun> {
 
 async function share(runId: string): Promise<{ url: string; include_replay: boolean }> {
   const path = `/api/v1/runs/${encodeURIComponent(runId)}/shares`;
+  const local = loadLocalRun(runId);
+  const authMode: CareerAuthMode = local?.ranked ? "ranked" : "casual";
   try {
-    return await request(path, { method: "POST", body: JSON.stringify({ include_replay: false }) });
+    return await request(path, { method: "POST", body: JSON.stringify({ include_replay: false }) }, authMode);
   } catch (reason) {
     if (!isMissingRun(reason)) throw reason;
     const restored = await restoreById(runId);
     if (!restored) throw reason;
-    return request(path, { method: "POST", body: JSON.stringify({ include_replay: false }) });
+    return request(path, { method: "POST", body: JSON.stringify({ include_replay: false }) }, authMode);
   }
 }
 
