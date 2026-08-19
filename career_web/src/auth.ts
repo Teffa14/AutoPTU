@@ -14,24 +14,21 @@ const localUserKey = "autoptu-career-development-user";
 
 export async function authHeaders(): Promise<Record<string, string>> {
   if (supabase) {
-    let { data } = await supabase.auth.getSession();
-    if (!data.session) {
-      await supabase.auth.signInAnonymously();
-      data = (await supabase.auth.getSession()).data;
-    }
+    const { data } = await supabase.auth.getSession();
     if (data.session?.access_token) return { Authorization: `Bearer ${data.session.access_token}` };
   }
-  let developmentUser = localStorage.getItem(localUserKey);
-  if (!developmentUser) {
-    developmentUser = crypto.randomUUID();
-    localStorage.setItem(localUserKey, developmentUser);
-  }
-  return { "X-Career-User": developmentUser };
+  return localCareerHeaders();
+}
+
+export async function hasPersistentCareerAccount(): Promise<boolean> {
+  if (!supabase) return false;
+  const { data } = await supabase.auth.getSession();
+  return Boolean(data.session?.access_token && !data.session.user.is_anonymous);
 }
 
 export async function signInWithEmail(email: string): Promise<void> {
   if (!supabase) throw new Error("Supabase Auth is not configured in this build.");
-  const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin + "/career-game/" } });
+  const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: authReturnUrl() } });
   if (error) throw error;
 }
 
@@ -42,8 +39,7 @@ export async function signInWithProvider(provider: "google" | "discord"): Promis
   if (current.user?.is_anonymous) {
     const { error: linkError } = await supabase.auth.linkIdentity({ provider, options });
     if (!linkError) return;
-    // Manual identity linking can be disabled in Supabase. A regular OAuth
-    // sign-in still lets an existing permanent account resume reliably.
+    // Existing anonymous sessions from older builds can still be upgraded.
   }
   const { error } = await supabase.auth.signInWithOAuth({ provider, options });
   if (error) throw error;
@@ -53,6 +49,15 @@ export async function signOut(): Promise<void> {
   if (!supabase) return;
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
+}
+
+function localCareerHeaders(): Record<string, string> {
+  let developmentUser = localStorage.getItem(localUserKey);
+  if (!developmentUser) {
+    developmentUser = crypto.randomUUID();
+    localStorage.setItem(localUserKey, developmentUser);
+  }
+  return { "X-Career-User": developmentUser };
 }
 
 function authReturnUrl(): string {

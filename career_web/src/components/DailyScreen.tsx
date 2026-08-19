@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { navigate } from "../App";
 import { careerApi } from "../api";
-import { signInWithEmail, signInWithProvider, supabase } from "../auth";
+import { hasPersistentCareerAccount, signInWithEmail, signInWithProvider, supabase } from "../auth";
 import { DEFAULT_TRAINER_SPRITE, trainerSpriteOptions } from "../trainerSprites";
 import type { CareerCatalog, CareerMode, CareerRun, Locale } from "../types";
 import { StarterPicker } from "./StarterPicker";
@@ -20,6 +20,8 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [accountReady, setAccountReady] = useState(false);
+  const [accountChecking, setAccountChecking] = useState(Boolean(supabase));
 
   useEffect(() => {
     Promise.all([careerApi.daily(day), careerApi.leaderboard(day, mode), careerApi.catalog(locale)])
@@ -28,6 +30,24 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
       })
       .catch((reason: Error) => setError(reason.message));
   }, [day, locale, mode]);
+
+  useEffect(() => {
+    let active = true;
+    async function refreshAccount() {
+      setAccountChecking(true);
+      const ready = await hasPersistentCareerAccount();
+      if (active) {
+        setAccountReady(ready);
+        setAccountChecking(false);
+      }
+    }
+    void refreshAccount();
+    const subscription = supabase?.auth.onAuthStateChange(() => { void refreshAccount(); }).data.subscription;
+    return () => {
+      active = false;
+      subscription?.unsubscribe();
+    };
+  }, []);
 
   const entries = (board?.entries as Record<string, unknown>[] | undefined) ?? [];
   const region = String(challenge?.region ?? "kanto");
@@ -41,6 +61,10 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
 
   async function beginAttempt() {
     if (!starter) return;
+    if (!accountReady) {
+      setError(locale === "es" ? "Iniciá sesión para usar uno de tus tres intentos ranked." : "Sign in before using one of your three ranked attempts.");
+      return;
+    }
     setBusy(true); setError("");
     try {
       const result = await careerApi.dailyAttempt(day, {
@@ -55,7 +79,10 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
 
   async function emailOtp() {
     setBusy(true); setError("");
-    try { await signInWithEmail(email); }
+    try {
+      await signInWithEmail(email);
+      setError(locale === "es" ? "Revisá tu email para completar el acceso ranked." : "Check your email to complete ranked sign-in.");
+    }
     catch (reason) { setError(reason instanceof Error ? reason.message : String(reason)); }
     finally { setBusy(false); }
   }
@@ -72,8 +99,16 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
           <label><span>{locale === "es" ? "Nombre" : "Name"}</span><input value={trainerName} maxLength={30} onChange={(event) => setTrainerName(event.target.value)} /></label>
           <label><span>{locale === "es" ? "Clase de entrenador" : "Trainer class"}</span><select value={trainerClass} onChange={(event) => setTrainerClass(event.target.value)}>{catalog?.classes.map((entry) => <option key={entry.id} value={entry.name}>{entry.name}</option>)}</select><small>{catalog?.classes.find((entry) => entry.name === trainerClass)?.[locale === "es" ? "description_es" : "description_en"]}</small></label>
         </div>
-        {supabase ? <div className="auth-actions"><button onClick={() => { void signInWithProvider("google").catch((reason: Error) => setError(reason.message)); }}>Google</button><button onClick={() => { void signInWithProvider("discord").catch((reason: Error) => setError(reason.message)); }}>Discord</button><input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="email@trainer.club" /><button onClick={emailOtp} disabled={!email || busy}>OTP</button></div> : <small>Local development identity</small>}
-        <footer><small>{locale === "es" ? "Tres intentos por modo · se conserva el mejor" : "Three attempts per mode · best result kept"}</small><button className="primary-action" onClick={beginAttempt} disabled={!starter || !trainerName.trim() || busy}>{busy ? "…" : locale === "es" ? "Iniciar intento" : "Start attempt"}</button></footer>
+        {supabase ? <div className="auth-actions">
+          {accountReady ? <strong>{locale === "es" ? "Cuenta ranked verificada" : "Ranked account verified"}</strong> : <>
+            <button onClick={() => { void signInWithProvider("google").catch((reason: Error) => setError(reason.message)); }}>Google</button>
+            <button onClick={() => { void signInWithProvider("discord").catch((reason: Error) => setError(reason.message)); }}>Discord</button>
+            <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="email@trainer.club" />
+            <button onClick={emailOtp} disabled={!email || busy}>OTP</button>
+          </>}
+          <small>{accountReady ? (locale === "es" ? "Tu identidad se usa sólo para ranked y leaderboard." : "Your identity is used only for ranked and leaderboard.") : accountChecking ? (locale === "es" ? "Comprobando cuenta…" : "Checking account…") : (locale === "es" ? "El Career casual no requiere cuenta." : "Casual Career does not require an account.")}</small>
+        </div> : <small>{locale === "es" ? "Ranked no está disponible en este build; el Career casual sigue libre." : "Ranked is unavailable in this build; casual Career remains open."}</small>}
+        <footer><small>{locale === "es" ? "Tres intentos por modo · se conserva el mejor" : "Three attempts per mode · best result kept"}</small><button className="primary-action" onClick={beginAttempt} disabled={!starter || !trainerName.trim() || busy || !accountReady}>{busy ? "…" : locale === "es" ? "Iniciar intento" : "Start attempt"}</button></footer>
       </aside> : null}
       <div className="leaderboard-board">
         <div className="leaderboard-head"><span>rank</span><span>{locale === "es" ? "entrenador" : "trainer"}</span><span>score</span></div>
