@@ -2,7 +2,14 @@ from pathlib import Path
 
 from auto_ptu.career.engine import CareerEngine
 from auto_ptu.career.models import BattleSpec, BattleTranscript, CareerRun
-from auto_ptu.career.roster import TRAINING_KIT_WEAR, grant_stat_training, progress_after_season, set_active_roster
+from auto_ptu.career.roster import (
+    TRAINING_KIT_WEAR,
+    capture_species,
+    grant_stat_training,
+    initialize_roster,
+    progress_after_season,
+    set_active_roster,
+)
 from auto_ptu.career.service import CareerService
 from auto_ptu.career.store import CareerStore
 
@@ -127,3 +134,22 @@ def test_retired_pokemon_cannot_be_reselected_and_longevity_round_trips(tmp_path
         assert "retired or unavailable" in str(exc) or "exactly" in str(exc)
     else:
         raise AssertionError("Retired Pokémon must not be selectable.")
+
+
+def test_roster_recovery_uses_persisted_pokemon_order_after_partner_retirement(tmp_path: Path) -> None:
+    run = new_run(tmp_path)
+    first_replacement = capture_species(run, "Pidgey", source="determinism-test")
+    second_replacement = capture_species(run, "Spearow", source="determinism-test")
+    assert first_replacement is not None
+    assert second_replacement is not None
+
+    partner = next(entry for entry in run.pokemon if entry.is_partner)
+    partner.status = "retired"
+    partner.career_health = 0
+    run.active_roster = []
+
+    changed = initialize_roster(run, stable_seed=run.seed)
+
+    assert changed is True
+    assert run.active_roster[:2] == [first_replacement.id, second_replacement.id]
+    assert partner.id not in run.active_roster
