@@ -1,6 +1,47 @@
 import { authHeaders } from "./auth";
 import type { BattleTranscript, CareerCatalog, CareerRun } from "./types";
 
+export interface ClubOffer {
+  id: string;
+  club_id: string;
+  club_name: string;
+  salary: number;
+  seasons: number;
+  loan_slots: number;
+  loan_species: string[];
+  renewal: boolean;
+  perk: { stat: string; amount: number; label: string };
+}
+
+export interface SponsorOffer {
+  id: string;
+  name: string;
+  theme: string;
+  upfront: number;
+  bonus: number;
+  objective: string;
+  target: number;
+  description_es: string;
+  description_en: string;
+}
+
+export interface CaptureCandidate {
+  id: string;
+  species: string;
+  rarity: string;
+  ball_cost: number;
+}
+
+export interface PreseasonSnapshot {
+  season: number;
+  club_completed: boolean;
+  sponsor_completed: boolean;
+  capture_completed: boolean;
+  club_offers: ClubOffer[];
+  sponsor_offers: SponsorOffer[];
+  capture_candidates: CaptureCandidate[];
+}
+
 const base = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") ?? "";
 const battleCache = new Map<string, BattleTranscript>();
 
@@ -54,6 +95,16 @@ function decideOnce(run: CareerRun, optionId: string) {
       body: JSON.stringify({ expected_revision: run.revision, option_id: optionId }),
     },
   );
+}
+
+async function retryRunMutation(run: CareerRun, path: string, payload: Record<string, unknown>): Promise<CareerRun> {
+  try {
+    return await request<CareerRun>(path, { method: "POST", body: JSON.stringify({ expected_revision: run.revision, ...payload }) });
+  } catch (reason) {
+    if (!(reason instanceof ApiError) || reason.status !== 409) throw reason;
+    const latest = await request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}`);
+    return request<CareerRun>(path, { method: "POST", body: JSON.stringify({ expected_revision: latest.revision, ...payload }) });
+  }
 }
 
 async function lineup(run: CareerRun, pokemonIds: string[]): Promise<CareerRun> {
@@ -146,6 +197,10 @@ export const careerApi = {
   catalog: (locale: string) => request<CareerCatalog>(`/api/v1/catalog?locale=${encodeURIComponent(locale)}`),
   create: (payload: Record<string, unknown>) => request<CareerRun>("/api/v1/runs", { method: "POST", body: JSON.stringify(payload) }),
   run: (id: string) => request<CareerRun>(`/api/v1/runs/${encodeURIComponent(id)}`),
+  preseason: (runId: string) => request<PreseasonSnapshot>(`/api/v1/runs/${encodeURIComponent(runId)}/preseason`),
+  chooseClub: (run: CareerRun, offerId: string) => retryRunMutation(run, `/api/v1/runs/${encodeURIComponent(run.id)}/club`, { offer_id: offerId }),
+  chooseSponsor: (run: CareerRun, offerId: string) => retryRunMutation(run, `/api/v1/runs/${encodeURIComponent(run.id)}/sponsor`, { offer_id: offerId }),
+  capture: (run: CareerRun, candidateId: string) => retryRunMutation(run, `/api/v1/runs/${encodeURIComponent(run.id)}/captures`, { candidate_id: candidateId }),
   lineup,
   useItem,
   train,
