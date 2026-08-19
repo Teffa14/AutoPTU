@@ -5,7 +5,7 @@ import { DailyScreen } from "./components/DailyScreen";
 import { GameShell } from "./components/GameShell";
 import { HomeScreen } from "./components/HomeScreen";
 import { ProfileScreen } from "./components/ProfileScreen";
-import { SeasonScreen } from "./components/SeasonScreen";
+import { SeasonHub } from "./components/SeasonHub";
 import { ShareScreen } from "./components/ShareScreen";
 import { TimelineScreen } from "./components/TimelineScreen";
 import type { CareerRun, Locale } from "./types";
@@ -57,13 +57,9 @@ export function App() {
     let active = true;
     setRunLoadError("");
     careerApi.run(requestedRunId).then((value) => {
-      if (active) {
-        setRun(value);
-      }
+      if (active) setRun(value);
     }).catch((reason: Error) => {
-      if (active) {
-        setRunLoadError(reason.message);
-      }
+      if (active) setRunLoadError(reason.message);
     });
     return () => { active = false; };
   }, [requestedRunId, run?.id]);
@@ -94,7 +90,7 @@ export function App() {
   } else if (path === "daily" || path.startsWith("leaderboard")) {
     screen = <DailyScreen locale={locale} onRun={setRun} leaderboardOnly={path.startsWith("leaderboard")} />;
   } else if (path.startsWith("run/") && routeRun) {
-    screen = <SeasonScreen run={routeRun} locale={locale} onRun={setRun} />;
+    screen = <SeasonHub run={routeRun} locale={locale} onRun={setRun} />;
   } else if (path === "new" || path === "create") {
     screen = <CreateScreen locale={locale} onCreated={(value) => { setRun(value); localStorage.setItem("career-last-run", value.id); navigate(`run/${value.id}`); }} />;
   } else {
@@ -102,16 +98,8 @@ export function App() {
   }
 
   const shellRun = shareMatch || path === "" || path === "new" || path === "create" ? null : requestedRunId ? routeRun : run;
-
   return (
-    <GameShell
-      run={shellRun}
-      locale={locale}
-      path={path}
-      displaySeason={battleSeason}
-      homePath={battleMatch ? `run/${battleMatch[1]}` : undefined}
-      onLocale={setLocale}
-    >
+    <GameShell run={shellRun} locale={locale} path={path} displaySeason={battleSeason} homePath={battleMatch ? `run/${battleMatch[1]}` : undefined} onLocale={setLocale}>
       {screen}
     </GameShell>
   );

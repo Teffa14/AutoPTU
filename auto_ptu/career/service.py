@@ -1,20 +1,21 @@
 from __future__ import annotations
 
-import os
 import logging
+import os
 import time
 from dataclasses import asdict
 from datetime import date
 from typing import Dict, Optional
 
+from .battle import simulate_calendar_summaries
 from .catalogs import REGIONS, region_catalog
 from .class_adapters import compile_class_adapters
-from .battle import simulate_calendar_summaries
 from .content_compiler import validate_compiled_content
 from .engine import CareerEngine
 from .items import buy_product, complete_training, item_catalog, shop_catalog, training_catalog, use_item
 from .models import CURRENT_CAREER_VERSION, BattleTranscript, CareerRun, utc_now
 from .postgres_store import career_store_from_environment
+from .season_market import capture_candidate, preseason_snapshot, settle_sponsor, sign_club, sign_sponsor
 from .store import CareerStore
 
 
@@ -91,14 +92,35 @@ class CareerService:
         return {"challenge": asdict(challenge), "run": run.to_dict(), "attempt_no": attempt_no}
 
     def get_run(self, player_id: str, run_id: str) -> dict:
+        return self._owned_run(player_id, run_id).to_dict()
+
+    def preseason(self, player_id: str, run_id: str) -> dict:
+        return preseason_snapshot(self._owned_run(player_id, run_id))
+
+    def choose_club(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
         run = self._owned_run(player_id, run_id)
+        self._check_revision(run, payload)
+        sign_club(run, str(payload.get("offer_id") or ""))
+        self._save_mutation(run)
+        return run.to_dict()
+
+    def choose_sponsor(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
+        run = self._owned_run(player_id, run_id)
+        self._check_revision(run, payload)
+        sign_sponsor(run, str(payload.get("offer_id") or ""))
+        self._save_mutation(run)
+        return run.to_dict()
+
+    def capture(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
+        run = self._owned_run(player_id, run_id)
+        self._check_revision(run, payload)
+        capture_candidate(run, str(payload.get("candidate_id") or ""))
+        self._save_mutation(run)
         return run.to_dict()
 
     def lineup(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
         run = self._owned_run(player_id, run_id)
-        expected = int(payload.get("expected_revision", -1))
-        if expected != run.revision:
-            raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
+        self._check_revision(run, payload)
         pokemon_ids = payload.get("pokemon_ids") or []
         if not isinstance(pokemon_ids, list):
             raise ValueError("pokemon_ids must be a list.")
@@ -108,44 +130,23 @@ class CareerService:
 
     def use_item(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
         run = self._owned_run(player_id, run_id)
-        expected = int(payload.get("expected_revision", -1))
-        if expected != run.revision:
-            raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
-        use_item(
-            run,
-            str(payload.get("item") or ""),
-            pokemon_id=str(payload.get("pokemon_id") or ""),
-            stat=str(payload.get("stat") or ""),
-        )
-        run.revision += 1
-        run.updated_at = utc_now()
-        self.store.save_run(run)
+        self._check_revision(run, payload)
+        use_item(run, str(payload.get("item") or ""), pokemon_id=str(payload.get("pokemon_id") or ""), stat=str(payload.get("stat") or ""))
+        self._save_mutation(run)
         return run.to_dict()
 
     def train(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
         run = self._owned_run(player_id, run_id)
-        expected = int(payload.get("expected_revision", -1))
-        if expected != run.revision:
-            raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
-        complete_training(
-            run,
-            str(payload.get("method") or ""),
-            str(payload.get("pokemon_id") or ""),
-        )
-        run.revision += 1
-        run.updated_at = utc_now()
-        self.store.save_run(run)
+        self._check_revision(run, payload)
+        complete_training(run, str(payload.get("method") or ""), str(payload.get("pokemon_id") or ""))
+        self._save_mutation(run)
         return run.to_dict()
 
     def purchase(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
         run = self._owned_run(player_id, run_id)
-        expected = int(payload.get("expected_revision", -1))
-        if expected != run.revision:
-            raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
+        self._check_revision(run, payload)
         buy_product(run, str(payload.get("product_id") or ""))
-        run.revision += 1
-        run.updated_at = utc_now()
-        self.store.save_run(run)
+        self._save_mutation(run)
         return run.to_dict()
 
     def decide(self, player_id: str, run_id: str, payload: Dict[str, object], idempotency_key: str) -> dict:
@@ -159,27 +160,17 @@ class CareerService:
         if cached is not None:
             return cached
         run = self._validate_owned_run(player_id, run) if run is not None else self._owned_run(player_id, run_id)
-        expected = int(payload.get("expected_revision", -1))
-        if expected != run.revision:
-            raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
+        self._check_revision(run, payload)
         run, specs = self.engine.prepare_season(run, option_id=str(payload.get("option_id") or ""))
         battle_ids = [entry.id for entry in specs]
         featured = None
         if specs:
-            # Only the broadcast match blocks the transition into the arena.
-            # Calendar summaries, progression, salary and the next season are
-            # finalized while the player watches the replay.
             featured_spec = next((entry for entry in specs if entry.featured), specs[-1])
             try:
                 started_at = time.perf_counter()
                 featured = self.engine.battle_runner(featured_spec)
                 self.store.save_battle(featured)
-                LOGGER.info(
-                    "career featured battle ready run=%s season=%s seconds=%.3f",
-                    run.id,
-                    run.season_number,
-                    time.perf_counter() - started_at,
-                )
+                LOGGER.info("career featured battle ready run=%s season=%s seconds=%.3f", run.id, run.season_number, time.perf_counter() - started_at)
             except Exception:
                 LOGGER.exception("career featured battle generation failed run=%s", run.id)
             self.store.save_run(run)
@@ -212,30 +203,20 @@ class CareerService:
             featured = self.engine.battle_runner(featured_spec)
             self.store.save_battle(featured)
             generated.append(featured)
-        missing_summaries = [
-            entry for entry in specs
-            if entry.id != featured_spec.id and entry.id not in existing
-        ]
+        missing_summaries = [entry for entry in specs if entry.id != featured_spec.id and entry.id not in existing]
         for summary in simulate_calendar_summaries(missing_summaries):
             self.store.save_battle(summary)
             generated.append(summary)
         generated_by_id = {entry.battle_id: entry for entry in generated}
-        transcripts = [
-            BattleTranscript.from_dict(existing[spec.id]) if spec.id in existing
-            else generated_by_id[spec.id]
-            for spec in specs
-        ]
+        transcripts = [BattleTranscript.from_dict(existing[spec.id]) if spec.id in existing else generated_by_id[spec.id] for spec in specs]
+        wins = sum(1 for transcript in transcripts if transcript.winner_team == "career-home")
+        settle_sponsor(run, wins=wins)
         resolved_season = run.season_number
         run, _ = self.engine.resolve_prepared_season(run, transcripts)
         self.store.save_run(run)
         if run.status == "retired" and hasattr(self.store, "finalize_ranked"):
             self.store.finalize_ranked(run)
-        LOGGER.info(
-            "career season finalized run=%s season=%s seconds=%.3f",
-            run.id,
-            resolved_season,
-            time.perf_counter() - started_at,
-        )
+        LOGGER.info("career season finalized run=%s season=%s seconds=%.3f", run.id, resolved_season, time.perf_counter() - started_at)
         return run.to_dict()
 
     def retire(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
@@ -258,10 +239,7 @@ class CareerService:
             requested = next((entry for entry in specs if entry.id == battle_id), None)
             if requested is None:
                 raise PermissionError("Battle does not belong to the prepared career calendar.")
-            if requested.featured:
-                generated = self.engine.battle_runner(requested)
-            else:
-                generated = simulate_calendar_summaries([requested])[0]
+            generated = self.engine.battle_runner(requested) if requested.featured else simulate_calendar_summaries([requested])[0]
             self.store.save_battle(generated)
             return generated.to_dict()
         transcript = self.store.load_battle(battle_id)
@@ -278,16 +256,7 @@ class CareerService:
         return {
             "challenge": asdict(challenge),
             "mode": mode,
-            "entries": [
-                {
-                    "rank": index + 1,
-                    "handle": entry.handle,
-                    "score": entry.score,
-                    "achievements": entry.achievements,
-                    "completed_at": entry.completed_at,
-                }
-                for index, entry in enumerate(entries)
-            ],
+            "entries": [{"rank": index + 1, "handle": entry.handle, "score": entry.score, "achievements": entry.achievements, "completed_at": entry.completed_at} for index, entry in enumerate(entries)],
         }
 
     def share(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
@@ -309,3 +278,14 @@ class CareerService:
             run.revision += 1
             self.store.save_run(run)
         return run
+
+    @staticmethod
+    def _check_revision(run: CareerRun, payload: Dict[str, object]) -> None:
+        expected = int(payload.get("expected_revision", -1))
+        if expected != run.revision:
+            raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
+
+    def _save_mutation(self, run: CareerRun) -> None:
+        run.revision += 1
+        run.updated_at = utc_now()
+        self.store.save_run(run)
