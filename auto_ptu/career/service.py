@@ -13,7 +13,7 @@ from .class_adapters import compile_class_adapters
 from .content_compiler import validate_compiled_content
 from .engine import CareerEngine
 from .items import buy_product, complete_training, item_catalog, shop_catalog, training_catalog, use_item
-from .models import CURRENT_CAREER_VERSION, BattleTranscript, CareerRun, utc_now
+from .models import CURRENT_CAREER_VERSION, BattleTranscript, CareerRun, ClubContract, utc_now
 from .postgres_store import career_store_from_environment
 from .season_market import capture_candidate, preseason_snapshot, settle_sponsor, sign_club, sign_sponsor
 from .store import CareerStore
@@ -216,7 +216,24 @@ class CareerService:
         wins = sum(1 for transcript in transcripts if transcript.winner_team == "career-home")
         settle_sponsor(run, wins=wins)
         resolved_season = run.season_number
+        expiring_contract = asdict(run.contract) if run.contract and run.contract.seasons_remaining <= 1 else None
         run, _ = self.engine.resolve_prepared_season(run, transcripts)
+
+        # CareerEngine historically auto-created a replacement club when a
+        # one-season contract expired. Preserve the incumbent as an expired
+        # contract instead so the next preseason can offer a real extension or
+        # a move. Existing multi-season contracts continue without a market.
+        if run.status == "active" and expiring_contract is not None:
+            run.contract = ClubContract(
+                club_id=str(expiring_contract["club_id"]),
+                club_name=str(expiring_contract["club_name"]),
+                region=str(expiring_contract["region"]),
+                league=str(expiring_contract["league"]),
+                salary=int(expiring_contract["salary"]),
+                seasons_remaining=0,
+                loan_slots=int(expiring_contract["loan_slots"]),
+            )
+
         self.store.save_run(run)
         if run.status == "retired" and hasattr(self.store, "finalize_ranked"):
             self.store.finalize_ranked(run)

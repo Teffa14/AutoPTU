@@ -29,9 +29,25 @@ def new_run(service: CareerService, user: str = "market-user", seed: int = 4401)
     }))
 
 
-def test_preseason_markets_are_deterministic_and_offer_real_choice(tmp_path: Path) -> None:
+def expire_contract(service: CareerService, run: CareerRun) -> CareerRun:
+    assert run.contract is not None
+    run.contract.seasons_remaining = 0
+    service.store.save_run(run)
+    return run
+
+
+def test_first_season_keeps_real_club_choice(tmp_path: Path) -> None:
     service = service_for(tmp_path)
     run = new_run(service)
+    snapshot = service.preseason("market-user", run.id)
+
+    assert snapshot["club_completed"] is False
+    assert len(snapshot["club_offers"]) == 3
+
+
+def test_preseason_markets_are_deterministic_and_offer_real_choice(tmp_path: Path) -> None:
+    service = service_for(tmp_path)
+    run = expire_contract(service, new_run(service))
     clone = CareerRun.from_dict(run.to_dict())
 
     assert club_offers(run) == club_offers(clone)
@@ -41,25 +57,59 @@ def test_preseason_markets_are_deterministic_and_offer_real_choice(tmp_path: Pat
     assert len(sponsor_offers(run)) == 3
     assert len(capture_board(run)) == 6
     assert all(entry["loan_species"] for entry in club_offers(run))
+    assert all(entry["gift_species"] for entry in club_offers(run))
 
 
-def test_signing_club_replaces_loans_without_adding_permanent_captures(tmp_path: Path) -> None:
+def test_same_league_renewal_keeps_club_loans_and_adds_permanent_gift(tmp_path: Path) -> None:
     service = service_for(tmp_path)
-    run = new_run(service, "club-user", 4402)
-    permanent_before = permanent_pokemon_count(run)
+    run = expire_contract(service, new_run(service, "club-user", 4402))
+    run.season_number = 2
+    if run.season:
+        run.season.number = 2
+    current_club = run.contract.club_name if run.contract else ""
+    service.store.save_run(run)
     offers = service.preseason("club-user", run.id)["club_offers"]
+    renewal = next(entry for entry in offers if entry["club_name"] == current_club)
 
-    signed = CareerRun.from_dict(service.choose_club("club-user", run.id, {
+    first = CareerRun.from_dict(service.choose_club("club-user", run.id, {
         "expected_revision": run.revision,
-        "offer_id": offers[1]["id"],
+        "offer_id": renewal["id"],
     }))
-    loans = [entry for entry in signed.pokemon if entry.ownership == "loan"]
+    assert first.contract is not None
+    assert first.contract.club_name == current_club
+    assert first.contract.seasons_remaining == 2
+    assert permanent_pokemon_count(first) == permanent_pokemon_count(run) + 1
+    assert any(entry.ownership == "owned" and entry.caught_species == renewal["gift_species"] for entry in first.pokemon)
 
-    assert signed.contract is not None
-    assert signed.contract.club_name == offers[1]["club_name"]
-    assert len(loans) == offers[1]["loan_slots"]
-    assert permanent_pokemon_count(signed) == permanent_before
-    assert all(entry.loan_club_id == signed.contract.club_id for entry in loans)
+    loan_ids = {entry.id for entry in first.pokemon if entry.ownership == "loan"}
+    first.contract.seasons_remaining = 0
+    first.season_number += 1
+    if first.season:
+        first.season.number = first.season_number
+    service.store.save_run(first)
+    second_offers = service.preseason("club-user", first.id)["club_offers"]
+    second_renewal = next(entry for entry in second_offers if entry["club_name"] == current_club)
+    renewed = CareerRun.from_dict(service.choose_club("club-user", first.id, {
+        "expected_revision": first.revision,
+        "offer_id": second_renewal["id"],
+    }))
+
+    assert loan_ids.issubset({entry.id for entry in renewed.pokemon if entry.ownership == "loan"})
+
+
+def test_higher_leagues_offer_better_signing_gift_tiers(tmp_path: Path) -> None:
+    service = service_for(tmp_path)
+    run = expire_contract(service, new_run(service, "gift-user", 4405))
+    run.season_number = 2
+
+    expected = {"junior": "common", "rookie": "rare", "regular": "very_rare", "elite": "epic"}
+    for league, rarity in expected.items():
+        run.league = league
+        if run.contract:
+            run.contract.league = league
+        offers = club_offers(run)
+        assert offers
+        assert all(entry["gift_rarity"] == rarity for entry in offers)
 
 
 def test_sponsor_pays_upfront_and_bonus_only_when_objective_is_met(tmp_path: Path) -> None:

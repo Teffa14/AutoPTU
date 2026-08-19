@@ -1,10 +1,17 @@
 import type { CareerRun } from "./types";
 
 const RUN_PREFIX = "autoptu-career-run:";
+const TRAINING_PREFIX = "autoptu-career-training-plan:";
+const AUTOMATIC_TRAINING = new Set(["conditioning", "power", "guard", "agility"]);
 
 export function saveLocalRun(run: CareerRun): void {
-  if (run.ranked) return;
   try {
+    const trainingKey = `${TRAINING_PREFIX}${run.id}`;
+    const currentPlan = localStorage.getItem(trainingKey);
+    if (!currentPlan || !AUTOMATIC_TRAINING.has(currentPlan)) {
+      localStorage.setItem(trainingKey, "conditioning");
+    }
+    if (run.ranked) return;
     localStorage.setItem(`${RUN_PREFIX}${run.id}`, JSON.stringify(run));
     localStorage.setItem("career-last-run", run.id);
   } catch {

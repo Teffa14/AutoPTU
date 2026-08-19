@@ -76,7 +76,7 @@ export interface CareerPokemon {
   acquired_age: number;
   capture_region: string;
   is_partner: boolean;
-  status: "active" | "pc";
+  status: "active" | "pc" | "retired";
   matches: number;
   wins: number;
   taught_moves: string[];
@@ -91,6 +91,13 @@ export interface CareerPokemon {
     age: number;
   }[];
   gimmicks: string[];
+  ownership?: "owned" | "loan";
+  loan_club_id?: string;
+  loan_expires_season?: number;
+  career_health: number;
+  training_wear: number;
+  retired_season: number;
+  retired_reason: string;
 }
 
 export interface CareerRun {

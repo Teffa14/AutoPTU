@@ -66,28 +66,38 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
     <section className="preseason-market" aria-label={locale === "es" ? "Mercado de temporada" : "Season market"}>
       <header className="preseason-heading">
         <div><span>{locale === "es" ? `TEMPORADA ${run.season_number}` : `SEASON ${run.season_number}`}</span><h2>{locale === "es" ? "Mercado de pretemporada" : "Preseason market"}</h2></div>
-        <p>{locale === "es" ? "Elegí club. Después podés firmar sponsor y usar una oportunidad de captura antes de cerrar tu primera decisión." : "Choose a club. Then you can sign a sponsor and use one capture opportunity before committing your first decision."}</p>
+        <p>{locale === "es" ? "Si tu contrato sigue vigente, continuás con el mismo club y equipo cedido. Cuando vence, podés renovar o cambiar. Después resolvés sponsor y captura." : "If your contract is still active, you keep the same club and loan squad. When it expires, renew or move. Then resolve sponsor and capture."}</p>
       </header>
 
       {!snapshot.club_completed ? (
         <div className="market-block club-market">
-          <div className="market-title"><b>{locale === "es" ? "Elegí club" : "Choose a club"}</b><span>{locale === "es" ? "Obligatorio para esta temporada" : "Required for this season"}</span></div>
+          <div className="market-title"><b>{locale === "es" ? "Contrato de club" : "Club contract"}</b><span>{locale === "es" ? "Elegí continuidad o cambio" : "Choose continuity or a move"}</span></div>
           <div className="market-grid club-grid">
-            {snapshot.club_offers.map((offer) => (
-              <article key={offer.id} className="market-card club-card">
-                <span className="market-tag">{offer.renewal ? (locale === "es" ? "RENOVACIÓN" : "RENEWAL") : (locale === "es" ? "OFERTA" : "OFFER")}</span>
-                <h3>{offer.club_name}</h3>
-                <strong>₽ {offer.salary} <small>/{locale === "es" ? "temporada" : "season"}</small></strong>
-                <p>{offer.perk.label}: +{offer.perk.amount} {marketStat(offer.perk.stat, locale)}</p>
-                <div className="loan-strip">
-                  <small>{locale === "es" ? "PRÉSTAMOS DEL CLUB" : "CLUB LOANS"}</small>
-                  {offer.loan_species.map((species) => <span key={species}><PokemonSprite name={species} className="market-sprite" /><b>{species}</b></span>)}
-                </div>
-                <button disabled={Boolean(busy)} onClick={() => mutate(`club:${offer.id}`, () => careerApi.chooseClub(run, offer.id))}>{busy === `club:${offer.id}` ? (locale === "es" ? "Firmando…" : "Signing…") : (locale === "es" ? "Firmar por la temporada" : "Sign for the season")}</button>
-              </article>
-            ))}
+            {snapshot.club_offers.map((offer) => {
+              const enhanced = offer as typeof offer & { gift_species?: string; gift_rarity?: string; retains_current_team?: boolean };
+              return (
+                <article key={offer.id} className={`market-card club-card ${offer.renewal ? "renewal-card" : ""}`}>
+                  <span className="market-tag">{offer.renewal ? (locale === "es" ? "EXTENSIÓN" : "EXTENSION") : (locale === "es" ? "OFERTA" : "OFFER")}</span>
+                  <h3>{offer.club_name}</h3>
+                  <strong>₽ {offer.salary} <small>/{locale === "es" ? "temporada" : "season"}</small></strong>
+                  <p>{offer.perk.label}: +{offer.perk.amount} {marketStat(offer.perk.stat, locale)}</p>
+                  {offer.renewal ? <p className="renewal-copy">{locale === "es" ? `Extendés ${offer.seasons} temporadas y mantenés los Pokémon cedidos actuales.` : `Extend for ${offer.seasons} seasons and keep the current loan Pokémon.`}</p> : null}
+                  <div className="loan-strip">
+                    <small>{locale === "es" ? "PLANTEL CEDIDO" : "LOAN SQUAD"}</small>
+                    {offer.loan_species.map((species) => <span key={species}><PokemonSprite name={species} className="market-sprite" /><b>{species}</b></span>)}
+                  </div>
+                  {enhanced.gift_species ? (
+                    <div className="club-gift">
+                      <small>{locale === "es" ? "REGALO DE FIRMA · PERMANENTE" : "SIGNING GIFT · PERMANENT"}</small>
+                      <span><PokemonSprite name={enhanced.gift_species} className="market-sprite gift-sprite" /><b>{enhanced.gift_species}</b><em>{rarityLabel(enhanced.gift_rarity ?? "common", locale)}</em></span>
+                    </div>
+                  ) : null}
+                  <button disabled={Boolean(busy)} onClick={() => mutate(`club:${offer.id}`, () => careerApi.chooseClub(run, offer.id))}>{busy === `club:${offer.id}` ? (locale === "es" ? "Firmando…" : "Signing…") : offer.renewal ? (locale === "es" ? `Extender ${offer.seasons} temporadas` : `Extend ${offer.seasons} seasons`) : (locale === "es" ? "Firmar contrato" : "Sign contract")}</button>
+                </article>
+              );
+            })}
           </div>
-          <p className="market-note">{locale === "es" ? "Los Pokémon cedidos pueden entrar en tu equipo de seis, pero regresan al club cuando cambies de contrato. No cuentan como capturas permanentes." : "Loan Pokémon may enter your active six, but return to the club when you change contracts. They do not count as permanent captures."}</p>
+          <p className="market-note">{locale === "es" ? "El regalo de firma es tuyo para siempre. Su rareza mejora con la liga. Los Pokémon cedidos pertenecen al club y sólo se devuelven al cambiar de club o al terminar el vínculo." : "The signing gift is permanently yours and its rarity improves with league level. Loan Pokémon belong to the club and only return when you move or the relationship ends."}</p>
         </div>
       ) : null}
 

@@ -14,7 +14,7 @@ const PRODUCTS = [
   { id: "pokeball", price: 30, es: "Poké Ball", en: "Poké Ball", esDetail: "Una captura futura.", enDetail: "One future capture." },
   { id: "super_potion", price: 75, es: "Super Potion", en: "Super Potion", esDetail: "+12 salud al usarla.", enDetail: "+12 health when used." },
   { id: "club_resource", price: 100, es: "Sanear recursos", en: "Fund resources", esDetail: "+1 recurso; reduce la deuda.", enDetail: "+1 resource; reduces debt." },
-  { id: "training_kit", price: 125, es: "Training Kit", en: "Training Kit", esDetail: "+2 a un stat elegido.", enDetail: "+2 to a chosen stat." },
+  { id: "training_kit", price: 125, es: "Training Kit", en: "Training Kit", esDetail: "+2 a un stat. Consume 12 de salud competitiva del Pokémon; abusarlo acelera su retiro.", enDetail: "+2 to a stat. Costs 12 Pokémon career health; repeated use accelerates retirement." },
   { id: "facility_pass", price: 180, es: "Facility Pass", en: "Facility Pass", esDetail: "+2 desarrollo al usarlo.", enDetail: "+2 development when used." },
   { id: "pokedex_upgrade", price: 300, es: "Pokédex Upgrade", en: "Pokédex Upgrade", esDetail: "Mejores encuentros para siempre.", enDetail: "Better encounters permanently." },
 ] as const;

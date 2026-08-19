@@ -28,11 +28,26 @@ _CLUB_PERKS = (
     ("health", 3, "Medical staff"),
 )
 
+_LEAGUE_GIFT_RARITY = {
+    "junior": "common",
+    "rookie": "rare",
+    "regular": "very_rare",
+    "elite": "epic",
+}
+
+_RARITY_FALLBACKS = {
+    "epic": ("epic", "very_rare", "rare", "common"),
+    "very_rare": ("very_rare", "rare", "common"),
+    "rare": ("rare", "common"),
+    "common": ("common",),
+}
+
 
 def preseason_snapshot(run: CareerRun) -> Dict[str, Any]:
+    club_completed = _season_event(run, {"club.offer_signed"}) or _contract_covers_current_season(run)
     return {
         "season": run.season_number,
-        "club_completed": _season_event(run, {"club.offer_signed"}),
+        "club_completed": club_completed,
         "sponsor_completed": _season_event(run, {"sponsor.signed", "sponsor.declined"}),
         "capture_completed": _season_event(run, {"capture.board_used"}),
         "club_offers": club_offers(run),
@@ -46,18 +61,33 @@ def club_offers(run: CareerRun) -> List[Dict[str, Any]]:
     clubs = list(region.clubs)
     rng = random.Random(_stable_seed(run.seed, run.season_number, "club-market"))
     current = run.contract.club_name if run.contract else ""
+    renewal_allowed = bool(current and run.season_number > 1 and _same_league_as_last_season(run))
     alternatives = [club for club in clubs if club != current]
     rng.shuffle(alternatives)
-    selected = ([current] if current else []) + alternatives
+    selected = ([current] if renewal_allowed else []) + alternatives
     selected = selected[:3]
     if len(selected) < 3:
-        selected.extend(club for club in clubs if club not in selected)
+        selected.extend(club for club in clubs if club not in selected and (renewal_allowed or club != current))
         selected = selected[:3]
     offers: List[Dict[str, Any]] = []
-    for index, club in enumerate(selected):
+    for club in selected:
         offer_rng = random.Random(_stable_seed(run.seed, run.season_number, club, "club-offer"))
+        renewal = bool(renewal_allowed and club == current)
         loan_slots = 1 + int(run.league in {"regular", "elite"})
-        loan_species = _loan_species(run, offer_rng, loan_slots)
+        existing_loans = [
+            entry.species
+            for entry in run.pokemon
+            if entry.ownership == "loan" and entry.loan_club_id == _slug(club)
+        ] if renewal else []
+        retained_loans = existing_loans[:loan_slots]
+        loan_species = retained_loans + _loan_species(
+            run,
+            offer_rng,
+            max(0, loan_slots - len(retained_loans)),
+            excluded={entry.casefold() for entry in retained_loans},
+        )
+        gift_rarity = _LEAGUE_GIFT_RARITY.get(run.league, "common")
+        gift_species = _gift_species(run, offer_rng, gift_rarity, excluded={entry.casefold() for entry in loan_species})
         perk_stat, perk_amount, perk_label = _CLUB_PERKS[_stable_seed(club, run.season_number) % len(_CLUB_PERKS)]
         salary_base = 120 * LEAGUES[run.league].weight + max(0, run.reputation * 5)
         salary = max(60, salary_base + offer_rng.choice((-20, 0, 20, 40)))
@@ -68,23 +98,38 @@ def club_offers(run: CareerRun) -> List[Dict[str, Any]]:
             "region": run.build.region,
             "league": run.league,
             "salary": salary,
-            "seasons": 1,
+            "seasons": 2 if renewal else 1,
             "loan_slots": loan_slots,
             "loan_species": loan_species,
+            "gift_species": gift_species,
+            "gift_rarity": gift_rarity,
             "perk": {"stat": perk_stat, "amount": perk_amount, "label": perk_label},
-            "renewal": bool(current and club == current),
+            "renewal": renewal,
+            "retains_current_team": renewal,
         })
     return offers
 
 
 def sign_club(run: CareerRun, offer_id: str) -> Dict[str, Any]:
     _require_preseason(run)
-    if _season_event(run, {"club.offer_signed"}):
+    if _season_event(run, {"club.offer_signed"}) or _contract_covers_current_season(run):
         raise ValueError("A club has already been selected for this season.")
     offer = next((entry for entry in club_offers(run) if entry["id"] == offer_id), None)
     if offer is None:
         raise ValueError("The selected club offer is no longer available.")
-    returned = _return_loans(run)
+
+    renewal = bool(offer.get("renewal")) and run.contract is not None and run.contract.club_id == str(offer["club_id"])
+    returned = [] if renewal else _return_loans(run)
+    existing_loan_species = {
+        entry.species.casefold()
+        for entry in run.pokemon
+        if entry.ownership == "loan" and entry.loan_club_id == str(offer["club_id"])
+    }
+    if renewal:
+        for pokemon in run.pokemon:
+            if pokemon.ownership == "loan" and pokemon.loan_club_id == str(offer["club_id"]):
+                pokemon.loan_expires_season = run.season_number + int(offer["seasons"]) - 1
+
     run.contract = ClubContract(
         club_id=str(offer["club_id"]),
         club_name=str(offer["club_name"]),
@@ -96,11 +141,20 @@ def sign_club(run: CareerRun, offer_id: str) -> Dict[str, Any]:
     )
     perk = dict(offer["perk"])
     _apply_perk(run, str(perk["stat"]), int(perk["amount"]))
-    loans = [_create_loan(run, species, run.contract.club_id) for species in offer["loan_species"]]
+
+    loans = [
+        _create_loan(run, species, run.contract.club_id)
+        for species in offer["loan_species"]
+        if species.casefold() not in existing_loan_species
+    ]
     for pokemon in loans:
+        pokemon.loan_expires_season = run.season_number + run.contract.seasons_remaining - 1
         run.pokemon.append(pokemon)
         if len(run.active_roster) < 6:
             run.active_roster.append(pokemon.id)
+
+    gift_species = str(offer.get("gift_species") or "")
+    gift = capture_species(run, gift_species, source="club_signing_gift", spend_ball=False) if gift_species else None
     run.roster = [entry.species for entry in run.pokemon]
     if run.season:
         run.season.club_name = run.contract.club_name
@@ -111,11 +165,21 @@ def sign_club(run: CareerRun, offer_id: str) -> Dict[str, Any]:
         "club": run.contract.club_name,
         "club_id": run.contract.club_id,
         "salary": run.contract.salary,
-        "loan_species": [entry.species for entry in loans],
-        "loan_ids": [entry.id for entry in loans],
+        "seasons": run.contract.seasons_remaining,
+        "renewal": renewal,
+        "retained_team": renewal,
+        "loan_species": [entry.species for entry in run.pokemon if entry.ownership == "loan" and entry.loan_club_id == run.contract.club_id],
+        "loan_ids": [entry.id for entry in run.pokemon if entry.ownership == "loan" and entry.loan_club_id == run.contract.club_id],
         "returned_loan_ids": returned,
+        "gift_species": gift.species if gift else "",
+        "gift_pokemon_id": gift.id if gift else "",
+        "gift_rarity": offer.get("gift_rarity"),
         "perk": perk,
-        "label": f"Signed with {run.contract.club_name}; club loans: {', '.join(entry.species for entry in loans)}.",
+        "label": (
+            f"Extended with {run.contract.club_name} for {run.contract.seasons_remaining} seasons; current club squad retained."
+            if renewal
+            else f"Signed with {run.contract.club_name} for {run.contract.seasons_remaining} season; club loans registered."
+        ) + (f" Signing gift: {gift.species}." if gift else ""),
     }
     run.timeline.append(event)
     return event
@@ -271,20 +335,33 @@ def permanent_pokemon_count(run: CareerRun) -> int:
     return sum(1 for entry in run.pokemon if entry.ownership == "owned")
 
 
-def _loan_species(run: CareerRun, rng: random.Random, count: int) -> List[str]:
+def _loan_species(run: CareerRun, rng: random.Random, count: int, *, excluded: set[str] | None = None) -> List[str]:
     selected: List[str] = []
     unavailable = {entry.species.casefold() for entry in run.pokemon if entry.ownership == "owned"}
+    unavailable.update(excluded or set())
     for index in range(count):
         rarity = "rare" if run.league in {"regular", "elite"} or index else "common"
         pool = list(encounter_pool(run.build.region, rarity))
         rng.shuffle(pool)
         species = next(
-            (entry for entry in pool if entry.casefold() not in unavailable and entry not in selected),
+            (entry for entry in pool if entry.casefold() not in unavailable and entry.casefold() not in {value.casefold() for value in selected}),
             pool[0] if pool else run.build.starter,
         )
         selected.append(species)
         unavailable.add(species.casefold())
     return selected
+
+
+def _gift_species(run: CareerRun, rng: random.Random, rarity: str, *, excluded: set[str] | None = None) -> str:
+    unavailable = {entry.caught_species.casefold() for entry in run.pokemon if entry.ownership == "owned"}
+    unavailable.update(excluded or set())
+    for candidate_rarity in _RARITY_FALLBACKS.get(rarity, (rarity, "common")):
+        pool = list(encounter_pool(run.build.region, candidate_rarity))
+        rng.shuffle(pool)
+        species = next((entry for entry in pool if entry.casefold() not in unavailable), "")
+        if species:
+            return species
+    return ""
 
 
 def _create_loan(run: CareerRun, species: str, club_id: str) -> CareerPokemon:
@@ -332,6 +409,28 @@ def _apply_perk(run: CareerRun, stat: str, amount: int) -> None:
         run.health = min(100, run.health + amount)
     elif hasattr(run, stat):
         setattr(run, stat, int(getattr(run, stat)) + amount)
+
+
+def _contract_covers_current_season(run: CareerRun) -> bool:
+    # The default club on a brand-new career is only a placeholder until the
+    # player makes the first club choice. From season two onward, a genuinely
+    # multi-season signed deal carries forward without forcing another market.
+    return bool(
+        run.season_number > 1
+        and run.contract
+        and run.contract.seasons_remaining > 0
+        and _same_league_as_last_season(run)
+    )
+
+
+def _same_league_as_last_season(run: CareerRun) -> bool:
+    previous = next(
+        (entry for entry in reversed(run.timeline) if entry.get("type") == "season.completed"),
+        None,
+    )
+    if previous is None:
+        return True
+    return str(previous.get("league") or run.league) == run.league
 
 
 def _season_event(run: CareerRun, types: set[str]) -> bool:

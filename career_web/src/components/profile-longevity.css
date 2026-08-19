@@ -1,0 +1,105 @@
+.pokemon-longevity {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .18rem .45rem;
+  align-items: center;
+  margin-top: .28rem;
+  color: #b9cbc3;
+  font: 700 .52rem "IBM Plex Mono", monospace;
+}
+
+.pokemon-longevity span {
+  letter-spacing: .08em;
+}
+
+.pokemon-longevity b {
+  color: #dce9e3;
+}
+
+.pokemon-longevity i {
+  grid-column: 1 / -1;
+  display: block;
+  height: .3rem;
+  width: 100%;
+  background: linear-gradient(90deg, #55b884 var(--career-health, 100%), #263b33 0);
+  box-shadow: inset 0 0 0 1px #ffffff1c;
+}
+
+.pokemon-longevity.healthy i {
+  background: linear-gradient(90deg, #55b884 var(--career-health, 100%), #263b33 0);
+}
+
+.pokemon-longevity.worn b {
+  color: #f1ce72;
+}
+
+.pokemon-longevity.worn i {
+  background: linear-gradient(90deg, #c89b42 var(--career-health, 100%), #3c3321 0);
+}
+
+.pokemon-longevity.critical b {
+  color: #ff9a83;
+}
+
+.pokemon-longevity.critical i {
+  background: linear-gradient(90deg, #c24f3d var(--career-health, 100%), #40231e 0);
+}
+
+.roster-card.retired {
+  opacity: .62;
+  filter: grayscale(.8) saturate(.45);
+  border-color: #76544d;
+  background: #171513;
+}
+
+.roster-card.retired .pokemon-longevity b,
+.roster-card.retired .pokemon-longevity span {
+  color: #e1a999;
+}
+
+.retired-storage {
+  border-color: #70473f !important;
+  background: linear-gradient(145deg, #271c19, #11100f 72%) !important;
+}
+
+.retired-storage .eyebrow {
+  color: #d58b78;
+}
+
+.auto-training-controls {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.auto-training-controls label,
+.auto-training-controls > div {
+  display: grid;
+  gap: .3rem;
+  min-width: 0;
+}
+
+.auto-training-controls label {
+  color: #66583f;
+  text-transform: uppercase;
+  font: 700 .58rem "IBM Plex Mono", monospace;
+}
+
+.auto-training-controls > div {
+  align-content: center;
+  padding: .55rem .65rem;
+  border: 1px solid #aa9971;
+  background: #e7d8b2;
+  color: #463b2c;
+}
+
+.auto-training-controls > div b {
+  color: #184f38;
+  font-size: .7rem;
+}
+
+@media (max-width: 699px) {
+  .auto-training-controls {
+    grid-template-columns: 1fr;
+  }
+}
