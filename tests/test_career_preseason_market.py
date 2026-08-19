@@ -36,14 +36,13 @@ def expire_contract(service: CareerService, run: CareerRun) -> CareerRun:
     return run
 
 
-def test_initial_contract_skips_forced_club_change(tmp_path: Path) -> None:
+def test_first_season_keeps_real_club_choice(tmp_path: Path) -> None:
     service = service_for(tmp_path)
     run = new_run(service)
     snapshot = service.preseason("market-user", run.id)
 
-    assert snapshot["club_completed"] is True
-    assert run.contract is not None
-    assert run.contract.club_name == "Saffron Comets"
+    assert snapshot["club_completed"] is False
+    assert len(snapshot["club_offers"]) == 3
 
 
 def test_preseason_markets_are_deterministic_and_offer_real_choice(tmp_path: Path) -> None:
@@ -64,7 +63,11 @@ def test_preseason_markets_are_deterministic_and_offer_real_choice(tmp_path: Pat
 def test_same_league_renewal_keeps_club_loans_and_adds_permanent_gift(tmp_path: Path) -> None:
     service = service_for(tmp_path)
     run = expire_contract(service, new_run(service, "club-user", 4402))
+    run.season_number = 2
+    if run.season:
+        run.season.number = 2
     current_club = run.contract.club_name if run.contract else ""
+    service.store.save_run(run)
     offers = service.preseason("club-user", run.id)["club_offers"]
     renewal = next(entry for entry in offers if entry["club_name"] == current_club)
 
@@ -97,6 +100,7 @@ def test_same_league_renewal_keeps_club_loans_and_adds_permanent_gift(tmp_path: 
 def test_higher_leagues_offer_better_signing_gift_tiers(tmp_path: Path) -> None:
     service = service_for(tmp_path)
     run = expire_contract(service, new_run(service, "gift-user", 4405))
+    run.season_number = 2
 
     expected = {"junior": "common", "rookie": "rare", "regular": "very_rare", "elite": "epic"}
     for league, rarity in expected.items():
