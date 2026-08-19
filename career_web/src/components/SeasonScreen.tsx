@@ -82,7 +82,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
     }
     void trainAutomatically();
     return () => { cancelled = true; };
-  }, [busy, onRun, run, trainingBusy, trainingPlan]);
+  }, [busy, onRun, run, trainingPlan]);
 
   async function decide() {
     if (!selectedId || trainingBusy) return;
@@ -318,7 +318,7 @@ function RouletteOverlay({ state, target, locale, option, outcome, hasBattle, on
   const mechanical = outcome ? effectSentence(Object.fromEntries(Object.entries(outcome).filter(([, value]) => typeof value === "number")) as Record<string, number>, locale) : "";
   const resolved = state === "success" || state === "failure";
   return <div className={`roulette-overlay ${state}${target ? ` target-${target}` : ""}`} role="status" aria-live="assertive">
-    <div className="roulette-wheel" aria-hidden="true"><i>×</i><i>×</i><i>✓</i><i>✓</i><b /></div>
+    <div className="roulette-wheel" aria-hidden="true" style={state === "settling" ? { animationDuration: "400ms" } : undefined}><i>×</i><i>×</i><i>✓</i><i>✓</i><b /></div>
     <section>
       <span>{locale === "es" ? "RULETA DE APUESTA" : "GAMBLE WHEEL"}</span>
       <h2>{state === "spinning" ? (locale === "es" ? "Girando…" : "Spinning…") : state === "settling" ? (locale === "es" ? "Resultado fijado" : "Result locked") : state === "success" ? (locale === "es" ? "¡ÉXITO!" : "SUCCESS!") : (locale === "es" ? "NO SALIÓ" : "NO WIN")}</h2>
