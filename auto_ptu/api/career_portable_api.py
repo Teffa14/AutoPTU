@@ -12,7 +12,7 @@ from ..career.service import CareerService
 from ..career.store import CareerStore
 
 
-router = APIRouter(prefix="/api/v1/portable", tags=["career-portable"])
+router = APIRouter(prefix="/portable", tags=["career-portable"])
 
 
 def _error(exc: Exception) -> HTTPException:
