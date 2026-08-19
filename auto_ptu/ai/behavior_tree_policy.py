@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Callable, Dict, Optional
 
-import py_trees
+from .._vendor import py_trees
 
 
 @dataclass
@@ -78,62 +78,52 @@ def choose_action(context: BTContext) -> tuple[object | None, Dict[str, Any]]:
                 "Emergency Shift",
                 context=context,
                 action_getter=lambda: context.emergency_shift,
-                reason_getter=lambda: "royale_emergency_shift",
+                reason_getter=lambda: "emergency_shift",
                 source="bt_emergency_shift",
+            ),
+            _DecisionLeaf(
+                "Hybrid Tactical",
+                context=context,
+                action_getter=lambda: context.hybrid_action,
+                reason_getter=lambda: "hybrid_tactical_choice",
+                source="bt_hybrid",
+                info_getter=lambda: context.hybrid_info,
             ),
             _DecisionLeaf(
                 "MCTS Tactical",
                 context=context,
                 action_getter=lambda: context.mcts_action,
-                reason_getter=lambda: str((context.mcts_info or {}).get("reason") or "mcts"),
+                reason_getter=lambda: "mcts_tactical_choice",
                 source="bt_mcts",
                 info_getter=lambda: context.mcts_info,
             ),
             _DecisionLeaf(
-                "Hybrid Policy",
-                context=context,
-                action_getter=lambda: context.hybrid_action,
-                reason_getter=lambda: str((context.hybrid_info or {}).get("reason") or "hybrid"),
-                source="bt_hybrid",
-                info_getter=lambda: context.hybrid_info,
-            ),
-            _DecisionLeaf(
-                "Grapple Policy",
+                "Grapple",
                 context=context,
                 action_getter=lambda: context.grapple_action,
-                reason_getter=lambda: str((context.grapple_info or {}).get("reason") or "grapple"),
+                reason_getter=lambda: "grapple_control",
                 source="bt_grapple",
                 info_getter=lambda: context.grapple_info,
             ),
             _DecisionLeaf(
-                "Fallback Rules",
+                "Fallback",
                 context=context,
                 action_getter=lambda: context.fallback_action,
-                reason_getter=lambda: str((context.fallback_info or {}).get("reason") or "fallback"),
+                reason_getter=lambda: "fallback",
                 source="bt_fallback",
                 info_getter=lambda: context.fallback_info,
             ),
         ]
     )
-    tree = py_trees.trees.BehaviourTree(root=root)
+    tree = py_trees.trees.BehaviourTree(root)
     tree.tick()
     try:
-        context.tree_ascii = py_trees.display.unicode_tree(root=root, show_status=True)
+        context.tree_ascii = py_trees.display.unicode_tree(root, show_status=True)
     except Exception:
         context.tree_ascii = ""
-    if context.decision is None:
-        return None, {
-            "reason": "bt_no_decision",
-            "policy": "py_trees",
-            "tree_ascii": context.tree_ascii,
-        }
-    info = dict(context.decision.info or {})
-    info.setdefault("policy", "py_trees")
-    if context.tree_ascii:
-        info.setdefault("tree_ascii", context.tree_ascii)
-    return context.decision.action, {
-        "reason": context.decision.reason,
-        "source": context.decision.source,
-        **info,
-    }
-
+    decision = context.decision
+    if decision is None:
+        return None, {"source": "bt_no_action", "tree": context.tree_ascii}
+    info = dict(decision.info)
+    info.update({"reason": decision.reason, "source": decision.source, "tree": context.tree_ascii})
+    return decision.action, info
