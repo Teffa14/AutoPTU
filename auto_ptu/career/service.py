@@ -17,6 +17,7 @@ from .models import CURRENT_CAREER_VERSION, BattleTranscript, CareerRun, utc_now
 from .postgres_store import career_store_from_environment
 from .season_market import capture_candidate, preseason_snapshot, settle_sponsor, sign_club, sign_sponsor
 from .store import CareerStore
+from .trainer_sprites import apply_trainer_sprite, trainer_sprite_catalog
 
 
 LOGGER = logging.getLogger("autoptu.career")
@@ -49,6 +50,7 @@ class CareerService:
             "items": item_catalog(),
             "shop": shop_catalog(),
             "training_methods": training_catalog(),
+            "trainer_sprites": trainer_sprite_catalog(),
             "modes": [
                 {"id": "simple", "target_minutes": "15–20", "decisions_per_season": 1},
                 {"id": "advanced", "target_minutes": "30–45", "decisions_per_season": 3},
@@ -66,6 +68,7 @@ class CareerService:
             locale=str(payload.get("locale") or "es"),
             seed=int(payload["seed"]) if payload.get("seed") not in (None, "") else None,
         )
+        apply_trainer_sprite(run, payload.get("trainer_sprite"))
         self.store.save_run(run)
         return run.to_dict()
 
@@ -86,6 +89,7 @@ class CareerService:
             daily_challenge_id=challenge.id,
             attempt_no=0,
         )
+        apply_trainer_sprite(run, payload.get("trainer_sprite"))
         attempt_no = self.store.create_daily_run(run, challenge)
         run.seed = challenge.seed
         self.store.save_run(run)
