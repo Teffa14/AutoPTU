@@ -80,71 +80,89 @@ class CareerStore:
             return None
         return json.loads(path.read_text(encoding="utf-8")).get(str(key))
 
-    def create_share(self, run: CareerRun, include_replay: bool = False) -> dict:
-        share_id = uuid.uuid4().hex[:16]
+    def attempt_count(self, challenge_id: str, player_id: str, mode: str) -> int:
+        return sum(
+            1 for run in self.list_runs()
+            if run.daily_challenge_id == challenge_id and run.player_id == player_id and run.mode == mode
+        )
+
+    def create_daily_run(self, run: CareerRun, challenge: object) -> int:
+        with self._lock:
+            count = self.attempt_count(run.daily_challenge_id, run.player_id, run.mode)
+            attempts = int(getattr(challenge, "attempts_per_mode", 3))
+            if count >= attempts:
+                raise PermissionError("All three ranked attempts for this mode are already committed.")
+            run.attempt_no = count + 1
+            self.save_run(run)
+            return run.attempt_no
+
+    def leaderboard(self, challenge_id: str, mode: str) -> List[LeaderboardEntry]:
+        best: Dict[str, CareerRun] = {}
+        for run in self.list_runs():
+            if run.daily_challenge_id != challenge_id or run.mode != mode or run.status != "retired":
+                continue
+            current = best.get(run.player_id)
+            if current is None or (run.score, -run.attempt_no, run.id) > (current.score, -current.attempt_no, current.id):
+                best[run.player_id] = run
+        entries = [
+            LeaderboardEntry(
+                challenge_id=challenge_id,
+                mode=mode,
+                player_id=run.player_id,
+                handle=f"Trainer-{run.player_id[:8]}",
+                score=run.score,
+                achievements=list(run.achievements),
+                run_id=run.id,
+                attempt_no=run.attempt_no,
+                completed_at=run.updated_at,
+            )
+            for run in best.values()
+        ]
+        return sorted(entries, key=lambda entry: (-entry.score, entry.completed_at, entry.player_id))
+
+    def create_share(self, run: CareerRun, include_replay: bool) -> dict:
+        share_id = f"share-{uuid.uuid4().hex[:20]}"
+        public_summary = {
+            "trainer": run.build.name,
+            "region": run.build.region,
+            "starter": run.build.starter,
+            "final_age": run.age,
+            "score": run.score,
+            "totals": run.totals,
+            "achievements": run.achievements,
+            "retirement_reason": run.retirement_reason,
+        }
         payload = {
             "share_id": share_id,
             "run_id": run.id,
-            "include_replay": bool(include_replay),
-            "summary": run.summary(),
+            "summary": public_summary,
+            "timeline": run.timeline,
+            "include_replay": include_replay,
+            "battle_ids": [
+                battle_id for entry in run.timeline if entry.get("type") == "season.completed"
+                for battle_id in (entry.get("battle_ids") or [])
+            ],
         }
-        self._atomic_write(self.meta_dir / f"share-{share_id}.json", payload)
-        return {"share_id": share_id, "url": f"/career-game/share/{share_id}", "include_replay": bool(include_replay)}
+        with self._lock:
+            self._atomic_write(self.meta_dir / f"{share_id}.json", payload)
+        return {"share_id": share_id, "url": f"/career-game/share/{share_id}", "published": True, "include_replay": include_replay}
 
     def load_share(self, share_id: str) -> dict:
-        path = self.meta_dir / f"share-{_safe_id(share_id)}.json"
+        path = self.meta_dir / f"{_safe_id(share_id)}.json"
         if not path.exists():
             raise KeyError(f"Career share not found: {share_id}")
-        return json.loads(path.read_text(encoding="utf-8"))
-
-    def create_daily_run(self, run: CareerRun, challenge) -> int:
-        meta_path = self.meta_dir / f"daily-{_safe_id(challenge.id)}.json"
-        with self._lock:
-            meta = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {"attempts": {}}
-            attempts = meta.setdefault("attempts", {})
-            user_attempts = int(attempts.get(run.player_id, 0)) + 1
-            if user_attempts > 3:
-                raise PermissionError("Daily ranked attempt limit reached.")
-            attempts[run.player_id] = user_attempts
-            run.attempt_no = user_attempts
-            run.ranked = True
-            run.daily_challenge_id = challenge.id
-            self._atomic_write(meta_path, meta)
-            self.save_run(run)
-            return user_attempts
-
-    def finalize_ranked(self, run: CareerRun) -> None:
-        if not run.ranked or not run.daily_challenge_id:
-            return
-        path = self.meta_dir / f"leaderboard-{_safe_id(run.daily_challenge_id)}-{_safe_id(run.build.mode)}.json"
-        with self._lock:
-            rows = json.loads(path.read_text(encoding="utf-8")) if path.exists() else []
-            rows = [entry for entry in rows if entry.get("run_id") != run.id]
-            rows.append({
-                "run_id": run.id,
-                "user_id": run.player_id,
-                "handle": run.build.name,
-                "score": run.score,
-                "achievements": list(run.achievements),
-                "completed_at": run.updated_at,
-            })
-            rows.sort(key=lambda entry: (-int(entry.get("score", 0)), str(entry.get("completed_at", ""))))
-            self._atomic_write(path, rows[:100])
-
-    def leaderboard(self, challenge_id: str, mode: str, limit: int = 100) -> List[LeaderboardEntry]:
-        path = self.meta_dir / f"leaderboard-{_safe_id(challenge_id)}-{_safe_id(mode)}.json"
-        if not path.exists():
-            return []
-        rows = json.loads(path.read_text(encoding="utf-8"))[:limit]
-        return [LeaderboardEntry.from_dict(entry) for entry in rows]
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        return {"share_id": payload["share_id"], "summary": payload["summary"], "has_replay": bool(payload["include_replay"])}
 
     @staticmethod
-    def _atomic_write(path: Path, payload: object) -> None:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        temp = path.with_suffix(path.suffix + ".tmp")
-        temp.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    def _atomic_write(path: Path, payload: dict) -> None:
+        temp = path.with_suffix(".tmp")
+        temp.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
         temp.replace(path)
 
 
 def _safe_id(value: str) -> str:
-    return "".join(ch for ch in str(value) if ch.isalnum() or ch in {"-", "_"})
+    safe = "".join(char for char in str(value) if char.isalnum() or char in "-_")
+    if not safe:
+        raise ValueError("A non-empty identifier is required.")
+    return safe
