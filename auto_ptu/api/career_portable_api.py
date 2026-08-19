@@ -38,6 +38,11 @@ def _unranked_run(value: object) -> CareerRun:
     return run
 
 
+def _normalized_run(service: CareerService, player_id: str, run_id: str) -> dict:
+    """Return the exact snapshot that the next portable request must use."""
+    return service.get_run(player_id, run_id)
+
+
 def execute_portable_action(request: Dict[str, Any]) -> Any:
     """Run one casual Career action from a complete browser-held snapshot.
 
@@ -53,7 +58,8 @@ def execute_portable_action(request: Dict[str, Any]) -> Any:
 
         if action == "new":
             player_id = str(request.get("player_id") or f"casual-{uuid.uuid4()}")
-            return service.create_run(player_id, payload)
+            created = service.create_run(player_id, payload)
+            return _normalized_run(service, player_id, str(created["id"]))
 
         run = _unranked_run(request.get("run"))
         store.save_run(run)
@@ -61,32 +67,45 @@ def execute_portable_action(request: Dict[str, Any]) -> Any:
         run_id = run.id
 
         if action in {"get", "run"}:
-            return service.get_run(player_id, run_id)
+            return _normalized_run(service, player_id, run_id)
         if action == "preseason":
-            return service.preseason(player_id, run_id)
+            snapshot = service.preseason(player_id, run_id)
+            snapshot["run"] = _normalized_run(service, player_id, run_id)
+            return snapshot
         if action == "club":
-            return service.choose_club(player_id, run_id, payload)
+            service.choose_club(player_id, run_id, payload)
+            return _normalized_run(service, player_id, run_id)
         if action == "sponsor":
-            return service.choose_sponsor(player_id, run_id, payload)
+            service.choose_sponsor(player_id, run_id, payload)
+            return _normalized_run(service, player_id, run_id)
         if action == "capture":
-            return service.capture(player_id, run_id, payload)
+            service.capture(player_id, run_id, payload)
+            return _normalized_run(service, player_id, run_id)
         if action == "lineup":
-            return service.lineup(player_id, run_id, payload)
+            service.lineup(player_id, run_id, payload)
+            return _normalized_run(service, player_id, run_id)
         if action == "item":
-            return service.use_item(player_id, run_id, payload)
+            service.use_item(player_id, run_id, payload)
+            return _normalized_run(service, player_id, run_id)
         if action == "train":
-            return service.train(player_id, run_id, payload)
+            service.train(player_id, run_id, payload)
+            return _normalized_run(service, player_id, run_id)
         if action == "purchase":
-            return service.purchase(player_id, run_id, payload)
+            service.purchase(player_id, run_id, payload)
+            return _normalized_run(service, player_id, run_id)
         if action == "decide":
             key = str(request.get("idempotency_key") or f"portable:{run_id}:{run.revision}:{payload.get('option_id', '')}")
-            return service.decide(player_id, run_id, payload, key)
+            response = service.decide(player_id, run_id, payload, key)
+            response["run"] = _normalized_run(service, player_id, run_id)
+            return response
         if action == "battle":
             return service.battle(player_id, run_id, str(payload.get("battle_id") or ""))
         if action == "finalize":
-            return service.finalize_season(player_id, run_id, str(payload.get("battle_id") or ""))
+            service.finalize_season(player_id, run_id, str(payload.get("battle_id") or ""))
+            return _normalized_run(service, player_id, run_id)
         if action == "retire":
-            return service.retire(player_id, run_id, payload)
+            service.retire(player_id, run_id, payload)
+            return _normalized_run(service, player_id, run_id)
 
         raise ValueError(f"Unknown portable Career action: {action or '<empty>'}")
 
