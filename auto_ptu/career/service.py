@@ -86,9 +86,6 @@ class CareerService:
             attempt_no=0,
         )
         attempt_no = self.store.create_daily_run(run, challenge)
-        # Every ranked attempt receives the exact committed world. The player may
-        # change build choices, but schedule, decisions, rolls and rival AI remain
-        # tied to the published daily seed.
         run.seed = challenge.seed
         self.store.save_run(run)
         return {"challenge": asdict(challenge), "run": run.to_dict(), "attempt_no": attempt_no}
@@ -167,56 +164,79 @@ class CareerService:
             raise RuntimeError(f"Revision conflict: expected {expected}, current {run.revision}.")
         run, specs = self.engine.prepare_season(run, option_id=str(payload.get("option_id") or ""))
         battle_ids = [entry.id for entry in specs]
-        season_resolved = False
-        season_transcripts = []
-        persisted_atomically = False
-        prepared_run = CareerRun.from_dict(run.to_dict())
+        featured = None
         if specs:
-            # The client has already switched to the stadium transition. Resolve
-            # the immutable calendar during that transition so /battle only has
-            # to fetch a cached transcript instead of starting a cold PTU engine.
+            # Only the broadcast match blocks the transition into the arena.
+            # Calendar summaries, progression, salary and the next season are
+            # finalized while the player watches the replay.
+            featured_spec = next((entry for entry in specs if entry.featured), specs[-1])
             try:
                 started_at = time.perf_counter()
-                featured_spec = next((entry for entry in specs if entry.featured), specs[-1])
                 featured = self.engine.battle_runner(featured_spec)
-                featured_seconds = time.perf_counter() - started_at
-                summaries = simulate_calendar_summaries([entry for entry in specs if entry.id != featured_spec.id])
-                summaries_seconds = time.perf_counter() - started_at - featured_seconds
-                season_transcripts = [*summaries, featured]
-                run, _ = self.engine.resolve_prepared_season(run, season_transcripts)
-                season_resolved = True
+                self.store.save_battle(featured)
                 LOGGER.info(
-                    "career calendar ready run=%s season=%s featured=%.3fs summaries=%.3fs total=%.3fs",
+                    "career featured battle ready run=%s season=%s seconds=%.3f",
                     run.id,
-                    max(1, run.season_number - 1),
-                    featured_seconds,
-                    summaries_seconds,
+                    run.season_number,
                     time.perf_counter() - started_at,
                 )
             except Exception:
-                LOGGER.exception("career eager battle generation failed run=%s", run.id)
-                # A prepared season is recoverable: /battle retains the same
-                # deterministic fallback if eager generation ever fails.
-                run = prepared_run
-                self.store.save_run(run)
-        response = {"run": run.to_dict(), "battle_ids": battle_ids, "season_resolved": season_resolved}
-        if season_resolved:
-            response["featured_battle"] = featured.to_dict()
-        if season_resolved and hasattr(self.store, "save_season_resolution"):
-            persistence_started = time.perf_counter()
-            self.store.save_season_resolution(run, season_transcripts, idempotency_key, response)
-            LOGGER.info(
-                "career season persisted run=%s season=%s seconds=%.3f",
-                run.id,
-                max(1, run.season_number - 1),
-                time.perf_counter() - persistence_started,
-            )
-            persisted_atomically = True
-        elif not specs:
+                LOGGER.exception("career featured battle generation failed run=%s", run.id)
             self.store.save_run(run)
-        if not persisted_atomically:
-            self.store.record_idempotency(run_id, idempotency_key, response)
+        else:
+            self.store.save_run(run)
+        response = {"run": run.to_dict(), "battle_ids": battle_ids, "season_resolved": False}
+        if featured is not None:
+            response["featured_battle"] = featured.to_dict()
+            response["featured_battle_id"] = featured.battle_id
+        self.store.record_idempotency(run_id, idempotency_key, response)
         return response
+
+    def finalize_season(self, player_id: str, run_id: str, battle_id: str) -> dict:
+        run = self._owned_run(player_id, run_id)
+        if run.season is None or run.season.status != "battle":
+            return run.to_dict()
+        specs = list(run.season.battles)
+        if not any(entry.id == battle_id for entry in specs):
+            raise PermissionError("Battle does not belong to the prepared career calendar.")
+        started_at = time.perf_counter()
+        existing: Dict[str, dict] = {}
+        for spec in specs:
+            try:
+                existing[spec.id] = self.store.load_battle(spec.id)
+            except KeyError:
+                pass
+        generated: list[BattleTranscript] = []
+        featured_spec = next((entry for entry in specs if entry.featured), specs[-1])
+        if featured_spec.id not in existing:
+            featured = self.engine.battle_runner(featured_spec)
+            self.store.save_battle(featured)
+            generated.append(featured)
+        missing_summaries = [
+            entry for entry in specs
+            if entry.id != featured_spec.id and entry.id not in existing
+        ]
+        for summary in simulate_calendar_summaries(missing_summaries):
+            self.store.save_battle(summary)
+            generated.append(summary)
+        generated_by_id = {entry.battle_id: entry for entry in generated}
+        transcripts = [
+            BattleTranscript.from_dict(existing[spec.id]) if spec.id in existing
+            else generated_by_id[spec.id]
+            for spec in specs
+        ]
+        resolved_season = run.season_number
+        run, _ = self.engine.resolve_prepared_season(run, transcripts)
+        self.store.save_run(run)
+        if run.status == "retired" and hasattr(self.store, "finalize_ranked"):
+            self.store.finalize_ranked(run)
+        LOGGER.info(
+            "career season finalized run=%s season=%s seconds=%.3f",
+            run.id,
+            resolved_season,
+            time.perf_counter() - started_at,
+        )
+        return run.to_dict()
 
     def retire(self, player_id: str, run_id: str, payload: Dict[str, object]) -> dict:
         run = self._owned_run(player_id, run_id)
@@ -238,30 +258,12 @@ class CareerService:
             requested = next((entry for entry in specs if entry.id == battle_id), None)
             if requested is None:
                 raise PermissionError("Battle does not belong to the prepared career calendar.")
-            existing: Dict[str, dict] = {}
-            for spec in specs:
-                try:
-                    existing[spec.id] = self.store.load_battle(spec.id)
-                except KeyError:
-                    pass
-            generated = []
-            if battle_id not in existing:
-                featured = self.engine.battle_runner(requested)
-                self.store.save_battle(featured)
-                generated.append(featured)
-            missing_summaries = [entry for entry in specs if entry.id != battle_id and entry.id not in existing]
-            for summary in simulate_calendar_summaries(missing_summaries):
-                self.store.save_battle(summary)
-                generated.append(summary)
-            transcripts = [
-                BattleTranscript.from_dict(existing[spec.id]) if spec.id in existing
-                else next(entry for entry in generated if entry.battle_id == spec.id)
-                for spec in specs
-            ]
-            run, _ = self.engine.resolve_prepared_season(run, transcripts)
-            self.store.save_run(run)
-            if run.status == "retired" and hasattr(self.store, "finalize_ranked"):
-                self.store.finalize_ranked(run)
+            if requested.featured:
+                generated = self.engine.battle_runner(requested)
+            else:
+                generated = simulate_calendar_summaries([requested])[0]
+            self.store.save_battle(generated)
+            return generated.to_dict()
         transcript = self.store.load_battle(battle_id)
         if str(transcript.get("spec", {}).get("id") or "") != battle_id or not battle_id.startswith(f"{run_id}-"):
             raise PermissionError("Battle does not belong to this career.")
