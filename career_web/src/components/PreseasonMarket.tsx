@@ -33,7 +33,7 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
     }).catch((reason: Error) => {
       if (!active) return;
       setError(reason.message);
-      onClubReady(true);
+      onClubReady(false);
     });
     return () => { active = false; };
   }, [onClubReady, onRun, run.id, run.season?.decisions_completed, run.season?.status, run.status, run.revision]);
@@ -130,7 +130,8 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
               </button>
             ))}
           </div>
-          <p className="market-note">{locale === "es" ? "Aunque ya tengas seis Pokémon, podés seguir capturando. Si el equipo activo está lleno, la captura va al PC." : "You can keep catching Pokémon after owning six. When the active team is full, the capture goes to PC."}</p>
+          <button className="market-skip" disabled={Boolean(busy)} onClick={() => mutate("capture:skip", () => careerApi.capture(run, ""))}>{busy === "capture:skip" ? (locale === "es" ? "Cerrando salida…" : "Closing outing…") : (locale === "es" ? "Guardar Poké Balls y seguir" : "Keep Poké Balls and continue")}</button>
+          <p className="market-note">{locale === "es" ? "La captura es opcional. Aunque ya tengas seis Pokémon, podés seguir capturando; si el equipo activo está lleno, la captura va al PC." : "Capturing is optional. You can keep catching Pokémon after owning six; when the active team is full, the capture goes to PC."}</p>
         </div>
       ) : null}
       {error ? <p className="form-error" role="alert">{error}</p> : null}
