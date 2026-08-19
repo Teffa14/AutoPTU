@@ -6,7 +6,7 @@ import os
 from typing import Any, Dict, List, Optional
 
 
-CURRENT_CAREER_VERSION = "career-0.10.0"
+CURRENT_CAREER_VERSION = "career-0.11.0"
 CURRENT_NARRATIVE_VERSION = "career-hooks-0.8.0"
 
 
@@ -95,6 +95,10 @@ class CareerPokemon:
     ownership: str = "owned"
     loan_club_id: str = ""
     loan_expires_season: int = 0
+    career_health: int = 100
+    training_wear: int = 0
+    retired_season: int = 0
+    retired_reason: str = ""
 
 
 @dataclass
@@ -282,7 +286,7 @@ class CareerRun:
             ]
         active_roster = [str(value) for value in payload.get("active_roster") or []]
         if not active_roster:
-            active_roster = [entry.id for entry in pokemon[:6]]
+            active_roster = [entry.id for entry in pokemon if entry.status != "retired"][:6]
         summary = CareerSummary(**dict(payload["summary"])) if payload.get("summary") else None
         fields = dict(payload)
         for key in ("build", "contract", "versions", "season", "summary", "pokemon", "active_roster"):
