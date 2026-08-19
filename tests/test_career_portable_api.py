@@ -54,7 +54,7 @@ def test_casual_career_actions_are_stateless_between_requests() -> None:
         "payload": {"expected_revision": sponsor["revision"], "candidate_id": candidate["id"]},
     })
     assert captured["revision"] > sponsor["revision"]
-    assert any(entry["species"] == candidate["species"] for entry in captured["pokemon"])
+    assert any(entry["caught_species"] == candidate["species"] for entry in captured["pokemon"])
 
 
 def test_portable_endpoint_rejects_ranked_snapshot() -> None:
