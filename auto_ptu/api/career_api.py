@@ -8,9 +8,11 @@ from fastapi import APIRouter, Header, HTTPException, Query
 from ..career.auth import SupabaseIdentityResolver
 from ..career.models import CareerRun
 from ..career.service import CareerService
+from .career_portable_api import router as portable_router
 
 
 router = APIRouter(prefix="/api/v1", tags=["career"])
+router.include_router(portable_router)
 SERVICE = CareerService()
 IDENTITIES = SupabaseIdentityResolver()
 
