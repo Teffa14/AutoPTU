@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from auto_ptu.career.catalogs import all_region_encounters
 from auto_ptu.career.engine import CareerEngine
 from auto_ptu.career.models import CareerRun
@@ -154,3 +156,28 @@ def test_capture_board_still_works_with_six_owned_pokemon_and_overflows_to_pc(tm
     assert newest.ownership == "owned"
     assert newest.id not in captured.active_roster
     assert newest.status == "pc"
+
+
+def test_capture_outing_can_be_skipped_without_spending_balls(tmp_path: Path) -> None:
+    service = service_for(tmp_path)
+    run = new_run(service, "capture-skip-user", 4406)
+    run.build.pokeballs = 0
+    service.store.save_run(run)
+    pokemon_before = [entry.id for entry in run.pokemon]
+
+    skipped = CareerRun.from_dict(service.capture("capture-skip-user", run.id, {
+        "expected_revision": run.revision,
+        "candidate_id": "",
+    }))
+
+    assert skipped.build.pokeballs == 0
+    assert [entry.id for entry in skipped.pokemon] == pokemon_before
+    event = next(entry for entry in reversed(skipped.timeline) if entry.get("type") == "capture.board_used")
+    assert event["skipped"] is True
+    assert service.preseason("capture-skip-user", run.id)["capture_completed"] is True
+
+    with pytest.raises(ValueError, match="already used"):
+        service.capture("capture-skip-user", run.id, {
+            "expected_revision": skipped.revision,
+            "candidate_id": "",
+        })
