@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { chooseBattleVisualQuality } from "./battleQuality";
+import { battleRenderFrameFactors, battleRenderMaxFps, chooseBattleVisualQuality } from "./battleQuality";
 
 describe("chooseBattleVisualQuality", () => {
   it("forces light mode for reduced motion", () => {
@@ -22,5 +22,19 @@ describe("chooseBattleVisualQuality", () => {
 
   it("keeps full mode on capable hardware when no preference exists", () => {
     expect(chooseBattleVisualQuality({ hardwareConcurrency: 8, deviceMemory: 8 })).toBe("full");
+  });
+});
+
+describe("battle render budget", () => {
+  it("cuts continuous Pixi render work in light mode without changing replay timing", () => {
+    expect(battleRenderMaxFps("light")).toBe(30);
+    expect(battleRenderMaxFps("full")).toBe(60);
+  });
+
+  it("keeps position smoothing and impulse decay stable across lower frame rates", () => {
+    expect(battleRenderFrameFactors(1)).toEqual({ positionBlend: 0.2, impulseDecay: 0.78 });
+    const twoFrames = battleRenderFrameFactors(2);
+    expect(twoFrames.positionBlend).toBeCloseTo(0.36, 10);
+    expect(twoFrames.impulseDecay).toBeCloseTo(0.6084, 10);
   });
 });

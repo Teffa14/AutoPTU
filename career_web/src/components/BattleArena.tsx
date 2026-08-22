@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Application, Container, Graphics, Text, TextStyle } from "pixi.js";
 
 import type { BattleViewState } from "../battlePresentation";
-import { detectBattleVisualQuality, persistBattleVisualQuality, prefersReducedMotion, type BattleVisualQuality } from "../battleQuality";
+import { battleRenderFrameFactors, battleRenderMaxFps, detectBattleVisualQuality, persistBattleVisualQuality, prefersReducedMotion, type BattleVisualQuality } from "../battleQuality";
 import type { BattleCombatant, BattleMove, BattleTranscript, Locale } from "../types";
 import { PokemonSprite } from "./PokemonSprite";
 
@@ -71,6 +71,7 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
       const full = effectiveQuality === "full";
       await app.init({ resizeTo: mount, antialias: full, backgroundAlpha: 0, resolution: full ? Math.min(2, window.devicePixelRatio || 1) : 1 });
       if (cancelled || !app) return;
+      app.ticker.maxFPS = battleRenderMaxFps(effectiveQuality);
       appRef.current = app;
       mount.appendChild(app.canvas);
       screen.current = { width: app.screen.width, height: app.screen.height };
@@ -101,14 +102,15 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
       }
 
       app.ticker.add((ticker) => {
+        const { positionBlend, impulseDecay } = battleRenderFrameFactors(ticker.deltaTime);
         for (const [id, visual] of visuals.current) {
           const target = targets.current.get(id);
           const impulse = impulses.current.get(id) ?? [0, 0];
           if (target) {
-            visual.container.x += (target[0] + impulse[0] - visual.container.x) * 0.2;
-            visual.container.y += (target[1] + impulse[1] - visual.container.y) * 0.2;
+            visual.container.x += (target[0] + impulse[0] - visual.container.x) * positionBlend;
+            visual.container.y += (target[1] + impulse[1] - visual.container.y) * positionBlend;
           }
-          impulses.current.set(id, [impulse[0] * 0.78, impulse[1] * 0.78]);
+          impulses.current.set(id, [impulse[0] * impulseDecay, impulse[1] * impulseDecay]);
         }
         effects.current = effects.current.filter((effect) => {
           effect.life += ticker.deltaTime;

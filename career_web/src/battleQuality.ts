@@ -9,6 +9,18 @@ export type BattleVisualSignals = {
 
 export const BATTLE_VISUAL_QUALITY_KEY = "autoptu:battle-visual-quality";
 
+export function battleRenderMaxFps(quality: BattleVisualQuality): number {
+  return quality === "light" ? 30 : 60;
+}
+
+export function battleRenderFrameFactors(deltaTime: number): { positionBlend: number; impulseDecay: number } {
+  const frameScale = Number.isFinite(deltaTime) && deltaTime >= 0 ? deltaTime : 1;
+  return {
+    positionBlend: 1 - 0.8 ** frameScale,
+    impulseDecay: 0.78 ** frameScale,
+  };
+}
+
 export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleVisualQuality {
   if (signals.reducedMotion) return "light";
   if (signals.storedPreference === "full" || signals.storedPreference === "light") return signals.storedPreference;
