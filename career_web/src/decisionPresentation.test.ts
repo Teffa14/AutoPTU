@@ -34,6 +34,28 @@ describe("decision information labels", () => {
     expect(view.options[2].description).toContain("Salud -8");
   });
 
+  it("guards dynamic prose that promises unsupported permanent world changes", () => {
+    const decision = {
+      id: "conservation-es", family: "conservation", title: "El nuevo campo invade una ruta de migración", body: "Seguir cambia el hábitat para siempre.", npc_name: "Erika · owner · Kanto",
+      options: [
+        { id: "conservation:2:0:0", label: "Detener las obras", description: "legacy", risk: "safe", transparency: "full", guaranteed: { scouting: 1 }, rewards: [] },
+        { id: "conservation:2:0:1", label: "Rediseñar", description: "legacy", risk: "calculated", transparency: "full", guaranteed: { scouting: 2, finances: -1 }, rewards: [] },
+        { id: "conservation:2:0:2", label: "Seguir", description: "legacy", risk: "gamble", transparency: "estimated", guaranteed: { scouting: 3 }, rewards: [], gamble: { chance: 0.55, success: { reputation: 6 }, failure: { health: -8 } } },
+      ],
+    } as CareerDecision;
+    const run = {
+      locale: "es",
+      contract: { club_name: "Saffron Comets", salary: 10, seasons_remaining: 1 },
+      relationships: {},
+      build: { starter: "Rattata" },
+    } as CareerRun;
+    const view = decisionPresentation(decision, run, "es");
+    expect(view.title).toContain("ruta de migración");
+    expect(view.body).toContain("Saffron Comets");
+    expect(view.body).toContain("todavía no está resuelta");
+    expect(view.body).not.toContain("para siempre");
+  });
+
   it("localizes decisions from an existing Spanish save when English is selected", () => {
     const decision = {
       id: "stored-es", family: "contest", title: "La invitación del escenario", body: "Un concurso regional.", npc_name: "Brock",
