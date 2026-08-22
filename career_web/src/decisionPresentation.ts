@@ -128,6 +128,13 @@ function localizedPriorLabel(optionId: string, storedLabel: string, fallback?: C
     : storedLabel;
 }
 
+function highestFiniteBond(relationships: CareerRun["relationships"]): number {
+  const values = Object.values(relationships ?? {})
+    .map((value) => Number(value))
+    .filter((value) => Number.isFinite(value));
+  return Math.max(0, ...values);
+}
+
 function supportedContextBody(decision: CareerDecision, run: CareerRun, locale: Locale): string {
   const npc = decision.npc_name?.split(" · ")[0] || (locale === "es" ? "el contacto" : "the contact");
   const club = run.contract?.club_name || (locale === "es" ? "tu equipo" : "your team");
@@ -140,7 +147,7 @@ function supportedContextBody(decision: CareerDecision, run: CareerRun, locale: 
     if (decision.family === "contract") return `${npc} pide una posición antes del calendario. Tu contrato actual es ${run.contract ? `${run.contract.club_name}, ₽ ${run.contract.salary} por temporada, ${run.contract.seasons_remaining} temporada(s) restante(s)` : "sin contrato activo"}. Esta decisión cambia tu margen de carrera, no reemplaza el mercado de clubes.`;
     if (decision.family === "media") return `${npc} espera una respuesta de ${club}. Tu reputación está en ${run.reputation}. Lo que elijas quedará asociado a esta temporada y los efectos concretos están detallados en cada opción.`;
     if (decision.family === "crime") return `${npc} trae un contacto que la Liga no autorizó. No sabés más que eso. Podés cortar la conversación, dedicar recursos a seguir la pista o asumir el riesgo que figura en la opción.`;
-    if (decision.family === "friendship") return `${npc} vuelve a aparecer en una semana cargada. El vínculo registrado más alto de tu carrera es ${Math.max(0, ...Object.values(run.relationships ?? {}))}. Elegís cuánto tiempo y recursos le dedica ${club}; cualquier cambio de vínculo aparece explícitamente en la opción.`;
+    if (decision.family === "friendship") return `${npc} vuelve a aparecer en una semana cargada. El vínculo registrado más alto de tu carrera es ${highestFiniteBond(run.relationships)}. Elegís cuánto tiempo y recursos le dedica ${club}; cualquier cambio de vínculo aparece explícitamente en la opción.`;
     if (decision.family === "rivalry") return `${npc} pone el próximo cruce sobre la mesa. ${partner} quedó en el centro de la conversación. Elegís si ${club} conserva recursos, invierte en preparación general o toma la apuesta indicada; no hay ventaja oculta fuera de los efectos mostrados.`;
     if (decision.family === "conservation") return `${npc} informa que un proyecto de ${club} entró en conflicto con una zona usada por Pokémon silvestres. La situación todavía no está resuelta. Esta semana sólo definís qué coste inmediato acepta el club; cualquier consecuencia posterior tendrá que aparecer como un hecho nuevo.`;
     if (decision.family === "regional_culture") return `${npc} invita a ${club} a una actividad de la región con ${partner}. La comunidad ya hizo la invitación; lo que todavía está abierto es cuánto tiempo, recursos y exposición acepta el club.`;
@@ -152,7 +159,7 @@ function supportedContextBody(decision: CareerDecision, run: CareerRun, locale: 
   if (decision.family === "contract") return `${npc} wants a position before the schedule. Your current contract is ${run.contract ? `${run.contract.club_name}, ₽ ${run.contract.salary} per season, ${run.contract.seasons_remaining} season(s) remaining` : "no active contract"}. This choice changes your career position; it does not replace the club market.`;
   if (decision.family === "media") return `${npc} is waiting for an answer from ${club}. Your reputation is ${run.reputation}. The response will stay with this season, and each option shows the concrete effects it can produce.`;
   if (decision.family === "crime") return `${npc} brings a contact the League did not authorize. That is all you know. End the conversation, spend resources following the lead, or take the listed risk.`;
-  if (decision.family === "friendship") return `${npc} returns during a crowded week. Your highest recorded career bond is ${Math.max(0, ...Object.values(run.relationships ?? {}))}. You decide how much time and resources ${club} gives the contact; any bond change is stated explicitly in the option.`;
+  if (decision.family === "friendship") return `${npc} returns during a crowded week. Your highest recorded career bond is ${highestFiniteBond(run.relationships)}. You decide how much time and resources ${club} gives the contact; any bond change is stated explicitly in the option.`;
   if (decision.family === "rivalry") return `${npc} puts the next matchup on the table. ${partner} is at the center of the discussion. Decide whether ${club} preserves resources, invests in general preparation, or takes the listed gamble; there is no hidden competitive edge beyond the shown effects.`;
   if (decision.family === "conservation") return `${npc} reports that a ${club} project conflicts with an area used by wild Pokémon. The situation is not resolved yet. This week you only choose which immediate cost the club accepts; later consequences must arrive as new facts.`;
   if (decision.family === "regional_culture") return `${npc} invites ${club} and ${partner} to a regional activity. The invitation is real; what remains open is how much time, resources and exposure the club accepts.`;

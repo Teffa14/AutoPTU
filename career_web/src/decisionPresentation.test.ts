@@ -56,6 +56,32 @@ describe("decision information labels", () => {
     expect(view.body).not.toContain("para siempre");
   });
 
+  it("ignores non-finite relationship values when summarizing friendship context", () => {
+    const decision = {
+      id: "friendship-es", family: "friendship", title: "Un contacto pide tiempo", body: "Texto guardado.", npc_name: "Misty · mentor · Kanto",
+      options: [
+        { id: "friendship:3:0:0", label: "Escuchar", description: "legacy", risk: "safe", transparency: "full", guaranteed: {}, rewards: [] },
+        { id: "friendship:3:0:1", label: "Trabajar juntos", description: "legacy", risk: "calculated", transparency: "full", guaranteed: {}, rewards: [] },
+        { id: "friendship:3:0:2", label: "Exigir", description: "legacy", risk: "gamble", transparency: "estimated", guaranteed: {}, rewards: [] },
+      ],
+    } as CareerDecision;
+    const run = {
+      locale: "es",
+      contract: { club_name: "Saffron Comets", salary: 10, seasons_remaining: 1 },
+      relationships: {
+        "Misty · mentor · Kanto": Number.NaN,
+        "Brock · scout · Kanto": Number.POSITIVE_INFINITY,
+        "Erika · owner · Kanto": 7,
+      },
+      build: { starter: "Rattata" },
+    } as CareerRun;
+
+    const view = decisionPresentation(decision, run, "es");
+    expect(view.body).toContain("vínculo registrado más alto de tu carrera es 7");
+    expect(view.body).not.toContain("NaN");
+    expect(view.body).not.toContain("Infinity");
+  });
+
   it("localizes decisions from an existing Spanish save when English is selected", () => {
     const decision = {
       id: "stored-es", family: "contest", title: "La invitación del escenario", body: "Un concurso regional.", npc_name: "Brock",
