@@ -1,0 +1,23 @@
+name: Verify Career save slice
+
+on:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e . pytest
+      - run: python scripts/validate_repo.py
+      - run: python -m pytest -q tests/test_career_battle_pipeline.py tests/test_career_rival_training.py tests/test_career_preseason_market.py tests/test_career_pokemon_longevity.py tests/test_career_item_catalog.py tests/test_career_trainer_sprite.py tests/test_career_portable_api.py tests/test_career_save_compatibility.py
+      - run: npm --prefix career_web ci
+      - run: npm --prefix career_web test
+      - run: npm --prefix career_web run build
