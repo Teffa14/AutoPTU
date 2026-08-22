@@ -33,7 +33,7 @@ const run = {
     // Simulates finalizeSeason finishing while the season-3 replay is still on screen.
     { type: "season.completed", season: 3, opponents: ["Cerulean Current"] },
   ],
-} as CareerRun;
+} as unknown as CareerRun;
 
 describe("battle trainer presentation", () => {
   it("keeps a stable rival identity for the same regional club", () => {
