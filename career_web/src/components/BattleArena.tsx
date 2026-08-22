@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Application, Container, Graphics, Text, TextStyle } from "pixi.js";
 
 import type { BattleViewState } from "../battlePresentation";
-import { detectBattleVisualQuality, persistBattleVisualQuality, prefersReducedMotion, type BattleVisualQuality } from "../battleQuality";
+import { battleRenderMaxFps, detectBattleVisualQuality, persistBattleVisualQuality, prefersReducedMotion, type BattleVisualQuality } from "../battleQuality";
 import type { BattleCombatant, BattleMove, BattleTranscript, Locale } from "../types";
 import { PokemonSprite } from "./PokemonSprite";
 
@@ -71,6 +71,7 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
       const full = effectiveQuality === "full";
       await app.init({ resizeTo: mount, antialias: full, backgroundAlpha: 0, resolution: full ? Math.min(2, window.devicePixelRatio || 1) : 1 });
       if (cancelled || !app) return;
+      app.ticker.maxFPS = battleRenderMaxFps(effectiveQuality);
       appRef.current = app;
       mount.appendChild(app.canvas);
       screen.current = { width: app.screen.width, height: app.screen.height };
