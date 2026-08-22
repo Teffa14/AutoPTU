@@ -1,0 +1,26 @@
+import { describe, expect, it } from "vitest";
+
+import trainerCss from "./components/battle-trainer-strip.css?raw";
+import trainerComponent from "./components/BattleTrainerStrip.tsx?raw";
+
+
+describe("battle trainer layout", () => {
+  it("keeps trainer presentation in a dedicated lane above the arena host", () => {
+    expect(trainerComponent).toContain('className="battle-trainer-strip"');
+    expect(trainerCss).toContain(".battle-trainer-strip + div");
+    expect(trainerCss).toContain("inset: 5.35rem 0 0 !important");
+  });
+
+  it("compacts the trainer lane on phones without restoring overlap", () => {
+    expect(trainerCss).toContain("@media (max-width: 699px)");
+    expect(trainerCss).toContain("inset: 3.85rem 0 0 !important");
+    expect(trainerCss).toContain(".battle-trainer-copy q,");
+    expect(trainerCss).toContain("display: none");
+  });
+
+  it("keeps trainer sprites bounded instead of allowing intrinsic image size", () => {
+    expect(trainerCss).toContain("width: 3.45rem");
+    expect(trainerCss).toContain("height: 3.45rem");
+    expect(trainerCss).toContain("object-fit: contain");
+  });
+});

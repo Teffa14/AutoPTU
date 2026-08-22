@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
 import "./styles.css";
+import "./components/battle-trainer-strip.css";
 import "./components/profile-longevity.css";
 
 const resumePath = new URLSearchParams(window.location.search).get("resume");
