@@ -4,14 +4,15 @@ from typing import Any, Dict
 
 from .catalogs import LEAGUES, REGIONS
 from .models import CareerRun, ClubContract
-from .roster import grant_pokemon_levels, grant_stat_training
+from .roster import TRAINING_KIT_WEAR, grant_pokemon_levels, grant_stat_training
 
 
-ITEM_CATALOG: Dict[str, Dict[str, str]] = {
+ITEM_CATALOG: Dict[str, Dict[str, Any]] = {
     "Training Kit": {
-        "description_es": "Sesión individual: +2 permanentes al stat elegido de un Pokémon.",
-        "description_en": "Individual session: +2 permanent points to one chosen Pokémon stat.",
+        "description_es": f"Sesión individual: +2 permanentes al stat elegido. Consume {TRAINING_KIT_WEAR} de vida útil competitiva del Pokémon; al llegar a 0 se retira.",
+        "description_en": f"Individual session: +2 permanent points to one chosen stat. Costs {TRAINING_KIT_WEAR} Pokémon career health; at 0 the Pokémon retires.",
         "target": "pokemon_stat",
+        "career_health_cost": TRAINING_KIT_WEAR,
     },
     "Exp. Share": {
         "description_es": "Otorga 3 niveles al Pokémon elegido y evoluciona automáticamente si corresponde.",
@@ -142,11 +143,12 @@ SHOP_CATALOG: Dict[str, Dict[str, Any]] = {
     "training_kit": {
         "label_es": "Training Kit",
         "label_en": "Training Kit",
-        "description_es": "Se guarda en la mochila: +2 permanentes al stat que elijas.",
-        "description_en": "Stored in the bag: +2 permanent points to a chosen stat.",
+        "description_es": f"Se guarda en la mochila: +2 permanentes al stat elegido. Cada uso consume {TRAINING_KIT_WEAR} de vida útil competitiva del Pokémon y acelera su retiro.",
+        "description_en": f"Stored in the bag: +2 permanent points to a chosen stat. Each use costs {TRAINING_KIT_WEAR} Pokémon career health and accelerates retirement.",
         "price": 125,
         "kind": "item",
         "item": "Training Kit",
+        "career_health_cost": TRAINING_KIT_WEAR,
     },
     "facility_pass": {
         "label_es": "Facility Pass",
@@ -201,7 +203,7 @@ TRAINING_METHODS: Dict[str, Dict[str, Any]] = {
 }
 
 
-def item_catalog() -> Dict[str, Dict[str, str]]:
+def item_catalog() -> Dict[str, Dict[str, Any]]:
     return {name: dict(details) for name, details in ITEM_CATALOG.items()}
 
 
