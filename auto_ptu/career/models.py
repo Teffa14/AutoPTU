@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, fields as dataclass_fields
 from datetime import datetime, timezone
 import os
 from typing import Any, Dict, List, Optional
@@ -288,13 +288,15 @@ class CareerRun:
         if not active_roster:
             active_roster = [entry.id for entry in pokemon if entry.status != "retired"][:6]
         summary = CareerSummary(**dict(payload["summary"])) if payload.get("summary") else None
-        fields = dict(payload)
+        values = dict(payload)
         for key in ("build", "contract", "versions", "season", "summary", "pokemon", "active_roster"):
-            fields.pop(key, None)
-        if "money" not in fields:
-            fields["money"] = max(0, int(fields.get("career_earnings", 0)))
+            values.pop(key, None)
+        if "money" not in values:
+            values["money"] = max(0, int(values.get("career_earnings", 0)))
+        known_fields = {entry.name for entry in dataclass_fields(cls)}
+        values = {key: value for key, value in values.items() if key in known_fields}
         return cls(
-            **fields,
+            **values,
             build=build,
             contract=contract,
             versions=versions,
