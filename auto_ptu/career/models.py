@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field, fields as dataclass_fields
 from datetime import datetime, timezone
+import math
 import os
 from typing import Any, Dict, List, Optional, Type, TypeVar
 
@@ -24,6 +25,16 @@ def _known_dataclass_values(model_cls: Type[T], payload: Dict[str, Any]) -> Dict
 
 def _load_dataclass(model_cls: Type[T], payload: Dict[str, Any]) -> T:
     return model_cls(**_known_dataclass_values(model_cls, payload))
+
+
+def _safe_nonnegative_int(value: Any, default: int = 0) -> int:
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return default
+    if not math.isfinite(number):
+        return default
+    return max(0, int(number))
 
 
 @dataclass
@@ -305,7 +316,7 @@ class CareerRun:
         for key in ("build", "contract", "versions", "season", "summary", "pokemon", "active_roster"):
             values.pop(key, None)
         if "money" not in values:
-            values["money"] = max(0, int(values.get("career_earnings", 0)))
+            values["money"] = _safe_nonnegative_int(values.get("career_earnings", 0))
         values = _known_dataclass_values(cls, values)
         return cls(
             **values,
