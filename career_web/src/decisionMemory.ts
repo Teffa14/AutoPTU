@@ -42,5 +42,6 @@ function findInDecisionList(values: unknown[], family: string, season: number): 
 
 function recordedBond(run: CareerRun, npcName: string): number {
   if (!npcName) return 0;
-  return Number(run.relationships?.[npcName] ?? 0);
+  const bond = Number(run.relationships?.[npcName] ?? 0);
+  return Number.isFinite(bond) ? bond : 0;
 }

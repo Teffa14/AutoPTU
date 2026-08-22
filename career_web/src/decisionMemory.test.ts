@@ -65,4 +65,13 @@ describe("decision memory", () => {
     expect(decisionMemory(run, "health", npc).contactBond).toBe(4);
     expect(decisionMemory(run, "health", "Erika · mentor · Kanto").contactBond).toBe(0);
   });
+
+  it("does not surface corrupt persisted relationship values as NaN or Infinity", () => {
+    const npc = "Misty · mentor · Kanto";
+    const corrupt = runWith({ relationships: { [npc]: "not-a-number" } as unknown as CareerRun["relationships"] });
+    const overflow = runWith({ relationships: { [npc]: Infinity } });
+
+    expect(decisionMemory(corrupt, "health", npc).contactBond).toBe(0);
+    expect(decisionMemory(overflow, "health", npc).contactBond).toBe(0);
+  });
 });
