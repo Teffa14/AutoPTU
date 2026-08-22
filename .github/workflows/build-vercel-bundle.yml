@@ -28,59 +28,110 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install ignore parser
-        run: python -m pip install pathspec
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
 
-      - name: Build Vercel source tree
+      - name: Build current Career frontend
+        run: python scripts/build_vercel.py
+
+      - name: Build slim Vercel runtime
         shell: bash
         run: |
           python - <<'PY'
           from __future__ import annotations
 
           import json
-          import shutil
           import subprocess
+          import zipfile
           from pathlib import Path
 
-          import pathspec
-
           root = Path.cwd()
-          out = root / "vercel-source"
+          out = root / "vercel-slim"
           out.mkdir(parents=True, exist_ok=True)
-
-          patterns = (root / ".vercelignore").read_text(encoding="utf-8").splitlines()
-          spec = pathspec.PathSpec.from_lines("gitwildmatch", patterns)
-          tracked = subprocess.check_output(["git", "ls-files", "-z"]).decode("utf-8").split("\0")
-
-          copied = 0
-          total_bytes = 0
-          for rel in tracked:
-              if not rel or spec.match_file(rel):
-                  continue
-              src = root / rel
-              if not src.is_file():
-                  continue
-              dst = out / rel
-              dst.parent.mkdir(parents=True, exist_ok=True)
-              shutil.copy2(src, dst)
-              copied += 1
-              total_bytes += src.stat().st_size
-
           sha = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
-          manifest = {
-              "source_commit": sha,
-              "file_count": copied,
-              "total_bytes": total_bytes,
+
+          def include(path: Path) -> bool:
+              rel = path.relative_to(root).as_posix()
+              if not path.is_file():
+                  return False
+              if rel.startswith("auto_ptu/data/terrain_maps/starter/images/"):
+                  return False
+              if rel.startswith("auto_ptu/api/static/"):
+                  return rel in {
+                      "auto_ptu/api/static/character_creation.json",
+                      "auto_ptu/api/static/pokemon_move_sources.json",
+                  }
+              if rel.startswith("files/") and path.suffix.lower() in {".pdf", ".xlsx", ".xls", ".docx"}:
+                  return False
+              return True
+
+          runtime_roots = [root / "auto_ptu", root / "files", root / "public" / "career-game"]
+          runtime_files: list[Path] = []
+          for runtime_root in runtime_roots:
+              if runtime_root.exists():
+                  runtime_files.extend(path for path in runtime_root.rglob("*") if include(path))
+
+          ptu_yaml = root / "PTUDatabase-main" / "Data" / "ptu.1.05.yaml"
+          if ptu_yaml.exists():
+              runtime_files.append(ptu_yaml)
+
+          bundle_path = out / "runtime_bundle.zip"
+          with zipfile.ZipFile(bundle_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+              for path in sorted(set(runtime_files)):
+                  archive.write(path, path.relative_to(root).as_posix())
+              archive.writestr(".runtime-source.json", json.dumps({"source_commit": sha}) + "\n")
+
+          requirements = """typer>=0.12
+rich>=13.7
+pydantic>=2.8
+PyYAML>=6.0
+pandas>=2.2
+PyPDF2>=3.0
+fastapi>=0.115
+uvicorn[standard]>=0.30
+psycopg[binary]>=3.2
+py-trees==2.4.0
+trueskill==0.4.5
+six>=1.16
+pydot>=3.0
+"""
+          (out / "requirements.txt").write_text(requirements, encoding="utf-8")
+
+          bootstrap = f'''"""Slim Vercel bootstrap generated from AutoPTU {sha}."""\nfrom __future__ import annotations\n\nimport os\nimport shutil\nimport sys\nimport zipfile\nfrom pathlib import Path\n\nSOURCE_COMMIT = "{sha}"\nBUNDLE = Path(__file__).resolve().parent / "runtime_bundle.zip"\nRUNTIME = Path("/tmp/autoptu-runtime")\nMARKER = RUNTIME / ".source-commit"\n\nif not MARKER.exists() or MARKER.read_text(encoding="utf-8", errors="ignore").strip() != SOURCE_COMMIT:\n    shutil.rmtree(RUNTIME, ignore_errors=True)\n    RUNTIME.mkdir(parents=True, exist_ok=True)\n    with zipfile.ZipFile(BUNDLE) as archive:\n        archive.extractall(RUNTIME)\n    MARKER.write_text(SOURCE_COMMIT, encoding="utf-8")\n\nos.environ.setdefault("AUTO_PTU_RUNTIME_ROOT", str(RUNTIME))\nsys.path.insert(0, str(RUNTIME))\n\nfrom auto_ptu.api.server import app\n\n__all__ = ["app"]\n'''
+          (out / "app.py").write_text(bootstrap, encoding="utf-8")
+
+          config = {
+              "$schema": "https://openapi.vercel.sh/vercel.json",
+              "buildCommand": "echo 'Using prebuilt Career runtime'",
+              "functions": {"app.py": {"includeFiles": "runtime_bundle.zip"}},
+              "env": {
+                  "AUTO_PTU_RUNTIME_ROOT": "/tmp/autoptu-runtime",
+                  "AUTO_PTU_REPORTS_DIR": "/tmp/autoptu-runtime/reports",
+                  "AUTOPTU_BATTLE_LOG_DIR": "/tmp/autoptu-runtime/reports/battle_logs",
+                  "AUTO_PTU_SPRITE_DIR": "/tmp/autoptu-runtime/sprites",
+                  "AUTO_PTU_POKEAPI_CACHE": "/tmp/autoptu-runtime/pokeapi",
+                  "CAREER_BATTLE_EXECUTION": "inline",
+              },
           }
-          (out / ".deploy-source.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
-          print(json.dumps(manifest))
+          (out / "vercel.json").write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
+          (out / ".deploy-source.json").write_text(
+              json.dumps({
+                  "source_commit": sha,
+                  "runtime_files": len(runtime_files),
+                  "runtime_zip_bytes": bundle_path.stat().st_size,
+              }, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          print((out / ".deploy-source.json").read_text())
           PY
 
       - name: Upload Vercel source bundle
         uses: actions/upload-artifact@v4
         with:
           name: vercel-source
-          path: vercel-source
+          path: vercel-slim
           if-no-files-found: error
-          compression-level: 6
+          compression-level: 0
           retention-days: 1
