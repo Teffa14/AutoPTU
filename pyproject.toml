@@ -28,5 +28,8 @@ dependencies = [
 [project.scripts]
 auto-ptu = "auto_ptu.cli:app"
 
+[tool.vercel]
+entrypoint = "app.py"
+
 [tool.setuptools.packages.find]
 where = ["."]
