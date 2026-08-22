@@ -32,7 +32,9 @@ describe("battle render budget", () => {
   });
 
   it("keeps position smoothing and impulse decay stable across lower frame rates", () => {
-    expect(battleRenderFrameFactors(1)).toEqual({ positionBlend: 0.2, impulseDecay: 0.78 });
+    const oneFrame = battleRenderFrameFactors(1);
+    expect(oneFrame.positionBlend).toBeCloseTo(0.2, 10);
+    expect(oneFrame.impulseDecay).toBeCloseTo(0.78, 10);
     const twoFrames = battleRenderFrameFactors(2);
     expect(twoFrames.positionBlend).toBeCloseTo(0.36, 10);
     expect(twoFrames.impulseDecay).toBeCloseTo(0.6084, 10);
