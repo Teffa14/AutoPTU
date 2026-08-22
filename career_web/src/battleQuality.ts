@@ -5,6 +5,7 @@ export type BattleVisualSignals = {
   reducedMotion?: boolean;
   hardwareConcurrency?: number | null;
   deviceMemory?: number | null;
+  saveData?: boolean;
 };
 
 export const BATTLE_VISUAL_QUALITY_KEY = "autoptu:battle-visual-quality";
@@ -24,6 +25,7 @@ export function battleRenderFrameFactors(deltaTime: number): { positionBlend: nu
 export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleVisualQuality {
   if (signals.reducedMotion) return "light";
   if (signals.storedPreference === "full" || signals.storedPreference === "light") return signals.storedPreference;
+  if (signals.saveData) return "light";
 
   const cores = Number(signals.hardwareConcurrency ?? 0);
   if (Number.isFinite(cores) && cores > 0 && cores <= 4) return "light";
@@ -44,12 +46,16 @@ export function detectBattleVisualQuality(): BattleVisualQuality {
     storedPreference = null;
   }
 
-  const nav = window.navigator as Navigator & { deviceMemory?: number };
+  const nav = window.navigator as Navigator & {
+    deviceMemory?: number;
+    connection?: { saveData?: boolean };
+  };
   return chooseBattleVisualQuality({
     storedPreference,
     reducedMotion: prefersReducedMotion(),
     hardwareConcurrency: nav.hardwareConcurrency,
     deviceMemory: nav.deviceMemory,
+    saveData: nav.connection?.saveData,
   });
 }
 
