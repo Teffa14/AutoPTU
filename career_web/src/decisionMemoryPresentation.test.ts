@@ -29,7 +29,7 @@ function runBase(): CareerRun {
       training_method: "",
       training_completed_ids: [],
     },
-  } as CareerRun;
+  } as unknown as CareerRun;
 }
 
 describe("decision scene callbacks", () => {
