@@ -7,6 +7,7 @@ import { t } from "../i18n";
 import type { BattleCombatant, BattleTranscript, CareerRun, Locale } from "../types";
 import { BattleArena } from "./BattleArena";
 import { BattlePreparing } from "./BattlePreparing";
+import { BattleTrainerStrip } from "./BattleTrainerStrip";
 import { CareerCelebration } from "./CareerCelebration";
 import { PokemonSprite } from "./PokemonSprite";
 
@@ -121,6 +122,7 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: {
       <div className="battle-stage">
         <CombatantHud combatant={away} team={awayTeam} club={transcript.spec.away_club} locale={locale} side="away" transcript={transcript} />
         <div className="arena-wrap">
+          <BattleTrainerStrip transcript={transcript} run={run} locale={locale} complete={complete} />
           <BattleArena transcript={transcript} eventIndex={rawEventIndex} view={view} locale={locale} />
           <div className={calloutClass} key={`${rawEventIndex}-${eventTitle(locale, view)}`}>
             <span>{eventTitle(locale, view)}</span>
