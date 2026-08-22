@@ -7,11 +7,19 @@ export type BattleTrainerCard = {
   line: string;
 };
 
+export type RivalMemory = {
+  previousMeetings: number;
+  firstSeason: number | null;
+  lastSeason: number | null;
+  seasonsSinceLastMeeting: number | null;
+};
+
 export type BattleTrainerPresentation = {
   home: BattleTrainerCard;
   away: BattleTrainerCard;
   meeting: number;
   meetingLabel: string;
+  rivalMemory: RivalMemory;
 };
 
 type RivalIdentity = { name: string; sprite: string };
@@ -74,7 +82,8 @@ export function battleTrainerPresentation(
   const awayClub = String(transcript.spec.away_club || "Opponent");
   const pool = REGIONAL_RIVALS[region] ?? REGIONAL_RIVALS.kanto;
   const rival = pool[stableIndex(`${region}:${awayClub}`, pool.length)];
-  const meeting = previousMeetings(run, awayClub, transcript.spec.season) + 1;
+  const rivalMemory = formalRivalMemory(run, awayClub, transcript.spec.season);
+  const meeting = rivalMemory.previousMeetings + 1;
   const userWon = transcript.winner_team === "career-home";
   const difficulty = transcript.spec.difficulty_label ?? "even";
 
@@ -90,14 +99,39 @@ export function battleTrainerPresentation(
       name: rival.name,
       sprite: rival.sprite,
       line: complete
-        ? rivalResultLine(locale, userWon)
-        : rivalOpeningLine(locale, meeting),
+        ? rivalResultLine(locale, userWon, rivalMemory)
+        : rivalOpeningLine(locale, rivalMemory),
     },
     meeting,
-    meetingLabel: meeting === 1
-      ? (locale === "es" ? "PRIMER CRUCE" : "FIRST MEETING")
-      : (locale === "es" ? `CRUCE #${meeting}` : `MEETING #${meeting}`),
+    meetingLabel: meetingLabel(locale, meeting, rivalMemory),
+    rivalMemory,
   };
+}
+
+export function formalRivalMemory(
+  run: CareerRun | null | undefined,
+  awayClub: string,
+  beforeSeason?: number,
+): RivalMemory {
+  if (!run) return { previousMeetings: 0, firstSeason: null, lastSeason: null, seasonsSinceLastMeeting: null };
+  let previousMeetings = 0;
+  let firstSeason: number | null = null;
+  let lastSeason: number | null = null;
+  for (const event of run.timeline) {
+    if (event.type !== "season.completed" || !Array.isArray(event.opponents)) continue;
+    const eventSeason = Number(event.season ?? 0);
+    if (!Number.isFinite(eventSeason) || eventSeason <= 0) continue;
+    if (beforeSeason !== undefined && eventSeason >= beforeSeason) continue;
+    const meetings = event.opponents.filter((opponent) => String(opponent) === awayClub).length;
+    if (!meetings) continue;
+    previousMeetings += meetings;
+    firstSeason = firstSeason === null ? eventSeason : Math.min(firstSeason, eventSeason);
+    lastSeason = lastSeason === null ? eventSeason : Math.max(lastSeason, eventSeason);
+  }
+  const seasonsSinceLastMeeting = beforeSeason !== undefined && lastSeason !== null
+    ? Math.max(0, beforeSeason - lastSeason)
+    : null;
+  return { previousMeetings, firstSeason, lastSeason, seasonsSinceLastMeeting };
 }
 
 export function previousMeetings(
@@ -105,13 +139,7 @@ export function previousMeetings(
   awayClub: string,
   beforeSeason?: number,
 ): number {
-  if (!run) return 0;
-  return run.timeline.reduce((total, event) => {
-    if (event.type !== "season.completed" || !Array.isArray(event.opponents)) return total;
-    const eventSeason = Number(event.season ?? 0);
-    if (beforeSeason !== undefined && eventSeason >= beforeSeason) return total;
-    return total + event.opponents.filter((opponent) => String(opponent) === awayClub).length;
-  }, 0);
+  return formalRivalMemory(run, awayClub, beforeSeason).previousMeetings;
 }
 
 function stableIndex(value: string, modulo: number): number {
@@ -121,6 +149,13 @@ function stableIndex(value: string, modulo: number): number {
     hash = Math.imul(hash, 16777619) >>> 0;
   }
   return modulo > 0 ? hash % modulo : 0;
+}
+
+function meetingLabel(locale: Locale, meeting: number, memory: RivalMemory): string {
+  if (meeting === 1) return locale === "es" ? "PRIMER CRUCE" : "FIRST MEETING";
+  if (memory.previousMeetings >= 5) return locale === "es" ? `RIVALIDAD · CRUCE #${meeting}` : `RIVALRY · MEETING #${meeting}`;
+  if ((memory.seasonsSinceLastMeeting ?? 0) >= 3) return locale === "es" ? `REENCUENTRO · CRUCE #${meeting}` : `REUNION · MEETING #${meeting}`;
+  return locale === "es" ? `CRUCE #${meeting}` : `MEETING #${meeting}`;
 }
 
 function homePlanLine(locale: Locale, difficulty: "favored" | "even" | "dangerous"): string {
@@ -134,15 +169,17 @@ function homePlanLine(locale: Locale, difficulty: "favored" | "even" | "dangerou
   return "Do not guess. Read and execute.";
 }
 
-function rivalOpeningLine(locale: Locale, meeting: number): string {
+function rivalOpeningLine(locale: Locale, memory: RivalMemory): string {
   if (locale === "es") {
-    return meeting > 1
-      ? "Ya vi tu plan una vez. Mostrame qué cambiaste."
-      : "Quiero ver cómo resolvés cuando el plan se rompe.";
+    if (memory.previousMeetings >= 5) return "Ya tenemos historia. Hoy no alcanza con repetir lo que funcionó antes.";
+    if ((memory.seasonsSinceLastMeeting ?? 0) >= 3) return "Pasó tiempo. Quiero ver qué cambió desde la última vez.";
+    if (memory.previousMeetings > 0) return "Ya vi tu plan una vez. Mostrame qué cambiaste.";
+    return "Quiero ver cómo resolvés cuando el plan se rompe.";
   }
-  return meeting > 1
-    ? "I have seen your plan before. Show me what changed."
-    : "I want to see what you do when the plan breaks.";
+  if (memory.previousMeetings >= 5) return "We have history now. Repeating what worked before will not be enough.";
+  if ((memory.seasonsSinceLastMeeting ?? 0) >= 3) return "It has been a while. Show me what changed since last time.";
+  if (memory.previousMeetings > 0) return "I have seen your plan before. Show me what changed.";
+  return "I want to see what you do when the plan breaks.";
 }
 
 function homeResultLine(locale: Locale, userWon: boolean): string {
@@ -150,7 +187,11 @@ function homeResultLine(locale: Locale, userWon: boolean): string {
   return userWon ? "Done. This goes in the record." : "Mark where they opened us up. We work on it.";
 }
 
-function rivalResultLine(locale: Locale, userWon: boolean): string {
-  if (locale === "es") return userWon ? "Bien. La próxima vengo con otra respuesta." : "La próxima vas a tener que cambiar algo.";
+function rivalResultLine(locale: Locale, userWon: boolean, memory: RivalMemory): string {
+  if (locale === "es") {
+    if (memory.previousMeetings >= 5) return userWon ? "Otra para vos. El registro sigue abierto." : "Otra para mí. El registro sigue abierto.";
+    return userWon ? "Bien. La próxima vengo con otra respuesta." : "La próxima vas a tener que cambiar algo.";
+  }
+  if (memory.previousMeetings >= 5) return userWon ? "Another one for you. The record stays open." : "Another one for me. The record stays open.";
   return userWon ? "Good. Next time I bring a different answer." : "Next time you will have to change something.";
 }
