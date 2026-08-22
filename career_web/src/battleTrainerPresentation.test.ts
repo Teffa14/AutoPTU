@@ -16,6 +16,7 @@ const transcript = {
     away_species: "Squirtle",
     region: "kanto",
     league: "junior",
+    season: 3,
     difficulty_label: "even",
   },
   events: [],
@@ -27,8 +28,10 @@ const run = {
   build: { name: "QA Trainer", region: "kanto", starter: "Bulbasaur", classes: [], pokeballs: 10 },
   timeline: [
     { type: "trainer.appearance_selected", trainer_sprite: "hilda" },
-    { type: "season.completed", opponents: ["Cerulean Current", "Pewter Foundry", "Cerulean Current"] },
-    { type: "season.completed", opponents: ["Fuchsia Wardens"] },
+    { type: "season.completed", season: 1, opponents: ["Cerulean Current", "Pewter Foundry", "Cerulean Current"] },
+    { type: "season.completed", season: 2, opponents: ["Fuchsia Wardens"] },
+    // Simulates finalizeSeason finishing while the season-3 replay is still on screen.
+    { type: "season.completed", season: 3, opponents: ["Cerulean Current"] },
   ],
 } as CareerRun;
 
@@ -40,8 +43,9 @@ describe("battle trainer presentation", () => {
     expect(first.away.sprite).toBe(second.away.sprite);
   });
 
-  it("counts every prior formal meeting with the same club", () => {
-    expect(previousMeetings(run, "Cerulean Current")).toBe(2);
+  it("counts only formal meetings before the battle currently being replayed", () => {
+    expect(previousMeetings(run, "Cerulean Current")).toBe(3);
+    expect(previousMeetings(run, "Cerulean Current", 3)).toBe(2);
     expect(battleTrainerPresentation("es", transcript, run, false).meeting).toBe(3);
     expect(battleTrainerPresentation("es", transcript, run, false).meetingLabel).toBe("CRUCE #3");
   });
