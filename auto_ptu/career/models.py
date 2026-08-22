@@ -3,15 +3,27 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field, fields as dataclass_fields
 from datetime import datetime, timezone
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Type, TypeVar
 
 
 CURRENT_CAREER_VERSION = "career-0.11.0"
 CURRENT_NARRATIVE_VERSION = "career-hooks-0.8.0"
 
 
+T = TypeVar("T")
+
+
 def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def _known_dataclass_values(model_cls: Type[T], payload: Dict[str, Any]) -> Dict[str, Any]:
+    known_fields = {entry.name for entry in dataclass_fields(model_cls)}
+    return {key: value for key, value in dict(payload).items() if key in known_fields}
+
+
+def _load_dataclass(model_cls: Type[T], payload: Dict[str, Any]) -> T:
+    return model_cls(**_known_dataclass_values(model_cls, payload))
 
 
 @dataclass
@@ -153,8 +165,8 @@ class BattleTranscript:
     @classmethod
     def from_dict(cls, payload: Dict[str, Any]) -> "BattleTranscript":
         raw = dict(payload)
-        raw["spec"] = BattleSpec(**dict(raw["spec"]))
-        return cls(**raw)
+        raw["spec"] = _load_dataclass(BattleSpec, raw["spec"])
+        return cls(**_known_dataclass_values(cls, raw))
 
 
 @dataclass
@@ -248,9 +260,9 @@ class CareerRun:
 
     @classmethod
     def from_dict(cls, payload: Dict[str, Any]) -> "CareerRun":
-        build = TrainerCareerBuild(**dict(payload["build"]))
-        contract = ClubContract(**dict(payload["contract"])) if payload.get("contract") else None
-        versions = ContentVersion(**dict(payload.get("versions") or {}))
+        build = _load_dataclass(TrainerCareerBuild, payload["build"])
+        contract = _load_dataclass(ClubContract, payload["contract"]) if payload.get("contract") else None
+        versions = _load_dataclass(ContentVersion, payload.get("versions") or {})
         season_payload = payload.get("season")
         season = None
         if season_payload:
@@ -259,15 +271,16 @@ class CareerRun:
             battles_payload = raw.pop("battles", [])
             decision = None
             if decision_payload:
-                options = [CareerDecisionOption(**dict(entry)) for entry in decision_payload.get("options", [])]
-                decision = CareerDecision(**{**dict(decision_payload), "options": options})
-            season = SeasonState(
-                **raw,
-                decision=decision,
-                battles=[BattleSpec(**dict(entry)) for entry in battles_payload],
-            )
+                options = [_load_dataclass(CareerDecisionOption, entry) for entry in decision_payload.get("options", [])]
+                decision_values = _known_dataclass_values(CareerDecision, decision_payload)
+                decision_values["options"] = options
+                decision = CareerDecision(**decision_values)
+            season_values = _known_dataclass_values(SeasonState, raw)
+            season_values["decision"] = decision
+            season_values["battles"] = [_load_dataclass(BattleSpec, entry) for entry in battles_payload]
+            season = SeasonState(**season_values)
         pokemon_payload = payload.get("pokemon") or []
-        pokemon = [CareerPokemon(**dict(entry)) for entry in pokemon_payload]
+        pokemon = [_load_dataclass(CareerPokemon, entry) for entry in pokemon_payload]
         if not pokemon:
             legacy_roster = list(payload.get("roster") or [build.starter])
             pokemon = [
@@ -287,14 +300,13 @@ class CareerRun:
         active_roster = [str(value) for value in payload.get("active_roster") or []]
         if not active_roster:
             active_roster = [entry.id for entry in pokemon if entry.status != "retired"][:6]
-        summary = CareerSummary(**dict(payload["summary"])) if payload.get("summary") else None
+        summary = _load_dataclass(CareerSummary, payload["summary"]) if payload.get("summary") else None
         values = dict(payload)
         for key in ("build", "contract", "versions", "season", "summary", "pokemon", "active_roster"):
             values.pop(key, None)
         if "money" not in values:
             values["money"] = max(0, int(values.get("career_earnings", 0)))
-        known_fields = {entry.name for entry in dataclass_fields(cls)}
-        values = {key: value for key, value in values.items() if key in known_fields}
+        values = _known_dataclass_values(cls, values)
         return cls(
             **values,
             build=build,
