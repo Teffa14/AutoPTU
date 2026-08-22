@@ -1,3 +1,4 @@
+import { decisionMemory } from "./decisionMemory";
 import type { CareerDecision, CareerRun, DecisionOption, DecisionReward, Locale } from "./types";
 
 type CrossLocaleCopy = {
@@ -78,11 +79,13 @@ export function decisionPresentation(decision: CareerDecision, run: CareerRun, l
   const crossLocale = storedLocale !== locale;
   const fallback = CROSS_LOCALE[decision.family]?.[locale];
   const title = crossLocale && fallback ? fallback.title : decision.title;
-  const body = crossLocale && fallback
+  const baseBody = crossLocale && fallback
     ? fallback.body
     : GUARDED_DYNAMIC_FAMILIES.has(decision.family)
       ? supportedContextBody(decision, run, locale)
       : decision.body;
+  const memory = decisionMemory(run, decision.family, decision.npc_name);
+  const body = `${baseBody}${memoryContext(decision, memory, locale, crossLocale ? fallback : undefined)}`;
 
   return {
     title: title.replaceAll("{partner}", run.build.starter),
@@ -93,6 +96,36 @@ export function decisionPresentation(decision: CareerDecision, run: CareerRun, l
       description: optionTradeoff(option, locale),
     })),
   };
+}
+
+function memoryContext(
+  decision: CareerDecision,
+  memory: ReturnType<typeof decisionMemory>,
+  locale: Locale,
+  fallback?: CrossLocaleCopy,
+): string {
+  const lines: string[] = [];
+  if (memory.prior) {
+    const priorLabel = localizedPriorLabel(memory.prior.optionId, memory.prior.label, fallback);
+    lines.push(locale === "es"
+      ? `El archivo del club conserva un antecedente: en la temporada ${memory.prior.season} elegiste «${priorLabel}» ante un caso parecido.`
+      : `The club archive keeps a precedent: in season ${memory.prior.season} you chose “${priorLabel}” in a similar case.`);
+  }
+  if (memory.contactBond !== 0) {
+    const npc = decision.npc_name?.split(" · ")[0] || (locale === "es" ? "Este contacto" : "This contact");
+    lines.push(locale === "es"
+      ? `${npc} ya figura entre tus contactos con vínculo ${signed(memory.contactBond)}.`
+      : `${npc} is already in your contacts with bond ${signed(memory.contactBond)}.`);
+  }
+  return lines.length ? ` ${lines.join(" ")}` : "";
+}
+
+function localizedPriorLabel(optionId: string, storedLabel: string, fallback?: CrossLocaleCopy): string {
+  if (!fallback) return storedLabel;
+  const index = Number(optionId.split(":").at(-1));
+  return Number.isInteger(index) && index >= 0 && index < fallback.options.length
+    ? fallback.options[index]
+    : storedLabel;
 }
 
 function supportedContextBody(decision: CareerDecision, run: CareerRun, locale: Locale): string {
