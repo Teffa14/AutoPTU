@@ -24,7 +24,7 @@ describe("decision information labels", () => {
         { id: "health:1:0:2", label: "Seguir igual", description: "legacy", risk: "gamble", transparency: "estimated", guaranteed: { health: -2 }, rewards: [], gamble: { chance: 0.55, success: { development: 4 }, failure: { health: -8, reputation: -3 } } },
       ],
     } as CareerDecision;
-    const run = { locale: "es", build: { starter: "Rattata" } } as CareerRun;
+    const run = { locale: "es", build: { starter: "Rattata" } } as unknown as CareerRun;
     const view = decisionPresentation(decision, run, "es");
     expect(view.title).toBe("Misty cerró la puerta del consultorio");
     expect(view.body).toContain("41/100");
@@ -48,7 +48,7 @@ describe("decision information labels", () => {
       contract: { club_name: "Saffron Comets", salary: 10, seasons_remaining: 1 },
       relationships: {},
       build: { starter: "Rattata" },
-    } as CareerRun;
+    } as unknown as CareerRun;
     const view = decisionPresentation(decision, run, "es");
     expect(view.title).toContain("ruta de migración");
     expect(view.body).toContain("Saffron Comets");
@@ -64,7 +64,7 @@ describe("decision information labels", () => {
         transparency: index === 2 ? "estimated" as const : "full" as const, guaranteed: {}, rewards: [],
       })),
     } as CareerDecision;
-    const run = { locale: "es", build: { starter: "Rattata" } } as CareerRun;
+    const run = { locale: "es", build: { starter: "Rattata" } } as unknown as CareerRun;
     const english = decisionPresentation(decision, run, "en");
     expect(english.title).toBe("An invitation to perform");
     expect(english.options[0].label).toBe("Watch from outside");
