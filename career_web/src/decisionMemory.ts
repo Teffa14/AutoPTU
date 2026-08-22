@@ -15,7 +15,8 @@ export function decisionMemory(run: CareerRun, family: string, npcName = ""): De
   const current = findInDecisionList(run.season?.decision_history ?? [], family, run.season_number);
   if (current) return { prior: current, contactBond: recordedBond(run, npcName) };
 
-  for (const entry of [...run.timeline].reverse()) {
+  const timeline = Array.isArray(run.timeline) ? run.timeline : [];
+  for (const entry of [...timeline].reverse()) {
     if (entry.type !== "season.completed") continue;
     const season = Number(entry.season ?? 0);
     const decisions = Array.isArray(entry.decisions) ? entry.decisions : [];
