@@ -9,6 +9,10 @@ export type BattleVisualSignals = {
 
 export const BATTLE_VISUAL_QUALITY_KEY = "autoptu:battle-visual-quality";
 
+export function battleRenderMaxFps(quality: BattleVisualQuality): number {
+  return quality === "light" ? 30 : 60;
+}
+
 export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleVisualQuality {
   if (signals.reducedMotion) return "light";
   if (signals.storedPreference === "full" || signals.storedPreference === "light") return signals.storedPreference;
