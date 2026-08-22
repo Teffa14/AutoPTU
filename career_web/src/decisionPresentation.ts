@@ -69,12 +69,20 @@ const CROSS_LOCALE: Record<string, { es: CrossLocaleCopy; en: CrossLocaleCopy }>
   ),
 };
 
+const GUARDED_DYNAMIC_FAMILIES = new Set([
+  "breeding", "contest", "economy", "contract", "media", "crime", "friendship", "rivalry", "conservation", "regional_culture",
+]);
+
 export function decisionPresentation(decision: CareerDecision, run: CareerRun, locale: Locale) {
   const storedLocale = run.locale ?? locale;
   const crossLocale = storedLocale !== locale;
   const fallback = CROSS_LOCALE[decision.family]?.[locale];
   const title = crossLocale && fallback ? fallback.title : decision.title;
-  const body = crossLocale && fallback ? fallback.body : decision.body;
+  const body = crossLocale && fallback
+    ? fallback.body
+    : GUARDED_DYNAMIC_FAMILIES.has(decision.family)
+      ? supportedContextBody(decision, run, locale)
+      : decision.body;
 
   return {
     title: title.replaceAll("{partner}", run.build.starter),
@@ -85,6 +93,37 @@ export function decisionPresentation(decision: CareerDecision, run: CareerRun, l
       description: optionTradeoff(option, locale),
     })),
   };
+}
+
+function supportedContextBody(decision: CareerDecision, run: CareerRun, locale: Locale): string {
+  const npc = decision.npc_name?.split(" · ")[0] || (locale === "es" ? "el contacto" : "the contact");
+  const club = run.contract?.club_name || (locale === "es" ? "tu equipo" : "your team");
+  const partner = run.build.starter;
+
+  if (locale === "es") {
+    if (decision.family === "breeding") return `${npc} consiguió una plaza de trabajo en la guardería regional para ${club}. ${partner} puede participar de la semana, pero sólo hay tiempo y recursos para una de las tres alternativas que aparecen abajo.`;
+    if (decision.family === "contest") return `${npc} acercó una invitación para una actividad pública en la región. ${partner} puede participar, pero la jornada compite por tiempo y recursos con la preparación de ${club}.`;
+    if (decision.family === "economy") return `${npc} cerró las cuentas de ${club}. Tenés ${run.finances} puntos de recursos de club y ₽ ${run.money ?? 0} disponibles. Esta decisión define qué coste acepta el equipo esta semana.`;
+    if (decision.family === "contract") return `${npc} pide una posición antes del calendario. Tu contrato actual es ${run.contract ? `${run.contract.club_name}, ₽ ${run.contract.salary} por temporada, ${run.contract.seasons_remaining} temporada(s) restante(s)` : "sin contrato activo"}. Esta decisión cambia tu margen de carrera, no reemplaza el mercado de clubes.`;
+    if (decision.family === "media") return `${npc} espera una respuesta de ${club}. Tu reputación está en ${run.reputation}. Lo que elijas quedará asociado a esta temporada y los efectos concretos están detallados en cada opción.`;
+    if (decision.family === "crime") return `${npc} trae un contacto que la Liga no autorizó. No sabés más que eso. Podés cortar la conversación, dedicar recursos a seguir la pista o asumir el riesgo que figura en la opción.`;
+    if (decision.family === "friendship") return `${npc} vuelve a aparecer en una semana cargada. El vínculo registrado más alto de tu carrera es ${Math.max(0, ...Object.values(run.relationships ?? {}))}. Elegís cuánto tiempo y recursos le dedica ${club}; cualquier cambio de vínculo aparece explícitamente en la opción.`;
+    if (decision.family === "rivalry") return `${npc} pone el próximo cruce sobre la mesa. ${partner} quedó en el centro de la conversación. Elegís si ${club} conserva recursos, invierte en preparación general o toma la apuesta indicada; no hay ventaja oculta fuera de los efectos mostrados.`;
+    if (decision.family === "conservation") return `${npc} informa que un proyecto de ${club} entró en conflicto con una zona usada por Pokémon silvestres. La situación todavía no está resuelta. Esta semana sólo definís qué coste inmediato acepta el club; cualquier consecuencia posterior tendrá que aparecer como un hecho nuevo.`;
+    if (decision.family === "regional_culture") return `${npc} invita a ${club} a una actividad de la región con ${partner}. La comunidad ya hizo la invitación; lo que todavía está abierto es cuánto tiempo, recursos y exposición acepta el club.`;
+  }
+
+  if (decision.family === "breeding") return `${npc} secured a working place at the regional nursery for ${club}. ${partner} can take part in the week, but there is time and budget for only one of the three options below.`;
+  if (decision.family === "contest") return `${npc} brought an invitation to a public regional activity. ${partner} can participate, but the event competes with ${club}'s preparation for time and resources.`;
+  if (decision.family === "economy") return `${npc} closed ${club}'s books. The club has ${run.finances} resource points and ₽ ${run.money ?? 0} available. This choice decides which cost the team accepts this week.`;
+  if (decision.family === "contract") return `${npc} wants a position before the schedule. Your current contract is ${run.contract ? `${run.contract.club_name}, ₽ ${run.contract.salary} per season, ${run.contract.seasons_remaining} season(s) remaining` : "no active contract"}. This choice changes your career position; it does not replace the club market.`;
+  if (decision.family === "media") return `${npc} is waiting for an answer from ${club}. Your reputation is ${run.reputation}. The response will stay with this season, and each option shows the concrete effects it can produce.`;
+  if (decision.family === "crime") return `${npc} brings a contact the League did not authorize. That is all you know. End the conversation, spend resources following the lead, or take the listed risk.`;
+  if (decision.family === "friendship") return `${npc} returns during a crowded week. Your highest recorded career bond is ${Math.max(0, ...Object.values(run.relationships ?? {}))}. You decide how much time and resources ${club} gives the contact; any bond change is stated explicitly in the option.`;
+  if (decision.family === "rivalry") return `${npc} puts the next matchup on the table. ${partner} is at the center of the discussion. Decide whether ${club} preserves resources, invests in general preparation, or takes the listed gamble; there is no hidden competitive edge beyond the shown effects.`;
+  if (decision.family === "conservation") return `${npc} reports that a ${club} project conflicts with an area used by wild Pokémon. The situation is not resolved yet. This week you only choose which immediate cost the club accepts; later consequences must arrive as new facts.`;
+  if (decision.family === "regional_culture") return `${npc} invites ${club} and ${partner} to a regional activity. The invitation is real; what remains open is how much time, resources and exposure the club accepts.`;
+  return decision.body;
 }
 
 function optionTradeoff(option: DecisionOption, locale: Locale): string {
@@ -102,7 +141,7 @@ function optionTradeoff(option: DecisionOption, locale: Locale): string {
       effectSummary(option.gamble?.failure ?? {}, locale),
       rewardSummary(option.gamble?.failure_rewards ?? [], locale),
     ].filter(Boolean).join(" · ") || (locale === "es" ? "sin cambio adicional" : "no additional change");
-    const base = direct ? (locale === "es" ? `Base: ${direct}. ` : `Base: ${direct}. `) : "";
+    const base = direct ? `Base: ${direct}. ` : "";
     return locale === "es"
       ? `${base}${chance}% de éxito: ${success}. Si falla: ${failure}.`
       : `${base}${chance}% success: ${success}. On failure: ${failure}.`;
