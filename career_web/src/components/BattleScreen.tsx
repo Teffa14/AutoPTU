@@ -23,6 +23,7 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: {
   const [stepIndex, setStepIndex] = useState(0);
   const [speed, setSpeed] = useState(1);
   const [error, setError] = useState("");
+  const [retryAttempt, setRetryAttempt] = useState(0);
   const [finalizing, setFinalizing] = useState(false);
   const [finalizeError, setFinalizeError] = useState("");
   const finalizationRef = useRef<{ key: string; promise: Promise<CareerRun> } | null>(null);
@@ -37,7 +38,7 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: {
       setStepIndex(0);
     }).catch((reason: Error) => active && setError(reason.message));
     return () => { active = false; };
-  }, [runId, battleId]);
+  }, [runId, battleId, retryAttempt]);
 
   useEffect(() => {
     if (!transcript) return;
@@ -72,6 +73,13 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: {
     return () => window.clearTimeout(timer);
   }, [complete, speed, transcript, view?.event?.type, stepIndex]);
 
+  function retryBattleLoading() {
+    setTranscript(null);
+    setError("");
+    setStepIndex(0);
+    setRetryAttempt((current) => current + 1);
+  }
+
   async function continueCareer() {
     if (finalizing) return;
     if (finalizeError) {
@@ -90,8 +98,8 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: {
     navigate(`run/${runId}`);
   }
 
-  if (error) return <section className="battle-error"><h1>{locale === "es" ? "No se pudo abrir el combate" : "Battle unavailable"}</h1><p>{error}</p><button onClick={() => navigate(`run/${runId}`)}>{copy.back}</button></section>;
-  if (!transcript || !view) return <BattlePreparing run={run} locale={locale} />;
+  if (error) return <section className="battle-error"><h1>{locale === "es" ? "No se pudo abrir el combate" : "Battle unavailable"}</h1><p>{error}</p><button onClick={retryBattleLoading}>{locale === "es" ? "Reintentar carga" : "Retry loading"}</button><button onClick={() => navigate(`run/${runId}`)}>{copy.back}</button></section>;
+  if (!transcript || !view) return <BattlePreparing run={run} locale={locale} onRetry={retryBattleLoading} attempt={retryAttempt} />;
 
   const homeTeam = view.combatants.filter((entry) => entry.team === "career-home");
   const awayTeam = view.combatants.filter((entry) => entry.team === "career-away");
