@@ -6,14 +6,27 @@ if TYPE_CHECKING:
     from .models import CareerRun
 
 
+def _bond_value(value: object) -> int:
+    """Return a safe non-negative relationship bond from persisted input."""
+    try:
+        return max(0, int(value))
+    except (TypeError, ValueError, OverflowError):
+        return 0
+
+
 def calculate_relationship_effects(relationships: Dict[str, int]) -> Dict[str, Any]:
     """Translate social bonds into small, explicit career advantages.
 
     Relationships are intentionally capped: they should make a contact matter
     without replacing roster quality, preparation, or match performance.
+    Invalid persisted bond values are ignored instead of breaking a career load.
     """
     positive = sorted(
-        ((str(name), max(0, int(value))) for name, value in relationships.items() if int(value) > 0),
+        (
+            (str(name), bond)
+            for name, value in relationships.items()
+            if (bond := _bond_value(value)) > 0
+        ),
         key=lambda entry: (-entry[1], entry[0]),
     )
     best_name, best_value = positive[0] if positive else ("", 0)
