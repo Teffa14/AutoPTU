@@ -74,7 +74,7 @@ export function battleTrainerPresentation(
   const awayClub = String(transcript.spec.away_club || "Opponent");
   const pool = REGIONAL_RIVALS[region] ?? REGIONAL_RIVALS.kanto;
   const rival = pool[stableIndex(`${region}:${awayClub}`, pool.length)];
-  const meeting = previousMeetings(run, awayClub) + 1;
+  const meeting = previousMeetings(run, awayClub, transcript.spec.season) + 1;
   const userWon = transcript.winner_team === "career-home";
   const difficulty = transcript.spec.difficulty_label ?? "even";
 
@@ -100,10 +100,16 @@ export function battleTrainerPresentation(
   };
 }
 
-export function previousMeetings(run: CareerRun | null | undefined, awayClub: string): number {
+export function previousMeetings(
+  run: CareerRun | null | undefined,
+  awayClub: string,
+  beforeSeason?: number,
+): number {
   if (!run) return 0;
   return run.timeline.reduce((total, event) => {
     if (event.type !== "season.completed" || !Array.isArray(event.opponents)) return total;
+    const eventSeason = Number(event.season ?? 0);
+    if (beforeSeason !== undefined && eventSeason >= beforeSeason) return total;
     return total + event.opponents.filter((opponent) => String(opponent) === awayClub).length;
   }, 0);
 }
