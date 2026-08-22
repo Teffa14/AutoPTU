@@ -18,6 +18,14 @@ describe("battle trainer layout", () => {
     expect(trainerCss).toContain("display: none");
   });
 
+  it("compacts the trainer lane on short landscape viewports", () => {
+    expect(trainerCss).toContain("@media (max-height: 500px)");
+    expect(trainerCss).toContain("height: 2.8rem");
+    expect(trainerCss).toContain("inset: 3.35rem 0 0 !important");
+    expect(trainerCss).toContain("width: 2.1rem");
+    expect(trainerCss).toContain("height: 2.1rem");
+  });
+
   it("keeps trainer sprites bounded instead of allowing intrinsic image size", () => {
     expect(trainerCss).toContain("width: 3.45rem");
     expect(trainerCss).toContain("height: 3.45rem");

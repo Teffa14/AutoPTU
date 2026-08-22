@@ -179,3 +179,56 @@
     justify-content: center;
   }
 }
+
+/* Wide-but-short browser windows (landscape phones, split-screen tablets and
+   compact laptop windows) need vertical priority for the arena. Keep trainer
+   identity visible, but collapse secondary broadcast copy and reclaim field space. */
+@media (max-height: 500px) {
+  .battle-trainer-strip {
+    inset: .25rem .3rem auto;
+    height: 2.8rem;
+    gap: .3rem;
+  }
+
+  .battle-trainer-strip + div {
+    inset: 3.35rem 0 0 !important;
+  }
+
+  .battle-trainer-side {
+    gap: .28rem;
+    padding: .15rem .28rem;
+  }
+
+  .battle-trainer-sprite-frame {
+    width: 2.1rem;
+    height: 2.1rem;
+    flex-basis: 2.1rem;
+  }
+
+  .battle-trainer-copy q,
+  .battle-trainer-copy small,
+  .battle-trainer-center span {
+    display: none;
+  }
+
+  .battle-trainer-copy strong {
+    font-size: .68rem;
+  }
+
+  .battle-trainer-center {
+    min-width: 2.15rem;
+    padding-inline: 0;
+  }
+
+  .battle-trainer-center small {
+    max-width: 4rem;
+    overflow: hidden;
+    font-size: .36rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .battle-trainer-center strong {
+    font-size: .84rem;
+  }
+}
