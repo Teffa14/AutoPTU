@@ -1,7 +1,8 @@
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Application, Container, Graphics, Text, TextStyle } from "pixi.js";
 
 import type { BattleViewState } from "../battlePresentation";
+import { detectBattleVisualQuality, persistBattleVisualQuality, prefersReducedMotion, type BattleVisualQuality } from "../battleQuality";
 import type { BattleCombatant, BattleMove, BattleTranscript, Locale } from "../types";
 import { PokemonSprite } from "./PokemonSprite";
 
@@ -23,6 +24,22 @@ const TYPE_COLORS: Record<string, number> = {
   steel: 0xb8cad0, water: 0x4ba5ff, typeless: 0xf1e5c5,
 };
 
+const QUALITY_TOGGLE_STYLE: CSSProperties = {
+  position: "absolute",
+  top: 10,
+  right: 12,
+  zIndex: 8,
+  border: "1px solid rgba(245, 226, 168, 0.62)",
+  borderRadius: 999,
+  padding: "6px 10px",
+  background: "rgba(5, 14, 12, 0.84)",
+  color: "#f5e2a8",
+  font: "700 11px/1 Arial, sans-serif",
+  letterSpacing: "0.08em",
+  cursor: "pointer",
+  backdropFilter: "blur(4px)",
+};
+
 export function BattleArena({ transcript, eventIndex, view, locale }: { transcript: BattleTranscript; eventIndex: number; view: BattleViewState; locale: Locale }) {
   const host = useRef<HTMLDivElement>(null);
   const appRef = useRef<Application | null>(null);
@@ -32,6 +49,16 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
   const effects = useRef<ArenaEffect[]>([]);
   const timers = useRef<number[]>([]);
   const screen = useRef({ width: 900, height: 520 });
+  const [quality, setQuality] = useState<BattleVisualQuality>(() => detectBattleVisualQuality());
+  const reducedMotion = prefersReducedMotion();
+  const effectiveQuality: BattleVisualQuality = reducedMotion ? "light" : quality;
+
+  function toggleQuality() {
+    if (reducedMotion) return;
+    const next: BattleVisualQuality = quality === "full" ? "light" : "full";
+    setQuality(next);
+    persistBattleVisualQuality(next);
+  }
 
   useEffect(() => {
     if (!host.current) return;
@@ -41,7 +68,8 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
 
     async function start() {
       app = new Application();
-      await app.init({ resizeTo: mount, antialias: true, backgroundAlpha: 0, resolution: Math.min(2, window.devicePixelRatio || 1) });
+      const full = effectiveQuality === "full";
+      await app.init({ resizeTo: mount, antialias: full, backgroundAlpha: 0, resolution: full ? Math.min(2, window.devicePixelRatio || 1) : 1 });
       if (cancelled || !app) return;
       appRef.current = app;
       mount.appendChild(app.canvas);
@@ -115,7 +143,7 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
       if (app) app.destroy(true, { children: true, texture: false, textureSource: false });
       mount.replaceChildren();
     };
-  }, [transcript]);
+  }, [effectiveQuality, transcript]);
 
   useEffect(() => {
     const app = appRef.current;
@@ -125,7 +153,7 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
       visual.container.visible = combatant.active !== false;
       if (combatant.position) targets.current.set(combatant.id, stagePosition(combatant.position, screen.current.width, screen.current.height, transcript.initial_state.grid, combatant.footprint_side));
     }
-    if (!app || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!app || effectiveQuality === "light" || reducedMotion) return;
     const event = view.event;
     if (!event) {
       for (const combatant of view.combatants) {
@@ -191,26 +219,38 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
     } else if (event.type === "combat_stage" && target) {
       spawnStatus(app, target.container.x, target.container.y - 30, `${Number(event.amount ?? 0) > 0 ? "+" : ""}${Number(event.amount ?? 0)} ${String(event.stat ?? "STAT").toUpperCase()}`, effects.current, 0x72d9a0);
     }
-  }, [eventIndex, transcript, view]);
+  }, [effectiveQuality, eventIndex, locale, reducedMotion, transcript, view]);
 
   const parity = eventIndex % 2 === 0 ? "event-even" : "event-odd";
+  const qualityLabel = effectiveQuality === "light"
+    ? (locale === "es" ? "FX LIGEROS" : "LIGHT FX")
+    : (locale === "es" ? "FX COMPLETOS" : "FULL FX");
+  const qualityTitle = reducedMotion
+    ? (locale === "es" ? "Los efectos ligeros están fijados por la preferencia de movimiento reducido del dispositivo." : "Light effects are locked by the device reduced-motion preference.")
+    : (locale === "es" ? "Cambia sólo el costo visual del replay. Las reglas y el resultado no cambian." : "Changes replay rendering cost only. Rules and results do not change.");
+
   return (
-    <div className="arena-canvas-shell" role="img" aria-label={`${transcript.spec.home_club} versus ${transcript.spec.away_club}`}>
-      <div ref={host} className="pixi-arena" aria-hidden="true" />
-      <div className="field-pokemon-layer" aria-hidden="true">
-        {view.combatants.filter((combatant) => combatant.active !== false).map((combatant) => {
-          const isActor = (view.event?.type === "move" || view.event?.type === "forced_movement" || view.event?.type === "maneuver") && combatant.id === view.actorId;
-          const isTarget = (view.event?.type === "move" || view.event?.type === "forced_movement" || view.event?.type === "maneuver") && combatant.id === view.targetId && view.hit !== false;
-          return (
-            <div
-              key={combatant.id}
-              className={`field-pokemon ${combatant.team === "career-home" ? "home" : "away"} ${isActor ? `attacking ${parity}` : ""} ${isTarget ? `taking-hit ${parity}` : ""} ${combatant.hp <= 0 ? "fainted" : ""}`}
-              style={actorFieldStyle(combatant, transcript)}
-            >
-              <div className="field-model-facing"><PokemonSprite name={combatant.species} className="field-model" /></div>
-            </div>
-          );
-        })}
+    <div style={{ position: "relative" }}>
+      <button type="button" style={{ ...QUALITY_TOGGLE_STYLE, cursor: reducedMotion ? "default" : "pointer", opacity: reducedMotion ? 0.72 : 1 }} onClick={toggleQuality} disabled={reducedMotion} title={qualityTitle} aria-label={qualityTitle}>
+        {qualityLabel}
+      </button>
+      <div className="arena-canvas-shell" data-visual-quality={effectiveQuality} role="img" aria-label={`${transcript.spec.home_club} versus ${transcript.spec.away_club}`}>
+        <div ref={host} className="pixi-arena" aria-hidden="true" />
+        <div className="field-pokemon-layer" aria-hidden="true">
+          {view.combatants.filter((combatant) => combatant.active !== false).map((combatant) => {
+            const isActor = (view.event?.type === "move" || view.event?.type === "forced_movement" || view.event?.type === "maneuver") && combatant.id === view.actorId;
+            const isTarget = (view.event?.type === "move" || view.event?.type === "forced_movement" || view.event?.type === "maneuver") && combatant.id === view.targetId && view.hit !== false;
+            return (
+              <div
+                key={combatant.id}
+                className={`field-pokemon ${combatant.team === "career-home" ? "home" : "away"} ${isActor ? `attacking ${parity}` : ""} ${isTarget ? `taking-hit ${parity}` : ""} ${combatant.hp <= 0 ? "fainted" : ""}`}
+                style={actorFieldStyle(combatant, transcript)}
+              >
+                <div className="field-model-facing"><PokemonSprite name={combatant.species} className="field-model" /></div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
