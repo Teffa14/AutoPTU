@@ -12,6 +12,14 @@ describe("chooseBattleVisualQuality", () => {
     expect(chooseBattleVisualQuality({ storedPreference: "full", hardwareConcurrency: 2, deviceMemory: 2 })).toBe("full");
   });
 
+  it("automatically selects light mode when the browser asks to save data", () => {
+    expect(chooseBattleVisualQuality({ saveData: true, hardwareConcurrency: 8, deviceMemory: 8 })).toBe("light");
+  });
+
+  it("keeps an explicit full preference even when save-data is enabled", () => {
+    expect(chooseBattleVisualQuality({ storedPreference: "full", saveData: true, hardwareConcurrency: 8, deviceMemory: 8 })).toBe("full");
+  });
+
   it("automatically selects light mode on low-core hardware", () => {
     expect(chooseBattleVisualQuality({ hardwareConcurrency: 4, deviceMemory: 8 })).toBe("light");
   });
