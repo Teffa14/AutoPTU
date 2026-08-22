@@ -1,4 +1,5 @@
 name: Build Vercel source bundle
+# Final production artifact trigger.
 
 on:
   workflow_dispatch:
