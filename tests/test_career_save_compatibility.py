@@ -44,3 +44,31 @@ def test_save_loader_ignores_unknown_nested_fields() -> None:
     assert restored.versions.career == run.versions.career
     assert restored.pokemon[0].species == run.pokemon[0].species
     assert restored.pokemon[0].is_partner is True
+
+
+def test_save_loader_recovers_missing_money_from_corrupt_legacy_earnings() -> None:
+    run = CareerEngine().new_run(
+        player_id="save-money-recovery",
+        name="Luz",
+        region="paldea",
+        starter="Sprigatito",
+        classes=["Ace Trainer"],
+        seed=1221,
+    )
+
+    for corrupt_value in (None, "not-a-number", float("nan"), float("inf"), -500):
+        payload = run.to_dict()
+        payload.pop("money", None)
+        payload["career_earnings"] = corrupt_value
+
+        restored = CareerRun.from_dict(payload)
+
+        assert restored.money == 0
+
+    payload = run.to_dict()
+    payload.pop("money", None)
+    payload["career_earnings"] = "350"
+
+    restored = CareerRun.from_dict(payload)
+
+    assert restored.money == 350
