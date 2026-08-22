@@ -1,0 +1,38 @@
+import { describe, expect, it } from "vitest";
+
+import { decisionOutcomeView, isGambleHistoryEntry } from "./decisionOutcome";
+
+describe("decision outcome presentation", () => {
+  it("reports only effects and rewards that were actually applied", () => {
+    const view = decisionOutcomeView({
+      option_id: "capture:2:0:1",
+      label: "Cambiar la zona de búsqueda",
+      effects: {
+        scouting: 2,
+        finances: -1,
+        rewards: [{ type: "pokemon", species: "Growlithe", rarity: "rare" }],
+      },
+    }, "es");
+
+    expect(view.choice).toBe("Cambiar la zona de búsqueda");
+    expect(view.changes).toContain("Scouting +2");
+    expect(view.changes).toContain("Recursos -1");
+    expect(view.changes).toContain("Se sumó Growlithe");
+    expect(view.changes.join(" ")).not.toContain("hábitat");
+  });
+
+  it("distinguishes a failed gamble without inventing a reward", () => {
+    const entry = {
+      option_id: "training:3:1:2",
+      label: "Doblar las sesiones",
+      effects: { development: 3, health: -8, reputation: -3, gamble_success: false },
+    };
+    const view = decisionOutcomeView(entry, "es");
+
+    expect(isGambleHistoryEntry(entry)).toBe(true);
+    expect(view.gamble).toBe(true);
+    expect(view.headline).toContain("no rindió");
+    expect(view.changes).toContain("Desarrollo +3");
+    expect(view.changes).toContain("Salud -8");
+  });
+});
