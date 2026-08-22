@@ -1,5 +1,5 @@
 name: Build Vercel source bundle
-# Final production artifact trigger.
+# Release artifact trigger only; do not merge this branch.
 
 on:
   workflow_dispatch:
