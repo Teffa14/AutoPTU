@@ -17,15 +17,15 @@ export function DecisionOutcomePanel({ entry, locale, onContinue }: {
         <p style={CHOICE_STYLE}><span>{locale === "es" ? "Elegiste" : "You chose"}</span><strong>{view.choice}</strong></p>
         <p style={BODY_STYLE}>{view.body}</p>
         {view.changes.length ? (
-          <div style={CHANGES_STYLE} aria-label={locale === "es" ? "Cambios aplicados" : "Applied changes"}>
-            <small style={CHANGE_LABEL_STYLE}>{locale === "es" ? "AHORA ES VERDAD EN TU CARRERA" : "NOW TRUE IN YOUR CAREER"}</small>
+          <div style={CHANGES_STYLE} aria-label={locale === "es" ? "Cambios registrados" : "Recorded changes"}>
+            <small style={CHANGE_LABEL_STYLE}>{locale === "es" ? "QUEDÓ REGISTRADO" : "ON THE RECORD"}</small>
             <div style={CHIP_ROW_STYLE}>{view.changes.map((change) => <b key={change} style={CHIP_STYLE}>{change}</b>)}</div>
           </div>
         ) : null}
         <button type="button" className="primary-action" onClick={onContinue} style={BUTTON_STYLE}>
           {locale === "es" ? "Seguir con la temporada" : "Continue the season"}
         </button>
-        <small style={FOOTNOTE_STYLE}>{locale === "es" ? "La elección queda guardada en el registro de esta temporada." : "The choice remains in this season's record."}</small>
+        <small style={FOOTNOTE_STYLE}>{locale === "es" ? "La elección queda en el registro de esta temporada." : "The choice remains in this season's record."}</small>
       </div>
     </section>
   );
