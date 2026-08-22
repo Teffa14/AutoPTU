@@ -1,0 +1,81 @@
+name: Build Vercel source bundle
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/build-vercel-bundle.yml
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ignore parser
+        run: python -m pip install pathspec
+
+      - name: Build Vercel source tree
+        shell: bash
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+          import shutil
+          import subprocess
+          from pathlib import Path
+
+          import pathspec
+
+          root = Path.cwd()
+          out = root / "vercel-source"
+          out.mkdir(parents=True, exist_ok=True)
+
+          patterns = (root / ".vercelignore").read_text(encoding="utf-8").splitlines()
+          spec = pathspec.PathSpec.from_lines("gitwildmatch", patterns)
+          tracked = subprocess.check_output(["git", "ls-files", "-z"]).decode("utf-8").split("\0")
+
+          copied = 0
+          total_bytes = 0
+          for rel in tracked:
+              if not rel or spec.match_file(rel):
+                  continue
+              src = root / rel
+              if not src.is_file():
+                  continue
+              dst = out / rel
+              dst.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copy2(src, dst)
+              copied += 1
+              total_bytes += src.stat().st_size
+
+          sha = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+          manifest = {
+              "source_commit": sha,
+              "file_count": copied,
+              "total_bytes": total_bytes,
+          }
+          (out / ".deploy-source.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+          print(json.dumps(manifest))
+          PY
+
+      - name: Upload Vercel source bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: vercel-source
+          path: vercel-source
+          if-no-files-found: error
+          compression-level: 6
+          retention-days: 1
