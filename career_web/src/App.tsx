@@ -5,7 +5,6 @@ import { DailyScreen } from "./components/DailyScreen";
 import { GameShell } from "./components/GameShell";
 import { HomeScreen } from "./components/HomeScreen";
 import { ProfileScreen } from "./components/ProfileScreen";
-import { SeasonHub } from "./components/SeasonHub";
 import { ShareScreen } from "./components/ShareScreen";
 import { TimelineScreen } from "./components/TimelineScreen";
 import { loadLocalRun, saveLocalRun } from "./localCareer";
@@ -13,6 +12,7 @@ import { trainerSpriteForRun } from "./trainerSprites";
 import type { CareerRun, Locale } from "./types";
 
 const BattleScreen = lazy(() => import("./components/BattleScreen"));
+const SeasonHub = lazy(() => import("./components/SeasonHub").then((module) => ({ default: module.SeasonHub })));
 
 function currentPath(): string {
   return window.location.pathname.replace(/^\/career-game\/?/, "");
@@ -108,7 +108,11 @@ export function App() {
   } else if (path === "daily" || path.startsWith("leaderboard")) {
     screen = <DailyScreen locale={locale} onRun={setRun} leaderboardOnly={path.startsWith("leaderboard")} />;
   } else if (path.startsWith("run/") && routeRun) {
-    screen = <SeasonHub run={routeRun} locale={locale} onRun={setRun} />;
+    screen = (
+      <Suspense fallback={<div className="scene-loading">{locale === "es" ? "Cargando temporada…" : "Loading season…"}</div>}>
+        <SeasonHub run={routeRun} locale={locale} onRun={setRun} />
+      </Suspense>
+    );
   } else if (path === "new" || path === "create") {
     screen = <CreateScreen locale={locale} onCreated={(value) => { setRun(value); saveLocalRun(value); navigate(`run/${value.id}`); }} />;
   } else {
