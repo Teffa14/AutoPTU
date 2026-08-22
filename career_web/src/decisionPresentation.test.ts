@@ -74,7 +74,7 @@ describe("decision information labels", () => {
         "Erika · owner · Kanto": 7,
       },
       build: { starter: "Rattata" },
-    } as CareerRun;
+    } as unknown as CareerRun;
 
     const view = decisionPresentation(decision, run, "es");
     expect(view.body).toContain("vínculo registrado más alto de tu carrera es 7");
