@@ -8,7 +8,7 @@ const SLOW_BATTLE_WARNING_MS = 12000;
 export function BattlePreparing({ run, locale, onRetry, attempt = 0 }: {
   run?: CareerRun | null;
   locale: Locale;
-  onRetry: () => void;
+  onRetry?: () => void;
   attempt?: number;
 }) {
   const [slow, setSlow] = useState(false);
@@ -31,7 +31,7 @@ export function BattlePreparing({ run, locale, onRetry, attempt = 0 }: {
         <div className="tunnel-light" aria-hidden="true" />
       </div>
       <div className="preparing-copy"><i /><div><h1>{locale === "es" ? "El equipo ya entra al campo" : "The team is entering the field"}</h1><p>{locale === "es" ? "El motor táctico está cerrando alineaciones y la estrategia rival." : "The tactical engine is locking lineups and opponent strategy."}</p></div></div>
-      {slow ? (
+      {slow && onRetry ? (
         <div className="battle-loading-recovery" role="alert">
           <p>{locale === "es" ? "El combate está tardando más de lo normal. Podés reintentar la carga sin registrar una derrota ni recargar toda la carrera." : "The battle is taking longer than expected. You can retry loading without recording a loss or reloading the whole career."}</p>
           <button type="button" onClick={onRetry}>{locale === "es" ? "Reintentar carga" : "Retry loading"}</button>
