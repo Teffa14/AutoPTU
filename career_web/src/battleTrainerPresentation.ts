@@ -114,6 +114,8 @@ export function formalRivalMemory(
   beforeSeason?: number,
 ): RivalMemory {
   if (!run) return { previousMeetings: 0, firstSeason: null, lastSeason: null, seasonsSinceLastMeeting: null };
+  const normalizedAwayClub = normalizeClubIdentity(awayClub);
+  if (!normalizedAwayClub) return { previousMeetings: 0, firstSeason: null, lastSeason: null, seasonsSinceLastMeeting: null };
   let previousMeetings = 0;
   let firstSeason: number | null = null;
   let lastSeason: number | null = null;
@@ -124,7 +126,7 @@ export function formalRivalMemory(
     const eventSeason = Number(event.season ?? 0);
     if (!Number.isFinite(eventSeason) || eventSeason <= 0) continue;
     if (beforeSeason !== undefined && eventSeason >= beforeSeason) continue;
-    const meetings = event.opponents.filter((opponent) => String(opponent) === awayClub).length;
+    const meetings = event.opponents.filter((opponent) => normalizeClubIdentity(opponent) === normalizedAwayClub).length;
     if (!meetings) continue;
     previousMeetings += meetings;
     firstSeason = firstSeason === null ? eventSeason : Math.min(firstSeason, eventSeason);
@@ -142,6 +144,11 @@ export function previousMeetings(
   beforeSeason?: number,
 ): number {
   return formalRivalMemory(run, awayClub, beforeSeason).previousMeetings;
+}
+
+function normalizeClubIdentity(value: unknown): string {
+  if (typeof value !== "string") return "";
+  return value.trim().replace(/\s+/g, " ").toLocaleLowerCase("en-US");
 }
 
 function stableIndex(value: string, modulo: number): number {
