@@ -165,6 +165,7 @@ class CareerService:
             return cached
         run = self._validate_owned_run(player_id, run) if run is not None else self._owned_run(player_id, run_id)
         self._check_revision(run, payload)
+        pre_battle_snapshot = run.to_dict()
         run, specs = self.engine.prepare_season(run, option_id=str(payload.get("option_id") or ""))
         battle_ids = [entry.id for entry in specs]
         featured = None
@@ -177,6 +178,19 @@ class CareerService:
                 LOGGER.info("career featured battle ready run=%s season=%s seconds=%.3f", run.id, run.season_number, time.perf_counter() - started_at)
             except Exception:
                 LOGGER.exception("career featured battle generation failed run=%s", run.id)
+                restored = CareerRun.from_dict(pre_battle_snapshot)
+                self.store.save_run(restored)
+                response = {
+                    "run": restored.to_dict(),
+                    "battle_ids": [],
+                    "season_resolved": False,
+                    "battle_generation_error": {
+                        "code": "featured_battle_generation_failed",
+                        "retryable": True,
+                    },
+                }
+                self.store.record_idempotency(run_id, idempotency_key, response)
+                return response
             self.store.save_run(run)
         else:
             self.store.save_run(run)
@@ -219,10 +233,6 @@ class CareerService:
         expiring_contract = asdict(run.contract) if run.contract and run.contract.seasons_remaining <= 1 else None
         run, _ = self.engine.resolve_prepared_season(run, transcripts)
 
-        # CareerEngine historically auto-created a replacement club when a
-        # one-season contract expired. Preserve the incumbent as an expired
-        # contract instead so the next preseason can offer a real extension or
-        # a move. Existing multi-season contracts continue without a market.
         if run.status == "active" and expiring_contract is not None:
             run.contract = ClubContract(
                 club_id=str(expiring_contract["club_id"]),
