@@ -180,7 +180,7 @@ class CareerService:
                 LOGGER.exception("career featured battle generation failed run=%s", run.id)
                 restored = CareerRun.from_dict(pre_battle_snapshot)
                 self.store.save_run(restored)
-                response = {
+                return {
                     "run": restored.to_dict(),
                     "battle_ids": [],
                     "season_resolved": False,
@@ -189,8 +189,6 @@ class CareerService:
                         "retryable": True,
                     },
                 }
-                self.store.record_idempotency(run_id, idempotency_key, response)
-                return response
             self.store.save_run(run)
         else:
             self.store.save_run(run)
