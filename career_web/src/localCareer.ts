@@ -10,13 +10,20 @@ function battleCheckpointKey(runId: string): string {
   return `${BATTLE_CHECKPOINT_PREFIX}${runId}`;
 }
 
+function isExhaustedDecisionPhase(run: CareerRun): boolean {
+  if (run.status !== "active" || run.season?.status !== "decision") return false;
+  const required = run.season.decisions_required ?? 0;
+  const completed = run.season.decisions_completed ?? 0;
+  return required > 0 && completed >= required;
+}
+
 function shouldCreateBattleCheckpoint(previous: CareerRun | null, next: CareerRun): previous is CareerRun {
   if (!previous || previous.id !== next.id || previous.ranked || next.ranked) return false;
   if (previous.status !== "active" || next.status !== "active") return false;
   if (!previous.season || !next.season) return false;
-  return previous.season_number === next.season_number
-    && previous.season.status === "decision"
-    && next.season.status === "battle";
+  if (previous.season_number !== next.season_number || previous.season.status !== "decision") return false;
+  if (isExhaustedDecisionPhase(previous)) return false;
+  return next.season.status === "battle" || isExhaustedDecisionPhase(next);
 }
 
 export function saveLocalRun(run: CareerRun): void {
