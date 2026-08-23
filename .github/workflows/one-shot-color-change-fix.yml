@@ -1,22 +1,24 @@
 name: One-shot Color Change scope fix
 
 on:
-  push:
+  pull_request:
     branches:
-      - fix/color-change-unbound-payload
+      - main
     paths:
       - .github/workflows/one-shot-color-change-fix.yml
+      - tests/test_color_change_payload_scope.py
 
 permissions:
   contents: write
 
 jobs:
   patch-and-verify:
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: fix/color-change-unbound-payload
+          ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -50,4 +52,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add auto_ptu/rules/battle_state.py .github/workflows/one-shot-color-change-fix.yml
           git commit -m "fix: keep Color Change payload inside type-change guard"
-          git push origin HEAD:fix/color-change-unbound-payload
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
