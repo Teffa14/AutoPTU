@@ -56,6 +56,23 @@ describe("battle trainer presentation", () => {
     expect(battleTrainerPresentation("es", transcript, run, false).meetingLabel).toBe("CRUCE #3");
   });
 
+  it("preserves formal rival memory across harmless persisted club-name formatting drift", () => {
+    const migratedRun = {
+      ...run,
+      timeline: [
+        { type: "season.completed", season: 1, opponents: [" cerulean   current ", "CERULEAN CURRENT"] },
+        { type: "season.completed", season: 2, opponents: [null, 123, { name: "Cerulean Current" }] },
+      ],
+    } as unknown as CareerRun;
+    expect(formalRivalMemory(migratedRun, "Cerulean Current", 3)).toEqual({
+      previousMeetings: 2,
+      firstSeason: 1,
+      lastSeason: 1,
+      seasonsSinceLastMeeting: 2,
+    });
+    expect(formalRivalMemory(migratedRun, "   ", 3).previousMeetings).toBe(0);
+  });
+
   it("uses the selected player trainer sprite and changes dialogue after the result", () => {
     const opening = battleTrainerPresentation("es", transcript, run, false);
     const result = battleTrainerPresentation("es", transcript, run, true);
