@@ -23,7 +23,8 @@ export function PendingBattleRecovery({ run, locale, onRun }: { run: CareerRun; 
   function rollbackBattle() {
     const restored = restoreBattleCheckpoint(run.id);
     if (!restored) return;
-    window.location.reload();
+    onRun(restored);
+    navigate(`run/${run.id}`);
   }
 
   return (
