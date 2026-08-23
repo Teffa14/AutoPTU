@@ -16,14 +16,22 @@ function isExhaustedDecisionPhase(run: CareerRun): boolean {
   return required > 0 && completed >= required;
 }
 
+function normalizedBattleIds(run: CareerRun): string[] {
+  return (run.season?.battle_ids ?? [])
+    .filter((value): value is string => typeof value === "string")
+    .map((value) => value.trim())
+    .filter(Boolean);
+}
+
 export function repairExhaustedDecisionPhase(run: CareerRun): CareerRun | null {
   if (!isExhaustedDecisionPhase(run) || !run.season) return null;
-  const battleIds = (run.season.battle_ids ?? []).filter((value) => typeof value === "string" && value.length > 0);
+  const battleIds = normalizedBattleIds(run);
   if (!battleIds.length) return null;
   return {
     ...run,
     season: {
       ...run.season,
+      battle_ids: battleIds,
       status: "battle",
     },
   };
@@ -35,7 +43,7 @@ export function pendingBattleRecovery(run: CareerRun): PendingBattleRecovery | n
   const phaseRepairNeeded = isExhaustedDecisionPhase(run);
   if (season.status !== "battle" && !phaseRepairNeeded) return null;
 
-  const battleIds = (season.battle_ids ?? []).filter((value) => typeof value === "string" && value.length > 0);
+  const battleIds = normalizedBattleIds(run);
   return {
     battleId: battleIds.at(-1) ?? null,
     seasonNumber: season.number ?? run.season_number,
