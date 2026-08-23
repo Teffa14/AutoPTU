@@ -153,8 +153,13 @@ pydot>=3.0
 """
           (out / "requirements.txt").write_text(requirements, encoding="utf-8")
 
-          bootstrap = f'''"""Slim Vercel bootstrap generated from AutoPTU {sha}."""\nfrom __future__ import annotations\n\nimport os\nimport shutil\nimport sys\nimport zipfile\nfrom pathlib import Path\n\nSOURCE_COMMIT = "{sha}"\nBUNDLE = Path(__file__).resolve().parent / "runtime_bundle.zip"\nRUNTIME = Path("/tmp/autoptu-runtime")\nMARKER = RUNTIME / ".source-commit"\n\nif not MARKER.exists() or MARKER.read_text(encoding="utf-8", errors="ignore").strip() != SOURCE_COMMIT:\n    shutil.rmtree(RUNTIME, ignore_errors=True)\n    RUNTIME.mkdir(parents=True, exist_ok=True)\n    with zipfile.ZipFile(BUNDLE) as archive:\n        archive.extractall(RUNTIME)\n    MARKER.write_text(SOURCE_COMMIT, encoding="utf-8")\n\nos.environ.setdefault("AUTO_PTU_RUNTIME_ROOT", str(RUNTIME))\nsys.path.insert(0, str(RUNTIME))\n\nfrom auto_ptu.api.server import app\n\n__all__ = ["app"]\n'''
+          bootstrap = f'''"""Slim Vercel bootstrap generated from AutoPTU {sha}."""\nfrom __future__ import annotations\n\nimport os\nimport shutil\nimport sys\nimport zipfile\nfrom pathlib import Path\n\nSOURCE_COMMIT = "{sha}"\nBUNDLE = Path(__file__).resolve().parent / "runtime_bundle.zip"\nRUNTIME = Path("/tmp/autoptu-runtime")\nMARKER = RUNTIME / ".source-commit"\n\nif not MARKER.exists() or MARKER.read_text(encoding="utf-8", errors="ignore").strip() != SOURCE_COMMIT:\n    shutil.rmtree(RUNTIME, ignore_errors=True)\n    RUNTIME.mkdir(parents=True, exist_ok=True)\n    with zipfile.ZipFile(BUNDLE) as archive:\n        archive.extractall(RUNTIME)\n    MARKER.write_text(SOURCE_COMMIT, encoding="utf-8")\n\nos.environ.setdefault("AUTO_PTU_RUNTIME_ROOT", str(RUNTIME))\nos.environ.setdefault("AUTOPTU_SOURCE_COMMIT", SOURCE_COMMIT)\nsys.path.insert(0, str(RUNTIME))\n\nfrom auto_ptu.api.server import app\n\n@app.get("/api/v1/build", include_in_schema=False)\ndef deployed_build() -> dict[str, str]:\n    return {{"source_commit": SOURCE_COMMIT}}\n\n__all__ = ["app"]\n'''
           (out / "app.py").write_text(bootstrap, encoding="utf-8")
+          bootstrap_text = (out / "app.py").read_text(encoding="utf-8")
+          if f'SOURCE_COMMIT = "{sha}"' not in bootstrap_text:
+              raise RuntimeError("Career deploy bootstrap lost its source commit")
+          if '@app.get("/api/v1/build", include_in_schema=False)' not in bootstrap_text:
+              raise RuntimeError("Career deploy bootstrap omitted the build provenance endpoint")
 
           config = {
               "$schema": "https://openapi.vercel.sh/vercel.json",
