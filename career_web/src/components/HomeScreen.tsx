@@ -1,8 +1,9 @@
 import { navigate } from "../App";
+import { loadLastLocalRunId } from "../localCareer";
 import type { Locale } from "../types";
 
 export function HomeScreen({ locale }: { locale: Locale }) {
-  const lastRunId = localStorage.getItem("career-last-run");
+  const lastRunId = loadLastLocalRunId();
   return (
     <section className="career-home">
       <div className="career-home-copy">
