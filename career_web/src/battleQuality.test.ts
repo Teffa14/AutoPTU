@@ -20,6 +20,14 @@ describe("chooseBattleVisualQuality", () => {
     expect(chooseBattleVisualQuality({ storedPreference: "full", saveData: true, hardwareConcurrency: 8, deviceMemory: 8 })).toBe("full");
   });
 
+  it("automatically selects light mode on compact touch devices", () => {
+    expect(chooseBattleVisualQuality({ compactTouch: true, hardwareConcurrency: 8, deviceMemory: 8 })).toBe("light");
+  });
+
+  it("keeps an explicit full preference on compact touch devices", () => {
+    expect(chooseBattleVisualQuality({ storedPreference: "full", compactTouch: true, hardwareConcurrency: 8, deviceMemory: 8 })).toBe("full");
+  });
+
   it("automatically selects light mode on low-core hardware", () => {
     expect(chooseBattleVisualQuality({ hardwareConcurrency: 4, deviceMemory: 8 })).toBe("light");
   });
