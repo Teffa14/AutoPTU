@@ -78,11 +78,31 @@ jobs:
           if ptu_yaml.exists():
               runtime_files.append(ptu_yaml)
 
+          gen9_pbs = (
+              root
+              / "IMPLEMENTATION FILES"
+              / "Generation 9 Pack v3.3.4"
+              / "PBS"
+              / "pokemon_base_Gen_9_Pack.txt"
+          )
+          if not gen9_pbs.exists():
+              raise FileNotFoundError(f"Required Career Generation 9 PBS is missing: {gen9_pbs}")
+          runtime_files.append(gen9_pbs)
+
           bundle_path = out / "runtime_bundle.zip"
           with zipfile.ZipFile(bundle_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
               for path in sorted(set(runtime_files)):
                   archive.write(path, path.relative_to(root).as_posix())
               archive.writestr(".runtime-source.json", json.dumps({"source_commit": sha}) + "\n")
+
+          gen9_archive_path = gen9_pbs.relative_to(root).as_posix()
+          with zipfile.ZipFile(bundle_path) as archive:
+              names = set(archive.namelist())
+              if gen9_archive_path not in names:
+                  raise RuntimeError(f"Career runtime omitted required PBS: {gen9_archive_path}")
+              gen9_text = archive.read(gen9_archive_path).decode("utf-8-sig", errors="replace")
+              if "Name = Annihilape" not in gen9_text:
+                  raise RuntimeError("Career runtime Generation 9 PBS failed Annihilape smoke check")
 
           requirements = """typer>=0.12
 rich>=13.7
