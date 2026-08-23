@@ -49,10 +49,12 @@ describe("pendingBattleRecovery", () => {
   });
 
   it("detects the impossible 2-of-1 style state before SeasonScreen can render it", () => {
-    const run = runWithSeason("decision", 1, 1, ["run-1-s1-m6"]);
+    const run = runWithSeason("decision", 2, 1, ["run-1-s1-m6"]);
     const recovery = pendingBattleRecovery(run);
     expect(recovery?.phaseRepairNeeded).toBe(true);
     expect(recovery?.battleId).toBe("run-1-s1-m6");
+    expect(recovery?.decisionsCompleted).toBe(1);
+    expect(recovery?.decisionsRequired).toBe(1);
   });
 
   it("repairs an exhausted decision phase only when a prepared battle exists", () => {
@@ -62,6 +64,14 @@ describe("pendingBattleRecovery", () => {
     expect(repaired?.season?.decisions_completed).toBe(1);
     expect(run.season?.status).toBe("decision");
     expect(repairExhaustedDecisionPhase(runWithSeason("decision", 1, 1, []))).toBeNull();
+  });
+
+  it("clamps corrupt completed-count overflow while repairing the exhausted phase", () => {
+    const run = runWithSeason("decision", 2, 1, ["run-1-s1-m6"]);
+    const repaired = repairExhaustedDecisionPhase(run);
+    expect(repaired?.season?.status).toBe("battle");
+    expect(repaired?.season?.decisions_completed).toBe(1);
+    expect(run.season?.decisions_completed).toBe(2);
   });
 
   it("keeps a corrupt pending state visible even if the battle id is missing", () => {
