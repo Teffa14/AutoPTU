@@ -25,7 +25,7 @@ export function SeasonHub({ run, locale, onRun }: { run: CareerRun; locale: Loca
     setAcknowledgedDecisions(historyCount);
   }, [run.id, run.season_number]);
 
-  if (pendingBattle) return <PendingBattleRecovery run={run} locale={locale} />;
+  if (pendingBattle) return <PendingBattleRecovery run={run} locale={locale} onRun={onRun} />;
 
   const showOutcome = run.season?.status === "decision"
     && Boolean(latestDecision)
