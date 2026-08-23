@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from auto_ptu.career.catalogs import REGIONS
+from auto_ptu.career.decisions import build_season_decision
 from auto_ptu.career.engine import CareerEngine
 from auto_ptu.career.models import BattleSpec, BattleTranscript
 from auto_ptu.career.roster import capture_species
@@ -51,3 +52,32 @@ def test_seventh_owned_pokemon_goes_to_pc_without_replacing_active_six() -> None
     event = run.timeline[-1]
     assert event["type"] == "pokemon.captured"
     assert overflow.species in event["species"]
+
+
+def test_capture_decisions_continue_after_active_six_and_report_pc_storage() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="capture-cadence",
+        name="Ari",
+        region="kanto",
+        starter="Rattata",
+        classes=["Ace Trainer"],
+        seed=2032,
+    )
+
+    candidates = [species for species in REGIONS["kanto"].underdogs if species != run.build.starter]
+    for species in candidates[:6]:
+        assert capture_species(run, species, source="test") is not None
+
+    assert len(run.pokemon) == 7
+    assert len(run.active_roster) == 6
+    assert len([entry for entry in run.pokemon if entry.status == "pc"]) == 1
+
+    # Season 4 is a forced capture cadence slot but its authored rotation would
+    # otherwise resolve to research. A full active roster must not suppress it.
+    run.season_number = 4
+    decision = build_season_decision(run)
+
+    assert decision.family == "capture"
+    assert "6/6 active places occupied" in decision.body
+    assert "1 Pokemon in PC" in decision.body
