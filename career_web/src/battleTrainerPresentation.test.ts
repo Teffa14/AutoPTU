@@ -116,4 +116,23 @@ describe("battle trainer presentation", () => {
     expect(memory.lastSeason).toBe(50);
     expect(memory.seasonsSinceLastMeeting).toBe(1);
   });
+
+  it("falls back to no rival history when a persisted timeline is missing or contains null entries", () => {
+    const missingTimelineRun = { ...run, timeline: null } as unknown as CareerRun;
+    expect(formalRivalMemory(missingTimelineRun, "Cerulean Current", 3)).toEqual({
+      previousMeetings: 0,
+      firstSeason: null,
+      lastSeason: null,
+      seasonsSinceLastMeeting: null,
+    });
+
+    const mixedTimelineRun = {
+      ...run,
+      timeline: [
+        null,
+        { type: "season.completed", season: 1, opponents: ["Cerulean Current"] },
+      ],
+    } as unknown as CareerRun;
+    expect(formalRivalMemory(mixedTimelineRun, "Cerulean Current", 3).previousMeetings).toBe(1);
+  });
 });
