@@ -1,5 +1,5 @@
 name: Build Vercel source bundle
-# Final production artifact trigger.
+# Build the deployable Career runtime whenever production-relevant source changes.
 
 on:
   workflow_dispatch:
@@ -8,11 +8,27 @@ on:
       - main
     paths:
       - .github/workflows/build-vercel-bundle.yml
+      - auto_ptu/**
+      - career_web/**
+      - scripts/build_vercel.py
+      - public/career-game/**
+      - files/**
+      - PTUDatabase-main/**
+      - "IMPLEMENTATION FILES/**"
+      - pyproject.toml
   pull_request:
     branches:
       - main
     paths:
       - .github/workflows/build-vercel-bundle.yml
+      - auto_ptu/**
+      - career_web/**
+      - scripts/build_vercel.py
+      - public/career-game/**
+      - files/**
+      - PTUDatabase-main/**
+      - "IMPLEMENTATION FILES/**"
+      - pyproject.toml
 
 permissions:
   contents: read
