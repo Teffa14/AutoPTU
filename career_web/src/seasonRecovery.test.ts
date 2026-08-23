@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { pendingBattleRecovery } from "./seasonRecovery";
+import { pendingBattleRecovery, repairExhaustedDecisionPhase } from "./seasonRecovery";
 import type { CareerRun } from "./types";
 
 function runWithSeason(status: string, completed: number, required: number, battleIds: string[]): CareerRun {
@@ -34,6 +34,7 @@ describe("pendingBattleRecovery", () => {
       seasonNumber: 1,
       decisionsCompleted: 1,
       decisionsRequired: 1,
+      phaseRepairNeeded: false,
     });
   });
 
@@ -45,6 +46,22 @@ describe("pendingBattleRecovery", () => {
 
   it("does not intercept a real decision phase", () => {
     expect(pendingBattleRecovery(runWithSeason("decision", 0, 1, []))).toBeNull();
+  });
+
+  it("detects the impossible 2-of-1 style state before SeasonScreen can render it", () => {
+    const run = runWithSeason("decision", 1, 1, ["run-1-s1-m6"]);
+    const recovery = pendingBattleRecovery(run);
+    expect(recovery?.phaseRepairNeeded).toBe(true);
+    expect(recovery?.battleId).toBe("run-1-s1-m6");
+  });
+
+  it("repairs an exhausted decision phase only when a prepared battle exists", () => {
+    const run = runWithSeason("decision", 1, 1, ["run-1-s1-m6"]);
+    const repaired = repairExhaustedDecisionPhase(run);
+    expect(repaired?.season?.status).toBe("battle");
+    expect(repaired?.season?.decisions_completed).toBe(1);
+    expect(run.season?.status).toBe("decision");
+    expect(repairExhaustedDecisionPhase(runWithSeason("decision", 1, 1, []))).toBeNull();
   });
 
   it("keeps a corrupt pending state visible even if the battle id is missing", () => {
