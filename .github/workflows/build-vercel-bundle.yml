@@ -112,6 +112,7 @@ jobs:
               archive.writestr(".runtime-source.json", json.dumps({"source_commit": sha}) + "\n")
 
           gen9_archive_path = gen9_pbs.relative_to(root).as_posix()
+          career_entry_path = "public/career-game/index.html"
           with zipfile.ZipFile(bundle_path) as archive:
               names = set(archive.namelist())
               if gen9_archive_path not in names:
@@ -119,6 +120,18 @@ jobs:
               gen9_text = archive.read(gen9_archive_path).decode("utf-8-sig", errors="replace")
               if "Name = Annihilape" not in gen9_text:
                   raise RuntimeError("Career runtime Generation 9 PBS failed Annihilape smoke check")
+
+              if career_entry_path not in names:
+                  raise RuntimeError("Career runtime omitted the browser entrypoint")
+              career_html = archive.read(career_entry_path).decode("utf-8", errors="replace")
+              if 'id="root"' not in career_html:
+                  raise RuntimeError("Career runtime browser entrypoint has no React root")
+              if "/career-game/assets/" not in career_html:
+                  raise RuntimeError("Career runtime browser entrypoint has no built Career assets")
+
+              source_manifest = json.loads(archive.read(".runtime-source.json").decode("utf-8"))
+              if source_manifest.get("source_commit") != sha:
+                  raise RuntimeError("Career runtime source provenance does not match the checked-out commit")
 
           requirements = """typer>=0.12
 rich>=13.7
