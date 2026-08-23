@@ -35980,8 +35980,8 @@ class PokemonState:
                                 "description": "Color Change shifts the target's type.",
                                 "target_hp": defender.hp,
                             }
-                        events.append(payload)
-                        self.log_event(payload)
+                            events.append(payload)
+                            self.log_event(payload)
                     if (
                         hit
                         and defender is not None
