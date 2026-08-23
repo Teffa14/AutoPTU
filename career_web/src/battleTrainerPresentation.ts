@@ -117,7 +117,9 @@ export function formalRivalMemory(
   let previousMeetings = 0;
   let firstSeason: number | null = null;
   let lastSeason: number | null = null;
-  for (const event of run.timeline) {
+  const timeline = Array.isArray(run.timeline) ? run.timeline : [];
+  for (const event of timeline) {
+    if (!event || typeof event !== "object") continue;
     if (event.type !== "season.completed" || !Array.isArray(event.opponents)) continue;
     const eventSeason = Number(event.season ?? 0);
     if (!Number.isFinite(eventSeason) || eventSeason <= 0) continue;
