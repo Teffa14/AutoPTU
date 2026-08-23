@@ -6,6 +6,7 @@ export type BattleVisualSignals = {
   hardwareConcurrency?: number | null;
   deviceMemory?: number | null;
   saveData?: boolean;
+  compactTouch?: boolean;
 };
 
 export const BATTLE_VISUAL_QUALITY_KEY = "autoptu:battle-visual-quality";
@@ -26,6 +27,7 @@ export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleV
   if (signals.reducedMotion) return "light";
   if (signals.storedPreference === "full" || signals.storedPreference === "light") return signals.storedPreference;
   if (signals.saveData) return "light";
+  if (signals.compactTouch) return "light";
 
   const cores = Number(signals.hardwareConcurrency ?? 0);
   if (Number.isFinite(cores) && cores > 0 && cores <= 4) return "light";
@@ -56,6 +58,7 @@ export function detectBattleVisualQuality(): BattleVisualQuality {
     hardwareConcurrency: nav.hardwareConcurrency,
     deviceMemory: nav.deviceMemory,
     saveData: nav.connection?.saveData,
+    compactTouch: isCompactTouchDevice(),
   });
 }
 
@@ -63,6 +66,20 @@ export function prefersReducedMotion(): boolean {
   return typeof window !== "undefined"
     && typeof window.matchMedia === "function"
     && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+export function isCompactTouchDevice(): boolean {
+  if (typeof window === "undefined") return false;
+  const coarsePointer = typeof window.matchMedia === "function"
+    && window.matchMedia("(pointer: coarse)").matches;
+  const touchPoints = Number(window.navigator.maxTouchPoints ?? 0);
+  const shortestViewportEdge = Math.min(
+    Number(window.innerWidth || 0),
+    Number(window.innerHeight || 0),
+  );
+  return (coarsePointer || touchPoints > 0)
+    && shortestViewportEdge > 0
+    && shortestViewportEdge <= 900;
 }
 
 export function persistBattleVisualQuality(value: BattleVisualQuality): void {
