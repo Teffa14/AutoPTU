@@ -6,17 +6,18 @@ import type { CareerRun, Locale } from "../types";
 export function PendingBattleRecovery({ run, locale, onRun }: { run: CareerRun; locale: Locale; onRun: (run: CareerRun) => void }) {
   const recovery = pendingBattleRecovery(run);
   if (!recovery) return null;
+  const activeRecovery = recovery;
   const checkpoint = loadBattleCheckpoint(run.id);
 
   function retryBattle() {
-    if (!recovery.battleId) return;
-    if (recovery.phaseRepairNeeded) {
+    if (!activeRecovery.battleId) return;
+    if (activeRecovery.phaseRepairNeeded) {
       const repaired = repairExhaustedDecisionPhase(run);
       if (!repaired) return;
       saveLocalRun(repaired);
       onRun(repaired);
     }
-    navigate(`battle/${run.id}/${recovery.battleId}`);
+    navigate(`battle/${run.id}/${activeRecovery.battleId}`);
   }
 
   function rollbackBattle() {
@@ -30,7 +31,7 @@ export function PendingBattleRecovery({ run, locale, onRun }: { run: CareerRun; 
       <p className="eyebrow">{locale === "es" ? "TEMPORADA EN CURSO" : "SEASON IN PROGRESS"}</p>
       <h1>{locale === "es" ? "El combate sigue pendiente" : "The battle is still pending"}</h1>
       <p>
-        {recovery.phaseRepairNeeded
+        {activeRecovery.phaseRepairNeeded
           ? (locale === "es"
             ? "La temporada quedó en una fase imposible después de registrar todas las decisiones. Podés reparar el estado y volver al combate sin perder la carrera."
             : "The season was left in an impossible phase after all decisions were recorded. Repair the state and return to battle without losing the career.")
@@ -39,12 +40,12 @@ export function PendingBattleRecovery({ run, locale, onRun }: { run: CareerRun; 
             : "Your decisions are already recorded. The schedule was not reset. You can first retry loading the same battle.")}
       </p>
       <p>
-        <b>{recovery.decisionsCompleted}/{recovery.decisionsRequired}</b>{" "}
-        {locale === "es" ? "decisiones registradas" : "decisions recorded"} · {locale === "es" ? "temporada" : "season"} {recovery.seasonNumber}
+        <b>{activeRecovery.decisionsCompleted}/{activeRecovery.decisionsRequired}</b>{" "}
+        {locale === "es" ? "decisiones registradas" : "decisions recorded"} · {locale === "es" ? "temporada" : "season"} {activeRecovery.seasonNumber}
       </p>
-      {recovery.battleId ? (
+      {activeRecovery.battleId ? (
         <button className="primary-action" type="button" onClick={retryBattle}>
-          {recovery.phaseRepairNeeded
+          {activeRecovery.phaseRepairNeeded
             ? (locale === "es" ? "Reparar y volver al combate" : "Repair and return to battle")
             : (locale === "es" ? "Reintentar combate" : "Retry battle")}
         </button>
