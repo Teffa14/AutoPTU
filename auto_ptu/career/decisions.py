@@ -113,7 +113,7 @@ def build_season_decision(run: CareerRun, slot: int = 0) -> CareerDecision:
     title, base_body = _decision_story(run, family, rewards, locale)
     hook = _VARIANT_HOOKS[variant][0 if locale == "es" else 1]
     club = run.contract.club_name if run.contract else ("el club" if locale == "es" else "the club")
-    trainer_class = run.build.classes[0]
+    trainer_class = run.build.classes[0] if run.build.classes else ("Entrenador" if locale == "es" else "Trainer")
     if locale == "es":
         body = (
             f"{npc_name.split(' · ')[0]} lleva el caso a {club}. "
