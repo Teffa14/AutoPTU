@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { loadBattleCheckpoint, loadLocalRun, restoreBattleCheckpoint, saveLocalRun } from "./localCareer";
 import type { CareerRun } from "./types";
 
-function runWithSeason(status: string, revision: number): CareerRun {
+function runWithSeason(status: string, revision: number, decisionsCompleted?: number): CareerRun {
   return {
     id: "rollback-run",
     ranked: false,
@@ -19,7 +19,7 @@ function runWithSeason(status: string, revision: number): CareerRun {
       status,
       battle_ids: status === "battle" ? ["rollback-run-s4-featured"] : [],
       decisions_required: 3,
-      decisions_completed: status === "decision" ? 2 : 3,
+      decisions_completed: decisionsCompleted ?? (status === "decision" ? 2 : 3),
       decision_history: [],
       training_completed: true,
       training_method: "conditioning",
@@ -52,6 +52,31 @@ describe("pre-battle rollback checkpoint", () => {
 
     expect(loadBattleCheckpoint(safe.id)?.revision).toBe(17);
     expect(loadLocalRun(safe.id)?.revision).toBe(18);
+  });
+
+  it("checkpoints the last safe decision when the season exhausts without entering battle", () => {
+    const safe = runWithSeason("decision", 17, 2);
+    const stuck = runWithSeason("decision", 18, 3);
+
+    saveLocalRun(safe);
+    saveLocalRun(stuck);
+
+    expect(loadBattleCheckpoint(safe.id)?.revision).toBe(17);
+    expect(loadBattleCheckpoint(safe.id)?.season?.decisions_completed).toBe(2);
+    expect(loadLocalRun(safe.id)?.revision).toBe(18);
+  });
+
+  it("keeps the safe checkpoint when an exhausted phase is later repaired into battle", () => {
+    const safe = runWithSeason("decision", 17, 2);
+    const stuck = runWithSeason("decision", 18, 3);
+    const repaired = runWithSeason("battle", 19, 3);
+
+    saveLocalRun(safe);
+    saveLocalRun(stuck);
+    saveLocalRun(repaired);
+
+    expect(loadBattleCheckpoint(safe.id)?.revision).toBe(17);
+    expect(loadBattleCheckpoint(safe.id)?.season?.decisions_completed).toBe(2);
   });
 
   it("does not overwrite the pre-battle checkpoint with later battle saves", () => {
