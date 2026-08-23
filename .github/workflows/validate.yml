@@ -35,7 +35,7 @@ jobs:
         run: python scripts/validate_repo.py
 
       - name: Run Career pipeline tests
-        run: python -m pytest -q tests/test_career_battle_pipeline.py tests/test_career_rival_training.py tests/test_career_preseason_market.py tests/test_career_pokemon_longevity.py tests/test_career_item_catalog.py tests/test_career_trainer_sprite.py tests/test_career_portable_api.py tests/test_career_save_compatibility.py tests/test_career_capture_overflow.py tests/test_career_decision_resilience.py tests/test_career_encounter_buildability.py
+        run: python -m pytest -q tests/test_career_battle_pipeline.py tests/test_career_rival_training.py tests/test_career_preseason_market.py tests/test_career_pokemon_longevity.py tests/test_career_item_catalog.py tests/test_career_trainer_sprite.py tests/test_career_portable_api.py tests/test_career_save_compatibility.py tests/test_career_capture_overflow.py tests/test_career_decision_resilience.py
 
       - name: Install Career frontend
         run: npm --prefix career_web ci
@@ -74,10 +74,33 @@ jobs:
           ptu_yaml = root / "PTUDatabase-main" / "Data" / "ptu.1.05.yaml"
           if ptu_yaml.exists(): runtime_files.append(ptu_yaml)
 
+          gen9_pbs = (
+              root
+              / "IMPLEMENTATION FILES"
+              / "Generation 9 Pack v3.3.4"
+              / "PBS"
+              / "pokemon_base_Gen_9_Pack.txt"
+          )
+          if not gen9_pbs.exists():
+              raise FileNotFoundError(f"Required Career Generation 9 PBS is missing: {gen9_pbs}")
+          runtime_files.append(gen9_pbs)
+
           bundle = out / "runtime_bundle.zip"
           with zipfile.ZipFile(bundle, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as z:
               for path in sorted(set(runtime_files)): z.write(path, path.relative_to(root).as_posix())
               z.writestr(".runtime-source.json", json.dumps({"source_commit": sha}) + "\n")
+
+          gen9_archive_path = gen9_pbs.relative_to(root).as_posix()
+          with zipfile.ZipFile(bundle) as archive:
+              names = set(archive.namelist())
+              if gen9_archive_path not in names:
+                  raise RuntimeError(f"Validated Career runtime omitted required PBS: {gen9_archive_path}")
+              gen9_text = archive.read(gen9_archive_path).decode("utf-8-sig", errors="replace")
+              if "Name = Annihilape" not in gen9_text:
+                  raise RuntimeError("Validated Career runtime Generation 9 PBS failed Annihilape smoke check")
+              source_manifest = json.loads(archive.read(".runtime-source.json").decode("utf-8"))
+              if source_manifest.get("source_commit") != sha:
+                  raise RuntimeError("Validated Career runtime source provenance does not match the checked-out commit")
 
           (out / "requirements.txt").write_text("""typer>=0.12
 rich>=13.7
@@ -94,7 +117,12 @@ six>=1.16
 pydot>=3.0
 """, encoding="utf-8")
 
-          (out / "app.py").write_text(f'''"""Slim Vercel bootstrap generated from AutoPTU {sha}."""\nfrom __future__ import annotations\nimport os, shutil, sys, zipfile\nfrom pathlib import Path\nSOURCE_COMMIT = "{sha}"\nBUNDLE = Path(__file__).resolve().parent / "runtime_bundle.zip"\nRUNTIME = Path("/tmp/autoptu-runtime")\nMARKER = RUNTIME / ".source-commit"\nif not MARKER.exists() or MARKER.read_text(encoding="utf-8", errors="ignore").strip() != SOURCE_COMMIT:\n    shutil.rmtree(RUNTIME, ignore_errors=True)\n    RUNTIME.mkdir(parents=True, exist_ok=True)\n    with zipfile.ZipFile(BUNDLE) as archive: archive.extractall(RUNTIME)\n    MARKER.write_text(SOURCE_COMMIT, encoding="utf-8")\nos.environ.setdefault("AUTO_PTU_RUNTIME_ROOT", str(RUNTIME))\nsys.path.insert(0, str(RUNTIME))\nfrom auto_ptu.api.server import app\n__all__ = ["app"]\n''', encoding="utf-8")
+          (out / "app.py").write_text(f'''"""Slim Vercel bootstrap generated from AutoPTU {sha}."""\nfrom __future__ import annotations\nimport os, shutil, sys, zipfile\nfrom pathlib import Path\nSOURCE_COMMIT = "{sha}"\nBUNDLE = Path(__file__).resolve().parent / "runtime_bundle.zip"\nRUNTIME = Path("/tmp/autoptu-runtime")\nMARKER = RUNTIME / ".source-commit"\nif not MARKER.exists() or MARKER.read_text(encoding="utf-8", errors="ignore").strip() != SOURCE_COMMIT:\n    shutil.rmtree(RUNTIME, ignore_errors=True)\n    RUNTIME.mkdir(parents=True, exist_ok=True)\n    with zipfile.ZipFile(BUNDLE) as archive: archive.extractall(RUNTIME)\n    MARKER.write_text(SOURCE_COMMIT, encoding="utf-8")\nos.environ.setdefault("AUTO_PTU_RUNTIME_ROOT", str(RUNTIME))\nos.environ.setdefault("AUTOPTU_SOURCE_COMMIT", SOURCE_COMMIT)\nsys.path.insert(0, str(RUNTIME))\nfrom auto_ptu.api.server import app\n@app.get("/api/v1/build", include_in_schema=False)\ndef deployed_build() -> dict[str, str]:\n    return {{"source_commit": SOURCE_COMMIT}}\n__all__ = ["app"]\n''', encoding="utf-8")
+          bootstrap_text = (out / "app.py").read_text(encoding="utf-8")
+          if f'SOURCE_COMMIT = "{sha}"' not in bootstrap_text:
+              raise RuntimeError("Validated Career deploy bootstrap lost its source commit")
+          if '@app.get("/api/v1/build", include_in_schema=False)' not in bootstrap_text:
+              raise RuntimeError("Validated Career deploy bootstrap omitted the build provenance endpoint")
 
           config = {"$schema":"https://openapi.vercel.sh/vercel.json","buildCommand":"echo 'Using prebuilt Career runtime'","functions":{"app.py":{"includeFiles":"runtime_bundle.zip"}},"env":{"AUTO_PTU_RUNTIME_ROOT":"/tmp/autoptu-runtime","AUTO_PTU_REPORTS_DIR":"/tmp/autoptu-runtime/reports","AUTOPTU_BATTLE_LOG_DIR":"/tmp/autoptu-runtime/reports/battle_logs","AUTO_PTU_SPRITE_DIR":"/tmp/autoptu-runtime/sprites","AUTO_PTU_POKEAPI_CACHE":"/tmp/autoptu-runtime/pokeapi","CAREER_BATTLE_EXECUTION":"inline"}}
           (out / "vercel.json").write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
