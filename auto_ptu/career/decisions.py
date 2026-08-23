@@ -397,7 +397,7 @@ def _decision_family(run: CareerRun, slot: int) -> str:
         return "contract"
     if run.health <= 55:
         return "health"
-    if len(run.pokemon) < 6 and base_index % 3 == 0:
+    if base_index % 3 == 0:
         return "capture"
     return playable_domains[base_index % len(playable_domains)]
 
@@ -416,16 +416,18 @@ def _decision_story(
             (str(reward.get("species")) for option in rewards for reward in option if reward.get("type") == "pokemon"),
             "un Pokémon" if locale == "es" else "a Pokémon",
         )
+        active_count = len(run.active_roster)
+        pc_count = max(0, len(run.pokemon) - active_count)
         if locale == "es":
             return (
                 f"{species} apareció cerca del estadio",
                 f"El informe confirma que {species} está solo y puede sumarse al plantel. "
-                f"Tenés {run.build.pokeballs} Poké Balls y {len(run.pokemon)}/6 plazas activas ocupadas.",
+                f"Tenés {run.build.pokeballs} Poké Balls, {active_count}/6 plazas activas ocupadas y {pc_count} Pokémon en PC.",
             )
         return (
             f"{species} appeared near the stadium",
             f"The report confirms {species} is alone and can join the squad. "
-            f"You have {run.build.pokeballs} Poke Balls and {len(run.pokemon)}/6 active places occupied.",
+            f"You have {run.build.pokeballs} Poke Balls, {active_count}/6 active places occupied and {pc_count} Pokemon in PC.",
         )
     if family == "breeding":
         species = next((str(reward.get("species")) for option in rewards for reward in option if reward.get("type") == "pokemon"), partner_name)
@@ -462,7 +464,7 @@ def _decision_story(
         return (
             "A new signal contradicts the habitat map",
             f"Your scanner is level {run.pokedex_level}. Studying the signal can improve future encounters, "
-            "teach a technique, or reveal a Pokémon missing from the common report.",
+            "teach a technique or reveal a Pokémon missing from the common report.",
         )
     if family == "health":
         if locale == "es":
@@ -488,7 +490,7 @@ def _decision_story(
         return (
             "The club office put real numbers on the table",
             f"Current salary is ₽ {salary} per season and you have {warnings}/2 no-contract warnings. "
-            "You can protect stability, ask for usable resources, or risk waiting for a better offer.",
+            "You can protect stability, ask for usable resources or risk waiting for a better offer.",
         )
     if family == "media":
         if locale == "es":
