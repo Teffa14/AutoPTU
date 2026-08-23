@@ -67,4 +67,14 @@ describe("pendingBattleRecovery", () => {
   it("keeps a corrupt pending state visible even if the battle id is missing", () => {
     expect(pendingBattleRecovery(runWithSeason("battle", 1, 1, []))?.battleId).toBeNull();
   });
+
+  it("trims persisted battle ids before retry navigation", () => {
+    const run = runWithSeason("decision", 1, 1, ["  run-1-s1-m6  ", "   "]);
+    const recovery = pendingBattleRecovery(run);
+    expect(recovery?.battleId).toBe("run-1-s1-m6");
+
+    const repaired = repairExhaustedDecisionPhase(run);
+    expect(repaired?.season?.battle_ids).toEqual(["run-1-s1-m6"]);
+    expect(repaired?.season?.status).toBe("battle");
+  });
 });
