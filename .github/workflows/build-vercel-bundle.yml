@@ -8,6 +8,7 @@ on:
       - main
     paths:
       - .github/workflows/build-vercel-bundle.yml
+      - .vercelignore
       - vercel.json
       - auto_ptu/**
       - career_web/**
@@ -22,6 +23,7 @@ on:
       - main
     paths:
       - .github/workflows/build-vercel-bundle.yml
+      - .vercelignore
       - vercel.json
       - auto_ptu/**
       - career_web/**
