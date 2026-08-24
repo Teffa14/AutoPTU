@@ -1,6 +1,7 @@
 from auto_ptu.career.engine import CareerEngine
 from auto_ptu.career.items import buy_product
 from auto_ptu.career.models import CareerRun
+from auto_ptu.career.relationships import refresh_relationship_effects
 
 
 def test_save_loader_ignores_unknown_top_level_fields() -> None:
@@ -138,3 +139,45 @@ def test_save_loader_sanitizes_competitive_totals_before_season_resolution() -> 
         recovered = CareerRun.from_dict(corrupt_payload)
 
         assert recovered.totals == {"wins": 0, "losses": 0, "draws": 0, "titles": 0}
+
+
+def test_save_loader_recovers_corrupt_relationship_memory_before_social_effects() -> None:
+    run = CareerEngine().new_run(
+        player_id="save-relationship-recovery",
+        name="Sora",
+        region="unova",
+        starter="Oshawott",
+        classes=["Ace Trainer"],
+        seed=1889,
+    )
+
+    for corrupt_relationships in (None, [], "broken"):
+        payload = run.to_dict()
+        payload["relationships"] = corrupt_relationships
+
+        restored = CareerRun.from_dict(payload)
+        effects = refresh_relationship_effects(restored)
+
+        assert restored.relationships == {}
+        assert effects["active_contacts"] == 0
+        assert effects["best_contact"] == ""
+
+    payload = run.to_dict()
+    payload["relationships"] = {
+        " Mara · mentor · Unova ": "6",
+        "Rex · rival · Unova": float("nan"),
+        "Club Chair · owner · Unova": -4,
+        "   ": 9,
+    }
+
+    restored = CareerRun.from_dict(payload)
+    effects = refresh_relationship_effects(restored)
+
+    assert restored.relationships == {
+        "Mara · mentor · Unova": 6,
+        "Rex · rival · Unova": 0,
+        "Club Chair · owner · Unova": 0,
+    }
+    assert effects["mentor_training_bonus"] == 2
+    assert effects["rival_scouting_bonus"] == 0
+    assert effects["owner_recovery_bonus"] == 0
