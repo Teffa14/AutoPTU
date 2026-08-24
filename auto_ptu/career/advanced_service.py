@@ -4,6 +4,7 @@ from dataclasses import asdict
 from datetime import date
 from typing import Dict
 
+from .leaderboard_names import trainer_display_name
 from .service import CareerService
 from .trainer_sprites import apply_trainer_sprite, trainer_sprite_catalog
 
@@ -39,11 +40,12 @@ class AdvancedCareerService(CareerService):
         entries = self.store.leaderboard(challenge.id, mode)
         rows = []
         for index, entry in enumerate(entries):
-            trainer_name = entry.handle
+            trainer_name = trainer_display_name(entry.handle)
             if entry.run_id:
                 try:
-                    trainer_name = self.store.load_run(entry.run_id).build.name
-                except (KeyError, ValueError):
+                    run = self.store.load_run(entry.run_id)
+                    trainer_name = trainer_display_name(getattr(run.build, "name", None), trainer_name)
+                except (AttributeError, KeyError, TypeError, ValueError):
                     pass
             rows.append(
                 {
@@ -62,7 +64,11 @@ class AdvancedCareerService(CareerService):
             rows = connection.execute(
                 """
                 select
-                  coalesce(best.state #>> '{build,name}', e.handle) as trainer_name,
+                  coalesce(
+                    nullif(btrim(best.state #>> '{build,name}'), ''),
+                    nullif(btrim(e.handle), ''),
+                    'Trainer'
+                  ) as trainer_name,
                   e.score,
                   e.achievements,
                   e.completed_at
@@ -88,8 +94,8 @@ class AdvancedCareerService(CareerService):
         entries = [
             {
                 "rank": index + 1,
-                "handle": str(row[0]),
-                "trainer_name": str(row[0]),
+                "handle": trainer_display_name(row[0]),
+                "trainer_name": trainer_display_name(row[0]),
                 "score": int(row[1]),
                 "achievements": list(row[2]),
                 "completed_at": row[3].isoformat(),

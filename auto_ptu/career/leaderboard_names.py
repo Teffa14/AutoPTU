@@ -5,6 +5,24 @@ from typing import Dict, List
 from .models import CareerRun, LeaderboardEntry
 
 
+def trainer_display_name(value: object, fallback: object = "Trainer") -> str:
+    """Return a stable visible leaderboard name from persisted or legacy data."""
+
+    def clean(candidate: object) -> str:
+        if candidate is None:
+            return ""
+        try:
+            text = str(candidate)
+        except Exception:
+            return ""
+        text = " ".join(text.split())
+        if text.casefold() in {"", "none", "null", "nan"}:
+            return ""
+        return text
+
+    return clean(value) or clean(fallback) or "Trainer"
+
+
 def _local_leaderboard(self, challenge_id: str, mode: str) -> List[LeaderboardEntry]:
     best: Dict[str, CareerRun] = {}
     for run in self.list_runs():
@@ -18,7 +36,7 @@ def _local_leaderboard(self, challenge_id: str, mode: str) -> List[LeaderboardEn
             challenge_id=challenge_id,
             mode=mode,
             player_id=run.player_id,
-            handle=run.build.name.strip() or "Trainer",
+            handle=trainer_display_name(getattr(run.build, "name", None)),
             score=run.score,
             achievements=list(run.achievements),
             run_id=run.id,
@@ -38,7 +56,7 @@ def _postgres_leaderboard(self, challenge_id: str, mode: str) -> List[Leaderboar
             """
             select
               coalesce(
-                nullif((
+                nullif(btrim((
                   select r.state #>> '{build,name}'
                   from private.competitive_results cr
                   join private.career_runs r on r.id = cr.run_id
@@ -48,8 +66,9 @@ def _postgres_leaderboard(self, challenge_id: str, mode: str) -> List[Leaderboar
                     and cr.score = e.score
                   order by cr.verified_at desc
                   limit 1
-                ), ''),
-                e.handle
+                )), ''),
+                nullif(btrim(e.handle), ''),
+                'Trainer'
               ) as trainer_name,
               e.score,
               e.achievements,
@@ -67,7 +86,7 @@ def _postgres_leaderboard(self, challenge_id: str, mode: str) -> List[Leaderboar
             challenge_id=challenge_id,
             mode=mode,
             player_id="",
-            handle=str(row[0] or "Trainer"),
+            handle=trainer_display_name(row[0]),
             score=row[1],
             achievements=list(row[2]),
             run_id="",
