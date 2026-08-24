@@ -18,6 +18,14 @@ describe("battle trainer layout", () => {
     expect(trainerCss).toContain("display: none");
   });
 
+  it("keeps authoritative rival progression visible on compact battle layouts", () => {
+    expect(trainerComponent).toContain('className="battle-trainer-progression"');
+    expect(trainerCss).toContain(".battle-trainer-copy small:not(.battle-trainer-progression)");
+    expect(trainerCss).toContain(".battle-trainer-progression {\n    display: block;");
+    expect(trainerCss).toContain("@media (max-width: 430px)");
+    expect(trainerCss).toContain("max-width: 5.25rem");
+  });
+
   it("compacts the trainer lane on short landscape viewports", () => {
     expect(trainerCss).toContain("@media (max-height: 500px)");
     expect(trainerCss).toContain("height: 2.8rem");
