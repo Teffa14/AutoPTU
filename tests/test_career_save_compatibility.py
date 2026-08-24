@@ -1,5 +1,5 @@
 from auto_ptu.career.engine import CareerEngine
-from auto_ptu.career.items import buy_product
+from auto_ptu.career.items import buy_product, use_item
 from auto_ptu.career.models import CareerRun
 from auto_ptu.career.relationships import refresh_relationship_effects
 
@@ -181,3 +181,46 @@ def test_save_loader_recovers_corrupt_relationship_memory_before_social_effects(
     assert effects["mentor_training_bonus"] == 2
     assert effects["rival_scouting_bonus"] == 0
     assert effects["owner_recovery_bonus"] == 0
+
+
+def test_save_loader_sanitizes_corrupt_inventory_before_bag_and_market_use() -> None:
+    run = CareerEngine().new_run(
+        player_id="save-inventory-recovery",
+        name="Vale",
+        region="hoenn",
+        starter="Treecko",
+        classes=["Ace Trainer"],
+        seed=1993,
+    )
+    run.money = 500
+
+    for corrupt_inventory in (None, [], "broken"):
+        payload = run.to_dict()
+        payload["inventory"] = corrupt_inventory
+
+        restored = CareerRun.from_dict(payload)
+        purchase = buy_product(restored, "super_potion")
+
+        assert restored.inventory == {"Super Potion": 1}
+        assert purchase["item"] == "Super Potion"
+
+    payload = run.to_dict()
+    payload["inventory"] = {
+        " Super Potion ": "2",
+        "Training Kit": float("nan"),
+        "Future Token": -4,
+        "   ": 8,
+    }
+    payload["health"] = 50
+
+    restored = CareerRun.from_dict(payload)
+
+    assert restored.inventory == {
+        "Super Potion": 2,
+        "Training Kit": 0,
+        "Future Token": 0,
+    }
+    result = use_item(restored, "super potion")
+    assert result["health"] == 12
+    assert restored.health == 62
+    assert restored.inventory["Super Potion"] == 1
