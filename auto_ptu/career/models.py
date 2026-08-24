@@ -315,7 +315,9 @@ class CareerRun:
         values = dict(payload)
         for key in ("build", "contract", "versions", "season", "summary", "pokemon", "active_roster"):
             values.pop(key, None)
-        if "money" not in values:
+        if "money" in values:
+            values["money"] = _safe_nonnegative_int(values["money"])
+        else:
             values["money"] = _safe_nonnegative_int(values.get("career_earnings", 0))
         values = _known_dataclass_values(cls, values)
         return cls(
