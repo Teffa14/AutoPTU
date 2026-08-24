@@ -29,17 +29,19 @@ export function BattleTrainerStrip({ transcript, run, locale, complete }: {
         name={presentation.away.name}
         sprite={presentation.away.sprite}
         line={presentation.away.line}
+        progression={presentation.away.progression}
       />
     </section>
   );
 }
 
-function TrainerSide({ align, club, name, sprite, line }: {
+function TrainerSide({ align, club, name, sprite, line, progression }: {
   align: "left" | "right";
   club: string;
   name: string;
   sprite: string;
   line: string;
+  progression?: string;
 }) {
   return (
     <div className={`battle-trainer-side ${align}`}>
@@ -55,6 +57,7 @@ function TrainerSide({ align, club, name, sprite, line }: {
       <div className="battle-trainer-copy">
         <small>{club}</small>
         <strong>{name}</strong>
+        {progression ? <small className="battle-trainer-progression">{progression}</small> : null}
         <q>{line}</q>
       </div>
     </div>
