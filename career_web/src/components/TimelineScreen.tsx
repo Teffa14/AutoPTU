@@ -7,6 +7,11 @@ interface TimelineDecision {
   effects: Record<string, unknown>;
 }
 
+interface SeasonPostbattleReview {
+  title: string;
+  prompt: string;
+}
+
 export function timelineSeasonDecisions(entry: Record<string, unknown>): TimelineDecision[] {
   if (Array.isArray(entry.decisions)) {
     return entry.decisions.flatMap((value) => {
@@ -17,6 +22,22 @@ export function timelineSeasonDecisions(entry: Record<string, unknown>): Timelin
   }
   const label = String(entry.decision ?? "").trim();
   return label ? [{ label, effects: asRecord(entry.decision_effects) }] : [];
+}
+
+export function seasonPostbattleReview(entry: Record<string, unknown>, locale: Locale): SeasonPostbattleReview | null {
+  if (entry.type !== "season.completed") return null;
+  const opponent = String(entry.featured_opponent ?? "").trim();
+  const record = String(entry.record ?? "").trim();
+  if (!opponent || !record) return null;
+  return locale === "es"
+    ? {
+      title: `Sala de video · ${opponent} · ${record}`,
+      prompt: "Compará el plan previo con lo que ocurrió en los combates. Elegí una decisión para repetir y una para corregir.",
+    }
+    : {
+      title: `Video room · ${opponent} · ${record}`,
+      prompt: "Compare the plan with what happened in battle. Choose one decision to repeat and one to correct.",
+    };
 }
 
 export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale }) {
@@ -33,6 +54,7 @@ export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale
       <div className="timeline-track">
         {run.timeline.map((entry, index) => {
           const decisions = timelineSeasonDecisions(entry);
+          const review = seasonPostbattleReview(entry, locale);
           const pokemonUsed = Array.isArray(entry.pokemon_used) ? entry.pokemon_used.map(String) : [];
           const unlocked = Array.isArray(entry.new_achievements) ? entry.new_achievements.map(String) : [];
           const majorHighlight = entry.title === true || entry.promoted === true || unlocked.length > 0;
@@ -43,6 +65,7 @@ export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale
                 <span>{eventKind(entry, locale)}</span>
                 <h2>{eventTitle(entry, locale)}</h2>
                 {entry.record ? <p className="season-record">{String(entry.league)} · {String(entry.record)} · score {signed(Number(entry.score_delta ?? 0))}</p> : null}
+                {review ? <aside className="postbattle-review"><b>{review.title}</b><p>{review.prompt}</p></aside> : null}
                 {decisions.length ? (
                   <div className="decision-ledger">
                     <b>{locale === "es" ? (decisions.length > 1 ? "Decisiones" : "Decisión") : (decisions.length > 1 ? "Decisions" : "Decision")}</b>
