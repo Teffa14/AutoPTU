@@ -335,3 +335,46 @@ def test_save_loader_recovers_corrupt_active_roster_before_team_use() -> None:
 
     assert restored.active_roster == [entry["id"] for entry in pokemon[:6]]
     assert len(restored.active_roster) == len(set(restored.active_roster)) == 6
+
+
+def test_save_loader_sanitizes_season_progress_before_browser_and_training_use() -> None:
+    run = CareerEngine().new_run(
+        player_id="save-season-progress-recovery",
+        name="Mara",
+        region="unova",
+        starter="Snivy",
+        classes=["Ace Trainer"],
+        seed=2293,
+    )
+    payload = run.to_dict()
+    assert isinstance(payload["season"], dict)
+    payload["season"].update({
+        "decisions_required": "1",
+        "decisions_completed": "2",
+        "battle_ids": [" battle-a ", "", "battle-a", 17, "battle-b"],
+        "training_completed_ids": [f" {run.active_roster[0]} ", "", run.active_roster[0], None],
+        "decision_history": [{"id": "kept"}, "broken", None],
+    })
+
+    restored = CareerRun.from_dict(payload)
+
+    assert restored.season is not None
+    assert restored.season.decisions_required == 1
+    assert restored.season.decisions_completed == 1
+    assert restored.season.battle_ids == ["battle-a", "battle-b"]
+    assert restored.season.training_completed_ids == [run.active_roster[0]]
+    assert restored.season.decision_history == [{"id": "kept"}]
+
+    for corrupt_container in ({"bad": True}, "broken", 7, None):
+        corrupt_payload = run.to_dict()
+        assert isinstance(corrupt_payload["season"], dict)
+        corrupt_payload["season"]["battle_ids"] = corrupt_container
+        corrupt_payload["season"]["training_completed_ids"] = corrupt_container
+        corrupt_payload["season"]["decision_history"] = corrupt_container
+
+        recovered = CareerRun.from_dict(corrupt_payload)
+
+        assert recovered.season is not None
+        assert recovered.season.battle_ids == []
+        assert recovered.season.training_completed_ids == []
+        assert recovered.season.decision_history == []
