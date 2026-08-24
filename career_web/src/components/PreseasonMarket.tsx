@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { careerApi, type PreseasonSnapshot } from "../api";
 import type { CareerRun, Locale } from "../types";
+import { ClubTransitionBrief } from "./ClubTransitionBrief";
 import { PokemonSprite } from "./PokemonSprite";
 import "./preseason-market.css";
 
@@ -76,6 +77,8 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
         <div><span>{locale === "es" ? `TEMPORADA ${run.season_number}` : `SEASON ${run.season_number}`}</span><h2>{locale === "es" ? "Mercado de pretemporada" : "Preseason market"}</h2></div>
         <p>{locale === "es" ? "Si tu contrato sigue vigente, continuás con el mismo club y equipo cedido. Cuando vence, podés renovar o cambiar. Después resolvés sponsor y captura." : "If your contract is still active, you keep the same club and loan squad. When it expires, renew or move. Then resolve sponsor and capture."}</p>
       </header>
+
+      {snapshot.club_completed ? <ClubTransitionBrief run={run} locale={locale} /> : null}
 
       {!snapshot.club_completed ? (
         <div className="market-block club-market">
