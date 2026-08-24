@@ -63,6 +63,13 @@ def _safe_inventory(value: Any) -> Dict[str, int]:
     return inventory
 
 
+def _safe_pokemon_payloads(value: Any) -> List[Dict[str, Any]]:
+    """Keep valid persisted Pokémon records and discard malformed container entries."""
+    if not isinstance(value, list):
+        return []
+    return [dict(entry) for entry in value if isinstance(entry, dict)]
+
+
 @dataclass
 class ContentVersion:
     rules: str = "ptu-1.05-autoptu"
@@ -316,7 +323,7 @@ class CareerRun:
             season_values["decision"] = decision
             season_values["battles"] = [_load_dataclass(BattleSpec, entry) for entry in battles_payload]
             season = SeasonState(**season_values)
-        pokemon_payload = payload.get("pokemon") or []
+        pokemon_payload = _safe_pokemon_payloads(payload.get("pokemon"))
         pokemon = [_load_dataclass(CareerPokemon, entry) for entry in pokemon_payload]
         if not pokemon:
             legacy_roster = list(payload.get("roster") or [build.starter])

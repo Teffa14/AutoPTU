@@ -224,3 +224,36 @@ def test_save_loader_sanitizes_corrupt_inventory_before_bag_and_market_use() -> 
     assert result["health"] == 12
     assert restored.health == 62
     assert restored.inventory["Super Potion"] == 1
+
+
+def test_save_loader_recovers_malformed_pokemon_container_before_roster_use() -> None:
+    run = CareerEngine().new_run(
+        player_id="save-pokemon-container-recovery",
+        name="Kai",
+        region="kanto",
+        starter="Bulbasaur",
+        classes=["Ace Trainer"],
+        seed=2039,
+    )
+
+    for corrupt_pokemon in (None, {}, "broken", [None, "bad-entry", 7]):
+        payload = run.to_dict()
+        payload["pokemon"] = corrupt_pokemon
+        payload["roster"] = [run.build.starter]
+
+        restored = CareerRun.from_dict(payload)
+
+        assert len(restored.pokemon) == 1
+        assert restored.pokemon[0].species == run.build.starter
+        assert restored.pokemon[0].is_partner is True
+        assert restored.active_roster == [restored.pokemon[0].id]
+
+    payload = run.to_dict()
+    valid_partner = dict(payload["pokemon"][0])
+    payload["pokemon"] = [valid_partner, None, "bad-entry"]
+
+    restored = CareerRun.from_dict(payload)
+
+    assert len(restored.pokemon) == 1
+    assert restored.pokemon[0].id == valid_partner["id"]
+    assert restored.pokemon[0].species == valid_partner["species"]
