@@ -221,5 +221,6 @@ def test_save_loader_sanitizes_corrupt_inventory_before_bag_and_market_use() -> 
         "Future Token": 0,
     }
     result = use_item(restored, "super potion")
-    assert result["health"] == 62
+    assert result["health"] == 12
+    assert restored.health == 62
     assert restored.inventory["Super Potion"] == 1
