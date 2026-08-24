@@ -22,6 +22,20 @@ def test_career_vercel_entrypoint_exposes_playable_routes_without_full_server(mo
     assert module.deployed_build() == {"source_commit": "test-sha"}
 
 
+def test_missing_browser_bundle_fails_over_without_redirect_loop(monkeypatch, tmp_path):
+    sys.modules.pop("career_app", None)
+    module = importlib.import_module("career_app")
+    monkeypatch.setattr(module, "CAREER_STATIC_DIR", tmp_path / "missing-career-build")
+    monkeypatch.setenv("CAREER_FALLBACK_URL", "https://fallback.example/career-game")
+
+    response = module.career_game("run/abc 123")
+
+    assert response.status_code == 307
+    assert response.headers["location"] == "https://fallback.example/career-game/run/abc%20123"
+    assert response.headers["cache-control"] == "no-store"
+    assert "/career-game/index.html?resume=" not in response.headers["location"]
+
+
 def test_vercel_artifact_workflows_keep_thin_career_entrypoint() -> None:
     root = Path(__file__).resolve().parents[1]
     for relative_path in (
