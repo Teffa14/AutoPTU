@@ -102,3 +102,39 @@ def test_save_loader_sanitizes_explicit_money_before_market_use() -> None:
 
     assert restored.money == 320
     assert purchase["money"] == 320
+
+
+def test_save_loader_sanitizes_competitive_totals_before_season_resolution() -> None:
+    run = CareerEngine().new_run(
+        player_id="save-totals-recovery",
+        name="Iris",
+        region="johto",
+        starter="Hoothoot",
+        classes=["Ace Trainer"],
+        seed=1771,
+    )
+    payload = run.to_dict()
+    payload["totals"] = {
+        "wins": "12",
+        "losses": None,
+        "draws": float("nan"),
+        "titles": -3,
+        "legacy_exhibitions": 99,
+    }
+
+    restored = CareerRun.from_dict(payload)
+
+    assert restored.totals == {"wins": 12, "losses": 0, "draws": 0, "titles": 0}
+    restored.totals["wins"] += 1
+    restored.totals["losses"] += 1
+    restored.totals["draws"] += 1
+    restored.totals["titles"] += 1
+    assert restored.totals == {"wins": 13, "losses": 1, "draws": 1, "titles": 1}
+
+    for corrupt_totals in (None, [], "broken"):
+        corrupt_payload = run.to_dict()
+        corrupt_payload["totals"] = corrupt_totals
+
+        recovered = CareerRun.from_dict(corrupt_payload)
+
+        assert recovered.totals == {"wins": 0, "losses": 0, "draws": 0, "titles": 0}

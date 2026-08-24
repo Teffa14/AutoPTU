@@ -319,6 +319,13 @@ class CareerRun:
             values["money"] = _safe_nonnegative_int(values["money"])
         else:
             values["money"] = _safe_nonnegative_int(values.get("career_earnings", 0))
+        raw_totals = values.get("totals")
+        if not isinstance(raw_totals, dict):
+            raw_totals = {}
+        values["totals"] = {
+            key: _safe_nonnegative_int(raw_totals.get(key, 0))
+            for key in ("wins", "losses", "draws", "titles")
+        }
         values = _known_dataclass_values(cls, values)
         return cls(
             **values,
