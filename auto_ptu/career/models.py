@@ -50,6 +50,19 @@ def _safe_relationships(value: Any) -> Dict[str, int]:
     return relationships
 
 
+def _safe_inventory(value: Any) -> Dict[str, int]:
+    """Recover bag state while preserving forward-compatible item names."""
+    if not isinstance(value, dict):
+        return {}
+    inventory: Dict[str, int] = {}
+    for raw_name, raw_quantity in value.items():
+        name = str(raw_name).strip()
+        if not name:
+            continue
+        inventory[name] = _safe_nonnegative_int(raw_quantity)
+    return inventory
+
+
 @dataclass
 class ContentVersion:
     rules: str = "ptu-1.05-autoptu"
@@ -340,6 +353,7 @@ class CareerRun:
             for key in ("wins", "losses", "draws", "titles")
         }
         values["relationships"] = _safe_relationships(values.get("relationships"))
+        values["inventory"] = _safe_inventory(values.get("inventory"))
         values = _known_dataclass_values(cls, values)
         return cls(
             **values,
