@@ -5,6 +5,7 @@ export type BattleTrainerCard = {
   name: string;
   sprite: string;
   line: string;
+  progression?: string;
 };
 
 export type RivalMemory = {
@@ -101,6 +102,7 @@ export function battleTrainerPresentation(
       line: complete
         ? rivalResultLine(locale, userWon, rivalMemory)
         : rivalOpeningLine(locale, rivalMemory),
+      progression: rivalProgressionLine(locale, transcript),
     },
     meeting,
     meetingLabel: meetingLabel(locale, meeting, rivalMemory),
@@ -165,6 +167,35 @@ function meetingLabel(locale: Locale, meeting: number, memory: RivalMemory): str
   if (memory.previousMeetings >= 5) return locale === "es" ? `RIVALIDAD · CRUCE #${meeting}` : `RIVALRY · MEETING #${meeting}`;
   if ((memory.seasonsSinceLastMeeting ?? 0) >= 3) return locale === "es" ? `REENCUENTRO · CRUCE #${meeting}` : `REUNION · MEETING #${meeting}`;
   return locale === "es" ? `CRUCE #${meeting}` : `MEETING #${meeting}`;
+}
+
+function rivalProgressionLine(locale: Locale, transcript: BattleTranscript): string {
+  const seasonValue = Number(transcript.spec.season ?? 0);
+  const season = Number.isFinite(seasonValue) && seasonValue > 0 ? Math.floor(seasonValue) : null;
+  const levels = Array.isArray(transcript.spec.away_team_levels)
+    ? transcript.spec.away_team_levels
+      .map((value) => Number(value))
+      .filter((value) => Number.isFinite(value) && value > 0)
+    : [];
+  const fallbackLevel = Number(transcript.spec.level ?? 0);
+  const averageLevel = levels.length
+    ? Math.round(levels.reduce((total, value) => total + value, 0) / levels.length)
+    : Number.isFinite(fallbackLevel) && fallbackLevel > 0
+      ? Math.round(fallbackLevel)
+      : null;
+  const stage = season === null
+    ? null
+    : season >= 8
+      ? (locale === "es" ? "VETERANO" : "VETERAN")
+      : season >= 4
+        ? (locale === "es" ? "CONSOLIDADO" : "ESTABLISHED")
+        : (locale === "es" ? "EN DESARROLLO" : "DEVELOPING");
+  const parts = [
+    season === null ? "" : `${locale === "es" ? "T" : "S"}${season}`,
+    averageLevel === null ? "" : `${locale === "es" ? "NIVEL MEDIO" : "AVG LEVEL"} ${averageLevel}`,
+    stage ?? "",
+  ].filter(Boolean);
+  return parts.join(" · ");
 }
 
 function homePlanLine(locale: Locale, difficulty: "favored" | "even" | "dangerous"): string {
