@@ -9,7 +9,7 @@ describe("battle loading recovery", () => {
     expect(preparingComponent).toContain("SLOW_BATTLE_WARNING_MS = 12000");
     expect(preparingComponent).toContain("setSlow(true)");
     expect(preparingComponent).toContain('className="battle-loading-recovery"');
-    expect(preparingComponent).toContain("onClick={onRetry}");
+    expect(preparingComponent).toContain("onClick={retry}");
   });
 
   it("retries the transcript request in place instead of reloading the whole career", () => {
@@ -18,6 +18,15 @@ describe("battle loading recovery", () => {
     expect(battleScreen).toContain("[runId, battleId, retryAttempt]");
     expect(battleScreen).toContain("setRetryAttempt((current) => current + 1)");
     expect(battleScreen).toContain("onRetry={retryBattleLoading}");
+  });
+
+  it("guards a stalled attempt against repeated retry clicks", () => {
+    expect(preparingComponent).toContain("const [retrying, setRetrying] = useState(false)");
+    expect(preparingComponent).toContain("if (retrying || !onRetry) return");
+    expect(preparingComponent).toContain("disabled={retrying}");
+    expect(preparingComponent).toContain("setRetrying(false)");
+    expect(preparingComponent).toContain("Reintentando...");
+    expect(preparingComponent).toContain("Retrying...");
   });
 
   it("makes clear that a technical retry does not count as a defeat", () => {

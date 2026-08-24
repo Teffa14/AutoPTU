@@ -12,15 +12,23 @@ export function BattlePreparing({ run, locale, onRetry, attempt = 0 }: {
   attempt?: number;
 }) {
   const [slow, setSlow] = useState(false);
+  const [retrying, setRetrying] = useState(false);
   const lineup = run?.active_roster
     .map((id) => run.pokemon.find((pokemon) => pokemon.id === id))
     .filter((pokemon) => pokemon !== undefined) ?? [];
 
   useEffect(() => {
     setSlow(false);
+    setRetrying(false);
     const timer = window.setTimeout(() => setSlow(true), SLOW_BATTLE_WARNING_MS);
     return () => window.clearTimeout(timer);
   }, [attempt]);
+
+  const retry = () => {
+    if (retrying || !onRetry) return;
+    setRetrying(true);
+    onRetry();
+  };
 
   return (
     <section className="battle-preparing" role="status">
@@ -34,7 +42,11 @@ export function BattlePreparing({ run, locale, onRetry, attempt = 0 }: {
       {slow && onRetry ? (
         <div className="battle-loading-recovery" role="alert">
           <p>{locale === "es" ? "El combate está tardando más de lo normal. Podés reintentar la carga sin registrar una derrota ni recargar toda la carrera." : "The battle is taking longer than expected. You can retry loading without recording a loss or reloading the whole career."}</p>
-          <button type="button" onClick={onRetry}>{locale === "es" ? "Reintentar carga" : "Retry loading"}</button>
+          <button type="button" onClick={retry} disabled={retrying}>
+            {retrying
+              ? (locale === "es" ? "Reintentando..." : "Retrying...")
+              : (locale === "es" ? "Reintentar carga" : "Retry loading")}
+          </button>
         </div>
       ) : null}
     </section>
