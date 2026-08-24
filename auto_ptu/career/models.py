@@ -37,6 +37,19 @@ def _safe_nonnegative_int(value: Any, default: int = 0) -> int:
     return max(0, int(number))
 
 
+def _safe_relationships(value: Any) -> Dict[str, int]:
+    """Recover durable social memory without trusting malformed save payloads."""
+    if not isinstance(value, dict):
+        return {}
+    relationships: Dict[str, int] = {}
+    for raw_name, raw_bond in value.items():
+        name = str(raw_name).strip()
+        if not name:
+            continue
+        relationships[name] = _safe_nonnegative_int(raw_bond)
+    return relationships
+
+
 @dataclass
 class ContentVersion:
     rules: str = "ptu-1.05-autoptu"
@@ -326,6 +339,7 @@ class CareerRun:
             key: _safe_nonnegative_int(raw_totals.get(key, 0))
             for key in ("wins", "losses", "draws", "titles")
         }
+        values["relationships"] = _safe_relationships(values.get("relationships"))
         values = _known_dataclass_values(cls, values)
         return cls(
             **values,
