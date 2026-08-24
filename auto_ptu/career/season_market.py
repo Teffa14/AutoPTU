@@ -196,6 +196,22 @@ def sponsor_offers(run: CareerRun) -> List[Dict[str, Any]]:
     rng = random.Random(_stable_seed(run.seed, run.season_number, "sponsor-market"))
     candidates = list(_SPONSORS)
     rng.shuffle(candidates)
+    previous_outcome = _previous_sponsor_outcome(run)
+    renewal_name = ""
+    blocked_name = ""
+    if previous_outcome is not None:
+        previous_name = str(previous_outcome.get("name") or "").strip()
+        if previous_outcome.get("type") == "sponsor.completed":
+            renewal_name = previous_name
+        elif previous_outcome.get("type") == "sponsor.failed":
+            blocked_name = previous_name
+    if blocked_name:
+        candidates = [entry for entry in candidates if entry[0] != blocked_name]
+    if renewal_name:
+        renewal = next((entry for entry in _SPONSORS if entry[0] == renewal_name), None)
+        if renewal is not None:
+            candidates = [renewal] + [entry for entry in candidates if entry[0] != renewal_name]
+
     matches = LEAGUES[run.league].matches
     base = 35 * LEAGUES[run.league].weight + max(0, run.reputation * 3)
     offers = []
@@ -203,6 +219,12 @@ def sponsor_offers(run: CareerRun) -> List[Dict[str, Any]]:
         target = min(matches, max(2, matches // 2 + (index % 2)))
         upfront = base + rng.randrange(0, 31, 10)
         bonus = upfront + 40 + target * 10
+        is_renewal = bool(renewal_name and name == renewal_name)
+        description_es = f"Ganá al menos {target} partidos esta temporada."
+        description_en = f"Win at least {target} matches this season."
+        if is_renewal:
+            description_es = f"Renovación tras cumplir el objetivo anterior. {description_es}"
+            description_en = f"Renewal after completing the previous objective. {description_en}"
         offers.append({
             "id": f"sponsor:{_slug(name)}:{run.season_number}",
             "name": name,
@@ -211,8 +233,9 @@ def sponsor_offers(run: CareerRun) -> List[Dict[str, Any]]:
             "bonus": bonus,
             "objective": "wins",
             "target": target,
-            "description_es": f"Ganá al menos {target} partidos esta temporada.",
-            "description_en": f"Win at least {target} matches this season.",
+            "renewal": is_renewal,
+            "description_es": description_es,
+            "description_en": description_en,
         })
     return offers
 
@@ -459,6 +482,18 @@ def _same_league_as_last_season(run: CareerRun) -> bool:
     if previous is None:
         return True
     return str(previous.get("league") or run.league) == run.league
+
+
+def _previous_sponsor_outcome(run: CareerRun) -> Dict[str, Any] | None:
+    return next(
+        (
+            entry
+            for entry in reversed(run.timeline)
+            if entry.get("type") in {"sponsor.completed", "sponsor.failed"}
+            and int(entry.get("season") or 0) < run.season_number
+        ),
+        None,
+    )
 
 
 def _season_event(run: CareerRun, types: set[str]) -> bool:

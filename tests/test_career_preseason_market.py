@@ -11,6 +11,7 @@ from auto_ptu.career.season_market import (
     club_offers,
     permanent_pokemon_count,
     settle_sponsor,
+    sign_sponsor,
     sponsor_offers,
 )
 from auto_ptu.career.service import CareerService
@@ -147,7 +148,6 @@ def test_sponsor_pays_upfront_and_bonus_only_when_objective_is_met(tmp_path: Pat
     offer = sponsor_offers(run)[0]
     money_before = run.money
 
-    from auto_ptu.career.season_market import sign_sponsor
     sign_sponsor(run, offer["id"])
     assert run.money == money_before + offer["upfront"]
 
@@ -156,6 +156,46 @@ def test_sponsor_pays_upfront_and_bonus_only_when_objective_is_met(tmp_path: Pat
     assert result["bonus"] == offer["bonus"]
     assert run.money == money_before + offer["upfront"] + offer["bonus"]
     assert settle_sponsor(run, wins=offer["target"] + 1) is None
+
+
+def test_completed_sponsor_gets_explicit_next_season_renewal_offer(tmp_path: Path) -> None:
+    service = service_for(tmp_path)
+    run = new_run(service, "sponsor-renewal-user", 4410)
+    first_offer = sponsor_offers(run)[0]
+
+    sign_sponsor(run, first_offer["id"])
+    result = settle_sponsor(run, wins=first_offer["target"])
+    assert result is not None
+    assert result["type"] == "sponsor.completed"
+
+    run.season_number = 2
+    if run.season:
+        run.season.number = 2
+    next_offers = sponsor_offers(run)
+
+    assert next_offers[0]["name"] == first_offer["name"]
+    assert next_offers[0]["renewal"] is True
+    assert next_offers[0]["description_en"].startswith("Renewal after completing the previous objective.")
+    assert sponsor_offers(run) == next_offers
+
+
+def test_failed_sponsor_does_not_immediately_offer_renewal(tmp_path: Path) -> None:
+    service = service_for(tmp_path)
+    run = new_run(service, "sponsor-failure-user", 4411)
+    first_offer = sponsor_offers(run)[0]
+
+    sign_sponsor(run, first_offer["id"])
+    result = settle_sponsor(run, wins=max(0, first_offer["target"] - 1))
+    assert result is not None
+    assert result["type"] == "sponsor.failed"
+
+    run.season_number = 2
+    if run.season:
+        run.season.number = 2
+    next_offers = sponsor_offers(run)
+
+    assert first_offer["name"] not in {entry["name"] for entry in next_offers}
+    assert all(entry["renewal"] is False for entry in next_offers)
 
 
 def test_capture_board_still_works_with_six_owned_pokemon_and_overflows_to_pc(tmp_path: Path) -> None:
