@@ -22,11 +22,18 @@ app = FastAPI(title="AutoPTU Career API")
 app.include_router(career_router)
 
 CAREER_STATIC_DIR = Path(__file__).resolve().parent / "public" / "career-game"
+DEFAULT_CAREER_FALLBACK_URL = "https://autoptu-career-open-qa.vercel.app/career-game"
 app.mount(
     "/career-game/assets",
     StaticFiles(directory=CAREER_STATIC_DIR / "assets", check_dir=False),
     name="career-assets",
 )
+
+
+def _career_fallback_url(path: str = "") -> str:
+    base = str(os.environ.get("CAREER_FALLBACK_URL") or DEFAULT_CAREER_FALLBACK_URL).strip().rstrip("/")
+    suffix = quote(path.lstrip("/"), safe="/")
+    return f"{base}/{suffix}" if suffix else f"{base}/"
 
 
 @app.get("/api/v1/build", include_in_schema=False)
@@ -46,10 +53,10 @@ def deployed_build() -> dict[str, str]:
 def career_game(path: str = "") -> Response:
     entrypoint = CAREER_STATIC_DIR / "index.html"
     if not entrypoint.exists():
-        resume_path = f"/career-game/{path.lstrip('/')}"
         return RedirectResponse(
-            f"/career-game/index.html?resume={quote(resume_path, safe='')}",
+            _career_fallback_url(path),
             status_code=307,
+            headers={"Cache-Control": "no-store"},
         )
     return FileResponse(entrypoint, headers={"Cache-Control": "no-store"})
 
