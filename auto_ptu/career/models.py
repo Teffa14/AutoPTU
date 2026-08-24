@@ -37,6 +37,27 @@ def _safe_nonnegative_int(value: Any, default: int = 0) -> int:
     return max(0, int(number))
 
 
+def _safe_string_list(value: Any) -> List[str]:
+    """Recover ordered persisted identifiers without trusting container shape or duplicates."""
+    if not isinstance(value, list):
+        return []
+    recovered: List[str] = []
+    for raw_value in value:
+        if not isinstance(raw_value, str):
+            continue
+        item = raw_value.strip()
+        if item and item not in recovered:
+            recovered.append(item)
+    return recovered
+
+
+def _safe_dict_list(value: Any) -> List[Dict[str, Any]]:
+    """Keep only mapping records from persisted event/history containers."""
+    if not isinstance(value, list):
+        return []
+    return [dict(entry) for entry in value if isinstance(entry, dict)]
+
+
 def _safe_relationships(value: Any) -> Dict[str, int]:
     """Recover durable social memory without trusting malformed save payloads."""
     if not isinstance(value, dict):
@@ -363,6 +384,15 @@ class CareerRun:
                 for entry in battles_payload
                 if isinstance(entry, dict)
             ]
+            decisions_required = max(1, _safe_nonnegative_int(season_values.get("decisions_required", 1), 1))
+            season_values["decisions_required"] = decisions_required
+            season_values["decisions_completed"] = min(
+                _safe_nonnegative_int(season_values.get("decisions_completed", 0)),
+                decisions_required,
+            )
+            season_values["battle_ids"] = _safe_string_list(season_values.get("battle_ids"))
+            season_values["training_completed_ids"] = _safe_string_list(season_values.get("training_completed_ids"))
+            season_values["decision_history"] = _safe_dict_list(season_values.get("decision_history"))
             season = SeasonState(**season_values)
         pokemon_payload = _safe_pokemon_payloads(payload.get("pokemon"))
         pokemon = [_load_dataclass(CareerPokemon, entry) for entry in pokemon_payload]
