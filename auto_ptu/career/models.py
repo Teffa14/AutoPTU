@@ -309,19 +309,32 @@ class CareerRun:
         versions = _load_dataclass(ContentVersion, payload.get("versions") or {})
         season_payload = payload.get("season")
         season = None
-        if season_payload:
+        if isinstance(season_payload, dict):
             raw = dict(season_payload)
             decision_payload = raw.pop("decision", None)
             battles_payload = raw.pop("battles", [])
             decision = None
-            if decision_payload:
-                options = [_load_dataclass(CareerDecisionOption, entry) for entry in decision_payload.get("options", [])]
+            if isinstance(decision_payload, dict):
+                options_payload = decision_payload.get("options", [])
+                if not isinstance(options_payload, list):
+                    options_payload = []
+                options = [
+                    _load_dataclass(CareerDecisionOption, entry)
+                    for entry in options_payload
+                    if isinstance(entry, dict)
+                ]
                 decision_values = _known_dataclass_values(CareerDecision, decision_payload)
                 decision_values["options"] = options
                 decision = CareerDecision(**decision_values)
             season_values = _known_dataclass_values(SeasonState, raw)
             season_values["decision"] = decision
-            season_values["battles"] = [_load_dataclass(BattleSpec, entry) for entry in battles_payload]
+            if not isinstance(battles_payload, list):
+                battles_payload = []
+            season_values["battles"] = [
+                _load_dataclass(BattleSpec, entry)
+                for entry in battles_payload
+                if isinstance(entry, dict)
+            ]
             season = SeasonState(**season_values)
         pokemon_payload = _safe_pokemon_payloads(payload.get("pokemon"))
         pokemon = [_load_dataclass(CareerPokemon, entry) for entry in pokemon_payload]

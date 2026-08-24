@@ -257,3 +257,34 @@ def test_save_loader_recovers_malformed_pokemon_container_before_roster_use() ->
     assert len(restored.pokemon) == 1
     assert restored.pokemon[0].id == valid_partner["id"]
     assert restored.pokemon[0].species == valid_partner["species"]
+
+
+def test_save_loader_recovers_malformed_season_containers() -> None:
+    run = CareerEngine().new_run(
+        player_id="save-season-container-recovery",
+        name="Tala",
+        region="sinnoh",
+        starter="Turtwig",
+        classes=["Ace Trainer"],
+        seed=2111,
+    )
+
+    for corrupt_season in ([], "broken", 7):
+        payload = run.to_dict()
+        payload["season"] = corrupt_season
+
+        restored = CareerRun.from_dict(payload)
+
+        assert restored.season is None
+
+    payload = run.to_dict()
+    assert isinstance(payload["season"], dict)
+    payload["season"]["decision"] = "broken"
+    payload["season"]["battles"] = [None, "bad-battle"]
+
+    restored = CareerRun.from_dict(payload)
+
+    assert restored.season is not None
+    assert restored.season.number == run.season.number
+    assert restored.season.decision is None
+    assert restored.season.battles == []
