@@ -70,6 +70,34 @@ def _safe_pokemon_payloads(value: Any) -> List[Dict[str, Any]]:
     return [dict(entry) for entry in value if isinstance(entry, dict)]
 
 
+def _safe_active_roster(value: Any, pokemon: List["CareerPokemon"]) -> List[str]:
+    """Recover a complete legal active team from persisted roster identifiers."""
+    eligible_order = [
+        entry.id
+        for entry in pokemon
+        if entry.status != "retired" and entry.career_health > 0
+    ]
+    eligible_ids = set(eligible_order)
+    requested: List[str] = []
+    if isinstance(value, list):
+        for raw_id in value:
+            if not isinstance(raw_id, str):
+                continue
+            pokemon_id = raw_id.strip()
+            if pokemon_id in eligible_ids and pokemon_id not in requested:
+                requested.append(pokemon_id)
+            if len(requested) >= 6:
+                break
+    target_size = min(6, len(eligible_order))
+    if len(requested) < target_size:
+        requested.extend(
+            pokemon_id
+            for pokemon_id in eligible_order
+            if pokemon_id not in requested
+        )
+    return requested[:target_size]
+
+
 @dataclass
 class ContentVersion:
     rules: str = "ptu-1.05-autoptu"
@@ -354,9 +382,7 @@ class CareerRun:
                 )
                 for index, species in enumerate(legacy_roster)
             ]
-        active_roster = [str(value) for value in payload.get("active_roster") or []]
-        if not active_roster:
-            active_roster = [entry.id for entry in pokemon if entry.status != "retired"][:6]
+        active_roster = _safe_active_roster(payload.get("active_roster"), pokemon)
         summary = _load_dataclass(CareerSummary, payload["summary"]) if payload.get("summary") else None
         values = dict(payload)
         for key in ("build", "contract", "versions", "season", "summary", "pokemon", "active_roster"):
