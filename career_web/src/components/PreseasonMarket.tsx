@@ -12,6 +12,14 @@ interface Props {
   onClubReady: (ready: boolean) => void;
 }
 
+interface ReturningLoan {
+  id: string;
+  species: string;
+  club_id: string;
+  club_name: string;
+  active: boolean;
+}
+
 export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
   const [snapshot, setSnapshot] = useState<PreseasonSnapshot | null>(null);
   const [busy, setBusy] = useState("");
@@ -74,7 +82,9 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
           <div className="market-title"><b>{locale === "es" ? "Contrato de club" : "Club contract"}</b><span>{locale === "es" ? "Elegí continuidad o cambio" : "Choose continuity or a move"}</span></div>
           <div className="market-grid club-grid">
             {snapshot.club_offers.map((offer) => {
-              const enhanced = offer as typeof offer & { gift_species?: string; gift_rarity?: string; retains_current_team?: boolean };
+              const enhanced = offer as typeof offer & { gift_species?: string; gift_rarity?: string; retains_current_team?: boolean; returning_loans?: ReturningLoan[] };
+              const returningLoans = enhanced.returning_loans ?? [];
+              const returnClub = returningLoans[0]?.club_name ?? run.contract?.club_name ?? "";
               return (
                 <article key={offer.id} className={`market-card club-card ${offer.renewal ? "renewal-card" : ""}`}>
                   <span className="market-tag">{offer.renewal ? (locale === "es" ? "EXTENSIÓN" : "EXTENSION") : (locale === "es" ? "OFERTA" : "OFFER")}</span>
@@ -82,6 +92,13 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
                   <strong>₽ {offer.salary} <small>/{locale === "es" ? "temporada" : "season"}</small></strong>
                   <p>{offer.perk.label}: +{offer.perk.amount} {marketStat(offer.perk.stat, locale)}</p>
                   {offer.renewal ? <p className="renewal-copy">{locale === "es" ? `Extendés ${offer.seasons} temporadas y mantenés los Pokémon cedidos actuales.` : `Extend for ${offer.seasons} seasons and keep the current loan Pokémon.`}</p> : null}
+                  {returningLoans.length ? (
+                    <div className="loan-return-warning">
+                      <small>{locale === "es" ? `SI FIRMÁS, VUELVEN A ${returnClub}` : `IF YOU SIGN, RETURN TO ${returnClub}`}</small>
+                      <div>{returningLoans.map((pokemon) => <span key={pokemon.id}><PokemonSprite name={pokemon.species} className="market-sprite" /><b>{pokemon.species}</b>{pokemon.active ? <em>{locale === "es" ? "ACTIVO" : "ACTIVE"}</em> : null}</span>)}</div>
+                      <p>{locale === "es" ? "Salen de tu plantel al cambiar de club. Su paso por tu carrera queda registrado y no cuenta como captura permanente." : "They leave your squad when you change clubs. Their career history remains recorded and they do not count as permanent captures."}</p>
+                    </div>
+                  ) : null}
                   <div className="loan-strip">
                     <small>{locale === "es" ? "PLANTEL CEDIDO" : "LOAN SQUAD"}</small>
                     {offer.loan_species.map((species) => <span key={species}><PokemonSprite name={species} className="market-sprite" /><b>{species}</b></span>)}
