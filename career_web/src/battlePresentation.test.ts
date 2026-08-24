@@ -48,4 +48,37 @@ describe("battle presentation", () => {
     expect(playbackEventIndexes(tactical)).toEqual([0, 1]);
     expect(deriveBattleView(tactical, 1).combatants.find((entry) => entry.id === "career-away-1")?.position).toEqual([8, 4]);
   });
+
+  it("keeps malformed non-finite transcript numbers out of the renderer state", () => {
+    const malformed = {
+      ...transcript,
+      initial_state: {
+        ...transcript.initial_state,
+        combatants: transcript.initial_state.combatants.map((entry, index) => index === 0
+          ? { ...entry, hp: Number.NaN, max_hp: Number.POSITIVE_INFINITY, position: [Number.NaN, 2] }
+          : entry),
+      },
+      events: [
+        { type: "shift", round: Number.NaN, actor: "career-home-1", to: [Number.POSITIVE_INFINITY, 4] },
+        { type: "move", round: 1, actor: "career-home-1", target: "career-away-1", move: "Peck", hit: true, damage: Number.NaN, target_hp: Number.NEGATIVE_INFINITY, type_multiplier: Number.POSITIVE_INFINITY, attack_value: Number.NaN, defense_value: Number.POSITIVE_INFINITY, effective_db: Number.NEGATIVE_INFINITY },
+      ],
+    } as BattleTranscript;
+
+    const shifted = deriveBattleView(malformed, 0);
+    const resolved = deriveBattleView(malformed, 1);
+    const home = shifted.combatants.find((entry) => entry.id === "career-home-1");
+    const away = resolved.combatants.find((entry) => entry.id === "career-away-1");
+
+    expect(home?.position).toBeUndefined();
+    expect(home?.hp).toBe(0);
+    expect(home?.max_hp).toBe(0);
+    expect(shifted.round).toBe(1);
+    expect(away?.hp).toBe(42);
+    expect(resolved.damage).toBe(0);
+    expect(resolved.effectiveness).toBe(1);
+    expect(resolved.attackValue).toBeNull();
+    expect(resolved.defenseValue).toBeNull();
+    expect(resolved.effectiveDb).toBeNull();
+    expect(battleCommentary("en", malformed, resolved)).not.toMatch(/NaN|Infinity/);
+  });
 });
