@@ -288,3 +288,50 @@ def test_save_loader_recovers_malformed_season_containers() -> None:
     assert restored.season.number == run.season.number
     assert restored.season.decision is None
     assert restored.season.battles == []
+
+
+def test_save_loader_recovers_corrupt_active_roster_before_team_use() -> None:
+    run = CareerEngine().new_run(
+        player_id="save-active-roster-recovery",
+        name="Nico",
+        region="kanto",
+        starter="Bulbasaur",
+        classes=["Ace Trainer"],
+        seed=2237,
+    )
+    payload = run.to_dict()
+    partner = dict(payload["pokemon"][0])
+    pokemon = []
+    for index in range(7):
+        entry = dict(partner)
+        entry["id"] = f"{run.id}-p{index + 1:03d}"
+        entry["is_partner"] = index == 0
+        entry["status"] = "active" if index < 6 else "pc"
+        pokemon.append(entry)
+    payload["pokemon"] = pokemon
+
+    for corrupt_roster in (None, "broken", {"id": "bad"}, 7):
+        corrupt_payload = dict(payload)
+        corrupt_payload["active_roster"] = corrupt_roster
+
+        restored = CareerRun.from_dict(corrupt_payload)
+
+        assert restored.active_roster == [entry["id"] for entry in pokemon[:6]]
+
+    payload["active_roster"] = [
+        " stale-id ",
+        f" {pokemon[0]['id']} ",
+        pokemon[0]["id"],
+        17,
+        pokemon[1]["id"],
+        pokemon[2]["id"],
+        pokemon[3]["id"],
+        pokemon[4]["id"],
+        pokemon[5]["id"],
+        pokemon[6]["id"],
+    ]
+
+    restored = CareerRun.from_dict(payload)
+
+    assert restored.active_roster == [entry["id"] for entry in pokemon[:6]]
+    assert len(restored.active_roster) == len(set(restored.active_roster)) == 6
