@@ -17,6 +17,8 @@ const transcript = {
     region: "kanto",
     league: "junior",
     season: 3,
+    level: 13,
+    away_team_levels: [12, 13, 14],
     difficulty_label: "even",
   },
   events: [],
@@ -41,6 +43,34 @@ describe("battle trainer presentation", () => {
     const second = battleTrainerPresentation("es", transcript, run, false);
     expect(first.away.name).toBe(second.away.name);
     expect(first.away.sprite).toBe(second.away.sprite);
+  });
+
+  it("shows rival progression from the battle data the engine actually scheduled", () => {
+    const presentation = battleTrainerPresentation("es", transcript, run, false);
+    expect(presentation.away.progression).toBe("T3 · NIVEL MEDIO 13 · EN DESARROLLO");
+
+    const veteranTranscript = {
+      ...transcript,
+      spec: { ...transcript.spec, season: 9, level: 44, away_team_levels: [42, 44, 46] },
+    } as BattleTranscript;
+    expect(battleTrainerPresentation("en", veteranTranscript, run, false).away.progression)
+      .toBe("S9 · AVG LEVEL 44 · VETERAN");
+  });
+
+  it("never exposes NaN or Infinity when persisted battle level metadata is malformed", () => {
+    const malformed = {
+      ...transcript,
+      spec: {
+        ...transcript.spec,
+        season: 4,
+        level: Number.NaN,
+        away_team_levels: [Number.NaN, Number.POSITIVE_INFINITY, -4],
+      },
+    } as BattleTranscript;
+    const progression = battleTrainerPresentation("es", malformed, run, false).away.progression;
+    expect(progression).toBe("T4 · CONSOLIDADO");
+    expect(progression).not.toContain("NaN");
+    expect(progression).not.toContain("Infinity");
   });
 
   it("counts only formal meetings before the battle currently being replayed", () => {
