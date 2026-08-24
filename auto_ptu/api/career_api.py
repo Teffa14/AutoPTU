@@ -130,6 +130,9 @@ def career_decision(
 ) -> dict:
     identity = _user(authorization, x_career_user)
     try:
+        preseason = SERVICE.preseason(identity.user_id, run_id)
+        if not bool(preseason.get("club_completed")):
+            raise ValueError("Choose a club before committing a career decision.")
         return SERVICE.decide(identity.user_id, run_id, payload, idempotency_key or "")
     except Exception as exc:
         raise _error(exc) from exc
