@@ -32,3 +32,13 @@ def test_vercel_artifact_workflows_keep_thin_career_entrypoint() -> None:
         assert 'root / "career_app.py"' in workflow
         assert "from career_app import app" in workflow
         assert "from auto_ptu.api.server import app" not in workflow
+
+
+def test_vercel_bundle_rebuilds_when_thin_entrypoint_changes() -> None:
+    root = Path(__file__).resolve().parents[1]
+    workflow = (root / ".github/workflows/build-vercel-bundle.yml").read_text(encoding="utf-8")
+
+    # career_app.py is the production Career function source. If it changes without
+    # rebuilding the slim artifact, Vercel can keep serving a stale entrypoint even
+    # while main contains the fix.
+    assert workflow.count("- career_app.py") == 2
