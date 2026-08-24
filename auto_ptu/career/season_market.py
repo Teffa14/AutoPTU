@@ -106,6 +106,7 @@ def club_offers(run: CareerRun) -> List[Dict[str, Any]]:
             "seasons": 2 if renewal else 1,
             "loan_slots": loan_slots,
             "loan_species": loan_species,
+            "returning_loans": [] if renewal else _loan_return_preview(run),
             "gift_species": gift_species,
             "gift_rarity": gift_rarity,
             "gift_target_rarity": gift_target_rarity,
@@ -437,10 +438,28 @@ def _create_loan(run: CareerRun, species: str, club_id: str) -> CareerPokemon:
     )
 
 
+def _loan_return_preview(run: CareerRun) -> List[Dict[str, Any]]:
+    active = set(run.active_roster)
+    current_club_id = run.contract.club_id if run.contract else ""
+    current_club_name = run.contract.club_name if run.contract else ""
+    return [
+        {
+            "id": entry.id,
+            "species": entry.species,
+            "club_id": entry.loan_club_id,
+            "club_name": current_club_name if entry.loan_club_id == current_club_id else entry.loan_club_id,
+            "active": entry.id in active,
+        }
+        for entry in run.pokemon
+        if entry.ownership == "loan"
+    ]
+
+
 def _return_loans(run: CareerRun) -> List[str]:
     loans = [entry for entry in run.pokemon if entry.ownership == "loan"]
     if not loans:
         return []
+    returned_pokemon = _loan_return_preview(run)
     loan_ids = {entry.id for entry in loans}
     run.pokemon = [entry for entry in run.pokemon if entry.id not in loan_ids]
     run.active_roster = [entry_id for entry_id in run.active_roster if entry_id not in loan_ids]
@@ -449,7 +468,10 @@ def _return_loans(run: CareerRun) -> List[str]:
         "type": "club.loans_returned",
         "season": run.season_number,
         "age": run.age,
+        "club": run.contract.club_name if run.contract else "",
+        "club_id": run.contract.club_id if run.contract else "",
         "pokemon_ids": sorted(loan_ids),
+        "pokemon": returned_pokemon,
         "label": f"Returned {len(loan_ids)} club loan Pokémon.",
     })
     return sorted(loan_ids)
