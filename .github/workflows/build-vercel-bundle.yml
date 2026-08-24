@@ -89,7 +89,7 @@ jobs:
               return True
 
           runtime_roots = [root / "auto_ptu", root / "files", root / "public" / "career-game"]
-          runtime_files: list[Path] = []
+          runtime_files: list[Path] = [root / "career_app.py"]
           for runtime_root in runtime_roots:
               if runtime_root.exists():
                   runtime_files.extend(path for path in runtime_root.rglob("*") if include(path))
@@ -119,6 +119,8 @@ jobs:
           career_entry_path = "public/career-game/index.html"
           with zipfile.ZipFile(bundle_path) as archive:
               names = set(archive.namelist())
+              if "career_app.py" not in names:
+                  raise RuntimeError("Career runtime omitted the thin Career entrypoint")
               if gen9_archive_path not in names:
                   raise RuntimeError(f"Career runtime omitted required PBS: {gen9_archive_path}")
               gen9_text = archive.read(gen9_archive_path).decode("utf-8-sig", errors="replace")
@@ -153,13 +155,15 @@ pydot>=3.0
 """
           (out / "requirements.txt").write_text(requirements, encoding="utf-8")
 
-          bootstrap = f'''"""Slim Vercel bootstrap generated from AutoPTU {sha}."""\nfrom __future__ import annotations\n\nimport os\nimport shutil\nimport sys\nimport zipfile\nfrom pathlib import Path\n\nSOURCE_COMMIT = "{sha}"\nBUNDLE = Path(__file__).resolve().parent / "runtime_bundle.zip"\nRUNTIME = Path("/tmp/autoptu-runtime")\nMARKER = RUNTIME / ".source-commit"\n\nif not MARKER.exists() or MARKER.read_text(encoding="utf-8", errors="ignore").strip() != SOURCE_COMMIT:\n    shutil.rmtree(RUNTIME, ignore_errors=True)\n    RUNTIME.mkdir(parents=True, exist_ok=True)\n    with zipfile.ZipFile(BUNDLE) as archive:\n        archive.extractall(RUNTIME)\n    MARKER.write_text(SOURCE_COMMIT, encoding="utf-8")\n\nos.environ.setdefault("AUTO_PTU_RUNTIME_ROOT", str(RUNTIME))\nos.environ.setdefault("AUTOPTU_SOURCE_COMMIT", SOURCE_COMMIT)\nsys.path.insert(0, str(RUNTIME))\n\nfrom auto_ptu.api.server import app\n\n@app.get("/api/v1/build", include_in_schema=False)\ndef deployed_build() -> dict[str, str]:\n    return {{"source_commit": SOURCE_COMMIT}}\n\n__all__ = ["app"]\n'''
+          bootstrap = f'''"""Slim Vercel bootstrap generated from AutoPTU {sha}."""\nfrom __future__ import annotations\n\nimport os\nimport shutil\nimport sys\nimport zipfile\nfrom pathlib import Path\n\nSOURCE_COMMIT = "{sha}"\nBUNDLE = Path(__file__).resolve().parent / "runtime_bundle.zip"\nRUNTIME = Path("/tmp/autoptu-runtime")\nMARKER = RUNTIME / ".source-commit"\n\nif not MARKER.exists() or MARKER.read_text(encoding="utf-8", errors="ignore").strip() != SOURCE_COMMIT:\n    shutil.rmtree(RUNTIME, ignore_errors=True)\n    RUNTIME.mkdir(parents=True, exist_ok=True)\n    with zipfile.ZipFile(BUNDLE) as archive:\n        archive.extractall(RUNTIME)\n    MARKER.write_text(SOURCE_COMMIT, encoding="utf-8")\n\nos.environ.setdefault("AUTO_PTU_RUNTIME_ROOT", str(RUNTIME))\nos.environ.setdefault("AUTOPTU_SOURCE_COMMIT", SOURCE_COMMIT)\nsys.path.insert(0, str(RUNTIME))\n\nfrom career_app import app\n\n__all__ = ["app"]\n'''
           (out / "app.py").write_text(bootstrap, encoding="utf-8")
           bootstrap_text = (out / "app.py").read_text(encoding="utf-8")
           if f'SOURCE_COMMIT = "{sha}"' not in bootstrap_text:
               raise RuntimeError("Career deploy bootstrap lost its source commit")
-          if '@app.get("/api/v1/build", include_in_schema=False)' not in bootstrap_text:
-              raise RuntimeError("Career deploy bootstrap omitted the build provenance endpoint")
+          if "from career_app import app" not in bootstrap_text:
+              raise RuntimeError("Career deploy bootstrap bypassed the thin Career entrypoint")
+          if "auto_ptu.api.server" in bootstrap_text:
+              raise RuntimeError("Career deploy bootstrap imports the full battle server")
 
           config = {
               "$schema": "https://openapi.vercel.sh/vercel.json",
