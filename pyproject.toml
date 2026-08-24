@@ -29,7 +29,7 @@ dependencies = [
 auto-ptu = "auto_ptu.cli:app"
 
 [tool.vercel]
-entrypoint = "app:app"
+entrypoint = "career_app:app"
 
 [tool.setuptools.packages.find]
 where = ["."]

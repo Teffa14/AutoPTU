@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "python scripts/build_vercel.py",
   "functions": {
-    "app.py": {
+    "career_app.py": {
       "includeFiles": "public/career-game/**",
       "excludeFiles": "{tests/**,reports/**,portable_data/**,concept art/**,Animated Pokemon Sprites/**,Generation 9 Pack v3.3.4/**,7z-extra/**,build_logs/**,check here for issues/**,career_web/node_modules/**,auto_ptu/api/static/**,files/**/*.pdf,files/**/*.xlsx,files/**/*.xls,files/**/*.docx,files/rulebook/**,IMPLEMENTATION FILES/**/*.zip,IMPLEMENTATION FILES/**/*.rar,IMPLEMENTATION FILES/Generation 9 Pack v3.3.4/Audio/**,IMPLEMENTATION FILES/Generation 9 Pack v3.3.4/Graphics/**}"
     }
