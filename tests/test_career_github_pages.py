@@ -11,7 +11,7 @@ def test_career_api_entrypoint_exposes_playable_routes_without_full_server(monke
     sys.modules.pop("auto_ptu.api.server", None)
 
     module = importlib.import_module("career_app")
-    paths = {route.path for route in module.app.routes}
+    paths = {route.path for route in module.app.routes if hasattr(route, "path")}
 
     assert "/api/v1/catalog" in paths
     assert "/api/v1/build" in paths
