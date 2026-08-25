@@ -39,5 +39,11 @@ describe("sponsorRenewalContext", () => {
       2,
       "en",
     )).toBeNull();
+    expect(sponsorRenewalContext(
+      { name: "Rotom Broadcast", renewal: true },
+      [{ ...completed, wins: " ", target: "4" }],
+      2,
+      "en",
+    )).toBeNull();
   });
 });
