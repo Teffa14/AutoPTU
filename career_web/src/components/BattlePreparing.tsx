@@ -15,7 +15,7 @@ export function BattlePreparing({ run, locale, onRetry, attempt = 0 }: {
   const [retrying, setRetrying] = useState(false);
   const activeRoster = Array.isArray(run?.active_roster) ? run.active_roster : [];
   const pokemon = Array.isArray(run?.pokemon) ? run.pokemon : [];
-  const lineup = activeRoster.map((id) => pokemon.find((entry) => entry.id === id))
+  const lineup = activeRoster.map((id) => pokemon.find((entry) => entry && typeof entry === "object" && entry.id === id))
     .filter((entry) => entry !== undefined);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export function BattlePreparing({ run, locale, onRetry, attempt = 0 }: {
 
   return (
     <section className="battle-preparing" role="status">
-      <header><span>{run?.build.region ?? (locale === "es" ? "Liga" : "League")} · {run?.league ?? "league"}</span><b>{run?.contract?.club_name ?? (locale === "es" ? "Tu equipo" : "Your team")}</b></header>
+      <header><span>{run?.build?.region ?? (locale === "es" ? "Liga" : "League")} · {run?.league ?? "league"}</span><b>{run?.contract?.club_name ?? (locale === "es" ? "Tu equipo" : "Your team")}</b></header>
       <div className="preparing-field">
         <div className="field-grid" aria-hidden="true" />
         <div className="team-entry">{lineup.map((pokemon) => <PokemonSprite key={pokemon.id} name={pokemon.species} className="entry-sprite" />)}</div>
