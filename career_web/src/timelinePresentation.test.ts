@@ -1,6 +1,48 @@
 import { describe, expect, it } from "vitest";
 
-import { eventTitle, seasonPostbattleReview, timelineSeasonDecisions } from "./components/TimelineScreen";
+import { eventTitle, seasonPostbattleReview, timelineRenderState, timelineSeasonDecisions } from "./components/TimelineScreen";
+
+describe("timeline legacy save resilience", () => {
+  it("fails closed when the career-book collections are malformed", () => {
+    expect(timelineRenderState({
+      build: null,
+      timeline: null,
+      pokemon: null,
+      achievements: null,
+      totals: null,
+    })).toEqual({
+      trainerName: "",
+      starter: "",
+      timeline: [],
+      pokemonCount: 0,
+      evolutions: 0,
+      achievements: [],
+      totals: { wins: 0, losses: 0, draws: 0, titles: 0 },
+    });
+  });
+
+  it("keeps valid career history while dropping corrupt entries", () => {
+    expect(timelineRenderState({
+      build: { name: "  Red Campo  ", starter: " Pikachu " },
+      timeline: [null, { type: "season.completed", club: "Pewter Forge" }, "broken"],
+      pokemon: [
+        null,
+        { species: "Pikachu", evolution_history: ["Pichu>Pikachu"] },
+        { species: "Eevee", evolution_history: null },
+      ],
+      achievements: [" First Win ", "", null],
+      totals: { wins: 8, losses: "3", draws: Number.NaN, titles: Number.POSITIVE_INFINITY },
+    })).toEqual({
+      trainerName: "Red Campo",
+      starter: "Pikachu",
+      timeline: [{ type: "season.completed", club: "Pewter Forge" }],
+      pokemonCount: 2,
+      evolutions: 1,
+      achievements: ["First Win", "null"],
+      totals: { wins: 8, losses: 3, draws: 0, titles: 0 },
+    });
+  });
+});
 
 describe("timeline season decisions", () => {
   it("reads the complete decision ledger for an advanced season", () => {
