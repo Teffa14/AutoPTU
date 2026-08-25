@@ -107,17 +107,19 @@ function returnedLoanClub(timeline: Record<string, unknown>[], signIndex: number
 }
 
 function returnedLoanSpecies(timeline: Record<string, unknown>[], signIndex: number): string[] {
+  const returned: string[] = [];
   for (let index = signIndex - 1; index >= 0; index -= 1) {
     const entry = asRecord(timeline[index]);
     if (entry.type === "club.offer_signed") break;
     if (entry.type !== "club.loans_returned") continue;
     const pokemon = Array.isArray(entry.pokemon) ? entry.pokemon : [];
-    return pokemon.flatMap((value) => {
-      const species = cleanText(asRecord(value).species);
-      return species ? [species] : [];
+    const species = pokemon.flatMap((value) => {
+      const name = cleanText(asRecord(value).species);
+      return name ? [name] : [];
     });
+    returned.unshift(...species);
   }
-  return [];
+  return returned;
 }
 
 function previousSeasonRecord(timeline: Record<string, unknown>[], signIndex: number, currentSeason: number): string {
