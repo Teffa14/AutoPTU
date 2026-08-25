@@ -93,6 +93,8 @@ describe("latestClubTransition", () => {
       giftSpecies: "Scyther",
       perkLabel: "Regional scouting network",
       record: "2-4-0",
+      previousLeague: "",
+      newLeague: "regular",
       questions: ["rebuild", "recovery", "contract"],
     });
     expect(clubTransitionQuestionText(brief!.questions[0], brief!, "es")).toContain("2 Pokémon cedidos");
@@ -127,6 +129,43 @@ describe("latestClubTransition", () => {
     const brief = latestClubTransition(run);
     expect(brief?.returnedLoans).toEqual(["Machoke", "Graveler"]);
     expect(brief?.questions[0]).toBe("rebuild");
+  });
+
+  it("surfaces an authoritative upward league move before neutral contract copy", () => {
+    const run = runWithTimeline([
+      { type: "club.offer_signed", season: 2, club: "Pewter Onix", salary: 180, seasons: 1 },
+      { type: "season.completed", season: 2, record: "4-4-0", league: "rookie" },
+      {
+        type: "club.offer_signed",
+        season: 3,
+        club: "Celadon Comets",
+        salary: 420,
+        seasons: 1,
+        renewal: false,
+      },
+    ]);
+
+    const brief = latestClubTransition(run);
+    expect(brief?.previousLeague).toBe("rookie");
+    expect(brief?.newLeague).toBe("regular");
+    expect(brief?.questions).toEqual(["step_up", "contract"]);
+    expect(clubTransitionQuestionText("step_up", brief!, "es")).toContain("Rookie a Regular");
+  });
+
+  it("fails closed on corrupt or downward league history", () => {
+    const corrupt = latestClubTransition(runWithTimeline([
+      { type: "season.completed", season: 2, record: "4-4-0", league: "champion" },
+      { type: "club.offer_signed", season: 3, club: "Celadon Comets", renewal: false },
+    ]));
+    expect(corrupt?.questions).toEqual(["contract"]);
+
+    const downwardRun = runWithTimeline([
+      { type: "season.completed", season: 2, record: "4-4-0", league: "elite" },
+      { type: "club.offer_signed", season: 3, club: "Celadon Comets", renewal: false },
+    ]);
+    downwardRun.league = "regular";
+    if (downwardRun.season) downwardRun.season.league = "regular";
+    expect(latestClubTransition(downwardRun)?.questions).toEqual(["contract"]);
   });
 
   it("treats a renewal as continuity and never invents loan returns", () => {

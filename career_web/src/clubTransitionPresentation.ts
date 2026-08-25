@@ -1,6 +1,6 @@
 import type { CareerRun, Locale } from "./types";
 
-export type ClubTransitionQuestion = "rebuild" | "momentum" | "recovery" | "continuity" | "contract";
+export type ClubTransitionQuestion = "rebuild" | "step_up" | "momentum" | "recovery" | "continuity" | "contract";
 
 export interface ClubTransitionBrief {
   season: number;
@@ -14,8 +14,12 @@ export interface ClubTransitionBrief {
   giftSpecies: string;
   perkLabel: string;
   record: string;
+  previousLeague: string;
+  newLeague: string;
   questions: ClubTransitionQuestion[];
 }
+
+const LEAGUE_ORDER = ["junior", "rookie", "regular", "elite"] as const;
 
 export function latestClubTransition(run: CareerRun): ClubTransitionBrief | null {
   const timeline = Array.isArray(run.timeline) ? run.timeline : [];
@@ -37,7 +41,10 @@ export function latestClubTransition(run: CareerRun): ClubTransitionBrief | null
   const previousClub = renewal ? newClub : previousSignedClub(timeline, signIndex) || returnedLoanClub(timeline, signIndex);
   const returnedLoans = renewal ? [] : returnedLoanSpecies(timeline, signIndex);
   const incomingLoans = stringList(signed.loan_species);
-  const record = previousSeasonRecord(timeline, signIndex, run.season_number);
+  const previousSeason = previousSeasonFacts(timeline, signIndex, run.season_number);
+  const record = previousSeason.record;
+  const previousLeague = previousSeason.league;
+  const newLeague = cleanLeague(run.league);
 
   return {
     season: run.season_number,
@@ -51,7 +58,9 @@ export function latestClubTransition(run: CareerRun): ClubTransitionBrief | null
     giftSpecies: cleanText(signed.gift_species),
     perkLabel: cleanText(asRecord(signed.perk).label),
     record,
-    questions: questionFamilies({ renewal, returnedLoans, record }),
+    previousLeague,
+    newLeague,
+    questions: questionFamilies({ renewal, returnedLoans, record, previousLeague, newLeague }),
   };
 }
 
@@ -60,6 +69,9 @@ export function clubTransitionQuestionText(question: ClubTransitionQuestion, bri
   if (question === "rebuild") return es
     ? `Volvieron ${brief.returnedLoans.length} Pokémon cedidos. ¿Cómo vas a reconstruir el plantel en ${brief.newClub}?`
     : `${brief.returnedLoans.length} loan Pokémon returned. How will you rebuild the squad at ${brief.newClub}?`;
+  if (question === "step_up") return es
+    ? `Subiste de ${leagueLabel(brief.previousLeague)} a ${leagueLabel(brief.newLeague)}. ¿Cómo vas a afrontar el salto de categoría?`
+    : `You moved up from ${leagueLabel(brief.previousLeague)} to ${leagueLabel(brief.newLeague)}. How will you handle the step up?`;
   if (question === "momentum") return es
     ? `Venís de un registro ${brief.record}. ¿Qué querés sostener en esta nueva etapa?`
     : `You are coming off a ${brief.record} record. What do you want to carry into this next chapter?`;
@@ -74,9 +86,16 @@ export function clubTransitionQuestionText(question: ClubTransitionQuestion, bri
     : `You signed for ${brief.seasons} ${brief.seasons === 1 ? "season" : "seasons"} with ${brief.newClub}. What is your immediate priority?`;
 }
 
-function questionFamilies(input: { renewal: boolean; returnedLoans: string[]; record: string }): ClubTransitionQuestion[] {
+function questionFamilies(input: {
+  renewal: boolean;
+  returnedLoans: string[];
+  record: string;
+  previousLeague: string;
+  newLeague: string;
+}): ClubTransitionQuestion[] {
   const questions: ClubTransitionQuestion[] = [];
   if (input.returnedLoans.length >= 2) questions.push("rebuild");
+  if (isLeagueStepUp(input.previousLeague, input.newLeague)) questions.push("step_up");
   const recordTrend = parseRecord(input.record);
   if (recordTrend > 0) questions.push("momentum");
   else if (recordTrend < 0) questions.push("recovery");
@@ -122,15 +141,30 @@ function returnedLoanSpecies(timeline: Record<string, unknown>[], signIndex: num
   return returned;
 }
 
-function previousSeasonRecord(timeline: Record<string, unknown>[], signIndex: number, currentSeason: number): string {
+function previousSeasonFacts(
+  timeline: Record<string, unknown>[],
+  signIndex: number,
+  currentSeason: number,
+): { record: string; league: string } {
   for (let index = signIndex - 1; index >= 0; index -= 1) {
     const entry = asRecord(timeline[index]);
     if (entry.type !== "season.completed") continue;
     const season = Number(entry.season ?? 0);
-    if (season >= currentSeason) continue;
-    return cleanText(entry.record);
+    if (!Number.isFinite(season) || season >= currentSeason) continue;
+    return { record: cleanText(entry.record), league: cleanLeague(entry.league) };
   }
-  return "";
+  return { record: "", league: "" };
+}
+
+function isLeagueStepUp(previousLeague: string, newLeague: string): boolean {
+  const previousRank = LEAGUE_ORDER.indexOf(previousLeague as (typeof LEAGUE_ORDER)[number]);
+  const newRank = LEAGUE_ORDER.indexOf(newLeague as (typeof LEAGUE_ORDER)[number]);
+  return previousRank >= 0 && newRank > previousRank;
+}
+
+function leagueLabel(league: string): string {
+  if (!league) return "";
+  return league.charAt(0).toUpperCase() + league.slice(1);
 }
 
 function parseRecord(record: string): number {
@@ -147,6 +181,11 @@ function stringList(value: unknown): string[] {
 function finiteInt(value: unknown): number {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? Math.max(0, Math.trunc(parsed)) : 0;
+}
+
+function cleanLeague(value: unknown): string {
+  const league = cleanText(value).toLowerCase();
+  return LEAGUE_ORDER.includes(league as (typeof LEAGUE_ORDER)[number]) ? league : "";
 }
 
 function cleanText(value: unknown): string {
