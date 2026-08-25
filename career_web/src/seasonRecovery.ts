@@ -1,4 +1,4 @@
-import type { CareerRun } from "./types";
+import type { CareerPokemon, CareerRun } from "./types";
 
 export type PendingBattleRecovery = {
   battleId: string | null;
@@ -31,6 +31,18 @@ function normalizedBattleIds(run: CareerRun): string[] {
     .filter((value): value is string => typeof value === "string")
     .map((value) => value.trim())
     .filter(Boolean);
+}
+
+export function normalizedActiveLineup(run: CareerRun): CareerPokemon[] {
+  const activeRoster = Array.isArray(run.active_roster) ? run.active_roster : [];
+  const pokemon = Array.isArray(run.pokemon)
+    ? run.pokemon.filter((entry): entry is CareerPokemon => Boolean(entry) && typeof entry === "object" && typeof entry.id === "string")
+    : [];
+  const byId = new Map(pokemon.map((entry) => [entry.id, entry]));
+  return activeRoster
+    .filter((id): id is string => typeof id === "string")
+    .map((id) => byId.get(id))
+    .filter((entry): entry is CareerPokemon => entry !== undefined);
 }
 
 export function repairExhaustedDecisionPhase(run: CareerRun): CareerRun | null {
