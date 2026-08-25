@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Application, Container, Graphics, Text, TextStyle } from "pixi.js";
 
 import type { BattleViewState } from "../battlePresentation";
-import { battleRenderFrameFactors, battleRenderMaxFps, detectBattleVisualQuality, persistBattleVisualQuality, prefersReducedMotion, type BattleVisualQuality } from "../battleQuality";
+import { battleOutcomeVisualState, battleRenderFrameFactors, battleRenderMaxFps, detectBattleVisualQuality, persistBattleVisualQuality, prefersReducedMotion, type BattleVisualQuality } from "../battleQuality";
 import type { BattleCombatant, BattleMove, BattleTranscript, Locale } from "../types";
 import { PokemonSprite } from "./PokemonSprite";
 
@@ -155,18 +155,19 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
       visual.container.visible = combatant.active !== false;
       if (combatant.position) targets.current.set(combatant.id, stagePosition(combatant.position, screen.current.width, screen.current.height, transcript.initial_state.grid, combatant.footprint_side));
     }
-    if (!app || effectiveQuality === "light" || reducedMotion) return;
+    if (!app) return;
     const event = view.event;
     if (!event) {
       for (const combatant of view.combatants) {
         const visual = visuals.current.get(combatant.id);
         if (!visual || !visual.container.visible) continue;
-        const winner = combatant.team === transcript.winner_team;
-        visual.container.alpha = winner ? 1 : 0.38;
-        visual.container.scale.set(winner ? 1.08 : 0.86);
+        const outcome = battleOutcomeVisualState(combatant.team, transcript.winner_team);
+        visual.container.alpha = outcome.alpha;
+        visual.container.scale.set(outcome.scale);
       }
       return;
     }
+    if (effectiveQuality === "light" || reducedMotion) return;
     const actor = visuals.current.get(view.actorId);
     const target = visuals.current.get(view.targetId);
     if (event.type === "switch") {
@@ -263,8 +264,6 @@ function buildStadium(width: number, height: number, grid?: { width: number; hei
   const columns = Math.max(2, grid?.width ?? 15);
   const rows = Math.max(2, grid?.height ?? 9);
   const metrics = tileMetrics(width, height, grid);
-  // The painted stadium is supplied by CSS. Pixi owns the deterministic
-  // tactical grid, actors and effects, so this layer stays translucent.
   stadium.addChild(new Graphics().rect(0, 0, width, height).fill({ color: 0x06100d, alpha: 0.12 }));
   const crowd = new Graphics().roundRect(width * 0.03, height * 0.035, width * 0.94, height * 0.14, 16).fill({ color: 0x13211d, alpha: 0.24 }).stroke({ color: 0xe8c86f, width: 2, alpha: 0.24 });
   for (let x = width * 0.055; x < width * 0.95; x += 17) {
