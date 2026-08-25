@@ -3,7 +3,7 @@ import { navigate } from "../App";
 import { careerApi } from "../api";
 import { hasPersistentCareerAccount, signInWithEmail, signInWithProvider, supabase } from "../auth";
 import { leaderboardTrainerName } from "../leaderboardPresentation";
-import { DEFAULT_TRAINER_SPRITE, trainerSpriteOptions } from "../trainerSprites";
+import { DEFAULT_TRAINER_SPRITE, trainerSpriteOptions, trainerSpriteStorageEntry } from "../trainerSprites";
 import type { CareerCatalog, CareerMode, CareerRun, Locale } from "../types";
 import { StarterPicker } from "./StarterPicker";
 import { TrainerSpritePicker } from "./TrainerSpritePicker";
@@ -71,7 +71,8 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
       const result = await careerApi.dailyAttempt(day, {
         mode, starter, name: trainerName, classes: [trainerClass], locale, trainer_sprite: trainerSprite,
       });
-      localStorage.setItem(`career-trainer-sprite:${result.run.build.name.trim().toLocaleLowerCase()}`, trainerSprite);
+      const storageEntry = trainerSpriteStorageEntry(result.run);
+      if (storageEntry) localStorage.setItem(storageEntry.key, trainerSprite);
       onRun(result.run);
       navigate(`run/${result.run.id}`);
     } catch (reason) { setError(localizedError(reason instanceof Error ? reason.message : String(reason), locale)); }
