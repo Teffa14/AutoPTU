@@ -33,16 +33,27 @@ function normalizedBattleIds(run: CareerRun): string[] {
     .filter(Boolean);
 }
 
-export function normalizedActiveLineup(run: CareerRun): CareerPokemon[] {
-  const activeRoster = Array.isArray(run.active_roster) ? run.active_roster : [];
-  const pokemon = Array.isArray(run.pokemon)
+function normalizedPokemon(run: CareerRun): CareerPokemon[] {
+  return Array.isArray(run.pokemon)
     ? run.pokemon.filter((entry): entry is CareerPokemon => Boolean(entry) && typeof entry === "object" && typeof entry.id === "string")
     : [];
+}
+
+export function normalizedActiveLineup(run: CareerRun): CareerPokemon[] {
+  const activeRoster = Array.isArray(run.active_roster) ? run.active_roster : [];
+  const pokemon = normalizedPokemon(run);
   const byId = new Map(pokemon.map((entry) => [entry.id, entry]));
   return activeRoster
     .filter((id): id is string => typeof id === "string")
     .map((id) => byId.get(id))
     .filter((entry): entry is CareerPokemon => entry !== undefined);
+}
+
+export function normalizeSeasonRosterState(run: CareerRun): CareerRun {
+  const pokemon = normalizedPokemon(run);
+  const activeRoster = normalizedActiveLineup({ ...run, pokemon }).map((entry) => entry.id);
+  if (pokemon === run.pokemon && activeRoster === run.active_roster) return run;
+  return { ...run, pokemon, active_roster: activeRoster };
 }
 
 export function repairExhaustedDecisionPhase(run: CareerRun): CareerRun | null {
