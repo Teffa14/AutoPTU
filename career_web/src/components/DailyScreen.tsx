@@ -108,7 +108,7 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
             <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="email@trainer.club" />
             <button onClick={emailOtp} disabled={!email || busy}>OTP</button>
           </>}
-          <small>{accountReady ? (locale === "es" ? "Tu identidad se usa sólo para ranked y leaderboard." : "Your identity is used only for ranked and leaderboard.") : accountChecking ? (locale === "es" ? "Comprobando cuenta…" : "Checking account…") : (locale === "es" ? "El Career casual no requiere cuenta." : "Casual Career remains open.")}</small>
+          <small>{accountReady ? (locale === "es" ? "Tu identidad se usa sólo para ranked y leaderboard." : "Your identity is used only for ranked and leaderboard.") : accountChecking ? (locale === "es" ? "Comprobando cuenta…" : "Checking account…") : (locale === "es" ? "El Career casual no requiere cuenta." : "Casual Career does not require an account.")}</small>
         </div> : <small>{locale === "es" ? "Ranked no está disponible en este build; el Career casual sigue libre." : "Ranked is unavailable in this build; casual Career remains open."}</small>}
         <footer><small>{locale === "es" ? "Tres intentos por modo · se conserva el mejor" : "Three attempts per mode · best result kept"}</small><button className="primary-action" onClick={beginAttempt} disabled={!starter || !trainerName.trim() || busy || !accountReady}>{busy ? "…" : locale === "es" ? "Iniciar intento" : "Start attempt"}</button></footer>
       </aside> : null}
