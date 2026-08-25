@@ -1,4 +1,5 @@
 import { achievementLabel } from "../achievementPresentation";
+import { sponsorObjectiveLabel, sponsorSeasonReview, sponsorStatusLabel } from "../sponsorReviewPresentation";
 import type { CareerRun, Locale } from "../types";
 
 interface Props {
@@ -28,6 +29,7 @@ export function CareerCelebration({ run, locale, season }: Props) {
   const promoted = completed.promoted === true;
   const score = Number(completed.score_delta ?? 0);
   const incident = completed.incident && typeof completed.incident === "object" ? completed.incident as Record<string, unknown> : null;
+  const sponsorReview = run ? sponsorSeasonReview(run, Number(completed.season)) : null;
   const positive = title || promoted || achievements.length > 0 || evolutions.length > 0 || score > 0 || Boolean(incident);
 
   return (
@@ -42,6 +44,17 @@ export function CareerCelebration({ run, locale, season }: Props) {
       </div>
       {evolutions.length ? <div className="evolution-highlights">{evolutions.map((entry, index) => <span key={`${String(entry.to)}-${index}`}><i>✦</i>{String(entry.from)} <b>→ {String(entry.to)}</b><small>LV {String(entry.level)}</small></span>)}</div> : null}
       {incident ? <div className="incident-highlight"><i>✦</i><div><small>{locale === "es" ? "IMPREVISTO" : "UNEXPECTED EVENT"}</small><b>{String(incident[locale === "es" ? "title_es" : "title_en"] ?? "")}</b><p>{String(incident[locale === "es" ? "detail_es" : "detail_en"] ?? "")}</p></div></div> : null}
+      {sponsorReview ? (
+        <div className="incident-highlight sponsor-season-review" aria-label={locale === "es" ? "Revisión de sponsor" : "Sponsor review"}>
+          <i>₽</i>
+          <div>
+            <small>{locale === "es" ? "REVISIÓN DE SPONSOR" : "SPONSOR REVIEW"}</small>
+            <b>{sponsorReview.name || (locale === "es" ? "Sin sponsor" : "No sponsor")} · {sponsorStatusLabel(sponsorReview, locale)}</b>
+            <p>{sponsorObjectiveLabel(sponsorReview, locale)}</p>
+            <p>{locale === "es" ? "Garantizado" : "Guaranteed"}: ₽ {sponsorReview.upfront} · {locale === "es" ? "Bonus pagado" : "Bonus paid"}: ₽ {sponsorReview.bonusPaid}</p>
+          </div>
+        </div>
+      ) : null}
       {achievements.length ? <div className="achievement-highlights">{achievements.map((entry) => <span key={entry}><i>◆</i><small>{locale === "es" ? "LOGRO" : "ACHIEVEMENT"}</small><b>{achievementLabel(entry, locale)}</b></span>)}</div> : null}
     </section>
   );
