@@ -1,10 +1,8 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-const base = process.env.VITE_BASE_PATH ?? "/career-game/";
-
-export default defineConfig({
-  base,
+export default defineConfig(({ command }) => ({
+  base: command === "serve" ? "/career-game/" : "/AutoPTU/career-game/",
   plugins: [react()],
   build: {
     outDir: "../public/career-game",
@@ -27,4 +25,4 @@ export default defineConfig({
       "/poke": "http://127.0.0.1:8010",
     },
   },
-});
+}));
