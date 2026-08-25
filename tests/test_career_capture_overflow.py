@@ -62,6 +62,7 @@ def test_capture_decisions_continue_after_active_six_and_report_pc_storage() -> 
         region="kanto",
         starter="Rattata",
         classes=["Ace Trainer"],
+        locale="en",
         seed=2032,
     )
 

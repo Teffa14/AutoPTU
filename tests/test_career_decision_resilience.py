@@ -33,6 +33,7 @@ def test_decision_generation_survives_missing_persisted_trainer_class() -> None:
         region="kanto",
         starter="Rattata",
         classes=["Ace Trainer"],
+        locale="en",
         seed=2041,
     )
     run.build.classes = []

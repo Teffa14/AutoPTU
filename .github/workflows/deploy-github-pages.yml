@@ -1,0 +1,82 @@
+name: Deploy Career to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/deploy-github-pages.yml
+      - career_web/**
+      - public/career-game/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: career_web/package-lock.json
+
+      - name: Install Career frontend
+        run: npm --prefix career_web ci
+
+      - name: Build Career frontend for GitHub Pages
+        env:
+          VITE_API_URL: ${{ vars.CAREER_API_URL || 'https://autoptu-career-api.onrender.com' }}
+        run: npm --prefix career_web run build
+
+      - name: Add Pages root redirect
+        shell: bash
+        run: |
+          cat > public/index.html <<'EOF'
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8" />
+              <meta http-equiv="refresh" content="0; url=./career-game/" />
+              <link rel="canonical" href="./career-game/" />
+              <title>AutoPTU Career</title>
+            </head>
+            <body>
+              <a href="./career-game/">Open AutoPTU Career</a>
+            </body>
+          </html>
+          EOF
+          touch public/.nojekyll
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}career-game/
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
