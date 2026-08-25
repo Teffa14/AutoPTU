@@ -13,9 +13,10 @@ export function BattlePreparing({ run, locale, onRetry, attempt = 0 }: {
 }) {
   const [slow, setSlow] = useState(false);
   const [retrying, setRetrying] = useState(false);
-  const lineup = run?.active_roster
-    .map((id) => run.pokemon.find((pokemon) => pokemon.id === id))
-    .filter((pokemon) => pokemon !== undefined) ?? [];
+  const activeRoster = Array.isArray(run?.active_roster) ? run.active_roster : [];
+  const pokemon = Array.isArray(run?.pokemon) ? run.pokemon : [];
+  const lineup = activeRoster.map((id) => pokemon.find((entry) => entry.id === id))
+    .filter((entry) => entry !== undefined);
 
   useEffect(() => {
     setSlow(false);
