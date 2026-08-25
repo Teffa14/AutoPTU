@@ -73,4 +73,17 @@ describe("automatic training candidates", () => {
     expect(canUseTrainingPlan(pokemon("mixed", { stat_training: { atk: 12, spatk: 11 } }), "power")).toBe(true);
     expect(canUseTrainingPlan(pokemon("full", { stat_training: { atk: 12, spatk: 12 } }), "power")).toBe(false);
   });
+
+  it("treats a malformed legacy active roster as empty instead of crashing season training", () => {
+    const source = run("advanced", [pokemon("available")], ["available"]);
+    (source as unknown as { active_roster: unknown }).active_roster = null;
+    expect(automaticTrainingCandidates(source, "conditioning")).toEqual([]);
+  });
+
+  it("ignores null legacy Pokemon entries while preserving valid active candidates", () => {
+    const available = pokemon("available");
+    const source = run("advanced", [available], [available.id]);
+    (source as unknown as { pokemon: unknown }).pokemon = [null, available];
+    expect(automaticTrainingCandidates(source, "guard")).toEqual([available.id]);
+  });
 });
