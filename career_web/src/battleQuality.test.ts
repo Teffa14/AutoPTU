@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { battleRenderFrameFactors, battleRenderMaxFps, chooseBattleVisualQuality } from "./battleQuality";
+import { battleOutcomeVisualState, battleRenderFrameFactors, battleRenderMaxFps, chooseBattleVisualQuality } from "./battleQuality";
 
 describe("chooseBattleVisualQuality", () => {
   it("forces light mode for reduced motion", () => {
@@ -54,5 +54,16 @@ describe("battle render budget", () => {
     const twoFrames = battleRenderFrameFactors(2);
     expect(twoFrames.positionBlend).toBeCloseTo(0.36, 10);
     expect(twoFrames.impulseDecay).toBeCloseTo(0.6084, 10);
+  });
+});
+
+describe("battle outcome feedback", () => {
+  it("keeps decisive winner and loser readability available to light mode", () => {
+    expect(battleOutcomeVisualState("career-home", "career-home")).toEqual({ alpha: 1, scale: 1.08 });
+    expect(battleOutcomeVisualState("career-away", "career-home")).toEqual({ alpha: 0.38, scale: 0.86 });
+  });
+
+  it("fails closed when a transcript has no winner team", () => {
+    expect(battleOutcomeVisualState("career-home", "")).toEqual({ alpha: 1, scale: 1 });
   });
 });
