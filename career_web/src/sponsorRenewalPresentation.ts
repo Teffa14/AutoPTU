@@ -1,4 +1,4 @@
-import type { Locale, TimelineEvent } from "./types";
+import type { Locale } from "./types";
 
 interface SponsorRenewalOffer {
   name: string;
@@ -18,7 +18,7 @@ function safeNonnegativeInteger(value: unknown): number | null {
 
 export function sponsorRenewalContext(
   offer: SponsorRenewalOffer,
-  timeline: TimelineEvent[],
+  timeline: Record<string, unknown>[],
   seasonNumber: number,
   locale: Locale,
 ): SponsorRenewalContext | null {
