@@ -40,4 +40,9 @@ describe("battle loading recovery", () => {
     expect(preparingComponent).toContain("activeRoster.map");
     expect(preparingComponent).toContain("pokemon.find");
   });
+
+  it("fails closed when legacy prebattle metadata contains missing build or null pokemon entries", () => {
+    expect(preparingComponent).toContain("run?.build?.region");
+    expect(preparingComponent).toContain("entry && typeof entry === \"object\" && entry.id === id");
+  });
 });
