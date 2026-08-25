@@ -3,6 +3,7 @@ import { Application, Container, Graphics, Text, TextStyle } from "pixi.js";
 
 import type { BattleViewState } from "../battlePresentation";
 import { battleOutcomeVisualState, battleRenderFrameFactors, battleRenderMaxFps, detectBattleVisualQuality, persistBattleVisualQuality, prefersReducedMotion, type BattleVisualQuality } from "../battleQuality";
+import { createBattleTimerRegistry, type BattleTimerRegistry } from "../battleTimerRegistry";
 import type { BattleCombatant, BattleMove, BattleTranscript, Locale } from "../types";
 import { PokemonSprite } from "./PokemonSprite";
 
@@ -47,7 +48,8 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
   const targets = useRef<Map<string, [number, number]>>(new Map());
   const impulses = useRef<Map<string, [number, number]>>(new Map());
   const effects = useRef<ArenaEffect[]>([]);
-  const timers = useRef<number[]>([]);
+  const timers = useRef<BattleTimerRegistry | null>(null);
+  if (!timers.current) timers.current = createBattleTimerRegistry();
   const screen = useRef({ width: 900, height: 520 });
   const [quality, setQuality] = useState<BattleVisualQuality>(() => detectBattleVisualQuality());
   const reducedMotion = prefersReducedMotion();
@@ -140,14 +142,14 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
       appRef.current = null;
       visuals.current.clear();
       effects.current = [];
-      timers.current.forEach((timer) => window.clearTimeout(timer));
-      timers.current = [];
+      timers.current?.clearAll();
       if (app) app.destroy(true, { children: true, texture: false, textureSource: false });
       mount.replaceChildren();
     };
   }, [effectiveQuality, transcript]);
 
   useEffect(() => {
+    timers.current?.clearAll();
     const app = appRef.current;
     for (const combatant of view.combatants) {
       const visual = visuals.current.get(combatant.id);
@@ -176,7 +178,7 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
         incoming.container.visible = true;
         incoming.container.alpha = 1;
         incoming.container.scale.set(0.25);
-        timers.current.push(window.setTimeout(() => incoming.container.scale.set(1), 40));
+        timers.current?.schedule(() => incoming.container.scale.set(1), 40);
         spawnStatus(app, incoming.container.x, incoming.container.y - 34, locale === "es" ? "¡ENTRA!" : "IN!", effects.current, 0x72d9a0);
       }
       return;
@@ -184,7 +186,7 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
     if (event.type === "shift" && actor) {
       spawnStatus(app, actor.container.x, actor.container.y - 34, locale === "es" ? "POSICIÓN" : "POSITION", effects.current, 0x72d9a0);
       actor.container.scale.set(1.06);
-      timers.current.push(window.setTimeout(() => actor.container.scale.set(1), 220));
+      timers.current?.schedule(() => actor.container.scale.set(1), 220);
       return;
     }
     if ((event.type === "forced_movement" || event.type === "maneuver") && target) {
@@ -192,7 +194,7 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
       const targetPoint = targets.current.get(view.targetId);
       if (actorPoint && targetPoint) spawnAttack(app, actorPoint, targetPoint, undefined, effects.current, false);
       impulses.current.set(view.targetId, [view.targetId.includes("away") ? 28 : -28, -9]);
-      flashCombatant(target, 0xf0c760, timers.current);
+      flashCombatant(target, 0xf0c760, timers.current!);
       spawnStatus(app, target.container.x, target.container.y - 34, locale === "es" ? "MANIOBRA" : "MANEUVER", effects.current, 0xf0c760);
       return;
     }
@@ -206,16 +208,16 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
         spawnAttack(app, actorPoint, targetPoint, move, effects.current, view.hit === false);
       }
       actor.container.scale.set(1.1);
-      timers.current.push(window.setTimeout(() => actor.container.scale.set(1), 260));
+      timers.current?.schedule(() => actor.container.scale.set(1), 260);
       if (target && view.hit !== false) {
-        timers.current.push(window.setTimeout(() => {
+        timers.current?.schedule(() => {
           impulses.current.set(view.targetId, [view.critical ? 34 : 20, view.critical ? -11 : -5]);
-          flashCombatant(target, view.critical ? 0xffdc68 : attackColor(move), timers.current);
+          flashCombatant(target, view.critical ? 0xffdc68 : attackColor(move), timers.current!);
           spawnImpact(app, target.container.x, target.container.y - 24, view.damage, view.critical, effects.current, attackColor(move));
           if (view.combatants.find((entry) => entry.id === view.targetId)?.hp === 0) {
-            timers.current.push(window.setTimeout(() => { target.container.alpha = 0.34; target.container.scale.set(0.72); }, 240));
+            timers.current?.schedule(() => { target.container.alpha = 0.34; target.container.scale.set(0.72); }, 240);
           }
-        }, melee ? 170 : 330));
+        }, melee ? 170 : 330);
       }
     } else if ((event.type === "status" || event.type === "ability") && target) {
       spawnStatus(app, target.container.x, target.container.y - 30, String(event.status ?? event.ability ?? "STATUS"), effects.current);
@@ -326,10 +328,10 @@ function spawnStatus(app: Application, x: number, y: number, label: string, buck
   bucket.push({ display, life: 0, maxLife: 54 });
 }
 
-function flashCombatant(target: ActorVisual, color: number, timers: number[]) {
+function flashCombatant(target: ActorVisual, color: number, timers: BattleTimerRegistry) {
   const flash = new Graphics().circle(0, -26, 42).fill({ color, alpha: 0.42 });
   target.container.addChild(flash);
-  timers.push(window.setTimeout(() => flash.destroy(), 140));
+  timers.schedule(() => flash.destroy(), 140);
 }
 
 function moveMetadata(view: BattleViewState, transcript: BattleTranscript): BattleMove | undefined {
