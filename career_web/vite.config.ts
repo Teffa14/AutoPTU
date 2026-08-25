@@ -1,16 +1,14 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+const base = process.env.VITE_BASE_PATH ?? "/career-game/";
+
 export default defineConfig({
-  base: "/career-game/",
+  base,
   plugins: [react()],
   build: {
-    // Vercel's FastAPI runtime only publishes generated static files from
-    // public/. The local API serves this same directory for parity.
     outDir: "../public/career-game",
-    // Keep the versioned CDN files present while the remote build overwrites
-    // them; Vercel discovers public/ before it runs the build command.
-    emptyOutDir: false,
+    emptyOutDir: true,
     sourcemap: false,
     assetsDir: "assets",
     rollupOptions: {
