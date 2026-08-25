@@ -33,4 +33,11 @@ describe("battle loading recovery", () => {
     expect(preparingComponent).toContain("sin registrar una derrota");
     expect(preparingComponent).toContain("without recording a loss");
   });
+
+  it("fails closed on malformed legacy lineup arrays instead of crashing the loading screen", () => {
+    expect(preparingComponent).toContain("const activeRoster = Array.isArray(run?.active_roster) ? run.active_roster : []");
+    expect(preparingComponent).toContain("const pokemon = Array.isArray(run?.pokemon) ? run.pokemon : []");
+    expect(preparingComponent).toContain("activeRoster.map");
+    expect(preparingComponent).toContain("pokemon.find");
+  });
 });
