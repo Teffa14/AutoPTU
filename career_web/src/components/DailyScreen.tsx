@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { navigate } from "../App";
 import { careerApi } from "../api";
 import { hasPersistentCareerAccount, signInWithEmail, signInWithProvider, supabase } from "../auth";
+import { leaderboardTrainerName } from "../leaderboardPresentation";
 import { DEFAULT_TRAINER_SPRITE, trainerSpriteOptions } from "../trainerSprites";
 import type { CareerCatalog, CareerMode, CareerRun, Locale } from "../types";
 import { StarterPicker } from "./StarterPicker";
@@ -112,7 +113,10 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
       </aside> : null}
       <div className="leaderboard-board">
         <div className="leaderboard-head"><span>rank</span><span>{locale === "es" ? "entrenador" : "trainer"}</span><span>score</span></div>
-        {entries.length ? entries.map((entry) => <div key={`${String(entry.trainer_name ?? entry.handle)}:${String(entry.rank)}`}><b>#{String(entry.rank)}</b><span>{String(entry.trainer_name ?? entry.handle)}</span><strong>{String(entry.score)}</strong></div>) : <div className="empty-board">{error || (locale === "es" ? "Nadie ha cerrado su carrera todavía." : "No career has been sealed yet.")}</div>}
+        {entries.length ? entries.map((entry) => {
+          const visibleTrainerName = leaderboardTrainerName(entry);
+          return <div key={`${visibleTrainerName}:${String(entry.rank)}`}><b>#{String(entry.rank)}</b><span>{visibleTrainerName}</span><strong>{String(entry.score)}</strong></div>;
+        }) : <div className="empty-board">{error || (locale === "es" ? "Nadie ha cerrado su carrera todavía." : "No career has been sealed yet.")}</div>}
       </div>
     </section>
   );
