@@ -1,7 +1,16 @@
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+
 import { describe, expect, it } from "vitest";
 
-import trainerCss from "./components/battle-trainer-strip.css?raw";
-import trainerComponent from "./components/BattleTrainerStrip.tsx?raw";
+const trainerCss = readFileSync(
+  fileURLToPath(new URL("./components/battle-trainer-strip.css", import.meta.url)),
+  "utf8",
+);
+const trainerComponent = readFileSync(
+  fileURLToPath(new URL("./components/BattleTrainerStrip.tsx", import.meta.url)),
+  "utf8",
+);
 
 
 describe("battle trainer layout", () => {
