@@ -23,6 +23,13 @@ export function battleRenderFrameFactors(deltaTime: number): { positionBlend: nu
   };
 }
 
+export function battleOutcomeVisualState(team: string, winnerTeam: string): { alpha: number; scale: number } {
+  if (!winnerTeam) return { alpha: 1, scale: 1 };
+  return team === winnerTeam
+    ? { alpha: 1, scale: 1.08 }
+    : { alpha: 0.38, scale: 0.86 };
+}
+
 export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleVisualQuality {
   if (signals.reducedMotion) return "light";
   if (signals.storedPreference === "full" || signals.storedPreference === "light") return signals.storedPreference;
