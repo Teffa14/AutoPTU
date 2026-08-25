@@ -23,9 +23,9 @@ def calculate_relationship_effects(relationships: Dict[str, int]) -> Dict[str, A
     """
     positive = sorted(
         (
-            (str(name), bond)
+            (str(name).strip(), bond)
             for name, value in relationships.items()
-            if (bond := _bond_value(value)) > 0
+            if str(name).strip() and (bond := _bond_value(value)) > 0
         ),
         key=lambda entry: (-entry[1], entry[0]),
     )
@@ -38,7 +38,7 @@ def calculate_relationship_effects(relationships: Dict[str, int]) -> Dict[str, A
     owner_guard = False
     for name, value in positive:
         parts = name.split(" · ")
-        role = parts[1] if len(parts) > 1 else "contact"
+        role = parts[1].strip().lower() if len(parts) > 1 else "contact"
         tier = "confidant" if value >= 6 else "ally" if value >= 4 else "active" if value >= 2 else "known"
         if role == "mentor":
             amount = min(2, value // 3)
