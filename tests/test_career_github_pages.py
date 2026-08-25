@@ -36,20 +36,21 @@ def test_missing_local_browser_bundle_redirects_to_github_pages(monkeypatch, tmp
     assert response.headers["cache-control"] == "no-store"
 
 
-def test_github_pages_workflow_builds_expected_project_site_path() -> None:
+def test_github_pages_workflow_deploys_browser_build() -> None:
     root = Path(__file__).resolve().parents[1]
     workflow = (root / ".github/workflows/deploy-github-pages.yml").read_text(encoding="utf-8")
 
+    assert "actions/configure-pages@v5" in workflow
+    assert "enablement: true" in workflow
     assert "actions/deploy-pages@v4" in workflow
     assert "actions/upload-pages-artifact@v3" in workflow
-    assert "VITE_BASE_PATH: /AutoPTU/career-game/" in workflow
     assert "VITE_API_URL:" in workflow
     assert "vercel" not in workflow.lower()
 
 
-def test_vite_build_accepts_pages_base_path() -> None:
+def test_vite_build_uses_github_project_site_path() -> None:
     root = Path(__file__).resolve().parents[1]
     config = (root / "career_web" / "vite.config.ts").read_text(encoding="utf-8")
 
-    assert 'process.env.VITE_BASE_PATH ?? "/career-game/"' in config
+    assert 'command === "serve" ? "/career-game/" : "/AutoPTU/career-game/"' in config
     assert 'outDir: "../public/career-game"' in config
