@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { pendingBattleRecovery, repairExhaustedDecisionPhase } from "./seasonRecovery";
+import { normalizedActiveLineup, pendingBattleRecovery, repairExhaustedDecisionPhase } from "./seasonRecovery";
 import type { CareerRun } from "./types";
 
 function runWithSeason(status: string, completed: number, required: number, battleIds: string[]): CareerRun {
@@ -86,5 +86,23 @@ describe("pendingBattleRecovery", () => {
     const repaired = repairExhaustedDecisionPhase(run);
     expect(repaired?.season?.battle_ids).toEqual(["run-1-s1-m6"]);
     expect(repaired?.season?.status).toBe("battle");
+  });
+});
+
+describe("normalizedActiveLineup", () => {
+  it("fails closed when legacy active_roster is malformed", () => {
+    const run = {
+      active_roster: null,
+      pokemon: [{ id: "starter", species: "Bulbasaur", level: 5 }],
+    } as unknown as CareerRun;
+    expect(normalizedActiveLineup(run)).toEqual([]);
+  });
+
+  it("ignores malformed pokemon entries and preserves valid lineup order", () => {
+    const run = {
+      active_roster: ["two", "missing", "one"],
+      pokemon: [null, { id: "one", species: "Bulbasaur", level: 5 }, { id: "two", species: "Pidgey", level: 4 }],
+    } as unknown as CareerRun;
+    expect(normalizedActiveLineup(run).map((pokemon) => pokemon.id)).toEqual(["two", "one"]);
   });
 });
