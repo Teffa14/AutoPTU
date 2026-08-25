@@ -38,7 +38,6 @@ jobs:
 
       - name: Build Career frontend for GitHub Pages
         env:
-          VITE_BASE_PATH: /AutoPTU/career-game/
           VITE_API_URL: ${{ vars.CAREER_API_URL || 'https://autoptu-career-api.onrender.com' }}
         run: npm --prefix career_web run build
 
