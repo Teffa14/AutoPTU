@@ -12,6 +12,53 @@ interface SeasonPostbattleReview {
   prompt: string;
 }
 
+interface TimelineRenderState {
+  trainerName: string;
+  starter: string;
+  timeline: Record<string, unknown>[];
+  pokemonCount: number;
+  evolutions: number;
+  achievements: string[];
+  totals: {
+    wins: number;
+    losses: number;
+    draws: number;
+    titles: number;
+  };
+}
+
+export function timelineRenderState(run: unknown): TimelineRenderState {
+  const raw = asRecord(run);
+  const build = asRecord(raw.build);
+  const timeline = Array.isArray(raw.timeline)
+    ? raw.timeline.map(asRecord).filter((entry) => Object.keys(entry).length > 0)
+    : [];
+  const pokemon = Array.isArray(raw.pokemon)
+    ? raw.pokemon.map(asRecord).filter((entry) => Object.keys(entry).length > 0)
+    : [];
+  const achievements = Array.isArray(raw.achievements)
+    ? raw.achievements.map((entry) => String(entry).trim()).filter(Boolean)
+    : [];
+  const totals = asRecord(raw.totals);
+  return {
+    trainerName: String(build.name ?? "").trim(),
+    starter: String(build.starter ?? "").trim(),
+    timeline,
+    pokemonCount: pokemon.length,
+    evolutions: pokemon.reduce(
+      (total, entry) => total + (Array.isArray(entry.evolution_history) ? entry.evolution_history.length : 0),
+      0,
+    ),
+    achievements,
+    totals: {
+      wins: finiteNumber(totals.wins),
+      losses: finiteNumber(totals.losses),
+      draws: finiteNumber(totals.draws),
+      titles: finiteNumber(totals.titles),
+    },
+  };
+}
+
 export function timelineSeasonDecisions(entry: Record<string, unknown>): TimelineDecision[] {
   if (Array.isArray(entry.decisions)) {
     return entry.decisions.flatMap((value) => {
@@ -41,10 +88,12 @@ export function seasonPostbattleReview(entry: Record<string, unknown>, locale: L
 }
 
 export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale }) {
+  const state = timelineRenderState(run);
+  const trainerName = state.trainerName || (locale === "es" ? "Entrenador" : "Trainer");
   return (
     <section className="timeline-scene">
       <header className="career-book-cover">
-        <p className="eyebrow">{run.build.name} · {locale === "es" ? "libro de carrera" : "career book"}</p>
+        <p className="eyebrow">{trainerName} · {locale === "es" ? "libro de carrera" : "career book"}</p>
         <h1>{locale === "es" ? "Lo que decidió. Lo que consiguió." : "What they chose. What they achieved."}</h1>
         <p>{locale === "es" ? "Una historia compacta de temporadas, decisiones, capturas y evolución." : "A compact history of seasons, decisions, captures and growth."}</p>
       </header>
@@ -52,7 +101,7 @@ export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale
       {run.status === "retired" ? <FinalCareerSheet run={run} locale={locale} /> : null}
 
       <div className="timeline-track">
-        {run.timeline.map((entry, index) => {
+        {state.timeline.map((entry, index) => {
           const decisions = timelineSeasonDecisions(entry);
           const review = seasonPostbattleReview(entry, locale);
           const pokemonUsed = Array.isArray(entry.pokemon_used) ? entry.pokemon_used.map(String) : [];
@@ -90,23 +139,23 @@ export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale
 
 function FinalCareerSheet({ run, locale }: { run: CareerRun; locale: Locale }) {
   const summary = run.summary;
-  const evolutions = run.pokemon.reduce((total, pokemon) => total + pokemon.evolution_history.length, 0);
-  const clubs = Array.from(new Set(run.timeline.filter((entry) => entry.type === "season.completed").map((entry) => String(entry.club ?? "")).filter(Boolean)));
+  const state = timelineRenderState(run);
+  const clubs = Array.from(new Set(state.timeline.filter((entry) => entry.type === "season.completed").map((entry) => String(entry.club ?? "")).filter(Boolean)));
   return (
     <section className="final-career-sheet" aria-labelledby="final-career-title">
       <header><div><p className="eyebrow">{locale === "es" ? "Registro final" : "Final record"}</p><h2 id="final-career-title">{locale === "es" ? "La carrera en números" : "The career in numbers"}</h2></div><strong>{run.score}<small>score</small></strong></header>
       <div className="final-stat-grid">
         <span><b>{summary?.seasons ?? run.season_number - 1}</b>{locale === "es" ? "temporadas" : "seasons"}</span>
-        <span><b>{run.totals.wins}–{run.totals.losses}–{run.totals.draws}</b>W–L–D</span>
-        <span><b>{run.totals.titles}</b>{locale === "es" ? "títulos" : "titles"}</span>
+        <span><b>{state.totals.wins}–{state.totals.losses}–{state.totals.draws}</b>W–L–D</span>
+        <span><b>{state.totals.titles}</b>{locale === "es" ? "títulos" : "titles"}</span>
         <span><b>{summary?.highest_league ?? run.league}</b>{locale === "es" ? "máxima liga" : "highest league"}</span>
         <span><b>{summary?.final_age ?? run.age}</b>{locale === "es" ? "edad final" : "final age"}</span>
-        <span><b>{run.pokemon.length}</b>{locale === "es" ? "Pokémon" : "Pokémon"}</span>
-        <span><b>{evolutions}</b>{locale === "es" ? "evoluciones" : "evolutions"}</span>
-        <span><b>{run.build.starter}</b>{locale === "es" ? "compañero final" : "final partner"}</span>
+        <span><b>{state.pokemonCount}</b>{locale === "es" ? "Pokémon" : "Pokémon"}</span>
+        <span><b>{state.evolutions}</b>{locale === "es" ? "evoluciones" : "evolutions"}</span>
+        <span><b>{state.starter || "—"}</b>{locale === "es" ? "compañero final" : "final partner"}</span>
       </div>
       {clubs.length ? <p className="club-history"><b>{locale === "es" ? "Clubes" : "Clubs"}</b>{clubs.join(" · ")}</p> : null}
-      <div className="final-achievements"><b>{locale === "es" ? "Logros" : "Achievements"}</b>{run.achievements.length ? run.achievements.map((achievement) => <span key={achievement}>{achievementLabel(achievement, locale)}</span>) : <small>{locale === "es" ? "Sin títulos registrados." : "No recorded titles."}</small>}</div>
+      <div className="final-achievements"><b>{locale === "es" ? "Logros" : "Achievements"}</b>{state.achievements.length ? state.achievements.map((achievement) => <span key={achievement}>{achievementLabel(achievement, locale)}</span>) : <small>{locale === "es" ? "Sin títulos registrados." : "No recorded titles."}</small>}</div>
     </section>
   );
 }
@@ -210,6 +259,10 @@ function effectSummary(effects: Record<string, unknown>, locale: Locale): string
 }
 
 function signed(value: number): string { return `${value >= 0 ? "+" : ""}${value}`; }
+function finiteNumber(value: unknown): number {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : 0;
+}
 function asRecord(value: unknown): Record<string, unknown> { return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {}; }
 function parseLegacyStart(label: string): { trainer: string; club: string; starter: string } | null {
   const match = label.match(/^(.+) joined (.+) with (.+)\.$/);
