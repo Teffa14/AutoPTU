@@ -8,7 +8,7 @@ import { ProfileScreen } from "./components/ProfileScreen";
 import { ShareScreen } from "./components/ShareScreen";
 import { TimelineScreen } from "./components/TimelineScreen";
 import { loadLocalRun, saveLocalRun } from "./localCareer";
-import { trainerSpriteForRun } from "./trainerSprites";
+import { trainerSpriteStorageEntry } from "./trainerSprites";
 import type { CareerRun, Locale } from "./types";
 
 const BattleScreen = lazy(() => import("./components/BattleScreen"));
@@ -46,10 +46,8 @@ export function App() {
   useEffect(() => {
     if (!run) return;
     saveLocalRun(run);
-    localStorage.setItem(
-      `career-trainer-sprite:${run.build.name.trim().toLocaleLowerCase()}`,
-      trainerSpriteForRun(run),
-    );
+    const trainerSprite = trainerSpriteStorageEntry(run);
+    if (trainerSprite) localStorage.setItem(trainerSprite.key, trainerSprite.sprite);
   }, [run]);
 
   const runMatch = path.match(/^(?:run|profile|timeline)\/([^/]+)/);
