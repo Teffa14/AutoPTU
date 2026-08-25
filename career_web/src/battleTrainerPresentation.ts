@@ -79,10 +79,11 @@ export function battleTrainerPresentation(
   run?: CareerRun | null,
   complete = false,
 ): BattleTrainerPresentation {
-  const region = String(transcript.spec.region || "kanto").toLowerCase();
+  const region = normalizeRegionIdentity(transcript.spec.region);
   const awayClub = String(transcript.spec.away_club || "Opponent");
+  const normalizedAwayClub = normalizeClubIdentity(awayClub) || "opponent";
   const pool = REGIONAL_RIVALS[region] ?? REGIONAL_RIVALS.kanto;
-  const rival = pool[stableIndex(`${region}:${awayClub}`, pool.length)];
+  const rival = pool[stableIndex(`${region}:${normalizedAwayClub}`, pool.length)];
   const rivalMemory = formalRivalMemory(run, awayClub, transcript.spec.season);
   const meeting = rivalMemory.previousMeetings + 1;
   const userWon = transcript.winner_team === "career-home";
@@ -146,6 +147,11 @@ export function previousMeetings(
   beforeSeason?: number,
 ): number {
   return formalRivalMemory(run, awayClub, beforeSeason).previousMeetings;
+}
+
+function normalizeRegionIdentity(value: unknown): string {
+  if (typeof value !== "string") return "kanto";
+  return value.trim().toLocaleLowerCase("en-US") || "kanto";
 }
 
 function normalizeClubIdentity(value: unknown): string {
