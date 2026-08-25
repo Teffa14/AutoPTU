@@ -98,6 +98,37 @@ describe("latestClubTransition", () => {
     expect(clubTransitionQuestionText(brief!.questions[0], brief!, "es")).toContain("2 Pokémon cedidos");
   });
 
+  it("aggregates every authoritative loan-return event before a transfer", () => {
+    const run = runWithTimeline([
+      { type: "club.offer_signed", season: 1, club: "Pewter Onix", salary: 180, seasons: 1 },
+      { type: "season.completed", season: 2, record: "3-3-0" },
+      {
+        type: "club.loans_returned",
+        season: 3,
+        club: "Pewter Onix",
+        pokemon: [{ id: "loan-1", species: "Machoke", active: true }],
+      },
+      {
+        type: "club.loans_returned",
+        season: 3,
+        club: "Pewter Onix",
+        pokemon: [{ id: "loan-2", species: "Graveler", active: false }],
+      },
+      {
+        type: "club.offer_signed",
+        season: 3,
+        club: "Celadon Comets",
+        salary: 420,
+        seasons: 1,
+        renewal: false,
+      },
+    ]);
+
+    const brief = latestClubTransition(run);
+    expect(brief?.returnedLoans).toEqual(["Machoke", "Graveler"]);
+    expect(brief?.questions[0]).toBe("rebuild");
+  });
+
   it("treats a renewal as continuity and never invents loan returns", () => {
     const run = runWithTimeline([
       { type: "season.completed", season: 2, record: "5-1-0" },
