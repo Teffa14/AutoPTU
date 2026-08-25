@@ -41,7 +41,7 @@ class NarrativeRenderer:
         key = self._cache_key(fallback, context, locale)
         cached = self._read_cache(key)
         prose = cached or self._request_prose(fallback, context, locale)
-        if not prose:
+        if not _valid_prose_payload(prose, len(fallback.options)):
             return fallback
         rendered = _apply_prose(fallback, prose)
         if _mechanical_signature(rendered) != mechanical_before:
@@ -108,14 +108,16 @@ class NarrativeRenderer:
             with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
                 payload = json.loads(response.read().decode("utf-8"))
             content = payload.get("message", {}).get("content", "")
-            return json.loads(content) if isinstance(content, str) else None
-        except (OSError, ValueError, urllib.error.URLError, json.JSONDecodeError):
+            result = json.loads(content) if isinstance(content, str) else None
+            return result if isinstance(result, dict) else None
+        except (OSError, ValueError, urllib.error.URLError, json.JSONDecodeError, AttributeError):
             return None
 
     def _read_cache(self, key: str) -> Optional[dict]:
         path = self.cache_root / f"{key}.json"
         try:
-            return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+            payload = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+            return payload if isinstance(payload, dict) else None
         except (OSError, ValueError):
             return None
 
@@ -144,14 +146,26 @@ def _mechanical_signature(decision: CareerDecision) -> str:
     return hashlib.sha256(json.dumps(mechanics, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
-def _apply_prose(decision: CareerDecision, prose: dict) -> CareerDecision:
-    decision.title = str(prose.get("title") or decision.title)[:160]
-    decision.body = str(prose.get("body") or decision.body)[:1200]
+def _valid_prose_payload(prose: object, option_count: int) -> bool:
+    if not isinstance(prose, dict):
+        return False
+    if not isinstance(prose.get("title"), str) or not isinstance(prose.get("body"), str):
+        return False
     options = prose.get("options")
-    if not isinstance(options, list) or len(options) != len(decision.options):
-        return decision
-    for option, generated in zip(decision.options, options):
-        if isinstance(generated, dict):
-            option.label = str(generated.get("label") or option.label)[:120]
-            option.description = str(generated.get("description") or option.description)[:500]
+    if not isinstance(options, list) or len(options) != option_count:
+        return False
+    return all(
+        isinstance(option, dict)
+        and isinstance(option.get("label"), str)
+        and isinstance(option.get("description"), str)
+        for option in options
+    )
+
+
+def _apply_prose(decision: CareerDecision, prose: dict) -> CareerDecision:
+    decision.title = prose["title"][:160]
+    decision.body = prose["body"][:1200]
+    for option, generated in zip(decision.options, prose["options"]):
+        option.label = generated["label"][:120]
+        option.description = generated["description"][:500]
     return decision
