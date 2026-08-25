@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import math
 import random
 from typing import Any, Dict, List
 
@@ -271,14 +272,20 @@ def sign_sponsor(run: CareerRun, offer_id: str) -> Dict[str, Any]:
 
 def settle_sponsor(run: CareerRun, *, wins: int) -> Dict[str, Any] | None:
     signed = next(
-        (entry for entry in reversed(run.timeline) if entry.get("type") == "sponsor.signed" and int(entry.get("season") or 0) == run.season_number),
+        (
+            entry
+            for entry in reversed(run.timeline)
+            if entry.get("type") == "sponsor.signed" and _event_season(entry) == run.season_number
+        ),
         None,
     )
     if signed is None or _season_event(run, {"sponsor.completed", "sponsor.failed"}):
         return None
-    target = int(signed.get("target") or 0)
-    success = wins >= target
-    bonus = int(signed.get("bonus") or 0) if success else 0
+    target_value = _safe_nonnegative_int(signed.get("target"))
+    target = target_value if target_value is not None else 0
+    success = bool(target_value and wins >= target_value)
+    bonus_value = _safe_nonnegative_int(signed.get("bonus"))
+    bonus = bonus_value if success and bonus_value is not None else 0
     if bonus:
         run.money += bonus
         run.career_earnings += bonus
@@ -512,7 +519,7 @@ def _previous_sponsor_outcome(run: CareerRun) -> Dict[str, Any] | None:
             entry
             for entry in reversed(run.timeline)
             if entry.get("type") in {"sponsor.completed", "sponsor.failed"}
-            and int(entry.get("season") or 0) < run.season_number
+            and (_event_season(entry) is not None and _event_season(entry) < run.season_number)
         ),
         None,
     )
@@ -520,9 +527,23 @@ def _previous_sponsor_outcome(run: CareerRun) -> Dict[str, Any] | None:
 
 def _season_event(run: CareerRun, types: set[str]) -> bool:
     return any(
-        entry.get("type") in types and int(entry.get("season") or 0) == run.season_number
+        entry.get("type") in types and _event_season(entry) == run.season_number
         for entry in run.timeline
     )
+
+
+def _safe_nonnegative_int(value: Any) -> int | None:
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if not math.isfinite(parsed) or parsed < 0:
+        return None
+    return int(parsed)
+
+
+def _event_season(entry: Dict[str, Any]) -> int | None:
+    return _safe_nonnegative_int(entry.get("season"))
 
 
 def _require_preseason(run: CareerRun) -> None:
