@@ -11,13 +11,14 @@ def test_career_api_entrypoint_exposes_playable_routes_without_full_server(monke
     sys.modules.pop("auto_ptu.api.server", None)
 
     module = importlib.import_module("career_app")
-    paths = {route.path for route in module.app.routes if hasattr(route, "path")}
+    app_paths = {route.path for route in module.app.routes if hasattr(route, "path")}
+    api_paths = {route.path for route in module.career_router.routes if hasattr(route, "path")}
 
-    assert "/api/v1/catalog" in paths
-    assert "/api/v1/build" in paths
-    assert "/career-game/" in paths
-    assert "/career-game/{path:path}" in paths
-    assert "/" in paths
+    assert "/api/v1/catalog" in api_paths
+    assert "/api/v1/build" in app_paths
+    assert "/career-game/" in app_paths
+    assert "/career-game/{path:path}" in app_paths
+    assert "/" in app_paths
     assert "auto_ptu.api.server" not in sys.modules
     assert module.deployed_build() == {"source_commit": "test-sha"}
     assert "https://teffa14.github.io" in module._cors_origins()
