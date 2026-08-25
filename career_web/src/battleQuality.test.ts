@@ -66,4 +66,9 @@ describe("battle outcome feedback", () => {
   it("fails closed when a transcript has no winner team", () => {
     expect(battleOutcomeVisualState("career-home", "")).toEqual({ alpha: 1, scale: 1 });
   });
+
+  it("keeps both teams neutral when a legacy transcript has an unknown winner token", () => {
+    expect(battleOutcomeVisualState("career-home", "undefined")).toEqual({ alpha: 1, scale: 1 });
+    expect(battleOutcomeVisualState("career-away", "undefined")).toEqual({ alpha: 1, scale: 1 });
+  });
 });
