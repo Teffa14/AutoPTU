@@ -23,7 +23,7 @@ export function battleRenderFrameFactors(deltaTime: number): { positionBlend: nu
   };
 }
 
-export function battleOutcomeVisualState(team: string, winnerTeam: string): { alpha: number; scale: number } {
+export function battleOutcomeVisualState(team: string, winnerTeam?: string | null): { alpha: number; scale: number } {
   if (!winnerTeam) return { alpha: 1, scale: 1 };
   return team === winnerTeam
     ? { alpha: 1, scale: 1.08 }
