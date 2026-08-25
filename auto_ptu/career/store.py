@@ -41,8 +41,23 @@ class CareerStore:
             return CareerRun.from_dict(json.loads(path.read_text(encoding="utf-8")))
 
     def list_runs(self) -> List[CareerRun]:
+        """Return every readable career without letting one corrupt record poison the registry.
+
+        Explicit ``load_run`` calls still surface corruption for the requested save. Aggregate
+        consumers such as leaderboards and ranked-attempt accounting must remain available when
+        an unrelated local JSON file is truncated or structurally invalid.
+        """
+        runs: List[CareerRun] = []
         with self._lock:
-            return [CareerRun.from_dict(json.loads(path.read_text(encoding="utf-8"))) for path in sorted(self.runs_dir.glob("*.json"))]
+            for path in sorted(self.runs_dir.glob("*.json")):
+                try:
+                    payload = json.loads(path.read_text(encoding="utf-8"))
+                    if not isinstance(payload, dict):
+                        continue
+                    runs.append(CareerRun.from_dict(payload))
+                except (json.JSONDecodeError, KeyError, TypeError, ValueError, AttributeError):
+                    continue
+        return runs
 
     def save_battle(self, transcript: BattleTranscript) -> None:
         with self._lock:

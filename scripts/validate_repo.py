@@ -49,6 +49,7 @@ def main() -> int:
                 "tests/test_trainer_passive_perks.py",
                 "tests/test_web_regressions.py",
                 "tests/test_career_leaderboard_names.py",
+                "tests/test_career_store_resilience.py",
             ]
         )
 
