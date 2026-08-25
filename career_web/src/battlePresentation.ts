@@ -19,6 +19,13 @@ export interface BattleViewState {
   complete: boolean;
 }
 
+export interface BattleOutcomePresentation {
+  kind: "victory" | "defeat" | "draw";
+  title: string;
+  commentary: string;
+  detail: string;
+}
+
 const PRESENTED_EVENT_TYPES = new Set([
   "round_start", "shift", "forced_movement", "maneuver", "move", "status", "ability", "combat_stage", "switch",
 ]);
@@ -137,12 +144,37 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
   };
 }
 
-export function battleCommentary(locale: Locale, transcript: BattleTranscript, view: BattleViewState): string {
-  if (view.complete) {
-    return locale === "es"
-      ? `${transcript.winner_label ?? "El combate"} se lleva la victoria en ${transcript.rounds} rondas.`
-      : `${transcript.winner_label ?? "The match"} wins after ${transcript.rounds} rounds.`;
+export function battleOutcomePresentation(locale: Locale, transcript: BattleTranscript): BattleOutcomePresentation {
+  const rounds = Math.max(0, finiteNumber(transcript.rounds) ?? 0);
+  const roundsLabel = locale === "es" ? "rondas" : "rounds";
+  if (transcript.winner_team === "career-home") {
+    const winner = String(transcript.winner_label || transcript.spec.home_club).trim() || transcript.spec.home_club;
+    return {
+      kind: "victory",
+      title: locale === "es" ? "VICTORIA" : "VICTORY",
+      commentary: locale === "es" ? `${winner} se lleva la victoria en ${rounds} ${roundsLabel}.` : `${winner} wins after ${rounds} ${roundsLabel}.`,
+      detail: `${winner} · ${rounds} ${roundsLabel}`,
+    };
   }
+  if (transcript.winner_team === "career-away") {
+    const winner = String(transcript.winner_label || transcript.spec.away_club).trim() || transcript.spec.away_club;
+    return {
+      kind: "defeat",
+      title: locale === "es" ? "DERROTA" : "DEFEAT",
+      commentary: locale === "es" ? `${winner} se lleva la victoria en ${rounds} ${roundsLabel}.` : `${winner} wins after ${rounds} ${roundsLabel}.`,
+      detail: `${winner} · ${rounds} ${roundsLabel}`,
+    };
+  }
+  return {
+    kind: "draw",
+    title: locale === "es" ? "EMPATE" : "DRAW",
+    commentary: locale === "es" ? `El combate termina en empate después de ${rounds} ${roundsLabel}.` : `The battle ends in a draw after ${rounds} ${roundsLabel}.`,
+    detail: `${transcript.spec.home_club} vs ${transcript.spec.away_club} · ${rounds} ${roundsLabel}`,
+  };
+}
+
+export function battleCommentary(locale: Locale, transcript: BattleTranscript, view: BattleViewState): string {
+  if (view.complete) return battleOutcomePresentation(locale, transcript).commentary;
   const event = view.event ?? {};
   const type = String(event.type ?? "");
   const actor = combatantName(transcript, String(event.actor ?? ""));
