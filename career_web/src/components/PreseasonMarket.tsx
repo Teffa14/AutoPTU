@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { careerApi, type PreseasonSnapshot } from "../api";
+import { sponsorRenewalContext } from "../sponsorRenewalPresentation";
 import type { CareerRun, Locale } from "../types";
 import { ClubTransitionBrief } from "./ClubTransitionBrief";
 import { PokemonSprite } from "./PokemonSprite";
@@ -125,15 +126,21 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
         <div className="market-block sponsor-market">
           <div className="market-title"><b>{locale === "es" ? "Sponsors interesados" : "Interested sponsors"}</b><span>{locale === "es" ? "Opcional" : "Optional"}</span></div>
           <div className="market-grid sponsor-grid">
-            {snapshot.sponsor_offers.map((offer) => (
-              <article key={offer.id} className="market-card sponsor-card">
-                <span className="market-tag">{offer.theme.toUpperCase()}</span><h3>{offer.name}</h3>
-                <strong>₽ {offer.upfront} <small>{locale === "es" ? "al firmar" : "up front"}</small></strong>
-                <p>{locale === "es" ? offer.description_es : offer.description_en}</p>
-                <em>+ ₽ {offer.bonus} {locale === "es" ? "si cumplís" : "if completed"}</em>
-                <button disabled={Boolean(busy)} onClick={() => mutate(`sponsor:${offer.id}`, () => careerApi.chooseSponsor(run, offer.id))}>{busy === `sponsor:${offer.id}` ? (locale === "es" ? "Firmando…" : "Signing…") : (locale === "es" ? "Firmar sponsor" : "Sign sponsor")}</button>
-              </article>
-            ))}
+            {snapshot.sponsor_offers.map((offer) => {
+              const enhanced = offer as typeof offer & { renewal?: boolean };
+              const renewal = sponsorRenewalContext(enhanced, run.timeline, run.season_number, locale);
+              return (
+                <article key={offer.id} className={`market-card sponsor-card ${enhanced.renewal ? "renewal-card" : ""}`}>
+                  <span className="market-tag">{enhanced.renewal ? (locale === "es" ? "RENOVACIÓN" : "RENEWAL") : offer.theme.toUpperCase()}</span>
+                  <h3>{offer.name}</h3>
+                  <strong>₽ {offer.upfront} <small>{locale === "es" ? "al firmar" : "up front"}</small></strong>
+                  {renewal ? <p className="renewal-copy"><b>{renewal.relationshipLabel}</b><br />{renewal.resultLabel}</p> : null}
+                  <p>{locale === "es" ? offer.description_es : offer.description_en}</p>
+                  <em>+ ₽ {offer.bonus} {locale === "es" ? "si cumplís" : "if completed"}</em>
+                  <button disabled={Boolean(busy)} onClick={() => mutate(`sponsor:${offer.id}`, () => careerApi.chooseSponsor(run, offer.id))}>{busy === `sponsor:${offer.id}` ? (locale === "es" ? "Firmando…" : "Signing…") : enhanced.renewal ? (locale === "es" ? "Renovar sponsor" : "Renew sponsor") : (locale === "es" ? "Firmar sponsor" : "Sign sponsor")}</button>
+                </article>
+              );
+            })}
           </div>
           <button className="market-skip" disabled={Boolean(busy)} onClick={() => mutate("sponsor:skip", () => careerApi.chooseSponsor(run, ""))}>{locale === "es" ? "Seguir sin sponsor" : "Continue without sponsor"}</button>
         </div>
