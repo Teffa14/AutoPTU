@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 
 import { careerApi } from "../api";
 import { navigate } from "../App";
-import { battleCommentary, deriveBattleView, eventTitle, playbackEventIndexes, statLabel, statusLabel } from "../battlePresentation";
+import { battleCommentary, battleOutcomePresentation, deriveBattleView, eventTitle, playbackEventIndexes, statLabel, statusLabel } from "../battlePresentation";
 import { t } from "../i18n";
 import type { BattleCombatant, BattleTranscript, CareerRun, Locale } from "../types";
 import { BattleArena } from "./BattleArena";
@@ -105,7 +105,7 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: {
   const awayTeam = view.combatants.filter((entry) => entry.team === "career-away");
   const home = homeTeam.find((entry) => entry.active !== false && entry.hp > 0) ?? homeTeam.find((entry) => entry.active !== false) ?? homeTeam[0];
   const away = awayTeam.find((entry) => entry.active !== false && entry.hp > 0) ?? awayTeam.find((entry) => entry.active !== false) ?? awayTeam[0];
-  const userWon = transcript.winner_team === "career-home";
+  const outcome = battleOutcomePresentation(locale, transcript);
   const commentary = battleCommentary(locale, transcript, view);
   const adjudicated = transcript.events.some((event) => event.type === "match_adjudicated");
   const homePower = battleTeamPower(homeTeam);
@@ -143,10 +143,10 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: {
           </div>
           <BattleMechanics transcript={transcript} view={view} locale={locale} />
           {complete ? (
-            <div className={`battle-result ${userWon ? "victory" : "defeat"}`} role="status">
+            <div className={`battle-result ${outcome.kind}`} role="status">
               <span>{adjudicated ? (locale === "es" ? "DECISIÓN ARBITRAL" : "REFEREE DECISION") : (locale === "es" ? "COMBATE TERMINADO" : "BATTLE COMPLETE")}</span>
-              <h1>{userWon ? (locale === "es" ? "VICTORIA" : "VICTORY") : (locale === "es" ? "DERROTA" : "DEFEAT")}</h1>
-              <p>{transcript.winner_label} · {transcript.rounds} {locale === "es" ? "rondas" : "rounds"}</p>
+              <h1>{outcome.title}</h1>
+              <p>{outcome.detail}</p>
               <p className="battle-result-explanation">{locale === "es" ? `Potencia efectiva ${homePower}–${awayPower}. El nivel es sólo una parte: stats, tipos, STAB, habilidades, precisión y decisiones tácticas también definieron el resultado.` : `Effective power ${homePower}–${awayPower}. Level is only one part: stats, types, STAB, abilities, accuracy and tactical choices also decided the result.`}</p>
               <CareerCelebration run={run} locale={locale} season={transcript.spec.season} />
               {finalizeError ? <p className="form-error" role="alert">{locale === "es" ? "La temporada no terminó de guardarse. Reintentá para continuar." : "The season did not finish saving. Retry to continue."}</p> : null}
