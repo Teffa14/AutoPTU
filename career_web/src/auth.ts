@@ -2,6 +2,9 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const publishable = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
+const careerApiBase = ((import.meta.env.VITE_API_URL as string | undefined) ?? "").replace(/\/$/, "");
+const rankedAccountDomain = "ranked.autoptu.app";
+
 export const supabase: SupabaseClient | null = url && publishable ? createClient(url, publishable, {
   auth: {
     autoRefreshToken: true,
@@ -31,17 +34,48 @@ export async function hasPersistentCareerAccount(): Promise<boolean> {
   return Boolean(data.session?.access_token && !data.session.user.is_anonymous);
 }
 
+export function normalizeRankedId(value: string): string {
+  const rankedId = String(value || "").trim().toLowerCase();
+  if (!/^[a-z0-9][a-z0-9._-]{2,23}$/.test(rankedId)) {
+    throw new Error("Ranked ID must be 3-24 characters using letters, numbers, dot, underscore or hyphen.");
+  }
+  return rankedId;
+}
+
+export function rankedEmailForId(value: string): string {
+  return `${normalizeRankedId(value)}@${rankedAccountDomain}`;
+}
+
 export async function signInWithPassword(email: string, password: string): Promise<void> {
   if (!supabase) throw new Error("Supabase Auth is not configured in this build.");
   const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
   if (error) throw error;
 }
 
-export async function signUpWithPassword(email: string, password: string): Promise<{ signedIn: boolean }> {
+export async function signInWithRankedId(rankedId: string, password: string): Promise<void> {
+  await signInWithPassword(rankedEmailForId(rankedId), password);
+}
+
+export async function registerRankedAccount(rankedId: string, password: string): Promise<void> {
   if (!supabase) throw new Error("Supabase Auth is not configured in this build.");
-  const { data, error } = await supabase.auth.signUp({ email: email.trim(), password });
-  if (error) throw error;
-  return { signedIn: Boolean(data.session?.access_token && !data.session.user.is_anonymous) };
+  const normalized = normalizeRankedId(rankedId);
+  if (password.length < 8) throw new Error("Ranked password must be at least 8 characters.");
+  const response = await fetch(`${careerApiBase}/auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ranked_id: normalized, password }),
+  });
+  if (!response.ok) {
+    let detail = `Ranked account registration failed (${response.status}).`;
+    try {
+      const payload = await response.json() as { detail?: unknown; message?: unknown };
+      detail = String(payload.detail ?? payload.message ?? detail);
+    } catch {
+      // Keep the status-based fallback when the edge response is not JSON.
+    }
+    throw new Error(detail);
+  }
+  await signInWithRankedId(normalized, password);
 }
 
 export async function signInWithEmail(email: string): Promise<void> {
