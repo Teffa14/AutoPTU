@@ -46,6 +46,7 @@ export interface PreseasonSnapshot {
 
 const base = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") ?? "";
 const battleCache = new Map<string, BattleTranscript>();
+const requestTimeoutMs = 15_000;
 
 export class ApiError extends Error {
   constructor(message: string, public readonly status: number) {
@@ -64,13 +65,33 @@ export function authModeForPath(path: string): CareerAuthMode {
 
 async function request<T>(path: string, init: RequestInit = {}, authMode: CareerAuthMode = authModeForPath(path)): Promise<T> {
   const identity = await authHeaders(authMode);
-  const response = await fetch(`${base}${path}`, {
-    ...init,
-    headers: { "Content-Type": "application/json", ...identity, ...(init.headers ?? {}) },
-  });
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) throw new ApiError(payload.detail || `Request failed (${response.status})`, response.status);
-  return payload as T;
+  const controller = new AbortController();
+  const upstreamSignal = init.signal;
+  let timedOut = false;
+  const abortFromCaller = () => controller.abort(upstreamSignal?.reason);
+  if (upstreamSignal?.aborted) abortFromCaller();
+  else upstreamSignal?.addEventListener("abort", abortFromCaller, { once: true });
+  const timeout = globalThis.setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, requestTimeoutMs);
+
+  try {
+    const response = await fetch(`${base}${path}`, {
+      ...init,
+      headers: { "Content-Type": "application/json", ...identity, ...(init.headers ?? {}) },
+      signal: controller.signal,
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new ApiError(payload.detail || `Request failed (${response.status})`, response.status);
+    return payload as T;
+  } catch (reason) {
+    if (timedOut) throw new ApiError("Request timed out. Check your connection and try again.", 408);
+    throw reason;
+  } finally {
+    globalThis.clearTimeout(timeout);
+    upstreamSignal?.removeEventListener("abort", abortFromCaller);
+  }
 }
 
 function isMissingRun(reason: unknown): reason is ApiError {
