@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { isGambleHistoryEntry, type DecisionHistoryEntry } from "../decisionOutcome";
+import { isGambleHistoryEntry, normalizedDecisionHistory, type DecisionHistoryEntry } from "../decisionOutcome";
 import { normalizeSeasonRosterState, pendingBattleRecovery } from "../seasonRecovery";
 import type { CareerRun, Locale } from "../types";
 import { DecisionOutcomePanel } from "./DecisionOutcomePanel";
@@ -12,7 +12,7 @@ export function SeasonHub({ run, locale, onRun }: { run: CareerRun; locale: Loca
   const seasonRun = normalizeSeasonRosterState(run);
   const pendingBattle = pendingBattleRecovery(seasonRun);
   const needsMarket = seasonRun.status === "active" && seasonRun.season?.status === "decision" && (seasonRun.season?.decisions_completed ?? 0) === 0;
-  const history = seasonRun.season?.decision_history ?? [];
+  const history = normalizedDecisionHistory(seasonRun.season?.decision_history);
   const historyCount = history.length;
   const latestDecision = history.at(-1) as DecisionHistoryEntry | undefined;
   const [clubReady, setClubReady] = useState(!needsMarket);
