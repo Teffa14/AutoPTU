@@ -37,7 +37,7 @@ def test_missing_local_browser_bundle_redirects_to_github_pages(monkeypatch, tmp
     assert response.headers["cache-control"] == "no-store"
 
 
-def test_github_pages_workflow_deploys_browser_build_with_spa_fallback() -> None:
+def test_github_pages_workflow_deploys_browser_build_with_ranked_auth_and_spa_fallback() -> None:
     root = Path(__file__).resolve().parents[1]
     workflow = (root / ".github/workflows/deploy-github-pages.yml").read_text(encoding="utf-8")
 
@@ -46,9 +46,21 @@ def test_github_pages_workflow_deploys_browser_build_with_spa_fallback() -> None
     assert "actions/deploy-pages@v4" in workflow
     assert "actions/upload-pages-artifact@v3" in workflow
     assert "VITE_API_URL: https://obfecwinjdczsfsperks.supabase.co/functions/v1/career-api" in workflow
+    assert "VITE_SUPABASE_URL: https://obfecwinjdczsfsperks.supabase.co" in workflow
+    assert "VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_" in workflow
     assert "autoptu-career-api.onrender.com" not in workflow
     assert "cp public/career-game/index.html public/404.html" in workflow
     assert "vercel" not in workflow.lower()
+
+
+def test_validation_build_matches_pages_runtime_endpoints() -> None:
+    root = Path(__file__).resolve().parents[1]
+    workflow = (root / ".github/workflows/validate.yml").read_text(encoding="utf-8")
+
+    assert "VITE_API_URL: https://obfecwinjdczsfsperks.supabase.co/functions/v1/career-api" in workflow
+    assert "VITE_SUPABASE_URL: https://obfecwinjdczsfsperks.supabase.co" in workflow
+    assert "VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_" in workflow
+    assert "autoptu-career-api.onrender.com" not in workflow
 
 
 def test_vite_build_uses_github_project_site_path() -> None:
