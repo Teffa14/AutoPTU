@@ -1,4 +1,4 @@
-import type { ClubOffer, PreseasonSnapshot } from "./api";
+import type { PreseasonSnapshot } from "./api";
 
 function invalid(): never {
   throw new Error("Invalid preseason response");
