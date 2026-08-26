@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { navigate } from "../App";
 import { careerApi } from "../api";
-import { hasPersistentCareerAccount, signInWithPassword, signUpWithPassword, supabase } from "../auth";
+import { hasPersistentCareerAccount, registerRankedAccount, signInWithRankedId, supabase } from "../auth";
 import { leaderboardEntries, leaderboardTrainerName } from "../leaderboardPresentation";
 import { DEFAULT_TRAINER_SPRITE, trainerSpriteOptions, trainerSpriteStorageEntry } from "../trainerSprites";
 import type { CareerCatalog, CareerMode, CareerRun, Locale } from "../types";
@@ -18,7 +18,7 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
   const [trainerClass, setTrainerClass] = useState("Ace Trainer");
   const [trainerName, setTrainerName] = useState("Ranked Trainer");
   const [trainerSprite, setTrainerSprite] = useState(DEFAULT_TRAINER_SPRITE);
-  const [email, setEmail] = useState("");
+  const [rankedId, setRankedId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -80,20 +80,14 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
     finally { setBusy(false); }
   }
 
-  async function passwordAuth(action: "signin" | "signup") {
+  async function rankedAuth(action: "signin" | "signup") {
     setBusy(true); setError("");
     try {
-      if (action === "signin") {
-        await signInWithPassword(email, password);
-      } else {
-        const result = await signUpWithPassword(email, password);
-        if (!result.signedIn) {
-          await signInWithPassword(email, password);
-        }
-      }
+      if (action === "signin") await signInWithRankedId(rankedId, password);
+      else await registerRankedAccount(rankedId, password);
       const ready = await hasPersistentCareerAccount();
       setAccountReady(ready);
-      if (!ready) throw new Error(locale === "es" ? "La cuenta se creó, pero Supabase no abrió una sesión ranked." : "The account was created, but Supabase did not open a ranked session.");
+      if (!ready) throw new Error(locale === "es" ? "Supabase no abrió una sesión ranked." : "Supabase did not open a ranked session.");
     }
     catch (reason) { setError(reason instanceof Error ? reason.message : String(reason)); }
     finally { setBusy(false); }
@@ -113,12 +107,12 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
         </div>
         {supabase ? <div className="auth-actions">
           {accountReady ? <strong>{locale === "es" ? "Cuenta ranked verificada" : "Ranked account verified"}</strong> : <>
-            <input type="email" autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="email@trainer.club" />
-            <input type="password" autoComplete="current-password" minLength={6} value={password} onChange={(event) => setPassword(event.target.value)} placeholder={locale === "es" ? "contraseña" : "password"} />
-            <button onClick={() => { void passwordAuth("signin"); }} disabled={!email || password.length < 6 || busy}>{locale === "es" ? "Entrar" : "Sign in"}</button>
-            <button onClick={() => { void passwordAuth("signup"); }} disabled={!email || password.length < 6 || busy}>{locale === "es" ? "Crear cuenta" : "Create account"}</button>
+            <input value={rankedId} autoComplete="username" maxLength={24} onChange={(event) => setRankedId(event.target.value)} placeholder={locale === "es" ? "Ranked ID" : "Ranked ID"} />
+            <input type="password" autoComplete="current-password" minLength={8} value={password} onChange={(event) => setPassword(event.target.value)} placeholder={locale === "es" ? "contraseña" : "password"} />
+            <button onClick={() => { void rankedAuth("signin"); }} disabled={rankedId.trim().length < 3 || password.length < 8 || busy}>{locale === "es" ? "Entrar" : "Sign in"}</button>
+            <button onClick={() => { void rankedAuth("signup"); }} disabled={rankedId.trim().length < 3 || password.length < 8 || busy}>{locale === "es" ? "Crear cuenta ranked" : "Create ranked account"}</button>
           </>}
-          <small>{accountReady ? (locale === "es" ? "Tu identidad se usa sólo para ranked y leaderboard." : "Your identity is used only for ranked and leaderboard.") : accountChecking ? (locale === "es" ? "Comprobando cuenta…" : "Checking account…") : (locale === "es" ? "Acceso directo en esta página. No usa redirects externos." : "Direct sign-in on this page. No external redirects.")}</small>
+          <small>{accountReady ? (locale === "es" ? "Tu identidad se usa sólo para ranked y leaderboard." : "Your identity is used only for ranked and leaderboard.") : accountChecking ? (locale === "es" ? "Comprobando cuenta…" : "Checking account…") : (locale === "es" ? "Ranked ID: 3 a 24 caracteres. No usa email, OAuth ni redirects." : "Ranked ID: 3 to 24 characters. No email, OAuth or redirects.")}</small>
         </div> : <small>{locale === "es" ? "Ranked no está disponible en este build; el Career casual sigue libre." : "Ranked is unavailable in this build; casual Career remains open."}</small>}
         <footer><small>{locale === "es" ? "Tres intentos por modo · se conserva el mejor" : "Three attempts per mode · best result kept"}</small><button className="primary-action" onClick={beginAttempt} disabled={!starter || !trainerName.trim() || busy || !accountReady}>{busy ? "…" : locale === "es" ? "Iniciar intento" : "Start attempt"}</button></footer>
       </aside> : null}
