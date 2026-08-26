@@ -109,7 +109,7 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
       if (hp !== null) current.hp = Math.max(0, hp);
       if (maxHp !== null) current.max_hp = Math.max(0, maxHp);
       current.position = position ?? undefined;
-      current.statuses = [...(final.statuses ?? [])];
+      current.statuses = Array.isArray(final.statuses) ? final.statuses.map(String) : [];
       current.active = final.active;
     }
   }
@@ -279,11 +279,13 @@ function cloneCombatant(entry: BattleCombatant): BattleCombatant {
     position: finitePosition(entry.position) ?? undefined,
     hp: finiteNumber(entry.hp) ?? 0,
     max_hp: finiteNumber(entry.max_hp) ?? 0,
-    statuses: [...(entry.statuses ?? [])],
+    statuses: Array.isArray(entry.statuses) ? entry.statuses.map(String) : [],
     stats: { ...(entry.stats ?? {}) },
     effective_stats: { ...(entry.effective_stats ?? {}) },
-    abilities: [...(entry.abilities ?? [])],
-    moves: (entry.moves ?? []).map((move) => ({ ...move })),
+    abilities: Array.isArray(entry.abilities) ? entry.abilities.map(String) : [],
+    moves: Array.isArray(entry.moves)
+      ? entry.moves.filter(isRecord).map((move) => ({ ...move })) as BattleCombatant["moves"]
+      : [],
   };
 }
 
