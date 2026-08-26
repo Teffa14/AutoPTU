@@ -8,13 +8,21 @@ interface Props {
   season?: number;
 }
 
+function validTimelineEntries(run?: CareerRun | null): Record<string, unknown>[] {
+  if (!Array.isArray(run?.timeline)) return [];
+  return run.timeline.filter((entry): entry is Record<string, unknown> => (
+    typeof entry === "object" && entry !== null && !Array.isArray(entry)
+  ));
+}
+
 export function CareerCelebration({ run, locale, season }: Props) {
-  const completed = [...(run?.timeline ?? [])].reverse().find((entry) => (
+  const timeline = validTimelineEntries(run);
+  const completed = [...timeline].reverse().find((entry) => (
     entry.type === "season.completed" && (!season || Number(entry.season) === season)
   ));
   if (!completed) return null;
   const achievements = Array.isArray(completed.new_achievements) ? completed.new_achievements.map(String) : [];
-  const seasonEvolutions = (run?.timeline ?? []).flatMap((entry) => (
+  const seasonEvolutions = timeline.flatMap((entry) => (
     entry.type === "pokemon.evolved" && Number(entry.season) === Number(completed.season)
       ? [entry]
       : []
