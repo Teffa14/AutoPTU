@@ -18,7 +18,7 @@ export function canUseTrainingPlan(pokemon: CareerPokemon, plan: AutomaticTraini
 export function automaticTrainingCandidates(run: CareerRun, plan: AutomaticTrainingPlan): string[] {
   const activeRoster = Array.isArray(run.active_roster) ? run.active_roster : [];
   const pokemonList = Array.isArray(run.pokemon) ? run.pokemon : [];
-  const active = activeRoster
+  const active = Array.from(new Set(activeRoster))
     .map((id) => pokemonList.find((pokemon) => pokemon && typeof pokemon === "object" && pokemon.id === id))
     .filter((pokemon): pokemon is CareerPokemon => Boolean(pokemon && pokemon.status !== "retired" && pokemon.career_health > 0));
   const completedIds = Array.isArray(run.season?.training_completed_ids) ? run.season.training_completed_ids : [];
