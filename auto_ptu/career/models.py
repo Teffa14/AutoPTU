@@ -12,6 +12,7 @@ CURRENT_NARRATIVE_VERSION = "career-hooks-0.8.0"
 
 
 T = TypeVar("T")
+POKEMON_TRAINING_STATS = {"hp", "atk", "def", "spatk", "spdef", "spd"}
 
 
 def utc_now() -> str:
@@ -35,6 +36,26 @@ def _safe_nonnegative_int(value: Any, default: int = 0) -> int:
     if not math.isfinite(number):
         return default
     return max(0, int(number))
+
+
+def _safe_pokemon_int(value: Any, default: int = 0) -> int:
+    """Recover authoritative Pokémon counters without coercing booleans into progress."""
+    if isinstance(value, bool):
+        return default
+    return _safe_nonnegative_int(value, default)
+
+
+def _safe_pokemon_stat_training(value: Any) -> Dict[str, int]:
+    """Recover only canonical stat-training counters from persisted Pokémon state."""
+    if not isinstance(value, dict):
+        return {}
+    recovered: Dict[str, int] = {}
+    for raw_stat, raw_amount in value.items():
+        stat = str(raw_stat).strip().lower()
+        if stat not in POKEMON_TRAINING_STATS:
+            continue
+        recovered[stat] = min(12, _safe_pokemon_int(raw_amount))
+    return recovered
 
 
 def _safe_string_list(value: Any) -> List[str]:
@@ -89,6 +110,15 @@ def _safe_pokemon_payloads(value: Any) -> List[Dict[str, Any]]:
     if not isinstance(value, list):
         return []
     return [dict(entry) for entry in value if isinstance(entry, dict)]
+
+
+def _load_career_pokemon(payload: Dict[str, Any]) -> "CareerPokemon":
+    values = _known_dataclass_values(CareerPokemon, payload)
+    for field_name in ("matches", "wins", "training_wear", "loan_expires_season", "retired_season"):
+        values[field_name] = _safe_pokemon_int(values.get(field_name, 0))
+    values["career_health"] = min(100, _safe_pokemon_int(values.get("career_health", 100), 100))
+    values["stat_training"] = _safe_pokemon_stat_training(values.get("stat_training"))
+    return CareerPokemon(**values)
 
 
 def _safe_active_roster(value: Any, pokemon: List["CareerPokemon"]) -> List[str]:
@@ -395,7 +425,7 @@ class CareerRun:
             season_values["decision_history"] = _safe_dict_list(season_values.get("decision_history"))
             season = SeasonState(**season_values)
         pokemon_payload = _safe_pokemon_payloads(payload.get("pokemon"))
-        pokemon = [_load_dataclass(CareerPokemon, entry) for entry in pokemon_payload]
+        pokemon = [_load_career_pokemon(entry) for entry in pokemon_payload]
         if not pokemon:
             legacy_roster = list(payload.get("roster") or [build.starter])
             pokemon = [
