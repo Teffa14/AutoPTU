@@ -301,9 +301,9 @@ function finiteNumber(value: unknown): number | null {
 
 function finitePosition(value: unknown): [number, number] | null {
   if (!Array.isArray(value) || value.length < 2) return null;
-  const x = Number(value[0]);
-  const y = Number(value[1]);
-  if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
+  const x = finiteNumber(value[0]);
+  const y = finiteNumber(value[1]);
+  if (x === null || y === null) return null;
   return [x, y];
 }
 
