@@ -26,7 +26,7 @@ export function latestClubTransition(run: CareerRun): ClubTransitionBrief | null
   let signIndex = -1;
   for (let index = timeline.length - 1; index >= 0; index -= 1) {
     const entry = asRecord(timeline[index]);
-    if (entry.type === "club.offer_signed" && Number(entry.season ?? 0) === run.season_number) {
+    if (entry.type === "club.offer_signed" && finiteInt(entry.season) === run.season_number) {
       signIndex = index;
       break;
     }
@@ -149,8 +149,8 @@ function previousSeasonFacts(
   for (let index = signIndex - 1; index >= 0; index -= 1) {
     const entry = asRecord(timeline[index]);
     if (entry.type !== "season.completed") continue;
-    const season = Number(entry.season ?? 0);
-    if (!Number.isFinite(season) || season >= currentSeason) continue;
+    const season = finiteInt(entry.season);
+    if (season <= 0 || season >= currentSeason) continue;
     return { record: cleanText(entry.record), league: cleanLeague(entry.league) };
   }
   return { record: "", league: "" };
@@ -179,6 +179,8 @@ function stringList(value: unknown): string[] {
 }
 
 function finiteInt(value: unknown): number {
+  if (typeof value !== "number" && typeof value !== "string") return 0;
+  if (typeof value === "string" && !value.trim()) return 0;
   const parsed = Number(value);
   return Number.isFinite(parsed) ? Math.max(0, Math.trunc(parsed)) : 0;
 }
