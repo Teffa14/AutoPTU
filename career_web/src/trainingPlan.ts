@@ -12,7 +12,9 @@ const TRAINING_STATS: Record<AutomaticTrainingPlan, (keyof CareerPokemon["stat_t
 
 export function canUseTrainingPlan(pokemon: CareerPokemon, plan: AutomaticTrainingPlan): boolean {
   if (pokemon.status === "retired" || pokemon.career_health <= 0) return false;
-  return TRAINING_STATS[plan].some((stat) => Number(pokemon.stat_training?.[stat] ?? 0) < 12);
+  const stats = TRAINING_STATS[plan];
+  if (!stats) return false;
+  return stats.some((stat) => Number(pokemon.stat_training?.[stat] ?? 0) < 12);
 }
 
 export function automaticTrainingCandidates(run: CareerRun, plan: AutomaticTrainingPlan): string[] {
