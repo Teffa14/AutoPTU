@@ -39,6 +39,18 @@ describe("chooseBattleVisualQuality", () => {
   it("keeps full mode on capable hardware when no preference exists", () => {
     expect(chooseBattleVisualQuality({ hardwareConcurrency: 8, deviceMemory: 8 })).toBe("full");
   });
+
+  it("fails closed for malformed host hardware signals without invoking coercion", () => {
+    const hostileSignal = {
+      valueOf: () => {
+        throw new Error("host coercion should not run");
+      },
+    } as unknown as number;
+
+    expect(() => chooseBattleVisualQuality({ hardwareConcurrency: hostileSignal, deviceMemory: 8 })).not.toThrow();
+    expect(chooseBattleVisualQuality({ hardwareConcurrency: true as unknown as number, deviceMemory: 8 })).toBe("full");
+    expect(chooseBattleVisualQuality({ hardwareConcurrency: 8, deviceMemory: hostileSignal })).toBe("full");
+  });
 });
 
 describe("battle render budget", () => {
