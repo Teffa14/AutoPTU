@@ -38,6 +38,7 @@ describe("preseason snapshot boundary", () => {
     };
     expect(() => normalizePreseasonSnapshot({ ...valid, club_offers: [{ ...offer, loan_species: "broken" }] })).toThrow("Invalid preseason response");
     expect(() => normalizePreseasonSnapshot({ ...valid, club_offers: [{ ...offer, returning_loans: "broken" }] })).toThrow("Invalid preseason response");
+    expect(() => normalizePreseasonSnapshot({ ...valid, club_offers: [{ ...offer, returning_loans: [null] }] })).toThrow("Invalid preseason response");
   });
 
   it("rejects sponsor and capture records that would crash presentation", () => {
