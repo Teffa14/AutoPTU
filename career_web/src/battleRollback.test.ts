@@ -30,8 +30,13 @@ function runWithSeason(status: string, revision: number, decisionsCompleted?: nu
 
 class MemoryStorage {
   private data = new Map<string, string>();
+  failWritesFor: string | null = null;
+
   getItem(key: string) { return this.data.get(key) ?? null; }
-  setItem(key: string, value: string) { this.data.set(key, String(value)); }
+  setItem(key: string, value: string) {
+    if (key === this.failWritesFor) throw new DOMException("Storage quota exceeded", "QuotaExceededError");
+    this.data.set(key, String(value));
+  }
   removeItem(key: string) { this.data.delete(key); }
   clear() { this.data.clear(); }
   key(index: number) { return [...this.data.keys()][index] ?? null; }
@@ -102,6 +107,20 @@ describe("pre-battle rollback checkpoint", () => {
     expect(restored?.season?.status).toBe("decision");
     expect(loadLocalRun(safe.id)?.revision).toBe(17);
     expect(loadBattleCheckpoint(safe.id)).toBeNull();
+  });
+
+  it("keeps the checkpoint when browser storage rejects the restored career", () => {
+    const storage = localStorage as MemoryStorage;
+    const safe = runWithSeason("decision", 17);
+    const battle = runWithSeason("battle", 18);
+
+    saveLocalRun(safe);
+    saveLocalRun(battle);
+    storage.failWritesFor = "autoptu-career-run:rollback-run";
+
+    expect(restoreBattleCheckpoint(safe.id)).toBeNull();
+    expect(loadLocalRun(safe.id)?.revision).toBe(18);
+    expect(loadBattleCheckpoint(safe.id)?.revision).toBe(17);
   });
 
   it("rejects a truncated browser save before it reaches the career UI", () => {
