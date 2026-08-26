@@ -65,9 +65,16 @@ function localCareerHeaders(): Record<string, string> {
   return { "X-Career-User": developmentUser };
 }
 
+export function authReturnUrlForLocation(origin: string, pathname: string, hash = ""): string {
+  const marker = "/career-game";
+  const markerIndex = pathname.indexOf(marker);
+  const configuredBase = String(import.meta.env.BASE_URL || "/career-game/");
+  const fallbackBase = configuredBase.endsWith("/") ? configuredBase : `${configuredBase}/`;
+  const appBase = markerIndex >= 0 ? `${pathname.slice(0, markerIndex)}${marker}/` : fallbackBase;
+  const routeHash = hash.startsWith("#/") ? hash : "";
+  return `${origin}${appBase}${routeHash}`;
+}
+
 function authReturnUrl(): string {
-  const path = window.location.pathname.startsWith("/career-game/")
-    ? window.location.pathname
-    : "/career-game/";
-  return `${window.location.origin}${path}`;
+  return authReturnUrlForLocation(window.location.origin, window.location.pathname, window.location.hash);
 }
