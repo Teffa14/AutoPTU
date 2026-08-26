@@ -10,6 +10,23 @@ function battleCheckpointKey(runId: string): string {
   return `${BATTLE_CHECKPOINT_PREFIX}${runId}`;
 }
 
+function isStoredCareerRun(value: unknown, runId: string, activeOnly = false): value is CareerRun {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const run = value as Partial<CareerRun>;
+  if (run.id !== runId || run.ranked) return false;
+  if (run.status !== "active" && run.status !== "retired") return false;
+  if (activeOnly && run.status !== "active") return false;
+  if (run.mode !== "simple" && run.mode !== "advanced") return false;
+  if (run.locale !== "es" && run.locale !== "en") return false;
+  if (!Number.isFinite(run.age) || !Number.isFinite(run.season_number)) return false;
+  if (!run.build || typeof run.build !== "object") return false;
+  if (!Array.isArray(run.roster) || !Array.isArray(run.pokemon) || !Array.isArray(run.active_roster)) return false;
+  if (!run.totals || typeof run.totals !== "object") return false;
+  if (!Array.isArray(run.timeline)) return false;
+  if (run.season !== undefined && (!run.season || typeof run.season !== "object" || Array.isArray(run.season))) return false;
+  return true;
+}
+
 function isExhaustedDecisionPhase(run: CareerRun): boolean {
   if (run.status !== "active" || run.season?.status !== "decision") return false;
   const required = run.season.decisions_required ?? 0;
@@ -33,7 +50,8 @@ export function saveLocalRun(run: CareerRun): void {
     let existing: CareerRun | null = null;
     if (existingRaw) {
       try {
-        existing = JSON.parse(existingRaw) as CareerRun;
+        const parsed = JSON.parse(existingRaw) as unknown;
+        existing = isStoredCareerRun(parsed, run.id) ? parsed : null;
       } catch {
         existing = null;
       }
@@ -58,8 +76,8 @@ export function loadLocalRun(runId: string): CareerRun | null {
   try {
     const raw = localStorage.getItem(`${RUN_PREFIX}${runId}`);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as CareerRun;
-    return parsed?.id === runId && !parsed.ranked ? parsed : null;
+    const parsed = JSON.parse(raw) as unknown;
+    return isStoredCareerRun(parsed, runId) ? parsed : null;
   } catch {
     return null;
   }
@@ -69,8 +87,8 @@ export function loadBattleCheckpoint(runId: string): CareerRun | null {
   try {
     const raw = localStorage.getItem(battleCheckpointKey(runId));
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as CareerRun;
-    return parsed?.id === runId && !parsed.ranked && parsed.status === "active" ? parsed : null;
+    const parsed = JSON.parse(raw) as unknown;
+    return isStoredCareerRun(parsed, runId, true) ? parsed : null;
   } catch {
     return null;
   }
