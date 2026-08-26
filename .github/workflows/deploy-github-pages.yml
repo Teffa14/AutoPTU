@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - .github/workflows/deploy-github-pages.yml
-      - career_web/**
-      - public/career-game/**
   workflow_dispatch:
 
 permissions:
