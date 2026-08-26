@@ -46,9 +46,9 @@ function shouldCreateBattleCheckpoint(previous: CareerRun | null, next: CareerRu
   return next.season.status === "battle" || isExhaustedDecisionPhase(next);
 }
 
-export function saveLocalRun(run: CareerRun): void {
+function persistLocalRun(run: CareerRun): boolean {
   try {
-    if (run.ranked) return;
+    if (run.ranked) return false;
     const existingRaw = localStorage.getItem(`${RUN_PREFIX}${run.id}`);
     let existing: CareerRun | null = null;
     if (existingRaw) {
@@ -70,9 +70,15 @@ export function saveLocalRun(run: CareerRun): void {
     }
     localStorage.setItem(`${RUN_PREFIX}${run.id}`, JSON.stringify(run));
     localStorage.setItem(LAST_RUN_KEY, run.id);
+    return true;
   } catch {
     // Storage can be unavailable in private/restricted browser contexts.
+    return false;
   }
+}
+
+export function saveLocalRun(run: CareerRun): void {
+  persistLocalRun(run);
 }
 
 export function loadLocalRun(runId: string): CareerRun | null {
@@ -100,7 +106,7 @@ export function loadBattleCheckpoint(runId: string): CareerRun | null {
 export function restoreBattleCheckpoint(runId: string): CareerRun | null {
   const checkpoint = loadBattleCheckpoint(runId);
   if (!checkpoint) return null;
-  saveLocalRun(checkpoint);
+  if (!persistLocalRun(checkpoint)) return null;
   clearBattleCheckpoint(runId);
   return checkpoint;
 }
