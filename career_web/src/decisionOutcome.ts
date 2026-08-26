@@ -17,6 +17,11 @@ export type DecisionOutcomeView = {
   gamble: boolean;
 };
 
+export function normalizedDecisionHistory(value: unknown): DecisionHistoryEntry[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((entry): entry is DecisionHistoryEntry => Boolean(entry) && typeof entry === "object" && !Array.isArray(entry));
+}
+
 export function decisionOutcomeView(entry: DecisionHistoryEntry, locale: Locale): DecisionOutcomeView {
   const family = String(entry.option_id ?? "decision").split(":", 1)[0] || "decision";
   const effects = entry.effects && typeof entry.effects === "object" ? entry.effects : {};
