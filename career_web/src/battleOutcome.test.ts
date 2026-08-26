@@ -64,4 +64,17 @@ describe("battle outcome presentation", () => {
       detail: "Pewter Forge vs Cerulean Current · 6 rondas",
     });
   });
+
+  it("does not stringify malformed persisted winner labels into authoritative battle commentary", () => {
+    const malformed = {
+      ...drawTranscript("career-home"),
+      winner_label: { club: "Injected Club" } as unknown as string,
+    };
+
+    expect(battleOutcomePresentation("es", malformed)).toMatchObject({
+      kind: "victory",
+      commentary: "Pewter Forge se lleva la victoria en 6 rondas.",
+      detail: "Pewter Forge · 6 rondas",
+    });
+  });
 });
