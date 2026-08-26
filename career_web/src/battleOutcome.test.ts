@@ -103,4 +103,23 @@ describe("battle outcome presentation", () => {
       moves: [],
     });
   });
+
+  it("fails closed when persisted combatant types are malformed", () => {
+    const base = drawTranscript();
+    const malformed = {
+      ...base,
+      initial_state: {
+        ...base.initial_state,
+        combatants: [
+          {
+            ...base.initial_state.combatants[0],
+            types: { Fighting: true },
+          },
+          base.initial_state.combatants[1],
+        ],
+      },
+    } as unknown as BattleTranscript;
+
+    expect(deriveBattleView(malformed, 0).combatants[0].types).toEqual([]);
+  });
 });
