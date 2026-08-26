@@ -26,11 +26,17 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
   const [accountChecking, setAccountChecking] = useState(Boolean(supabase));
 
   useEffect(() => {
+    let active = true;
     Promise.all([careerApi.daily(day), careerApi.leaderboard(day, mode), careerApi.catalog(locale)])
       .then(([daily, leaderboard, currentCatalog]) => {
+        if (!active) return;
         setChallenge(daily); setBoard(leaderboard); setCatalog(currentCatalog);
       })
-      .catch((reason: Error) => setError(reason.message));
+      .catch((reason: Error) => {
+        if (!active) return;
+        setError(reason.message);
+      });
+    return () => { active = false; };
   }, [day, locale, mode]);
 
   useEffect(() => {
