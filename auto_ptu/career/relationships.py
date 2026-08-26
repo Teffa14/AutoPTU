@@ -19,7 +19,9 @@ def calculate_relationship_effects(relationships: Dict[str, int]) -> Dict[str, A
 
     Relationships are intentionally capped: they should make a contact matter
     without replacing roster quality, preparation, or match performance.
-    Invalid persisted bond values are ignored instead of breaking a career load.
+    Rivalry intensity is continuity information only and never grants a career
+    or combat modifier. Invalid persisted bond values are ignored instead of
+    breaking a career load.
     """
     positive = sorted(
         (
@@ -31,7 +33,9 @@ def calculate_relationship_effects(relationships: Dict[str, int]) -> Dict[str, A
     )
     best_name, best_value = positive[0] if positive else ("", 0)
     active_contacts = sum(1 for _, value in positive if value >= 2)
+    support_contacts = 0
     contact_effects = []
+    support_value = 0
     rival_scouting_bonus = 0
     mentor_training_bonus = 0
     owner_recovery_bonus = 0
@@ -45,8 +49,9 @@ def calculate_relationship_effects(relationships: Dict[str, int]) -> Dict[str, A
             mentor_training_bonus = max(mentor_training_bonus, amount)
             benefit = "partner_training"
         elif role == "rival":
-            amount = min(2, value // 3)
-            rival_scouting_bonus = max(rival_scouting_bonus, amount)
+            # Rivalry may drive callbacks and scouting context, but intensity
+            # cannot alter PTU levels, preparation, recovery, or contracts.
+            amount = 0
             benefit = "rival_read"
         elif role == "owner":
             amount = min(3, value // 2)
@@ -56,6 +61,10 @@ def calculate_relationship_effects(relationships: Dict[str, int]) -> Dict[str, A
         else:
             amount = min(2, value // 3)
             benefit = "preparation"
+        if role != "rival":
+            support_value = max(support_value, value)
+            if value >= 2:
+                support_contacts += 1
         contact_effects.append({
             "name": name, "role": role, "bond": value, "tier": tier,
             "benefit": benefit, "amount": amount,
@@ -65,9 +74,9 @@ def calculate_relationship_effects(relationships: Dict[str, int]) -> Dict[str, A
         "best_contact": best_name,
         "best_value": best_value,
         "active_contacts": active_contacts,
-        "home_level_bonus": min(2, best_value // 2),
-        "season_recovery": min(3, active_contacts),
-        "contract_guard": owner_guard or best_value >= 6,
+        "home_level_bonus": min(2, support_value // 2),
+        "season_recovery": min(3, support_contacts),
+        "contract_guard": owner_guard or support_value >= 6,
         "mentor_training_bonus": mentor_training_bonus,
         "rival_scouting_bonus": rival_scouting_bonus,
         "owner_recovery_bonus": owner_recovery_bonus,
