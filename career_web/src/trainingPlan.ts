@@ -14,7 +14,7 @@ export function canUseTrainingPlan(pokemon: CareerPokemon, plan: AutomaticTraini
   if (pokemon.status === "retired" || pokemon.career_health <= 0) return false;
   const stats = TRAINING_STATS[plan];
   if (!stats) return false;
-  return stats.some((stat) => Number(pokemon.stat_training?.[stat] ?? 0) < 12);
+  return stats.some((stat) => authoritativeTrainingProgress(pokemon.stat_training?.[stat]) < 12);
 }
 
 export function automaticTrainingCandidates(run: CareerRun, plan: AutomaticTrainingPlan): string[] {
@@ -37,4 +37,13 @@ export function automaticTrainingCandidates(run: CareerRun, plan: AutomaticTrain
 
 export function automaticTrainingHasRoom(run: CareerRun, plan: AutomaticTrainingPlan): boolean {
   return automaticTrainingCandidates(run, plan).length > 0;
+}
+
+function authoritativeTrainingProgress(value: unknown): number {
+  if (typeof value === "number") return Number.isFinite(value) && value >= 0 ? value : 0;
+  if (typeof value !== "string") return 0;
+  const text = value.trim();
+  if (!text) return 0;
+  const parsed = Number(text);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
 }
