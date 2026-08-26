@@ -77,4 +77,30 @@ describe("battle outcome presentation", () => {
       detail: "Pewter Forge · 6 rondas",
     });
   });
+
+  it("does not crash playback when persisted combatant detail collections are malformed", () => {
+    const base = drawTranscript();
+    const malformed = {
+      ...base,
+      initial_state: {
+        ...base.initial_state,
+        combatants: [
+          {
+            ...base.initial_state.combatants[0],
+            statuses: { poisoned: true },
+            abilities: "Guts",
+            moves: { name: "Tackle" },
+          },
+          base.initial_state.combatants[1],
+        ],
+      },
+    } as unknown as BattleTranscript;
+
+    expect(() => deriveBattleView(malformed, 0)).not.toThrow();
+    expect(deriveBattleView(malformed, 0).combatants[0]).toMatchObject({
+      statuses: [],
+      abilities: [],
+      moves: [],
+    });
+  });
 });
