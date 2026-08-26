@@ -23,9 +23,30 @@ describe("sponsorRenewalContext", () => {
     });
   });
 
+  it("preserves sponsor memory across harmless persisted name formatting drift", () => {
+    expect(sponsorRenewalContext(
+      { name: "  ROTOM   broadcast  ", renewal: true },
+      [completed],
+      2,
+      "en",
+    )).toEqual({
+      relationshipLabel: "CONTINUING RELATIONSHIP",
+      resultLabel: "Verified previous objective: 5/4 wins",
+    });
+  });
+
   it("does not leak another sponsor's history into a new relationship", () => {
     expect(sponsorRenewalContext(
       { name: "Porygon Systems", renewal: false },
+      [completed],
+      2,
+      "en",
+    )).toBeNull();
+  });
+
+  it("does not merge distinct sponsors when only formatting is normalized", () => {
+    expect(sponsorRenewalContext(
+      { name: "Rotom Systems", renewal: true },
       [completed],
       2,
       "en",
@@ -64,5 +85,14 @@ describe("sponsorRenewalContext", () => {
       relationshipLabel: "RELACIÓN CONTINUA",
       resultLabel: "Objetivo anterior verificado: 5/4 victorias",
     });
+  });
+
+  it("fails closed instead of crashing on malformed offer names", () => {
+    expect(sponsorRenewalContext(
+      { name: null as unknown as string, renewal: true },
+      [completed],
+      2,
+      "en",
+    )).toBeNull();
   });
 });
