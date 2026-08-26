@@ -21,22 +21,27 @@ function safeNonnegativeInteger(value: unknown): number | null {
   return Math.trunc(parsed);
 }
 
+function sponsorIdentityKey(value: unknown): string {
+  if (typeof value !== "string") return "";
+  return value.trim().replace(/\s+/g, " ").toLocaleLowerCase("en-US");
+}
+
 export function sponsorRenewalContext(
   offer: SponsorRenewalOffer,
   timeline: unknown,
   seasonNumber: number,
   locale: Locale,
 ): SponsorRenewalContext | null {
-  if (!offer.renewal) return null;
-  const sponsorName = offer.name.trim();
-  if (!sponsorName) return null;
+  if (!offer?.renewal) return null;
+  const sponsorKey = sponsorIdentityKey(offer.name);
+  if (!sponsorKey) return null;
 
   const entries = Array.isArray(timeline) ? timeline.filter(recordEntry) : [];
   let outcome: Record<string, unknown> | null = null;
   for (let index = entries.length - 1; index >= 0; index -= 1) {
     const entry = entries[index];
     if (entry.type !== "sponsor.completed") continue;
-    if (String(entry.name ?? "").trim() !== sponsorName) continue;
+    if (sponsorIdentityKey(entry.name) !== sponsorKey) continue;
     const season = safeNonnegativeInteger(entry.season);
     if (season !== null && season < seasonNumber) {
       outcome = entry;
