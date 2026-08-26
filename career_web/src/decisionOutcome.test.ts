@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { decisionOutcomeView, isGambleHistoryEntry } from "./decisionOutcome";
+import { decisionOutcomeView, isGambleHistoryEntry, normalizedDecisionHistory } from "./decisionOutcome";
 
 describe("decision outcome presentation", () => {
   it("reports only effects and rewards that were actually applied", () => {
@@ -34,5 +34,16 @@ describe("decision outcome presentation", () => {
     expect(view.headline).toContain("no rindió");
     expect(view.changes).toContain("Desarrollo +3");
     expect(view.changes).toContain("Salud -8");
+  });
+
+  it("fails closed when a legacy decision history container is malformed", () => {
+    expect(normalizedDecisionHistory(null)).toEqual([]);
+    expect(normalizedDecisionHistory("decision:legacy")).toEqual([]);
+    expect(normalizedDecisionHistory({ option_id: "training:legacy" })).toEqual([]);
+  });
+
+  it("keeps valid decision records while dropping malformed legacy entries", () => {
+    const valid = { option_id: "training:3:1:2", label: "Doblar las sesiones", effects: { development: 3 } };
+    expect(normalizedDecisionHistory([null, "junk", [], valid])).toEqual([valid]);
   });
 });
