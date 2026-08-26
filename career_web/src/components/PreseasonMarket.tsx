@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { careerApi, type PreseasonSnapshot } from "../api";
+import { normalizePreseasonSnapshot } from "../preseasonSnapshot";
 import { sponsorRenewalContext } from "../sponsorRenewalPresentation";
 import type { CareerRun, Locale } from "../types";
 import { ClubTransitionBrief } from "./ClubTransitionBrief";
@@ -37,9 +38,10 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
     setError("");
     careerApi.preseason(run.id).then((value) => {
       if (!active) return;
-      if (value.run && value.run.revision !== run.revision) onRun(value.run);
-      setSnapshot(value);
-      onClubReady(value.club_completed);
+      const safe = normalizePreseasonSnapshot(value);
+      if (safe.run && safe.run.revision !== run.revision) onRun(safe.run);
+      setSnapshot(safe);
+      onClubReady(safe.club_completed);
     }).catch((reason: Error) => {
       if (!active) return;
       setError(reason.message);
@@ -54,7 +56,7 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
     try {
       const next = await action();
       onRun(next);
-      const fresh = await careerApi.preseason(next.id);
+      const fresh = normalizePreseasonSnapshot(await careerApi.preseason(next.id));
       if (fresh.run) onRun(fresh.run);
       setSnapshot(fresh);
       onClubReady(fresh.club_completed);
