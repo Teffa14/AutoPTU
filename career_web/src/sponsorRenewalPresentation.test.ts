@@ -46,4 +46,23 @@ describe("sponsorRenewalContext", () => {
       "en",
     )).toBeNull();
   });
+
+  it("survives malformed legacy timeline containers and entries", () => {
+    expect(sponsorRenewalContext(
+      { name: "Rotom Broadcast", renewal: true },
+      null,
+      2,
+      "en",
+    )).toBeNull();
+
+    expect(sponsorRenewalContext(
+      { name: "Rotom Broadcast", renewal: true },
+      [null, "legacy-junk", 42, [], completed],
+      2,
+      "es",
+    )).toEqual({
+      relationshipLabel: "RELACIÓN CONTINUA",
+      resultLabel: "Objetivo anterior verificado: 5/4 victorias",
+    });
+  });
 });
