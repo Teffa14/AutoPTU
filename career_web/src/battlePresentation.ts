@@ -148,7 +148,7 @@ export function battleOutcomePresentation(locale: Locale, transcript: BattleTran
   const rounds = Math.max(0, finiteNumber(transcript.rounds) ?? 0);
   const roundsLabel = locale === "es" ? "rondas" : "rounds";
   if (transcript.winner_team === "career-home") {
-    const winner = String(transcript.winner_label || transcript.spec.home_club).trim() || transcript.spec.home_club;
+    const winner = authoritativeWinnerLabel(transcript.winner_label, transcript.spec.home_club);
     return {
       kind: "victory",
       title: locale === "es" ? "VICTORIA" : "VICTORY",
@@ -157,7 +157,7 @@ export function battleOutcomePresentation(locale: Locale, transcript: BattleTran
     };
   }
   if (transcript.winner_team === "career-away") {
-    const winner = String(transcript.winner_label || transcript.spec.away_club).trim() || transcript.spec.away_club;
+    const winner = authoritativeWinnerLabel(transcript.winner_label, transcript.spec.away_club);
     return {
       kind: "defeat",
       title: locale === "es" ? "DERROTA" : "DEFEAT",
@@ -261,6 +261,12 @@ export function statusLabel(value: string, locale: Locale): string {
     asleep: ["dormido", "asleep"], frozen: ["congelado", "frozen"], fainted: ["debilitado", "fainted"],
   };
   return labels[value.toLowerCase()]?.[locale === "es" ? 0 : 1] ?? value;
+}
+
+function authoritativeWinnerLabel(value: unknown, fallback: string): string {
+  if (typeof value !== "string") return fallback;
+  const label = value.trim();
+  return label || fallback;
 }
 
 function combatantName(transcript: BattleTranscript, id: string): string {
