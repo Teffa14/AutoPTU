@@ -27,6 +27,13 @@ def test_trainer_display_name_rejects_invisible_and_corrupt_values() -> None:
     assert trainer_display_name("NaN", "Visible Handle") == "Visible Handle"
 
 
+def test_trainer_display_name_rejects_non_scalar_persisted_identity_values() -> None:
+    assert trainer_display_name(True) == "Trainer"
+    assert trainer_display_name(False, "Public Handle") == "Public Handle"
+    assert trainer_display_name({"name": "Red"}) == "Trainer"
+    assert trainer_display_name(["Blue"], "Legacy Handle") == "Legacy Handle"
+
+
 class _BrokenString:
     def __str__(self) -> str:
         raise RuntimeError("corrupt persisted display value")

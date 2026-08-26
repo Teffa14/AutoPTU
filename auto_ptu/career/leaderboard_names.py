@@ -13,18 +13,18 @@ def trainer_display_name(value: object, fallback: object = "Trainer") -> str:
     """Return a stable visible leaderboard name from persisted or legacy data."""
 
     def clean(candidate: object) -> str:
-        if candidate is None:
+        # Public trainer identity is authored text. Persisted booleans, numbers,
+        # lists or objects are corrupt state and must not become visible labels via
+        # Python string coercion.
+        if not isinstance(candidate, str):
             return ""
-        try:
-            text = str(candidate)
-        except Exception:
-            return ""
+        text = candidate
         # Public leaderboard labels must stay visually attributable. Strip Unicode
         # control/format state that can reverse or hide text, then bound the label
         # so a corrupted persisted name cannot expand compact/mobile rows.
         text = "".join(char for char in text if unicodedata.category(char) not in {"Cc", "Cf"})
         text = " ".join(text.split())
-        if text.casefold() in {"", "none", "null", "nan"}:
+        if text.casefold() in {"", "none", "null", "nan", "undefined", "infinity"}:
             return ""
         return text[:MAX_TRAINER_DISPLAY_NAME].rstrip()
 
