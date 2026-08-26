@@ -456,6 +456,11 @@ def _loan_return_preview(run: CareerRun) -> List[Dict[str, Any]]:
             "club_id": entry.loan_club_id,
             "club_name": current_club_name if entry.loan_club_id == current_club_id else entry.loan_club_id,
             "active": entry.id in active,
+            "matches": entry.matches,
+            "wins": entry.wins,
+            "stat_training": dict(entry.stat_training),
+            "career_health": entry.career_health,
+            "training_wear": entry.training_wear,
         }
         for entry in run.pokemon
         if entry.ownership == "loan"
