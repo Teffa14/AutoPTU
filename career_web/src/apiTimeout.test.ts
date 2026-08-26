@@ -14,11 +14,12 @@ describe("career API request timeout", () => {
     })));
 
     const pending = careerApi.catalog("es");
-    await vi.advanceTimersByTimeAsync(15_000);
-
-    await expect(pending).rejects.toMatchObject<ApiError>({
+    const rejection = expect(pending).rejects.toMatchObject<ApiError>({
       name: "ApiError",
       status: 408,
     });
+
+    await vi.advanceTimersByTimeAsync(15_000);
+    await rejection;
   });
 });
