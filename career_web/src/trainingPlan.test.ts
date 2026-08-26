@@ -86,4 +86,11 @@ describe("automatic training candidates", () => {
     (source as unknown as { pokemon: unknown }).pokemon = [null, available];
     expect(automaticTrainingCandidates(source, "guard")).toEqual([available.id]);
   });
+
+  it("deduplicates repeated active roster ids before automatic training", () => {
+    const loan = pokemon("loan-1");
+    const owned = pokemon("owned-2");
+    const source = run("advanced", [loan, owned], [loan.id, loan.id, owned.id]);
+    expect(automaticTrainingCandidates(source, "conditioning")).toEqual([loan.id, owned.id]);
+  });
 });
