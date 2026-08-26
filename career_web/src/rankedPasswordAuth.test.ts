@@ -2,54 +2,65 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const authMocks = vi.hoisted(() => ({
   signInWithPassword: vi.fn(),
-  signUp: vi.fn(),
 }));
 
 vi.mock("@supabase/supabase-js", () => ({
   createClient: () => ({
     auth: {
       signInWithPassword: authMocks.signInWithPassword,
-      signUp: authMocks.signUp,
     },
   }),
 }));
 
-describe("ranked password auth", () => {
+describe("ranked ID auth", () => {
   beforeEach(() => {
     vi.resetModules();
     vi.stubEnv("VITE_SUPABASE_URL", "https://example.supabase.co");
     vi.stubEnv("VITE_SUPABASE_PUBLISHABLE_KEY", "sb_publishable_test");
+    vi.stubEnv("VITE_API_URL", "https://api.example/functions/v1/career-api");
     authMocks.signInWithPassword.mockReset();
-    authMocks.signUp.mockReset();
+    vi.unstubAllGlobals();
   });
 
-  it("signs in on-page without a redirect URL", async () => {
-    authMocks.signInWithPassword.mockResolvedValue({ data: { session: {} }, error: null });
-    const { signInWithPassword } = await import("./auth");
+  it("normalizes a public ranked ID into an internal Supabase login", async () => {
+    const { normalizeRankedId, rankedEmailForId } = await import("./auth");
 
-    await signInWithPassword(" trainer@example.com ", "secret12");
+    expect(normalizeRankedId(" Stefano_14 ")).toBe("stefano_14");
+    expect(rankedEmailForId("Stefano_14")).toBe("stefano_14@ranked.autoptu.app");
+    expect(() => normalizeRankedId("no spaces allowed")).toThrow(/Ranked ID/);
+  });
+
+  it("signs in directly without OAuth, email or redirect options", async () => {
+    authMocks.signInWithPassword.mockResolvedValue({ data: { session: {} }, error: null });
+    const { signInWithRankedId } = await import("./auth");
+
+    await signInWithRankedId("trainer-7", "secret123");
 
     expect(authMocks.signInWithPassword).toHaveBeenCalledWith({
-      email: "trainer@example.com",
-      password: "secret12",
+      email: "trainer-7@ranked.autoptu.app",
+      password: "secret123",
     });
   });
 
-  it("creates a permanent account and reports an immediate session", async () => {
-    authMocks.signUp.mockResolvedValue({
-      data: { session: { access_token: "token", user: { is_anonymous: false } } },
-      error: null,
+  it("registers through the edge function then signs in on-page", async () => {
+    authMocks.signInWithPassword.mockResolvedValue({ data: { session: {} }, error: null });
+    const fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 201, json: vi.fn() });
+    vi.stubGlobal("fetch", fetchMock);
+    const { registerRankedAccount } = await import("./auth");
+
+    await registerRankedAccount("trainer-7", "secret123");
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://api.example/functions/v1/career-api/auth/register",
+      expect.objectContaining({
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ranked_id: "trainer-7", password: "secret123" }),
+      }),
+    );
+    expect(authMocks.signInWithPassword).toHaveBeenCalledWith({
+      email: "trainer-7@ranked.autoptu.app",
+      password: "secret123",
     });
-    const { signUpWithPassword } = await import("./auth");
-
-    await expect(signUpWithPassword("new@example.com", "secret12")).resolves.toEqual({ signedIn: true });
-    expect(authMocks.signUp).toHaveBeenCalledWith({ email: "new@example.com", password: "secret12" });
-  });
-
-  it("reports when signup did not create a browser session", async () => {
-    authMocks.signUp.mockResolvedValue({ data: { session: null }, error: null });
-    const { signUpWithPassword } = await import("./auth");
-
-    await expect(signUpWithPassword("new@example.com", "secret12")).resolves.toEqual({ signedIn: false });
   });
 });
