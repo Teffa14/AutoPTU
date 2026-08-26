@@ -45,7 +45,8 @@ def test_github_pages_workflow_deploys_browser_build_with_spa_fallback() -> None
     assert "enablement: true" in workflow
     assert "actions/deploy-pages@v4" in workflow
     assert "actions/upload-pages-artifact@v3" in workflow
-    assert "VITE_API_URL:" in workflow
+    assert "VITE_API_URL: https://obfecwinjdczsfsperks.supabase.co/functions/v1/career-api" in workflow
+    assert "autoptu-career-api.onrender.com" not in workflow
     assert "cp public/career-game/index.html public/404.html" in workflow
     assert "vercel" not in workflow.lower()
 
