@@ -13,13 +13,18 @@ import type { CareerRun, Locale } from "./types";
 
 const BattleScreen = lazy(() => import("./components/BattleScreen"));
 const SeasonHub = lazy(() => import("./components/SeasonHub").then((module) => ({ default: module.SeasonHub })));
+const CAREER_BASE_PATH = import.meta.env.BASE_URL.replace(/\/+$/, "");
 
 function currentPath(): string {
-  return window.location.pathname.replace(/^\/career-game\/?/, "");
+  const pathname = window.location.pathname;
+  if (pathname === CAREER_BASE_PATH || pathname === `${CAREER_BASE_PATH}/`) return "";
+  if (pathname.startsWith(`${CAREER_BASE_PATH}/`)) return pathname.slice(CAREER_BASE_PATH.length + 1);
+  return "";
 }
 
 export function navigate(path: string): void {
-  const target = `/career-game/${path.replace(/^\//, "")}`;
+  const suffix = path.replace(/^\/+/, "");
+  const target = suffix ? `${CAREER_BASE_PATH}/${suffix}` : `${CAREER_BASE_PATH}/`;
   window.history.pushState({}, "", target);
   window.dispatchEvent(new PopStateEvent("popstate"));
 }
