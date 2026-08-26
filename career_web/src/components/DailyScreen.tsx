@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { navigate } from "../App";
 import { careerApi } from "../api";
 import { hasPersistentCareerAccount, signInWithEmail, signInWithProvider, supabase } from "../auth";
-import { leaderboardTrainerName } from "../leaderboardPresentation";
+import { leaderboardEntries, leaderboardTrainerName } from "../leaderboardPresentation";
 import { DEFAULT_TRAINER_SPRITE, trainerSpriteOptions, trainerSpriteStorageEntry } from "../trainerSprites";
 import type { CareerCatalog, CareerMode, CareerRun, Locale } from "../types";
 import { StarterPicker } from "./StarterPicker";
@@ -50,7 +50,7 @@ export function DailyScreen({ locale, onRun, leaderboardOnly = false }: { locale
     };
   }, []);
 
-  const entries = (board?.entries as Record<string, unknown>[] | undefined) ?? [];
+  const entries = leaderboardEntries(board?.entries);
   const region = String(challenge?.region ?? "kanto");
   const regionCatalog = catalog?.regions.find((entry) => entry.id === region);
   const spriteOptions = trainerSpriteOptions(catalog);
