@@ -16,13 +16,16 @@ function isStoredCareerRun(value: unknown, runId: string, activeOnly = false): v
   if (run.id !== runId || run.ranked) return false;
   if (run.status !== "active" && run.status !== "retired") return false;
   if (activeOnly && run.status !== "active") return false;
-  if (run.mode !== "simple" && run.mode !== "advanced") return false;
-  if (run.locale !== "es" && run.locale !== "en") return false;
-  if (!Number.isFinite(run.age) || !Number.isFinite(run.season_number)) return false;
-  if (!run.build || typeof run.build !== "object") return false;
-  if (!Array.isArray(run.roster) || !Array.isArray(run.pokemon) || !Array.isArray(run.active_roster)) return false;
-  if (!run.totals || typeof run.totals !== "object") return false;
-  if (!Array.isArray(run.timeline)) return false;
+  if (!Number.isFinite(run.season_number)) return false;
+  if (!run.build || typeof run.build !== "object" || Array.isArray(run.build)) return false;
+  if (run.mode !== undefined && run.mode !== "simple" && run.mode !== "advanced") return false;
+  if (run.locale !== undefined && run.locale !== "es" && run.locale !== "en") return false;
+  if (run.age !== undefined && !Number.isFinite(run.age)) return false;
+  if (run.roster !== undefined && !Array.isArray(run.roster)) return false;
+  if (run.pokemon !== undefined && !Array.isArray(run.pokemon)) return false;
+  if (run.active_roster !== undefined && !Array.isArray(run.active_roster)) return false;
+  if (run.totals !== undefined && (!run.totals || typeof run.totals !== "object" || Array.isArray(run.totals))) return false;
+  if (run.timeline !== undefined && !Array.isArray(run.timeline)) return false;
   if (run.season !== undefined && (!run.season || typeof run.season !== "object" || Array.isArray(run.season))) return false;
   return true;
 }
