@@ -78,6 +78,7 @@ function persistLocalRun(run: CareerRun): boolean {
 }
 
 export function saveLocalRun(run: CareerRun): void {
+  if (run.ranked) return;
   persistLocalRun(run);
 }
 
