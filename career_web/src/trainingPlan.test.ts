@@ -93,4 +93,13 @@ describe("automatic training candidates", () => {
     const source = run("advanced", [loan, owned], [loan.id, loan.id, owned.id]);
     expect(automaticTrainingCandidates(source, "conditioning")).toEqual([loan.id, owned.id]);
   });
+
+  it("rejects an invalid legacy automatic plan without crashing the season screen", () => {
+    const available = pokemon("available", { is_partner: true });
+    const source = run("simple", [available], [available.id]);
+    const invalidPlan = "legacy-broken-plan" as never;
+
+    expect(canUseTrainingPlan(available, invalidPlan)).toBe(false);
+    expect(automaticTrainingCandidates(source, invalidPlan)).toEqual([]);
+  });
 });
