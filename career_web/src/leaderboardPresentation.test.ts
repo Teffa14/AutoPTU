@@ -17,4 +17,9 @@ describe("leaderboardTrainerName", () => {
   it("normalizes visible whitespace for stable public identity", () => {
     expect(leaderboardTrainerName({ trainer_name: "  Mayra   Sol  ", handle: "legacy" })).toBe("Mayra Sol");
   });
+
+  it("fails closed when a ranked leaderboard payload contains malformed entries", () => {
+    expect(leaderboardTrainerName(null as unknown as Record<string, unknown>)).toBe("Trainer");
+    expect(leaderboardTrainerName("legacy" as unknown as Record<string, unknown>)).toBe("Trainer");
+  });
 });
