@@ -127,8 +127,8 @@ export function formalRivalMemory(
   for (const event of timeline) {
     if (!event || typeof event !== "object") continue;
     if (event.type !== "season.completed" || !Array.isArray(event.opponents)) continue;
-    const eventSeason = Number(event.season ?? 0);
-    if (!Number.isFinite(eventSeason) || eventSeason <= 0) continue;
+    const eventSeason = authoritativePositiveNumber(event.season);
+    if (eventSeason === null) continue;
     if (beforeSeason !== undefined && eventSeason >= beforeSeason) continue;
     const meetings = event.opponents.filter((opponent) => normalizeClubIdentity(opponent) === normalizedAwayClub).length;
     if (!meetings) continue;
@@ -164,6 +164,13 @@ function normalizeRegionIdentity(value: unknown): string {
 function normalizeClubIdentity(value: unknown): string {
   if (typeof value !== "string") return "";
   return value.trim().replace(/\s+/g, " ").toLocaleLowerCase("en-US");
+}
+
+function authoritativePositiveNumber(value: unknown): number | null {
+  if (typeof value !== "number" && typeof value !== "string") return null;
+  if (typeof value === "string" && !value.trim()) return null;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
 }
 
 function stableIndex(value: string, modulo: number): number {
