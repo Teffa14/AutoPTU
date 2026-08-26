@@ -5,7 +5,10 @@ export function normalizeCareerBasePath(basePath: string): string {
   return normalized || "";
 }
 
-export function careerPathFromLocation(pathname: string, basePath: string): string {
+export function careerPathFromLocation(pathname: string, basePath: string, hash = ""): string {
+  const hashPath = String(hash || "").replace(/^#\/?/, "").replace(/^\/+/, "");
+  if (hashPath) return hashPath;
+
   const base = normalizeCareerBasePath(basePath);
   const path = String(pathname || "/");
   if (path === base || path === `${base}/`) return "";
@@ -17,5 +20,5 @@ export function careerPathFromLocation(pathname: string, basePath: string): stri
 export function careerNavigationTarget(path: string, basePath: string): string {
   const base = normalizeCareerBasePath(basePath);
   const suffix = String(path || "").replace(/^\/+/, "");
-  return suffix ? `${base}/${suffix}` : `${base}/`;
+  return suffix ? `${base}/#/${suffix}` : `${base}/`;
 }
