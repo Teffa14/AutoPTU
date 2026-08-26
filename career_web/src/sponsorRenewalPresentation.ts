@@ -15,6 +15,7 @@ function recordEntry(value: unknown): value is Record<string, unknown> {
 }
 
 function safeNonnegativeInteger(value: unknown): number | null {
+  if (typeof value !== "number" && typeof value !== "string") return null;
   if (typeof value === "string" && !value.trim()) return null;
   const parsed = typeof value === "number" ? value : Number(value);
   if (!Number.isFinite(parsed) || parsed < 0) return null;
