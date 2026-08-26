@@ -54,7 +54,7 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
         const maxHp = finiteNumber(raw.max_hp);
         if (hp !== null) current.hp = Math.max(0, hp);
         if (maxHp !== null) current.max_hp = Math.max(0, maxHp);
-        if (Array.isArray(raw.statuses)) current.statuses = raw.statuses.map(String);
+        if (Array.isArray(raw.statuses)) current.statuses = stringEntries(raw.statuses);
         if (typeof raw.active === "boolean") current.active = raw.active;
       }
     }
@@ -89,8 +89,8 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
     if (hpCombatant && newHp !== null) hpCombatant.hp = Math.max(0, newHp);
     if (event.status) {
       const statusOwner = combatants.get(String(event.target ?? event.actor ?? ""));
-      if (statusOwner) {
-        const status = String(event.status);
+      if (statusOwner && typeof event.status === "string") {
+        const status = event.status;
         const statuses = new Set(statusOwner.statuses ?? []);
         if (event.type === "status_removed" || event.effect === "cure") statuses.delete(status);
         else statuses.add(status);
@@ -109,14 +109,14 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
       if (hp !== null) current.hp = Math.max(0, hp);
       if (maxHp !== null) current.max_hp = Math.max(0, maxHp);
       current.position = position ?? undefined;
-      current.statuses = Array.isArray(final.statuses) ? final.statuses.map(String) : [];
+      current.statuses = Array.isArray(final.statuses) ? stringEntries(final.statuses) : [];
       current.active = final.active;
     }
   }
 
   const event = complete ? null : transcript.events[rawEventIndex] ?? null;
   const context = isRecord(event?.context) ? event.context : {};
-  const rollOptions = Array.isArray(context.roll_options) ? context.roll_options.map(String) : [];
+  const rollOptions = Array.isArray(context.roll_options) ? context.roll_options.filter((value): value is string => typeof value === "string") : [];
   const damage = event?.type === "move"
     ? finiteNumber(event.damage) ?? 0
     : event?.type === "status" && event.outcome === "hit_self"
@@ -279,15 +279,19 @@ function cloneCombatant(entry: BattleCombatant): BattleCombatant {
     position: finitePosition(entry.position) ?? undefined,
     hp: finiteNumber(entry.hp) ?? 0,
     max_hp: finiteNumber(entry.max_hp) ?? 0,
-    types: Array.isArray(entry.types) ? entry.types.map(String) : [],
-    statuses: Array.isArray(entry.statuses) ? entry.statuses.map(String) : [],
+    types: Array.isArray(entry.types) ? stringEntries(entry.types) : [],
+    statuses: Array.isArray(entry.statuses) ? stringEntries(entry.statuses) : [],
     stats: { ...(entry.stats ?? {}) },
     effective_stats: { ...(entry.effective_stats ?? {}) },
-    abilities: Array.isArray(entry.abilities) ? entry.abilities.map(String) : [],
+    abilities: Array.isArray(entry.abilities) ? stringEntries(entry.abilities) : [],
     moves: Array.isArray(entry.moves)
       ? entry.moves.filter(isRecord).map((move) => ({ ...move })) as BattleCombatant["moves"]
       : [],
   };
+}
+
+function stringEntries(value: unknown[]): string[] {
+  return value.filter((entry): entry is string => typeof entry === "string");
 }
 
 function finiteNumber(value: unknown): number | null {

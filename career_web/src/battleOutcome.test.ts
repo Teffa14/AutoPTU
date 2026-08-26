@@ -122,4 +122,40 @@ describe("battle outcome presentation", () => {
 
     expect(deriveBattleView(malformed, 0).combatants[0].types).toEqual([]);
   });
+
+  it("does not coerce malformed collection entries into visible battle facts", () => {
+    const base = drawTranscript();
+    const malformed = {
+      ...base,
+      initial_state: {
+        ...base.initial_state,
+        combatants: [
+          {
+            ...base.initial_state.combatants[0],
+            types: ["Fighting", true, { name: "Ghost" }],
+            statuses: ["poisoned", false, { name: "burned" }],
+            abilities: ["Guts", 7, { name: "No Guard" }],
+          },
+          base.initial_state.combatants[1],
+        ],
+      },
+      final_state: {
+        ...base.final_state,
+        combatants: [
+          {
+            ...base.final_state.combatants[0],
+            statuses: ["fainted", true, { name: "frozen" }],
+          },
+          base.final_state.combatants[1],
+        ],
+      },
+    } as unknown as BattleTranscript;
+
+    expect(deriveBattleView(malformed, 0).combatants[0]).toMatchObject({
+      types: ["Fighting"],
+      statuses: ["poisoned"],
+      abilities: ["Guts"],
+    });
+    expect(deriveBattleView(malformed, malformed.events.length).combatants[0].statuses).toEqual(["fainted"]);
+  });
 });
