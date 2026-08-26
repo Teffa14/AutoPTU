@@ -6,6 +6,16 @@ function visibleName(value: unknown): string {
   return INVALID_VISIBLE_NAMES.has(normalized.toLocaleLowerCase()) ? "" : normalized;
 }
 
-export function leaderboardTrainerName(entry: Record<string, unknown>): string {
+function isLeaderboardEntry(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+export function leaderboardEntries(value: unknown): Record<string, unknown>[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter(isLeaderboardEntry);
+}
+
+export function leaderboardTrainerName(entry: unknown): string {
+  if (!isLeaderboardEntry(entry)) return "Trainer";
   return visibleName(entry.trainer_name) || visibleName(entry.handle) || "Trainer";
 }
