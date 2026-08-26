@@ -32,17 +32,22 @@ def test_relationship_roles_survive_persisted_formatting_drift() -> None:
 
     assert effects["best_contact"] == "Mara · Mentor · Kanto"
     assert effects["mentor_training_bonus"] == 2
-    assert effects["rival_scouting_bonus"] == 1
+    assert effects["rival_scouting_bonus"] == 0
     assert effects["owner_recovery_bonus"] == 2
     assert effects["contract_guard"] is True
     assert [entry["role"] for entry in effects["contact_effects"]] == ["mentor", "owner", "rival"]
     assert all(entry["name"].strip() for entry in effects["contact_effects"])
 
 
-def test_rivalry_history_does_not_grant_combat_level_modifiers() -> None:
+def test_rivalry_history_stays_narrative_only() -> None:
     effects = calculate_relationship_effects({"Ivo · rival · Johto": 8})
 
     assert effects["best_contact"] == "Ivo · rival · Johto"
     assert effects["best_value"] == 8
+    assert effects["active_contacts"] == 1
     assert effects["home_level_bonus"] == 0
     assert effects["rival_scouting_bonus"] == 0
+    assert effects["season_recovery"] == 0
+    assert effects["contract_guard"] is False
+    assert effects["contact_effects"][0]["role"] == "rival"
+    assert effects["contact_effects"][0]["amount"] == 0
