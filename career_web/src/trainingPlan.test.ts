@@ -74,6 +74,16 @@ describe("automatic training candidates", () => {
     expect(canUseTrainingPlan(pokemon("full", { stat_training: { atk: 12, spatk: 12 } }), "power")).toBe(false);
   });
 
+  it("does not coerce malformed persisted stat training into plan eligibility", () => {
+    const malformed = pokemon("malformed", {
+      stat_training: {
+        hp: { valueOf: () => 12 },
+      } as unknown as CareerPokemon["stat_training"],
+    });
+
+    expect(canUseTrainingPlan(malformed, "conditioning")).toBe(true);
+  });
+
   it("treats a malformed legacy active roster as empty instead of crashing season training", () => {
     const source = run("advanced", [pokemon("available")], ["available"]);
     (source as unknown as { active_roster: unknown }).active_roster = null;
