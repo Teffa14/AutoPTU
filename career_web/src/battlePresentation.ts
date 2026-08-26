@@ -279,6 +279,7 @@ function cloneCombatant(entry: BattleCombatant): BattleCombatant {
     position: finitePosition(entry.position) ?? undefined,
     hp: finiteNumber(entry.hp) ?? 0,
     max_hp: finiteNumber(entry.max_hp) ?? 0,
+    types: Array.isArray(entry.types) ? entry.types.map(String) : [],
     statuses: Array.isArray(entry.statuses) ? entry.statuses.map(String) : [],
     stats: { ...(entry.stats ?? {}) },
     effective_stats: { ...(entry.effective_stats ?? {}) },
