@@ -10,6 +10,10 @@ export interface SponsorRenewalContext {
   relationshipLabel: string;
 }
 
+function recordEntry(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
 function safeNonnegativeInteger(value: unknown): number | null {
   if (typeof value === "string" && !value.trim()) return null;
   const parsed = typeof value === "number" ? value : Number(value);
@@ -19,7 +23,7 @@ function safeNonnegativeInteger(value: unknown): number | null {
 
 export function sponsorRenewalContext(
   offer: SponsorRenewalOffer,
-  timeline: Record<string, unknown>[],
+  timeline: unknown,
   seasonNumber: number,
   locale: Locale,
 ): SponsorRenewalContext | null {
@@ -27,9 +31,10 @@ export function sponsorRenewalContext(
   const sponsorName = offer.name.trim();
   if (!sponsorName) return null;
 
+  const entries = Array.isArray(timeline) ? timeline.filter(recordEntry) : [];
   let outcome: Record<string, unknown> | null = null;
-  for (let index = timeline.length - 1; index >= 0; index -= 1) {
-    const entry = timeline[index];
+  for (let index = entries.length - 1; index >= 0; index -= 1) {
+    const entry = entries[index];
     if (entry.type !== "sponsor.completed") continue;
     if (String(entry.name ?? "").trim() !== sponsorName) continue;
     const season = safeNonnegativeInteger(entry.season);
