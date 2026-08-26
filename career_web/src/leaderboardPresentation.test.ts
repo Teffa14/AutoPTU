@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { leaderboardTrainerName } from "./leaderboardPresentation";
+import { leaderboardEntries, leaderboardTrainerName } from "./leaderboardPresentation";
 
 describe("leaderboardTrainerName", () => {
   it("keeps a visible legacy handle when trainer_name is blank or corrupt", () => {
@@ -19,7 +19,11 @@ describe("leaderboardTrainerName", () => {
   });
 
   it("fails closed when a ranked leaderboard payload contains malformed entries", () => {
-    expect(leaderboardTrainerName(null as unknown as Record<string, unknown>)).toBe("Trainer");
-    expect(leaderboardTrainerName("legacy" as unknown as Record<string, unknown>)).toBe("Trainer");
+    expect(leaderboardTrainerName(null)).toBe("Trainer");
+    expect(leaderboardTrainerName("legacy")).toBe("Trainer");
+    expect(leaderboardEntries([null, "legacy", { trainer_name: "Red", rank: 1, score: 42 }])).toEqual([
+      { trainer_name: "Red", rank: 1, score: 42 },
+    ]);
+    expect(leaderboardEntries({ trainer_name: "not-an-array" })).toEqual([]);
   });
 });
