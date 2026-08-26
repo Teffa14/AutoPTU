@@ -193,4 +193,25 @@ describe("latestClubTransition", () => {
   it("returns null when no current-season signing exists", () => {
     expect(latestClubTransition(runWithTimeline([{ type: "club.offer_signed", season: 2, club: "Old Club" }]))).toBeNull();
   });
+
+  it("rejects coerced numeric facts instead of inventing a current signing or contract terms", () => {
+    const coercedSeason = latestClubTransition(runWithTimeline([
+      { type: "club.offer_signed", season: true, club: "False Current Club", salary: 999, seasons: 9 },
+    ], 1));
+    expect(coercedSeason).toBeNull();
+
+    const malformedTerms = latestClubTransition(runWithTimeline([
+      { type: "club.offer_signed", season: 3, club: "Celadon Comets", salary: true, seasons: { valueOf: () => 4 } },
+    ]));
+    expect(malformedTerms?.salary).toBe(0);
+    expect(malformedTerms?.seasons).toBe(1);
+  });
+
+  it("ignores coerced previous-season markers when choosing media questions", () => {
+    const run = runWithTimeline([
+      { type: "season.completed", season: true, record: "8-0-0", league: "rookie" },
+      { type: "club.offer_signed", season: 3, club: "Celadon Comets", salary: 420, seasons: 1 },
+    ]);
+    expect(latestClubTransition(run)?.questions).toEqual(["contract"]);
+  });
 });
