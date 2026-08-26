@@ -8,10 +8,18 @@ export type PendingBattleRecovery = {
   phaseRepairNeeded: boolean;
 };
 
+function safeNonnegativeInteger(value: unknown): number {
+  if (typeof value !== "number" && typeof value !== "string") return 0;
+  if (typeof value === "string" && !value.trim()) return 0;
+  const parsed = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(parsed) || parsed < 0) return 0;
+  return Math.trunc(parsed);
+}
+
 function decisionProgress(run: CareerRun): { completed: number; required: number; displayedCompleted: number } {
   const season = run.season;
-  const required = Math.max(0, season?.decisions_required ?? 0);
-  const completed = Math.max(0, season?.decisions_completed ?? 0);
+  const required = safeNonnegativeInteger(season?.decisions_required);
+  const completed = safeNonnegativeInteger(season?.decisions_completed);
   return {
     completed,
     required,
