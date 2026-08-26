@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import unicodedata
 from typing import Dict, List
 
 from .models import CareerRun, LeaderboardEntry
+
+
+MAX_TRAINER_DISPLAY_NAME = 48
 
 
 def trainer_display_name(value: object, fallback: object = "Trainer") -> str:
@@ -15,10 +19,14 @@ def trainer_display_name(value: object, fallback: object = "Trainer") -> str:
             text = str(candidate)
         except Exception:
             return ""
+        # Public leaderboard labels must stay visually attributable. Strip Unicode
+        # control/format state that can reverse or hide text, then bound the label
+        # so a corrupted persisted name cannot expand compact/mobile rows.
+        text = "".join(char for char in text if unicodedata.category(char) not in {"Cc", "Cf"})
         text = " ".join(text.split())
         if text.casefold() in {"", "none", "null", "nan"}:
             return ""
-        return text
+        return text[:MAX_TRAINER_DISPLAY_NAME].rstrip()
 
     return clean(value) or clean(fallback) or "Trainer"
 

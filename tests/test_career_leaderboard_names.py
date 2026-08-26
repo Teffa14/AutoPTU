@@ -36,6 +36,14 @@ def test_trainer_display_name_survives_broken_string_conversion() -> None:
     assert trainer_display_name(_BrokenString(), "Public Handle") == "Public Handle"
 
 
+def test_trainer_display_name_strips_format_controls_and_bounds_layout_length() -> None:
+    # Directional/zero-width format controls are invisible UI state and can make a
+    # public leaderboard label render misleadingly. Extremely long persisted names
+    # can also expand the leaderboard row far beyond its intended mobile layout.
+    assert trainer_display_name("Red\u202e\u200b Campo") == "Red Campo"
+    assert trainer_display_name("A" * 200) == "A" * 48
+
+
 def test_local_leaderboard_always_exposes_a_visible_trainer_name() -> None:
     store = SimpleNamespace(
         list_runs=lambda: [
