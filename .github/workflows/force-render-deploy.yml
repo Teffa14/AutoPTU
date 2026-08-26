@@ -1,0 +1,50 @@
+name: Force Render deploy
+
+on:
+  push:
+    branches:
+      - ops/force-render-deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+      RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      RENDER_API_TOKEN: ${{ secrets.RENDER_API_TOKEN }}
+      TARGET_COMMIT: d7824c9c627b9b64ce44df49b7695045cdddc54a
+    steps:
+      - name: Trigger Render deployment if credentials exist
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -n "${RENDER_DEPLOY_HOOK_URL:-}" ]; then
+            echo "Render deploy hook is configured; triggering it."
+            curl --fail --silent --show-error --request POST "${RENDER_DEPLOY_HOOK_URL}?ref=${TARGET_COMMIT}" >/dev/null
+            exit 0
+          fi
+
+          TOKEN="${RENDER_API_KEY:-${RENDER_API_TOKEN:-}}"
+          if [ -z "$TOKEN" ]; then
+            echo "No Render deploy hook or API token is configured in GitHub Actions."
+            exit 2
+          fi
+
+          echo "Render API token is configured; locating service without exposing credentials."
+          services="$(curl --fail --silent --show-error \
+            --header "Authorization: Bearer $TOKEN" \
+            --header "Accept: application/json" \
+            'https://api.render.com/v1/services?name=autoptu-career-api&limit=20')"
+          service_id="$(printf '%s' "$services" | jq -r '[.[] | (.service // .) | select(.name == "autoptu-career-api")][0].id // empty')"
+          if [ -z "$service_id" ]; then
+            echo "Render API credentials work, but autoptu-career-api was not found."
+            exit 3
+          fi
+
+          echo "Render service found; triggering exact main commit."
+          curl --fail --silent --show-error \
+            --request POST \
+            --header "Authorization: Bearer $TOKEN" \
+            --header "Content-Type: application/json" \
+            --data "{\"commitId\":\"${TARGET_COMMIT}\",\"clearCache\":\"clear\"}" \
+            "https://api.render.com/v1/services/${service_id}/deploys" >/dev/null
