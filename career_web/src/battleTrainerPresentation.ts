@@ -190,19 +190,19 @@ function meetingLabel(locale: Locale, meeting: number, memory: RivalMemory): str
 }
 
 function rivalProgressionLine(locale: Locale, transcript: BattleTranscript): string {
-  const seasonValue = Number(transcript.spec.season ?? 0);
-  const season = Number.isFinite(seasonValue) && seasonValue > 0 ? Math.floor(seasonValue) : null;
+  const seasonValue = authoritativePositiveNumber(transcript.spec.season);
+  const season = seasonValue === null ? null : Math.floor(seasonValue);
   const levels = Array.isArray(transcript.spec.away_team_levels)
     ? transcript.spec.away_team_levels
-      .map((value) => Number(value))
-      .filter((value) => Number.isFinite(value) && value > 0)
+      .map(authoritativePositiveNumber)
+      .filter((value): value is number => value !== null)
     : [];
-  const fallbackLevel = Number(transcript.spec.level ?? 0);
+  const fallbackLevel = authoritativePositiveNumber(transcript.spec.level);
   const averageLevel = levels.length
     ? Math.round(levels.reduce((total, value) => total + value, 0) / levels.length)
-    : Number.isFinite(fallbackLevel) && fallbackLevel > 0
-      ? Math.round(fallbackLevel)
-      : null;
+    : fallbackLevel === null
+      ? null
+      : Math.round(fallbackLevel);
   const stage = season === null
     ? null
     : season >= 8

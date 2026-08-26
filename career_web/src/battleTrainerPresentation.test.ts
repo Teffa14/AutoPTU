@@ -73,6 +73,19 @@ describe("battle trainer presentation", () => {
     expect(progression).not.toContain("Infinity");
   });
 
+  it("does not fabricate rival progression from coercible persisted metadata", () => {
+    const coercible = {
+      ...transcript,
+      spec: {
+        ...transcript.spec,
+        season: true,
+        level: true,
+        away_team_levels: [true, { valueOf: () => 99 }],
+      },
+    } as unknown as BattleTranscript;
+    expect(battleTrainerPresentation("es", coercible, run, false).away.progression).toBe("");
+  });
+
   it("counts only formal meetings before the battle currently being replayed", () => {
     expect(previousMeetings(run, "Cerulean Current")).toBe(3);
     expect(previousMeetings(run, "Cerulean Current", 3)).toBe(2);
