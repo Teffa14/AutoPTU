@@ -9,6 +9,7 @@ FROM python:3.12-slim AS runtime
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 WORKDIR /app
 COPY pyproject.toml README.md ./
+COPY career_app.py ./career_app.py
 COPY auto_ptu ./auto_ptu
 COPY scripts ./scripts
 COPY tests ./tests
@@ -18,4 +19,4 @@ COPY "IMPLEMENTATION FILES" "./IMPLEMENTATION FILES"
 COPY --from=web-build /build/auto_ptu/api/static/career ./auto_ptu/api/static/career
 RUN pip install --no-cache-dir .
 EXPOSE 10000
-CMD ["sh", "-c", "uvicorn auto_ptu.api.server:app --host 0.0.0.0 --port ${PORT:-10000} --workers 1"]
+CMD ["sh", "-c", "uvicorn career_app:app --host 0.0.0.0 --port ${PORT:-10000} --workers 1"]
