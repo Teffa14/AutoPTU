@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { battleTrainerPresentation } from "./battleTrainerPresentation";
-import type { BattleTranscript } from "./types";
+import { battleTrainerPresentation, formalRivalMemory } from "./battleTrainerPresentation";
+import type { BattleTranscript, CareerRun } from "./types";
 
 const baseTranscript = {
   battle_id: "rival-formatting",
@@ -40,5 +40,21 @@ describe("battle rival identity persistence", () => {
 
     expect(migrated.away.name).toBe(canonical.away.name);
     expect(migrated.away.sprite).toBe(canonical.away.sprite);
+  });
+
+  it("does not fabricate rival meetings from coerced timeline seasons", () => {
+    const run = {
+      timeline: [
+        { type: "season.completed", season: true, opponents: ["Cerulean Current"] },
+        { type: "season.completed", season: { valueOf: () => 2 }, opponents: ["Cerulean Current"] },
+      ],
+    } as unknown as CareerRun;
+
+    expect(formalRivalMemory(run, "Cerulean Current", 3)).toEqual({
+      previousMeetings: 0,
+      firstSeason: null,
+      lastSeason: null,
+      seasonsSinceLastMeeting: null,
+    });
   });
 });
