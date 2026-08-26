@@ -113,7 +113,7 @@ export function TimelineScreen({ run, locale }: { run: CareerRun; locale: Locale
               <div className="timeline-entry-copy">
                 <span>{eventKind(entry, locale)}</span>
                 <h2>{eventTitle(entry, locale)}</h2>
-                {entry.record ? <p className="season-record">{String(entry.league)} · {String(entry.record)} · score {signed(Number(entry.score_delta ?? 0))}</p> : null}
+                {entry.record ? <p className="season-record">{String(entry.league)} · {String(entry.record)} · score {signed(finiteNumber(entry.score_delta))}</p> : null}
                 {review ? <aside className="postbattle-review"><b>{review.title}</b><p>{review.prompt}</p></aside> : null}
                 {decisions.length ? (
                   <div className="decision-ledger">
@@ -205,7 +205,7 @@ export function eventTitle(entry: Record<string, unknown>, locale: Locale): stri
       : `${String(entry.from)} evolved into ${String(entry.to)} at level ${String(entry.level)}`;
   }
   if (type === "pokemon.trained") {
-    const levels = Number(entry.levels ?? 0);
+    const levels = finiteNumber(entry.levels);
     return locale === "es"
       ? `${String(entry.species)} ganó ${levels} ${levels === 1 ? "nivel" : "niveles"}`
       : `${String(entry.species)} gained ${levels} ${levels === 1 ? "level" : "levels"}`;
@@ -216,7 +216,7 @@ export function eventTitle(entry: Record<string, unknown>, locale: Locale): stri
   if (type === "season.incident") return String(entry[locale === "es" ? "title_es" : "title_en"] ?? entry.label ?? (locale === "es" ? "Algo inesperado cambió la temporada" : "Something unexpected changed the season"));
   if (type === "pokemon.move_learned") return locale === "es" ? `${String(entry.species)} aprendió ${String(entry.move)}` : `${String(entry.species)} learned ${String(entry.move)}`;
   if (type === "item.acquired") return locale === "es" ? `Conseguiste ${String(entry.quantity)} × ${String(entry.item)}` : `Received ${String(entry.quantity)} × ${String(entry.item)}`;
-  if (type === "relationship.changed") return locale === "es" ? `El vínculo con ${String(entry.name).split(" · ")[0]} cambió ${signed(Number(entry.amount ?? 0))}` : `Bond with ${String(entry.name).split(" · ")[0]} changed ${signed(Number(entry.amount ?? 0))}`;
+  if (type === "relationship.changed") return locale === "es" ? `El vínculo con ${String(entry.name).split(" · ")[0]} cambió ${signed(finiteNumber(entry.amount))}` : `Bond with ${String(entry.name).split(" · ")[0]} changed ${signed(finiteNumber(entry.amount))}`;
   if (type === "relationship.effect_applied") return locale === "es" ? `La red aportó +${String(entry.home_level_bonus ?? 0)} LV y +${String(entry.recovery_applied ?? 0)} salud` : `The network supplied +${String(entry.home_level_bonus ?? 0)} LV and +${String(entry.recovery_applied ?? 0)} health`;
   if (type === "relationship.mentor_training") return locale === "es"
     ? `${String(entry.name).split(" · ")[0]} entrenó a ${String(entry.pokemon)}: +${String(entry.amount)} ${effectLabel(String(entry.stat), locale)}`
@@ -225,7 +225,7 @@ export function eventTitle(entry: Record<string, unknown>, locale: Locale): stri
   if (type === "class.effect_applied") {
     const classes = Array.isArray(entry.classes) ? entry.classes.map(String).join(" + ") : (locale === "es" ? "Clase de entrenador" : "Trainer class");
     const seasonEffects = asRecord(entry.season_effects);
-    const partnerLevels = Number(seasonEffects.partner_levels ?? 0);
+    const partnerLevels = finiteNumber(seasonEffects.partner_levels);
     if (partnerLevels) return locale === "es"
       ? `${classes} dio +${partnerLevels} ${partnerLevels === 1 ? "nivel" : "niveles"} al compañero`
       : `${classes} gave the partner +${partnerLevels} ${partnerLevels === 1 ? "level" : "levels"}`;
@@ -260,6 +260,8 @@ function effectSummary(effects: Record<string, unknown>, locale: Locale): string
 
 function signed(value: number): string { return `${value >= 0 ? "+" : ""}${value}`; }
 function finiteNumber(value: unknown): number {
+  if (typeof value === "number") return Number.isFinite(value) ? value : 0;
+  if (typeof value !== "string" || !value.trim()) return 0;
   const number = Number(value);
   return Number.isFinite(number) ? number : 0;
 }

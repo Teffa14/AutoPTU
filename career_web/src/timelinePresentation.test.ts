@@ -42,6 +42,17 @@ describe("timeline legacy save resilience", () => {
       totals: { wins: 8, losses: 3, draws: 0, titles: 0 },
     });
   });
+
+  it("rejects coercible non-numeric totals instead of inventing career results", () => {
+    expect(timelineRenderState({
+      totals: {
+        wins: true,
+        losses: false,
+        draws: { valueOf: () => 4 },
+        titles: "2",
+      },
+    }).totals).toEqual({ wins: 0, losses: 0, draws: 0, titles: 2 });
+  });
 });
 
 describe("timeline season decisions", () => {
@@ -96,5 +107,18 @@ describe("timeline event copy", () => {
       classes: ["Ace Trainer"],
       season_effects: { partner_levels: 1 },
     }, "es")).toBe("Ace Trainer dio +1 nivel al compañero");
+  });
+
+  it("does not turn booleans or coercible objects into recorded numeric effects", () => {
+    expect(eventTitle({
+      type: "relationship.changed",
+      name: "Mara · rival",
+      amount: true,
+    }, "es")).toBe("El vínculo con Mara cambió +0");
+    expect(eventTitle({
+      type: "class.effect_applied",
+      classes: ["Ace Trainer"],
+      season_effects: { partner_levels: { valueOf: () => 2 } },
+    }, "en")).not.toContain("+2 levels");
   });
 });
