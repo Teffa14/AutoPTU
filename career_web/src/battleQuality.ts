@@ -30,17 +30,21 @@ export function battleOutcomeVisualState(team: string, winnerTeam?: string | nul
     : { alpha: 0.38, scale: 0.86 };
 }
 
+function finitePositiveHardwareSignal(value: unknown): number | null {
+  return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : null;
+}
+
 export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleVisualQuality {
   if (signals.reducedMotion) return "light";
   if (signals.storedPreference === "full" || signals.storedPreference === "light") return signals.storedPreference;
   if (signals.saveData) return "light";
   if (signals.compactTouch) return "light";
 
-  const cores = Number(signals.hardwareConcurrency ?? 0);
-  if (Number.isFinite(cores) && cores > 0 && cores <= 4) return "light";
+  const cores = finitePositiveHardwareSignal(signals.hardwareConcurrency);
+  if (cores !== null && cores <= 4) return "light";
 
-  const memory = Number(signals.deviceMemory ?? 0);
-  if (Number.isFinite(memory) && memory > 0 && memory <= 4) return "light";
+  const memory = finitePositiveHardwareSignal(signals.deviceMemory);
+  if (memory !== null && memory <= 4) return "light";
 
   return "full";
 }
