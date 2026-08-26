@@ -44,12 +44,26 @@ describe("local career persistence boundaries", () => {
     expect(homeScreenSource).toContain("loadLastLocalRunId()");
   });
 
-  it("keeps the resume pointer when the referenced casual career is valid", () => {
+  it("keeps the resume pointer when the referenced casual career has a render-safe shape", () => {
     localStorage.setItem("career-last-run", "run-1");
-    localStorage.setItem("autoptu-career-run:run-1", JSON.stringify({ id: "run-1", ranked: false }));
+    localStorage.setItem("autoptu-career-run:run-1", JSON.stringify({
+      id: "run-1",
+      ranked: false,
+      status: "active",
+      season_number: 1,
+      build: {},
+    }));
 
     expect(loadLastLocalRunId()).toBe("run-1");
     expect(localStorage.getItem("career-last-run")).toBe("run-1");
+  });
+
+  it("clears the resume pointer when the referenced save is truncated", () => {
+    localStorage.setItem("career-last-run", "truncated-run");
+    localStorage.setItem("autoptu-career-run:truncated-run", JSON.stringify({ id: "truncated-run", ranked: false }));
+
+    expect(loadLastLocalRunId()).toBeNull();
+    expect(localStorage.getItem("career-last-run")).toBeNull();
   });
 
   it("rejects a ranked residue from the local resume pointer", () => {

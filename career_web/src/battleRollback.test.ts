@@ -103,4 +103,20 @@ describe("pre-battle rollback checkpoint", () => {
     expect(loadLocalRun(safe.id)?.revision).toBe(17);
     expect(loadBattleCheckpoint(safe.id)).toBeNull();
   });
+
+  it("rejects a truncated browser save before it reaches the career UI", () => {
+    localStorage.setItem("autoptu-career-run:rollback-run", JSON.stringify({ id: "rollback-run" }));
+
+    expect(loadLocalRun("rollback-run")).toBeNull();
+  });
+
+  it("rejects corrupted collection fields while preserving legacy-compatible sparse saves", () => {
+    const sparse = runWithSeason("decision", 17);
+    localStorage.setItem("autoptu-career-run:rollback-run", JSON.stringify({ ...sparse, timeline: "broken" }));
+
+    expect(loadLocalRun("rollback-run")).toBeNull();
+
+    localStorage.setItem("autoptu-career-run:rollback-run", JSON.stringify(sparse));
+    expect(loadLocalRun("rollback-run")?.revision).toBe(17);
+  });
 });
