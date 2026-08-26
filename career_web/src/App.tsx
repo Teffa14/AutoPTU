@@ -17,7 +17,7 @@ const SeasonHub = lazy(() => import("./components/SeasonHub").then((module) => (
 const CAREER_BASE_PATH = import.meta.env.BASE_URL;
 
 function currentPath(): string {
-  return careerPathFromLocation(window.location.pathname, CAREER_BASE_PATH);
+  return careerPathFromLocation(window.location.pathname, CAREER_BASE_PATH, window.location.hash);
 }
 
 export function navigate(path: string): void {
@@ -34,7 +34,11 @@ export function App() {
   useEffect(() => {
     const update = () => setPath(currentPath());
     window.addEventListener("popstate", update);
-    return () => window.removeEventListener("popstate", update);
+    window.addEventListener("hashchange", update);
+    return () => {
+      window.removeEventListener("popstate", update);
+      window.removeEventListener("hashchange", update);
+    };
   }, []);
 
   useEffect(() => {
