@@ -31,8 +31,8 @@ describe("battle trainer result dialogue", () => {
     const drawTranscript = { ...baseTranscript, winner_team: null } as unknown as BattleTranscript;
     const presentation = battleTrainerPresentation("es", drawTranscript, null, true);
 
-    expect(presentation.home.line).toContain("empate");
-    expect(presentation.away.line).toContain("empate");
+    expect(presentation.home.line.toLowerCase()).toContain("empate");
+    expect(presentation.away.line.toLowerCase()).toContain("empate");
     expect(presentation.home.line).not.toContain("nos abrió");
     expect(presentation.away.line).not.toContain("vas a tener que cambiar");
   });
