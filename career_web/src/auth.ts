@@ -31,6 +31,19 @@ export async function hasPersistentCareerAccount(): Promise<boolean> {
   return Boolean(data.session?.access_token && !data.session.user.is_anonymous);
 }
 
+export async function signInWithPassword(email: string, password: string): Promise<void> {
+  if (!supabase) throw new Error("Supabase Auth is not configured in this build.");
+  const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+  if (error) throw error;
+}
+
+export async function signUpWithPassword(email: string, password: string): Promise<{ signedIn: boolean }> {
+  if (!supabase) throw new Error("Supabase Auth is not configured in this build.");
+  const { data, error } = await supabase.auth.signUp({ email: email.trim(), password });
+  if (error) throw error;
+  return { signedIn: Boolean(data.session?.access_token && !data.session.user.is_anonymous) };
+}
+
 export async function signInWithEmail(email: string): Promise<void> {
   if (!supabase) throw new Error("Supabase Auth is not configured in this build.");
   const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: authReturnUrl() } });
@@ -44,7 +57,6 @@ export async function signInWithProvider(provider: "google" | "discord"): Promis
   if (current.user?.is_anonymous) {
     const { error: linkError } = await supabase.auth.linkIdentity({ provider, options });
     if (!linkError) return;
-    // Existing anonymous sessions from older builds can still be upgraded.
   }
   const { error } = await supabase.auth.signInWithOAuth({ provider, options });
   if (error) throw error;
