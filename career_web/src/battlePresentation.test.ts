@@ -81,4 +81,27 @@ describe("battle presentation", () => {
     expect(resolved.effectiveDb).toBeNull();
     expect(battleCommentary("en", malformed, resolved)).not.toMatch(/NaN|Infinity/);
   });
+
+  it("does not coerce malformed position coordinates into authoritative movement", () => {
+    const malformed = {
+      ...transcript,
+      initial_state: {
+        ...transcript.initial_state,
+        combatants: transcript.initial_state.combatants.map((entry, index) => index === 0
+          ? { ...entry, position: [true, false] }
+          : entry),
+      },
+      events: [
+        {
+          type: "shift",
+          round: 1,
+          actor: "career-home-1",
+          to: [{ valueOf: () => 7 }, 3],
+        },
+      ],
+    } as unknown as BattleTranscript;
+
+    const view = deriveBattleView(malformed, 0);
+    expect(view.combatants.find((entry) => entry.id === "career-home-1")?.position).toBeUndefined();
+  });
 });
