@@ -74,4 +74,30 @@ describe("decision memory", () => {
     expect(decisionMemory(corrupt, "health", npc).contactBond).toBe(0);
     expect(decisionMemory(overflow, "health", npc).contactBond).toBe(0);
   });
+
+  it("does not coerce boolean or object relationship values into authoritative bonds", () => {
+    const npc = "Misty · mentor · Kanto";
+    const booleanBond = runWith({ relationships: { [npc]: true } as unknown as CareerRun["relationships"] });
+    const objectBond = runWith({ relationships: { [npc]: { valueOf: () => 7 } } as unknown as CareerRun["relationships"] });
+
+    expect(decisionMemory(booleanBond, "health", npc).contactBond).toBe(0);
+    expect(decisionMemory(objectBond, "health", npc).contactBond).toBe(0);
+  });
+
+  it("ignores malformed completed-season decision records instead of manufacturing memories", () => {
+    const run = runWith({
+      timeline: [
+        {
+          type: "season.completed",
+          season: true,
+          decisions: [
+            { option_id: { toString: () => "capture:1:0:0" }, label: "Fabricated option" },
+            { option_id: "capture:1:0:1", label: { toString: () => "Fabricated label" } },
+          ],
+        },
+      ] as unknown as CareerRun["timeline"],
+    });
+
+    expect(decisionMemory(run, "capture").prior).toBeUndefined();
+  });
 });
