@@ -68,6 +68,27 @@ describe("sponsorRenewalContext", () => {
     )).toBeNull();
   });
 
+  it("rejects non-numeric values instead of coercing them into verified results", () => {
+    expect(sponsorRenewalContext(
+      { name: "Rotom Broadcast", renewal: true },
+      [{ ...completed, wins: true, target: 1 }],
+      2,
+      "en",
+    )).toBeNull();
+    expect(sponsorRenewalContext(
+      { name: "Rotom Broadcast", renewal: true },
+      [{ ...completed, wins: { valueOf: () => 5 }, target: 4 }],
+      2,
+      "en",
+    )).toBeNull();
+    expect(sponsorRenewalContext(
+      { name: "Rotom Broadcast", renewal: true },
+      [{ ...completed, season: false, wins: 5, target: 4 }],
+      2,
+      "en",
+    )).toBeNull();
+  });
+
   it("survives malformed legacy timeline containers and entries", () => {
     expect(sponsorRenewalContext(
       { name: "Rotom Broadcast", renewal: true },
