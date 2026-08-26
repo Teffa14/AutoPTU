@@ -19,7 +19,9 @@ def calculate_relationship_effects(relationships: Dict[str, int]) -> Dict[str, A
 
     Relationships are intentionally capped: they should make a contact matter
     without replacing roster quality, preparation, or match performance.
-    Invalid persisted bond values are ignored instead of breaking a career load.
+    Rivalry intensity is continuity information only and never grants a combat
+    modifier. Invalid persisted bond values are ignored instead of breaking a
+    career load.
     """
     positive = sorted(
         (
@@ -32,6 +34,7 @@ def calculate_relationship_effects(relationships: Dict[str, int]) -> Dict[str, A
     best_name, best_value = positive[0] if positive else ("", 0)
     active_contacts = sum(1 for _, value in positive if value >= 2)
     contact_effects = []
+    battle_support_value = 0
     rival_scouting_bonus = 0
     mentor_training_bonus = 0
     owner_recovery_bonus = 0
@@ -43,18 +46,23 @@ def calculate_relationship_effects(relationships: Dict[str, int]) -> Dict[str, A
         if role == "mentor":
             amount = min(2, value // 3)
             mentor_training_bonus = max(mentor_training_bonus, amount)
+            battle_support_value = max(battle_support_value, value)
             benefit = "partner_training"
         elif role == "rival":
-            amount = min(2, value // 3)
-            rival_scouting_bonus = max(rival_scouting_bonus, amount)
+            # Rivalry is a narrative/knowledge relationship. It may drive
+            # callbacks and scouting context, but intensity cannot alter PTU
+            # levels or opponent preparation.
+            amount = 0
             benefit = "rival_read"
         elif role == "owner":
             amount = min(3, value // 2)
             owner_recovery_bonus = max(owner_recovery_bonus, amount)
             owner_guard = owner_guard or value >= 5
+            battle_support_value = max(battle_support_value, value)
             benefit = "club_protection"
         else:
             amount = min(2, value // 3)
+            battle_support_value = max(battle_support_value, value)
             benefit = "preparation"
         contact_effects.append({
             "name": name, "role": role, "bond": value, "tier": tier,
@@ -65,7 +73,7 @@ def calculate_relationship_effects(relationships: Dict[str, int]) -> Dict[str, A
         "best_contact": best_name,
         "best_value": best_value,
         "active_contacts": active_contacts,
-        "home_level_bonus": min(2, best_value // 2),
+        "home_level_bonus": min(2, battle_support_value // 2),
         "season_recovery": min(3, active_contacts),
         "contract_guard": owner_guard or best_value >= 6,
         "mentor_training_bonus": mentor_training_bonus,
