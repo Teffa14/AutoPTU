@@ -103,4 +103,25 @@ describe("sponsorSeasonReview", () => {
       { type: "season.completed", season: 3 },
     ]), 3)).toBeNull();
   });
+
+  it("survives malformed legacy timeline containers and entries", () => {
+    const missingTimeline = runWithTimeline([]);
+    (missingTimeline as unknown as { timeline: unknown }).timeline = null;
+    expect(sponsorSeasonReview(missingTimeline, 3)).toBeNull();
+
+    const mixedTimeline = runWithTimeline([]);
+    (mixedTimeline as unknown as { timeline: unknown }).timeline = [
+      null,
+      "legacy-junk",
+      { type: "sponsor.signed", season: 3, name: "Rotom Broadcast", objective: "wins", target: 4, upfront: 120 },
+      { type: "sponsor.completed", season: 3, name: "Rotom Broadcast", wins: 5, target: 4, bonus: 210 },
+    ];
+
+    expect(sponsorSeasonReview(mixedTimeline, 3)).toMatchObject({
+      status: "completed",
+      name: "Rotom Broadcast",
+      actual: 5,
+      target: 4,
+    });
+  });
 });
