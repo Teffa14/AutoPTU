@@ -8,24 +8,20 @@ import { ProfileScreen } from "./components/ProfileScreen";
 import { ShareScreen } from "./components/ShareScreen";
 import { TimelineScreen } from "./components/TimelineScreen";
 import { loadLocalRun, saveLocalRun } from "./localCareer";
+import { careerNavigationTarget, careerPathFromLocation } from "./routing";
 import { trainerSpriteStorageEntry } from "./trainerSprites";
 import type { CareerRun, Locale } from "./types";
 
 const BattleScreen = lazy(() => import("./components/BattleScreen"));
 const SeasonHub = lazy(() => import("./components/SeasonHub").then((module) => ({ default: module.SeasonHub })));
-const CAREER_BASE_PATH = import.meta.env.BASE_URL.replace(/\/+$/, "");
+const CAREER_BASE_PATH = import.meta.env.BASE_URL;
 
 function currentPath(): string {
-  const pathname = window.location.pathname;
-  if (pathname === CAREER_BASE_PATH || pathname === `${CAREER_BASE_PATH}/`) return "";
-  if (pathname.startsWith(`${CAREER_BASE_PATH}/`)) return pathname.slice(CAREER_BASE_PATH.length + 1);
-  return "";
+  return careerPathFromLocation(window.location.pathname, CAREER_BASE_PATH);
 }
 
 export function navigate(path: string): void {
-  const suffix = path.replace(/^\/+/, "");
-  const target = suffix ? `${CAREER_BASE_PATH}/${suffix}` : `${CAREER_BASE_PATH}/`;
-  window.history.pushState({}, "", target);
+  window.history.pushState({}, "", careerNavigationTarget(path, CAREER_BASE_PATH));
   window.dispatchEvent(new PopStateEvent("popstate"));
 }
 
