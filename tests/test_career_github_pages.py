@@ -37,7 +37,7 @@ def test_missing_local_browser_bundle_redirects_to_github_pages(monkeypatch, tmp
     assert response.headers["cache-control"] == "no-store"
 
 
-def test_github_pages_workflow_deploys_browser_build() -> None:
+def test_github_pages_workflow_deploys_browser_build_with_spa_fallback() -> None:
     root = Path(__file__).resolve().parents[1]
     workflow = (root / ".github/workflows/deploy-github-pages.yml").read_text(encoding="utf-8")
 
@@ -46,6 +46,7 @@ def test_github_pages_workflow_deploys_browser_build() -> None:
     assert "actions/deploy-pages@v4" in workflow
     assert "actions/upload-pages-artifact@v3" in workflow
     assert "VITE_API_URL:" in workflow
+    assert "cp public/career-game/index.html public/404.html" in workflow
     assert "vercel" not in workflow.lower()
 
 
@@ -55,3 +56,12 @@ def test_vite_build_uses_github_project_site_path() -> None:
 
     assert 'command === "serve" ? "/career-game/" : "/AutoPTU/career-game/"' in config
     assert 'outDir: "../public/career-game"' in config
+
+
+def test_render_container_starts_the_cors_enabled_career_api() -> None:
+    root = Path(__file__).resolve().parents[1]
+    dockerfile = (root / "Dockerfile").read_text(encoding="utf-8")
+
+    assert "COPY career_app.py ./career_app.py" in dockerfile
+    assert "uvicorn career_app:app" in dockerfile
+    assert "uvicorn auto_ptu.api.server:app" not in dockerfile

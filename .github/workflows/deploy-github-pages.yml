@@ -41,7 +41,7 @@ jobs:
           VITE_API_URL: ${{ vars.CAREER_API_URL || 'https://autoptu-career-api.onrender.com' }}
         run: npm --prefix career_web run build
 
-      - name: Add Pages root redirect
+      - name: Add Pages shell and SPA fallback
         shell: bash
         run: |
           cat > public/index.html <<'EOF'
@@ -58,6 +58,7 @@ jobs:
             </body>
           </html>
           EOF
+          cp public/career-game/index.html public/404.html
           touch public/.nojekyll
 
       - name: Configure GitHub Pages
