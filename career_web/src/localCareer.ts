@@ -46,6 +46,11 @@ function shouldCreateBattleCheckpoint(previous: CareerRun | null, next: CareerRu
   return next.season.status === "battle" || isExhaustedDecisionPhase(next);
 }
 
+export function saveLocalRun(run: CareerRun): void {
+  if (run.ranked) return;
+  persistLocalRun(run);
+}
+
 function persistLocalRun(run: CareerRun): boolean {
   try {
     if (run.ranked) return false;
@@ -75,11 +80,6 @@ function persistLocalRun(run: CareerRun): boolean {
     // Storage can be unavailable in private/restricted browser contexts.
     return false;
   }
-}
-
-export function saveLocalRun(run: CareerRun): void {
-  if (run.ranked) return;
-  persistLocalRun(run);
 }
 
 export function loadLocalRun(runId: string): CareerRun | null {
