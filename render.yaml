@@ -2,7 +2,12 @@ services:
   - type: web
     name: autoptu-career-api
     runtime: docker
+    repo: https://github.com/Teffa14/AutoPTU
+    branch: main
     dockerfilePath: ./Dockerfile
+    dockerCommand: sh -c "uvicorn career_app:app --host 0.0.0.0 --port ${PORT:-10000} --workers 1"
+    autoDeployTrigger: commit
+    renderSubdomainPolicy: enabled
     healthCheckPath: /api/v1/catalog
     envVars:
       - key: SUPABASE_URL

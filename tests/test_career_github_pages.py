@@ -66,3 +66,16 @@ def test_render_container_starts_the_cors_enabled_career_api() -> None:
     assert "COPY career_app.py ./career_app.py" in dockerfile
     assert "uvicorn career_app:app" in dockerfile
     assert "uvicorn auto_ptu.api.server:app" not in dockerfile
+
+
+def test_render_blueprint_keeps_career_api_public_and_tracks_main() -> None:
+    root = Path(__file__).resolve().parents[1]
+    blueprint = (root / "render.yaml").read_text(encoding="utf-8")
+
+    assert "name: autoptu-career-api" in blueprint
+    assert "repo: https://github.com/Teffa14/AutoPTU" in blueprint
+    assert "branch: main" in blueprint
+    assert "autoDeployTrigger: commit" in blueprint
+    assert "renderSubdomainPolicy: enabled" in blueprint
+    assert 'dockerCommand: sh -c "uvicorn career_app:app --host 0.0.0.0 --port ${PORT:-10000} --workers 1"' in blueprint
+    assert "healthCheckPath: /api/v1/catalog" in blueprint
