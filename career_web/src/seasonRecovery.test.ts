@@ -48,6 +48,24 @@ describe("pendingBattleRecovery", () => {
     expect(pendingBattleRecovery(runWithSeason("decision", 0, 1, []))).toBeNull();
   });
 
+  it("does not manufacture exhausted progress from malformed persisted values", () => {
+    const booleanProgress = runWithSeason("decision", 0, 1, ["featured"]);
+    if (booleanProgress.season) {
+      booleanProgress.season.decisions_completed = true as unknown as number;
+      booleanProgress.season.decisions_required = true as unknown as number;
+    }
+    expect(pendingBattleRecovery(booleanProgress)).toBeNull();
+    expect(repairExhaustedDecisionPhase(booleanProgress)).toBeNull();
+
+    const arrayProgress = runWithSeason("decision", 0, 1, ["featured"]);
+    if (arrayProgress.season) {
+      arrayProgress.season.decisions_completed = [3] as unknown as number;
+      arrayProgress.season.decisions_required = [3] as unknown as number;
+    }
+    expect(pendingBattleRecovery(arrayProgress)).toBeNull();
+    expect(repairExhaustedDecisionPhase(arrayProgress)).toBeNull();
+  });
+
   it("detects the impossible 2-of-1 style state before SeasonScreen can render it", () => {
     const run = runWithSeason("decision", 2, 1, ["run-1-s1-m6"]);
     const recovery = pendingBattleRecovery(run);
