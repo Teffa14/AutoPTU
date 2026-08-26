@@ -11,7 +11,16 @@ export interface SponsorSeasonReview {
   bonusPaid: number;
 }
 
-function seasonNumber(entry: Record<string, unknown>): number {
+function recordEntry(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function timelineEntries(run: CareerRun): Record<string, unknown>[] {
+  return Array.isArray(run.timeline) ? run.timeline.filter(recordEntry) : [];
+}
+
+function seasonNumber(entry: unknown): number {
+  if (!recordEntry(entry)) return 0;
   const value = Number(entry.season);
   return Number.isFinite(value) ? value : 0;
 }
@@ -27,8 +36,9 @@ function visibleText(value: unknown): string {
 }
 
 export function sponsorSeasonReview(run: CareerRun, season?: number): SponsorSeasonReview | null {
-  const targetSeason = season ?? [...run.timeline].reverse().map(seasonNumber).find((value) => value > 0) ?? run.season_number;
-  const entries = run.timeline.filter((entry) => seasonNumber(entry) === targetSeason);
+  const timeline = timelineEntries(run);
+  const targetSeason = season ?? [...timeline].reverse().map(seasonNumber).find((value) => value > 0) ?? run.season_number;
+  const entries = timeline.filter((entry) => seasonNumber(entry) === targetSeason);
   const declined = entries.find((entry) => entry.type === "sponsor.declined");
   const signed = entries.find((entry) => entry.type === "sponsor.signed");
   const outcome = [...entries].reverse().find((entry) => entry.type === "sponsor.completed" || entry.type === "sponsor.failed");
