@@ -35,6 +35,13 @@ def test_club_switch_previews_exact_loan_returns_and_preserves_return_history(tm
     current_loans = [entry for entry in signed.pokemon if entry.ownership == "loan"]
     assert current_loans
 
+    developed_loan = current_loans[0]
+    developed_loan.matches = 11
+    developed_loan.wins = 7
+    developed_loan.stat_training = {"atk": 3, "spd": 2}
+    developed_loan.career_health = 92
+    developed_loan.training_wear = 8
+
     signed.contract.seasons_remaining = 0
     signed.season_number = 2
     if signed.season:
@@ -64,3 +71,10 @@ def test_club_switch_previews_exact_loan_returns_and_preserves_return_history(tm
     assert returned["pokemon_ids"] == sorted(expected_ids)
     assert [entry["id"] for entry in returned["pokemon"]] == expected_ids
     assert [entry["species"] for entry in returned["pokemon"]] == [entry.species for entry in current_loans]
+
+    returned_developed = next(entry for entry in returned["pokemon"] if entry["id"] == developed_loan.id)
+    assert returned_developed["matches"] == 11
+    assert returned_developed["wins"] == 7
+    assert returned_developed["stat_training"] == {"atk": 3, "spd": 2}
+    assert returned_developed["career_health"] == 92
+    assert returned_developed["training_wear"] == 8
