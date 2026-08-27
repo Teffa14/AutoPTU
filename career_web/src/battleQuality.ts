@@ -34,6 +34,10 @@ function finitePositiveHardwareSignal(value: unknown): number | null {
   return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : null;
 }
 
+function finiteNonNegativeHostSignal(value: unknown): number {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : 0;
+}
+
 export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleVisualQuality {
   if (signals.reducedMotion) return "light";
   if (signals.storedPreference === "full" || signals.storedPreference === "light") return signals.storedPreference;
@@ -89,10 +93,10 @@ export function prefersReducedMotion(): boolean {
 export function isCompactTouchDevice(): boolean {
   if (typeof window === "undefined") return false;
   const coarsePointer = mediaQueryMatches("(pointer: coarse)");
-  const touchPoints = Number(window.navigator.maxTouchPoints ?? 0);
+  const touchPoints = finiteNonNegativeHostSignal(window.navigator.maxTouchPoints);
   const shortestViewportEdge = Math.min(
-    Number(window.innerWidth || 0),
-    Number(window.innerHeight || 0),
+    finiteNonNegativeHostSignal(window.innerWidth),
+    finiteNonNegativeHostSignal(window.innerHeight),
   );
   return (coarsePointer || touchPoints > 0)
     && shortestViewportEdge > 0
