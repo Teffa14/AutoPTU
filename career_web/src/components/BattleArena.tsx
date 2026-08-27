@@ -71,6 +71,25 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
   }
 
   useEffect(() => {
+    if (effectiveQuality !== "full") return;
+    const enforceRasterBudget = () => {
+      const next = constrainRequestedBattleVisualQuality("full", {
+        reducedMotion,
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight,
+        devicePixelRatio: window.devicePixelRatio,
+      });
+      if (next === "light") {
+        setRendererFailed(false);
+        persistBattleVisualQuality("light");
+        setQuality("light");
+      }
+    };
+    window.addEventListener("resize", enforceRasterBudget, { passive: true });
+    return () => window.removeEventListener("resize", enforceRasterBudget);
+  }, [effectiveQuality, reducedMotion]);
+
+  useEffect(() => {
     if (!host.current) return;
     let cancelled = false;
     let app: Application | null = null;
