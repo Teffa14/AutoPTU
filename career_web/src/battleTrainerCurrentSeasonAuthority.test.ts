@@ -34,6 +34,13 @@ const transcript = {
   final_state: { round: 1, battle_over: true, combatants: [] },
 } as BattleTranscript;
 
+const noAuthoritativeMemory = {
+  previousMeetings: 0,
+  firstSeason: null,
+  lastSeason: null,
+  seasonsSinceLastMeeting: null,
+};
+
 describe("battle rival current-season authority", () => {
   it("fails closed instead of coercing a malformed current battle season", () => {
     const hostileSeason = {
@@ -47,17 +54,9 @@ describe("battle rival current-season authority", () => {
     } as unknown as BattleTranscript;
 
     expect(() => battleTrainerPresentation("es", malformedTranscript, run, false)).not.toThrow();
-    expect(battleTrainerPresentation("es", malformedTranscript, run, false).rivalMemory).toEqual({
-      previousMeetings: 2,
-      firstSeason: 1,
-      lastSeason: 2,
-      seasonsSinceLastMeeting: null,
-    });
-    expect(formalRivalMemory(run, "Cerulean Current", hostileSeason as unknown as number)).toEqual({
-      previousMeetings: 2,
-      firstSeason: 1,
-      lastSeason: 2,
-      seasonsSinceLastMeeting: null,
-    });
+    expect(battleTrainerPresentation("es", malformedTranscript, run, false).rivalMemory)
+      .toEqual(noAuthoritativeMemory);
+    expect(formalRivalMemory(run, "Cerulean Current", hostileSeason as unknown as number))
+      .toEqual(noAuthoritativeMemory);
   });
 });
