@@ -7,20 +7,28 @@ const arena = readFileSync(
   fileURLToPath(new URL("./components/BattleArena.tsx", import.meta.url)),
   "utf8",
 );
-const styles = readFileSync(
-  fileURLToPath(new URL("./styles.css", import.meta.url)),
+const visibilityCss = readFileSync(
+  fileURLToPath(new URL("./components/battle-arena-visibility.css", import.meta.url)),
+  "utf8",
+);
+const main = readFileSync(
+  fileURLToPath(new URL("./main.tsx", import.meta.url)),
   "utf8",
 );
 
 describe("battle arena visibility", () => {
-  it("gives the renderer a real surface instead of an absolute child inside a zero-height wrapper", () => {
-    expect(arena).toContain('className="battle-arena-root"');
-    expect(styles).toMatch(/\.arena-wrap\{[^}]*position:relative/);
-    expect(styles).toMatch(/\.battle-arena-root\{[^}]*position:absolute[^}]*inset:0/);
+  it("anchors the renderer wrapper to the full arena instead of a zero-height flow box", () => {
+    expect(visibilityCss).toMatch(/\.arena-wrap\s*\{[^}]*position:\s*relative/);
+    expect(visibilityCss).toContain(".arena-wrap > div:has(> .arena-canvas-shell)");
+    expect(visibilityCss).toMatch(/position:\s*absolute\s*!important/);
+    expect(visibilityCss).toMatch(/inset:\s*0/);
+    expect(main).toContain('import "./components/battle-arena-visibility.css"');
   });
 
   it("keeps the animated Pokemon layer inside the same bounded arena surface", () => {
+    expect(arena).toContain('className="arena-canvas-shell"');
     expect(arena).toContain('className="field-pokemon-layer"');
-    expect(styles).toMatch(/\.arena-canvas-shell\{[^}]*position:absolute[^}]*inset:0/);
+    expect(visibilityCss).toContain("> .arena-canvas-shell");
+    expect(visibilityCss).toMatch(/\.arena-wrap > div:has\(> \.arena-canvas-shell\) > \.arena-canvas-shell\s*\{[^}]*position:\s*absolute[^}]*inset:\s*0/);
   });
 });
