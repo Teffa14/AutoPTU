@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { battleOutcomeVisualState, battleRenderFrameFactors, battleRenderMaxFps, chooseBattleVisualQuality, detectBattleVisualQuality } from "./battleQuality";
+import { BATTLE_FULL_RENDER_PIXEL_BUDGET, battleEstimatedRenderPixels, battleOutcomeVisualState, battleRenderFrameFactors, battleRenderMaxFps, chooseBattleVisualQuality, detectBattleVisualQuality } from "./battleQuality";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -44,6 +44,37 @@ describe("chooseBattleVisualQuality", () => {
     expect(chooseBattleVisualQuality({ hardwareConcurrency: 8, deviceMemory: 8 })).toBe("full");
   });
 
+  it("automatically selects light mode when full-resolution raster work exceeds the browser budget", () => {
+    expect(chooseBattleVisualQuality({
+      hardwareConcurrency: 12,
+      deviceMemory: 16,
+      viewportWidth: 2560,
+      viewportHeight: 1440,
+      devicePixelRatio: 2,
+    })).toBe("light");
+  });
+
+  it("keeps full mode for a common high-density 1080p viewport", () => {
+    expect(chooseBattleVisualQuality({
+      hardwareConcurrency: 12,
+      deviceMemory: 16,
+      viewportWidth: 1920,
+      viewportHeight: 1080,
+      devicePixelRatio: 2,
+    })).toBe("full");
+  });
+
+  it("keeps an explicit full preference above the automatic raster budget", () => {
+    expect(chooseBattleVisualQuality({
+      storedPreference: "full",
+      hardwareConcurrency: 12,
+      deviceMemory: 16,
+      viewportWidth: 3840,
+      viewportHeight: 2160,
+      devicePixelRatio: 2,
+    })).toBe("full");
+  });
+
   it("fails closed for malformed host hardware signals without invoking coercion", () => {
     const hostileSignal = {
       valueOf: () => {
@@ -57,6 +88,24 @@ describe("chooseBattleVisualQuality", () => {
   });
 });
 
+describe("battle raster budget", () => {
+  it("matches the capped Pixi resolution used by full mode", () => {
+    expect(battleEstimatedRenderPixels({ viewportWidth: 1920, viewportHeight: 1080, devicePixelRatio: 3 })).toBe(8_294_400);
+    expect(battleEstimatedRenderPixels({ viewportWidth: 2560, viewportHeight: 1440, devicePixelRatio: 2 })).toBe(14_745_600);
+    expect(BATTLE_FULL_RENDER_PIXEL_BUDGET).toBe(12_000_000);
+  });
+
+  it("ignores malformed raster signals instead of coercing host objects", () => {
+    const hostileSignal = {
+      valueOf: () => {
+        throw new Error("raster host coercion should not run");
+      },
+    } as unknown as number;
+    expect(() => battleEstimatedRenderPixels({ viewportWidth: hostileSignal, viewportHeight: 720, devicePixelRatio: 2 })).not.toThrow();
+    expect(battleEstimatedRenderPixels({ viewportWidth: hostileSignal, viewportHeight: 720, devicePixelRatio: 2 })).toBeNull();
+  });
+});
+
 describe("battle quality host resilience", () => {
   it("does not crash battle startup when matchMedia throws in a restricted browser", () => {
     vi.stubGlobal("window", {
@@ -65,6 +114,7 @@ describe("battle quality host resilience", () => {
       matchMedia: () => { throw new Error("media queries blocked"); },
       innerWidth: 1280,
       innerHeight: 720,
+      devicePixelRatio: 1,
     });
 
     expect(() => detectBattleVisualQuality()).not.toThrow();
@@ -83,6 +133,7 @@ describe("battle quality host resilience", () => {
       matchMedia: () => ({ matches: false }),
       innerWidth: hostileSignal,
       innerHeight: 720,
+      devicePixelRatio: 1,
     });
 
     expect(() => detectBattleVisualQuality()).not.toThrow();
