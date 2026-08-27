@@ -20,14 +20,23 @@ function finitePersistedNumber(value: unknown): number | undefined {
   return Number.isFinite(parsed) ? parsed : undefined;
 }
 
+function persistedSeasonNumber(value: unknown): number | undefined {
+  const parsed = finitePersistedNumber(value);
+  if (parsed === undefined || !Number.isInteger(parsed) || parsed < 1) return undefined;
+  return parsed;
+}
+
 export function decisionMemory(run: CareerRun, family: string, npcName = ""): DecisionMemory {
-  const current = findInDecisionList(run.season?.decision_history ?? [], family, run.season_number);
-  if (current) return { prior: current, contactBond: recordedBond(run, npcName) };
+  const currentSeason = persistedSeasonNumber(run.season_number);
+  if (currentSeason !== undefined) {
+    const current = findInDecisionList(run.season?.decision_history ?? [], family, currentSeason);
+    if (current) return { prior: current, contactBond: recordedBond(run, npcName) };
+  }
 
   const timeline = Array.isArray(run.timeline) ? run.timeline : [];
   for (const entry of [...timeline].reverse()) {
     if (entry.type !== "season.completed") continue;
-    const season = finitePersistedNumber(entry.season);
+    const season = persistedSeasonNumber(entry.season);
     if (season === undefined) continue;
     const decisions = Array.isArray(entry.decisions) ? entry.decisions : [];
     const found = findInDecisionList(decisions, family, season);
