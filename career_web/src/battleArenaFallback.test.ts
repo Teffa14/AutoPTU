@@ -17,6 +17,7 @@ describe("battle renderer fallback", () => {
     expect(initStart).toBeGreaterThan(-1);
     expect(initBlock).toContain("catch");
     expect(initBlock).toContain('effectiveQuality === "full"');
+    expect(initBlock).toContain('persistBattleVisualQuality("light")');
     expect(initBlock).toContain('setQuality("light")');
   });
 
