@@ -232,6 +232,9 @@ class CareerEngine:
         if run.status != "active" or run.season is None or run.season.status != "battle":
             raise ValueError("This season has no prepared calendar to resolve.")
         expected_ids = [entry.id for entry in run.season.battles]
+        transcript_ids = [entry.battle_id for entry in transcripts]
+        if len(transcript_ids) != len(set(transcript_ids)):
+            raise ValueError("The prepared calendar contains duplicate battle transcripts.")
         by_id = {entry.battle_id: entry for entry in transcripts}
         if set(by_id) != set(expected_ids):
             missing = sorted(set(expected_ids) - set(by_id))
