@@ -327,7 +327,7 @@ class CareerEngine:
             score=run.score,
             retirement_reason=run.retirement_reason,
             achievements=list(run.achievements),
-            pokemon_owned=len(run.pokemon),
+            pokemon_owned=sum(1 for entry in run.pokemon if entry.ownership == "owned"),
             evolutions=sum(len(entry.evolution_history) for entry in run.pokemon),
             partner_species=run.build.starter,
         )
@@ -377,16 +377,9 @@ class CareerEngine:
         home = run.contract.club_name if run.contract else clubs[0]
         rng = random.Random(stable_seed(run.seed, run.season_number, "schedule"))
         lineup = active_pokemon(run)
-        # Career choices alter preparation without bypassing PTU stats or rolls.
-        # Development and facilities raise the partner's generated PTU level;
-        # scouting reduces the opponent's preparation. Low health/finances have a
-        # visible competitive cost. All thresholds are deterministic.
         home_bonus = min(3, max(0, run.development) // 3)
         home_bonus += min(1, max(0, run.finances) // 4)
         home_bonus -= int(run.health < 45)
-        # Every point of club debt is felt immediately in travel, equipment and
-        # recovery. The penalty is capped so debt hurts without making a season
-        # mathematically unwinnable.
         home_bonus -= min(3, max(0, -run.finances))
         away_bonus = -min(2, max(0, run.scouting) // 3)
         class_effects = selected_class_effects(run.build.classes)
@@ -504,7 +497,6 @@ class CareerEngine:
         return specs
 
     def _apply_season_incident(self, run: CareerRun) -> dict:
-        """Add one low-impact, deterministic life event between seasons."""
         lineup = active_pokemon(run)
         pokemon = lineup[stable_seed(run.seed, run.season_number, "incident-pokemon") % len(lineup)]
         variant = stable_seed(run.seed, run.season_number, "incident") % 8
@@ -700,7 +692,6 @@ class CareerEngine:
         return {"title": title, "promoted": promotion, "relegated": relegation}
 
     def _unlock_achievements(self, run: CareerRun, season: SeasonState, outcome: dict) -> None:
-        """Grant stable career milestones after every fully resolved season."""
         evolution_count = sum(len(entry.evolution_history) for entry in run.pokemon)
         candidates = []
         if run.totals["wins"] >= 1:
@@ -814,7 +805,6 @@ def _slug(value: str) -> str:
 
 
 def _battle_gimmicks(lineup: List) -> List[str]:
-    """Equip at most one unlocked gimmick for the whole team."""
     equipped = False
     result: List[str] = []
     for pokemon in lineup:
