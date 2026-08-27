@@ -57,30 +57,12 @@ def _local_leaderboard(self, challenge_id: str, mode: str) -> List[LeaderboardEn
 
 
 def _postgres_leaderboard(self, challenge_id: str, mode: str) -> List[LeaderboardEntry]:
-    """Return the in-game trainer name, including for leaderboard rows created before this fix."""
+    """Read the materialized trainer identity from the public leaderboard projection."""
     day = challenge_id.removeprefix("daily-")
     with self._connect() as connection:
         rows = connection.execute(
             """
-            select
-              coalesce(
-                nullif(btrim((
-                  select r.state #>> '{build,name}'
-                  from private.competitive_results cr
-                  join private.career_runs r on r.id = cr.run_id
-                  where cr.challenge_id = e.challenge_id
-                    and cr.user_id = e.owner_id
-                    and cr.mode = e.mode
-                    and cr.score = e.score
-                  order by cr.verified_at desc
-                  limit 1
-                )), ''),
-                nullif(btrim(e.handle), ''),
-                'Trainer'
-              ) as trainer_name,
-              e.score,
-              e.achievements,
-              e.completed_at
+            select e.handle, e.score, e.achievements, e.completed_at
             from public.leaderboard_entries e
             join public.daily_challenges c on c.id = e.challenge_id
             where c.challenge_date = %s and e.mode = %s
