@@ -73,16 +73,22 @@ export function detectBattleVisualQuality(): BattleVisualQuality {
   });
 }
 
+function mediaQueryMatches(query: string): boolean {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") return false;
+  try {
+    return window.matchMedia(query).matches === true;
+  } catch {
+    return false;
+  }
+}
+
 export function prefersReducedMotion(): boolean {
-  return typeof window !== "undefined"
-    && typeof window.matchMedia === "function"
-    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return mediaQueryMatches("(prefers-reduced-motion: reduce)");
 }
 
 export function isCompactTouchDevice(): boolean {
   if (typeof window === "undefined") return false;
-  const coarsePointer = typeof window.matchMedia === "function"
-    && window.matchMedia("(pointer: coarse)").matches;
+  const coarsePointer = mediaQueryMatches("(pointer: coarse)");
   const touchPoints = Number(window.navigator.maxTouchPoints ?? 0);
   const shortestViewportEdge = Math.min(
     Number(window.innerWidth || 0),
