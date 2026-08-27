@@ -1,0 +1,207 @@
+/* Cohesion pass: keep the season screen focused on the current case. */
+.season-scene .relationship-edge {
+  display: none;
+}
+
+.season-stage {
+  align-items: start;
+}
+
+.decision-ticket {
+  overflow: hidden;
+}
+
+.decision-ticket .decision-body {
+  margin-bottom: .8rem;
+  max-width: 62ch;
+  color: #40382e;
+  line-height: 1.42;
+}
+
+.decision-options {
+  gap: .65rem;
+}
+
+.decision-options > button {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: .65rem;
+  align-items: center;
+  min-height: 5.1rem;
+  padding: .7rem .8rem;
+  border: 1px solid #b7a77f;
+  background: #fff8e8;
+  box-shadow: 0 .18rem 0 rgba(84, 68, 44, .13);
+  transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease;
+}
+
+.decision-options > button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #916f35;
+  background: #fff1cb;
+  box-shadow: 0 .38rem .7rem rgba(84, 68, 44, .16);
+}
+
+.decision-options > button.selected {
+  border: 2px solid #4b6e56;
+  background: #edf2dc;
+  box-shadow: inset .28rem 0 #4b6e56, 0 .35rem .75rem rgba(49, 68, 52, .18);
+}
+
+.decision-options .choice-number {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font: 800 .72rem "IBM Plex Mono", monospace;
+}
+
+.decision-options .choice-copy {
+  min-width: 0;
+}
+
+.decision-options .choice-copy b {
+  display: block;
+  margin-top: .08rem;
+  color: #251f18;
+  font-size: 1rem;
+}
+
+.decision-options .choice-copy p {
+  display: -webkit-box;
+  margin: .2rem 0 0;
+  overflow: hidden;
+  color: #615746;
+  line-height: 1.3;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* Exact mechanics appear only after the player selects an option. */
+.decision-options .choice-effects {
+  display: none;
+}
+
+.decision-confirmation {
+  margin-top: .85rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: .85rem;
+  align-items: center;
+  padding: .85rem;
+  border: 1px solid #9a8967;
+  background: #efe2bd;
+  color: #251f18;
+}
+
+.decision-confirmation > div {
+  min-width: 0;
+}
+
+.decision-confirmation span,
+.decision-confirmation strong,
+.decision-confirmation p {
+  display: block;
+}
+
+.decision-confirmation span {
+  color: #6b5b3d;
+  font: 800 .56rem "IBM Plex Mono", monospace;
+  letter-spacing: .09em;
+}
+
+.decision-confirmation strong {
+  margin-top: .15rem;
+  line-height: 1.25;
+}
+
+.decision-confirmation p {
+  margin: .25rem 0 0;
+  color: #5b4e3b;
+  line-height: 1.35;
+}
+
+.choice-help {
+  margin: .75rem 0 0;
+  color: #6d604b;
+  font-size: .85rem;
+}
+
+.active-class-effect {
+  max-width: 78rem;
+  margin-inline: auto;
+}
+
+@media (min-width: 920px) {
+  .season-stage {
+    grid-template-columns: minmax(12rem, .34fr) minmax(0, 1fr);
+    max-width: 78rem;
+    margin-inline: auto;
+  }
+
+  .decision-options {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .decision-options > button {
+    align-content: start;
+    min-height: 8rem;
+  }
+}
+
+@media (max-width: 699px) {
+  .decision-ticket {
+    padding: 1rem .8rem;
+  }
+
+  .decision-ticket h1 {
+    font-size: clamp(1.55rem, 8vw, 2.4rem);
+  }
+
+  .decision-ticket .decision-body {
+    font-size: 1rem;
+  }
+
+  .decision-options > button {
+    min-height: 4.6rem;
+  }
+
+  .decision-confirmation {
+    grid-template-columns: 1fr;
+  }
+
+  .decision-confirmation .primary-action {
+    width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .decision-options > button {
+    grid-template-columns: 1.8rem minmax(0, 1fr);
+    gap: .5rem;
+    padding: .6rem;
+  }
+
+  .decision-options .choice-number {
+    width: 1.8rem;
+    height: 1.8rem;
+    font-size: .62rem;
+  }
+
+  .decision-options .choice-copy p {
+    -webkit-line-clamp: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .decision-options > button {
+    transition: none;
+  }
+
+  .decision-options > button:hover:not(:disabled) {
+    transform: none;
+  }
+}
