@@ -4,6 +4,7 @@ import { App } from "./App";
 import "./styles.css";
 import "./components/battle-trainer-strip.css";
 import "./components/profile-longevity.css";
+import "./components/career-ux-refresh.css";
 
 const resumePath = new URLSearchParams(window.location.search).get("resume");
 if (resumePath?.startsWith("/career-game/") && !resumePath.includes("//")) {
