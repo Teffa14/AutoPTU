@@ -4,6 +4,7 @@ import { careerApi } from "../api";
 import { navigate } from "../App";
 import { battleCommentary, battleOutcomePresentation, deriveBattleView, eventTitle, playbackEventIndexes, statLabel, statusLabel } from "../battlePresentation";
 import { t } from "../i18n";
+import { opponentAbilityIsRevealed, opponentKnowledgeAtEvent, opponentMoveIsRevealed, type OpponentKnowledge } from "../opponentKnowledge";
 import type { BattleCombatant, BattleTranscript, CareerRun, Locale } from "../types";
 import { BattleArena } from "./BattleArena";
 import { BattlePreparing } from "./BattlePreparing";
@@ -105,6 +106,7 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: {
   const awayTeam = view.combatants.filter((entry) => entry.team === "career-away");
   const home = homeTeam.find((entry) => entry.active !== false && entry.hp > 0) ?? homeTeam.find((entry) => entry.active !== false) ?? homeTeam[0];
   const away = awayTeam.find((entry) => entry.active !== false && entry.hp > 0) ?? awayTeam.find((entry) => entry.active !== false) ?? awayTeam[0];
+  const awayKnowledge = opponentKnowledgeAtEvent(transcript, rawEventIndex);
   const outcome = battleOutcomePresentation(locale, transcript);
   const commentary = battleCommentary(locale, transcript, view);
   const adjudicated = transcript.events.some((event) => event.type === "match_adjudicated");
@@ -128,7 +130,7 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: {
       </header>
 
       <div className="battle-stage">
-        <CombatantHud combatant={away} team={awayTeam} club={transcript.spec.away_club} locale={locale} side="away" transcript={transcript} />
+        <CombatantHud combatant={away} team={awayTeam} club={transcript.spec.away_club} locale={locale} side="away" transcript={transcript} knowledge={awayKnowledge} />
         <div className="arena-wrap">
           <BattleTrainerStrip transcript={transcript} run={run} locale={locale} complete={complete} />
           <BattleArena transcript={transcript} eventIndex={rawEventIndex} view={view} locale={locale} />
@@ -179,11 +181,23 @@ export default function BattleScreen({ runId, battleId, locale, run, onRun }: {
   );
 }
 
-function CombatantHud({ combatant, team, club, locale, side, transcript }: { combatant?: BattleCombatant; team: BattleCombatant[]; club: string; locale: Locale; side: "home" | "away"; transcript: BattleTranscript }) {
+function CombatantHud({ combatant, team, club, locale, side, transcript, knowledge }: { combatant?: BattleCombatant; team: BattleCombatant[]; club: string; locale: Locale; side: "home" | "away"; transcript: BattleTranscript; knowledge?: OpponentKnowledge }) {
   if (!combatant) return <aside className={`combatant-hud ${side}`} />;
   const ratio = Math.max(0, Math.min(100, (combatant.hp / Math.max(1, combatant.max_hp)) * 100));
   const stats = { ...fallbackStats(combatant.id, transcript), ...(combatant.stats ?? {}) };
   const level = combatant.level ?? Math.max(1, Number(transcript.spec.level ?? 1) + Number(side === "home" ? transcript.spec.home_level_bonus ?? 0 : transcript.spec.away_level_bonus ?? 0));
+  const revealedAbilities = side === "away" && knowledge
+    ? (combatant.abilities ?? []).filter((ability) => opponentAbilityIsRevealed(knowledge, combatant.id, ability))
+    : combatant.abilities ?? [];
+  const revealedMoves = side === "away" && knowledge
+    ? (combatant.moves ?? []).filter((move) => opponentMoveIsRevealed(knowledge, combatant.id, move.name))
+    : combatant.moves ?? [];
+  const revealedTeamCount = side === "away" && knowledge
+    ? team.filter((entry) => knowledge.seenCombatantIds.has(entry.id)).length
+    : team.filter((entry) => entry.hp > 0).length;
+  const teamLabel = side === "away" && knowledge
+    ? `${revealedTeamCount} / ${team.length} ${locale === "es" ? "Pokémon rivales revelados" : "opponent Pokémon revealed"}`
+    : `${revealedTeamCount} / ${team.length} ${locale === "es" ? "Pokémon disponibles" : "Pokémon available"}`;
   return (
     <aside className={`combatant-hud ${side} ${combatant.hp <= 0 ? "fainted" : ""}`}>
       <header><span>{club}</span><b>{combatant.species}</b><small>LV {level}</small></header>
@@ -191,19 +205,28 @@ function CombatantHud({ combatant, team, club, locale, side, transcript }: { com
       <div className="status-row">{combatant.hp <= 0 ? <b>{locale === "es" ? "DEBILITADO" : "FAINTED"}</b> : (combatant.statuses?.length ? combatant.statuses.map((status) => <b key={status}>{statusLabel(status, locale)}</b>) : <span>{locale === "es" ? "Sin estados" : "No status"}</span>)}</div>
       <div className="combatant-types">{combatant.types?.map((type) => <b key={type} className={`type-${type.toLowerCase()}`}>{type}</b>)}</div>
       {combatant.gimmick ? <div className="gimmick-active" title={locale === "es" ? "Gimmick activo: sus bonos ya están incluidos en los stats mostrados." : "Active gimmick: its bonuses are already included in the displayed stats."}>✦ {gimmickBattleLabel(combatant.gimmick, locale)}</div> : null}
-      <div className="build-row"><span>{combatant.nature || (locale === "es" ? "Naturaleza desconocida" : "Unknown nature")}</span>{combatant.abilities?.length ? <small>{locale === "es" ? "HABILIDAD" : "ABILITY"}</small> : null}{combatant.abilities?.map((ability) => <b key={ability} title={locale === "es" ? "Habilidad activa en combate" : "Ability active in battle"}>{ability}</b>)}</div>
-      <div className="team-rack" aria-label={`${team.filter((entry) => entry.hp > 0).length} / ${team.length} ${locale === "es" ? "Pokémon disponibles" : "Pokémon available"}`}>
-        {team.map((entry) => <span key={entry.id} className={`${entry.hp <= 0 ? "fainted" : ""} ${entry.id === combatant.id ? "active" : ""}`} title={`${entry.species} · ${entry.hp}/${entry.max_hp}`}><PokemonSprite name={entry.species} className="team-sprite" /></span>)}
+      <div className="build-row">
+        <span>{side === "home" ? (combatant.nature || (locale === "es" ? "Naturaleza desconocida" : "Unknown nature")) : (locale === "es" ? "Datos observados" : "Observed data")}</span>
+        {revealedAbilities.length ? <small>{locale === "es" ? "HABILIDAD" : "ABILITY"}</small> : side === "away" ? <small>{locale === "es" ? "HABILIDAD NO REVELADA" : "ABILITY UNREVEALED"}</small> : null}
+        {revealedAbilities.map((ability) => <b key={ability} title={locale === "es" ? "Habilidad revelada por un evento del combate" : "Ability revealed by a battle event"}>{ability}</b>)}
       </div>
-      <dl className="battle-stats">{(["atk", "def", "spatk", "spdef", "spd"] as const).map((key) => {
+      <div className="team-rack" aria-label={teamLabel}>
+        {team.map((entry) => {
+          if (side === "away" && knowledge && !knowledge.seenCombatantIds.has(entry.id)) {
+            return <span key={entry.id} className="unknown" title={locale === "es" ? "Pokémon rival no revelado" : "Unrevealed opponent Pokémon"}>?</span>;
+          }
+          return <span key={entry.id} className={`${entry.hp <= 0 ? "fainted" : ""} ${entry.id === combatant.id ? "active" : ""}`} title={`${entry.species} · ${entry.hp}/${entry.max_hp}`}><PokemonSprite name={entry.species} className="team-sprite" /></span>;
+        })}
+      </div>
+      {side === "home" ? <dl className="battle-stats">{(["atk", "def", "spatk", "spdef", "spd"] as const).map((key) => {
         const base = stats[key];
         const effective = combatant.effective_stats?.[key];
         return <div key={key} title={battleStatDescription(key, locale)}><dt>{statLabel(key, locale)}</dt><dd className={effective !== undefined && effective !== base ? "modified" : ""}>{effective ?? base ?? "—"}{effective !== undefined && base !== undefined && effective !== base ? <small>{base} base</small> : null}</dd></div>;
-      })}</dl>
-      {combatant.moves?.length ? <div className="move-rack">{combatant.moves.slice(0, 4).map((move) => {
+      })}</dl> : null}
+      {revealedMoves.length ? <div className="move-rack">{revealedMoves.slice(0, 4).map((move) => {
         const stab = combatant.types?.some((type) => type.toLowerCase() === move.type.toLowerCase());
         return <span key={move.name} className={`move-type-${move.type.toLowerCase()}`}><b>{move.name}{stab ? <i>STAB</i> : null}</b><small>{move.type} · {move.category}{move.db ? ` · DB ${move.db}` : ""}</small></span>;
-      })}</div> : null}
+      })}</div> : side === "away" ? <div className="move-rack"><span><b>{locale === "es" ? "MOVIMIENTOS NO REVELADOS" : "MOVES UNREVEALED"}</b><small>{locale === "es" ? "Aparecen cuando se usan" : "Shown when used"}</small></span></div> : null}
     </aside>
   );
 }
