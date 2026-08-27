@@ -17,22 +17,55 @@ export type DecisionOutcomeView = {
   gamble: boolean;
 };
 
+const STAT_KEYS = new Set(["hp", "atk", "def", "spatk", "spdef", "spd"]);
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+function nonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+function finiteNumber(value: unknown): value is number {
+  return typeof value === "number" && Number.isFinite(value);
+}
+
+function validReward(value: unknown): value is DecisionReward {
+  if (!isRecord(value) || typeof value.type !== "string") return false;
+  if (value.type === "pokemon") return nonEmptyString(value.species);
+  if (value.type === "item") return nonEmptyString(value.item) && finiteNumber(value.quantity);
+  if (value.type === "move") return nonEmptyString(value.move);
+  if (value.type === "relationship") return nonEmptyString(value.name) && finiteNumber(value.amount);
+  if (value.type === "level") return finiteNumber(value.levels);
+  if (value.type === "stat") {
+    return nonEmptyString(value.pokemon_id)
+      && nonEmptyString(value.species)
+      && typeof value.stat === "string"
+      && STAT_KEYS.has(value.stat)
+      && finiteNumber(value.amount);
+  }
+  return false;
+}
+
 export function normalizedDecisionHistory(value: unknown): DecisionHistoryEntry[] {
   if (!Array.isArray(value)) return [];
-  return value.filter((entry): entry is DecisionHistoryEntry => Boolean(entry) && typeof entry === "object" && !Array.isArray(entry));
+  return value.filter((entry): entry is DecisionHistoryEntry => isRecord(entry));
 }
 
 export function decisionOutcomeView(entry: DecisionHistoryEntry, locale: Locale): DecisionOutcomeView {
-  const family = String(entry.option_id ?? "decision").split(":", 1)[0] || "decision";
-  const effects = entry.effects && typeof entry.effects === "object" ? entry.effects : {};
+  const optionId = typeof entry.option_id === "string" ? entry.option_id : "";
+  const family = optionId.split(":", 1)[0] || "decision";
+  const effects = isRecord(entry.effects) ? entry.effects : {};
   const gamble = typeof effects.gamble_success === "boolean";
   const wonGamble = effects.gamble_success === true;
   const changes = appliedChanges(effects, locale);
   const copy = OUTCOME_COPY[family]?.[locale] ?? OUTCOME_COPY.default[locale];
+  const label = typeof entry.label === "string" ? entry.label.trim() : "";
 
   return {
     family,
-    choice: String(entry.label ?? (locale === "es" ? "Decisión registrada" : "Decision recorded")),
+    choice: label || (locale === "es" ? "Decisión registrada" : "Decision recorded"),
     headline: gamble ? (wonGamble ? copy.success : copy.failure) : copy.headline,
     body: changes.length
       ? copy.body
@@ -50,10 +83,10 @@ function appliedChanges(effects: Record<string, unknown>, locale: Locale): strin
   const changes: string[] = [];
   for (const [key, value] of Object.entries(effects)) {
     if (key === "gamble_success" || key === "rewards") continue;
-    if (typeof value !== "number" || value === 0) continue;
+    if (!finiteNumber(value) || value === 0) continue;
     changes.push(`${effectLabel(key, locale)} ${value > 0 ? "+" : ""}${value}`);
   }
-  const rewards = Array.isArray(effects.rewards) ? effects.rewards as DecisionReward[] : [];
+  const rewards = Array.isArray(effects.rewards) ? effects.rewards.filter(validReward) : [];
   for (const reward of rewards) changes.push(rewardLabel(reward, locale));
   return changes;
 }
