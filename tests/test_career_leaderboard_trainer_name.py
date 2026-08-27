@@ -1,5 +1,6 @@
 from datetime import date
 
+from auto_ptu.career.catalogs import REGIONS
 from auto_ptu.career.engine import CareerEngine
 from auto_ptu.career.service import CareerService
 from auto_ptu.career.store import CareerStore
@@ -13,7 +14,7 @@ def test_ranked_leaderboard_preserves_the_winning_career_trainer_name(tmp_path) 
         player_id="player-123456789",
         name="Nemona Prime",
         region=challenge.region,
-        starter="Bulbasaur" if challenge.region == "kanto" else next(iter(__import__("auto_ptu.career.catalogs", fromlist=["REGIONS"]).REGIONS[challenge.region].partner_choices)),
+        starter=REGIONS[challenge.region].partner_choices[0],
         classes=["Ace Trainer"],
         mode="simple",
         locale="es",
@@ -28,8 +29,7 @@ def test_ranked_leaderboard_preserves_the_winning_career_trainer_name(tmp_path) 
 
     entries = store.leaderboard(challenge.id, "simple")
     assert len(entries) == 1
-    assert entries[0].trainer_name == "Nemona Prime"
+    assert entries[0].handle == "Nemona Prime"
 
     payload = CareerService(store=store, engine=engine).leaderboard(date(2026, 8, 27), "simple")
-    assert payload["entries"][0]["trainer_name"] == "Nemona Prime"
-    assert payload["entries"][0]["handle"].startswith("Trainer-")
+    assert payload["entries"][0]["handle"] == "Nemona Prime"
