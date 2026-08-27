@@ -24,7 +24,9 @@ Full mode keeps Pixi antialiasing, renders up to 2x device-pixel resolution, and
 
 Light mode renders the Pixi tactical layer at 1x resolution without antialiasing and suppresses transient Pixi effects. It keeps the tactical grid, deterministic actor positions, Pokémon sprites, HUD, HP/status information, event callouts, commentary, playback timing, and battle result.
 
-The browser automatically selects Light mode when reduced motion is requested, when reported hardware concurrency is four cores or fewer, or when reported device memory is 4 GB or less. A player preference overrides hardware auto-selection, except reduced motion always remains Light. The preference is stored locally when browser storage is available.
+The browser automatically selects Light mode when reduced motion is requested, when reported hardware concurrency is four cores or fewer, when reported device memory is 4 GB or less, or when the estimated Full-mode backing raster exceeds the existing 12,000,000-pixel safety budget. A player preference overrides ordinary hardware auto-selection, but reduced motion and the raster safety budget always remain Light. The preference is stored locally when browser storage is available.
+
+The raster budget is a renderer-startup guard. For example, a 3840×2160 viewport at the Full-mode DPR cap of 2 would request 33,177,600 backing pixels, about 132.7 MB for one RGBA8 framebuffer before additional buffers, textures, and effects. Carrera must select Light before Pixi attempts that allocation instead of relying on renderer failure after the expensive startup attempt.
 
 This boundary must remain presentation-only. Changing visual quality must never regenerate a transcript, change AI choices, alter hit/damage calculations, change movement legality, or produce a different winner.
 
