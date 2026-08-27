@@ -1,0 +1,49 @@
+from datetime import date
+from pathlib import Path
+
+from auto_ptu.career.catalogs import REGIONS
+from auto_ptu.career.engine import CareerEngine
+from auto_ptu.career.service import CareerService
+from auto_ptu.career.store import CareerStore
+
+
+def test_ranked_leaderboard_preserves_the_winning_career_trainer_name(tmp_path) -> None:
+    store = CareerStore(tmp_path / "career")
+    engine = CareerEngine()
+    challenge = engine.daily_challenge(date(2026, 8, 27))
+    run = engine.new_run(
+        player_id="player-123456789",
+        name="Nemona Prime",
+        region=challenge.region,
+        starter=REGIONS[challenge.region].partner_choices[0],
+        classes=["Ace Trainer"],
+        mode="simple",
+        locale="es",
+        seed=challenge.seed,
+        ranked=True,
+        daily_challenge_id=challenge.id,
+        attempt_no=1,
+    )
+    run.score = 321
+    engine.retire(run, "completed")
+    store.save_run(run)
+
+    entries = store.leaderboard(challenge.id, "simple")
+    assert len(entries) == 1
+    assert entries[0].handle == "Nemona Prime"
+
+    payload = CareerService(store=store, engine=engine).leaderboard(date(2026, 8, 27), "simple")
+    assert payload["entries"][0]["handle"] == "Nemona Prime"
+
+
+def test_postgres_leaderboard_uses_materialized_public_identity() -> None:
+    root = Path(__file__).resolve().parents[1]
+    projection = (root / "auto_ptu/career/leaderboard_names.py").read_text(encoding="utf-8")
+    migration = (root / "supabase/migrations/20260827154400_leaderboard_trainer_name_projection.sql").read_text(encoding="utf-8")
+
+    postgres_section = projection.split("def _postgres_leaderboard", 1)[1].split("def install_leaderboard_name_fix", 1)[0]
+    assert "select e.handle, e.score, e.achievements, e.completed_at" in postgres_section
+    assert "private.competitive_results" not in postgres_section
+    assert "create trigger leaderboard_trainer_name_projection" in migration
+    assert "cr.state #>> '{build,name}'" in migration
+    assert "before insert or update of score" in migration.lower()
