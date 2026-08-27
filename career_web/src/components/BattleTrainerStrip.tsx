@@ -18,6 +18,7 @@ export function BattleTrainerStrip({ transcript, run, locale, complete }: {
         club={transcript.spec.home_club}
         name={presentation.home.name}
         sprite={presentation.home.sprite}
+        progression={presentation.home.progression}
       />
       <div className="battle-trainer-center">
         <small>{presentation.meetingLabel}</small>
