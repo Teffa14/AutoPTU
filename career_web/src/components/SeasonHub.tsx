@@ -12,6 +12,7 @@ export function SeasonHub({ run, locale, onRun }: { run: CareerRun; locale: Loca
   const seasonRun = normalizeSeasonRosterState(run);
   const pendingBattle = pendingBattleRecovery(seasonRun);
   const needsMarket = seasonRun.status === "active" && seasonRun.season?.status === "decision" && (seasonRun.season?.decisions_completed ?? 0) === 0;
+  const hasAvailablePokemon = seasonRun.pokemon.some((pokemon) => pokemon.status !== "retired" && pokemon.career_health > 0);
   const history = normalizedDecisionHistory(seasonRun.season?.decision_history);
   const historyCount = history.length;
   const latestDecision = history.at(-1) as DecisionHistoryEntry | undefined;
@@ -37,8 +38,12 @@ export function SeasonHub({ run, locale, onRun }: { run: CareerRun; locale: Loca
     return <DecisionOutcomePanel entry={latestDecision} locale={locale} onContinue={() => setAcknowledgedDecisions(historyCount)} />;
   }
 
+  const seasonReady = clubReady && hasAvailablePokemon;
+
   return <>
     {needsMarket ? <PreseasonMarket run={seasonRun} locale={locale} onRun={onRun} onClubReady={setClubReady} /> : null}
-    {clubReady ? <SeasonScreen run={seasonRun} locale={locale} onRun={onRun} /> : <div className="preseason-gate">{locale === "es" ? "Elegí el club de esta temporada para abrir el calendario." : "Choose this season's club to open the schedule."}</div>}
+    {seasonReady ? <SeasonScreen run={seasonRun} locale={locale} onRun={onRun} /> : <div className="preseason-gate">{!clubReady
+      ? (locale === "es" ? "Elegí el club de esta temporada para abrir el calendario." : "Choose this season's club to open the schedule.")
+      : (locale === "es" ? "Necesitás al menos un Pokémon disponible. Recuperá el plantel desde el scouting de pretemporada antes de abrir el calendario." : "You need at least one available Pokémon. Rebuild the squad through preseason scouting before opening the schedule.")}</div>}
   </>;
 }

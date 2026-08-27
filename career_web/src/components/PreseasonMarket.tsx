@@ -76,6 +76,7 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
   const allClosed = snapshot.club_completed && snapshot.sponsor_completed && snapshot.capture_completed;
   if (allClosed) return null;
   const captureCandidates = captureCandidatesForProgress(snapshot.capture_candidates, run.league, run.scouting);
+  const hasAvailablePokemon = run.pokemon.some((pokemon) => pokemon.status !== "retired" && pokemon.career_health > 0);
 
   return (
     <section className="preseason-market" aria-label={locale === "es" ? "Mercado de temporada" : "Season market"}>
@@ -162,8 +163,10 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
               </button>
             ))}
           </div>
-          <button className="market-skip" disabled={Boolean(busy)} onClick={() => mutate("capture:skip", () => careerApi.capture(run, ""))}>{busy === "capture:skip" ? (locale === "es" ? "Cerrando salida…" : "Closing outing…") : (locale === "es" ? "Guardar Poké Balls y seguir" : "Keep Poké Balls and continue")}</button>
-          <p className="market-note">{locale === "es" ? "Los avistamientos visibles dependen de tu liga y mejoran con Scouting. Las categorías más altas aparecen cuando tu carrera ya tiene acceso a ellas. Si el equipo activo está lleno, una captura nueva va al PC." : "Visible sightings follow your league and improve with Scouting. Higher tiers appear when your career has earned access to them. If the active team is full, a new capture goes to PC."}</p>
+          <button className="market-skip" disabled={Boolean(busy) || !hasAvailablePokemon} onClick={() => mutate("capture:skip", () => careerApi.capture(run, ""))}>{busy === "capture:skip" ? (locale === "es" ? "Cerrando salida…" : "Closing outing…") : !hasAvailablePokemon ? (locale === "es" ? "Capturá un reemplazo para continuar" : "Capture a replacement to continue") : (locale === "es" ? "Guardar Poké Balls y seguir" : "Keep Poké Balls and continue")}</button>
+          <p className="market-note">{!hasAvailablePokemon
+            ? (locale === "es" ? "Tu plantel no tiene Pokémon disponibles. El calendario queda bloqueado hasta registrar al menos un reemplazo." : "Your squad has no available Pokémon. The schedule stays locked until at least one replacement is registered.")
+            : (locale === "es" ? "Los avistamientos visibles dependen de tu liga y mejoran con Scouting. Las categorías más altas aparecen cuando tu carrera ya tiene acceso a ellas. Si el equipo activo está lleno, una captura nueva va al PC." : "Visible sightings follow your league and improve with Scouting. Higher tiers appear when your career has earned access to them. If the active team is full, a new capture goes to PC.")}</p>
         </div>
       ) : null}
       {error ? <p className="form-error" role="alert">{error}</p> : null}

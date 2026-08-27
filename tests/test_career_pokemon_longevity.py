@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from auto_ptu.career.engine import CareerEngine
+from auto_ptu.career.items import use_item
 from auto_ptu.career.models import BattleSpec, BattleTranscript, CareerRun
 from auto_ptu.career.roster import (
     TRAINING_KIT_WEAR,
@@ -56,6 +57,42 @@ def test_training_kits_consume_longevity_and_eventually_retire_pokemon(tmp_path:
     assert pokemon.retired_season == run.season_number
     assert pokemon.id not in run.active_roster
     assert any(entry.get("type") == "pokemon.retired" and entry.get("pokemon_id") == pokemon.id for entry in run.timeline)
+
+
+def test_training_kit_cannot_retire_final_available_pokemon(tmp_path: Path) -> None:
+    run = new_run(tmp_path)
+    pokemon = run.pokemon[0]
+    pokemon.career_health = TRAINING_KIT_WEAR
+    run.inventory["Training Kit"] = 1
+
+    try:
+        use_item(run, "Training Kit", pokemon_id=pokemon.id, stat="atk")
+    except ValueError as exc:
+        assert "final available Pokémon" in str(exc)
+    else:
+        raise AssertionError("Training Kit must not leave an active career with zero available Pokémon.")
+
+    assert pokemon.career_health == TRAINING_KIT_WEAR
+    assert pokemon.status != "retired"
+    assert run.inventory["Training Kit"] == 1
+    assert pokemon.id in run.active_roster
+
+
+def test_training_kit_can_retire_one_pokemon_when_replacement_exists(tmp_path: Path) -> None:
+    run = new_run(tmp_path)
+    pokemon = run.pokemon[0]
+    replacement = capture_species(run, "Pidgey", source="replacement-test")
+    assert replacement is not None
+    pokemon.career_health = TRAINING_KIT_WEAR
+    run.inventory["Training Kit"] = 1
+
+    used = use_item(run, "Training Kit", pokemon_id=pokemon.id, stat="atk")
+
+    assert used["pokemon"] == pokemon.species
+    assert pokemon.status == "retired"
+    assert pokemon.career_health == 0
+    assert replacement.status != "retired"
+    assert replacement.career_health > 0
 
 
 def test_season_workload_creates_natural_competitive_lifespan(tmp_path: Path) -> None:

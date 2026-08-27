@@ -9,8 +9,8 @@ from .roster import TRAINING_KIT_WEAR, grant_pokemon_levels, grant_stat_training
 
 ITEM_CATALOG: Dict[str, Dict[str, Any]] = {
     "Training Kit": {
-        "description_es": f"Sesión individual: +2 permanentes al stat elegido. Consume {TRAINING_KIT_WEAR} de vida útil competitiva del Pokémon; al llegar a 0 se retira.",
-        "description_en": f"Individual session: +2 permanent points to one chosen stat. Costs {TRAINING_KIT_WEAR} Pokémon career health; at 0 the Pokémon retires.",
+        "description_es": f"Sesión individual: +2 permanentes al stat elegido. Consume {TRAINING_KIT_WEAR} de vida útil competitiva del Pokémon; al llegar a 0 se retira. No puede retirar al último Pokémon disponible de una carrera activa.",
+        "description_en": f"Individual session: +2 permanent points to one chosen stat. Costs {TRAINING_KIT_WEAR} Pokémon career health; at 0 the Pokémon retires. It cannot retire the final available Pokémon in an active career.",
         "target": "pokemon_stat",
         "career_health_cost": TRAINING_KIT_WEAR,
     },
@@ -143,8 +143,8 @@ SHOP_CATALOG: Dict[str, Dict[str, Any]] = {
     "training_kit": {
         "label_es": "Training Kit",
         "label_en": "Training Kit",
-        "description_es": f"Se guarda en la mochila: +2 permanentes al stat elegido. Cada uso consume {TRAINING_KIT_WEAR} de vida útil competitiva del Pokémon y acelera su retiro.",
-        "description_en": f"Stored in the bag: +2 permanent points to a chosen stat. Each use costs {TRAINING_KIT_WEAR} Pokémon career health and accelerates retirement.",
+        "description_es": f"Se guarda en la mochila: +2 permanentes al stat elegido. Cada uso consume {TRAINING_KIT_WEAR} de vida útil competitiva del Pokémon y acelera su retiro. No puede retirar al último Pokémon disponible de una carrera activa.",
+        "description_en": f"Stored in the bag: +2 permanent points to a chosen stat. Each use costs {TRAINING_KIT_WEAR} Pokémon career health and accelerates retirement. It cannot retire the final available Pokémon in an active career.",
         "price": 125,
         "kind": "item",
         "item": "Training Kit",
@@ -262,6 +262,9 @@ def use_item(run: CareerRun, item: str, *, pokemon_id: str = "", stat: str = "")
     if canonical == "Training Kit":
         if target is None:
             raise ValueError("Choose a Pokémon for the Training Kit.")
+        available = [entry for entry in run.pokemon if entry.status != "retired" and entry.career_health > 0]
+        if run.status == "active" and target in available and len(available) == 1 and target.career_health <= TRAINING_KIT_WEAR:
+            raise ValueError("The Training Kit would retire the final available Pokémon. Add another available Pokémon before using it.")
         trained = grant_stat_training(run, target.id, stat, 2, source="item:training_kit")
         if trained is None:
             raise ValueError("Choose a valid stat that has room for more training.")
