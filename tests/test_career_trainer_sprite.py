@@ -57,6 +57,11 @@ def test_character_creation_persists_trainer_sprite_and_allows_first_club_choice
     assert any(event.get("type") == "club.offer_signed" for event in signed["timeline"])
     assert any(event.get("type") == "trainer.appearance_selected" and event.get("trainer_sprite") == "hilda" for event in signed["timeline"])
 
+    scheduled = service.engine._schedule(service.store.load_run(created["id"]))
+    assert scheduled
+    assert all(spec.home_trainer_name == "QA Trainer" for spec in scheduled)
+    assert all(spec.home_trainer_sprite == "hilda" for spec in scheduled)
+
 
 def test_showdown_archive_sprite_slug_is_preserved(tmp_path) -> None:
     service = _service(tmp_path)
