@@ -40,11 +40,11 @@ function run(mode: "simple" | "advanced", pokemonList: CareerPokemon[], activeRo
 }
 
 describe("automatic training candidates", () => {
-  it("uses the active partner in simple mode", () => {
+  it("trains every eligible active Pokemon in simple mode", () => {
     const partner = pokemon("partner", { is_partner: true });
     const reserve = pokemon("reserve");
     expect(automaticTrainingCandidates(run("simple", [partner, reserve], [partner.id, reserve.id]), "conditioning"))
-      .toEqual([partner.id]);
+      .toEqual([partner.id, reserve.id]);
   });
 
   it("falls back to the first active Pokemon when the original partner is retired", () => {
