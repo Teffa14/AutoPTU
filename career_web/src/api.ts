@@ -47,6 +47,7 @@ export interface PreseasonSnapshot {
 const base = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") ?? "";
 const MAX_BATTLE_CACHE_ENTRIES = 6;
 const battleCache = new Map<string, BattleTranscript>();
+const battleRequests = new Map<string, Promise<BattleTranscript>>();
 const requestTimeoutMs = 15_000;
 
 function rememberBattleTranscript(key: string, transcript: BattleTranscript): BattleTranscript {
@@ -318,13 +319,7 @@ function purchaseOnce(run: CareerRun, productId: string): Promise<CareerRun> {
   });
 }
 
-async function battle(runId: string, battleId: string): Promise<BattleTranscript> {
-  const key = `${runId}:${battleId}`;
-  const cached = battleCache.get(key);
-  if (cached) {
-    rememberBattleTranscript(key, cached);
-    return cached;
-  }
+async function loadBattleTranscript(runId: string, battleId: string, key: string): Promise<BattleTranscript> {
   const local = loadLocalRun(runId);
   if (local && !local.ranked) {
     const transcript = await portable<BattleTranscript>("battle", local, { battle_id: battleId });
@@ -340,6 +335,25 @@ async function battle(runId: string, battleId: string): Promise<BattleTranscript
     if (!restored) throw reason;
     const transcript = await request<BattleTranscript>(path);
     return rememberBattleTranscript(key, transcript);
+  }
+}
+
+async function battle(runId: string, battleId: string): Promise<BattleTranscript> {
+  const key = `${runId}:${battleId}`;
+  const cached = battleCache.get(key);
+  if (cached) {
+    rememberBattleTranscript(key, cached);
+    return cached;
+  }
+  const pending = battleRequests.get(key);
+  if (pending) return pending;
+
+  const requestPromise = loadBattleTranscript(runId, battleId, key);
+  battleRequests.set(key, requestPromise);
+  try {
+    return await requestPromise;
+  } finally {
+    if (battleRequests.get(key) === requestPromise) battleRequests.delete(key);
   }
 }
 
