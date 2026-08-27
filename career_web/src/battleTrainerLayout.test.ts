@@ -14,38 +14,34 @@ const trainerComponent = readFileSync(
 
 
 describe("battle trainer layout", () => {
-  it("keeps trainer presentation in a dedicated lane above the arena host", () => {
+  it("places trainers on arena-edge pads without reserving a broadcast lane", () => {
     expect(trainerComponent).toContain('className="battle-trainer-strip"');
-    expect(trainerCss).toContain(".battle-trainer-strip + div");
-    expect(trainerCss).toContain("inset: 5.35rem 0 0 !important");
+    expect(trainerCss).toContain("pointer-events: none");
+    expect(trainerCss).toContain("bottom: .5rem");
+    expect(trainerCss).not.toContain(".battle-trainer-strip + div");
   });
 
-  it("compacts the trainer lane on phones without restoring overlap", () => {
-    expect(trainerCss).toContain("@media (max-width: 699px)");
-    expect(trainerCss).toContain("inset: 3.85rem 0 0 !important");
-    expect(trainerCss).toContain(".battle-trainer-copy q,");
-    expect(trainerCss).toContain("display: none");
+  it("removes trainer battle quotes from the combat surface", () => {
+    expect(trainerComponent).not.toContain("<q>");
+    expect(trainerComponent).not.toContain("line={presentation.home.line}");
+    expect(trainerComponent).not.toContain("line={presentation.away.line}");
   });
 
-  it("keeps authoritative rival progression visible on compact battle layouts", () => {
+  it("keeps trainer identity and authoritative rival progression visible", () => {
     expect(trainerComponent).toContain('className="battle-trainer-progression"');
-    expect(trainerCss).toContain(".battle-trainer-copy small:not(.battle-trainer-progression)");
-    expect(trainerCss).toContain(".battle-trainer-progression {\n    display: block;");
-    expect(trainerCss).toContain("@media (max-width: 430px)");
-    expect(trainerCss).toContain("max-width: 5.25rem");
+    expect(trainerCss).toContain(".battle-trainer-progression");
+    expect(trainerCss).toContain(".battle-trainer-copy strong");
   });
 
-  it("compacts the trainer lane on short landscape viewports", () => {
+  it("shrinks the arena-edge pads on phones and short landscape viewports", () => {
+    expect(trainerCss).toContain("@media (max-width: 699px)");
     expect(trainerCss).toContain("@media (max-height: 500px)");
-    expect(trainerCss).toContain("height: 2.8rem");
-    expect(trainerCss).toContain("inset: 3.35rem 0 0 !important");
-    expect(trainerCss).toContain("width: 2.1rem");
-    expect(trainerCss).toContain("height: 2.1rem");
+    expect(trainerCss).toContain("width: 2.35rem");
+    expect(trainerCss).toContain("height: 2.85rem");
   });
 
   it("keeps trainer sprites bounded instead of allowing intrinsic image size", () => {
-    expect(trainerCss).toContain("width: 3.45rem");
-    expect(trainerCss).toContain("height: 3.45rem");
     expect(trainerCss).toContain("object-fit: contain");
+    expect(trainerCss).toContain("image-rendering: pixelated");
   });
 });
