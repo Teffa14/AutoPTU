@@ -327,7 +327,7 @@ class CareerEngine:
             score=run.score,
             retirement_reason=run.retirement_reason,
             achievements=list(run.achievements),
-            pokemon_owned=len(run.pokemon),
+            pokemon_owned=sum(1 for entry in run.pokemon if entry.ownership == "owned"),
             evolutions=sum(len(entry.evolution_history) for entry in run.pokemon),
             partner_species=run.build.starter,
         )
