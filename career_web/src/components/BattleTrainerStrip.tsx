@@ -17,9 +17,8 @@ export function BattleTrainerStrip({ transcript, run, locale, complete }: {
         name={presentation.home.name}
         sprite={presentation.home.sprite}
       />
-      <div className="battle-trainer-center" aria-hidden="true">
+      <div className="battle-trainer-center">
         <small>{presentation.meetingLabel}</small>
-        <strong>VS</strong>
       </div>
       <TrainerSide
         align="right"

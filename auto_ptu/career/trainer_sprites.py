@@ -1,12 +1,15 @@
 from __future__ import annotations
 
+import re
 from typing import Dict, List
 
 from .models import CareerRun
 
 
-# Curated IDs from the canonical Pokemon Showdown 2D trainer sprite set.
-# Keep this list intentionally small so the creation screen stays readable.
+# These entries are the compact regional defaults returned by the Career API.
+# The web client can expose the broader Pokemon Showdown archive without making
+# every sprite part of this payload. Persisted appearance remains a presentation
+# choice and is therefore validated as a safe Showdown sprite slug.
 TRAINER_SPRITES: tuple[dict[str, str], ...] = (
     {"id": "red", "label": "Red", "region": "kanto"},
     {"id": "green", "label": "Green", "region": "kanto"},
@@ -20,14 +23,18 @@ TRAINER_SPRITES: tuple[dict[str, str], ...] = (
     {"id": "hilda", "label": "Hilda", "region": "unova"},
     {"id": "nate", "label": "Nate", "region": "unova"},
     {"id": "rosa", "label": "Rosa", "region": "unova"},
+    {"id": "calem", "label": "Calem", "region": "kalos"},
     {"id": "serena", "label": "Serena", "region": "kalos"},
+    {"id": "elio", "label": "Elio", "region": "alola"},
     {"id": "selene", "label": "Selene", "region": "alola"},
     {"id": "victor", "label": "Victor", "region": "galar"},
     {"id": "gloria", "label": "Gloria", "region": "galar"},
+    {"id": "florian-s", "label": "Florian", "region": "paldea"},
+    {"id": "juliana-s", "label": "Juliana", "region": "paldea"},
 )
 
 DEFAULT_TRAINER_SPRITE = "red"
-_VALID_IDS = {entry["id"] for entry in TRAINER_SPRITES}
+_SAFE_SPRITE_ID = re.compile(r"^[a-z0-9][a-z0-9-]{0,63}$")
 
 
 def trainer_sprite_catalog() -> List[Dict[str, str]]:
@@ -35,8 +42,10 @@ def trainer_sprite_catalog() -> List[Dict[str, str]]:
 
 
 def normalize_trainer_sprite(value: object) -> str:
-    candidate = str(value or "").strip().lower()
-    return candidate if candidate in _VALID_IDS else DEFAULT_TRAINER_SPRITE
+    if not isinstance(value, str):
+        return DEFAULT_TRAINER_SPRITE
+    candidate = value.strip().lower()
+    return candidate if _SAFE_SPRITE_ID.fullmatch(candidate) else DEFAULT_TRAINER_SPRITE
 
 
 def apply_trainer_sprite(run: CareerRun, value: object) -> str:

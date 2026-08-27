@@ -23,6 +23,8 @@ interface ReturningLoan {
   active: boolean;
 }
 
+type CaptureCandidate = PreseasonSnapshot["capture_candidates"][number];
+
 export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
   const [snapshot, setSnapshot] = useState<PreseasonSnapshot | null>(null);
   const [busy, setBusy] = useState("");
@@ -73,12 +75,13 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
   }
   const allClosed = snapshot.club_completed && snapshot.sponsor_completed && snapshot.capture_completed;
   if (allClosed) return null;
+  const captureCandidates = captureCandidatesForProgress(snapshot.capture_candidates, run.league, run.scouting);
 
   return (
     <section className="preseason-market" aria-label={locale === "es" ? "Mercado de temporada" : "Season market"}>
       <header className="preseason-heading">
         <div><span>{locale === "es" ? `TEMPORADA ${run.season_number}` : `SEASON ${run.season_number}`}</span><h2>{locale === "es" ? "Mercado de pretemporada" : "Preseason market"}</h2></div>
-        <p>{locale === "es" ? "Si tu contrato sigue vigente, continuás con el mismo club y equipo cedido. Cuando vence, podés renovar o cambiar. Después resolvés sponsor y captura." : "If your contract is still active, you keep the same club and loan squad. When it expires, renew or move. Then resolve sponsor and capture."}</p>
+        <p>{locale === "es" ? "Si tu contrato sigue vigente, continuás con el mismo club y equipo cedido. Cuando vence, podés renovar o cambiar. Después resolvés sponsor y scouting." : "If your contract is still active, you keep the same club and loan squad. When it expires, renew or move. Then resolve sponsor and scouting."}</p>
       </header>
 
       {snapshot.club_completed ? <ClubTransitionBrief run={run} locale={locale} /> : null}
@@ -150,9 +153,9 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
 
       {snapshot.club_completed && !snapshot.capture_completed ? (
         <div className="market-block capture-market">
-          <div className="market-title"><b>{locale === "es" ? "Salida de captura" : "Capture outing"}</b><span>{run.build.pokeballs} Poké Balls · {locale === "es" ? "una elección" : "one choice"}</span></div>
+          <div className="market-title"><b>{locale === "es" ? "Scouting de pretemporada" : "Preseason scouting"}</b><span>{run.build.pokeballs} Poké Balls · {locale === "es" ? `${captureCandidates.length} avistamientos` : `${captureCandidates.length} sightings`}</span></div>
           <div className="capture-grid">
-            {snapshot.capture_candidates.map((candidate) => (
+            {captureCandidates.map((candidate) => (
               <button key={candidate.id} className="capture-card" disabled={Boolean(busy) || run.build.pokeballs < candidate.ball_cost} onClick={() => mutate(`capture:${candidate.id}`, () => careerApi.capture(run, candidate.id))}>
                 <PokemonSprite name={candidate.species} className="capture-sprite" />
                 <b>{candidate.species}</b><span>{rarityLabel(candidate.rarity, locale)}</span><small>{candidate.ball_cost} Poké Ball</small>
@@ -160,12 +163,24 @@ export function PreseasonMarket({ run, locale, onRun, onClubReady }: Props) {
             ))}
           </div>
           <button className="market-skip" disabled={Boolean(busy)} onClick={() => mutate("capture:skip", () => careerApi.capture(run, ""))}>{busy === "capture:skip" ? (locale === "es" ? "Cerrando salida…" : "Closing outing…") : (locale === "es" ? "Guardar Poké Balls y seguir" : "Keep Poké Balls and continue")}</button>
-          <p className="market-note">{locale === "es" ? "La captura es opcional. Aunque ya tengas seis Pokémon, podés seguir capturando; si el equipo activo está lleno, la captura va al PC." : "Capturing is optional. You can keep catching Pokémon after owning six; when the active team is full, the capture goes to PC."}</p>
+          <p className="market-note">{locale === "es" ? "Los avistamientos visibles dependen de tu liga y mejoran con Scouting. Las categorías más altas aparecen cuando tu carrera ya tiene acceso a ellas. Si el equipo activo está lleno, una captura nueva va al PC." : "Visible sightings follow your league and improve with Scouting. Higher tiers appear when your career has earned access to them. If the active team is full, a new capture goes to PC."}</p>
         </div>
       ) : null}
       {error ? <p className="form-error" role="alert">{error}</p> : null}
     </section>
   );
+}
+
+function captureCandidatesForProgress(candidates: CaptureCandidate[], league: string, scouting: number): CaptureCandidate[] {
+  if (!candidates.length) return [];
+  const ranks: Record<string, number> = { common: 0, rare: 1, very_rare: 2, epic: 3, legendary: 4, mythical: 5 };
+  const leagueCeiling: Record<string, number> = { junior: 0, rookie: 1, regular: 2, elite: 3 };
+  const safeScouting = typeof scouting === "number" && Number.isFinite(scouting) ? Math.max(0, scouting) : 0;
+  const ceiling = Math.min(5, (leagueCeiling[league] ?? 0) + Math.floor(safeScouting / 3));
+  const unlocked = candidates.filter((candidate) => (ranks[candidate.rarity] ?? 99) <= ceiling);
+  if (unlocked.length) return unlocked;
+  const lowest = Math.min(...candidates.map((candidate) => ranks[candidate.rarity] ?? 99));
+  return candidates.filter((candidate) => (ranks[candidate.rarity] ?? 99) === lowest);
 }
 
 function rarityLabel(rarity: string, locale: Locale): string {
