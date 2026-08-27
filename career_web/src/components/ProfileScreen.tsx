@@ -32,7 +32,7 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
   const pc = eligiblePokemon.filter((pokemon) => !selectedSet.has(pokemon.id));
   const requiredLineup = Math.min(6, eligiblePokemon.length);
   const trainingCompletedIds = run.season?.training_completed_ids ?? [];
-  const trainingCapacity = run.mode === "advanced" ? Math.max(1, run.active_roster.length) : 1;
+  const trainingCapacity = Math.max(1, run.active_roster.length);
 
   useEffect(() => setSelected(run.active_roster.filter((id) => eligiblePokemon.some((pokemon) => pokemon.id === id))), [eligiblePokemon, run.active_roster]);
   useEffect(() => {
@@ -165,7 +165,7 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
 
         <section className="training-room">
           <h2>{locale === "es" ? "Plan de entrenamiento automático" : "Automatic training plan"}</h2>
-          <p>{run.mode === "advanced" ? (locale === "es" ? "Al abrir cada temporada, el plan se aplica automáticamente una vez a cada Pokémon del equipo activo. No tenés que entrar a la mochila ni confirmar sesiones una por una." : "When each season opens, the plan automatically runs once for every active-team Pokémon. No bag visit or one-by-one confirmation is required.") : (locale === "es" ? "Al abrir cada temporada, el plan se aplica automáticamente al compañero. No tenés que confirmar la sesión manualmente." : "When each season opens, the plan automatically applies to the partner. No manual confirmation is required.")}</p>
+          <p>{locale === "es" ? "Al abrir cada temporada, el plan se aplica automáticamente una vez a cada Pokémon del equipo activo. No tenés que entrar a la mochila ni confirmar sesiones una por una." : "When each season opens, the plan automatically runs once for every active-team Pokémon. No bag visit or one-by-one confirmation is required."}</p>
           <div className="training-controls auto-training-controls">
             <label>{locale === "es" ? "Plan" : "Plan"}<select value={trainingPlan} onChange={(event) => setTrainingPlan(event.target.value as TrainingPlan)}>{Object.entries(TRAINING_METHODS).map(([id, details]) => <option key={id} value={id}>{details[locale === "es" ? 0 : 1]}</option>)}</select></label>
             <div><small>{trainingDescription(trainingPlan, locale)}</small><b>{locale === "es" ? `Progreso esta temporada: ${trainingCompletedIds.length}/${trainingCapacity}` : `This season: ${trainingCompletedIds.length}/${trainingCapacity}`}</b></div>

@@ -26,11 +26,7 @@ export function automaticTrainingCandidates(run: CareerRun, plan: AutomaticTrain
   const completedIds = Array.isArray(run.season?.training_completed_ids) ? run.season.training_completed_ids : [];
   const completed = new Set(completedIds);
 
-  const selected = run.mode === "advanced"
-    ? active
-    : [active.find((pokemon) => pokemon.is_partner) ?? active[0]].filter((pokemon): pokemon is CareerPokemon => Boolean(pokemon));
-
-  return selected
+  return active
     .filter((pokemon) => !completed.has(pokemon.id) && canUseTrainingPlan(pokemon, plan))
     .map((pokemon) => pokemon.id);
 }
