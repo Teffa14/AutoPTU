@@ -23,6 +23,7 @@ export type BattleTrainerPresentation = {
 };
 
 type RivalIdentity = { name: string; sprite: string };
+type RelationshipRival = { rival: RivalIdentity; bond: number };
 
 const REGIONAL_RIVALS: Record<string, RivalIdentity[]> = {
   kanto: [
@@ -91,7 +92,8 @@ export function battleTrainerPresentation(
   const pool = REGIONAL_RIVALS[region] ?? REGIONAL_RIVALS.kanto;
   const clubRival = pool[stableIndex(`${region}:${normalizedAwayClub}`, pool.length)];
   const featured = (transcript.spec as typeof transcript.spec & { featured?: unknown }).featured === true;
-  const rival = featured ? knownRegionalRival(run, region, pool) ?? clubRival : clubRival;
+  const relationshipRival = featured ? knownRegionalRival(run, region, pool) : null;
+  const rival = relationshipRival?.rival ?? clubRival;
   const rivalMemory = formalRivalMemory(run, awayClub, transcript.spec.season);
   const meeting = rivalMemory.previousMeetings + 1;
 
@@ -107,7 +109,9 @@ export function battleTrainerPresentation(
       progression: rivalProgressionLine(locale, transcript),
     },
     meeting,
-    meetingLabel: meetingLabel(locale, meeting, rivalMemory),
+    meetingLabel: relationshipRival
+      ? relationshipRivalLabel(locale, relationshipRival.bond)
+      : meetingLabel(locale, meeting, rivalMemory),
     rivalMemory,
   };
 }
@@ -162,10 +166,10 @@ function knownRegionalRival(
   run: CareerRun | null | undefined,
   region: string,
   pool: RivalIdentity[],
-): RivalIdentity | null {
+): RelationshipRival | null {
   if (!run || !run.relationships || typeof run.relationships !== "object") return null;
   const regionLabel = region.toLocaleLowerCase("en-US");
-  const candidates: { rival: RivalIdentity; bond: number }[] = [];
+  const candidates: RelationshipRival[] = [];
   for (const [rawContact, rawBond] of Object.entries(run.relationships)) {
     if (typeof rawContact !== "string") continue;
     const [rawName, rawRole, rawRegion] = rawContact.split(" · ");
@@ -178,7 +182,7 @@ function knownRegionalRival(
     candidates.push({ rival, bond });
   }
   candidates.sort((left, right) => right.bond - left.bond || left.rival.name.localeCompare(right.rival.name));
-  return candidates[0]?.rival ?? null;
+  return candidates[0] ?? null;
 }
 
 function normalizeRegionIdentity(value: unknown): string {
@@ -212,6 +216,12 @@ function stableIndex(value: string, modulo: number): number {
     hash = Math.imul(hash, 16777619) >>> 0;
   }
   return modulo > 0 ? hash % modulo : 0;
+}
+
+function relationshipRivalLabel(locale: Locale, bond: number): string {
+  const decisive = bond >= 5;
+  if (locale === "es") return decisive ? "RIVALIDAD DECISIVA" : "RIVALIDAD ACTIVA";
+  return decisive ? "INTENSE RIVALRY" : "ACTIVE RIVALRY";
 }
 
 function meetingLabel(locale: Locale, meeting: number, memory: RivalMemory): string {
