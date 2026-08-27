@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Application, Container, Graphics, Text, TextStyle } from "pixi.js";
 
 import type { BattleViewState } from "../battlePresentation";
-import { battleOutcomeVisualState, battleRenderFrameFactors, battleRenderMaxFps, detectBattleVisualQuality, persistBattleVisualQuality, prefersReducedMotion, type BattleVisualQuality } from "../battleQuality";
+import { battleOutcomeVisualState, battleRenderFrameFactors, battleRenderMaxFps, constrainRequestedBattleVisualQuality, detectBattleVisualQuality, persistBattleVisualQuality, prefersReducedMotion, type BattleVisualQuality } from "../battleQuality";
 import { createBattleTimerRegistry, type BattleTimerRegistry } from "../battleTimerRegistry";
 import type { BattleCombatant, BattleMove, BattleTranscript, Locale } from "../types";
 import { PokemonSprite } from "./PokemonSprite";
@@ -58,7 +58,13 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
 
   function toggleQuality() {
     if (reducedMotion) return;
-    const next: BattleVisualQuality = quality === "full" ? "light" : "full";
+    const requested: BattleVisualQuality = quality === "full" ? "light" : "full";
+    const next = constrainRequestedBattleVisualQuality(requested, {
+      reducedMotion,
+      viewportWidth: window.innerWidth,
+      viewportHeight: window.innerHeight,
+      devicePixelRatio: window.devicePixelRatio,
+    });
     setRendererFailed(false);
     setQuality(next);
     persistBattleVisualQuality(next);
