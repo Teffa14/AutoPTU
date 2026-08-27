@@ -128,10 +128,12 @@ export function formalRivalMemory(
   const normalizedAwayClub = normalizeClubIdentity(awayClub);
   if (!normalizedAwayClub) return EMPTY_RIVAL_MEMORY;
 
-  const authoritativeBeforeSeason = beforeSeason === undefined
-    ? undefined
-    : authoritativePositiveNumber(beforeSeason);
-  if (beforeSeason !== undefined && authoritativeBeforeSeason === null) return EMPTY_RIVAL_MEMORY;
+  let authoritativeBeforeSeason: number | undefined;
+  if (beforeSeason !== undefined) {
+    const parsedBeforeSeason = authoritativePositiveNumber(beforeSeason);
+    if (parsedBeforeSeason === null) return EMPTY_RIVAL_MEMORY;
+    authoritativeBeforeSeason = parsedBeforeSeason;
+  }
 
   let previousMeetings = 0;
   let firstSeason: number | null = null;
