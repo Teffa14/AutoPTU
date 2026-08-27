@@ -38,9 +38,27 @@ describe("timeline legacy save resilience", () => {
       timeline: [{ type: "season.completed", club: "Pewter Forge" }],
       pokemonCount: 2,
       evolutions: 1,
-      achievements: ["First Win", "null"],
+      achievements: ["First Win"],
       totals: { wins: 8, losses: 3, draws: 0, titles: 0 },
     });
+  });
+
+  it("rejects coercible narrative labels instead of inventing career-book facts", () => {
+    const state = timelineRenderState({
+      build: {
+        name: { toString: () => "Fake Trainer" },
+        starter: true,
+      },
+      achievements: [
+        " Real title ",
+        null,
+        true,
+        { toString: () => "Invented title" },
+      ],
+    });
+    expect(state.trainerName).toBe("");
+    expect(state.starter).toBe("");
+    expect(state.achievements).toEqual(["Real title"]);
   });
 
   it("rejects coercible non-numeric totals instead of inventing career results", () => {
@@ -73,6 +91,22 @@ describe("timeline season decisions", () => {
     expect(timelineSeasonDecisions({ decision: "Train carefully", decision_effects: { development: 2 } })).toEqual([
       { label: "Train carefully", effects: { development: 2 } },
     ]);
+  });
+
+  it("drops malformed decision labels instead of coercing them into history", () => {
+    expect(timelineSeasonDecisions({
+      decisions: [
+        { label: "Keep pressure", effects: { scouting: 1 } },
+        { label: true, effects: { finances: 2 } },
+        { label: { toString: () => "Invented choice" }, effects: { health: 3 } },
+      ],
+    })).toEqual([
+      { label: "Keep pressure", effects: { scouting: 1 } },
+    ]);
+    expect(timelineSeasonDecisions({
+      decision: { toString: () => "Invented legacy choice" },
+      decision_effects: { development: 2 },
+    })).toEqual([]);
   });
 });
 
