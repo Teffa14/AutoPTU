@@ -57,4 +57,43 @@ describe("battle rival identity persistence", () => {
       seasonsSinceLastMeeting: null,
     });
   });
+
+  it("does not attribute a club's historical meetings to a relationship-selected featured rival", () => {
+    const featured = {
+      ...baseTranscript,
+      spec: { ...baseTranscript.spec, featured: true, season: 7 },
+    } as BattleTranscript;
+    const run = {
+      build: { name: "Ari", region: "kanto", starter: "Bulbasaur", classes: [], pokeballs: 10 },
+      relationships: { "Blue · Rival · kanto": 4 },
+      timeline: [
+        { type: "season.completed", season: 1, opponents: ["Cerulean Current"] },
+        { type: "season.completed", season: 2, opponents: ["Cerulean Current"] },
+        { type: "season.completed", season: 3, opponents: ["Cerulean Current"] },
+        { type: "season.completed", season: 4, opponents: ["Cerulean Current"] },
+        { type: "season.completed", season: 5, opponents: ["Cerulean Current"] },
+      ],
+    } as unknown as CareerRun;
+
+    const presentation = battleTrainerPresentation("es", featured, run, false);
+    expect(presentation.away.name).toBe("Blue");
+    expect(presentation.rivalMemory.previousMeetings).toBe(5);
+    expect(presentation.meetingLabel).toBe("RIVALIDAD ACTIVA");
+    expect(presentation.meetingLabel).not.toContain("CRUCE #6");
+  });
+
+  it("keeps club-series meeting labels when no relationship rival overrides the featured opponent", () => {
+    const featured = {
+      ...baseTranscript,
+      spec: { ...baseTranscript.spec, featured: true, season: 3 },
+    } as BattleTranscript;
+    const run = {
+      timeline: [
+        { type: "season.completed", season: 1, opponents: ["Cerulean Current"] },
+        { type: "season.completed", season: 2, opponents: ["Cerulean Current"] },
+      ],
+    } as unknown as CareerRun;
+
+    expect(battleTrainerPresentation("es", featured, run, false).meetingLabel).toBe("CRUCE #3");
+  });
 });
