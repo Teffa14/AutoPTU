@@ -89,7 +89,9 @@ export function battleTrainerPresentation(
   const awayClub = String(transcript.spec.away_club || "Opponent");
   const normalizedAwayClub = normalizeClubIdentity(awayClub) || "opponent";
   const pool = REGIONAL_RIVALS[region] ?? REGIONAL_RIVALS.kanto;
-  const rival = pool[stableIndex(`${region}:${normalizedAwayClub}`, pool.length)];
+  const clubRival = pool[stableIndex(`${region}:${normalizedAwayClub}`, pool.length)];
+  const featured = (transcript.spec as typeof transcript.spec & { featured?: unknown }).featured === true;
+  const rival = featured ? knownRegionalRival(run, region, pool) ?? clubRival : clubRival;
   const rivalMemory = formalRivalMemory(run, awayClub, transcript.spec.season);
   const meeting = rivalMemory.previousMeetings + 1;
 
@@ -155,6 +157,29 @@ export function previousMeetings(
   return formalRivalMemory(run, awayClub, beforeSeason).previousMeetings;
 }
 
+function knownRegionalRival(
+  run: CareerRun | null | undefined,
+  region: string,
+  pool: RivalIdentity[],
+): RivalIdentity | null {
+  if (!run || !run.relationships || typeof run.relationships !== "object") return null;
+  const regionLabel = region.toLocaleLowerCase("en-US");
+  const candidates: { rival: RivalIdentity; bond: number }[] = [];
+  for (const [rawContact, rawBond] of Object.entries(run.relationships)) {
+    if (typeof rawContact !== "string") continue;
+    const [rawName, rawRole, rawRegion] = rawContact.split(" · ");
+    if (!rawName || rawRole?.trim().toLocaleLowerCase("en-US") !== "rival") continue;
+    if (rawRegion?.trim().toLocaleLowerCase("en-US") !== regionLabel) continue;
+    const rival = pool.find((entry) => entry.name.toLocaleLowerCase("en-US") === rawName.trim().toLocaleLowerCase("en-US"));
+    if (!rival) continue;
+    const bond = authoritativeNonNegativeNumber(rawBond);
+    if (bond === null || bond <= 0) continue;
+    candidates.push({ rival, bond });
+  }
+  candidates.sort((left, right) => right.bond - left.bond || left.rival.name.localeCompare(right.rival.name));
+  return candidates[0]?.rival ?? null;
+}
+
 function normalizeRegionIdentity(value: unknown): string {
   if (typeof value !== "string") return "kanto";
   return value.trim().toLocaleLowerCase("en-US") || "kanto";
@@ -170,6 +195,13 @@ function authoritativePositiveNumber(value: unknown): number | null {
   if (typeof value === "string" && !value.trim()) return null;
   const parsed = Number(value);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+}
+
+function authoritativeNonNegativeNumber(value: unknown): number | null {
+  if (typeof value !== "number" && typeof value !== "string") return null;
+  if (typeof value === "string" && !value.trim()) return null;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
 }
 
 function stableIndex(value: string, modulo: number): number {
