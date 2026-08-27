@@ -31,7 +31,10 @@ const PRESENTED_EVENT_TYPES = new Set([
 ]);
 
 export function playbackEventIndexes(transcript: BattleTranscript): number[] {
-  return transcript.events.flatMap((event, index) => PRESENTED_EVENT_TYPES.has(String(event.type ?? "")) ? [index] : []);
+  return transcript.events.flatMap((event, index) => {
+    const type = stringValue(event.type);
+    return type !== null && PRESENTED_EVENT_TYPES.has(type) ? [index] : [];
+  });
 }
 
 export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: number): BattleViewState {
@@ -47,7 +50,7 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
     if (event.type === "round_start" && Array.isArray(event.initial_states)) {
       for (const raw of event.initial_states) {
         if (!isRecord(raw)) continue;
-        const id = String(raw.actor ?? "");
+        const id = stringValue(raw.actor) ?? "";
         const current = combatants.get(id);
         if (!current) continue;
         const hp = finiteNumber(raw.hp);
@@ -59,18 +62,18 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
       }
     }
     if (event.type === "shift") {
-      const current = combatants.get(String(event.actor ?? ""));
+      const current = combatants.get(stringValue(event.actor) ?? "");
       const position = finitePosition(event.to);
       if (current && position) current.position = position;
     }
     if (event.type === "forced_movement") {
-      const current = combatants.get(String(event.target ?? ""));
+      const current = combatants.get(stringValue(event.target) ?? "");
       const position = finitePosition(event.to);
       if (current && position) current.position = position;
     }
     if (event.type === "switch") {
-      const outgoing = combatants.get(String(event.outgoing ?? ""));
-      const incoming = combatants.get(String(event.target ?? ""));
+      const outgoing = combatants.get(stringValue(event.outgoing) ?? "");
+      const incoming = combatants.get(stringValue(event.target) ?? "");
       if (outgoing) {
         outgoing.active = false;
         outgoing.position = undefined;
@@ -81,15 +84,15 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
         if (position) incoming.position = position;
       }
     }
-    const hpOwner = String(event.target ?? event.actor ?? "");
+    const hpOwner = stringValue(event.target) ?? stringValue(event.actor) ?? "";
     const hpCombatant = combatants.get(hpOwner);
     const targetHp = finiteNumber(event.target_hp);
     const newHp = finiteNumber(event.new_hp);
     if (hpCombatant && targetHp !== null) hpCombatant.hp = Math.max(0, targetHp);
     if (hpCombatant && newHp !== null) hpCombatant.hp = Math.max(0, newHp);
-    if (event.status) {
-      const statusOwner = combatants.get(String(event.target ?? event.actor ?? ""));
-      if (statusOwner && typeof event.status === "string") {
+    if (typeof event.status === "string") {
+      const statusOwner = combatants.get(stringValue(event.target) ?? stringValue(event.actor) ?? "");
+      if (statusOwner) {
         const status = event.status;
         const statuses = new Set(statusOwner.statuses ?? []);
         if (event.type === "status_removed" || event.effect === "cure") statuses.delete(status);
@@ -128,12 +131,12 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
     combatants: [...combatants.values()],
     round: finiteNumber(complete ? transcript.rounds : event?.round) ?? 1,
     event,
-    actorId: String(event?.actor ?? ""),
-    targetId: String(event?.target ?? (event?.target_hp !== undefined ? event?.actor ?? "" : "")),
-    move: String(event?.move ?? event?.ability ?? ""),
+    actorId: stringValue(event?.actor) ?? "",
+    targetId: stringValue(event?.target) ?? (event?.target_hp !== undefined ? stringValue(event?.actor) ?? "" : ""),
+    move: stringValue(event?.move) ?? stringValue(event?.ability) ?? "",
     damage,
     hit: typeof event?.hit === "boolean" ? event.hit : null,
-    critical: Boolean(event?.crit),
+    critical: event?.crit === true,
     effectiveness,
     stab: rollOptions.includes("stab"),
     attackValue: finiteNumber(event?.attack_value),
@@ -176,14 +179,14 @@ export function battleOutcomePresentation(locale: Locale, transcript: BattleTran
 export function battleCommentary(locale: Locale, transcript: BattleTranscript, view: BattleViewState): string {
   if (view.complete) return battleOutcomePresentation(locale, transcript).commentary;
   const event = view.event ?? {};
-  const type = String(event.type ?? "");
-  const actor = combatantName(transcript, String(event.actor ?? ""));
-  const target = combatantName(transcript, String(event.target ?? event.actor ?? ""));
+  const type = stringValue(event.type) ?? "";
+  const actor = combatantName(transcript, stringValue(event.actor) ?? "");
+  const target = combatantName(transcript, stringValue(event.target) ?? stringValue(event.actor) ?? "");
   if (type === "round_start") {
     return locale === "es" ? `Comienza la ronda ${view.round}. Los dos equipos buscan la iniciativa.` : `Round ${view.round} begins. Both teams fight for position.`;
   }
   if (type === "switch") {
-    const incoming = combatantName(transcript, String(event.target ?? ""));
+    const incoming = combatantName(transcript, stringValue(event.target) ?? "");
     return locale === "es" ? `${incoming} entra a la cancha.` : `${incoming} enters the field.`;
   }
   if (type === "shift") {
@@ -195,10 +198,10 @@ export function battleCommentary(locale: Locale, transcript: BattleTranscript, v
       : `${actor} breaks ${target}'s position with a tactical maneuver.`;
   }
   if (type === "move") {
-    const move = String(event.move ?? (locale === "es" ? "un movimiento" : "a move"));
+    const move = stringValue(event.move) ?? (locale === "es" ? "un movimiento" : "a move");
     if (event.hit === false) return locale === "es" ? `${actor} usa ${move}, pero falla.` : `${actor} uses ${move}, but misses.`;
     const damage = view.damage;
-    const critical = event.crit ? (locale === "es" ? " ¡Golpe crítico!" : " Critical hit!") : "";
+    const critical = event.crit === true ? (locale === "es" ? " ¡Golpe crítico!" : " Critical hit!") : "";
     const effectiveness = view.effectiveness;
     const effect = effectiveness > 1
       ? (locale === "es" ? " Es muy eficaz." : " It's super effective.")
@@ -210,16 +213,18 @@ export function battleCommentary(locale: Locale, transcript: BattleTranscript, v
       : `${actor} uses ${move}.${critical}${damage > 0 ? ` ${target} loses ${damage} HP.` : ""}${effect}`;
   }
   if (type === "ability") {
-    const ability = String(event.ability ?? event.effect ?? "");
-    const status = event.status ? ` ${target} ${locale === "es" ? "queda" : "is"} ${statusLabel(String(event.status), locale)}.` : "";
+    const ability = stringValue(event.ability) ?? stringValue(event.effect) ?? "";
+    const statusValue = stringValue(event.status);
+    const status = statusValue !== null ? ` ${target} ${locale === "es" ? "queda" : "is"} ${statusLabel(statusValue, locale)}.` : "";
     return locale === "es" ? `Se activa ${ability} de ${actor}.${status}` : `${actor}'s ${ability} activates.${status}`;
   }
   if (type === "combat_stage") {
-    const stat = statLabel(String(event.stat ?? ""), locale);
+    const stat = statLabel(stringValue(event.stat) ?? "", locale);
     const amount = finiteNumber(event.amount) ?? 0;
+    const source = stringValue(event.move) ?? actor;
     return locale === "es"
-      ? `${String(event.move ?? actor)} cambia el ${stat} de ${target} ${Math.abs(amount)} niveles.`
-      : `${String(event.move ?? actor)} changes ${target}'s ${stat} by ${amount} stages.`;
+      ? `${source} cambia el ${stat} de ${target} ${Math.abs(amount)} niveles.`
+      : `${source} changes ${target}'s ${stat} by ${amount} stages.`;
   }
   if (type === "status") {
     if (event.outcome === "hit_self") {
@@ -228,7 +233,8 @@ export function battleCommentary(locale: Locale, transcript: BattleTranscript, v
         ? `${actor} se hiere por la confusión y pierde ${amount} PS.`
         : `${actor} hurts itself in confusion and loses ${amount} HP.`;
     }
-    if (event.status) return locale === "es" ? `${target} queda ${statusLabel(String(event.status), locale)}.` : `${target} is ${statusLabel(String(event.status), locale)}.`;
+    const statusValue = stringValue(event.status);
+    if (statusValue !== null) return locale === "es" ? `${target} queda ${statusLabel(statusValue, locale)}.` : `${target} is ${statusLabel(statusValue, locale)}.`;
   }
   return locale === "es" ? "La posición del combate cambia." : "The shape of the match changes.";
 }
@@ -237,13 +243,14 @@ export function eventTitle(locale: Locale, view: BattleViewState): string {
   if (view.complete) return locale === "es" ? "FINAL DEL COMBATE" : "FULL TIME";
   const event = view.event ?? {};
   if (event.type === "round_start") return `${locale === "es" ? "RONDA" : "ROUND"} ${view.round}`;
-  if (event.type === "move") return String(event.move ?? (locale === "es" ? "ATAQUE" : "ATTACK")).toUpperCase();
+  if (event.type === "move") return (stringValue(event.move) ?? (locale === "es" ? "ATAQUE" : "ATTACK")).toUpperCase();
   if (event.type === "shift") return locale === "es" ? "REPOSICIONAMIENTO" : "REPOSITION";
   if (event.type === "forced_movement" || event.type === "maneuver") return locale === "es" ? "MANIOBRA TÁCTICA" : "TACTICAL MANEUVER";
-  if (event.type === "ability") return String(event.ability ?? (locale === "es" ? "HABILIDAD" : "ABILITY")).toUpperCase();
+  if (event.type === "ability") return (stringValue(event.ability) ?? (locale === "es" ? "HABILIDAD" : "ABILITY")).toUpperCase();
   if (event.type === "combat_stage") return locale === "es" ? "CAMBIO DE STATS" : "STAT CHANGE";
   if (event.type === "switch") return locale === "es" ? "CAMBIO DE POKÉMON" : "POKÉMON SWITCH";
-  return event.status ? statusLabel(String(event.status), locale).toUpperCase() : (locale === "es" ? "ESTADO" : "STATUS");
+  const statusValue = stringValue(event.status);
+  return statusValue !== null ? statusLabel(statusValue, locale).toUpperCase() : (locale === "es" ? "ESTADO" : "STATUS");
 }
 
 export function statLabel(value: string, locale: Locale): string {
@@ -292,6 +299,10 @@ function cloneCombatant(entry: BattleCombatant): BattleCombatant {
 
 function stringEntries(value: unknown[]): string[] {
   return value.filter((entry): entry is string => typeof entry === "string");
+}
+
+function stringValue(value: unknown): string | null {
+  return typeof value === "string" ? value : null;
 }
 
 function finiteNumber(value: unknown): number | null {
