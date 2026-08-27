@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from auto_ptu.career.service import CareerService
 from auto_ptu.career.store import CareerStore
-from auto_ptu.career.trainer_sprites import trainer_sprite_for_run
+from auto_ptu.career.trainer_sprites import DEFAULT_TRAINER_SPRITE, normalize_trainer_sprite, trainer_sprite_for_run
 
 
 def _service(tmp_path):
@@ -58,7 +58,26 @@ def test_character_creation_persists_trainer_sprite_and_allows_first_club_choice
     assert any(event.get("type") == "trainer.appearance_selected" and event.get("trainer_sprite") == "hilda" for event in signed["timeline"])
 
 
-def test_invalid_trainer_sprite_falls_back_to_default(tmp_path) -> None:
+def test_showdown_archive_sprite_slug_is_preserved(tmp_path) -> None:
+    service = _service(tmp_path)
+    created = service.create_run(
+        "archive-player",
+        {
+            "name": "Archive Trainer",
+            "region": "kanto",
+            "starter": "Bulbasaur",
+            "classes": ["Ace Trainer"],
+            "mode": "simple",
+            "trainer_sprite": "aarune",
+            "seed": 2027,
+        },
+    )
+
+    run = service.store.load_run(created["id"])
+    assert trainer_sprite_for_run(run) == "aarune"
+
+
+def test_unsafe_trainer_sprite_falls_back_to_default(tmp_path) -> None:
     service = _service(tmp_path)
     created = service.create_run(
         "qa-player",
@@ -68,10 +87,22 @@ def test_invalid_trainer_sprite_falls_back_to_default(tmp_path) -> None:
             "starter": "Bulbasaur",
             "classes": ["Ace Trainer"],
             "mode": "simple",
-            "trainer_sprite": "not-a-real-sprite",
+            "trainer_sprite": "../../not-a-sprite.png",
             "seed": 2026,
         },
     )
 
     run = service.store.load_run(created["id"])
     assert trainer_sprite_for_run(run) == "red"
+
+
+def test_trainer_sprite_ids_fail_closed_without_object_coercion() -> None:
+    class Hostile:
+        def __str__(self) -> str:
+            raise AssertionError("trainer sprite coercion must not run")
+
+    assert normalize_trainer_sprite(Hostile()) == DEFAULT_TRAINER_SPRITE
+    assert normalize_trainer_sprite(True) == DEFAULT_TRAINER_SPRITE
+    assert normalize_trainer_sprite("red.png") == DEFAULT_TRAINER_SPRITE
+    assert normalize_trainer_sprite("Juliana-S") == "juliana-s"
+    assert normalize_trainer_sprite("red-gen1main") == "red-gen1main"
