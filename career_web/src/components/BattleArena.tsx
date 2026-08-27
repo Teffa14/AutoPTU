@@ -52,12 +52,14 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
   if (!timers.current) timers.current = createBattleTimerRegistry();
   const screen = useRef({ width: 900, height: 520 });
   const [quality, setQuality] = useState<BattleVisualQuality>(() => detectBattleVisualQuality());
+  const [rendererFailed, setRendererFailed] = useState(false);
   const reducedMotion = prefersReducedMotion();
   const effectiveQuality: BattleVisualQuality = reducedMotion ? "light" : quality;
 
   function toggleQuality() {
     if (reducedMotion) return;
     const next: BattleVisualQuality = quality === "full" ? "light" : "full";
+    setRendererFailed(false);
     setQuality(next);
     persistBattleVisualQuality(next);
   }
@@ -71,8 +73,25 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
     async function start() {
       app = new Application();
       const full = effectiveQuality === "full";
-      await app.init({ resizeTo: mount, antialias: full, backgroundAlpha: 0, resolution: full ? Math.min(2, window.devicePixelRatio || 1) : 1 });
+      try {
+        await app.init({ resizeTo: mount, antialias: full, backgroundAlpha: 0, resolution: full ? Math.min(2, window.devicePixelRatio || 1) : 1 });
+      } catch {
+        try {
+          app?.destroy(true, { children: true, texture: false, textureSource: false });
+        } catch {
+          // Pixi can reject before a renderer exists; cleanup is best-effort.
+        }
+        app = null;
+        if (cancelled) return;
+        if (effectiveQuality === "full") {
+          setQuality("light");
+          return;
+        }
+        setRendererFailed(true);
+        return;
+      }
       if (cancelled || !app) return;
+      setRendererFailed(false);
       app.ticker.maxFPS = battleRenderMaxFps(effectiveQuality);
       appRef.current = app;
       mount.appendChild(app.canvas);
@@ -233,6 +252,9 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
   const qualityTitle = reducedMotion
     ? (locale === "es" ? "Los efectos ligeros están fijados por la preferencia de movimiento reducido del dispositivo." : "Light effects are locked by the device reduced-motion preference.")
     : (locale === "es" ? "Cambia sólo el costo visual del replay. Las reglas y el resultado no cambian." : "Changes replay rendering cost only. Rules and results do not change.");
+  const fallbackCopy = locale === "es"
+    ? "El renderer visual no está disponible. El estado táctico y el resultado del combate siguen accesibles."
+    : "The visual renderer is unavailable. Tactical state and the battle result remain accessible.";
 
   return (
     <div style={{ position: "relative" }}>
@@ -241,6 +263,7 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
       </button>
       <div className="arena-canvas-shell" data-visual-quality={effectiveQuality} role="img" aria-label={`${transcript.spec.home_club} versus ${transcript.spec.away_club}`}>
         <div ref={host} className="pixi-arena" aria-hidden="true" />
+        {rendererFailed ? <div className="battle-arena-fallback" role="status">{fallbackCopy}</div> : null}
         <div className="field-pokemon-layer" aria-hidden="true">
           {view.combatants.filter((combatant) => combatant.active !== false).map((combatant) => {
             const isActor = (view.event?.type === "move" || view.event?.type === "forced_movement" || view.event?.type === "maneuver") && combatant.id === view.actorId;
