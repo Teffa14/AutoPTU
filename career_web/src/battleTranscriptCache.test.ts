@@ -15,4 +15,11 @@ describe("battle transcript cache", () => {
     expect(apiSource).toContain("battleCache.delete(oldestKey)");
     expect(apiSource.match(/battleCache\.set\(key, transcript\)/g)).toHaveLength(1);
   });
+
+  it("coalesces concurrent loads of the same uncached battle", () => {
+    expect(apiSource).toContain("battleRequests");
+    expect(apiSource).toContain("battleRequests.get(key)");
+    expect(apiSource).toContain("battleRequests.set(key, requestPromise)");
+    expect(apiSource).toContain("battleRequests.delete(key)");
+  });
 });
