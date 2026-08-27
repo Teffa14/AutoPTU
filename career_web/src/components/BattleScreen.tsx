@@ -192,11 +192,14 @@ function CombatantHud({ combatant, team, club, locale, side, transcript, knowled
   const revealedMoves = side === "away" && knowledge
     ? (combatant.moves ?? []).filter((move) => opponentMoveIsRevealed(knowledge, combatant.id, move.name))
     : combatant.moves ?? [];
+  const visibleTeam = side === "away" && knowledge
+    ? team.filter((entry) => knowledge.seenCombatantIds.has(entry.id))
+    : team;
   const revealedTeamCount = side === "away" && knowledge
-    ? team.filter((entry) => knowledge.seenCombatantIds.has(entry.id)).length
+    ? visibleTeam.length
     : team.filter((entry) => entry.hp > 0).length;
   const teamLabel = side === "away" && knowledge
-    ? `${revealedTeamCount} / ${team.length} ${locale === "es" ? "Pokémon rivales revelados" : "opponent Pokémon revealed"}`
+    ? `${revealedTeamCount} ${locale === "es" ? (revealedTeamCount === 1 ? "Pokémon rival revelado" : "Pokémon rivales revelados") : (revealedTeamCount === 1 ? "opponent Pokémon revealed" : "opponent Pokémon revealed")}`
     : `${revealedTeamCount} / ${team.length} ${locale === "es" ? "Pokémon disponibles" : "Pokémon available"}`;
   return (
     <aside className={`combatant-hud ${side} ${combatant.hp <= 0 ? "fainted" : ""}`}>
@@ -211,12 +214,7 @@ function CombatantHud({ combatant, team, club, locale, side, transcript, knowled
         {revealedAbilities.map((ability) => <b key={ability} title={locale === "es" ? "Habilidad revelada por un evento del combate" : "Ability revealed by a battle event"}>{ability}</b>)}
       </div>
       <div className="team-rack" aria-label={teamLabel}>
-        {team.map((entry) => {
-          if (side === "away" && knowledge && !knowledge.seenCombatantIds.has(entry.id)) {
-            return <span key={entry.id} className="unknown" title={locale === "es" ? "Pokémon rival no revelado" : "Unrevealed opponent Pokémon"}>?</span>;
-          }
-          return <span key={entry.id} className={`${entry.hp <= 0 ? "fainted" : ""} ${entry.id === combatant.id ? "active" : ""}`} title={`${entry.species} · ${entry.hp}/${entry.max_hp}`}><PokemonSprite name={entry.species} className="team-sprite" /></span>;
-        })}
+        {visibleTeam.map((entry) => <span key={entry.id} className={`${entry.hp <= 0 ? "fainted" : ""} ${entry.id === combatant.id ? "active" : ""}`} title={`${entry.species} · ${entry.hp}/${entry.max_hp}`}><PokemonSprite name={entry.species} className="team-sprite" /></span>)}
       </div>
       {side === "home" ? <dl className="battle-stats">{(["atk", "def", "spatk", "spdef", "spd"] as const).map((key) => {
         const base = stats[key];
