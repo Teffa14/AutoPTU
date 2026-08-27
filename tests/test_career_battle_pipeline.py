@@ -97,3 +97,22 @@ def test_finalize_season_is_safe_to_retry_after_completion(tmp_path: Path) -> No
     assert second["revision"] == first["revision"]
     assert second["season_number"] == first["season_number"] == 2
     assert second["totals"] == first["totals"]
+
+
+def test_resolve_prepared_season_rejects_duplicate_battle_transcripts() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="duplicate-transcript-user",
+        name="Mara",
+        region="kanto",
+        starter="Rattata",
+        classes=["Ace Trainer"],
+        seed=820,
+    )
+    option_id = run.season.decision.options[0].id
+    run, specs = engine.prepare_season(run, option_id=option_id)
+    transcripts = [fake_battle(spec) for spec in specs]
+    transcripts.append(fake_battle(specs[-1]))
+
+    with pytest.raises(ValueError, match="duplicate"):
+        engine.resolve_prepared_season(run, transcripts)
