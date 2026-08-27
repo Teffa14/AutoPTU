@@ -1,0 +1,25 @@
+.arena-wrap {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* BattleArena owns an absolute canvas and Pokemon layer. After the trainer strip
+   moved onto the field, its wrapper lost the old sibling rule that gave it
+   height. Anchor that wrapper to the arena so Pixi and the DOM sprites receive
+   the full playable surface instead of a zero-height containing block. */
+.arena-wrap > div:has(> .arena-canvas-shell) {
+  position: absolute !important;
+  inset: 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+.arena-wrap > div:has(> .arena-canvas-shell) > .arena-canvas-shell {
+  position: absolute;
+  inset: 0;
+}
+
+.arena-wrap > .battle-trainer-strip {
+  z-index: 4;
+}
