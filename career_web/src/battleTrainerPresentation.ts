@@ -4,7 +4,6 @@ import { DEFAULT_TRAINER_SPRITE, trainerSpriteForRun } from "./trainerSprites";
 export type BattleTrainerCard = {
   name: string;
   sprite: string;
-  line: string;
   progression?: string;
 };
 
@@ -24,7 +23,6 @@ export type BattleTrainerPresentation = {
 };
 
 type RivalIdentity = { name: string; sprite: string };
-type BattleResultPerspective = "win" | "loss" | "draw";
 
 const REGIONAL_RIVALS: Record<string, RivalIdentity[]> = {
   kanto: [
@@ -85,7 +83,7 @@ export function battleTrainerPresentation(
   locale: Locale,
   transcript: BattleTranscript,
   run?: CareerRun | null,
-  complete = false,
+  _complete = false,
 ): BattleTrainerPresentation {
   const region = normalizeRegionIdentity(transcript.spec.region);
   const awayClub = String(transcript.spec.away_club || "Opponent");
@@ -94,23 +92,15 @@ export function battleTrainerPresentation(
   const rival = pool[stableIndex(`${region}:${normalizedAwayClub}`, pool.length)];
   const rivalMemory = formalRivalMemory(run, awayClub, transcript.spec.season);
   const meeting = rivalMemory.previousMeetings + 1;
-  const result = battleResultPerspective(transcript.winner_team);
-  const difficulty = transcript.spec.difficulty_label ?? "even";
 
   return {
     home: {
       name: run?.build.name || transcript.spec.home_club || (locale === "es" ? "Entrenador" : "Trainer"),
       sprite: run ? trainerSpriteForRun(run) : DEFAULT_TRAINER_SPRITE,
-      line: complete
-        ? homeResultLine(locale, result)
-        : homePlanLine(locale, difficulty),
     },
     away: {
       name: rival.name,
       sprite: rival.sprite,
-      line: complete
-        ? rivalResultLine(locale, result, rivalMemory)
-        : rivalOpeningLine(locale, rivalMemory),
       progression: rivalProgressionLine(locale, transcript),
     },
     meeting,
@@ -163,12 +153,6 @@ export function previousMeetings(
   beforeSeason?: number,
 ): number {
   return formalRivalMemory(run, awayClub, beforeSeason).previousMeetings;
-}
-
-function battleResultPerspective(winnerTeam: unknown): BattleResultPerspective {
-  if (winnerTeam === "career-home") return "win";
-  if (winnerTeam === "career-away") return "loss";
-  return "draw";
 }
 
 function normalizeRegionIdentity(value: unknown): string {
@@ -231,60 +215,4 @@ function rivalProgressionLine(locale: Locale, transcript: BattleTranscript): str
     stage ?? "",
   ].filter(Boolean);
   return parts.join(" · ");
-}
-
-function homePlanLine(locale: Locale, difficulty: "favored" | "even" | "dangerous"): string {
-  if (locale === "es") {
-    if (difficulty === "dangerous") return "Primer turno: información. Después aceleramos.";
-    if (difficulty === "favored") return "Nada de relajarse. Terminamos el trabajo.";
-    return "No adivinen. Lean y ejecuten.";
-  }
-  if (difficulty === "dangerous") return "First turn: information. Then we accelerate.";
-  if (difficulty === "favored") return "No relaxing. Finish the job.";
-  return "Do not guess. Read and execute.";
-}
-
-function rivalOpeningLine(locale: Locale, memory: RivalMemory): string {
-  if (locale === "es") {
-    if (memory.previousMeetings >= 5) return "Ya tenemos historia. Hoy no alcanza con repetir lo que funcionó antes.";
-    if ((memory.seasonsSinceLastMeeting ?? 0) >= 3) return "Pasó tiempo. Quiero ver qué cambió desde la última vez.";
-    if (memory.previousMeetings > 0) return "Ya vi tu plan una vez. Mostrame qué cambiaste.";
-    return "Quiero ver cómo resolvés cuando el plan se rompe.";
-  }
-  if (memory.previousMeetings >= 5) return "We have history now. Repeating what worked before will not be enough.";
-  if ((memory.seasonsSinceLastMeeting ?? 0) >= 3) return "It has been a while. Show me what changed since last time.";
-  if (memory.previousMeetings > 0) return "I have seen your plan before. Show me what changed.";
-  return "I want to see what you do when the plan breaks.";
-}
-
-function homeResultLine(locale: Locale, result: BattleResultPerspective): string {
-  if (locale === "es") {
-    if (result === "win") return "Listo. Esto queda en el registro.";
-    if (result === "loss") return "Anoten dónde nos abrió. Lo trabajamos.";
-    return "Empate. Revisamos dónde se inclinó y volvemos mejor.";
-  }
-  if (result === "win") return "Done. This goes in the record.";
-  if (result === "loss") return "Mark where they opened us up. We work on it.";
-  return "Draw. Review where it tilted and come back better.";
-}
-
-function rivalResultLine(locale: Locale, result: BattleResultPerspective, memory: RivalMemory): string {
-  if (locale === "es") {
-    if (memory.previousMeetings >= 5) {
-      if (result === "win") return "Otra para vos. El registro sigue abierto.";
-      if (result === "loss") return "Otra para mí. El registro sigue abierto.";
-      return "Empate. El registro sigue abierto.";
-    }
-    if (result === "win") return "Bien. La próxima vengo con otra respuesta.";
-    if (result === "loss") return "La próxima vas a tener que cambiar algo.";
-    return "Empate. La próxima los dos necesitamos otra respuesta.";
-  }
-  if (memory.previousMeetings >= 5) {
-    if (result === "win") return "Another one for you. The record stays open.";
-    if (result === "loss") return "Another one for me. The record stays open.";
-    return "Draw. The record stays open.";
-  }
-  if (result === "win") return "Good. Next time I bring a different answer.";
-  if (result === "loss") return "Next time you will have to change something.";
-  return "Draw. Next time we both need a different answer.";
 }
