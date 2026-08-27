@@ -16,31 +16,26 @@ export function BattleTrainerStrip({ transcript, run, locale, complete }: {
         club={transcript.spec.home_club}
         name={presentation.home.name}
         sprite={presentation.home.sprite}
-        line={presentation.home.line}
       />
       <div className="battle-trainer-center">
         <small>{presentation.meetingLabel}</small>
-        <strong>VS</strong>
-        <span>{locale === "es" ? "historial formal" : "formal record"}</span>
       </div>
       <TrainerSide
         align="right"
         club={transcript.spec.away_club}
         name={presentation.away.name}
         sprite={presentation.away.sprite}
-        line={presentation.away.line}
         progression={presentation.away.progression}
       />
     </section>
   );
 }
 
-function TrainerSide({ align, club, name, sprite, line, progression }: {
+function TrainerSide({ align, club, name, sprite, progression }: {
   align: "left" | "right";
   club: string;
   name: string;
   sprite: string;
-  line: string;
   progression?: string;
 }) {
   return (
@@ -58,7 +53,6 @@ function TrainerSide({ align, club, name, sprite, line, progression }: {
         <small>{club}</small>
         <strong>{name}</strong>
         {progression ? <small className="battle-trainer-progression">{progression}</small> : null}
-        <q>{line}</q>
       </div>
     </div>
   );
