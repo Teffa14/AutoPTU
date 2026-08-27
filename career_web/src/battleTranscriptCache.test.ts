@@ -13,6 +13,6 @@ describe("battle transcript cache", () => {
     expect(apiSource).toContain("MAX_BATTLE_CACHE_ENTRIES");
     expect(apiSource).toContain("rememberBattleTranscript");
     expect(apiSource).toContain("battleCache.delete(oldestKey)");
-    expect(apiSource).not.toContain("battleCache.set(key, transcript)");
+    expect(apiSource.match(/battleCache\.set\(key, transcript\)/g)).toHaveLength(1);
   });
 });
