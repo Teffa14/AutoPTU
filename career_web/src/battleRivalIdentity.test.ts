@@ -88,6 +88,7 @@ describe("battle rival identity persistence", () => {
       spec: { ...baseTranscript.spec, featured: true, season: 3 },
     } as BattleTranscript;
     const run = {
+      build: { name: "Ari", region: "kanto", starter: "Bulbasaur", classes: [], pokeballs: 10 },
       timeline: [
         { type: "season.completed", season: 1, opponents: ["Cerulean Current"] },
         { type: "season.completed", season: 2, opponents: ["Cerulean Current"] },
