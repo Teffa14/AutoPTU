@@ -1,4 +1,5 @@
 from datetime import date
+from pathlib import Path
 
 from auto_ptu.career.catalogs import REGIONS
 from auto_ptu.career.engine import CareerEngine
@@ -33,3 +34,16 @@ def test_ranked_leaderboard_preserves_the_winning_career_trainer_name(tmp_path) 
 
     payload = CareerService(store=store, engine=engine).leaderboard(date(2026, 8, 27), "simple")
     assert payload["entries"][0]["handle"] == "Nemona Prime"
+
+
+def test_postgres_leaderboard_uses_materialized_public_identity() -> None:
+    root = Path(__file__).resolve().parents[1]
+    projection = (root / "auto_ptu/career/leaderboard_names.py").read_text(encoding="utf-8")
+    migration = (root / "supabase/migrations/20260827154400_leaderboard_trainer_name_projection.sql").read_text(encoding="utf-8")
+
+    postgres_section = projection.split("def _postgres_leaderboard", 1)[1].split("def install_leaderboard_name_fix", 1)[0]
+    assert "select e.handle, e.score, e.achievements, e.completed_at" in postgres_section
+    assert "private.competitive_results" not in postgres_section
+    assert "create trigger leaderboard_trainer_name_projection" in migration
+    assert "cr.state #>> '{build,name}'" in migration
+    assert "before insert or update of score" in migration.lower()
