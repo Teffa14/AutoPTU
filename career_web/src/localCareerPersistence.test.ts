@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 import { loadBattleCheckpoint, loadLastLocalRunId, removeLocalRun, saveLocalRun } from "./localCareer";
+import apiSource from "./api.ts?raw";
 import localCareerSource from "./localCareer.ts?raw";
 import homeScreenSource from "./components/HomeScreen.tsx?raw";
 
@@ -100,6 +101,15 @@ describe("local career persistence boundaries", () => {
     } as never);
 
     expect(loadBattleCheckpoint(runId)?.season?.status).toBe("decision");
+  });
+
+  it("releases the pre-battle rollback checkpoint after a season finalizes successfully", () => {
+    const finalizeStart = apiSource.indexOf("async function finalizeSeason");
+    const finalizeEnd = apiSource.indexOf("\nasync function", finalizeStart + 1);
+    const finalizeSource = apiSource.slice(finalizeStart, finalizeEnd === -1 ? undefined : finalizeEnd);
+
+    expect(finalizeStart).toBeGreaterThan(-1);
+    expect(finalizeSource).toContain("clearBattleCheckpoint(runId)");
   });
 
   it("removes the run, its automatic training plan, and matching resume pointer together", () => {
