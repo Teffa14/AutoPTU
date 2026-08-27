@@ -37,12 +37,15 @@ export function timelineRenderState(run: unknown): TimelineRenderState {
     ? raw.pokemon.map(asRecord).filter((entry) => Object.keys(entry).length > 0)
     : [];
   const achievements = Array.isArray(raw.achievements)
-    ? raw.achievements.map((entry) => String(entry).trim()).filter(Boolean)
+    ? raw.achievements.flatMap((entry) => {
+      const label = finiteString(entry);
+      return label ? [label] : [];
+    })
     : [];
   const totals = asRecord(raw.totals);
   return {
-    trainerName: String(build.name ?? "").trim(),
-    starter: String(build.starter ?? "").trim(),
+    trainerName: finiteString(build.name),
+    starter: finiteString(build.starter),
     timeline,
     pokemonCount: pokemon.length,
     evolutions: pokemon.reduce(
@@ -63,11 +66,11 @@ export function timelineSeasonDecisions(entry: Record<string, unknown>): Timelin
   if (Array.isArray(entry.decisions)) {
     return entry.decisions.flatMap((value) => {
       const decision = asRecord(value);
-      const label = String(decision.label ?? "").trim();
+      const label = finiteString(decision.label);
       return label ? [{ label, effects: asRecord(decision.effects) }] : [];
     });
   }
-  const label = String(entry.decision ?? "").trim();
+  const label = finiteString(entry.decision);
   return label ? [{ label, effects: asRecord(entry.decision_effects) }] : [];
 }
 
@@ -265,6 +268,7 @@ function finiteNumber(value: unknown): number {
   const number = Number(value);
   return Number.isFinite(number) ? number : 0;
 }
+function finiteString(value: unknown): string { return typeof value === "string" ? value.trim() : ""; }
 function asRecord(value: unknown): Record<string, unknown> { return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {}; }
 function parseLegacyStart(label: string): { trainer: string; club: string; starter: string } | null {
   const match = label.match(/^(.+) joined (.+) with (.+)\.$/);
