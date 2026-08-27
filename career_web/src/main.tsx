@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { App } from "./App";
 import "./styles.css";
 import "./components/battle-trainer-strip.css";
+import "./components/battle-arena-visibility.css";
 import "./components/profile-longevity.css";
 import "./components/career-ux-refresh.css";
 
