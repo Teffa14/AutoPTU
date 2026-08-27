@@ -46,4 +46,47 @@ describe("decision outcome presentation", () => {
     const valid = { option_id: "training:3:1:2", label: "Doblar las sesiones", effects: { development: 3 } };
     expect(normalizedDecisionHistory([null, "junk", [], valid])).toEqual([valid]);
   });
+
+  it("does not coerce hostile decision identity fields into visible history", () => {
+    const hostile = {
+      toString() {
+        throw new Error("decision identity coercion should not run");
+      },
+    };
+
+    expect(() => decisionOutcomeView({
+      option_id: hostile as unknown as string,
+      label: hostile as unknown as string,
+      effects: {},
+    }, "es")).not.toThrow();
+
+    const view = decisionOutcomeView({
+      option_id: hostile as unknown as string,
+      label: hostile as unknown as string,
+      effects: {},
+    }, "es");
+    expect(view.family).toBe("decision");
+    expect(view.choice).toBe("Decisión registrada");
+  });
+
+  it("ignores malformed rewards instead of rendering or crashing on them", () => {
+    expect(() => decisionOutcomeView({
+      option_id: "capture:2:0:1",
+      label: "Ruta segura",
+      effects: {
+        scouting: 1,
+        rewards: [null, true, { type: "pokemon", species: { name: "Fake" } }],
+      },
+    }, "es")).not.toThrow();
+
+    const view = decisionOutcomeView({
+      option_id: "capture:2:0:1",
+      label: "Ruta segura",
+      effects: {
+        scouting: 1,
+        rewards: [null, true, { type: "pokemon", species: { name: "Fake" } }],
+      },
+    }, "es");
+    expect(view.changes).toEqual(["Scouting +1"]);
+  });
 });
