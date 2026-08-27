@@ -99,6 +99,7 @@ export function battleTrainerPresentation(
     home: {
       name: run?.build.name || transcript.spec.home_club || (locale === "es" ? "Entrenador" : "Trainer"),
       sprite: run ? trainerSpriteForRun(run) : DEFAULT_TRAINER_SPRITE,
+      progression: playerProgressionLine(locale, transcript, run),
     },
     away: {
       name: rival.name,
@@ -220,20 +221,23 @@ function meetingLabel(locale: Locale, meeting: number, memory: RivalMemory): str
   return locale === "es" ? `CRUCE #${meeting}` : `MEETING #${meeting}`;
 }
 
+function playerProgressionLine(locale: Locale, transcript: BattleTranscript, run?: CareerRun | null): string {
+  const seasonValue = authoritativePositiveNumber(transcript.spec.season);
+  const season = seasonValue === null ? null : Math.floor(seasonValue);
+  const averageLevel = teamAverageLevel(transcript.spec.home_team_levels, transcript.spec.level);
+  const reputation = authoritativeNonNegativeNumber(run?.reputation);
+  const parts = [
+    season === null ? "" : `${locale === "es" ? "T" : "S"}${season}`,
+    averageLevel === null ? "" : `${locale === "es" ? "NIVEL MEDIO" : "AVG LEVEL"} ${averageLevel}`,
+    reputation === null ? "" : `${locale === "es" ? "REPUTACIÓN" : "REPUTATION"} ${Math.floor(reputation)}`,
+  ].filter(Boolean);
+  return parts.join(" · ");
+}
+
 function rivalProgressionLine(locale: Locale, transcript: BattleTranscript): string {
   const seasonValue = authoritativePositiveNumber(transcript.spec.season);
   const season = seasonValue === null ? null : Math.floor(seasonValue);
-  const levels = Array.isArray(transcript.spec.away_team_levels)
-    ? transcript.spec.away_team_levels
-      .map(authoritativePositiveNumber)
-      .filter((value): value is number => value !== null)
-    : [];
-  const fallbackLevel = authoritativePositiveNumber(transcript.spec.level);
-  const averageLevel = levels.length
-    ? Math.round(levels.reduce((total, value) => total + value, 0) / levels.length)
-    : fallbackLevel === null
-      ? null
-      : Math.round(fallbackLevel);
+  const averageLevel = teamAverageLevel(transcript.spec.away_team_levels, transcript.spec.level);
   const stage = season === null
     ? null
     : season >= 8
@@ -247,4 +251,15 @@ function rivalProgressionLine(locale: Locale, transcript: BattleTranscript): str
     stage ?? "",
   ].filter(Boolean);
   return parts.join(" · ");
+}
+
+function teamAverageLevel(rawLevels: unknown, fallback: unknown): number | null {
+  const levels = Array.isArray(rawLevels)
+    ? rawLevels
+      .map(authoritativePositiveNumber)
+      .filter((value): value is number => value !== null)
+    : [];
+  if (levels.length) return Math.round(levels.reduce((total, value) => total + value, 0) / levels.length);
+  const fallbackLevel = authoritativePositiveNumber(fallback);
+  return fallbackLevel === null ? null : Math.round(fallbackLevel);
 }
