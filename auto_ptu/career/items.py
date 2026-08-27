@@ -354,7 +354,7 @@ def use_item(run: CareerRun, item: str, *, pokemon_id: str = "", stat: str = "")
 def complete_training(run: CareerRun, method: str, pokemon_id: str) -> Dict[str, Any]:
     if run.status != "active" or run.season is None or run.season.status != "decision":
         raise ValueError("Training is only available before the season calendar is locked.")
-    capacity = 1 if run.mode == "simple" else max(1, len(run.active_roster))
+    capacity = max(1, len(run.active_roster))
     completed_ids = run.season.training_completed_ids
     if run.season.training_completed or len(completed_ids) >= capacity:
         raise ValueError("The training session for this season is already complete.")
