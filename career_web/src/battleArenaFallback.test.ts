@@ -25,4 +25,11 @@ describe("battle renderer fallback", () => {
     expect(battleArena).toContain("battle-arena-fallback");
     expect(battleArena).toContain("rendererFailed");
   });
+
+  it("rechecks the raster safety budget when the live viewport changes", () => {
+    expect(battleArena).toContain('window.addEventListener("resize"');
+    expect(battleArena).toContain('window.removeEventListener("resize"');
+    expect(battleArena).toContain("constrainRequestedBattleVisualQuality(\"full\"");
+    expect(battleArena).toContain('persistBattleVisualQuality("light")');
+  });
 });
