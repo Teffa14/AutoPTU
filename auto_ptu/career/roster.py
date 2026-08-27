@@ -13,6 +13,7 @@ TRAINING_KIT_WEAR = 12
 BASE_ACTIVE_SEASON_WEAR = 2
 VETERAN_WEAR_START_SEASON = 9
 PC_AGING_START_SEASON = 12
+SQUAD_DEVELOPMENT_GAP = 3
 
 
 def initialize_roster(run: CareerRun, stable_seed: int) -> bool:
@@ -74,7 +75,7 @@ def capture_species(run: CareerRun, species: str, *, source: str, spend_ball: bo
         return None
     if spend_ball and run.build.pokeballs <= 0:
         return None
-    pokemon = _pokemon(run, canonical, False, _base_level(run))
+    pokemon = _pokemon(run, canonical, False, _acquisition_level(run))
     run.pokemon.append(pokemon)
     if spend_ball:
         run.build.pokeballs -= 1
@@ -252,10 +253,8 @@ def progress_after_season(
         if played:
             pokemon.level += 6 + min(2, played // 3)
             used.append(pokemon.species)
-        elif pokemon.id in active_ids:
-            pokemon.level += 3
         else:
-            pokemon.level += 1
+            pokemon.level += 3
         pokemon.level = min(career_level_cap(run), pokemon.level)
         evolutions.extend(_evolve_ready(run, pokemon))
         _refresh_identity(run, pokemon)
@@ -274,6 +273,8 @@ def progress_after_season(
                 "retired": bool(retired),
             })
 
+    squad_updates, squad_evolutions = _apply_squad_development_floor(run)
+    evolutions.extend(squad_evolutions)
     partner = next((entry for entry in run.pokemon if entry.is_partner), None)
     if partner:
         run.build.starter = partner.species
@@ -286,7 +287,12 @@ def progress_after_season(
             "label": "Season workload reduced competitive career health for the roster.",
         })
     _sync(run)
-    return {"pokemon_used": used, "evolutions": evolutions, "pokemon_longevity": longevity}
+    return {
+        "pokemon_used": used,
+        "evolutions": evolutions,
+        "pokemon_longevity": longevity,
+        "squad_development": squad_updates,
+    }
 
 
 def _pokemon(run: CareerRun, species: str, partner: bool, level: int) -> CareerPokemon:
@@ -309,6 +315,52 @@ def _pokemon(run: CareerRun, species: str, partner: bool, level: int) -> CareerP
 
 def _base_level(run: CareerRun) -> int:
     return min(career_level_cap(run), LEAGUES[run.league].min_level + min(15, max(0, run.season_number - 1)))
+
+
+def _acquisition_level(run: CareerRun) -> int:
+    """Return the club development floor for a new Pokemon.
+
+    A signing or capture should be usable in the current competitive environment
+    without erasing the advantage earned by Pokemon that actually play matches.
+    The active squad therefore sets the reference and newcomers may trail it by
+    at most SQUAD_DEVELOPMENT_GAP levels.
+    """
+    eligible = [entry for entry in run.pokemon if entry.status != "retired" and entry.career_health > 0]
+    active_ids = set(run.active_roster)
+    reference = [entry.level for entry in eligible if entry.id in active_ids]
+    if not reference:
+        reference = [entry.level for entry in eligible]
+    squad_floor = round(sum(reference) / len(reference)) - SQUAD_DEVELOPMENT_GAP if reference else 0
+    return min(career_level_cap(run), max(_base_level(run), squad_floor))
+
+
+def _apply_squad_development_floor(run: CareerRun) -> tuple[List[dict], List[dict]]:
+    floor = _acquisition_level(run)
+    updates: List[dict] = []
+    evolutions: List[dict] = []
+    for pokemon in run.pokemon:
+        if pokemon.status == "retired" or pokemon.career_health <= 0 or pokemon.level >= floor:
+            continue
+        before = pokemon.level
+        pokemon.level = floor
+        evolutions.extend(_evolve_ready(run, pokemon))
+        _refresh_identity(run, pokemon)
+        updates.append({
+            "pokemon_id": pokemon.id,
+            "species": pokemon.species,
+            "from_level": before,
+            "to_level": pokemon.level,
+        })
+    if updates:
+        run.timeline.append({
+            "type": "pokemon.squad_development_completed",
+            "season": run.season_number,
+            "age": run.age,
+            "floor_level": floor,
+            "updates": updates,
+            "label": f"Club-wide season training brought the available squad to at least level {floor}.",
+        })
+    return updates, evolutions
 
 
 def career_level_cap(run: CareerRun) -> int:
