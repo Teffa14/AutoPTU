@@ -64,7 +64,7 @@ describe("chooseBattleVisualQuality", () => {
     })).toBe("full");
   });
 
-  it("keeps an explicit full preference above the automatic raster budget", () => {
+  it("forces light mode above the raster safety budget even when full was saved", () => {
     expect(chooseBattleVisualQuality({
       storedPreference: "full",
       hardwareConcurrency: 12,
@@ -72,7 +72,7 @@ describe("chooseBattleVisualQuality", () => {
       viewportWidth: 3840,
       viewportHeight: 2160,
       devicePixelRatio: 2,
-    })).toBe("full");
+    })).toBe("light");
   });
 
   it("fails closed for malformed host hardware signals without invoking coercion", () => {
@@ -92,6 +92,7 @@ describe("battle raster budget", () => {
   it("matches the capped Pixi resolution used by full mode", () => {
     expect(battleEstimatedRenderPixels({ viewportWidth: 1920, viewportHeight: 1080, devicePixelRatio: 3 })).toBe(8_294_400);
     expect(battleEstimatedRenderPixels({ viewportWidth: 2560, viewportHeight: 1440, devicePixelRatio: 2 })).toBe(14_745_600);
+    expect(battleEstimatedRenderPixels({ viewportWidth: 3840, viewportHeight: 2160, devicePixelRatio: 2 })).toBe(33_177_600);
     expect(BATTLE_FULL_RENDER_PIXEL_BUDGET).toBe(12_000_000);
   });
 
