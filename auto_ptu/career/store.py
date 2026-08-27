@@ -124,7 +124,7 @@ class CareerStore:
                 challenge_id=challenge_id,
                 mode=mode,
                 player_id=run.player_id,
-                handle=run.build.name,
+                handle=f"Trainer-{run.player_id[:8]}",
                 score=run.score,
                 achievements=list(run.achievements),
                 run_id=run.id,
