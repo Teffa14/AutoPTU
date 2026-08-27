@@ -14,38 +14,47 @@ const trainerComponent = readFileSync(
 
 
 describe("battle trainer layout", () => {
-  it("keeps trainer presentation in a dedicated lane above the arena host", () => {
+  it("lays trainers over the arena instead of reserving a broadcast strip", () => {
     expect(trainerComponent).toContain('className="battle-trainer-strip"');
-    expect(trainerCss).toContain(".battle-trainer-strip + div");
-    expect(trainerCss).toContain("inset: 5.35rem 0 0 !important");
+    expect(trainerCss).toContain("inset: 0;");
+    expect(trainerCss).toContain("pointer-events: none");
+    expect(trainerCss).not.toContain(".battle-trainer-strip + div");
   });
 
-  it("compacts the trainer lane on phones without restoring overlap", () => {
-    expect(trainerCss).toContain("@media (max-width: 699px)");
-    expect(trainerCss).toContain("inset: 3.85rem 0 0 !important");
-    expect(trainerCss).toContain(".battle-trainer-copy q,");
-    expect(trainerCss).toContain("display: none");
+  it("anchors home and away trainers to opposite league-field platforms", () => {
+    expect(trainerCss).toContain(".battle-trainer-side.left");
+    expect(trainerCss).toContain("bottom: clamp(1.4rem, 8%, 4.8rem)");
+    expect(trainerCss).toContain(".battle-trainer-side.right");
+    expect(trainerCss).toContain("top: clamp(1.3rem, 8%, 4.6rem)");
+    expect(trainerCss).toContain(".battle-trainer-sprite-frame::after");
+    expect(trainerCss).toContain("rotateX(54deg)");
   });
 
-  it("keeps authoritative rival progression visible on compact battle layouts", () => {
+  it("does not render scripted trainer quotes", () => {
+    expect(trainerComponent).not.toContain("<q>");
+    expect(trainerComponent).not.toContain("line={");
+    expect(trainerCss).not.toContain("battle-trainer-copy q");
+  });
+
+  it("preserves formal rival progression while dropping secondary copy on compact screens", () => {
     expect(trainerComponent).toContain('className="battle-trainer-progression"');
+    expect(trainerCss).toContain("@media (max-width: 699px)");
     expect(trainerCss).toContain(".battle-trainer-copy small:not(.battle-trainer-progression)");
-    expect(trainerCss).toContain(".battle-trainer-progression {\n    display: block;");
     expect(trainerCss).toContain("@media (max-width: 430px)");
-    expect(trainerCss).toContain("max-width: 5.25rem");
+    expect(trainerCss).toContain(".battle-trainer-progression {\n    display: none;");
   });
 
-  it("compacts the trainer lane on short landscape viewports", () => {
+  it("compacts trainer presence on short landscape viewports", () => {
     expect(trainerCss).toContain("@media (max-height: 500px)");
-    expect(trainerCss).toContain("height: 2.8rem");
-    expect(trainerCss).toContain("inset: 3.35rem 0 0 !important");
-    expect(trainerCss).toContain("width: 2.1rem");
-    expect(trainerCss).toContain("height: 2.1rem");
+    expect(trainerCss).toContain("bottom: .35rem");
+    expect(trainerCss).toContain("top: .35rem");
+    expect(trainerCss).toContain("width: 2.8rem");
+    expect(trainerCss).toContain("height: 3.4rem");
   });
 
   it("keeps trainer sprites bounded instead of allowing intrinsic image size", () => {
-    expect(trainerCss).toContain("width: 3.45rem");
-    expect(trainerCss).toContain("height: 3.45rem");
+    expect(trainerCss).toContain("width: clamp(4.2rem, 9vw, 5.8rem)");
+    expect(trainerCss).toContain("height: clamp(5.1rem, 11vw, 7rem)");
     expect(trainerCss).toContain("object-fit: contain");
   });
 });
