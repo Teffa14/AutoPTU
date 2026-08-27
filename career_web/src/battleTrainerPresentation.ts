@@ -74,6 +74,13 @@ const REGIONAL_RIVALS: Record<string, RivalIdentity[]> = {
   ],
 };
 
+const EMPTY_RIVAL_MEMORY: RivalMemory = {
+  previousMeetings: 0,
+  firstSeason: null,
+  lastSeason: null,
+  seasonsSinceLastMeeting: null,
+};
+
 export function battleTrainerPresentation(
   locale: Locale,
   transcript: BattleTranscript,
@@ -117,9 +124,17 @@ export function formalRivalMemory(
   awayClub: string,
   beforeSeason?: number,
 ): RivalMemory {
-  if (!run) return { previousMeetings: 0, firstSeason: null, lastSeason: null, seasonsSinceLastMeeting: null };
+  if (!run) return EMPTY_RIVAL_MEMORY;
   const normalizedAwayClub = normalizeClubIdentity(awayClub);
-  if (!normalizedAwayClub) return { previousMeetings: 0, firstSeason: null, lastSeason: null, seasonsSinceLastMeeting: null };
+  if (!normalizedAwayClub) return EMPTY_RIVAL_MEMORY;
+
+  let authoritativeBeforeSeason: number | undefined;
+  if (beforeSeason !== undefined) {
+    const parsedBeforeSeason = authoritativePositiveNumber(beforeSeason);
+    if (parsedBeforeSeason === null) return EMPTY_RIVAL_MEMORY;
+    authoritativeBeforeSeason = parsedBeforeSeason;
+  }
+
   let previousMeetings = 0;
   let firstSeason: number | null = null;
   let lastSeason: number | null = null;
@@ -129,15 +144,15 @@ export function formalRivalMemory(
     if (event.type !== "season.completed" || !Array.isArray(event.opponents)) continue;
     const eventSeason = authoritativePositiveNumber(event.season);
     if (eventSeason === null) continue;
-    if (beforeSeason !== undefined && eventSeason >= beforeSeason) continue;
+    if (authoritativeBeforeSeason !== undefined && eventSeason >= authoritativeBeforeSeason) continue;
     const meetings = event.opponents.filter((opponent) => normalizeClubIdentity(opponent) === normalizedAwayClub).length;
     if (!meetings) continue;
     previousMeetings += meetings;
     firstSeason = firstSeason === null ? eventSeason : Math.min(firstSeason, eventSeason);
     lastSeason = lastSeason === null ? eventSeason : Math.max(lastSeason, eventSeason);
   }
-  const seasonsSinceLastMeeting = beforeSeason !== undefined && lastSeason !== null
-    ? Math.max(0, beforeSeason - lastSeason)
+  const seasonsSinceLastMeeting = authoritativeBeforeSeason !== undefined && lastSeason !== null
+    ? Math.max(0, authoritativeBeforeSeason - lastSeason)
     : null;
   return { previousMeetings, firstSeason, lastSeason, seasonsSinceLastMeeting };
 }
