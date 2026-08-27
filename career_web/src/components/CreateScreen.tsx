@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { careerApi } from "../api";
 import { t } from "../i18n";
-import { DEFAULT_TRAINER_SPRITE, trainerSpriteOptions } from "../trainerSprites";
+import { DEFAULT_TRAINER_SPRITE, trainerSpriteOptions, withTrainerSpriteSelection } from "../trainerSprites";
 import type { CareerCatalog, CareerMode, CareerRun, Locale } from "../types";
 import { StarterPicker } from "./StarterPicker";
 import { TrainerSpritePicker } from "./TrainerSpritePicker";
@@ -39,8 +39,9 @@ export function CreateScreen({ locale, onCreated }: Props) {
     setError("");
     try {
       const created = await careerApi.create({ name, region, starter, classes: [trainerClass], mode, locale, trainer_sprite: trainerSprite });
-      localStorage.setItem(`career-trainer-sprite:${created.build.name.trim().toLocaleLowerCase()}`, trainerSprite);
-      onCreated(created);
+      const selectedRun = withTrainerSpriteSelection(created, trainerSprite);
+      localStorage.setItem(`career-trainer-sprite:${selectedRun.build.name.trim().toLocaleLowerCase()}`, trainerSprite);
+      onCreated(selectedRun);
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : String(reason));
     } finally {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { DEFAULT_TRAINER_SPRITE, trainerSpriteForRun, trainerSpriteOptions, trainerSpriteStorageEntry } from "./trainerSprites";
+import { DEFAULT_TRAINER_SPRITE, trainerSpriteForRun, trainerSpriteOptions, trainerSpriteStorageEntry, withTrainerSpriteSelection } from "./trainerSprites";
 import type { CareerRun } from "./types";
 
 describe("trainer sprite persistence", () => {
@@ -26,6 +26,20 @@ describe("trainer sprite persistence", () => {
       ],
     } as unknown as CareerRun;
     expect(trainerSpriteForRun(run)).toBe("hilda");
+  });
+
+  it("repairs a creation response that lost the selected appearance before it reaches the run", () => {
+    const run = {
+      build: { name: "QA Trainer" },
+      season_number: 1,
+      age: 12,
+      timeline: [{ type: "trainer.appearance_selected", trainer_sprite: "red" }],
+    } as unknown as CareerRun;
+    const repaired = withTrainerSpriteSelection(run, "hilda");
+    expect(trainerSpriteForRun(repaired)).toBe("hilda");
+    expect(repaired.timeline.filter((entry) => entry.type === "trainer.appearance_selected")).toEqual([
+      expect.objectContaining({ trainer_sprite: "hilda" }),
+    ]);
   });
 
   it("does not create a persistence key when legacy trainer identity metadata is missing", () => {

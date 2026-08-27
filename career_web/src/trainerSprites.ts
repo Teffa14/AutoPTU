@@ -13,6 +13,7 @@ export interface TrainerSpriteStorageEntry {
 
 const TRAINER_SPRITE_BASE = "https://play.pokemonshowdown.com/sprites/trainers";
 export const DEFAULT_TRAINER_SPRITE = "red";
+const SAFE_TRAINER_SPRITE = /^[a-z0-9][a-z0-9-]{0,63}$/;
 
 // Pokemon Showdown's public trainer whitelist. Keeping IDs as text is cheap: the
 // picker renders only the selected image, so expanding the catalog does not turn
@@ -37,7 +38,7 @@ export function trainerSpriteOptions(catalog: CareerCatalog | null): TrainerSpri
 }
 
 export function trainerSpriteUrl(sprite: string): string {
-  const id = sprite.trim().toLowerCase() || DEFAULT_TRAINER_SPRITE;
+  const id = normalizedTrainerSprite(sprite) ?? DEFAULT_TRAINER_SPRITE;
   return `${TRAINER_SPRITE_BASE}/${encodeURIComponent(id)}.png`;
 }
 
@@ -49,11 +50,30 @@ export function trainerSpriteForRun(run: CareerRun): string {
     if (!entry || typeof entry !== "object") continue;
     const event = entry as { type?: unknown; trainer_sprite?: unknown };
     if (event.type !== "trainer.appearance_selected") continue;
-    if (typeof event.trainer_sprite !== "string") continue;
-    const sprite = event.trainer_sprite.trim();
+    const sprite = normalizedTrainerSprite(event.trainer_sprite);
     if (sprite) return sprite;
   }
   return DEFAULT_TRAINER_SPRITE;
+}
+
+export function withTrainerSpriteSelection(run: CareerRun, value: unknown): CareerRun {
+  const sprite = normalizedTrainerSprite(value);
+  if (!sprite) return run;
+  const timeline = Array.isArray(run.timeline)
+    ? run.timeline.filter((entry) => !entry || typeof entry !== "object" || entry.type !== "trainer.appearance_selected")
+    : [];
+  return {
+    ...run,
+    timeline: [
+      ...timeline,
+      {
+        type: "trainer.appearance_selected",
+        season: Number.isFinite(run.season_number) ? run.season_number : 1,
+        age: Number.isFinite(run.age) ? run.age : 12,
+        trainer_sprite: sprite,
+      },
+    ],
+  };
 }
 
 export function trainerSpriteStorageEntry(run: CareerRun): TrainerSpriteStorageEntry | null {
@@ -65,6 +85,12 @@ export function trainerSpriteStorageEntry(run: CareerRun): TrainerSpriteStorageE
     key: `career-trainer-sprite:${name.toLocaleLowerCase()}`,
     sprite: trainerSpriteForRun(run),
   };
+}
+
+function normalizedTrainerSprite(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const sprite = value.trim().toLocaleLowerCase("en-US");
+  return SAFE_TRAINER_SPRITE.test(sprite) ? sprite : null;
 }
 
 function trainerSpriteLabel(id: string): string {
