@@ -1,53 +1,58 @@
 .battle-trainer-strip {
   position: absolute;
-  z-index: 7;
-  inset: .45rem .45rem auto;
-  height: 4.55rem;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: stretch;
-  gap: .55rem;
+  z-index: 2;
+  inset: 0;
   pointer-events: none;
-}
-
-/* The Pixi host is the immediate sibling of the trainer strip. Reserve a dedicated
-   broadcast lane so trainer art can never share the combat field plane. */
-.battle-trainer-strip + div {
-  position: absolute !important;
-  inset: 5.35rem 0 0 !important;
-  min-height: 0;
+  overflow: hidden;
 }
 
 .battle-trainer-side {
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .35rem .55rem;
-  overflow: hidden;
-  border: 1px solid rgba(245, 226, 168, .22);
-  border-radius: .55rem;
-  background: linear-gradient(180deg, rgba(10, 25, 21, .94), rgba(5, 13, 11, .9));
-  box-shadow: 0 .35rem 1rem rgba(0, 0, 0, .28);
+  position: absolute;
+  width: clamp(5.4rem, 13vw, 8rem);
+  display: grid;
+  justify-items: center;
+  gap: .15rem;
+  text-align: center;
+  filter: drop-shadow(0 .55rem .55rem rgba(0, 0, 0, .35));
+}
+
+.battle-trainer-side.left {
+  left: clamp(.6rem, 4.5%, 3.5rem);
+  bottom: clamp(1.4rem, 8%, 4.8rem);
 }
 
 .battle-trainer-side.right {
-  flex-direction: row-reverse;
-  text-align: right;
+  right: clamp(.6rem, 4.5%, 3.5rem);
+  top: clamp(1.3rem, 8%, 4.6rem);
 }
 
 .battle-trainer-sprite-frame {
-  width: 3.45rem;
-  height: 3.45rem;
-  flex: 0 0 3.45rem;
+  position: relative;
+  width: clamp(4.2rem, 9vw, 5.8rem);
+  height: clamp(5.1rem, 11vw, 7rem);
   display: grid;
   place-items: end center;
-  overflow: hidden;
-  border-radius: .45rem;
-  background: radial-gradient(circle at 50% 85%, rgba(239, 198, 96, .2), transparent 62%);
+}
+
+.battle-trainer-sprite-frame::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  bottom: -.18rem;
+  width: 112%;
+  height: 1.1rem;
+  border: 1px solid rgba(235, 205, 126, .55);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(226, 190, 91, .28) 0 28%, rgba(22, 67, 53, .92) 30% 64%, rgba(4, 18, 14, .94) 66% 100%);
+  box-shadow: inset 0 -.28rem .35rem rgba(0, 0, 0, .34), 0 .4rem .7rem rgba(0, 0, 0, .34);
+  transform: translateX(-50%) perspective(3rem) rotateX(54deg);
+  transform-origin: center;
 }
 
 .battle-trainer-sprite {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -56,205 +61,175 @@
 }
 
 .battle-trainer-copy {
-  min-width: 0;
+  max-width: 100%;
   display: grid;
-  gap: .05rem;
+  justify-items: center;
+  gap: .02rem;
+  padding: .22rem .42rem;
+  border: 1px solid rgba(233, 206, 139, .24);
+  background: rgba(5, 18, 14, .74);
+  box-shadow: 0 .25rem .65rem rgba(0, 0, 0, .25);
+  backdrop-filter: blur(4px);
+}
+
+.battle-trainer-copy small,
+.battle-trainer-copy strong {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .battle-trainer-copy small {
-  overflow: hidden;
-  color: rgba(238, 232, 211, .66);
-  font-size: .52rem;
-  letter-spacing: .08em;
-  text-overflow: ellipsis;
+  color: rgba(238, 232, 211, .7);
+  font: 700 .44rem "IBM Plex Mono", monospace;
+  letter-spacing: .06em;
   text-transform: uppercase;
-  white-space: nowrap;
 }
 
 .battle-trainer-copy strong {
-  overflow: hidden;
   color: #fff3cf;
-  font-size: .84rem;
+  font-size: .72rem;
   line-height: 1.05;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
-.battle-trainer-copy q {
-  overflow: hidden;
-  color: rgba(246, 244, 235, .78);
-  font-size: .62rem;
-  line-height: 1.15;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.battle-trainer-progression {
+  color: #e5c267 !important;
+  font-size: .4rem !important;
+  letter-spacing: .035em !important;
 }
 
 .battle-trainer-center {
-  min-width: 4rem;
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: 0;
-  padding: .25rem .35rem;
+  position: absolute;
+  left: 50%;
+  top: .45rem;
+  max-width: min(15rem, 46vw);
+  padding: .25rem .5rem;
+  border: 1px solid rgba(229, 194, 103, .24);
+  background: rgba(5, 18, 14, .66);
+  transform: translateX(-50%);
+  backdrop-filter: blur(4px);
 }
 
 .battle-trainer-center small {
+  display: block;
+  overflow: hidden;
   color: #e5c267;
-  font-size: .46rem;
-  font-weight: 800;
-  letter-spacing: .1em;
-}
-
-.battle-trainer-center strong {
-  color: #fff4d3;
-  font-size: 1.2rem;
-  line-height: 1;
-}
-
-.battle-trainer-center span {
-  color: rgba(236, 231, 212, .48);
-  font-size: .4rem;
+  font: 800 .46rem "IBM Plex Mono", monospace;
+  letter-spacing: .09em;
+  text-overflow: ellipsis;
   text-transform: uppercase;
-  letter-spacing: .08em;
+  white-space: nowrap;
 }
 
 @media (max-width: 699px) {
-  .battle-trainer-strip {
-    inset: .3rem .3rem auto;
-    height: 3.25rem;
-    gap: .3rem;
-  }
-
-  .battle-trainer-strip + div {
-    inset: 3.85rem 0 0 !important;
-  }
-
   .battle-trainer-side {
-    gap: .32rem;
-    padding: .2rem .3rem;
-    border-radius: .4rem;
+    width: 4.7rem;
+  }
+
+  .battle-trainer-side.left {
+    left: .35rem;
+    bottom: 1rem;
+  }
+
+  .battle-trainer-side.right {
+    right: .35rem;
+    top: 1rem;
   }
 
   .battle-trainer-sprite-frame {
-    width: 2.55rem;
-    height: 2.55rem;
-    flex-basis: 2.55rem;
+    width: 3.45rem;
+    height: 4.3rem;
   }
 
-  .battle-trainer-copy strong {
-    font-size: .7rem;
-  }
-
-  .battle-trainer-copy q,
-  .battle-trainer-copy small:not(.battle-trainer-progression),
-  .battle-trainer-center span {
-    display: none;
-  }
-
-  .battle-trainer-progression {
-    display: block;
-    max-width: 8.5rem;
-    color: rgba(229, 194, 103, .82) !important;
-    font-size: .46rem !important;
-    letter-spacing: .045em !important;
-  }
-
-  .battle-trainer-center {
-    min-width: 2.15rem;
-    padding-inline: 0;
-  }
-
-  .battle-trainer-center small {
-    max-width: 4rem;
-    overflow: hidden;
-    font-size: .38rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .battle-trainer-center strong {
-    font-size: .9rem;
-  }
-}
-
-@media (max-width: 430px) {
   .battle-trainer-copy {
-    display: grid;
-    align-content: center;
+    max-width: 4.7rem;
+    padding: .16rem .25rem;
   }
 
-  .battle-trainer-copy strong,
-  .battle-trainer-copy q,
   .battle-trainer-copy small:not(.battle-trainer-progression) {
     display: none;
   }
 
-  .battle-trainer-progression {
-    max-width: 5.25rem;
-    font-size: .4rem !important;
-  }
-
-  .battle-trainer-side {
-    justify-content: center;
-  }
-}
-
-/* Wide-but-short browser windows (landscape phones, split-screen tablets and
-   compact laptop windows) need vertical priority for the arena. Keep trainer
-   identity visible, but collapse secondary broadcast copy and reclaim field space. */
-@media (max-height: 500px) {
-  .battle-trainer-strip {
-    inset: .25rem .3rem auto;
-    height: 2.8rem;
-    gap: .3rem;
-  }
-
-  .battle-trainer-strip + div {
-    inset: 3.35rem 0 0 !important;
-  }
-
-  .battle-trainer-side {
-    gap: .28rem;
-    padding: .15rem .28rem;
-  }
-
-  .battle-trainer-sprite-frame {
-    width: 2.1rem;
-    height: 2.1rem;
-    flex-basis: 2.1rem;
-  }
-
-  .battle-trainer-copy q,
-  .battle-trainer-copy small:not(.battle-trainer-progression),
-  .battle-trainer-center span {
-    display: none;
-  }
-
-  .battle-trainer-progression {
-    display: block;
-    max-width: 7rem;
-    font-size: .4rem !important;
-  }
-
   .battle-trainer-copy strong {
-    font-size: .68rem;
+    font-size: .62rem;
+  }
+
+  .battle-trainer-progression {
+    max-width: 4.15rem;
+    font-size: .34rem !important;
   }
 
   .battle-trainer-center {
-    min-width: 2.15rem;
-    padding-inline: 0;
+    top: .25rem;
+    max-width: 40vw;
+    padding: .18rem .35rem;
   }
 
   .battle-trainer-center small {
-    max-width: 4rem;
-    overflow: hidden;
     font-size: .36rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  }
+}
+
+@media (max-width: 430px) {
+  .battle-trainer-side {
+    width: 4rem;
   }
 
-  .battle-trainer-center strong {
-    font-size: .84rem;
+  .battle-trainer-sprite-frame {
+    width: 3rem;
+    height: 3.75rem;
+  }
+
+  .battle-trainer-copy {
+    max-width: 4rem;
+  }
+
+  .battle-trainer-copy strong {
+    font-size: .56rem;
+  }
+
+  .battle-trainer-progression {
+    display: none;
+  }
+}
+
+@media (max-height: 500px) {
+  .battle-trainer-side.left {
+    bottom: .35rem;
+  }
+
+  .battle-trainer-side.right {
+    top: .35rem;
+  }
+
+  .battle-trainer-sprite-frame {
+    width: 2.8rem;
+    height: 3.4rem;
+  }
+
+  .battle-trainer-copy {
+    padding: .12rem .2rem;
+  }
+
+  .battle-trainer-copy small,
+  .battle-trainer-progression {
+    display: none;
+  }
+
+  .battle-trainer-copy strong {
+    font-size: .55rem;
+  }
+
+  .battle-trainer-center {
+    top: .15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .battle-trainer-side,
+  .battle-trainer-sprite-frame {
+    transition: none;
   }
 }
