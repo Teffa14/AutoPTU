@@ -1,4 +1,5 @@
 import { battleTrainerPresentation } from "../battleTrainerPresentation";
+import { loadLocalRun } from "../localCareer";
 import { trainerSpriteUrl } from "../trainerSprites";
 import type { BattleTranscript, CareerRun, Locale } from "../types";
 
@@ -8,7 +9,8 @@ export function BattleTrainerStrip({ transcript, run, locale, complete }: {
   locale: Locale;
   complete: boolean;
 }) {
-  const presentation = battleTrainerPresentation(locale, transcript, run, complete);
+  const presentationRun = run ?? localRunForBattle(transcript.battle_id);
+  const presentation = battleTrainerPresentation(locale, transcript, presentationRun, complete);
   return (
     <section className="battle-trainer-strip" aria-label={locale === "es" ? "Entrenadores del combate" : "Battle trainers"}>
       <TrainerSide
@@ -29,6 +31,13 @@ export function BattleTrainerStrip({ transcript, run, locale, complete }: {
       />
     </section>
   );
+}
+
+function localRunForBattle(battleId: string): CareerRun | null {
+  if (typeof battleId !== "string") return null;
+  const match = battleId.match(/^(.*)-s\d+-m\d+$/);
+  const runId = match?.[1]?.trim() ?? "";
+  return runId ? loadLocalRun(runId) : null;
 }
 
 function TrainerSide({ align, club, name, sprite, progression }: {
