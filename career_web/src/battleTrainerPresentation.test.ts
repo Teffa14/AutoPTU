@@ -125,6 +125,20 @@ describe("battle trainer presentation", () => {
     expect("line" in opening.away).toBe(false);
   });
 
+  it("keeps the selected trainer in the transcript when the run is temporarily unavailable", () => {
+    const replay = {
+      ...transcript,
+      spec: {
+        ...transcript.spec,
+        home_trainer_name: "QA Trainer",
+        home_trainer_sprite: "hilda",
+      },
+    } as unknown as BattleTranscript;
+    const presentation = battleTrainerPresentation("es", replay, null, false);
+    expect(presentation.home.name).toBe("QA Trainer");
+    expect(presentation.home.sprite).toBe("hilda");
+  });
+
   it("distinguishes a reunion after several seasons from an ordinary rematch", () => {
     const reunionRun = {
       ...run,
