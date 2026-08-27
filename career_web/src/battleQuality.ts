@@ -7,9 +7,13 @@ export type BattleVisualSignals = {
   deviceMemory?: number | null;
   saveData?: boolean;
   compactTouch?: boolean;
+  viewportWidth?: number | null;
+  viewportHeight?: number | null;
+  devicePixelRatio?: number | null;
 };
 
 export const BATTLE_VISUAL_QUALITY_KEY = "autoptu:battle-visual-quality";
+export const BATTLE_FULL_RENDER_PIXEL_BUDGET = 12_000_000;
 
 export function battleRenderMaxFps(quality: BattleVisualQuality): number {
   return quality === "light" ? 30 : 60;
@@ -38,6 +42,15 @@ function finiteNonNegativeHostSignal(value: unknown): number {
   return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : 0;
 }
 
+export function battleEstimatedRenderPixels(signals: Pick<BattleVisualSignals, "viewportWidth" | "viewportHeight" | "devicePixelRatio">): number | null {
+  const width = finitePositiveHardwareSignal(signals.viewportWidth);
+  const height = finitePositiveHardwareSignal(signals.viewportHeight);
+  const dpr = finitePositiveHardwareSignal(signals.devicePixelRatio);
+  if (width === null || height === null || dpr === null) return null;
+  const fullResolution = Math.min(2, dpr);
+  return width * height * fullResolution * fullResolution;
+}
+
 export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleVisualQuality {
   if (signals.reducedMotion) return "light";
   if (signals.storedPreference === "full" || signals.storedPreference === "light") return signals.storedPreference;
@@ -49,6 +62,9 @@ export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleV
 
   const memory = finitePositiveHardwareSignal(signals.deviceMemory);
   if (memory !== null && memory <= 4) return "light";
+
+  const renderPixels = battleEstimatedRenderPixels(signals);
+  if (renderPixels !== null && renderPixels > BATTLE_FULL_RENDER_PIXEL_BUDGET) return "light";
 
   return "full";
 }
@@ -74,6 +90,9 @@ export function detectBattleVisualQuality(): BattleVisualQuality {
     deviceMemory: nav.deviceMemory,
     saveData: nav.connection?.saveData,
     compactTouch: isCompactTouchDevice(),
+    viewportWidth: window.innerWidth,
+    viewportHeight: window.innerHeight,
+    devicePixelRatio: window.devicePixelRatio,
   });
 }
 
