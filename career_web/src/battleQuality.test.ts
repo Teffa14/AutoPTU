@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { BATTLE_FULL_RENDER_PIXEL_BUDGET, battleEstimatedRenderPixels, battleOutcomeVisualState, battleRenderFrameFactors, battleRenderMaxFps, chooseBattleVisualQuality, detectBattleVisualQuality } from "./battleQuality";
+import { BATTLE_FULL_RENDER_PIXEL_BUDGET, battleEstimatedRenderPixels, battleOutcomeVisualState, battleRenderFrameFactors, battleRenderMaxFps, chooseBattleVisualQuality, constrainRequestedBattleVisualQuality, detectBattleVisualQuality } from "./battleQuality";
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -85,6 +85,24 @@ describe("chooseBattleVisualQuality", () => {
     expect(() => chooseBattleVisualQuality({ hardwareConcurrency: hostileSignal, deviceMemory: 8 })).not.toThrow();
     expect(chooseBattleVisualQuality({ hardwareConcurrency: true as unknown as number, deviceMemory: 8 })).toBe("full");
     expect(chooseBattleVisualQuality({ hardwareConcurrency: 8, deviceMemory: hostileSignal })).toBe("full");
+  });
+});
+
+describe("manual battle quality requests", () => {
+  it("rejects a manual full-mode request when the current viewport exceeds the raster safety budget", () => {
+    expect(constrainRequestedBattleVisualQuality("full", {
+      viewportWidth: 3840,
+      viewportHeight: 2160,
+      devicePixelRatio: 2,
+    })).toBe("light");
+  });
+
+  it("keeps manual full mode available below the hard safety limit", () => {
+    expect(constrainRequestedBattleVisualQuality("full", {
+      viewportWidth: 1920,
+      viewportHeight: 1080,
+      devicePixelRatio: 2,
+    })).toBe("full");
   });
 });
 
