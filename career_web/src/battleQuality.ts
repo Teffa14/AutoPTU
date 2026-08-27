@@ -51,6 +51,15 @@ export function battleEstimatedRenderPixels(signals: Pick<BattleVisualSignals, "
   return width * height * fullResolution * fullResolution;
 }
 
+export function constrainRequestedBattleVisualQuality(
+  requested: BattleVisualQuality,
+  signals: Pick<BattleVisualSignals, "reducedMotion" | "viewportWidth" | "viewportHeight" | "devicePixelRatio">,
+): BattleVisualQuality {
+  if (requested === "light" || signals.reducedMotion) return "light";
+  const renderPixels = battleEstimatedRenderPixels(signals);
+  return renderPixels !== null && renderPixels > BATTLE_FULL_RENDER_PIXEL_BUDGET ? "light" : "full";
+}
+
 export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleVisualQuality {
   if (signals.reducedMotion) return "light";
 
