@@ -45,8 +45,20 @@ export interface PreseasonSnapshot {
 }
 
 const base = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") ?? "";
+const MAX_BATTLE_CACHE_ENTRIES = 6;
 const battleCache = new Map<string, BattleTranscript>();
 const requestTimeoutMs = 15_000;
+
+function rememberBattleTranscript(key: string, transcript: BattleTranscript): BattleTranscript {
+  battleCache.delete(key);
+  battleCache.set(key, transcript);
+  while (battleCache.size > MAX_BATTLE_CACHE_ENTRIES) {
+    const oldestKey = battleCache.keys().next().value as string | undefined;
+    if (!oldestKey) break;
+    battleCache.delete(oldestKey);
+  }
+  return transcript;
+}
 
 export class ApiError extends Error {
   constructor(message: string, public readonly status: number) {
@@ -144,7 +156,7 @@ async function decide(run: CareerRun, optionId: string): Promise<{ run: CareerRu
       `${run.id}:${run.revision}:${optionId}`,
     );
     remember(result.run);
-    if (result.featured_battle) battleCache.set(`${run.id}:${result.featured_battle.battle_id}`, result.featured_battle);
+    if (result.featured_battle) rememberBattleTranscript(`${run.id}:${result.featured_battle.battle_id}`, result.featured_battle);
     return result;
   }
 
@@ -173,7 +185,7 @@ async function decide(run: CareerRun, optionId: string): Promise<{ run: CareerRu
     }
   }
   remember(result.run);
-  if (result.featured_battle) battleCache.set(`${run.id}:${result.featured_battle.battle_id}`, result.featured_battle);
+  if (result.featured_battle) rememberBattleTranscript(`${run.id}:${result.featured_battle.battle_id}`, result.featured_battle);
   return result;
 }
 
@@ -309,25 +321,25 @@ function purchaseOnce(run: CareerRun, productId: string): Promise<CareerRun> {
 async function battle(runId: string, battleId: string): Promise<BattleTranscript> {
   const key = `${runId}:${battleId}`;
   const cached = battleCache.get(key);
-  if (cached) return cached;
+  if (cached) {
+    rememberBattleTranscript(key, cached);
+    return cached;
+  }
   const local = loadLocalRun(runId);
   if (local && !local.ranked) {
     const transcript = await portable<BattleTranscript>("battle", local, { battle_id: battleId });
-    battleCache.set(key, transcript);
-    return transcript;
+    return rememberBattleTranscript(key, transcript);
   }
   const path = `/api/v1/runs/${encodeURIComponent(runId)}/battles/${encodeURIComponent(battleId)}`;
   try {
     const transcript = await request<BattleTranscript>(path);
-    battleCache.set(key, transcript);
-    return transcript;
+    return rememberBattleTranscript(key, transcript);
   } catch (reason) {
     if (!isMissingRun(reason)) throw reason;
     const restored = await restoreById(runId);
     if (!restored) throw reason;
     const transcript = await request<BattleTranscript>(path);
-    battleCache.set(key, transcript);
-    return transcript;
+    return rememberBattleTranscript(key, transcript);
   }
 }
 
