@@ -53,6 +53,10 @@ export function battleEstimatedRenderPixels(signals: Pick<BattleVisualSignals, "
 
 export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleVisualQuality {
   if (signals.reducedMotion) return "light";
+
+  const renderPixels = battleEstimatedRenderPixels(signals);
+  if (renderPixels !== null && renderPixels > BATTLE_FULL_RENDER_PIXEL_BUDGET) return "light";
+
   if (signals.storedPreference === "full" || signals.storedPreference === "light") return signals.storedPreference;
   if (signals.saveData) return "light";
   if (signals.compactTouch) return "light";
@@ -62,9 +66,6 @@ export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleV
 
   const memory = finitePositiveHardwareSignal(signals.deviceMemory);
   if (memory !== null && memory <= 4) return "light";
-
-  const renderPixels = battleEstimatedRenderPixels(signals);
-  if (renderPixels !== null && renderPixels > BATTLE_FULL_RENDER_PIXEL_BUDGET) return "light";
 
   return "full";
 }
