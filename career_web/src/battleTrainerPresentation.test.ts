@@ -32,7 +32,6 @@ const run = {
     { type: "trainer.appearance_selected", trainer_sprite: "hilda" },
     { type: "season.completed", season: 1, opponents: ["Cerulean Current", "Pewter Foundry", "Cerulean Current"] },
     { type: "season.completed", season: 2, opponents: ["Fuchsia Wardens"] },
-    // Simulates finalizeSeason finishing while the season-3 replay is still on screen.
     { type: "season.completed", season: 3, opponents: ["Cerulean Current"] },
   ],
 } as unknown as CareerRun;
@@ -116,13 +115,14 @@ describe("battle trainer presentation", () => {
     expect(formalRivalMemory(migratedRun, "   ", 3).previousMeetings).toBe(0);
   });
 
-  it("uses the selected player trainer sprite and changes dialogue after the result", () => {
+  it("uses the selected player sprite without injecting result dialogue", () => {
     const opening = battleTrainerPresentation("es", transcript, run, false);
     const result = battleTrainerPresentation("es", transcript, run, true);
     expect(opening.home.name).toBe("QA Trainer");
     expect(opening.home.sprite).toBe("hilda");
-    expect(result.home.line).not.toBe(opening.home.line);
-    expect(result.away.line).not.toBe(opening.away.line);
+    expect(result.home).toEqual(opening.home);
+    expect("line" in opening.home).toBe(false);
+    expect("line" in opening.away).toBe(false);
   });
 
   it("distinguishes a reunion after several seasons from an ordinary rematch", () => {
@@ -139,7 +139,6 @@ describe("battle trainer presentation", () => {
     const presentation = battleTrainerPresentation("es", laterTranscript, reunionRun, false);
     expect(presentation.rivalMemory.seasonsSinceLastMeeting).toBe(4);
     expect(presentation.meetingLabel).toBe("REENCUENTRO · CRUCE #2");
-    expect(presentation.away.line).toContain("Pasó tiempo");
   });
 
   it("marks long-running formal rivalries without changing battle mechanics", () => {
@@ -155,7 +154,6 @@ describe("battle trainer presentation", () => {
     const presentation = battleTrainerPresentation("es", rivalryTranscript, rivalryRun, false);
     expect(presentation.meeting).toBe(6);
     expect(presentation.meetingLabel).toBe("RIVALIDAD · CRUCE #6");
-    expect(presentation.away.line).toContain("Ya tenemos historia");
   });
 
   it("handles malformed and huge timelines without counting future or invalid records", () => {
