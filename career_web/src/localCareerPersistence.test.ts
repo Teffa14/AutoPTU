@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
-import { loadLastLocalRunId, removeLocalRun } from "./localCareer";
+import { loadBattleCheckpoint, loadLastLocalRunId, removeLocalRun, saveLocalRun } from "./localCareer";
 import localCareerSource from "./localCareer.ts?raw";
 import homeScreenSource from "./components/HomeScreen.tsx?raw";
 
@@ -72,6 +72,34 @@ describe("local career persistence boundaries", () => {
 
     expect(loadLastLocalRunId()).toBeNull();
     expect(localStorage.getItem("career-last-run")).toBeNull();
+  });
+
+  it("does not let coercible decision counters suppress a battle rollback checkpoint", () => {
+    const runId = "run-corrupt-decisions";
+    const previous = {
+      id: runId,
+      ranked: false,
+      status: "active",
+      season_number: 1,
+      build: {},
+      season: {
+        status: "decision",
+        decisions_required: [1],
+        decisions_completed: [1],
+      },
+    };
+    localStorage.setItem(`autoptu-career-run:${runId}`, JSON.stringify(previous));
+
+    saveLocalRun({
+      ...previous,
+      season: {
+        status: "battle",
+        decisions_required: 1,
+        decisions_completed: 1,
+      },
+    } as never);
+
+    expect(loadBattleCheckpoint(runId)?.season?.status).toBe("decision");
   });
 
   it("removes the run, its automatic training plan, and matching resume pointer together", () => {

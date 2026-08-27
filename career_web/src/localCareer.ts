@@ -30,10 +30,19 @@ function isStoredCareerRun(value: unknown, runId: string, activeOnly = false): v
   return true;
 }
 
+function storedDecisionCount(value: unknown): number {
+  if (typeof value === "number") {
+    return Number.isFinite(value) && value >= 0 ? value : 0;
+  }
+  if (typeof value !== "string" || value.trim() === "") return 0;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+}
+
 function isExhaustedDecisionPhase(run: CareerRun): boolean {
   if (run.status !== "active" || run.season?.status !== "decision") return false;
-  const required = run.season.decisions_required ?? 0;
-  const completed = run.season.decisions_completed ?? 0;
+  const required = storedDecisionCount(run.season.decisions_required);
+  const completed = storedDecisionCount(run.season.decisions_completed);
   return required > 0 && completed >= required;
 }
 
