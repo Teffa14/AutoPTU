@@ -100,4 +100,21 @@ describe("decision memory", () => {
 
     expect(decisionMemory(run, "capture").prior).toBeUndefined();
   });
+
+  it("ignores current-season decision history when its season number is not authoritative", () => {
+    const decisionHistory = [
+      { option_id: "media:4:0:1", label: "Hablar con la prensa", effects: { reputation: 1 } },
+    ];
+    const booleanSeason = runWith({
+      season_number: true as unknown as number,
+      season: { ...runWith({}).season!, decision_history: decisionHistory },
+    });
+    const infiniteSeason = runWith({
+      season_number: Number.POSITIVE_INFINITY,
+      season: { ...runWith({}).season!, decision_history: decisionHistory },
+    });
+
+    expect(decisionMemory(booleanSeason, "media").prior).toBeUndefined();
+    expect(decisionMemory(infiniteSeason, "media").prior).toBeUndefined();
+  });
 });
