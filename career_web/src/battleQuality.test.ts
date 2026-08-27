@@ -70,6 +70,24 @@ describe("battle quality host resilience", () => {
     expect(() => detectBattleVisualQuality()).not.toThrow();
     expect(detectBattleVisualQuality()).toBe("full");
   });
+
+  it("does not coerce malformed compact-touch host signals during battle startup", () => {
+    const hostileSignal = {
+      valueOf: () => {
+        throw new Error("compact-touch host coercion should not run");
+      },
+    };
+    vi.stubGlobal("window", {
+      localStorage: { getItem: () => null, setItem: () => undefined },
+      navigator: { hardwareConcurrency: 8, deviceMemory: 8, maxTouchPoints: hostileSignal, connection: {} },
+      matchMedia: () => ({ matches: false }),
+      innerWidth: hostileSignal,
+      innerHeight: 720,
+    });
+
+    expect(() => detectBattleVisualQuality()).not.toThrow();
+    expect(detectBattleVisualQuality()).toBe("full");
+  });
 });
 
 describe("battle render budget", () => {
