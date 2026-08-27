@@ -84,6 +84,7 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
         app = null;
         if (cancelled) return;
         if (effectiveQuality === "full") {
+          persistBattleVisualQuality("light");
           setQuality("light");
           return;
         }
