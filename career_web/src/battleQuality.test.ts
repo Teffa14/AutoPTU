@@ -1,6 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { battleOutcomeVisualState, battleRenderFrameFactors, battleRenderMaxFps, chooseBattleVisualQuality } from "./battleQuality";
+import { battleOutcomeVisualState, battleRenderFrameFactors, battleRenderMaxFps, chooseBattleVisualQuality, detectBattleVisualQuality } from "./battleQuality";
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 
 describe("chooseBattleVisualQuality", () => {
   it("forces light mode for reduced motion", () => {
@@ -50,6 +54,21 @@ describe("chooseBattleVisualQuality", () => {
     expect(() => chooseBattleVisualQuality({ hardwareConcurrency: hostileSignal, deviceMemory: 8 })).not.toThrow();
     expect(chooseBattleVisualQuality({ hardwareConcurrency: true as unknown as number, deviceMemory: 8 })).toBe("full");
     expect(chooseBattleVisualQuality({ hardwareConcurrency: 8, deviceMemory: hostileSignal })).toBe("full");
+  });
+});
+
+describe("battle quality host resilience", () => {
+  it("does not crash battle startup when matchMedia throws in a restricted browser", () => {
+    vi.stubGlobal("window", {
+      localStorage: { getItem: () => null, setItem: () => undefined },
+      navigator: { hardwareConcurrency: 8, deviceMemory: 8, maxTouchPoints: 0, connection: {} },
+      matchMedia: () => { throw new Error("media queries blocked"); },
+      innerWidth: 1280,
+      innerHeight: 720,
+    });
+
+    expect(() => detectBattleVisualQuality()).not.toThrow();
+    expect(detectBattleVisualQuality()).toBe("full");
   });
 });
 
