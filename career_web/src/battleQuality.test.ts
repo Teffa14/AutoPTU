@@ -16,6 +16,17 @@ describe("chooseBattleVisualQuality", () => {
     expect(chooseBattleVisualQuality({ storedPreference: "full", hardwareConcurrency: 2, deviceMemory: 2 })).toBe("full");
   });
 
+  it("fails closed when saved full mode cannot prove the startup raster is safe", () => {
+    expect(chooseBattleVisualQuality({
+      storedPreference: "full",
+      hardwareConcurrency: 12,
+      deviceMemory: 16,
+      viewportWidth: 0,
+      viewportHeight: 1080,
+      devicePixelRatio: 2,
+    })).toBe("light");
+  });
+
   it("automatically selects light mode when the browser asks to save data", () => {
     expect(chooseBattleVisualQuality({ saveData: true, hardwareConcurrency: 8, deviceMemory: 8 })).toBe("light");
   });
