@@ -49,8 +49,8 @@ describe("career route bundle splitting", () => {
     expect(app).toContain('</RouteErrorBoundary>');
   });
 
-  it("does not let browser storage failures crash app bootstrap", () => {
-    expect(app).not.toContain('localStorage.getItem("career-locale")');
-    expect(app).not.toContain('localStorage.setItem("career-locale", locale)');
+  it("routes locale persistence through guarded browser storage", () => {
+    expect(app).toContain('readLocalStorage("career-locale")');
+    expect(app).toContain('writeLocalStorage("career-locale", locale)');
   });
 });
