@@ -48,4 +48,31 @@ describe("battle presentation malformed legacy events", () => {
     expect(() => deriveBattleView(transcript, 2)).not.toThrow();
     expect(deriveBattleView(transcript, 2).combatants.find((entry) => entry.id === "career-away-1")?.hp).toBe(20);
   });
+
+  it("survives missing legacy event and combatant arrays", () => {
+    const transcript = {
+      battle_id: "legacy-malformed-state-arrays",
+      rounds: 0,
+      sha256: "legacy",
+      winner_label: "",
+      winner_team: null,
+      spec: {
+        home_club: "Home",
+        away_club: "Away",
+        home_species: "Pidgey",
+        away_species: "Rattata",
+        region: "kanto",
+        league: "junior",
+      },
+      initial_state: { round: 0, battle_over: false, combatants: null },
+      final_state: { round: 0, battle_over: false, combatants: "legacy" },
+      events: null,
+    } as unknown as BattleTranscript;
+
+    expect(() => playbackEventIndexes(transcript)).not.toThrow();
+    expect(playbackEventIndexes(transcript)).toEqual([]);
+    expect(() => deriveBattleView(transcript, 0)).not.toThrow();
+    expect(deriveBattleView(transcript, 0).combatants).toEqual([]);
+    expect(deriveBattleView(transcript, 0).complete).toBe(true);
+  });
 });
