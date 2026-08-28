@@ -17,6 +17,12 @@ describe("battle transcript API boundary", () => {
     expect(apiSource).toContain("const rawInitialState = (transcript as { initial_state?: unknown }).initial_state");
     expect(apiSource).toContain("&& typeof rawInitialState === \"object\"");
     expect(apiSource).toContain("Array.isArray((rawInitialState as { combatants?: unknown }).combatants)");
+    expect(apiSource).toContain("? (rawInitialState as { grid?: unknown }).grid");
+    expect(apiSource).toContain("rawGrid && typeof rawGrid === \"object\"");
+    expect(apiSource).toContain("Number.isFinite((rawGrid as { width?: unknown }).width)");
+    expect(apiSource).toContain("Number.isFinite((rawGrid as { height?: unknown }).height)");
+    expect(apiSource).toContain("Number((rawGrid as { width?: unknown }).width) > 0");
+    expect(apiSource).toContain("Number((rawGrid as { height?: unknown }).height) > 0");
     expect(apiSource).toContain("initial_state: { round: 0, battle_over: false, grid: { width: 1, height: 1 }, combatants: [] }");
     expect(apiSource).toContain("normalizeBattleTranscriptInitialState(normalizeBattleTranscriptEvents(transcript))");
   });
