@@ -42,4 +42,10 @@ describe("career route bundle splitting", () => {
     expect(app).toContain('import("./localCareer")');
     expect(home).toContain('import("../localCareer")');
   });
+
+  it("gives lazy route failures a visible recovery path", () => {
+    expect(app).toContain('import { RouteErrorBoundary } from "./components/RouteErrorBoundary";');
+    expect(app).toContain('<RouteErrorBoundary locale={locale} resetKey={path}>');
+    expect(app).toContain('</RouteErrorBoundary>');
+  });
 });
