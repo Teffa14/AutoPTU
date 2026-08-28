@@ -57,7 +57,11 @@ function normalizeBattleTranscriptEvents(transcript: BattleTranscript): BattleTr
 
 function normalizeBattleTranscriptInitialState(transcript: BattleTranscript): BattleTranscript {
   const rawInitialState = (transcript as { initial_state?: unknown }).initial_state;
-  if (rawInitialState && typeof rawInitialState === "object") return transcript;
+  if (
+    rawInitialState
+    && typeof rawInitialState === "object"
+    && Array.isArray((rawInitialState as { combatants?: unknown }).combatants)
+  ) return transcript;
   return { ...transcript, initial_state: { round: 0, battle_over: false, grid: { width: 1, height: 1 }, combatants: [] } };
 }
 
@@ -140,336 +144,54 @@ function remember(run: CareerRun): CareerRun {
   return run;
 }
 
-async function portable<T>(
-  action: string,
-  run: CareerRun | null,
-  payload: Record<string, unknown> = {},
-  idempotencyKey = "",
-): Promise<T> {
-  return request<T>("/api/v1/portable/action", {
-    method: "POST",
-    body: JSON.stringify({
-      action,
-      ...(run ? { run } : {}),
-      payload,
-      ...(idempotencyKey ? { idempotency_key: idempotencyKey } : {}),
-    }),
-  });
-}
-
-async function restoreRun(run: CareerRun): Promise<CareerRun> {
-  if (run.ranked) throw new ApiError("Ranked career state cannot be restored from the browser.", 403);
-  const restored = await request<CareerRun>("/api/v1/runs/restore", {
-    method: "POST",
-    body: JSON.stringify({ run }),
-  });
-  return remember(restored);
-}
-
-async function restoreById(runId: string): Promise<CareerRun | null> {
-  const local = loadLocalRun(runId);
-  if (!local) return null;
-  return restoreRun(local);
-}
-
-async function decide(run: CareerRun, optionId: string): Promise<{ run: CareerRun; battle_ids: string[]; featured_battle?: BattleTranscript }> {
-  if (!run.ranked) {
-    const result = await portable<{ run: CareerRun; battle_ids: string[]; featured_battle?: BattleTranscript }>(
-      "decide",
-      run,
-      { expected_revision: run.revision, option_id: optionId },
-      `${run.id}:${run.revision}:${optionId}`,
-    );
-    remember(result.run);
-    if (result.featured_battle) rememberBattleTranscript(`${run.id}:${result.featured_battle.battle_id}`, result.featured_battle);
-    return result;
-  }
-
-  const originalDecisionId = run.season?.decision?.id;
-  const originalSeason = run.season_number;
-  let source = run;
-  let result;
+async function requestRun(path: string, init: RequestInit = {}, authMode: CareerAuthMode = authModeForPath(path)): Promise<CareerRun> {
   try {
-    result = await decideOnce(source, optionId);
+    return remember(await request<CareerRun>(path, init, authMode));
   } catch (reason) {
-    if (isMissingRun(reason) && !run.ranked) {
-      source = await restoreRun(run);
-      result = await decideOnce(source, optionId);
-    } else {
-      if (!(reason instanceof ApiError) || reason.status !== 409) throw reason;
-      const latest = await request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}`);
-      if (latest.season?.decision?.id !== originalDecisionId) {
-        const completed = [...latest.timeline].reverse().find((entry) => entry.type === "season.completed" && entry.season === originalSeason);
-        const hashes = Array.isArray(completed?.battle_hashes) ? completed.battle_hashes as { id?: string }[] : [];
-        remember(latest);
-        return { run: latest, battle_ids: hashes.map((entry) => String(entry.id ?? "")).filter(Boolean) };
+    if (isMissingRun(reason)) {
+      const runId = path.match(/^\/api\/v1\/runs\/([^/]+)/)?.[1];
+      if (runId) {
+        const local = loadLocalRun(runId);
+        if (local) return local;
       }
-      if (!latest.season?.decision?.options.some((option) => option.id === optionId)) throw reason;
-      source = latest;
-      result = await decideOnce(source, optionId);
     }
-  }
-  remember(result.run);
-  if (result.featured_battle) rememberBattleTranscript(`${run.id}:${result.featured_battle.battle_id}`, result.featured_battle);
-  return result;
-}
-
-function decideOnce(run: CareerRun, optionId: string) {
-  return request<{ run: CareerRun; battle_ids: string[]; featured_battle?: BattleTranscript }>(
-    `/api/v1/runs/${encodeURIComponent(run.id)}/decisions`,
-    {
-      method: "POST",
-      headers: { "Idempotency-Key": `${run.id}:${run.revision}:${optionId}` },
-      body: JSON.stringify({ expected_revision: run.revision, option_id: optionId }),
-    },
-  );
-}
-
-async function retryRunMutation(
-  run: CareerRun,
-  action: string,
-  path: string,
-  payload: Record<string, unknown>,
-): Promise<CareerRun> {
-  if (!run.ranked) {
-    return remember(await portable<CareerRun>(action, run, { expected_revision: run.revision, ...payload }));
-  }
-  try {
-    return remember(await request<CareerRun>(path, { method: "POST", body: JSON.stringify({ expected_revision: run.revision, ...payload }) }));
-  } catch (reason) {
-    if (isMissingRun(reason) && !run.ranked) {
-      const restored = await restoreRun(run);
-      return remember(await request<CareerRun>(path, { method: "POST", body: JSON.stringify({ expected_revision: restored.revision, ...payload }) }));
-    }
-    if (!(reason instanceof ApiError) || reason.status !== 409) throw reason;
-    const latest = await request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}`);
-    return remember(await request<CareerRun>(path, { method: "POST", body: JSON.stringify({ expected_revision: latest.revision, ...payload }) }));
-  }
-}
-
-async function lineup(run: CareerRun, pokemonIds: string[]): Promise<CareerRun> {
-  if (!run.ranked) {
-    return remember(await portable<CareerRun>("lineup", run, { expected_revision: run.revision, pokemon_ids: pokemonIds }));
-  }
-  try {
-    return remember(await lineupOnce(run, pokemonIds));
-  } catch (reason) {
-    if (isMissingRun(reason) && !run.ranked) {
-      return remember(await lineupOnce(await restoreRun(run), pokemonIds));
-    }
-    if (!(reason instanceof ApiError) || reason.status !== 409) throw reason;
-    const latest = await request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}`);
-    const owned = new Set(latest.pokemon.map((pokemon) => pokemon.id));
-    if (pokemonIds.some((id) => !owned.has(id))) return remember(latest);
-    return remember(await lineupOnce(latest, pokemonIds));
-  }
-}
-
-function lineupOnce(run: CareerRun, pokemonIds: string[]): Promise<CareerRun> {
-  return request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}/lineup`, {
-    method: "POST",
-    body: JSON.stringify({ expected_revision: run.revision, pokemon_ids: pokemonIds }),
-  });
-}
-
-async function useItem(run: CareerRun, item: string, pokemonId = "", stat = ""): Promise<CareerRun> {
-  if (!run.ranked) {
-    return remember(await portable<CareerRun>("item", run, { expected_revision: run.revision, item, pokemon_id: pokemonId, stat }));
-  }
-  try {
-    return remember(await useItemOnce(run, item, pokemonId, stat));
-  } catch (reason) {
-    if (isMissingRun(reason) && !run.ranked) {
-      return remember(await useItemOnce(await restoreRun(run), item, pokemonId, stat));
-    }
-    if (!(reason instanceof ApiError) || reason.status !== 409) throw reason;
-    const latest = await request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}`);
-    if ((latest.inventory[item] ?? 0) < (run.inventory[item] ?? 0)) return remember(latest);
-    return remember(await useItemOnce(latest, item, pokemonId, stat));
-  }
-}
-
-function useItemOnce(run: CareerRun, item: string, pokemonId: string, stat: string): Promise<CareerRun> {
-  return request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}/items/use`, {
-    method: "POST",
-    body: JSON.stringify({ expected_revision: run.revision, item, pokemon_id: pokemonId, stat }),
-  });
-}
-
-async function train(run: CareerRun, method: string, pokemonId: string): Promise<CareerRun> {
-  if (!run.ranked) {
-    return remember(await portable<CareerRun>("train", run, { expected_revision: run.revision, method, pokemon_id: pokemonId }));
-  }
-  try {
-    return remember(await trainOnce(run, method, pokemonId));
-  } catch (reason) {
-    if (isMissingRun(reason) && !run.ranked) {
-      return remember(await trainOnce(await restoreRun(run), method, pokemonId));
-    }
-    if (!(reason instanceof ApiError) || reason.status !== 409) throw reason;
-    const latest = await request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}`);
-    if (latest.season?.training_completed) return remember(latest);
-    return remember(await trainOnce(latest, method, pokemonId));
-  }
-}
-
-function trainOnce(run: CareerRun, method: string, pokemonId: string): Promise<CareerRun> {
-  return request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}/training`, {
-    method: "POST",
-    body: JSON.stringify({ expected_revision: run.revision, method, pokemon_id: pokemonId }),
-  });
-}
-
-async function purchase(run: CareerRun, productId: string): Promise<CareerRun> {
-  if (!run.ranked) {
-    return remember(await portable<CareerRun>("purchase", run, { expected_revision: run.revision, product_id: productId }));
-  }
-  try {
-    return remember(await purchaseOnce(run, productId));
-  } catch (reason) {
-    if (isMissingRun(reason) && !run.ranked) {
-      return remember(await purchaseOnce(await restoreRun(run), productId));
-    }
-    if (!(reason instanceof ApiError) || reason.status !== 409) throw reason;
-    const latest = await request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}`);
-    return remember(await purchaseOnce(latest, productId));
-  }
-}
-
-function purchaseOnce(run: CareerRun, productId: string): Promise<CareerRun> {
-  return request<CareerRun>(`/api/v1/runs/${encodeURIComponent(run.id)}/market/purchases`, {
-    method: "POST",
-    body: JSON.stringify({ expected_revision: run.revision, product_id: productId }),
-  });
-}
-
-async function loadBattleTranscript(runId: string, battleId: string, key: string): Promise<BattleTranscript> {
-  const local = loadLocalRun(runId);
-  if (local && !local.ranked) {
-    const transcript = await portable<BattleTranscript>("battle", local, { battle_id: battleId });
-    return rememberBattleTranscript(key, transcript);
-  }
-  const path = `/api/v1/runs/${encodeURIComponent(runId)}/battles/${encodeURIComponent(battleId)}`;
-  try {
-    const transcript = await request<BattleTranscript>(path);
-    return rememberBattleTranscript(key, transcript);
-  } catch (reason) {
-    if (!isMissingRun(reason)) throw reason;
-    const restored = await restoreById(runId);
-    if (!restored) throw reason;
-    const transcript = await request<BattleTranscript>(path);
-    return rememberBattleTranscript(key, transcript);
-  }
-}
-
-async function battle(runId: string, battleId: string): Promise<BattleTranscript> {
-  const key = `${runId}:${battleId}`;
-  const cached = battleCache.get(key);
-  if (cached) {
-    rememberBattleTranscript(key, cached);
-    return cached;
-  }
-  const pending = battleRequests.get(key);
-  if (pending) return pending;
-
-  const requestPromise = loadBattleTranscript(runId, battleId, key);
-  battleRequests.set(key, requestPromise);
-  try {
-    return await requestPromise;
-  } finally {
-    if (battleRequests.get(key) === requestPromise) battleRequests.delete(key);
-  }
-}
-
-async function finalizeSeason(runId: string, battleId: string): Promise<CareerRun> {
-  const local = loadLocalRun(runId);
-  if (local && !local.ranked) {
-    return remember(await portable<CareerRun>("finalize", local, { battle_id: battleId }));
-  }
-  const path = `/api/v1/runs/${encodeURIComponent(runId)}/battles/${encodeURIComponent(battleId)}/finalize`;
-  try {
-    return remember(await request<CareerRun>(path, { method: "POST", body: "{}" }));
-  } catch (reason) {
-    if (!isMissingRun(reason)) throw reason;
-    const restored = await restoreById(runId);
-    if (!restored) throw reason;
-    return remember(await request<CareerRun>(path, { method: "POST", body: "{}" }));
-  }
-}
-
-async function preseason(runId: string): Promise<PreseasonSnapshot> {
-  const local = loadLocalRun(runId);
-  if (local && !local.ranked) {
-    const snapshot = await portable<PreseasonSnapshot>("preseason", local);
-    if (snapshot.run) remember(snapshot.run);
-    return snapshot;
-  }
-  const path = `/api/v1/runs/${encodeURIComponent(runId)}/preseason`;
-  try {
-    return await request<PreseasonSnapshot>(path);
-  } catch (reason) {
-    if (!isMissingRun(reason)) throw reason;
-    const restored = await restoreById(runId);
-    if (!restored) throw reason;
-    return request<PreseasonSnapshot>(path);
-  }
-}
-
-async function retire(runId: string): Promise<CareerRun> {
-  const local = loadLocalRun(runId);
-  if (local && !local.ranked) {
-    return remember(await portable<CareerRun>("retire", local, { reason: "voluntary" }));
-  }
-  const path = `/api/v1/runs/${encodeURIComponent(runId)}/retire`;
-  try {
-    return remember(await request<CareerRun>(path, { method: "POST", body: JSON.stringify({ reason: "voluntary" }) }));
-  } catch (reason) {
-    if (!isMissingRun(reason)) throw reason;
-    const restored = await restoreById(runId);
-    if (!restored) throw reason;
-    return remember(await request<CareerRun>(path, { method: "POST", body: JSON.stringify({ reason: "voluntary" }) }));
-  }
-}
-
-async function share(runId: string): Promise<{ url: string; include_replay: boolean }> {
-  const path = `/api/v1/runs/${encodeURIComponent(runId)}/shares`;
-  const local = loadLocalRun(runId);
-  const authMode: CareerAuthMode = local?.ranked ? "ranked" : "casual";
-  try {
-    return await request(path, { method: "POST", body: JSON.stringify({ include_replay: false }) }, authMode);
-  } catch (reason) {
-    if (!isMissingRun(reason)) throw reason;
-    const restored = await restoreById(runId);
-    if (!restored) throw reason;
-    return request(path, { method: "POST", body: JSON.stringify({ include_replay: false }) }, authMode);
+    throw reason;
   }
 }
 
 export const careerApi = {
-  catalog: (locale: string) => request<CareerCatalog>(`/api/v1/catalog?locale=${encodeURIComponent(locale)}`),
-  create: async (payload: Record<string, unknown>) => remember(await portable<CareerRun>("new", null, payload)),
-  run: (id: string) => {
-    const local = loadLocalRun(id);
-    return local ? Promise.resolve(local) : request<CareerRun>(`/api/v1/runs/${encodeURIComponent(id)}`);
+  catalog: (locale: string) => request<CareerCatalog>(`/api/v1/catalog?locale=${locale}`),
+  start: (payload: Record<string, unknown>) => requestRun("/api/v1/runs", { method: "POST", body: JSON.stringify(payload) }),
+  getRun: (runId: string) => requestRun(`/api/v1/runs/${runId}`),
+  deleteRun: (runId: string) => request<void>(`/api/v1/runs/${runId}`, { method: "DELETE" }),
+  restoreRun: (payload: Record<string, unknown>) => requestRun("/api/v1/runs/restore", { method: "POST", body: JSON.stringify(payload) }, "casual"),
+  portableAction: (payload: Record<string, unknown>) => requestRun("/api/v1/portable/action", { method: "POST", body: JSON.stringify(payload) }, "casual"),
+  clubOffers: (runId: string) => request<ClubOffer[]>(`/api/v1/runs/${runId}/club-offers`),
+  chooseClub: (runId: string, offerId: string) => requestRun(`/api/v1/runs/${runId}/club`, { method: "POST", body: JSON.stringify({ offer_id: offerId }) }),
+  sponsorOffers: (runId: string) => request<SponsorOffer[]>(`/api/v1/runs/${runId}/sponsor-offers`),
+  chooseSponsor: (runId: string, offerId: string) => requestRun(`/api/v1/runs/${runId}/sponsor`, { method: "POST", body: JSON.stringify({ offer_id: offerId }) }),
+  captureCandidates: (runId: string) => request<CaptureCandidate[]>(`/api/v1/runs/${runId}/capture-candidates`),
+  capture: (runId: string, candidateId: string) => requestRun(`/api/v1/runs/${runId}/capture`, { method: "POST", body: JSON.stringify({ candidate_id: candidateId }) }),
+  skipCapture: (runId: string) => requestRun(`/api/v1/runs/${runId}/capture/skip`, { method: "POST" }),
+  preseason: (runId: string) => request<PreseasonSnapshot>(`/api/v1/runs/${runId}/preseason`),
+  startSeason: (runId: string) => requestRun(`/api/v1/runs/${runId}/season`, { method: "POST" }),
+  train: (runId: string, pokemonId: string, method: string) => requestRun(`/api/v1/runs/${runId}/train`, { method: "POST", body: JSON.stringify({ pokemon_id: pokemonId, method }) }),
+  trainAuto: (runId: string, payload: Record<string, unknown>) => requestRun(`/api/v1/runs/${runId}/train/auto`, { method: "POST", body: JSON.stringify(payload) }),
+  decision: (runId: string, optionId: string) => requestRun(`/api/v1/runs/${runId}/decision`, { method: "POST", body: JSON.stringify({ option_id: optionId }) }),
+  battle: async (runId: string, battleId: string) => {
+    const key = `${runId}:${battleId}`;
+    const cached = battleCache.get(key);
+    if (cached) return cached;
+    const pending = battleRequests.get(key);
+    if (pending) return pending;
+    const requestPromise = request<BattleTranscript>(`/api/v1/runs/${runId}/battles/${battleId}`)
+      .then((transcript) => rememberBattleTranscript(key, transcript))
+      .finally(() => battleRequests.delete(key));
+    battleRequests.set(key, requestPromise);
+    return requestPromise;
   },
-  preseason,
-  chooseClub: (run: CareerRun, offerId: string) => retryRunMutation(run, "club", `/api/v1/runs/${encodeURIComponent(run.id)}/club`, { offer_id: offerId }),
-  chooseSponsor: (run: CareerRun, offerId: string) => retryRunMutation(run, "sponsor", `/api/v1/runs/${encodeURIComponent(run.id)}/sponsor`, { offer_id: offerId }),
-  capture: (run: CareerRun, candidateId: string) => retryRunMutation(run, "capture", `/api/v1/runs/${encodeURIComponent(run.id)}/captures`, { candidate_id: candidateId }),
-  lineup,
-  useItem,
-  train,
-  purchase,
-  decide,
-  battle,
-  finalizeSeason,
-  retire,
-  share,
-  publicShare: (shareId: string) => request<{ share_id: string; summary: Record<string, unknown>; has_replay: boolean }>(`/api/v1/shares/${encodeURIComponent(shareId)}`),
-  daily: (day: string) => request<Record<string, unknown>>(`/api/v1/daily/${day}`),
-  dailyAttempt: (day: string, payload: Record<string, unknown>) => request<{ run: CareerRun; attempt_no: number }>(
-    `/api/v1/daily/${day}/attempts`,
-    { method: "POST", body: JSON.stringify(payload) },
-  ),
+  playBattle: (runId: string, battleId: string) => requestRun(`/api/v1/runs/${runId}/battles/${battleId}/play`, { method: "POST" }),
+  finishSeason: (runId: string) => requestRun(`/api/v1/runs/${runId}/season/finish`, { method: "POST" }),
+  retire: (runId: string) => requestRun(`/api/v1/runs/${runId}/retire`, { method: "POST" }),
   leaderboard: (day: string, mode: string) => request<Record<string, unknown>>(`/api/v1/daily/${day}/leaderboards/${mode}`),
 };
