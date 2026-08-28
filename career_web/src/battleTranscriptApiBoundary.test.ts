@@ -7,7 +7,7 @@ describe("battle transcript API boundary", () => {
     expect(apiSource).toContain("function normalizeBattleTranscriptEvents");
     expect(apiSource).toContain("Array.isArray((transcript as { events?: unknown }).events)");
     expect(apiSource).toContain("events: []");
-    expect(apiSource).toContain("const safeTranscript = normalizeBattleTranscriptSpec(normalizeBattleTranscriptEvents(transcript))");
+    expect(apiSource).toContain("const safeTranscript = normalizeBattleTranscriptHash(normalizeBattleTranscriptSpec(normalizeBattleTranscriptEvents(transcript)))");
     expect(apiSource).toContain("battleCache.set(key, safeTranscript)");
     expect(apiSource).toContain("return safeTranscript");
   });
