@@ -1,19 +1,19 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { careerApi } from "./api";
-import { CreateScreen } from "./components/CreateScreen";
-import { DailyScreen } from "./components/DailyScreen";
 import { GameShell } from "./components/GameShell";
 import { HomeScreen } from "./components/HomeScreen";
-import { ProfileScreen } from "./components/ProfileScreen";
-import { ShareScreen } from "./components/ShareScreen";
-import { TimelineScreen } from "./components/TimelineScreen";
 import { loadLocalRun, saveLocalRun } from "./localCareer";
 import { careerNavigationTarget, careerPathFromLocation } from "./routing";
 import { trainerSpriteStorageEntry } from "./trainerSprites";
 import type { CareerRun, Locale } from "./types";
 
 const BattleScreen = lazy(() => import("./components/BattleScreen"));
+const CreateScreen = lazy(() => import("./components/CreateScreen").then((module) => ({ default: module.CreateScreen })));
+const DailyScreen = lazy(() => import("./components/DailyScreen").then((module) => ({ default: module.DailyScreen })));
+const ProfileScreen = lazy(() => import("./components/ProfileScreen").then((module) => ({ default: module.ProfileScreen })));
 const SeasonHub = lazy(() => import("./components/SeasonHub").then((module) => ({ default: module.SeasonHub })));
+const ShareScreen = lazy(() => import("./components/ShareScreen").then((module) => ({ default: module.ShareScreen })));
+const TimelineScreen = lazy(() => import("./components/TimelineScreen").then((module) => ({ default: module.TimelineScreen })));
 const CAREER_BASE_PATH = import.meta.env.BASE_URL;
 
 function currentPath(): string {
@@ -125,7 +125,9 @@ export function App() {
   const shellRun = shareMatch || path === "" || path === "new" || path === "create" ? null : requestedRunId ? routeRun : run;
   return (
     <GameShell run={shellRun} locale={locale} path={path} displaySeason={battleSeason} homePath={battleMatch ? `run/${battleMatch[1]}` : undefined} onLocale={setLocale}>
-      {screen}
+      <Suspense fallback={<div className="scene-loading">{locale === "es" ? "Cargando…" : "Loading…"}</div>}>
+        {screen}
+      </Suspense>
     </GameShell>
   );
 }
