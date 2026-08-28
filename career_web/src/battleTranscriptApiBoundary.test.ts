@@ -17,7 +17,7 @@ describe("battle transcript API boundary", () => {
     expect(apiSource).toContain("const rawInitialState = (transcript as { initial_state?: unknown }).initial_state");
     expect(apiSource).toContain("&& typeof rawInitialState === \"object\"");
     expect(apiSource).toContain("Array.isArray((rawInitialState as { combatants?: unknown }).combatants)");
-    expect(apiSource).toContain("const rawGrid = (rawInitialState as { grid?: unknown }).grid");
+    expect(apiSource).toContain("? (rawInitialState as { grid?: unknown }).grid");
     expect(apiSource).toContain("rawGrid && typeof rawGrid === \"object\"");
     expect(apiSource).toContain("Number.isFinite((rawGrid as { width?: unknown }).width)");
     expect(apiSource).toContain("Number.isFinite((rawGrid as { height?: unknown }).height)");
