@@ -13,7 +13,7 @@ describe("battle transcript cache", () => {
     expect(apiSource).toContain("MAX_BATTLE_CACHE_ENTRIES");
     expect(apiSource).toContain("rememberBattleTranscript");
     expect(apiSource).toContain("battleCache.delete(oldestKey)");
-    expect(apiSource.match(/battleCache\.set\(key, transcript\)/g)).toHaveLength(1);
+    expect(apiSource.match(/battleCache\.set\(key, safeTranscript\)/g)).toHaveLength(1);
   });
 
   it("coalesces concurrent loads of the same uncached battle", () => {
