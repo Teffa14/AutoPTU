@@ -116,3 +116,23 @@ def test_resolve_prepared_season_rejects_duplicate_battle_transcripts() -> None:
 
     with pytest.raises(ValueError, match="duplicate"):
         engine.resolve_prepared_season(run, transcripts)
+
+
+def test_resolve_prepared_season_rejects_duplicate_prepared_battle_ids() -> None:
+    engine = CareerEngine(fake_battle)
+    run = engine.new_run(
+        player_id="duplicate-calendar-user",
+        name="Nia",
+        region="johto",
+        starter="Sentret",
+        classes=["Mentor"],
+        seed=821,
+    )
+    option_id = run.season.decision.options[0].id
+    run, specs = engine.prepare_season(run, option_id=option_id)
+    transcripts = [fake_battle(spec) for spec in specs]
+    run.season.battles.append(specs[-1])
+    run.season.battle_ids.append(specs[-1].id)
+
+    with pytest.raises(ValueError, match="duplicate"):
+        engine.resolve_prepared_season(run, transcripts)
