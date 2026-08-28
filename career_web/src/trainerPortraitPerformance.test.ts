@@ -8,7 +8,8 @@ const source = readFileSync(fileURLToPath(new URL("./components/TrainerPortrait.
 describe("trainer portrait loading", () => {
   it("does not pull the multi-megabyte generated portrait sheet into the Career bundle", () => {
     expect(source).not.toContain("trainer-portraits-v1.png");
-    expect(source).toContain("trainerSpriteUrl(sprite)");
+    expect(source).toContain("trainerSpriteUrl(roleSprite(name, role))");
+    expect(source).toContain("trainerSpriteUrl(playerSprite)");
   });
 
   it("defers off-screen trainer sprite image work", () => {
