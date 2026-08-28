@@ -86,6 +86,10 @@ export function battleTrainerPresentation(
   run?: CareerRun | null,
   _complete = false,
 ): BattleTrainerPresentation {
+  const rawSpec = (transcript as { spec?: unknown }).spec;
+  if (!rawSpec || typeof rawSpec !== "object") {
+    transcript = { ...transcript, spec: {} as BattleTranscript["spec"] };
+  }
   const region = normalizeRegionIdentity(transcript.spec.region);
   const awayClub = String(transcript.spec.away_club || "Opponent");
   const normalizedAwayClub = normalizeClubIdentity(awayClub) || "opponent";
