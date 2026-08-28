@@ -1,7 +1,6 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { GameShell } from "./components/GameShell";
 import { HomeScreen } from "./components/HomeScreen";
-import { loadLocalRun, saveLocalRun } from "./localCareer";
 import { careerNavigationTarget, careerPathFromLocation } from "./routing";
 import type { CareerRun, Locale } from "./types";
 
@@ -28,6 +27,7 @@ export function App() {
   const [locale, setLocale] = useState<Locale>(() => (localStorage.getItem("career-locale") === "en" ? "en" : "es"));
   const [run, setRun] = useState<CareerRun | null>(null);
   const [runLoadError, setRunLoadError] = useState("");
+  const saveRevision = useRef(0);
 
   useEffect(() => {
     const update = () => setPath(currentPath());
@@ -48,7 +48,10 @@ export function App() {
 
   useEffect(() => {
     if (!run) return;
-    saveLocalRun(run);
+    const revision = ++saveRevision.current;
+    void import("./localCareer").then(({ saveLocalRun }) => {
+      if (revision === saveRevision.current) saveLocalRun(run);
+    }).catch(() => undefined);
     let active = true;
     void import("./trainerSprites").then(({ trainerSpriteStorageEntry }) => {
       if (!active) return;
@@ -77,13 +80,18 @@ export function App() {
       if (active) setRun(value);
     }).catch((reason: Error) => {
       if (!active) return;
-      const local = loadLocalRun(requestedRunId);
-      if (local) {
-        setRun(local);
-        setRunLoadError("");
-        return;
-      }
-      setRunLoadError(reason.message);
+      void import("./localCareer").then(({ loadLocalRun }) => {
+        if (!active) return;
+        const local = loadLocalRun(requestedRunId);
+        if (local) {
+          setRun(local);
+          setRunLoadError("");
+          return;
+        }
+        setRunLoadError(reason.message);
+      }).catch(() => {
+        if (active) setRunLoadError(reason.message);
+      });
     });
     return () => { active = false; };
   }, [requestedRunId, run?.id]);
@@ -120,7 +128,11 @@ export function App() {
       </Suspense>
     );
   } else if (path === "new" || path === "create") {
-    screen = <CreateScreen locale={locale} onCreated={(value) => { setRun(value); saveLocalRun(value); navigate(`run/${value.id}`); }} />;
+    screen = <CreateScreen locale={locale} onCreated={(value) => {
+      setRun(value);
+      void import("./localCareer").then(({ saveLocalRun }) => saveLocalRun(value)).catch(() => undefined);
+      navigate(`run/${value.id}`);
+    }} />;
   } else {
     screen = <HomeScreen locale={locale} />;
   }
