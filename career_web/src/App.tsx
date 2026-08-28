@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { readLocalStorage, writeLocalStorage } from "./browserStorage";
 import { GameShell } from "./components/GameShell";
 import { HomeScreen } from "./components/HomeScreen";
 import { RouteErrorBoundary } from "./components/RouteErrorBoundary";
@@ -25,7 +26,7 @@ export function navigate(path: string): void {
 
 export function App() {
   const [path, setPath] = useState(currentPath);
-  const [locale, setLocale] = useState<Locale>(() => (localStorage.getItem("career-locale") === "en" ? "en" : "es"));
+  const [locale, setLocale] = useState<Locale>(() => (readLocalStorage("career-locale") === "en" ? "en" : "es"));
   const [run, setRun] = useState<CareerRun | null>(null);
   const [runLoadError, setRunLoadError] = useState("");
   const saveRevision = useRef(0);
@@ -41,7 +42,7 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("career-locale", locale);
+    writeLocalStorage("career-locale", locale);
     document.documentElement.lang = locale;
     const skipLink = document.querySelector<HTMLElement>(".skip-link");
     if (skipLink) skipLink.textContent = locale === "es" ? "Saltar al contenido" : "Skip to content";
@@ -57,7 +58,7 @@ export function App() {
     void import("./trainerSprites").then(({ trainerSpriteStorageEntry }) => {
       if (!active) return;
       const trainerSprite = trainerSpriteStorageEntry(run);
-      if (trainerSprite) localStorage.setItem(trainerSprite.key, trainerSprite.sprite);
+      if (trainerSprite) writeLocalStorage(trainerSprite.key, trainerSprite.sprite);
     }).catch(() => undefined);
     return () => { active = false; };
   }, [run]);
