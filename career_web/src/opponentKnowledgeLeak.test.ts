@@ -70,15 +70,12 @@ describe("opponent knowledge boundary", () => {
   });
 
   it("fails closed when legacy transcript collections are malformed", () => {
-    const battle = transcript() as BattleTranscript & {
-      initial_state: BattleTranscript["initial_state"] & { combatants: unknown };
-      events: unknown;
-    };
-    battle.initial_state.combatants = null;
-    battle.events = null;
+    const battle = transcript();
+    (battle.initial_state as unknown as { combatants: unknown }).combatants = null;
+    (battle as unknown as { events: unknown }).events = null;
 
-    expect(() => opponentKnowledgeAtEvent(battle as BattleTranscript, 5)).not.toThrow();
-    const knowledge = opponentKnowledgeAtEvent(battle as BattleTranscript, 5);
+    expect(() => opponentKnowledgeAtEvent(battle, 5)).not.toThrow();
+    const knowledge = opponentKnowledgeAtEvent(battle, 5);
     expect([...knowledge.seenCombatantIds]).toEqual([]);
     expect([...knowledge.revealedMoves]).toEqual([]);
     expect([...knowledge.revealedAbilities]).toEqual([]);
