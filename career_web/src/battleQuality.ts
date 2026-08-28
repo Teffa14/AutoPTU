@@ -64,6 +64,10 @@ export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleV
   if (signals.reducedMotion) return "light";
 
   const renderPixels = battleEstimatedRenderPixels(signals);
+  const hasRasterSignal = signals.viewportWidth !== undefined
+    || signals.viewportHeight !== undefined
+    || signals.devicePixelRatio !== undefined;
+  if (hasRasterSignal && renderPixels === null) return "light";
   if (renderPixels !== null && renderPixels > BATTLE_FULL_RENDER_PIXEL_BUDGET) return "light";
 
   if (signals.storedPreference === "full" || signals.storedPreference === "light") return signals.storedPreference;
