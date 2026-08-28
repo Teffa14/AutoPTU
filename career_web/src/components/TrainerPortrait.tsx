@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 
 import trainerPortraits from "../assets/generated/trainer-portraits-v1.png";
+import { readLocalStorage } from "../browserStorage";
 import { trainerSpriteUrl } from "../trainerSprites";
 
 interface Props {
@@ -13,8 +14,8 @@ const POSITIONS = [["0%", "0%"], ["100%", "0%"], ["0%", "100%"], ["100%", "100%"
 const ROLE_INDEX: Record<string, number> = { owner: 0, mentor: 1, rival: 2, scout: 3, contact: 3 };
 
 export function TrainerPortrait({ name, role = "scout", className = "" }: Props) {
-  const playerSprite = className.includes("profile-trainer-portrait") && typeof localStorage !== "undefined"
-    ? localStorage.getItem(`career-trainer-sprite:${name.trim().toLocaleLowerCase()}`) ?? ""
+  const playerSprite = className.includes("profile-trainer-portrait")
+    ? readLocalStorage(`career-trainer-sprite:${name.trim().toLocaleLowerCase()}`) ?? ""
     : "";
   if (playerSprite) {
     return <span
