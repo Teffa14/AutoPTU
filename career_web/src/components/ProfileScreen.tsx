@@ -295,7 +295,7 @@ function itemDescription(item: string, locale: Locale): string {
     "Club Voucher": ["Extiende el contrato y elimina una advertencia sin club.", "Extends the contract and clears a no-club warning."],
     "Press Pass": ["+2 reputación.", "+2 reputation."],
     "Facility Pass": ["+2 desarrollo.", "+2 development."],
-    "Choice Scarf": ["+3 Velocidad permanentes al objetivo.", "+3 Speed to target."],
+    "Choice Scarf": ["+3 Velocidad permanentes al objetivo.", "+3 permanent Speed to the target."],
     "Ranger Kit": ["+2 scouting y 2 Poké Balls.", "+2 scouting and 2 Poké Balls."],
     "Evidence File": ["Protege la licencia y concede +1 reputación.", "Protects the license and grants +1 reputation."],
     "Contest Ribbon": ["+2 reputación.", "+2 reputation."],
