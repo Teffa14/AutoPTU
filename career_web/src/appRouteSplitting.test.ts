@@ -12,4 +12,9 @@ describe("career route bundle splitting", () => {
       expect(app).toContain(`lazy(() => import(\"./components/${screen}\")`);
     }
   });
+
+  it("keeps the career API out of the home startup path", () => {
+    expect(app).not.toContain('import { careerApi } from "./api";');
+    expect(app).toContain('import("./api")');
+  });
 });

@@ -1,5 +1,4 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import { careerApi } from "./api";
 import { GameShell } from "./components/GameShell";
 import { HomeScreen } from "./components/HomeScreen";
 import { loadLocalRun, saveLocalRun } from "./localCareer";
@@ -70,7 +69,7 @@ export function App() {
     }
     let active = true;
     setRunLoadError("");
-    careerApi.run(requestedRunId).then((value) => {
+    void import("./api").then(({ careerApi }) => careerApi.run(requestedRunId)).then((value) => {
       if (active) setRun(value);
     }).catch((reason: Error) => {
       if (!active) return;
