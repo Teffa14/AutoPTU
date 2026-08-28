@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 const app = readFileSync(fileURLToPath(new URL("./App.tsx", import.meta.url)), "utf8");
+const home = readFileSync(fileURLToPath(new URL("./components/HomeScreen.tsx", import.meta.url)), "utf8");
 const shell = readFileSync(fileURLToPath(new URL("./components/GameShell.tsx", import.meta.url)), "utf8");
 
 describe("career route bundle splitting", () => {
@@ -35,8 +36,10 @@ describe("career route bundle splitting", () => {
     expect(app).toContain('import("./trainerSprites")');
   });
 
-  it("keeps local career persistence out of the home startup path", () => {
-    expect(app).not.toContain('import { loadLocalRun, saveLocalRun } from "./localCareer";');
+  it("keeps local career persistence out of the synchronous home startup graph", () => {
+    expect(app).not.toContain('from "./localCareer"');
+    expect(home).not.toContain('from "../localCareer"');
     expect(app).toContain('import("./localCareer")');
+    expect(home).toContain('import("../localCareer")');
   });
 });
