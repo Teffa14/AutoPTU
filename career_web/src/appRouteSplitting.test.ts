@@ -27,7 +27,7 @@ describe("career route bundle splitting", () => {
   it("does not start the auth chunk before the page load settles", () => {
     expect(shell).toContain('window.addEventListener("load", loadAuth, { once: true })');
     expect(shell).toContain('window.setTimeout(() => {');
-    expect(shell.indexOf('window.setTimeout(() => {')).toBeLessThan(shell.indexOf('import("../auth")'));
+    expect(shell.indexOf('window.setTimeout(() => {')).toBeLessThan(shell.indexOf('void import("../auth")'));
   });
 
   it("keeps trainer sprite persistence out of the home startup path", () => {
