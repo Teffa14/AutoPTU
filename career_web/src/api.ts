@@ -61,8 +61,14 @@ function normalizeBattleTranscriptSpec(transcript: BattleTranscript): BattleTran
   return { ...transcript, spec: {} as BattleTranscript["spec"] };
 }
 
+function normalizeBattleTranscriptHash(transcript: BattleTranscript): BattleTranscript {
+  const rawHash = (transcript as { sha256?: unknown }).sha256;
+  if (typeof rawHash === "string") return transcript;
+  return { ...transcript, sha256: "legacy" };
+}
+
 function rememberBattleTranscript(key: string, transcript: BattleTranscript): BattleTranscript {
-  const safeTranscript = normalizeBattleTranscriptSpec(normalizeBattleTranscriptEvents(transcript));
+  const safeTranscript = normalizeBattleTranscriptHash(normalizeBattleTranscriptSpec(normalizeBattleTranscriptEvents(transcript)));
   battleCache.delete(key);
   battleCache.set(key, safeTranscript);
   while (battleCache.size > MAX_BATTLE_CACHE_ENTRIES) {
