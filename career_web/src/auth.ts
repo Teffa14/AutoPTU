@@ -1,5 +1,7 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
+import { readLocalStorage, writeLocalStorage } from "./browserStorage";
+
 const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
 const publishable = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined;
 const careerApiBase = ((import.meta.env.VITE_API_URL as string | undefined) ?? "").replace(/\/$/, "");
@@ -14,6 +16,7 @@ export const supabase: SupabaseClient | null = url && publishable ? createClient
 }) : null;
 
 const localUserKey = "autoptu-career-development-user";
+let transientDevelopmentUser = "";
 
 export type CareerAuthMode = "public" | "casual" | "ranked";
 
@@ -104,10 +107,13 @@ export async function signOut(): Promise<void> {
 }
 
 function localCareerHeaders(): Record<string, string> {
-  let developmentUser = localStorage.getItem(localUserKey);
+  let developmentUser = readLocalStorage(localUserKey) ?? transientDevelopmentUser;
   if (!developmentUser) {
     developmentUser = crypto.randomUUID();
-    localStorage.setItem(localUserKey, developmentUser);
+    transientDevelopmentUser = developmentUser;
+    writeLocalStorage(localUserKey, developmentUser);
+  } else if (!transientDevelopmentUser) {
+    transientDevelopmentUser = developmentUser;
   }
   return { "X-Career-User": developmentUser };
 }
