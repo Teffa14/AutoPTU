@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { GameShell } from "./components/GameShell";
 import { HomeScreen } from "./components/HomeScreen";
+import { RouteErrorBoundary } from "./components/RouteErrorBoundary";
 import { careerNavigationTarget, careerPathFromLocation } from "./routing";
 import type { CareerRun, Locale } from "./types";
 
@@ -140,9 +141,11 @@ export function App() {
   const shellRun = shareMatch || path === "" || path === "new" || path === "create" ? null : requestedRunId ? routeRun : run;
   return (
     <GameShell run={shellRun} locale={locale} path={path} displaySeason={battleSeason} homePath={battleMatch ? `run/${battleMatch[1]}` : undefined} onLocale={setLocale}>
-      <Suspense fallback={<div className="scene-loading">{locale === "es" ? "Cargando…" : "Loading…"}</div>}>
-        {screen}
-      </Suspense>
+      <RouteErrorBoundary locale={locale} resetKey={path}>
+        <Suspense fallback={<div className="scene-loading">{locale === "es" ? "Cargando…" : "Loading…"}</div>}>
+          {screen}
+        </Suspense>
+      </RouteErrorBoundary>
     </GameShell>
   );
 }
