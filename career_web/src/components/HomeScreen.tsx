@@ -1,20 +1,9 @@
-import { useEffect, useState } from "react";
 import { navigate } from "../App";
+import { loadLastLocalRunId } from "../localCareer";
 import type { Locale } from "../types";
 
 export function HomeScreen({ locale }: { locale: Locale }) {
-  const [lastRunId, setLastRunId] = useState<string | null>(null);
-
-  useEffect(() => {
-    let active = true;
-    void import("../localCareer").then(({ loadLastLocalRunId }) => {
-      if (active) setLastRunId(loadLastLocalRunId());
-    }).catch(() => {
-      if (active) setLastRunId(null);
-    });
-    return () => { active = false; };
-  }, []);
-
+  const lastRunId = loadLastLocalRunId();
   return (
     <section className="career-home">
       <div className="career-home-copy">
