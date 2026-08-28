@@ -116,3 +116,37 @@ def test_resolve_prepared_season_rejects_duplicate_battle_transcripts() -> None:
 
     with pytest.raises(ValueError, match="duplicate"):
         engine.resolve_prepared_season(run, transcripts)
+
+
+def test_finalize_season_rejects_duplicate_prepared_battle_ids(tmp_path: Path) -> None:
+    service = service_for(tmp_path)
+    created = service.create_run(
+        "duplicate-calendar-user",
+        {
+            "name": "Nia",
+            "region": "johto",
+            "starter": "Sentret",
+            "classes": ["Mentor"],
+            "seed": 821,
+        },
+    )
+    run = CareerRun.from_dict(created)
+    response = service.decide(
+        "duplicate-calendar-user",
+        run.id,
+        {"expected_revision": run.revision, "option_id": run.season.decision.options[0].id},
+        "pipeline-decision-duplicate-calendar",
+    )
+    prepared = service.store.load_run(run.id)
+    original_totals = dict(prepared.totals)
+    duplicate = prepared.season.battles[-1]
+    prepared.season.battles.append(duplicate)
+    prepared.season.battle_ids.append(duplicate.id)
+    service.store.save_run(prepared)
+
+    with pytest.raises(ValueError, match="duplicate"):
+        service.finalize_season("duplicate-calendar-user", run.id, response["featured_battle_id"])
+
+    reloaded = service.store.load_run(run.id)
+    assert reloaded.season.status == "battle"
+    assert reloaded.totals == original_totals

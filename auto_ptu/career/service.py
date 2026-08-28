@@ -204,6 +204,9 @@ class CareerService:
         if run.season is None or run.season.status != "battle":
             return run.to_dict()
         specs = list(run.season.battles)
+        spec_ids = [entry.id for entry in specs]
+        if len(spec_ids) != len(set(spec_ids)):
+            raise ValueError("The prepared career calendar contains duplicate battle IDs.")
         if not any(entry.id == battle_id for entry in specs):
             raise PermissionError("Battle does not belong to the prepared career calendar.")
         started_at = time.perf_counter()
