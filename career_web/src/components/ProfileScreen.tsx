@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { careerApi } from "../api";
+import { readLocalStorage, writeLocalStorage } from "../browserStorage";
 import type { CareerPokemon, CareerRun, Locale } from "../types";
 import { achievementDescription, achievementLabel } from "../achievementPresentation";
 import { EconomyShop } from "./EconomyShop";
@@ -39,7 +40,7 @@ export function ProfileScreen({ run, locale, onRun }: Props) {
     if (!eligiblePokemon.some((pokemon) => pokemon.id === itemTarget)) setItemTarget(defaultTarget);
   }, [defaultTarget, eligiblePokemon, itemTarget]);
   useEffect(() => {
-    localStorage.setItem(trainingStorageKey(run.id), trainingPlan);
+    writeLocalStorage(trainingStorageKey(run.id), trainingPlan);
   }, [run.id, trainingPlan]);
 
   function toggle(pokemon: CareerPokemon) {
@@ -221,7 +222,7 @@ function isAvailable(pokemon: CareerPokemon): boolean { return pokemon.status !=
 function trainingStorageKey(runId: string): string { return `autoptu-career-training-plan:${runId}`; }
 function storedTrainingPlan(runId: string): TrainingPlan {
   if (typeof window === "undefined") return "conditioning";
-  const value = window.localStorage.getItem(trainingStorageKey(runId));
+  const value = readLocalStorage(trainingStorageKey(runId));
   return value === "power" || value === "guard" || value === "agility" ? value : "conditioning";
 }
 function itemRequiresPokemon(item: string): boolean { return ["Training Kit", "Exp. Share", "Egg Incubator", "Choice Scarf", "Mega Stone", "Z-Crystal", "Dynamax Band", "Tera Orb"].includes(item); }
