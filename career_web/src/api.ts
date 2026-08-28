@@ -50,15 +50,21 @@ const battleCache = new Map<string, BattleTranscript>();
 const battleRequests = new Map<string, Promise<BattleTranscript>>();
 const requestTimeoutMs = 15_000;
 
+function normalizeBattleTranscriptEvents(transcript: BattleTranscript): BattleTranscript {
+  if (Array.isArray((transcript as { events?: unknown }).events)) return transcript;
+  return { ...transcript, events: [] };
+}
+
 function rememberBattleTranscript(key: string, transcript: BattleTranscript): BattleTranscript {
+  const safeTranscript = normalizeBattleTranscriptEvents(transcript);
   battleCache.delete(key);
-  battleCache.set(key, transcript);
+  battleCache.set(key, safeTranscript);
   while (battleCache.size > MAX_BATTLE_CACHE_ENTRIES) {
     const oldestKey = battleCache.keys().next().value as string | undefined;
     if (!oldestKey) break;
     battleCache.delete(oldestKey);
   }
-  return transcript;
+  return safeTranscript;
 }
 
 export class ApiError extends Error {
