@@ -55,8 +55,14 @@ function normalizeBattleTranscriptEvents(transcript: BattleTranscript): BattleTr
   return { ...transcript, events: [] };
 }
 
+function normalizeBattleTranscriptSpec(transcript: BattleTranscript): BattleTranscript {
+  const rawSpec = (transcript as { spec?: unknown }).spec;
+  if (rawSpec && typeof rawSpec === "object") return transcript;
+  return { ...transcript, spec: {} as BattleTranscript["spec"] };
+}
+
 function rememberBattleTranscript(key: string, transcript: BattleTranscript): BattleTranscript {
-  const safeTranscript = normalizeBattleTranscriptEvents(transcript);
+  const safeTranscript = normalizeBattleTranscriptSpec(normalizeBattleTranscriptEvents(transcript));
   battleCache.delete(key);
   battleCache.set(key, safeTranscript);
   while (battleCache.size > MAX_BATTLE_CACHE_ENTRIES) {
