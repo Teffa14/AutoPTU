@@ -34,4 +34,9 @@ describe("career route bundle splitting", () => {
     expect(app).not.toContain('import { trainerSpriteStorageEntry } from "./trainerSprites";');
     expect(app).toContain('import("./trainerSprites")');
   });
+
+  it("keeps local career persistence out of the home startup path", () => {
+    expect(app).not.toContain('import { loadLocalRun, saveLocalRun } from "./localCareer";');
+    expect(app).toContain('import("./localCareer")');
+  });
 });
