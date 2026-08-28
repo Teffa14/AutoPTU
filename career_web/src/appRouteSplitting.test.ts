@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 
 const app = readFileSync(fileURLToPath(new URL("./App.tsx", import.meta.url)), "utf8");
 const home = readFileSync(fileURLToPath(new URL("./components/HomeScreen.tsx", import.meta.url)), "utf8");
+const shell = readFileSync(fileURLToPath(new URL("./components/GameShell.tsx", import.meta.url)), "utf8");
 
 describe("career route bundle splitting", () => {
   it("keeps secondary screens out of the initial app bundle", () => {
@@ -24,5 +25,10 @@ describe("career route bundle splitting", () => {
     expect(home).not.toContain('from "../localCareer"');
     expect(app).toContain('import("./localCareer")');
     expect(home).toContain('import("../localCareer")');
+  });
+
+  it("keeps account auth out of the synchronous shell startup graph", () => {
+    expect(shell).not.toContain('from "../auth"');
+    expect(shell).toContain('import("../auth")');
   });
 });
