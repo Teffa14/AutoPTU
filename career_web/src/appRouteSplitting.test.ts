@@ -23,4 +23,9 @@ describe("career route bundle splitting", () => {
     expect(shell).not.toContain('from "../auth"');
     expect(shell).toContain('import("../auth")');
   });
+
+  it("keeps trainer sprite persistence out of the home startup path", () => {
+    expect(app).not.toContain('import { trainerSpriteStorageEntry } from "./trainerSprites";');
+    expect(app).toContain('import("./trainerSprites")');
+  });
 });
