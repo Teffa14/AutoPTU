@@ -3,7 +3,6 @@ import { GameShell } from "./components/GameShell";
 import { HomeScreen } from "./components/HomeScreen";
 import { loadLocalRun, saveLocalRun } from "./localCareer";
 import { careerNavigationTarget, careerPathFromLocation } from "./routing";
-import { trainerSpriteStorageEntry } from "./trainerSprites";
 import type { CareerRun, Locale } from "./types";
 
 const BattleScreen = lazy(() => import("./components/BattleScreen"));
@@ -50,8 +49,13 @@ export function App() {
   useEffect(() => {
     if (!run) return;
     saveLocalRun(run);
-    const trainerSprite = trainerSpriteStorageEntry(run);
-    if (trainerSprite) localStorage.setItem(trainerSprite.key, trainerSprite.sprite);
+    let active = true;
+    void import("./trainerSprites").then(({ trainerSpriteStorageEntry }) => {
+      if (!active) return;
+      const trainerSprite = trainerSpriteStorageEntry(run);
+      if (trainerSprite) localStorage.setItem(trainerSprite.key, trainerSprite.sprite);
+    }).catch(() => undefined);
+    return () => { active = false; };
   }, [run]);
 
   const runMatch = path.match(/^(?:run|profile|timeline)\/([^/]+)/);
