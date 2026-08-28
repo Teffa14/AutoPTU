@@ -19,4 +19,12 @@ describe("battle transcript API boundary", () => {
     expect(apiSource).toContain("spec: {} as BattleTranscript[\"spec\"]");
     expect(apiSource).toContain("normalizeBattleTranscriptSpec(normalizeBattleTranscriptEvents(transcript))");
   });
+
+  it("normalizes a missing or non-string legacy battle hash before BattleScreen slices it", () => {
+    expect(apiSource).toContain("function normalizeBattleTranscriptHash");
+    expect(apiSource).toContain("const rawHash = (transcript as { sha256?: unknown }).sha256");
+    expect(apiSource).toContain("typeof rawHash === \"string\"");
+    expect(apiSource).toContain("sha256: \"legacy\"");
+    expect(apiSource).toContain("normalizeBattleTranscriptHash(normalizeBattleTranscriptSpec(normalizeBattleTranscriptEvents(transcript)))");
+  });
 });
