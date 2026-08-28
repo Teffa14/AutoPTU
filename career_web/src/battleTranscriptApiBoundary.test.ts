@@ -12,10 +12,11 @@ describe("battle transcript API boundary", () => {
     expect(apiSource).toContain("return safeTranscript");
   });
 
-  it("normalizes a missing or null legacy initial battle state before BattleArena dereferences it", () => {
+  it("normalizes a missing, null, or structurally malformed legacy initial battle state before BattleArena dereferences it", () => {
     expect(apiSource).toContain("function normalizeBattleTranscriptInitialState");
     expect(apiSource).toContain("const rawInitialState = (transcript as { initial_state?: unknown }).initial_state");
-    expect(apiSource).toContain("rawInitialState && typeof rawInitialState === \"object\"");
+    expect(apiSource).toContain("&& typeof rawInitialState === \"object\"");
+    expect(apiSource).toContain("Array.isArray((rawInitialState as { combatants?: unknown }).combatants)");
     expect(apiSource).toContain("initial_state: { round: 0, battle_over: false, grid: { width: 1, height: 1 }, combatants: [] }");
     expect(apiSource).toContain("normalizeBattleTranscriptInitialState(normalizeBattleTranscriptEvents(transcript))");
   });
