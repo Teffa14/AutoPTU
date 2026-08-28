@@ -32,6 +32,7 @@ const PRESENTED_EVENT_TYPES = new Set([
 
 export function playbackEventIndexes(transcript: BattleTranscript): number[] {
   return transcript.events.flatMap((event, index) => {
+    if (!isRecord(event)) return [];
     const type = stringValue(event.type);
     return type !== null && PRESENTED_EVENT_TYPES.has(type) ? [index] : [];
   });
@@ -46,7 +47,7 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
 
   for (let index = 0; index <= lastIndex; index += 1) {
     const event = transcript.events[index];
-    if (!event) continue;
+    if (!isRecord(event)) continue;
     if (event.type === "round_start" && Array.isArray(event.initial_states)) {
       for (const raw of event.initial_states) {
         if (!isRecord(raw)) continue;
@@ -117,7 +118,8 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
     }
   }
 
-  const event = complete ? null : transcript.events[rawEventIndex] ?? null;
+  const rawEvent = complete ? null : transcript.events[rawEventIndex] ?? null;
+  const event = isRecord(rawEvent) ? rawEvent : null;
   const context = isRecord(event?.context) ? event.context : {};
   const rollOptions = Array.isArray(context.roll_options) ? context.roll_options.filter((value): value is string => typeof value === "string") : [];
   const damage = event?.type === "move"
