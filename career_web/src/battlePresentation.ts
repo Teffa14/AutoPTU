@@ -31,7 +31,7 @@ const PRESENTED_EVENT_TYPES = new Set([
 ]);
 
 export function playbackEventIndexes(transcript: BattleTranscript): number[] {
-  return transcript.events.flatMap((event, index) => {
+  return battleEvents(transcript).flatMap((event, index) => {
     if (!isRecord(event)) return [];
     const type = stringValue(event.type);
     return type !== null && PRESENTED_EVENT_TYPES.has(type) ? [index] : [];
@@ -39,14 +39,15 @@ export function playbackEventIndexes(transcript: BattleTranscript): number[] {
 }
 
 export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: number): BattleViewState {
-  const complete = rawEventIndex >= transcript.events.length;
+  const events = battleEvents(transcript);
+  const complete = rawEventIndex >= events.length;
   const combatants = new Map(
-    transcript.initial_state.combatants.map((entry) => [entry.id, cloneCombatant(entry)]),
+    battleCombatants(transcript.initial_state).map((entry) => [entry.id, cloneCombatant(entry)]),
   );
-  const lastIndex = complete ? transcript.events.length - 1 : rawEventIndex;
+  const lastIndex = complete ? events.length - 1 : rawEventIndex;
 
   for (let index = 0; index <= lastIndex; index += 1) {
-    const event = transcript.events[index];
+    const event = events[index];
     if (!isRecord(event)) continue;
     if (event.type === "round_start" && Array.isArray(event.initial_states)) {
       for (const raw of event.initial_states) {
@@ -104,7 +105,7 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
   }
 
   if (complete) {
-    for (const final of transcript.final_state.combatants) {
+    for (const final of battleCombatants(transcript.final_state)) {
       const current = combatants.get(final.id);
       if (!current) continue;
       const hp = finiteNumber(final.hp);
@@ -118,7 +119,7 @@ export function deriveBattleView(transcript: BattleTranscript, rawEventIndex: nu
     }
   }
 
-  const rawEvent = complete ? null : transcript.events[rawEventIndex] ?? null;
+  const rawEvent = complete ? null : events[rawEventIndex] ?? null;
   const event = isRecord(rawEvent) ? rawEvent : null;
   const context = isRecord(event?.context) ? event.context : {};
   const rollOptions = Array.isArray(context.roll_options) ? context.roll_options.filter((value): value is string => typeof value === "string") : [];
@@ -279,7 +280,16 @@ function authoritativeWinnerLabel(value: unknown, fallback: string): string {
 }
 
 function combatantName(transcript: BattleTranscript, id: string): string {
-  return transcript.initial_state.combatants.find((entry) => entry.id === id)?.species ?? id.replace(/^career-(home|away)-?/, "");
+  return battleCombatants(transcript.initial_state).find((entry) => entry.id === id)?.species ?? id.replace(/^career-(home|away)-?/, "");
+}
+
+function battleEvents(transcript: BattleTranscript): unknown[] {
+  return Array.isArray(transcript.events) ? transcript.events : [];
+}
+
+function battleCombatants(state: unknown): BattleCombatant[] {
+  if (!isRecord(state) || !Array.isArray(state.combatants)) return [];
+  return state.combatants.filter((entry): entry is BattleCombatant => isRecord(entry) && typeof entry.id === "string");
 }
 
 function cloneCombatant(entry: BattleCombatant): BattleCombatant {
