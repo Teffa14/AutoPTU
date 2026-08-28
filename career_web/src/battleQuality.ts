@@ -57,7 +57,7 @@ export function constrainRequestedBattleVisualQuality(
 ): BattleVisualQuality {
   if (requested === "light" || signals.reducedMotion) return "light";
   const renderPixels = battleEstimatedRenderPixels(signals);
-  return renderPixels !== null && renderPixels > BATTLE_FULL_RENDER_PIXEL_BUDGET ? "light" : "full";
+  return renderPixels === null || renderPixels > BATTLE_FULL_RENDER_PIXEL_BUDGET ? "light" : "full";
 }
 
 export function chooseBattleVisualQuality(signals: BattleVisualSignals): BattleVisualQuality {
