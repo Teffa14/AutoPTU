@@ -55,6 +55,12 @@ function normalizeBattleTranscriptEvents(transcript: BattleTranscript): BattleTr
   return { ...transcript, events: [] };
 }
 
+function normalizeBattleTranscriptInitialState(transcript: BattleTranscript): BattleTranscript {
+  const rawInitialState = (transcript as { initial_state?: unknown }).initial_state;
+  if (rawInitialState && typeof rawInitialState === "object") return transcript;
+  return { ...transcript, initial_state: { grid: { width: 1, height: 1 }, combatants: [] } as BattleTranscript["initial_state"] };
+}
+
 function normalizeBattleTranscriptSpec(transcript: BattleTranscript): BattleTranscript {
   const rawSpec = (transcript as { spec?: unknown }).spec;
   if (rawSpec && typeof rawSpec === "object") return transcript;
@@ -68,7 +74,7 @@ function normalizeBattleTranscriptHash(transcript: BattleTranscript): BattleTran
 }
 
 function rememberBattleTranscript(key: string, transcript: BattleTranscript): BattleTranscript {
-  const safeTranscript = normalizeBattleTranscriptHash(normalizeBattleTranscriptSpec(normalizeBattleTranscriptEvents(transcript)));
+  const safeTranscript = normalizeBattleTranscriptHash(normalizeBattleTranscriptSpec(normalizeBattleTranscriptInitialState(normalizeBattleTranscriptEvents(transcript))));
   battleCache.delete(key);
   battleCache.set(key, safeTranscript);
   while (battleCache.size > MAX_BATTLE_CACHE_ENTRIES) {
