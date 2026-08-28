@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 
 const trainerPortrait = readFileSync(fileURLToPath(new URL("./components/TrainerPortrait.tsx", import.meta.url)), "utf8");
 const profileScreen = readFileSync(fileURLToPath(new URL("./components/ProfileScreen.tsx", import.meta.url)), "utf8");
+const seasonScreen = readFileSync(fileURLToPath(new URL("./components/SeasonScreen.tsx", import.meta.url)), "utf8");
 
 describe("career UI storage resilience", () => {
   it("routes trainer portrait storage through the guarded browser boundary", () => {
@@ -16,5 +17,11 @@ describe("career UI storage resilience", () => {
     expect(profileScreen).not.toMatch(/(?:window\.)?localStorage\.(?:getItem|setItem)\(/);
     expect(profileScreen).toContain("readLocalStorage(trainingStorageKey(runId))");
     expect(profileScreen).toContain("writeLocalStorage(trainingStorageKey(run.id), trainingPlan)");
+  });
+
+  it("routes season training-plan preferences through the guarded browser boundary", () => {
+    expect(seasonScreen).not.toMatch(/(?:window\.)?localStorage\.(?:getItem|setItem)\(/);
+    expect(seasonScreen).toContain("readLocalStorage(trainingStorageKey(runId))");
+    expect(seasonScreen).toContain("writeLocalStorage(trainingStorageKey(run.id), trainingPlan)");
   });
 });
