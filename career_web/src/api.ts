@@ -58,7 +58,7 @@ function normalizeBattleTranscriptEvents(transcript: BattleTranscript): BattleTr
 function normalizeBattleTranscriptInitialState(transcript: BattleTranscript): BattleTranscript {
   const rawInitialState = (transcript as { initial_state?: unknown }).initial_state;
   if (rawInitialState && typeof rawInitialState === "object") return transcript;
-  return { ...transcript, initial_state: { grid: { width: 1, height: 1 }, combatants: [] } as BattleTranscript["initial_state"] };
+  return { ...transcript, initial_state: { round: 0, battle_over: false, grid: { width: 1, height: 1 }, combatants: [] } };
 }
 
 function normalizeBattleTranscriptSpec(transcript: BattleTranscript): BattleTranscript {
