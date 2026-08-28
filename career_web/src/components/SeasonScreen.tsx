@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 
 import { careerApi } from "../api";
 import { navigate } from "../App";
+import { readLocalStorage, writeLocalStorage } from "../browserStorage";
 import { decisionPresentation, effectLabel, effectRule, riskLabel, transparencyLabel } from "../decisionPresentation";
 import { t } from "../i18n";
 import { automaticTrainingCandidates, automaticTrainingHasRoom, type TrainingPlan } from "../trainingPlan";
@@ -51,7 +52,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
     autoTrainingRef.current = "";
   }, [run.id]);
   useEffect(() => {
-    window.localStorage.setItem(trainingStorageKey(run.id), trainingPlan);
+    writeLocalStorage(trainingStorageKey(run.id), trainingPlan);
   }, [run.id, trainingPlan]);
   useEffect(() => {
     if (trainingPlan === "manual" || trainingBusy || busy || run.status !== "active" || run.season?.status !== "decision" || run.season.training_completed) return;
@@ -307,8 +308,7 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
 
 function trainingStorageKey(runId: string): string { return `autoptu-career-training-plan:${runId}`; }
 function storedTrainingPlan(runId: string): TrainingPlan {
-  if (typeof window === "undefined") return "manual";
-  const value = window.localStorage.getItem(trainingStorageKey(runId));
+  const value = readLocalStorage(trainingStorageKey(runId));
   return value === "conditioning" || value === "power" || value === "guard" || value === "agility" ? value : "manual";
 }
 function signed(value: number): string { return value > 0 ? `+${value}` : String(value); }
