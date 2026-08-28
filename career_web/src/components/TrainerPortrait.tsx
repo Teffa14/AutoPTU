@@ -22,7 +22,9 @@ export function TrainerPortrait({ name, role = "scout", className = "" }: Props)
   const playerSprite = className.includes("profile-trainer-portrait")
     ? readLocalStorage(`career-trainer-sprite:${name.trim().toLocaleLowerCase()}`) ?? ""
     : "";
-  const sprite = playerSprite || roleSprite(name, role);
+  const spriteUrl = playerSprite
+    ? trainerSpriteUrl(playerSprite)
+    : trainerSpriteUrl(roleSprite(name, role));
   return <span
     className={`trainer-portrait ${className}`.trim()}
     role="img"
@@ -30,7 +32,7 @@ export function TrainerPortrait({ name, role = "scout", className = "" }: Props)
     title={name}
     style={{ background: "none", display: "grid", placeItems: "center", overflow: "visible" } as CSSProperties}
   ><img
-      src={trainerSpriteUrl(sprite)}
+      src={spriteUrl}
       alt=""
       loading="lazy"
       decoding="async"
