@@ -1,7 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { GameShell } from "./components/GameShell";
 import { HomeScreen } from "./components/HomeScreen";
-import { loadLocalRun, saveLocalRun } from "./localCareer";
 import { careerNavigationTarget, careerPathFromLocation } from "./routing";
 import { trainerSpriteStorageEntry } from "./trainerSprites";
 import type { CareerRun, Locale } from "./types";
@@ -14,6 +13,12 @@ const SeasonHub = lazy(() => import("./components/SeasonHub").then((module) => (
 const ShareScreen = lazy(() => import("./components/ShareScreen").then((module) => ({ default: module.ShareScreen })));
 const TimelineScreen = lazy(() => import("./components/TimelineScreen").then((module) => ({ default: module.TimelineScreen })));
 const CAREER_BASE_PATH = import.meta.env.BASE_URL;
+let localCareerModulePromise: Promise<typeof import("./localCareer")> | null = null;
+
+function localCareerModule(): Promise<typeof import("./localCareer")> {
+  localCareerModulePromise ??= import("./localCareer");
+  return localCareerModulePromise;
+}
 
 function currentPath(): string {
   return careerPathFromLocation(window.location.pathname, CAREER_BASE_PATH, window.location.hash);
@@ -49,7 +54,7 @@ export function App() {
 
   useEffect(() => {
     if (!run) return;
-    saveLocalRun(run);
+    void localCareerModule().then(({ saveLocalRun }) => saveLocalRun(run));
     const trainerSprite = trainerSpriteStorageEntry(run);
     if (trainerSprite) localStorage.setItem(trainerSprite.key, trainerSprite.sprite);
   }, [run]);
@@ -73,13 +78,18 @@ export function App() {
       if (active) setRun(value);
     }).catch((reason: Error) => {
       if (!active) return;
-      const local = loadLocalRun(requestedRunId);
-      if (local) {
-        setRun(local);
-        setRunLoadError("");
-        return;
-      }
-      setRunLoadError(reason.message);
+      void localCareerModule().then(({ loadLocalRun }) => {
+        if (!active) return;
+        const local = loadLocalRun(requestedRunId);
+        if (local) {
+          setRun(local);
+          setRunLoadError("");
+          return;
+        }
+        setRunLoadError(reason.message);
+      }).catch(() => {
+        if (active) setRunLoadError(reason.message);
+      });
     });
     return () => { active = false; };
   }, [requestedRunId, run?.id]);
@@ -116,7 +126,11 @@ export function App() {
       </Suspense>
     );
   } else if (path === "new" || path === "create") {
-    screen = <CreateScreen locale={locale} onCreated={(value) => { setRun(value); saveLocalRun(value); navigate(`run/${value.id}`); }} />;
+    screen = <CreateScreen locale={locale} onCreated={(value) => {
+      setRun(value);
+      void localCareerModule().then(({ saveLocalRun }) => saveLocalRun(value));
+      navigate(`run/${value.id}`);
+    }} />;
   } else {
     screen = <HomeScreen locale={locale} />;
   }
