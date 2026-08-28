@@ -7,24 +7,28 @@ export type OpponentKnowledge = {
 };
 
 export function opponentKnowledgeAtEvent(transcript: BattleTranscript, rawEventIndex: number): OpponentKnowledge {
-  const opponentIds = new Set(
-    transcript.initial_state.combatants
-      .filter((combatant) => combatant.team === "career-away")
-      .map((combatant) => combatant.id),
-  );
+  const initialCombatants = Array.isArray(transcript.initial_state?.combatants)
+    ? transcript.initial_state.combatants
+    : [];
+  const events = Array.isArray(transcript.events) ? transcript.events : [];
+  const opponentIds = new Set<string>();
   const seenCombatantIds = new Set<string>();
   const revealedMoves = new Map<string, Set<string>>();
   const revealedAbilities = new Map<string, Set<string>>();
 
-  for (const combatant of transcript.initial_state.combatants) {
-    if (combatant.team === "career-away" && combatant.active !== false) seenCombatantIds.add(combatant.id);
+  for (const combatant of initialCombatants) {
+    if (!isRecord(combatant) || combatant.team !== "career-away") continue;
+    const id = safeString(combatant.id);
+    if (!id) continue;
+    opponentIds.add(id);
+    if (combatant.active !== false) seenCombatantIds.add(id);
   }
 
   const safeIndex = Number.isFinite(rawEventIndex) ? Math.floor(rawEventIndex) : -1;
-  const lastIndex = Math.min(Math.max(-1, safeIndex), transcript.events.length - 1);
+  const lastIndex = Math.min(Math.max(-1, safeIndex), events.length - 1);
   for (let index = 0; index <= lastIndex; index += 1) {
-    const event = transcript.events[index];
-    if (!event || typeof event !== "object") continue;
+    const event = events[index];
+    if (!isRecord(event)) continue;
     const actor = safeString(event.actor);
     const target = safeString(event.target);
 
@@ -61,6 +65,10 @@ function addReveal(target: Map<string, Set<string>>, combatantId: string, value:
   const current = target.get(combatantId) ?? new Set<string>();
   current.add(value);
   target.set(combatantId, current);
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
 }
 
 function safeString(value: unknown): string | null {
