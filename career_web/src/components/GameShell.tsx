@@ -1,6 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { navigate } from "../App";
-import { signInWithProvider, signOut, supabase } from "../auth";
 import { t } from "../i18n";
 import type { CareerRun, Locale } from "../types";
 
@@ -50,10 +49,22 @@ export function GameShell({ children, run, locale, path, displaySeason, homePath
 }
 
 function GoogleAccount({ locale }: { locale: Locale }) {
+  const [authModule, setAuthModule] = useState<typeof import("../auth") | null>(null);
   const [label, setLabel] = useState("");
   const [error, setError] = useState("");
+
   useEffect(() => {
-    const client = supabase;
+    let active = true;
+    void import("../auth").then((module) => {
+      if (active) setAuthModule(module);
+    }).catch(() => {
+      if (active) setAuthModule(null);
+    });
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    const client = authModule?.supabase;
     if (!client) return;
     let active = true;
     const update = (user: { is_anonymous?: boolean; email?: string; user_metadata?: Record<string, unknown> } | null | undefined) => {
@@ -63,9 +74,10 @@ function GoogleAccount({ locale }: { locale: Locale }) {
     void client.auth.getSession().then(({ data }) => update(data.session?.user));
     const { data } = client.auth.onAuthStateChange((_event, session) => update(session?.user));
     return () => { active = false; data.subscription.unsubscribe(); };
-  }, []);
-  if (!supabase) return null;
+  }, [authModule]);
+
+  if (!authModule?.supabase) return null;
   return label
-    ? <button className="account-chip" title={label} onClick={() => { void signOut().catch((reason: Error) => setError(reason.message)); }}>{label.split("@")[0]} <small>{locale === "es" ? "salir" : "sign out"}</small></button>
-    : <button className="account-chip google" title={error || undefined} onClick={() => { setError(""); void signInWithProvider("google").catch((reason: Error) => setError(reason.message)); }}>G <small>{error ? "!" : locale === "es" ? "Entrar" : "Sign in"}</small></button>;
+    ? <button className="account-chip" title={label} onClick={() => { void authModule.signOut().catch((reason: Error) => setError(reason.message)); }}>{label.split("@")[0]} <small>{locale === "es" ? "salir" : "sign out"}</small></button>
+    : <button className="account-chip google" title={error || undefined} onClick={() => { setError(""); void authModule.signInWithProvider("google").catch((reason: Error) => setError(reason.message)); }}>G <small>{error ? "!" : locale === "es" ? "Entrar" : "Sign in"}</small></button>;
 }
