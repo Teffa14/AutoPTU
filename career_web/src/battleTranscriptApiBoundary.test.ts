@@ -11,4 +11,12 @@ describe("battle transcript API boundary", () => {
     expect(apiSource).toContain("battleCache.set(key, safeTranscript)");
     expect(apiSource).toContain("return safeTranscript");
   });
+
+  it("normalizes a missing or null legacy battle spec before BattleScreen receives it", () => {
+    expect(apiSource).toContain("function normalizeBattleTranscriptSpec");
+    expect(apiSource).toContain("const rawSpec = (transcript as { spec?: unknown }).spec");
+    expect(apiSource).toContain("!rawSpec || typeof rawSpec !== \"object\"");
+    expect(apiSource).toContain("spec: {} as BattleTranscript[\"spec\"]");
+    expect(apiSource).toContain("normalizeBattleTranscriptSpec(normalizeBattleTranscriptEvents(transcript))");
+  });
 });
