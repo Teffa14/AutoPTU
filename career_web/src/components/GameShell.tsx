@@ -55,12 +55,26 @@ function GoogleAccount({ locale }: { locale: Locale }) {
 
   useEffect(() => {
     let active = true;
-    void import("../auth").then((module) => {
-      if (active) setAuthModule(module);
-    }).catch(() => {
-      if (active) setAuthModule(null);
-    });
-    return () => { active = false; };
+    let timer = 0;
+    const loadAuth = () => {
+      timer = window.setTimeout(() => {
+        void import("../auth").then((module) => {
+          if (active) setAuthModule(module);
+        }).catch(() => {
+          if (active) setAuthModule(null);
+        });
+      }, 1200);
+    };
+    if (document.readyState === "complete") {
+      loadAuth();
+    } else {
+      window.addEventListener("load", loadAuth, { once: true });
+    }
+    return () => {
+      active = false;
+      window.clearTimeout(timer);
+      window.removeEventListener("load", loadAuth);
+    };
   }, []);
 
   useEffect(() => {
