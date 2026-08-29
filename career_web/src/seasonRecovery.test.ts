@@ -132,6 +132,17 @@ describe("normalizedActiveLineup", () => {
     expect(normalizedActiveLineup(run).map((pokemon) => pokemon.id)).toEqual(["two", "one"]);
   });
 
+  it("trims corrupt persisted roster ids before matching pokemon", () => {
+    const run = {
+      active_roster: ["  two  ", "   ", " one"],
+      pokemon: [{ id: "one", species: "Bulbasaur", level: 5 }, { id: "two", species: "Pidgey", level: 4 }],
+    } as unknown as CareerRun;
+
+    const normalized = normalizeSeasonRosterState(run);
+    expect(normalized.active_roster).toEqual(["two", "one"]);
+    expect(normalizedActiveLineup(normalized).map((pokemon) => pokemon.id)).toEqual(["two", "one"]);
+  });
+
   it("deduplicates corrupt pokemon records by id while preserving the first valid record", () => {
     const run = {
       active_roster: ["starter", "wing"],
