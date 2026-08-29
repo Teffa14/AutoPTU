@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 
 import { careerApi } from "../api";
 import { navigate } from "../App";
@@ -8,9 +8,14 @@ import { t } from "../i18n";
 import { automaticTrainingCandidates, automaticTrainingHasRoom, type TrainingPlan } from "../trainingPlan";
 import type { CareerRun, DecisionOption, DecisionReward, Locale } from "../types";
 import { BattlePreparing } from "./BattlePreparing";
-import { EconomyShop } from "./EconomyShop";
 import { PokemonSprite } from "./PokemonSprite";
 import { TrainerPortrait } from "./TrainerPortrait";
+
+const EconomyShop = lazy(() => import("./EconomyShop").then(({ EconomyShop }) => ({ default: EconomyShop })));
+
+function warmEconomyShop(): void {
+  void import("./EconomyShop").catch(() => undefined);
+}
 
 interface Props { run: CareerRun; locale: Locale; onRun: (run: CareerRun) => void }
 
@@ -200,10 +205,10 @@ export function SeasonScreen({ run, locale, onRun }: Props) {
       </div>
       <div className={`season-contract-strip ${run.seasons_without_contract ? "warning" : ""}`}>
         <span><small>{locale === "es" ? "CONTRATO" : "CONTRACT"}</small><b>{run.contract ? `${run.contract.club_name} · ${run.contract.seasons_remaining} ${locale === "es" ? "temp. firmadas" : run.contract.seasons_remaining === 1 ? "season secured" : "seasons secured"}` : (locale === "es" ? "Sin club" : "No club")}</b></span>
-        <span className="salary-card"><small>{locale === "es" ? "SALARIO" : "SALARY"}</small><b>₽ {run.contract?.salary ?? 0} / {locale === "es" ? "temporada" : "season"}</b><em>{locale === "es" ? "Saldo" : "Balance"} ₽ {run.money ?? 0}</em><button type="button" onClick={() => setEconomyOpen((open) => !open)}>{economyOpen ? (locale === "es" ? "Cerrar" : "Close") : (locale === "es" ? "Usar dinero" : "Spend money")}</button></span>
+        <span className="salary-card"><small>{locale === "es" ? "SALARIO" : "SALARY"}</small><b>₽ {run.contract?.salary ?? 0} / {locale === "es" ? "temporada" : "season"}</b><em>{locale === "es" ? "Saldo" : "Balance"} ₽ {run.money ?? 0}</em><button type="button" onPointerEnter={warmEconomyShop} onFocus={warmEconomyShop} onClick={() => setEconomyOpen((open) => !open)}>{economyOpen ? (locale === "es" ? "Cerrar" : "Close") : (locale === "es" ? "Usar dinero" : "Spend money")}</button></span>
         <span><small>{locale === "es" ? "RIESGO DE RETIRO" : "RETIREMENT RISK"}</small><b>{run.seasons_without_contract}/2 {locale === "es" ? "temporadas sin contrato" : "seasons without a contract"}</b></span>
       </div>
-      {economyOpen ? <EconomyShop run={run} locale={locale} onRun={onRun} compact /> : null}
+      {economyOpen ? <Suspense fallback={<div className="economy-market compact" role="status">{locale === "es" ? "Abriendo mercado…" : "Opening market…"}</div>}><EconomyShop run={run} locale={locale} onRun={onRun} compact /></Suspense> : null}
       <div className="active-class-effect">
         {run.class_effects?.adapters?.map((entry) => <span key={entry.class_name}><b>{entry.class_name}</b> · {locale === "es" ? entry.description_es : entry.description_en}</span>)}
         <label>
