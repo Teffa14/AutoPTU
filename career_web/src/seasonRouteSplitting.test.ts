@@ -23,4 +23,9 @@ describe("season route bundle splitting", () => {
     expect(seasonHub).toContain('import("./PreseasonMarket")');
     expect(seasonHub).toContain('<Suspense fallback=');
   });
+
+  it("keeps decision outcome presentation out of the normal season hub graph", () => {
+    expect(seasonHub).not.toContain('import { DecisionOutcomePanel } from "./DecisionOutcomePanel";');
+    expect(seasonHub).toContain('import("./DecisionOutcomePanel")');
+  });
 });
