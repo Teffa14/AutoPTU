@@ -32,4 +32,11 @@ describe("battle renderer fallback", () => {
     expect(battleArena).toContain("constrainRequestedBattleVisualQuality(\"full\"");
     expect(battleArena).toContain('persistBattleVisualQuality("light")');
   });
+
+  it("keeps tactical sprite coordinate calculations synchronized with the resized Pixi screen", () => {
+    expect(battleArena).toContain("const syncScreenMetrics = () =>");
+    expect(battleArena).toContain("screen.current = { width: currentApp.screen.width, height: currentApp.screen.height }");
+    expect(battleArena).toContain('window.addEventListener("resize", syncScreenMetrics');
+    expect(battleArena).toContain('window.removeEventListener("resize", syncScreenMetrics)');
+  });
 });
