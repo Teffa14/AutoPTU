@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { normalizedActiveLineup, pendingBattleRecovery, repairExhaustedDecisionPhase } from "./seasonRecovery";
+import { normalizeSeasonRosterState, normalizedActiveLineup, pendingBattleRecovery, repairExhaustedDecisionPhase } from "./seasonRecovery";
 import type { CareerRun } from "./types";
 
 function runWithSeason(status: string, completed: number, required: number, battleIds: string[]): CareerRun {
@@ -130,5 +130,23 @@ describe("normalizedActiveLineup", () => {
       pokemon: [{ id: "one", species: "Bulbasaur", level: 5 }, { id: "two", species: "Pidgey", level: 4 }],
     } as unknown as CareerRun;
     expect(normalizedActiveLineup(run).map((pokemon) => pokemon.id)).toEqual(["two", "one"]);
+  });
+
+  it("deduplicates corrupt pokemon records by id while preserving the first valid record", () => {
+    const run = {
+      active_roster: ["starter", "wing"],
+      pokemon: [
+        { id: "starter", species: "Bulbasaur", level: 5 },
+        { id: "starter", species: "Ivysaur", level: 99 },
+        { id: "wing", species: "Pidgey", level: 4 },
+      ],
+    } as unknown as CareerRun;
+
+    const normalized = normalizeSeasonRosterState(run);
+    expect(normalized.pokemon.map((pokemon) => [pokemon.id, pokemon.species, pokemon.level])).toEqual([
+      ["starter", "Bulbasaur", 5],
+      ["wing", "Pidgey", 4],
+    ]);
+    expect(normalized.active_roster).toEqual(["starter", "wing"]);
   });
 });
