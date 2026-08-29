@@ -164,4 +164,16 @@ describe("normalizedActiveLineup", () => {
     expect(normalized.pokemon.map((pokemon) => pokemon.id)).toEqual(["starter"]);
     expect(normalized.active_roster).toEqual(["starter"]);
   });
+
+  it("returns the original run when a clean roster needs no repair", () => {
+    const run = {
+      active_roster: ["starter", "wing"],
+      pokemon: [
+        { id: "starter", species: "Bulbasaur", level: 5 },
+        { id: "wing", species: "Pidgey", level: 4 },
+      ],
+    } as unknown as CareerRun;
+
+    expect(normalizeSeasonRosterState(run)).toBe(run);
+  });
 });

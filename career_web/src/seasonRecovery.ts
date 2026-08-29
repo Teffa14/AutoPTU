@@ -44,12 +44,21 @@ function normalizedBattleIds(run: CareerRun): string[] {
 function normalizedPokemon(run: CareerRun): CareerPokemon[] {
   if (!Array.isArray(run.pokemon)) return [];
   const seen = new Set<string>();
-  return run.pokemon.filter((entry): entry is CareerPokemon => {
-    if (!entry || typeof entry !== "object" || typeof entry.id !== "string" || !entry.id.trim()) return false;
-    if (seen.has(entry.id)) return false;
+  const normalized: CareerPokemon[] = [];
+  let changed = false;
+  for (const entry of run.pokemon) {
+    if (!entry || typeof entry !== "object" || typeof entry.id !== "string" || !entry.id.trim()) {
+      changed = true;
+      continue;
+    }
+    if (seen.has(entry.id)) {
+      changed = true;
+      continue;
+    }
     seen.add(entry.id);
-    return true;
-  });
+    normalized.push(entry);
+  }
+  return changed ? normalized : (run.pokemon as CareerPokemon[]);
 }
 
 export function normalizedActiveLineup(run: CareerRun): CareerPokemon[] {
@@ -71,7 +80,11 @@ export function normalizedActiveLineup(run: CareerRun): CareerPokemon[] {
 export function normalizeSeasonRosterState(run: CareerRun): CareerRun {
   const pokemon = normalizedPokemon(run);
   const activeRoster = normalizedActiveLineup({ ...run, pokemon }).map((entry) => entry.id);
-  if (pokemon === run.pokemon && activeRoster === run.active_roster) return run;
+  const rosterUnchanged =
+    Array.isArray(run.active_roster) &&
+    activeRoster.length === run.active_roster.length &&
+    activeRoster.every((id, index) => id === run.active_roster[index]);
+  if (pokemon === run.pokemon && rosterUnchanged) return run;
   return { ...run, pokemon, active_roster: activeRoster };
 }
 
