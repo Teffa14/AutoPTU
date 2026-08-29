@@ -15,6 +15,13 @@ function warmHomeRoute(destination: HomeDestination): void {
   void warmDestination[destination]().catch(() => undefined);
 }
 
+function warmContinueRoute(): void {
+  void Promise.all([
+    import("../api"),
+    import("./SeasonHub"),
+  ]).catch(() => undefined);
+}
+
 export function HomeScreen({ locale }: { locale: Locale }) {
   const [lastRunId, setLastRunId] = useState<string | null>(null);
 
@@ -53,7 +60,7 @@ export function HomeScreen({ locale }: { locale: Locale }) {
           <b>{locale === "es" ? "Ver tabla →" : "View standings →"}</b>
         </button>
       </div>
-      {lastRunId ? <button className="continue-career" onClick={() => navigate(`run/${lastRunId}`)}>{locale === "es" ? "Continuar mi última carrera" : "Continue my last career"}</button> : null}
+      {lastRunId ? <button className="continue-career" onPointerEnter={warmContinueRoute} onFocus={warmContinueRoute} onClick={() => navigate(`run/${lastRunId}`)}>{locale === "es" ? "Continuar mi última carrera" : "Continue my last career"}</button> : null}
     </section>
   );
 }
