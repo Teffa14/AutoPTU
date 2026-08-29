@@ -42,9 +42,14 @@ function normalizedBattleIds(run: CareerRun): string[] {
 }
 
 function normalizedPokemon(run: CareerRun): CareerPokemon[] {
-  return Array.isArray(run.pokemon)
-    ? run.pokemon.filter((entry): entry is CareerPokemon => Boolean(entry) && typeof entry === "object" && typeof entry.id === "string")
-    : [];
+  if (!Array.isArray(run.pokemon)) return [];
+  const seen = new Set<string>();
+  return run.pokemon.filter((entry): entry is CareerPokemon => {
+    if (!entry || typeof entry !== "object" || typeof entry.id !== "string") return false;
+    if (seen.has(entry.id)) return false;
+    seen.add(entry.id);
+    return true;
+  });
 }
 
 export function normalizedActiveLineup(run: CareerRun): CareerPokemon[] {
