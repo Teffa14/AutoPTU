@@ -51,8 +51,14 @@ export function normalizedActiveLineup(run: CareerRun): CareerPokemon[] {
   const activeRoster = Array.isArray(run.active_roster) ? run.active_roster : [];
   const pokemon = normalizedPokemon(run);
   const byId = new Map(pokemon.map((entry) => [entry.id, entry]));
+  const seen = new Set<string>();
   return activeRoster
     .filter((id): id is string => typeof id === "string")
+    .filter((id) => {
+      if (seen.has(id)) return false;
+      seen.add(id);
+      return true;
+    })
     .map((id) => byId.get(id))
     .filter((entry): entry is CareerPokemon => entry !== undefined);
 }
