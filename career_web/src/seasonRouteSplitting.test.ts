@@ -28,4 +28,9 @@ describe("season route bundle splitting", () => {
     expect(seasonHub).not.toContain('import { DecisionOutcomePanel } from "./DecisionOutcomePanel";');
     expect(seasonHub).toContain('import("./DecisionOutcomePanel")');
   });
+
+  it("keeps pending-battle recovery code out of the normal season hub graph", () => {
+    expect(seasonHub).not.toContain('import { PendingBattleRecovery } from "./PendingBattleRecovery";');
+    expect(seasonHub).toContain('import("./PendingBattleRecovery")');
+  });
 });
