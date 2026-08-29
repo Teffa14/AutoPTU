@@ -252,3 +252,20 @@ def test_reserve_training_prevents_multi_season_level_lock_in(tmp_path: Path) ->
     active_average = round(sum(pokemon.level for pokemon in run.pokemon if pokemon.id in run.active_roster) / len(run.active_roster))
     assert reserve.level >= active_average - 3
     assert any(entry.get("type") == "pokemon.squad_development_completed" for entry in run.timeline)
+
+
+def test_initialize_roster_repairs_duplicate_active_ids(tmp_path: Path) -> None:
+    run = new_run(tmp_path)
+    first_replacement = capture_species(run, "Pidgey", source="recovery-test", spend_ball=False)
+    second_replacement = capture_species(run, "Spearow", source="recovery-test", spend_ball=False)
+    assert first_replacement is not None
+    assert second_replacement is not None
+
+    partner_id = run.pokemon[0].id
+    run.active_roster = [partner_id, partner_id, partner_id]
+
+    changed = initialize_roster(run, stable_seed=run.seed)
+
+    assert changed is True
+    assert run.active_roster == [partner_id, first_replacement.id, second_replacement.id]
+    assert len(run.active_roster) == len(set(run.active_roster))
