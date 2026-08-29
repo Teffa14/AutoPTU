@@ -74,7 +74,8 @@ export function normalizedActiveLineup(run: CareerRun): CareerPokemon[] {
       return true;
     })
     .map((id) => byId.get(id))
-    .filter((entry): entry is CareerPokemon => entry !== undefined);
+    .filter((entry): entry is CareerPokemon => entry !== undefined)
+    .slice(0, 6);
 }
 
 export function normalizeSeasonRosterState(run: CareerRun): CareerRun {
