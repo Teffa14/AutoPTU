@@ -149,4 +149,19 @@ describe("normalizedActiveLineup", () => {
     ]);
     expect(normalized.active_roster).toEqual(["starter", "wing"]);
   });
+
+  it("drops pokemon records whose persisted id is blank or whitespace-only", () => {
+    const run = {
+      active_roster: ["", "   ", "starter"],
+      pokemon: [
+        { id: "", species: "MissingNo", level: 99 },
+        { id: "   ", species: "MissingNo", level: 99 },
+        { id: "starter", species: "Bulbasaur", level: 5 },
+      ],
+    } as unknown as CareerRun;
+
+    const normalized = normalizeSeasonRosterState(run);
+    expect(normalized.pokemon.map((pokemon) => pokemon.id)).toEqual(["starter"]);
+    expect(normalized.active_roster).toEqual(["starter"]);
+  });
 });

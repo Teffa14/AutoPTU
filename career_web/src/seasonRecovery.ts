@@ -45,7 +45,7 @@ function normalizedPokemon(run: CareerRun): CareerPokemon[] {
   if (!Array.isArray(run.pokemon)) return [];
   const seen = new Set<string>();
   return run.pokemon.filter((entry): entry is CareerPokemon => {
-    if (!entry || typeof entry !== "object" || typeof entry.id !== "string") return false;
+    if (!entry || typeof entry !== "object" || typeof entry.id !== "string" || !entry.id.trim()) return false;
     if (seen.has(entry.id)) return false;
     seen.add(entry.id);
     return true;
