@@ -43,13 +43,21 @@ describe("career route bundle splitting", () => {
     expect(home).toContain('import("../localCareer")');
   });
 
-  it("prefetches the two home destination chunks only after user intent", () => {
+  it("prefetches home destination chunks only after user intent", () => {
     expect(home).toContain('new: () => import("./CreateScreen")');
     expect(home).toContain('daily: () => import("./DailyScreen")');
     expect(home).toContain('leaderboard: () => import("./DailyScreen")');
     expect(home).toContain('onPointerEnter={() => warmHomeRoute("new")}');
     expect(home).toContain('onFocus={() => warmHomeRoute("new")}');
     expect(home).not.toContain('useEffect(() => {\n    warmHomeRoute');
+  });
+
+  it("prefetches the continue-career API and season route on intent", () => {
+    expect(home).toContain('import("../api")');
+    expect(home).toContain('import("./SeasonHub")');
+    expect(home).toContain('onPointerEnter={warmContinueRoute}');
+    expect(home).toContain('onFocus={warmContinueRoute}');
+    expect(home).not.toContain('useEffect(() => {\n    warmContinueRoute');
   });
 
   it("gives lazy route failures a visible recovery path", () => {
