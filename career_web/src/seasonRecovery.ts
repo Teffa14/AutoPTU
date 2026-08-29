@@ -68,6 +68,8 @@ export function normalizedActiveLineup(run: CareerRun): CareerPokemon[] {
   const seen = new Set<string>();
   return activeRoster
     .filter((id): id is string => typeof id === "string")
+    .map((id) => id.trim())
+    .filter(Boolean)
     .filter((id) => {
       if (seen.has(id)) return false;
       seen.add(id);
