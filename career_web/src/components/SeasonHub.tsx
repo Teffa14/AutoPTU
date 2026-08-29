@@ -3,10 +3,10 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { isGambleHistoryEntry, normalizedDecisionHistory, type DecisionHistoryEntry } from "../decisionOutcome";
 import { normalizeSeasonRosterState, pendingBattleRecovery } from "../seasonRecovery";
 import type { CareerRun, Locale } from "../types";
-import { DecisionOutcomePanel } from "./DecisionOutcomePanel";
 import { PendingBattleRecovery } from "./PendingBattleRecovery";
 import { SeasonScreen } from "./SeasonScreen";
 
+const DecisionOutcomePanel = lazy(() => import("./DecisionOutcomePanel").then(({ DecisionOutcomePanel }) => ({ default: DecisionOutcomePanel })));
 const PreseasonMarket = lazy(() => import("./PreseasonMarket").then(({ PreseasonMarket }) => ({ default: PreseasonMarket })));
 
 export function SeasonHub({ run, locale, onRun }: { run: CareerRun; locale: Locale; onRun: (run: CareerRun) => void }) {
@@ -36,7 +36,7 @@ export function SeasonHub({ run, locale, onRun }: { run: CareerRun; locale: Loca
     && !isGambleHistoryEntry(latestDecision);
 
   if (showOutcome && latestDecision) {
-    return <DecisionOutcomePanel entry={latestDecision} locale={locale} onContinue={() => setAcknowledgedDecisions(historyCount)} />;
+    return <Suspense fallback={<div className="decision-outcome" role="status">{locale === "es" ? "Preparando consecuencia…" : "Preparing consequence…"}</div>}><DecisionOutcomePanel entry={latestDecision} locale={locale} onContinue={() => setAcknowledgedDecisions(historyCount)} /></Suspense>;
   }
 
   const seasonReady = clubReady && hasAvailablePokemon;
