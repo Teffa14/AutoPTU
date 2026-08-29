@@ -1,0 +1,19 @@
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+
+import { describe, expect, it } from "vitest";
+
+const season = readFileSync(fileURLToPath(new URL("./components/SeasonScreen.tsx", import.meta.url)), "utf8");
+
+describe("season route bundle splitting", () => {
+  it("keeps the optional economy market out of the synchronous season graph", () => {
+    expect(season).not.toContain('import { EconomyShop } from "./EconomyShop";');
+    expect(season).toContain('import("./EconomyShop")');
+  });
+
+  it("warms the economy market only after spend-money intent", () => {
+    expect(season).toContain('onPointerEnter={warmEconomyShop}');
+    expect(season).toContain('onFocus={warmEconomyShop}');
+    expect(season).not.toContain('useEffect(() => {\n    warmEconomyShop');
+  });
+});
