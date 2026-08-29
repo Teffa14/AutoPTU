@@ -94,6 +94,14 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
     let cancelled = false;
     let app: Application | null = null;
     const mount = host.current;
+    const syncScreenMetrics = () => {
+      const currentApp = appRef.current;
+      if (!currentApp) return;
+      requestAnimationFrame(() => {
+        if (cancelled || appRef.current !== currentApp) return;
+        screen.current = { width: currentApp.screen.width, height: currentApp.screen.height };
+      });
+    };
 
     async function start() {
       app = new Application();
@@ -122,6 +130,7 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
       appRef.current = app;
       mount.appendChild(app.canvas);
       screen.current = { width: app.screen.width, height: app.screen.height };
+      window.addEventListener("resize", syncScreenMetrics, { passive: true });
       app.stage.addChild(buildStadium(app.screen.width, app.screen.height, transcript.initial_state.grid));
       visuals.current.clear();
       targets.current.clear();
@@ -184,6 +193,7 @@ export function BattleArena({ transcript, eventIndex, view, locale }: { transcri
     void start();
     return () => {
       cancelled = true;
+      window.removeEventListener("resize", syncScreenMetrics);
       appRef.current = null;
       visuals.current.clear();
       effects.current = [];
