@@ -51,7 +51,7 @@ def initialize_roster(run: CareerRun, stable_seed: int) -> bool:
 
     eligible_order = [entry.id for entry in run.pokemon if entry.status != "retired" and entry.career_health > 0]
     eligible_ids = set(eligible_order)
-    active = [entry_id for entry_id in run.active_roster if entry_id in eligible_ids]
+    active = list(dict.fromkeys(entry_id for entry_id in run.active_roster if entry_id in eligible_ids))
     if not active and eligible_order:
         partner_id = next(
             (entry.id for entry in run.pokemon if entry.is_partner and entry.id in eligible_ids),
