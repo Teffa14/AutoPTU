@@ -123,4 +123,12 @@ describe("normalizedActiveLineup", () => {
     } as unknown as CareerRun;
     expect(normalizedActiveLineup(run).map((pokemon) => pokemon.id)).toEqual(["two", "one"]);
   });
+
+  it("deduplicates corrupt persisted roster ids while preserving first-slot order", () => {
+    const run = {
+      active_roster: ["two", "two", "one", "two", "one"],
+      pokemon: [{ id: "one", species: "Bulbasaur", level: 5 }, { id: "two", species: "Pidgey", level: 4 }],
+    } as unknown as CareerRun;
+    expect(normalizedActiveLineup(run).map((pokemon) => pokemon.id)).toEqual(["two", "one"]);
+  });
 });
