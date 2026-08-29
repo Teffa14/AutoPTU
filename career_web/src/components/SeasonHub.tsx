@@ -3,9 +3,9 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { isGambleHistoryEntry, normalizedDecisionHistory, type DecisionHistoryEntry } from "../decisionOutcome";
 import { normalizeSeasonRosterState, pendingBattleRecovery } from "../seasonRecovery";
 import type { CareerRun, Locale } from "../types";
-import { PendingBattleRecovery } from "./PendingBattleRecovery";
 import { SeasonScreen } from "./SeasonScreen";
 
+const PendingBattleRecovery = lazy(() => import("./PendingBattleRecovery").then(({ PendingBattleRecovery }) => ({ default: PendingBattleRecovery })));
 const DecisionOutcomePanel = lazy(() => import("./DecisionOutcomePanel").then(({ DecisionOutcomePanel }) => ({ default: DecisionOutcomePanel })));
 const PreseasonMarket = lazy(() => import("./PreseasonMarket").then(({ PreseasonMarket }) => ({ default: PreseasonMarket })));
 
@@ -28,7 +28,9 @@ export function SeasonHub({ run, locale, onRun }: { run: CareerRun; locale: Loca
     setAcknowledgedDecisions(historyCount);
   }, [seasonRun.id, seasonRun.season_number]);
 
-  if (pendingBattle) return <PendingBattleRecovery run={seasonRun} locale={locale} onRun={onRun} />;
+  if (pendingBattle) {
+    return <Suspense fallback={<div className="battle-error pending-battle-recovery" role="status">{locale === "es" ? "Preparando recuperación del combate…" : "Preparing battle recovery…"}</div>}><PendingBattleRecovery run={seasonRun} locale={locale} onRun={onRun} /></Suspense>;
+  }
 
   const showOutcome = seasonRun.season?.status === "decision"
     && Boolean(latestDecision)
