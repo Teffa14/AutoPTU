@@ -7,7 +7,7 @@ import os
 from typing import Any, Dict, List, Optional, Type, TypeVar
 
 
-CURRENT_CAREER_VERSION = "career-0.11.0"
+CURRENT_CAREER_VERSION = "career-0.12.0"
 CURRENT_NARRATIVE_VERSION = "career-hooks-0.8.0"
 
 
